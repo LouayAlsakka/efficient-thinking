@@ -1,0 +1,39 @@
+\begin{thebibliography}{1}
+
+\bibitem{bertsekas2022lessons}
+Dimitri Bertsekas.
+\newblock Lessons from {AlphaZero} for optimal, model predictive, and adaptive
+  control.
+\newblock {\em arXiv preprint arXiv:2108.10315}, 2022.
+
+\bibitem{mlx2023}
+Awni Hannun, Jagrit Digani, Angelos Katharopoulos, and Ronan Collobert.
+\newblock {MLX}: An array framework for {Apple} silicon.
+\newblock \url{https://github.com/ml-explore/mlx}, 2023.
+
+\bibitem{mcilroy2020maia}
+Reid McIlroy-Young, Siddhartha Sen, Jon Kleinberg, and Ashton Anderson.
+\newblock Aligning superhuman {AI} with human behavior: Chess as a model
+  system.
+\newblock In {\em Proceedings of the 26th ACM SIGKDD International Conference
+  on Knowledge Discovery \& Data Mining}, pages 1677--1687, 2020.
+
+\bibitem{silver2018alphazero}
+David Silver, Thomas Hubert, Julian Schrittwieser, Ioannis Antonoglou, Matthew
+  Lai, Arthur Guez, Marc Lanctot, Laurent Sifre, Dharshan Kumaran, Thore
+  Graepel, Timothy Lillicrap, Karen Simonyan, and Demis Hassabis.
+\newblock A general reinforcement learning algorithm that masters chess, shogi,
+  and {Go} through self-play.
+\newblock {\em Science}, 362(6419):1140--1144, 2018.
+
+\bibitem{lc0}
+{The LCZero Authors}.
+\newblock Leela chess zero.
+\newblock \url{https://lczero.org}, 2018--2024.
+
+\bibitem{stockfishnnue}
+{The Stockfish Developers}.
+\newblock Stockfish: A strong open-source chess engine (nnue evaluation).
+\newblock \url{https://stockfishchess.org}, 2008--2024.
+
+\end{thebibliography}

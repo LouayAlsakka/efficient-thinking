@@ -21,6 +21,9 @@ docs/*
 !docs/whitepaper.md
 !docs/whitepaper.html
 !docs/whitepaper.pdf
+# --- arXiv LaTeX package (source + figures + compiled pdf) ---
+!docs/arxiv/
+docs/arxiv/*.tar.gz
 
 # --- scratch ---
 *.log
