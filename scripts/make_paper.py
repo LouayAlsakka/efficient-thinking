@@ -1,6 +1,12 @@
 #!/usr/bin/env python
-"""Render docs/whitepaper.md -> whitepaper.html (styled, self-contained) + whitepaper.pdf."""
-import os, sys
+"""Render docs/whitepaper.md -> whitepaper.html (native inline SVG) + whitepaper.pdf.
+
+The HTML keeps native inline SVG (browsers render it perfectly). For the PDF, each SVG is
+RASTERIZED to a PNG and embedded as <img> — weasyprint's SVG engine renders these charts
+incompletely, but every PDF renderer handles raster images, so all graphs show up.
+"""
+import os, re, base64
+
 import markdown
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,30 +40,62 @@ hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
 blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
              color: #333; background: #f6f8fa; font-style: italic; }
 a { color: #0969da; }
-.subtitle { color: #555; font-size: 15px; }
+img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 """
+
+# glyphs cairosvg's default font lacks -> ASCII so they don't render as boxes in the PDF.
+# NOTE: "←" must escape its "<" (a bare "<" in text breaks strict XML parsing).
+_GLYPHS = {"→": "->", "←": "&lt;-", "↑": "^", "↓": "v", "↕": "|", "≫": ">>", "·": "-"}
+
+
+def _rasterize_svgs(html):
+    """Replace every inline <svg>..</svg> with a rasterized PNG <img> (for the PDF)."""
+    import cairosvg
+
+    def repl(m):
+        svg = m.group(0)
+        for k, v in _GLYPHS.items():
+            svg = svg.replace(k, v)
+        vb = re.search(r'viewBox="[\d.]+ [\d.]+ ([\d.]+) ([\d.]+)"', svg)
+        w, h = (vb.group(1), vb.group(2)) if vb else ("620", "320")
+        svg = re.sub(r'style="[^"]*"', "", svg, count=1)             # cairosvg sizing fix
+        svg = svg.replace("<svg ", f'<svg width="{w}" height="{h}" ', 1)
+        try:
+            png = cairosvg.svg2png(bytestring=svg.encode(),
+                                   output_width=int(float(w)) * 2, background_color="white")
+        except Exception as e:
+            print(f"  ! chart rasterize failed ({e}); keeping inline SVG")
+            return m.group(0)
+        b64 = base64.b64encode(png).decode()
+        return f'<img src="data:image/png;base64,{b64}"/>'
+
+    return re.sub(r"<svg.*?</svg>", repl, html, flags=re.S)
+
 
 def main():
     text = open(MD).read()
     body = markdown.markdown(
         text, extensions=["tables", "fenced_code", "sane_lists", "attr_list"])
-    html = (f"<!doctype html><html><head><meta charset='utf-8'>"
-            f"<title>Chess-Scaling White Paper</title><style>{CSS}</style></head>"
-            f"<body>{body}</body></html>")
-    open(HTML, "w").write(html)
+
+    def wrap(b):
+        return (f"<!doctype html><html><head><meta charset='utf-8'>"
+                f"<title>Efficient Thinking — White Paper</title><style>{CSS}</style></head>"
+                f"<body>{b}</body></html>")
+
+    open(HTML, "w").write(wrap(body))                                # HTML: native SVG
     print(f"wrote {HTML} ({os.path.getsize(HTML)} bytes)")
 
-    # PDF: prefer weasyprint (full CSS), fall back to xhtml2pdf
+    pdf_html = wrap(_rasterize_svgs(body))                           # PDF: rasterized charts
     try:
         from weasyprint import HTML as WHTML
-        WHTML(string=html).write_pdf(PDF)
+        WHTML(string=pdf_html).write_pdf(PDF)
         print(f"wrote {PDF} via weasyprint ({os.path.getsize(PDF)} bytes)")
         return
     except Exception as e:
         print(f"weasyprint unavailable ({type(e).__name__}); using xhtml2pdf")
     from xhtml2pdf import pisa
     with open(PDF, "wb") as f:
-        res = pisa.CreatePDF(html, dest=f)
+        res = pisa.CreatePDF(pdf_html, dest=f)
     print(f"wrote {PDF} via xhtml2pdf (err={res.err}, {os.path.getsize(PDF)} bytes)")
 
 
