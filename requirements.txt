@@ -1,0 +1,4 @@
+mlx>=0.31
+numpy>=2.0
+python-chess>=1.11
+pytest>=8.0

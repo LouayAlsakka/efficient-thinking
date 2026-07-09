@@ -1,0 +1,28 @@
+# --- large data & environments (never commit) ---
+data/
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+.pytest_cache/
+
+# --- training runs: keep ONLY the best model for out-of-the-box reproducibility ---
+runs/*
+!runs/conv_value_llm1/
+runs/conv_value_llm1/*
+!runs/conv_value_llm1/model.npz
+!runs/conv_value_llm1/config.json
+
+# --- internal working notes: the white paper is the public document ---
+docs/*
+!docs/whitepaper.md
+!docs/whitepaper.html
+!docs/whitepaper.pdf
+
+# --- scratch ---
+*.log
+*.tmp
+scratchpad/
