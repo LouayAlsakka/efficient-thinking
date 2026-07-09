@@ -5,6 +5,8 @@
 
 **A white paper on parameter-efficient game AI.**
 
+**Code & trained model:** [github.com/louayalsakka/efficient-thinking](https://github.com/louayalsakka/efficient-thinking)
+
 *The recurring theme is a set of **tradeoffs**: memory vs compute (Stage 1 vs 2), speed vs score
 (the search cascade), and diversity vs correlation (the committee) — each one a different way of
 spending a fixed budget to buy strength, and each capped by the same wall: the quality of the
@@ -97,7 +99,7 @@ what each ingredient buys.
   they are always run on the *same* ladder and seeds.
 
 ### 2.4 Hardware
-- Two Apple-Silicon machines (M3 Max / M3 Ultra, 256 GB), MLX framework, 40 Gbps bridge.
+- Two Apple-Silicon **Mac Studios (M3 Ultra, 256 GB each)**, MLX framework, 40 Gbps bridge.
 
 ---
 
