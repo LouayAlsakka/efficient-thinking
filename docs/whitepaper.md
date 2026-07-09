@@ -30,16 +30,24 @@ strength while running up to ~4.8× faster per move** — the same answer for fa
 committees) with one robust positive and sober negatives: **model agreement predicts correctness**
 (a confidence signal needing no oracle), but *none* of these methods — including outcome-based
 evolution — crosses the self-play plateau, and plurality voting does not reliably de-bias. Since the
-same net reaches higher under supervised labels, the wall is the quality of *self-generated* signal,
-not capacity. Stage 3's constraint — **no engine, no labels** — is
+same net reaches higher under supervised labels, the wall — *at this scale and compute* — is the
+quality of *self-generated* signal, not capacity. (This is a small-scale statement: AlphaZero-scale
+self-play is known to bootstrap well past its initial model; we simply did not have that compute.) Stage 3's constraint — **no engine, no labels** — is
 deliberate: it is the setting of any *genuinely new* problem, where no teacher or dataset exists to
 imitate, so a recipe that depends on them (as Stages 1–2 do) cannot transfer; only a self-bootstrapping
 method can. Throughout, the unifying finding is that **the ceiling is the evaluator (the network),
 not the loop around it** — search and self-play *redistribute* the
 knowledge in the net; they do not manufacture it.
 
-**Headline:** *A 14 MB model reaches ~2800 Elo by thinking (search), not by growing (parameters) —
-and once the search is good, the only wall left is the quality of the evaluation.*
+**Headline:** *A 14 MB learned evaluator plus adaptive search reaches strong play (~2800-class), and
+a staged MCTS **cascade** recovers up to **4.8× compute** at little Elo cost — thinking, not growing.*
+
+> **Read the numbers carefully.** Absolute Elo is measured against a Stockfish ladder and carries
+> **±~100 systematic uncertainty** near the top rung — "~2800" is an *efficiency indicator, not an
+> engine-matching claim*, and it is the single easiest figure for a skeptic to attack. The
+> **robust** results are the *relative*, same-ladder ones: MCTS beats and out-scales fixed depth,
+> the cascade holds Elo while cutting compute up to 4.8×, and every Stage-3 aggregation/self-learning
+> method fails to beat a single model. Treat those as the paper's claims; treat 2800 as a headline.
 
 ---
 
@@ -112,6 +120,26 @@ what each ingredient buys.
 
 ### 2.4 Hardware
 - Two Apple-Silicon **Mac Studios (M3 Ultra, 256 GB each)**, MLX framework, 40 Gbps bridge.
+
+### 2.5 Reproducibility (evaluation protocol)
+Every Elo/CPL figure in this paper uses a fixed protocol so numbers are comparable across methods:
+- **Engine:** Stockfish 18 as both the ladder opponent and the CPL oracle; opponents run at
+  fixed `UCI_Elo` rungs, movetime **0.03–0.04 s** (stated per experiment). CPL uses Stockfish at
+  **fixed depth 12** (depth-limited, so CPU contention slows but does not weaken it).
+- **Ladder:** a random-mover anchor plus `UCI_Elo` rungs (e.g. 1700/2000/2300, 2400/2700/3000);
+  Elo is the maximum-likelihood fit vs the known rung ratings. **Games per rung: 20–40** (stated
+  per table). The reported margin is a crude $\pm 400/\sqrt{n}\cdot 2$ (≈$\pm$89 at 20 games/rung,
+  ≈$\pm$100 typical) — treat all absolutes as **±100** and rely on *relative* same-ladder deltas.
+- **Openings:** sampled from the public Lichess PGN (`2013-01`), replayed to plies 6–16 for a
+  diverse, balanced start book; both colors played from each opening.
+- **Seeds:** default seed 0 (stated where varied); openings, ladder, and match seeds are fixed so a
+  method's eval is reproducible, and any two methods compared are always run on the **same** ladder,
+  openings, and seeds.
+- **Known caveats:** (i) the ladder **compresses** once the player beats the top rung — we raised
+  the ladder as strength grew, and near-top absolutes carry extra uncertainty; (ii) at movetime
+  0.03–0.04 s Stockfish plays **below** its nominal `UCI_Elo`, so the ladder is internally
+  consistent but not calibrated to over-the-board Elo. Code, the trained model, and the exact
+  scripts are in the repository.
 
 ---
 
@@ -540,8 +568,10 @@ space. This also sharpens the "better aggregator" question: it must live at infe
 **Two axes at once — size and speed.**
 - **Parameters:** our net is **~10–25× smaller than AlphaZero and 30–100× smaller than large Leela
   transformers**, yet reaches ~2800 with search. On *Elo-per-million-parameters* it is the extreme
-  efficiency point — an order of magnitude above the big-net engines (which spend their parameters
-  on the last few hundred Elo of a much better value function).
+  point. **This is an *efficiency* framing, not a superiority claim** — top engines optimize
+  *absolute strength*, not parameters-per-Elo, and are 600–800 Elo stronger; the point is only that
+  parameter count is *not* what buys their last few hundred Elo (a much better value function and far
+  more search are). Read the table as "most strength per parameter," never as "better than."
 - **Speed:** the two paradigms differ. AlphaZero/Leela use a **similar sim count** (~hundreds–
   thousands) but each sim is a **big-net** forward pass, so their per-move cost is dominated by a
   10–100× larger network; our sim is a 14 MB pass (~1.5 ms), and the **cascade recovers a further
@@ -592,9 +622,11 @@ loop around it.**
   its teacher; a self-referential Elo ladder never promotes; and derivative-free **evolution**, given
   the fairest shot (unbiased game-outcome fitness, annealed exploration), also fails — its apparent
   +47-Elo escape was a **noise artifact** that reversed to −30 under a clean 400-game re-match. Since
-  the *same* net reaches ~2150 under supervised labels, the wall is **not capacity** but the ceiling
-  of any signal a system generates about *itself*: external information lifts it, self-generated
-  information cannot.
+  the *same* net reaches ~2150 under supervised labels, the wall — **at this scale and compute** — is
+  **not capacity** but the ceiling of the signal these methods generate about *themselves*: external
+  information (a bigger net, more search, stronger labels) lifted it, recycling the current one did
+  not. *(This is a small-scale statement, not a universal one: given AlphaZero-scale compute, self-play
+  is known to bootstrap far past its initial model; we characterize the regime we could actually run.)*
 - **A better *evaluator* is the only lever — but it is harder than it looks.** The committee gives a
   robust, teacher-free **confidence signal** (agreement predicts correctness), yet **plurality voting
   does not reliably de-bias**: across a 3/5/7/9-agent sweep the consensus never clearly beat the best
@@ -634,10 +666,10 @@ self-play, a self-referential ladder, and derivative-free evolution all **fail t
 plateau** (evolution's apparent escape was a noise artifact), and plurality-voting committees do not
 reliably de-bias — though model **agreement is a robust teacher-free confidence signal**. The
 transferable result, proven from every direction we pushed, is that **the learned evaluator is the
-bottleneck** — search redistributes its knowledge and self-generated signal cannot exceed its own
-quality; only a better evaluator (better labels, more scale, or a better *aggregator* than plurality)
-raises the ceiling. A quantified recipe, and an honest map of its limits, for compact, search-driven
-sequential decision-making in general.
+bottleneck** — search redistributes its knowledge, and **at our scale** self-generated signal did not
+cross the supervised ceiling; only a better evaluator (better labels, more capacity/scale, more search,
+or a better *aggregator* than plurality) raised it. A quantified recipe, and an honest map of its
+limits, for compact, search-driven sequential decision-making in general.
 
 ---
 
