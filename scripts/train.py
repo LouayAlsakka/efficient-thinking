@@ -23,6 +23,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", required=True, help="glob for shard .npz files")
     ap.add_argument("--run-dir", required=True)
+    ap.add_argument("--init", default=None, help="warm-start weights (.npz) to fine-tune from")
     ap.add_argument("--encoding", choices=["onehot", "packed"], default="onehot")
     ap.add_argument("--depth", type=int, default=10)
     ap.add_argument("--width", type=int, default=256)
@@ -80,6 +81,7 @@ def main():
         batch_size=args.batch_size, epochs=args.epochs, lr=args.lr,
         weight_decay=args.weight_decay, val_frac=args.val_frac, seed=args.seed,
         data_glob=args.data, run_dir=args.run_dir, ckpt_every=args.ckpt_every,
+        init=args.init,
     )
     ds = Dataset(shards, encoding=args.encoding)
     print(f"loaded {len(ds)} positions from {len(shards)} shard(s)")

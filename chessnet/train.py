@@ -67,6 +67,7 @@ class RunConfig:
     # --- bookkeeping ---
     data_glob: str = "data/smoke.*.npz"
     run_dir: str = "runs/exp"
+    init: str = None              # optional warm-start weights (.npz) to load before training
     log_every: int = 50
     ckpt_every: int = 0           # >0: save an atomic model.npz every N steps (crash safety)
 
@@ -224,6 +225,9 @@ def train(cfg: RunConfig, dataset):
     mx.random.seed(cfg.seed)
     model = PolicyNet(cfg.model_config())
     mx.eval(model.parameters())
+    if getattr(cfg, "init", None):
+        model.load_weights(cfg.init)              # warm-start (fine-tune / model-soup)
+        print(f"[warm-start] loaded {cfg.init}")
     n_params = cfg.model_config().param_estimate()
 
     train_view, val_view = dataset.split(cfg.val_frac, cfg.seed)

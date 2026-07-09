@@ -464,9 +464,9 @@ Stages 1–2 measure what search and capacity buy <em>when a teacher is availabl
 whether the recipe can <strong>stand on its own in a domain where Stages 1–2 are simply impossible</strong> —
 which is precisely the case for any genuinely new problem.</p>
 <p>The loop: the net plays itself with MCTS, trains toward the visit distribution (improved policy)
-and game result (value), and repeats. The only external input is the rules. We studied four
-approaches — self-play, a self-referential ladder, a committee, and evolution — and they converge
-on one story.</p>
+and game result (value), and repeats. The only external input is the rules. We studied five
+approaches — self-play, a self-referential ladder, a committee, evolution, and weight merging — and
+they converge on one story.</p>
 <h3>5.1 Self-play expert iteration (AlphaZero-style)</h3>
 <p>The net plays itself with MCTS, trains toward the visit distribution (improved policy) and game
 result (value), and repeats. Two failure modes appeared and were fixed: <strong>cold-start draw-collapse</strong>
@@ -665,6 +665,64 @@ trusted — we nearly reported a false escape and caught it only by measuring pr
   <text x="420" y="118" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#333">(reality)</text>
   <text x="310" y="270" text-anchor="middle" font-size="10" fill="#999" font-style="italic">the apparent escape reversed under proper measurement — no self-generated signal crossed the wall</text>
 </svg></p>
+<h3>5.4 Model merging — can we <em>average</em> diverse models into one?</h3>
+<p>A committee combines diverse models at <em>inference</em> (voting). The weight-space alternative is to
+<strong>average their coefficients into a single network</strong> ("marriage of coefficients"). We tested it on
+several conv-96×8 members from different seeds / data / objectives, scored by mean <strong>centipawn loss
+(CPL)</strong> against Stockfish depth-12 (lower is better; the members sit at ~60, i.e. ~2000-level, and
+~260 is near-random).</p>
+<table>
+<thead>
+<tr>
+<th>merge</th>
+<th>starting points</th>
+<th style="text-align: right;">CPL ↓</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>naive average</td>
+<td>different-start (diverse)</td>
+<td style="text-align: right;">261</td>
+<td>collapse</td>
+</tr>
+<tr>
+<td>Git Re-Basin aligned</td>
+<td>different-start (diverse)</td>
+<td style="text-align: right;">268</td>
+<td>still collapse</td>
+</tr>
+<tr>
+<td>naive average (<strong>model soup</strong>)</td>
+<td><strong>same init</strong></td>
+<td style="text-align: right;">58.8</td>
+<td>works (~parent)</td>
+</tr>
+<tr>
+<td>aligned (net + permuted twin)</td>
+<td>identical</td>
+<td style="text-align: right;">72</td>
+<td>perfect recovery <em>(verification)</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Naive averaging of different-random-start nets collapses</strong> (261 vs ~60): independent networks sit
+in different loss basins related by neuron permutations, so averaging misaligned neurons cancels
+signal. The known fix is <strong>permutation alignment (Git Re-Basin):</strong> match net B's neurons to net A's
+before averaging. We implemented it for the residual conv tower (one shared residual-stream
+permutation, a per-block hidden permutation, plus the reduce and value heads) and <strong>verified it is
+correct</strong> — it recovers a network <em>exactly</em> from a known random permutation (72 CPL = the original).
+Yet on the <em>real</em> different-start members it <strong>still collapses</strong> (268). The reason is fundamental:
+Git Re-Basin assumes independent networks learn the <em>same features in a different order</em>; ours
+learned <strong>genuinely different features</strong> (different seeds <em>and</em> data <em>and</em> objectives), and no
+permutation aligns different features. By contrast a <strong>model soup</strong> — two children fine-tuned from
+the <em>same</em> checkpoint — averages fine (58.8), because a shared start keeps them in one basin.</p>
+<p><strong>Conclusion.</strong> Weight-averaging only works within a shared basin. The very diversity that makes an
+ensemble valuable (uncorrelated errors, informative agreement, §5.2) is exactly what makes the
+members' <strong>weights un-averageable</strong> — diverse models can be combined at <em>inference</em>, not in weight
+space. This also sharpens the "better aggregator" question: it must live at inference time
+(soft-averaging, confidence routing), not in merging.</p>
 <hr />
 <h2>6. Comparison to existing systems — parameters, performance, and speed</h2>
 <table>

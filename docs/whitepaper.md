@@ -305,9 +305,9 @@ whether the recipe can **stand on its own in a domain where Stages 1–2 are sim
 which is precisely the case for any genuinely new problem.
 
 The loop: the net plays itself with MCTS, trains toward the visit distribution (improved policy)
-and game result (value), and repeats. The only external input is the rules. We studied four
-approaches — self-play, a self-referential ladder, a committee, and evolution — and they converge
-on one story.
+and game result (value), and repeats. The only external input is the rules. We studied five
+approaches — self-play, a self-referential ladder, a committee, evolution, and weight merging — and
+they converge on one story.
 
 ### 5.1 Self-play expert iteration (AlphaZero-style)
 The net plays itself with MCTS, trains toward the visit distribution (improved policy) and game
@@ -466,6 +466,39 @@ trusted — we nearly reported a false escape and caught it only by measuring pr
   <text x="420" y="118" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#333">(reality)</text>
   <text x="310" y="270" text-anchor="middle" font-size="10" fill="#999" font-style="italic">the apparent escape reversed under proper measurement — no self-generated signal crossed the wall</text>
 </svg>
+
+### 5.4 Model merging — can we *average* diverse models into one?
+
+A committee combines diverse models at *inference* (voting). The weight-space alternative is to
+**average their coefficients into a single network** ("marriage of coefficients"). We tested it on
+several conv-96×8 members from different seeds / data / objectives, scored by mean **centipawn loss
+(CPL)** against Stockfish depth-12 (lower is better; the members sit at ~60, i.e. ~2000-level, and
+~260 is near-random).
+
+| merge | starting points | CPL ↓ | verdict |
+|---|---|---:|---|
+| naive average | different-start (diverse) | 261 | collapse |
+| Git Re-Basin aligned | different-start (diverse) | 268 | still collapse |
+| naive average (**model soup**) | **same init** | 58.8 | works (~parent) |
+| aligned (net + permuted twin) | identical | 72 | perfect recovery *(verification)* |
+
+**Naive averaging of different-random-start nets collapses** (261 vs ~60): independent networks sit
+in different loss basins related by neuron permutations, so averaging misaligned neurons cancels
+signal. The known fix is **permutation alignment (Git Re-Basin):** match net B's neurons to net A's
+before averaging. We implemented it for the residual conv tower (one shared residual-stream
+permutation, a per-block hidden permutation, plus the reduce and value heads) and **verified it is
+correct** — it recovers a network *exactly* from a known random permutation (72 CPL = the original).
+Yet on the *real* different-start members it **still collapses** (268). The reason is fundamental:
+Git Re-Basin assumes independent networks learn the *same features in a different order*; ours
+learned **genuinely different features** (different seeds *and* data *and* objectives), and no
+permutation aligns different features. By contrast a **model soup** — two children fine-tuned from
+the *same* checkpoint — averages fine (58.8), because a shared start keeps them in one basin.
+
+**Conclusion.** Weight-averaging only works within a shared basin. The very diversity that makes an
+ensemble valuable (uncorrelated errors, informative agreement, §5.2) is exactly what makes the
+members' **weights un-averageable** — diverse models can be combined at *inference*, not in weight
+space. This also sharpens the "better aggregator" question: it must live at inference time
+(soft-averaging, confidence routing), not in merging.
 
 ---
 
