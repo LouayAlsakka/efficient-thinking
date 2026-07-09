@@ -80,7 +80,19 @@ what each ingredient buys.
   (mirror + color-swap for Black), so one network serves both players.
 - **Encodings:** *onehot* = 64 squares × 12 piece planes + 5 meta bits = **773 floats**
   (used throughout). For convolutions the 773-vector reshapes to **8×8×12 piece planes** + 5 meta
-  planes = 17 input channels.
+  planes = 17 input channels. We compared this to a compact *packed* encoding (one integer code
+  per square, 64+5 = **69 floats** — a 4-bit-per-square board). On an identical MLP, budget, and
+  data, **one-hot is decisively stronger — 84.9 vs 142.5 mean centipawn-loss** — because a network
+  learns clean categorical piece-type features far more readily than an arbitrary *ordinal* code
+  (where code 7 vs 8 carry a spurious "closeness"), and, crucially, convolution *requires*
+  per-piece-type planes, which a packed 8×8×1 integer board cannot provide. Packed is a
+  compact-but-harder-to-learn ablation; one-hot is the workhorse.
+- **No side-to-move feature:** the turn is not a bit — the board is *re-oriented* so the side to
+  move is always "White" (mirror + color-swap for Black), so one evaluator serves both players and
+  the turn is carried by the orientation. (This is why `Eval(P)` equals `Eval(mirror(P))` exactly,
+  and why the value of the move can be read off as `Eval(B) + Eval(null-move) − 1` — the deviation
+  from that mirror symmetry; measured mean tempo ≈ +0.15, up to +0.77 in tactical shots and
+  negative in zugzwang.)
 
 ### 2.2 Labels and objective
 - **Supervised data:** the full public Lichess cloud-eval database — **394,669,566 positions**
@@ -424,6 +436,18 @@ but plurality is not it.
   <text x="410" y="286" text-anchor="middle" font-size="9" fill="#666">7</text>
   <text x="550" y="286" text-anchor="middle" font-size="9" fill="#666">9</text>
 </svg>
+
+**And a third way to combine them — averaging *evaluations inside the search* — also fails.** The
+most direct use of the committee is to average the K models' value estimates at every MCTS leaf (a
+de-biased evaluator *inside* the tree; ELO-weightable; blending *continuous* values, so a single
+overconfident member can't dominate). At equal compute — the ensemble at 200 sims (600 passes/move)
+vs a single model at 600 sims — it scored **2222 vs 2282, a −60 Elo *loss*:** the ensemble searches
+3× less tree, and the small de-biasing from averaging *correlated* evaluations does not justify
+tripling the per-leaf cost. **More search beats a marginally-cleaner-but-shallower one.** So all
+three ways to combine the committee — plurality voting, weight merging (§5.4), and in-search value
+averaging — fail to beat a single model, for the same root cause: **the members' errors are too
+correlated to cancel.** Genuinely independent evaluators (cross-family, cross-data), not more of the
+same, are the prerequisite.
 
 ### 5.3 Evolution — mutate / play / score (a plateau-escape attempt)
 

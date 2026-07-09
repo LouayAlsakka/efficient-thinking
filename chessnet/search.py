@@ -400,3 +400,45 @@ class MultiStageMCTSPlayer:
             best = next(iter(board.legal_moves))
         return MoveChoice(best, move_to_index(best, board.turn == chess.BLACK),
                           was_illegal=False)
+
+
+# ============================================================================
+# Ensemble-evaluator MCTS — the committee applied where the bottleneck is: the
+# LEAF EVALUATION inside the tree. At each expanded leaf, K diverse models each
+# produce (policy priors, value); we average them (optionally ELO-weighted) into
+# a single de-biased evaluation. Blends CONTINUOUS values (robust to one loud/
+# overconfident member) rather than voting on discrete moves. Cost = K forward
+# passes per leaf, so compare fairly: ensemble at N sims vs one model at K*N sims.
+# ============================================================================
+
+class EnsembleMCTSPlayer(MCTSPlayer):
+    def __init__(self, models, encoding: str = "onehot", weights=None, sims: int = 200,
+                 c_puct: float = 1.5, cache: bool = True, seed: int = 0):
+        super().__init__(models[0], encoding=encoding, sims=sims, c_puct=c_puct,
+                         cache=cache, seed=seed)
+        self.models = list(models)
+        w = np.array(weights, dtype=float) if weights is not None else np.ones(len(models))
+        self.weights = w / w.sum()
+
+    def _policy_value(self, board):
+        key = board._transposition_key() if self._cache is not None else None
+        if key is not None and key in self._cache:
+            return self._cache[key]
+        x = mx.array(self.encode(board)[None, :])
+        mirrored = board.turn == chess.BLACK
+        legal = list(board.legal_moves)
+        idx = [move_to_index(mv, mirrored) for mv in legal]
+        avg_p = np.zeros(len(legal)); avg_v = 0.0
+        for wgt, m in zip(self.weights, self.models):
+            logits, v = m(x, return_value=True)                 # ensemble eval per leaf
+            logits = np.array(logits[0])
+            z = np.array([logits[i] for i in idx]); z = z - z.max()
+            p = np.exp(z); p = p / p.sum()
+            avg_p += wgt * p
+            avg_v += wgt * float(np.array(v)[0])
+        out = (legal, avg_p, avg_v)
+        if key is not None:
+            if len(self._cache) > 200000:
+                self._cache.clear()
+            self._cache[key] = out
+        return out
