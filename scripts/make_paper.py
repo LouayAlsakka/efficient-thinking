@@ -45,7 +45,8 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 
 # glyphs cairosvg's default font lacks -> ASCII so they don't render as boxes in the PDF.
 # NOTE: "←" must escape its "<" (a bare "<" in text breaks strict XML parsing).
-_GLYPHS = {"→": "->", "←": "&lt;-", "↑": "^", "↓": "v", "↕": "|", "≫": ">>", "·": "-"}
+_GLYPHS = {"→": "->", "←": "&lt;-", "↑": "^", "↓": "v", "↕": "|", "≫": ">>", "·": "-",
+           "×": "x", "≈": "~", "≤": "&lt;=", "≥": ">="}
 
 
 def _rasterize_svgs(html):
@@ -72,10 +73,19 @@ def _rasterize_svgs(html):
     return re.sub(r"<svg.*?</svg>", repl, html, flags=re.S)
 
 
+def _despan_svgs(html):
+    """python-markdown sometimes injects <p>/</p> inside an inline <svg> block (breaks strict XML
+    parsing for the rasterizer and is invalid inside SVG). Strip them from every <svg>..</svg>."""
+    def repl(m):
+        return m.group(0).replace("<p>", "").replace("</p>", "")
+    return re.sub(r"<svg.*?</svg>", repl, html, flags=re.S)
+
+
 def main():
     text = open(MD).read()
     body = markdown.markdown(
         text, extensions=["tables", "fenced_code", "sane_lists", "attr_list"])
+    body = _despan_svgs(body)
 
     def wrap(b):
         return (f"<!doctype html><html><head><meta charset='utf-8'>"
