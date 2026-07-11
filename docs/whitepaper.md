@@ -945,11 +945,20 @@ evidence that self-play fails** (AlphaZero/Leela break past human play with far 
 transfers is a quantified recipe and an explicit **diagnostic** for finding the binding lever.
 
 **Beyond chess.** The decomposition — **capacity, inference-time search, self-generated information**
-— is domain-agnostic: the same three levers and the evaluator-vs-compute trade-off recur in planning,
-robotics, scheduling, compiler optimization, and scientific design, each with an evaluator, a
-decision-time search budget, and a self-improvement loop capped by its own signal quality. We measured
-none of those domains — only that the *decomposition* and its diagnostic (find the binding lever
-before investing) are what transfer, and likely outlast the chess numbers.
+— is domain-agnostic. Each chess finding is an instance of a general resource-allocation principle,
+and maps directly onto other AI systems (we measured only chess; these are the transfer claims):
+
+| Chess finding | General principle | Where it transfers |
+|---|---|---|
+| **strength = evaluator × search** | capability = model quality × inference-time compute | LLM reasoning (base model × sampling/tree-of-thought); robotics (value net × planning horizon); theorem proving (heuristic × search depth) |
+| **cascade: 4.8× cheaper search** | spend a fixed decision-time budget wide→narrow | LLM reasoning under latency SLAs; model-predictive control; any anytime search |
+| **search extracts, can't create — needs an oracle** | self-improvement is capped without external ground truth | LLM self-training needs verifiers; RL needs an environment; scientific discovery needs experiments |
+| **capacity is the weakest lever when data-starved** | don't scale parameters ahead of data | compute-optimal (Chinchilla) scaling; collect data before growing nets |
+| **agreement predicts correctness; voting doesn't de-bias** | consensus is a confidence meter, not an accuracy booster (correlated errors) | ensemble uncertainty / OOD detection; caution on naïve model-averaging |
+| **bottleneck diagnostic** | find the binding resource experimentally before investing | design of any resource-constrained AI system |
+
+The *decomposition* and its diagnostic (find the binding lever before investing) are what transfer,
+and likely outlast the chess numbers.
 
 **The clearest current echo is in large language models.** The 2024–25 shift to **inference-time
 compute** — o1/o3, DeepSeek-R1, reasoning models — is this thesis at frontier scale: a fixed base

@@ -1355,11 +1355,51 @@ information, but only through an <strong>external oracle</strong>, so our platea
 evidence that self-play fails</strong> (AlphaZero/Leela break past human play with far more of it). What
 transfers is a quantified recipe and an explicit <strong>diagnostic</strong> for finding the binding lever.</p>
 <p><strong>Beyond chess.</strong> The decomposition — <strong>capacity, inference-time search, self-generated information</strong>
-— is domain-agnostic: the same three levers and the evaluator-vs-compute trade-off recur in planning,
-robotics, scheduling, compiler optimization, and scientific design, each with an evaluator, a
-decision-time search budget, and a self-improvement loop capped by its own signal quality. We measured
-none of those domains — only that the <em>decomposition</em> and its diagnostic (find the binding lever
-before investing) are what transfer, and likely outlast the chess numbers.</p>
+— is domain-agnostic. Each chess finding is an instance of a general resource-allocation principle,
+and maps directly onto other AI systems (we measured only chess; these are the transfer claims):</p>
+<table>
+<thead>
+<tr>
+<th>Chess finding</th>
+<th>General principle</th>
+<th>Where it transfers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>strength = evaluator × search</strong></td>
+<td>capability = model quality × inference-time compute</td>
+<td>LLM reasoning (base model × sampling/tree-of-thought); robotics (value net × planning horizon); theorem proving (heuristic × search depth)</td>
+</tr>
+<tr>
+<td><strong>cascade: 4.8× cheaper search</strong></td>
+<td>spend a fixed decision-time budget wide→narrow</td>
+<td>LLM reasoning under latency SLAs; model-predictive control; any anytime search</td>
+</tr>
+<tr>
+<td><strong>search extracts, can't create — needs an oracle</strong></td>
+<td>self-improvement is capped without external ground truth</td>
+<td>LLM self-training needs verifiers; RL needs an environment; scientific discovery needs experiments</td>
+</tr>
+<tr>
+<td><strong>capacity is the weakest lever when data-starved</strong></td>
+<td>don't scale parameters ahead of data</td>
+<td>compute-optimal (Chinchilla) scaling; collect data before growing nets</td>
+</tr>
+<tr>
+<td><strong>agreement predicts correctness; voting doesn't de-bias</strong></td>
+<td>consensus is a confidence meter, not an accuracy booster (correlated errors)</td>
+<td>ensemble uncertainty / OOD detection; caution on naïve model-averaging</td>
+</tr>
+<tr>
+<td><strong>bottleneck diagnostic</strong></td>
+<td>find the binding resource experimentally before investing</td>
+<td>design of any resource-constrained AI system</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>decomposition</em> and its diagnostic (find the binding lever before investing) are what transfer,
+and likely outlast the chess numbers.</p>
 <p><strong>The clearest current echo is in large language models.</strong> The 2024–25 shift to <strong>inference-time
 compute</strong> — o1/o3, DeepSeek-R1, reasoning models — is this thesis at frontier scale: a fixed base
 model made far stronger by <em>searching over reasoning at decision time</em> (sampling, self-consistency,
