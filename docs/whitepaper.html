@@ -104,12 +104,6 @@ before investing in it — as it is the individual numbers.</p>
   the simulation budget through progressively narrower, deeper stages, matching flat MCTS at up to
   <strong>4.8× less compute per move</strong> with a clean score/speed trade-off curve.
 - A parameter-efficiency result: <strong>~2800 Elo from 3.45M params</strong> via search, at constant memory.
-- <strong>The efficiency numbers are a floor, not a ceiling.</strong> Every result here uses a deliberately
-  simple <strong>batch-1</strong> search — one leaf per forward pass, <strong>no parallel leaf batching and no virtual
-  loss</strong> — running at only <strong>~600 nodes/s</strong>, so the M3 Ultra sits largely <em>idle</em> during search.
-  Batched-leaf MCTS (a contained change, quantified in §4.4) leaves an estimated <strong>10–50× per-move
-  speedup untapped</strong>: the true efficiency ceiling of this approach is far above what we benchmark,
-  and every latency figure in this paper is an <strong>upper bound</strong> on what the method costs.
 - A direct <strong>MCTS-vs-fixed-depth</strong> result: adaptive search beats and out-scales fixed depth.
 - An <strong>architecture-beats-scale</strong> finding (convolution ≫ MLP at equal data), with topology sweep.
 - A reproducible <strong>negative result</strong> on small-scale self-play (plateaus below supervision).
@@ -1137,14 +1131,29 @@ sharper form than "the network is the bottleneck": <strong>the <em>quality of th
 evaluator</em> (its training signal) was the recurring binding constraint, not the loop around it.</strong> We
 state this as an empirical regularity of the regime we tested, not a theorem. The organizing law is <strong>strength = evaluator × search</strong>:
 search sets how <em>closely</em> you approach the ceiling, the evaluator sets <em>where</em> it is, and the
-evaluator is only ever as good as the information it was given. This one statement explains
-everything below — supervision and scale lift the ceiling because they inject <em>new</em> information;
-within-move search, voting and merging cannot, because they only <strong>extract information already
-represented, not create what is absent</strong>. Self-play and evolution are the exception in principle —
-their search taps the environment's ground truth, so <strong>at sufficient scale they do inject new
-information (this is exactly how AlphaZero/Leela surpass human play)</strong> — but at our compute the
-signal they generated never exceeded supervision. That plateau is a <strong>scale limit of two Mac
-Studios, not a limit of self-play.</strong></p>
+evaluator is only ever as good as the information it was given. This explains everything below, once
+we are precise about <em>information</em>. By <strong>new information</strong> we mean <strong>novel empirical data from
+<em>outside</em> the closed system of the network and its training set</strong> — not a re-encoding of what is
+already latent in it. Supervision and scale inject it directly; every other method divides on one
+question — <strong>does it have an external ground-truth oracle to query?</strong></p>
+<ul>
+<li><strong>Within-move search, voting, and merging do not.</strong> They operate on fixed representations, so they
+  only <em>extract</em> information already present — cutting variance, sharpening, filtering — never
+  creating what is absent.</li>
+<li><strong>Self-play and evolution can — but only through the environment.</strong> In a <strong>closed-form,
+  perfect-information</strong> game the <em>rules are a perfect, external, infinite oracle</em>: search queries
+  terminal outcomes that lie outside any dataset — exactly how AlphaZero and Leela inject information
+  no human game contains and surpass human play. This is a property of the <em>environment</em>, not of
+  self-play: in an <strong>open-ended, semantic</strong> domain (natural language) with no external verifier, the
+  identical loop has nothing to query and collapses into hallucination or mode-collapse — it can only
+  redistribute.</li>
+<li><strong>Our chess result sits in the oracle-rich regime and still plateaued</strong> — because at
+  two-Mac-Studio compute the search was too weak to extract much from that oracle, <em>not</em> because the
+  oracle was absent. The plateau is a <strong>scale</strong> limit, not evidence against self-play.</li>
+</ul>
+<p>None of this makes redistribution <em>useless</em>: variance reduction, sharpening, alignment, and filtering
+are how you <strong>reach</strong> a ceiling cheaply and reliably — indispensable engineering. The claim is narrow,
+and about the <em>absolute</em> ceiling: <strong>only information from outside the closed system can raise it.</strong></p>
 <ul>
 <li><strong>Architecture &gt; parameters.</strong> The right prior (spatial locality + weight sharing) beats raw
   width; a 14 MB conv reaches strength a 3× larger MLP cannot.</li>
@@ -1361,7 +1370,17 @@ each has a learned or hand-built evaluator, a search or rollout budget spent at 
 some notion of self-improvement whose value is likewise capped by the quality of the signal it can
 generate about itself. We make no claim to have measured those domains — only that the <em>decomposition</em>
 and its diagnostic (find the binding lever before investing in it) are what transfer, and are, we
-believe, the contribution most likely to outlast the chess numbers.
+believe, the contribution most likely to outlast the chess numbers.</p>
+<p><strong>A test for what comes next.</strong> The framework is not only a post-mortem — it is a <strong>predictive
+filter</strong>. Any future claim of a <em>synthetic-data breakthrough</em> or a <em>recursively self-improving
+architecture</em> can be pre-screened with one question: <strong>does it inject information from outside its
+closed system</strong> — new empirical data, human supervision, or an external ground-truth oracle (a
+verifier, a simulator, the physical world)? If it does, it can raise the ceiling. If it merely
+re-processes what its own models already contain — however cleverly — our results predict it will
+<strong>plateau</strong>. Recursive self-improvement compounds precisely where an external oracle exists to be
+exploited (a game's rules, a theorem checker, a compiler, a market, a lab), and stalls where one does
+not. That is a claim about the <em>source</em> of information, not the ingenuity of the method — and it
+should hold well beyond chess.
 - <code>chessnet/model.py</code> — conv/MLP/dual-path + value head. <code>chessnet/search.py</code> — alpha-beta,
   MCTS/PUCT, quiescence, the wide→narrow cascade (<code>MultiStageMCTSPlayer</code>).
   <code>chessnet/committee.py</code> — ensemble inference + agreement signal.
