@@ -55,9 +55,10 @@ regime we could run.)</p>
 <p>The unifying principle is <strong>strength = evaluator × search</strong>: search sets how <em>closely</em> you approach
 the evaluator's ceiling; the evaluator sets <em>where</em> that ceiling is. And across all three stages the
 binding constraint consistently emerged as <strong>the quality of the information reaching the evaluator</strong>
-— its training signal — rather than the machinery around it. Search <em>redistributes</em> information (cutting variance, not bias); self-play,
-voting, evolution and merging fail because none injects <em>new</em> information; supervision and scale
-succeed because they do. The method is as transferable as the numbers: <strong>at each stage a single lever
+— its training signal — rather than the machinery around it. <strong>Search <em>extracts</em> information already
+represented by the evaluator (cutting variance, not bias); it cannot create information absent from
+it.</strong> Self-play, voting, evolution and merging fail for the same reason — none injects <em>new</em>
+information — while supervision and scale succeed because they do. The method is as transferable as the numbers: <strong>at each stage a single lever
 binds — only an experiment reveals which — so effort on any non-binding lever returns almost
 nothing.</strong></p>
 <p><strong>Headline:</strong> <em>A 14 MB evaluator plus adaptive search reaches ~2800-class play, and a staged MCTS
@@ -1128,8 +1129,8 @@ state this as an empirical regularity of the regime we tested, not a theorem. Th
 search sets how <em>closely</em> you approach the ceiling, the evaluator sets <em>where</em> it is, and the
 evaluator is only ever as good as the information it was given. This one statement explains
 everything below — supervision and scale lift the ceiling because they inject <em>new</em> information;
-search, self-play, voting, evolution and merging do not, because they only <em>rearrange</em> information
-already present.</p>
+search, self-play, voting, evolution and merging do not, because they can only <strong>extract information
+already represented, not create what is absent</strong>.</p>
 <ul>
 <li><strong>Architecture &gt; parameters.</strong> The right prior (spatial locality + weight sharing) beats raw
   width; a 14 MB conv reaches strength a 3× larger MLP cannot.</li>
@@ -1231,7 +1232,7 @@ wasted compute; it is a measurement that says <em>"strength is not gated here �
 <td><strong>Aggregation</strong> (ensemble-eval, merging)</td>
 <td>no gain</td>
 <td>combining ≠ creating knowledge</td>
-<td>redistributes signal, doesn't add it</td>
+<td>extracts existing signal, creates none</td>
 </tr>
 <tr>
 <td><strong>Self-distillation</strong> (fixed set)</td>
@@ -1325,14 +1326,15 @@ doubling, unsaturated through 6400 sims)</strong>, so the ceiling is set by the 
 out of search; then the evaluator itself binds — and at our data scale it was <strong>data-bound</strong>, not
 capacity-bound: adding parameters at fixed data (1.4×) bought <strong>~0 Elo</strong> (a full 1×/1.4×/2×/4×
 capacity sweep on the complete dataset is running to confirm capacity stays inert once well-fed). The transferable <em>observation</em>, recurring from every direction we pushed, is that
-<strong>evaluator quality consistently emerged as the dominant limiting factor</strong> — search redistributes its
-knowledge, and <strong>at our scale</strong> self-generated signal did not cross the supervised ceiling; only a
+<strong>evaluator quality consistently emerged as the dominant limiting factor</strong> — search extracts the
+information already represented by the net but cannot create what is absent, and <strong>at our scale</strong>
+self-generated signal did not cross the supervised ceiling; only a
 better evaluator (better labels, more data, more capacity <em>once data-matched</em>, more search, or a
 better <em>aggregator</em> than plurality) raised it. Stated at its sharpest, and as an empirical pattern
 rather than a proof: <strong>the quality of the information reaching the evaluator was the binding
 constraint</strong> — which is why supervision, data, and search help (they add or extract information) and
-why voting, evolution, merging and self-play do not (they only rearrange the information already
-there). A quantified recipe, an explicit <strong>diagnostic</strong> for finding the binding lever, and an honest
+why voting, evolution, merging and self-play do not (they can only extract or rearrange information
+already there, never create what is absent). A quantified recipe, an explicit <strong>diagnostic</strong> for finding the binding lever, and an honest
 map of the limits — for compact, search-driven sequential decision-making in general.</p>
 <p><strong>Beyond chess.</strong> Chess is only the controlled environment; the decomposition — <strong>model capacity,
 inference-time search, and self-generated information</strong> — is domain-agnostic. The same three levers,
