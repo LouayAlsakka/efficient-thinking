@@ -39,14 +39,19 @@ learned evaluator.</em></p>
 <p><strong>This paper asks one engineering question: given finite resources — parameters (memory), training
 data, inference-time search, and latency — how do you spend them <em>efficiently</em> to reach a target
 playing strength?</strong> We treat chess as a clean, fully-measurable testbed and map the tradeoff curves
-directly, resource by resource. With a deliberately tiny model on modest hardware, a <strong>3.45M-parameter
-(14 MB) convolutional net</strong> plays at <strong>~2150 Elo</strong> as a single forward pass; adding <strong>Monte-Carlo Tree
-Search (MCTS)</strong> lifts the <em>same weights</em> to <strong>~2800</strong> with <strong>zero extra parameters</strong> — strength bought
-with <strong>compute, not size</strong>. That single result is the thesis in miniature: the same capability can be
-purchased with very different resource mixes, and the efficient mix is rarely "more parameters".</p>
-<p>Three contributions. <strong>(1)</strong> A <strong>wide→narrow MCTS cascade</strong> that funnels the simulation budget
-through progressively narrower, deeper stages <strong>matches flat MCTS at up to ~4.8× less compute per
-move</strong> — our most practical result. <strong>(2)</strong> A direct <strong>MCTS-vs-fixed-depth</strong> comparison: adaptive
+directly, resource by resource. With a deliberately tiny model on modest hardware, a <strong>14 MB</strong>
+convolutional evaluator (3.45M params) plays at ~2150 Elo as a single forward pass; adding
+<strong>Monte-Carlo Tree Search (MCTS)</strong> lifts the <em>same weights</em> to <strong>~2800</strong> with zero extra parameters —
+strength bought with <strong>compute, not size</strong>. That single result is the thesis in miniature: the same
+capability can be purchased with very different resource mixes, and the efficient mix is rarely "more
+parameters". <em>(If you remember three numbers, remember these: a </em><em>14 MB evaluator</em><em>, </em><em>~2800 with
+search</em><em>, and </em><em>4.8× search efficiency</em><em> from the cascade.)</em></p>
+<p><strong>The primary contribution is an empirical <em>framework</em> for allocating finite AI resources —
+parameters, data, search, and latency — to a fixed capability goal, with measured tradeoff curves for
+each; the staged MCTS cascade is its sharpest concrete demonstration.</strong> Three specific results
+support it. <strong>(1)</strong> A <strong>wide→narrow MCTS cascade</strong> that funnels the simulation budget through
+progressively narrower, deeper stages <strong>matches flat MCTS at up to ~4.8× less compute per move</strong> —
+our most practical result. <strong>(2)</strong> A direct <strong>MCTS-vs-fixed-depth</strong> comparison: adaptive
 search both beats alpha-beta at equal compute and <em>keeps scaling</em>, while fixed depth plateaus.
 <strong>(3)</strong> A <strong>teacher-free self-learning</strong> study (self-play, a self-referential ladder, evolution,
 committees): one robust positive — <strong>agreement predicts correctness</strong>, a confidence signal needing
@@ -82,6 +87,15 @@ engine-matching claim</em>, and it is the single easiest figure for a skeptic to
 the cascade holds Elo while cutting compute up to 4.8×, and every Stage-3 aggregation/self-learning
 method fails to beat a single model. Treat those as the paper's claims; treat 2800 as a headline.</p>
 </blockquote>
+<p><strong>Established results vs. regime-limited observations.</strong> We separate the two explicitly:</p>
+<ul>
+<li><strong>Established</strong> (robust, relative, same-ladder): the <strong>cascade's compute efficiency</strong>, <strong>adaptive
+  search out-scaling fixed-depth</strong>, and <strong>agreement predicts correctness</strong>. These are same-ladder
+  comparisons that do not lean on absolute Elo.</li>
+<li><strong>Observations limited to our compute/scale</strong>: the <strong>self-play plateau</strong>, the <strong>flat parameter
+  scaling</strong>, and <strong>evolution's non-escape</strong>. These are true <em>in our regime</em> and we expect them to
+  change at AlphaZero/LLM scale — they are honest negatives, not universal laws.</li>
+</ul>
 <hr />
 <h2>Key Takeaways</h2>
 <p><em>Five findings — enough to understand the paper on one page.</em></p>
@@ -645,62 +659,60 @@ rather than compute — the M3 Ultra is massively under-utilised. Effective thro
 neural-MCTS engines evaluate many tree leaves in a single forward pass and reach <strong>~10k–80k
 nodes/second</strong> (modern Leela; AlphaZero on TPUs) — 20–100× our throughput on comparable or better
 accelerators. Batching the leaf evaluations here (32–256 leaves per pass) would plausibly cut
-per-move latency <strong>10–50×</strong>, which means <strong>the +260 Elo from 3200-sim search could be had at
+per-move latency <strong>13–37×</strong>, which means <strong>the +260 Elo from 3200-sim search could be had at
 roughly today's 800-sim wall-clock.</strong> This is the single largest piece of engineering headroom in
 the system — and it changes none of the strength conclusions, only their price.</p>
-<p><strong>GPU utilisation — why more search can be nearly free, and when it is not.</strong> The three modes use
-the M3 Ultra very differently:</p>
+<p><strong>GPU utilisation — batch-1 is an implementation <em>limitation</em>, and we measured the fix.</strong> All latency
+figures above use a deliberately simple <strong>batch-1</strong> search: one leaf per forward pass. On the wide
+M3 Ultra that leaves the accelerator's thousands of cores <strong>idle between launches</strong> — throughput is
+launch-bound at only <strong>~600 nodes/s</strong>. So the latencies above are <strong>pessimistic upper bounds</strong>, not
+the method's true cost: a move's <em>strength</em> is fixed by <strong>N (nodes searched)</strong>, but its <em>latency</em> is
+<strong>N ÷ throughput</strong>, and our throughput is left on the floor.</p>
+<p>The standard fix is <strong>batched-leaf evaluation</strong> (gather many tree leaves via <em>virtual loss</em>, evaluate
+them in a single GPU launch). We implemented it (<code>BatchedMCTSPlayer</code>, <code>search.py</code>) and <strong>measured</strong> it
+on the same net and positions — the same nodes searched, only the launch pattern changed:</p>
 <table>
 <thead>
 <tr>
-<th>Mode</th>
-<th>Work per move</th>
-<th>GPU utilisation</th>
-<th>Bound by</th>
+<th>Search</th>
+<th style="text-align: right;">Throughput</th>
+<th style="text-align: right;">Speedup vs batch-1</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Open-loop</td>
-<td>1 forward, batch 1</td>
-<td>~nil (one tiny op)</td>
-<td>kernel-launch latency</td>
+<td><strong>batch-1</strong> (as used above)</td>
+<td style="text-align: right;">~600 nps</td>
+<td style="text-align: right;">1.0×</td>
 </tr>
 <tr>
-<td>MCTS (batch-1)</td>
-<td>N forwards, <strong>sequential</strong></td>
-<td>low — idle between launches</td>
-<td>launch overhead × N</td>
+<td>batched, 32 leaves/launch</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>13×</strong></td>
 </tr>
 <tr>
-<td>MCTS (<strong>batched</strong>)</td>
-<td>N forwards in batches of 32–256</td>
-<td>high — cores filled</td>
-<td>actual compute</td>
+<td>batched, 64 leaves/launch</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>23×</strong></td>
+</tr>
+<tr>
+<td>batched, 128 leaves/launch</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>37×</strong></td>
 </tr>
 </tbody>
 </table>
-<p>A move's <em>strength</em> is set by <strong>N, the number of nodes searched</strong> — 3200 explores more of the tree
-than 800, full stop. A move's <em>latency</em> is <strong>N ÷ throughput</strong>. Our batch-1 search issues the 3200
-forward passes one at a time, so between launches the accelerator's thousands of cores sit <strong>idle</strong>;
-throughput is launch-bound at <strong>~600 nps</strong> and latency ≈ 3200 × (a fixed per-launch cost). Batching
-evaluates 32–256 tree leaves in a <em>single</em> launch, filling those idle cores: the <strong>same 3200
-node-evaluations</strong> now take ~3200/256 launches — same search, same nodes, a fraction of the
-wall-clock. The extra search was hiding in <strong>idle silicon</strong>, not in extra time. (This is already
-visible unbatched: latency grows <em>sub-linearly</em> with sims because larger N amortises the fixed
-per-move overhead — MCTS-3200 is only ~2.8× slower than MCTS-800, not 4×.)</p>
-<p><strong>This free lunch is hardware-specific — the point your intuition should latch onto.</strong> The speedup
-equals the <strong>idle parallelism you can reclaim.</strong> The M3 Ultra is a very wide accelerator that a
-batch-1, 14 MB workload barely touches, so there is a great deal to reclaim, and 3200-sim search can
-approach 800-sim wall-clock. On hardware <em>without</em> that spare width — a small GPU, a CPU, or an
-accelerator already <strong>saturated by a large network</strong> (AlphaZero/Leela, whose single forward pass
-already fills the device) — you are <strong>compute-bound</strong>, not launch-bound: there are no idle cores for
-batching to fill, so latency scales <strong>linearly</strong> with sims and MCTS-3200 genuinely costs <strong>~4× the
-time</strong> of MCTS-800. So "3200-strength at 800-speed" is a property of running a <em>tiny</em> evaluator on a
-<em>wide, under-utilised</em> device — precisely our regime, and precisely <strong>not</strong> the regime of the
-big-net engines, where the extra search is paid for in full.</p>
-<p><em>(Latencies are derived from evaluation wall-clock on the M3 Ultra; a dedicated single-GPU
-micro-benchmark is pending and will replace these with stopwatch figures.)</em></p>
+<p><em>(ratios measured under light concurrent load, so conservative.)</em> A <strong>~13–37×</strong> per-move speedup at
+identical strength is enough to run <strong>MCTS-3200 well below today's MCTS-800 latency</strong>. <strong>The batch-1
+numbers should therefore be read as a ceiling on cost, not the method's efficiency</strong>, and the true
+strength-vs-latency curve sits far to the left of the one we plot.</p>
+<p>Two caveats keep this honest. First, the gain is <strong>hardware-dependent</strong>: it equals the <em>idle
+parallelism you can reclaim</em>. The M3 Ultra is a wide accelerator a 14 MB batch-1 workload barely
+touches, so there is much to reclaim; on a small GPU/CPU, or an accelerator already <strong>saturated by a
+large network</strong> (AlphaZero/Leela, whose single forward pass fills the device), there are no idle cores
+and deeper search costs full, <strong>linear</strong> price. Second, batched selection uses momentarily stale tree
+statistics, so it is a hair less sample-efficient <em>per node</em> than sequential MCTS — a second-order
+effect that does not change the order-of-magnitude speedup.</p>
 <h3>4.5 Does a bigger evaluator raise the ceiling? (a capacity sweep)</h3>
 <p>Section 4.4 shows search still climbing at 6400 — the ceiling isn't reached <em>by search</em>, but each
 doubling of compute buys less, so the practical route higher is a <em>better evaluator</em>. The direct
@@ -1173,7 +1185,7 @@ space. This also sharpens the "better aggregator" question: it must live at infe
   thousands) but each sim is a <strong>big-net</strong> forward pass, so their per-move cost is dominated by a
   10–100× larger network; our sim is a 14 MB pass (~1.5 ms), and the <strong>cascade recovers a further
   ~1.6–4.8×</strong>. But our search runs its leaf evaluations <strong>one at a time (batch 1)</strong> — only ~600
-  nodes/second versus ~10k–80k for batched engines, so <strong>10–50× of per-move latency is left on the
+  nodes/second versus ~10k–80k for batched engines, so <strong>13–37× of per-move latency is left on the
   table</strong> purely to implementation (§4.4), independent of the strength results. Stockfish is the
   opposite regime — a small, heavily-quantized net evaluated at
   <strong>millions of nodes/second</strong> under alpha-beta. The structure is the same across all of them — a
@@ -1308,7 +1320,7 @@ wasted compute; it is a measurement that says <em>"strength is not gated here �
 <td><strong>Search implementation</strong> (batch-1)</td>
 <td>latency only</td>
 <td>throughput-bound by engineering</td>
-<td>batch leaves → 10–50× speed, same strength</td>
+<td>batch leaves → 13–37× speed, same strength</td>
 </tr>
 <tr>
 <td><strong>Self-play signal</strong></td>
@@ -1417,9 +1429,13 @@ domain that has no engine and no dataset to imitate.</p>
 parameters, data, inference-time search, and latency, how do you spend it to buy the most capability?
 The answer, measured resource by resource, is that the efficient mix is rarely "more parameters." A
 14 MB, 3.45M-parameter network reaches <strong>~2800 Elo by <em>thinking</em> (MCTS search), not by <em>growing</em>
-(parameters)</strong> — the same capability, a far cheaper resource mix. Adaptive MCTS beats and out-scales
-fixed-depth search; a wide→narrow MCTS cascade matches it at up to 4.8× less compute (buying strength
-back as <em>latency</em> rather than parameters). On the self-learning side the results are honestly negative:
+(parameters)</strong> — the same capability, a far cheaper resource mix. This is a claim about <em>efficiency</em>,
+not a denial of scale: our first full-data capacity point already nudges up (1× 2734 → 1.4× 2794), and
+<strong>if the 2×/4× points continue to climb, parameters become a co-dominant lever once the data-starvation
+bottleneck is relieved</strong> — "thinking, not growing" is the <em>efficient</em> choice under our budget, not a
+law that growing never helps. Adaptive MCTS beats and out-scales fixed-depth search; a wide→narrow
+MCTS cascade matches it at up to 4.8× less compute (buying strength back as <em>latency</em> rather than
+parameters). On the self-learning side the results are honestly negative:
 self-play, a self-referential ladder, and derivative-free evolution all <strong>fail to cross the ~2000
 plateau</strong> (evolution's apparent escape was a noise artifact), and plurality-voting committees do not
 reliably de-bias — though model <strong>agreement is a robust teacher-free confidence signal</strong>.</p>
@@ -1452,6 +1468,20 @@ some notion of self-improvement whose value is likewise capped by the quality of
 generate about itself. We make no claim to have measured those domains — only that the <em>decomposition</em>
 and its diagnostic (find the binding lever before investing in it) are what transfer, and are, we
 believe, the contribution most likely to outlast the chess numbers.</p>
+<p><strong>The clearest current echo is in large language models.</strong> The 2024–25 shift to <strong>inference-time
+compute</strong> — OpenAI's o1/o3, DeepSeek-R1, and reasoning models generally — is exactly this paper's
+thesis at frontier scale: a fixed base model made far stronger by <em>searching over reasoning at
+decision time</em> (sampling, self-consistency, tree-of-thought, long chains-of-thought) rather than by
+adding parameters. Our chess result — <strong>+286 Elo and a further log-linear climb from search on a
+frozen 14 MB net</strong> — is the same tradeoff in miniature: <strong>capability purchased with inference-time
+computation instead of memory.</strong> The mapping is direct: our <em>evaluator</em> is their <strong>base model /
+verifier</strong>, our <em>search</em> is their <strong>reasoning/sampling budget</strong>, our <em>self-play</em> is their <strong>STaR-style
+self-training</strong> — and the same limit applies, sharply: search and self-training only <strong>convert what
+the model already latently knows into better answers; they cannot inject knowledge it never learned.</strong>
+That is precisely why reasoning models pair inference-time search with <strong>external verifiers or
+ground-truth reward</strong> (code that runs, math that checks, tools that return facts) — the external
+oracle that lets the loop add information rather than merely rearrange it. A model with no such oracle
+should, by our framework, <strong>plateau</strong> — the identical prediction our chess self-play makes.</p>
 <p><strong>A test for what comes next.</strong> The framework is not only a post-mortem — it is a <strong>predictive
 filter</strong>. Any future claim of a <em>synthetic-data breakthrough</em> or a <em>recursively self-improving
 architecture</em> can be pre-screened with one question: <strong>does it inject information from outside its
