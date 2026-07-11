@@ -25,8 +25,8 @@ blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
              color: #333; background: #f6f8fa; font-style: italic; }
 a { color: #0969da; }
 img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
-</style></head><body><h1>Efficient Thinking: Resource Allocation in Game-Playing AI</h1>
-<h2>Spending Parameters, Data, Search, and Latency Efficiently for Maximum Playing Strength — an Empirical Framework, Demonstrated in Chess</h2>
+</style></head><body><h1>Efficient Thinking: An Empirical Framework for Resource Allocation in AI</h1>
+<h2>Spending Parameters, Data, Search, and Latency Efficiently to Maximize Capability — Demonstrated in Chess</h2>
 <p><strong>Louay Alsakka</strong> · July 8, 2026</p>
 <p><strong>A white paper on parameter-efficient game AI.</strong></p>
 <p><strong>Code &amp; trained model:</strong> <a href="https://github.com/louayalsakka/efficient-thinking">github.com/louayalsakka/efficient-thinking</a></p>
@@ -38,68 +38,32 @@ learned evaluator.</em></p>
 <h2>Abstract</h2>
 <p><strong>This paper asks one engineering question: given finite resources — parameters (memory), training
 data, inference-time search, and latency — how do you spend them <em>efficiently</em> to reach a target
-playing strength?</strong> We treat chess as a clean, fully-measurable testbed and map the tradeoff curves
-directly, resource by resource. With a deliberately tiny model on modest hardware, a <strong>14 MB</strong>
-convolutional evaluator (3.45M params) plays at ~2150 Elo as a single forward pass; adding
-<strong>Monte-Carlo Tree Search (MCTS)</strong> lifts the <em>same weights</em> to <strong>~2800</strong> with zero extra parameters
-(<strong>+286 Elo over the raw policy from pure inference compute</strong>, same-ladder) — strength bought with
-<strong>compute, not size</strong>. <strong>The ~2800 target is deliberate, not a ceiling we failed to exceed:</strong> ~2800
-is Super-GM / peak-human level, and our question is <em>how small a model can match top-human capability
-when augmented by search</em> — the human-peak band (which ~2800 ±100 brackets) is the intended
-saturation point, not a race against 3500-Elo engines. That single result is the thesis in miniature:
-the same capability can be purchased with very different resource mixes, and the efficient mix is
-rarely "more parameters". <em>(If you remember three numbers, remember these: a </em><em>14 MB evaluator</em><em>,
-</em><em>+286 Elo from search alone</em><em> (→ ~2800, human-peak), and </em><em>4.8× search efficiency</em><em> from the
-cascade.)</em></p>
+playing strength?</strong> Using chess as a clean, fully-measurable testbed, we map the tradeoff curves
+resource by resource. A <strong>14 MB</strong> convolutional evaluator (3.45M params) plays at ~2150 Elo as a
+single forward pass; adding <strong>Monte-Carlo Tree Search (MCTS)</strong> lifts the <em>same weights</em> to <strong>~2800</strong> —
+a same-ladder gain of <strong>+286 Elo from inference compute alone</strong>, with zero extra parameters. Since
+~2800 is Super-GM / peak-human level, the study is really <em>how small a model can reach top-human
+capability when augmented by search</em>: the same capability, bought with <strong>compute, not size</strong>.</p>
 <p><strong>The primary contribution is an empirical <em>framework</em> for allocating finite AI resources —
 parameters, data, search, latency — to a fixed capability goal, with measured tradeoff curves; the
-staged MCTS cascade is its sharpest demonstration.</strong> Three results support it. <strong>(1)</strong> A <strong>wide→narrow
-MCTS cascade</strong> matching flat MCTS at up to <strong>~4.8× less compute per move</strong> — our most practical result.
-<strong>(2)</strong> A direct <strong>MCTS-vs-fixed-depth</strong> comparison: adaptive search beats alpha-beta at equal compute
-and <em>keeps scaling</em>, while fixed depth plateaus. <strong>(3)</strong> A <strong>teacher-free self-learning</strong> study: one
+staged MCTS cascade is its sharpest demonstration.</strong> Three results support it: <strong>(1)</strong> a <strong>wide→narrow
+MCTS cascade</strong> matching flat MCTS at up to <strong>~4.8× less compute per move</strong>; <strong>(2)</strong> a direct
+<strong>MCTS-vs-fixed-depth</strong> comparison — adaptive search beats alpha-beta at equal compute and <em>keeps
+scaling</em> while fixed depth plateaus; and <strong>(3)</strong> a <strong>teacher-free self-learning</strong> study with one
 robust positive — <strong>agreement predicts correctness</strong> — and honest negatives — self-play, a
-self-referential ladder, evolution, and plurality voting all fail to cross the plateau or de-bias. A
-<strong>capacity sweep</strong> agrees: 1.4× more parameters at fixed data (3.45M→4.81M) move strength <strong>~0</strong> while
-8× more <em>data</em> moves it <strong>~+90</strong> — capacity is the <em>weakest</em> lever here (a full 1×/1.4×/2×/4× sweep is
-confirming it). (A small-scale statement: AlphaZero-scale self-play bootstraps far past its start.)</p>
+self-referential ladder, evolution, and plurality voting all fail to cross the plateau. A <strong>capacity
+sweep</strong> agrees: 1.4× more parameters at fixed data move strength <strong>~0</strong>, while 8× more <em>data</em> moves it
+<strong>~+90</strong> — capacity is the weakest lever in this regime.</p>
 <p>The unifying principle — the <strong>evaluator–search decomposition</strong> — is <strong>strength = evaluator ×
-search</strong>: search sets how <em>closely</em> you approach the evaluator's ceiling; the evaluator sets <em>where
-that ceiling is</em> — and that ceiling is <strong>the quality of the information the evaluator was trained on</strong>. Within a
-move, search <em>converts</em> the net's latent information into better decisions (cutting variance, not
-bias); it cannot create what the net never learned — the reason voting and merging don't help either.
-<strong>Self-play and evolution differ in kind</strong>: they <em>can</em> inject new information from the environment, so
-at AlphaZero scale they break past human play, but <strong>at two-Mac-Studio compute they plateau — a
-<em>scale</em> limit, not a claim that self-play fails.</strong> The method is as transferable as the numbers: <strong>at
-each stage one lever binds; only an experiment reveals which, so effort on any other returns almost
-nothing.</strong></p>
+search</strong>: search sets how <em>closely</em> you approach the evaluator's ceiling, the evaluator sets <em>where
+that ceiling is</em>, and that ceiling is <strong>the quality of the information the evaluator was trained on</strong>.
+Search <em>converts</em> the net's latent information into better decisions; it cannot create what the net
+never learned. And the method transfers beyond the numbers: <strong>at each stage one lever binds, and only
+an experiment reveals which — so effort on any other returns almost nothing.</strong></p>
 <p><strong>Headline:</strong> <em>A 14 MB evaluator plus adaptive search reaches ~2800-class play, and a staged MCTS
 </em><em>cascade</em><em> recovers up to </em><em>4.8× compute</em><em> at little Elo cost — thinking, not growing. Search
 converts what the evaluator already knows into stronger play; it cannot lift the ceiling set by the
 </em><em>quality of the information the evaluator was given.</em>**</p>
-<blockquote>
-<p><strong>Read the numbers carefully.</strong> Absolute Elo is measured against a Stockfish ladder and carries
-<strong>±~100 systematic uncertainty</strong> near the top rung — "~2800" is an <em>efficiency indicator, not an
-engine-matching claim</em>, and it is the single easiest figure for a skeptic to attack. The
-<strong>robust</strong> results are the <em>relative</em>, same-ladder ones: search adds <strong>+286 Elo</strong> over the raw
-policy, MCTS beats and out-scales fixed depth, the cascade holds Elo while cutting compute up to
-4.8×, and every Stage-3 aggregation/self-learning method fails to beat a single model. Treat those
-as the paper's claims; treat 2800 as a headline.</p>
-<p><strong>Target calibration (design philosophy).</strong> We aimed at the <strong>human-peak band (~2800, Super-GM)</strong>
-<em>on purpose</em>, not as a failed attempt to beat engines. For human-facing applications, matching top
-human capability is the efficient saturation point; pushing a model to 3500 Elo (machine-only
-territory) spends compute where it stops mattering. The study is therefore "how small a model, plus
-how little search, reaches human-peak" — <strong>maximum efficiency at the human ceiling</strong>, not a race
-for absolute strength.</p>
-</blockquote>
-<p><strong>Established results vs. regime-limited observations.</strong> We separate the two explicitly:</p>
-<ul>
-<li><strong>Established</strong> (robust, relative, same-ladder): the <strong>cascade's compute efficiency</strong>, <strong>adaptive
-  search out-scaling fixed-depth</strong>, and <strong>agreement predicts correctness</strong>. These are same-ladder
-  comparisons that do not lean on absolute Elo.</li>
-<li><strong>Observations limited to our compute/scale</strong>: the <strong>self-play plateau</strong>, the <strong>flat parameter
-  scaling</strong>, and <strong>evolution's non-escape</strong>. These are true <em>in our regime</em> and we expect them to
-  change at AlphaZero/LLM scale — they are honest negatives, not universal laws.</li>
-</ul>
 <hr />
 <h2>Key Takeaways</h2>
 <p><em>Five findings — enough to understand the paper on one page.</em></p>
@@ -154,6 +118,20 @@ ride it up log-linearly until the evaluator's quality caps the return; then the 
 <em>data</em>, not its parameter count in our regime — binds). This bottleneck analysis is not the paper's
 goal but its <strong>method</strong>: one instrument in the larger objective of spending a fixed budget
 efficiently.</p>
+<p><strong>Target calibration.</strong> We aim at the <strong>human-peak band — ~2800 Elo, Super-Grandmaster level — by
+design.</strong> For human-facing applications, matching top-human capability is the efficient saturation
+point; pushing to 3500 Elo (machine-only territory) spends compute where it stops mattering. The
+question is therefore <em>how small a model, plus how little search, reaches human-peak</em> — efficiency at
+the human ceiling, not absolute strength.</p>
+<p><strong>How to read the numbers.</strong> Absolute Elo is measured against a Stockfish ladder and carries <strong>±~100
+systematic uncertainty</strong> near the top rung; treat "~2800" as a headline calibrated to the human-peak
+band. The paper's <em>claims</em> are the <strong>relative, same-ladder</strong> results, which do not depend on that
+calibration: search adds <strong>+286 Elo</strong> over the raw policy, MCTS out-scales fixed-depth search, the
+cascade holds Elo at up to 4.8× less compute, and every Stage-3 aggregation method fails to beat a
+single model. We further separate <strong>established</strong> results (robust, relative — the cascade, adaptive
+search scaling, agreement-predicts-correctness) from <strong>regime-limited observations</strong> true only at our
+compute (the self-play plateau, flat parameter scaling, evolution's non-escape), which we expect to
+change at AlphaZero/LLM scale.</p>
 <p><strong>Contributions.</strong>
 - <strong>Our headline method — a search-efficiency result:</strong> a wide→narrow MCTS <strong>cascade</strong> that funnels
   the simulation budget through progressively narrower, deeper stages, matching flat MCTS at up to
