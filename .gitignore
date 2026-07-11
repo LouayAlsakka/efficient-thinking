@@ -21,6 +21,9 @@ docs/*
 !docs/whitepaper.md
 !docs/whitepaper.html
 !docs/whitepaper.pdf
+!docs/whitepaper_short.md
+!docs/whitepaper_short.html
+!docs/whitepaper_short.pdf
 # --- arXiv LaTeX package (source + figures + compiled pdf) ---
 !docs/arxiv/
 docs/arxiv/*.tar.gz

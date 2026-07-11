@@ -1,0 +1,1379 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
+@page { size: A4; margin: 20mm 18mm; }
+body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
+       line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
+       font-size: 15px; }
+h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
+     padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
+h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
+     margin-top: 34px; }
+h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
+p, li { font-size: 15px; }
+strong { color: #111; }
+code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
+       padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
+pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
+      overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
+pre code { background: none; color: #24292e; padding: 0; }
+table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
+th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+th { background: #2c3e50; color: #fff; }
+tr:nth-child(even) td { background: #f6f8fa; }
+td[align="right"], th[align="right"] { text-align: right; }
+hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
+blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
+             color: #333; background: #f6f8fa; font-style: italic; }
+a { color: #0969da; }
+img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+</style></head><body><h1>Efficient Thinking: Resource Allocation in Game-Playing AI</h1>
+<h2>Spending Parameters, Data, Search, and Latency Efficiently for Maximum Playing Strength — an Empirical Framework, Demonstrated in Chess</h2>
+<p><strong>Louay Alsakka</strong> · July 8, 2026</p>
+<p><strong>A white paper on parameter-efficient game AI.</strong></p>
+<p><strong>Code &amp; trained model:</strong> <a href="https://github.com/louayalsakka/efficient-thinking">github.com/louayalsakka/efficient-thinking</a></p>
+<p><em>The recurring theme is a set of </em><em>tradeoffs</em><em>: memory vs compute (Stage 1 vs 2), speed vs score
+(the search cascade), and diversity vs correlation (the committee) — each one a different way of
+spending a fixed budget to buy strength, and each capped by the same wall: the quality of the
+learned evaluator.</em></p>
+<hr />
+<h2>Abstract</h2>
+<p><strong>This paper asks one engineering question: given finite resources — parameters (memory), training
+data, inference-time search, and latency — how do you spend them <em>efficiently</em> to reach a target
+playing strength?</strong> We treat chess as a clean, fully-measurable testbed and map the tradeoff curves
+directly, resource by resource. With a deliberately tiny model on modest hardware, a <strong>14 MB</strong>
+convolutional evaluator (3.45M params) plays at ~2150 Elo as a single forward pass; adding
+<strong>Monte-Carlo Tree Search (MCTS)</strong> lifts the <em>same weights</em> to <strong>~2800</strong> with zero extra parameters —
+strength bought with <strong>compute, not size</strong>. That single result is the thesis in miniature: the same
+capability can be purchased with very different resource mixes, and the efficient mix is rarely "more
+parameters". <em>(If you remember three numbers, remember these: a </em><em>14 MB evaluator</em><em>, </em><em>~2800 with
+search</em><em>, and </em><em>4.8× search efficiency</em><em> from the cascade.)</em></p>
+<p><strong>The primary contribution is an empirical <em>framework</em> for allocating finite AI resources —
+parameters, data, search, latency — to a fixed capability goal, with measured tradeoff curves; the
+staged MCTS cascade is its sharpest demonstration.</strong> Three results support it. <strong>(1)</strong> A <strong>wide→narrow
+MCTS cascade</strong> matching flat MCTS at up to <strong>~4.8× less compute per move</strong> — our most practical result.
+<strong>(2)</strong> A direct <strong>MCTS-vs-fixed-depth</strong> comparison: adaptive search beats alpha-beta at equal compute
+and <em>keeps scaling</em>, while fixed depth plateaus. <strong>(3)</strong> A <strong>teacher-free self-learning</strong> study: one
+robust positive — <strong>agreement predicts correctness</strong> — and honest negatives — self-play, a
+self-referential ladder, evolution, and plurality voting all fail to cross the plateau or de-bias. A
+<strong>capacity sweep</strong> agrees: 1.4× more parameters at fixed data (3.45M→4.81M) move strength <strong>~0</strong> while
+8× more <em>data</em> moves it <strong>~+90</strong> — capacity is the <em>weakest</em> lever here (a full 1×/1.4×/2×/4× sweep is
+confirming it). (A small-scale statement: AlphaZero-scale self-play bootstraps far past its start.)</p>
+<p>The unifying principle — the <strong>evaluator–search decomposition</strong> — is <strong>strength = evaluator ×
+search</strong>: search sets how <em>closely</em> you reach the evaluator's ceiling, the evaluator sets <em>where</em> it
+is, and that ceiling is <strong>the quality of the information the evaluator was trained on</strong>. Within a
+move, search <em>converts</em> the net's latent information into better decisions (cutting variance, not
+bias); it cannot create what the net never learned — the reason voting and merging don't help either.
+<strong>Self-play and evolution differ in kind</strong>: they <em>can</em> inject new information from the environment, so
+at AlphaZero scale they break past human play, but <strong>at two-Mac-Studio compute they plateau — a
+<em>scale</em> limit, not a claim that self-play fails.</strong> The method is as transferable as the numbers: <strong>at
+each stage one lever binds; only an experiment reveals which, so effort on any other returns almost
+nothing.</strong></p>
+<p><strong>Headline:</strong> <em>A 14 MB evaluator plus adaptive search reaches ~2800-class play, and a staged MCTS
+</em><em>cascade</em><em> recovers up to </em><em>4.8× compute</em><em> at little Elo cost — thinking, not growing. Search
+converts what the evaluator already knows into stronger play; it cannot lift the ceiling set by the
+</em><em>quality of the information the evaluator was given.</em>**</p>
+<blockquote>
+<p><strong>Read the numbers carefully.</strong> Absolute Elo is measured against a Stockfish ladder and carries
+<strong>±~100 systematic uncertainty</strong> near the top rung — "~2800" is an <em>efficiency indicator, not an
+engine-matching claim</em>, and it is the single easiest figure for a skeptic to attack. The
+<strong>robust</strong> results are the <em>relative</em>, same-ladder ones: MCTS beats and out-scales fixed depth,
+the cascade holds Elo while cutting compute up to 4.8×, and every Stage-3 aggregation/self-learning
+method fails to beat a single model. Treat those as the paper's claims; treat 2800 as a headline.</p>
+</blockquote>
+<p><strong>Established results vs. regime-limited observations.</strong> We separate the two explicitly:</p>
+<ul>
+<li><strong>Established</strong> (robust, relative, same-ladder): the <strong>cascade's compute efficiency</strong>, <strong>adaptive
+  search out-scaling fixed-depth</strong>, and <strong>agreement predicts correctness</strong>. These are same-ladder
+  comparisons that do not lean on absolute Elo.</li>
+<li><strong>Observations limited to our compute/scale</strong>: the <strong>self-play plateau</strong>, the <strong>flat parameter
+  scaling</strong>, and <strong>evolution's non-escape</strong>. These are true <em>in our regime</em> and we expect them to
+  change at AlphaZero/LLM scale — they are honest negatives, not universal laws.</li>
+</ul>
+<hr />
+<h2>Key Takeaways</h2>
+<p><em>Five findings — enough to understand the paper on one page.</em></p>
+<ol>
+<li><strong>Search dominates parameters in this regime.</strong> On a <em>fixed</em> evaluator, adding search buys <strong>+286
+   Elo</strong> over the raw policy and keeps climbing <strong>~+55 per doubling</strong> of simulations; <em>doubling the
+   parameters at fixed data added ~0</em>. Strength came from <strong>thinking, not growing</strong>.</li>
+<li><strong>A wide→narrow MCTS cascade recovers up to 4.8× compute.</strong> Funnelling the simulation budget
+   through progressively narrower, deeper stages <strong>matches flat-MCTS strength at a fraction of the
+   per-move cost</strong> — our most practical result.</li>
+<li><strong>Adaptive MCTS out-scales fixed-depth search.</strong> At equal compute MCTS <strong>beats</strong> alpha-beta and
+   <strong>keeps scaling</strong>, where fixed-depth search plateaus.</li>
+<li><strong>Model agreement predicts correctness.</strong> Where independent models agree they are more often
+   right — a <strong>teacher-free confidence signal</strong>, and a result independent of chess.</li>
+<li><strong>Find the binding bottleneck experimentally.</strong> At each stage exactly one lever binds — capacity,
+   search, data, or the quality of self-generated signal — and effort on any <em>other</em> returns almost
+   nothing. The transferable contribution is this <strong>diagnostic</strong>, not any single Elo number.</li>
+</ol>
+<hr />
+<h2>1. Introduction</h2>
+<p><strong>Every AI system spends finite resources to buy capability</strong> — parameters (memory), training data,
+inference-time computation, latency, and human supervision. The engineering question is rarely "how
+do I maximize any one of them" but <strong>"how do I <em>allocate</em> them efficiently to reach a target level of
+performance?"</strong> More capacity, more data, more search, and more supervision each raise strength — but
+each carries a cost, and to a large degree they <em>substitute</em> for one another. This paper is an
+<strong>empirical study of those tradeoffs</strong>: we fix the objective (playing strength) and measure what each
+resource actually buys, and where spending on one is wasted because a <em>different</em> resource is the
+binding constraint. We claim <strong>no solved optimal-allocation rule</strong> — the contribution is a <em>framework</em>
+and a set of <em>measured tradeoff curves</em>, demonstrated in chess as a clean, fully-observable testbed.</p>
+<p>The study runs as <strong>three allocation questions</strong> of increasing autonomy:
+1. <strong>Open loop — spend on capacity/architecture.</strong> What single-forward-pass strength can a fixed
+   memory budget buy, and does the right architecture beat raw parameter count?
+2. <strong>Closed loop — spend on inference-time search.</strong> How much does search on a learned value function
+   add per unit of compute and latency, and how <em>cheaply</em> can that strength be bought?
+3. <strong>Self-learning — spend without supervision.</strong> With no labels, where should compute go — self-play,
+   committees, evolution, merging — and does any of it pay?</p>
+<p>We measure each independently. The framing is also <strong>control-theoretic</strong> (Bertsekas 2022, <em>Lessons
+from AlphaZero for Optimal, Model Predictive, and Adaptive Control</em>): open-loop policy = feedforward
+controller, closed-loop search = model-predictive control (receding-horizon planning with a learned
+terminal cost), self-play = iterative/adaptive learning control. Chess is only the testbed; the goal
+is a <em>generic</em> way to reason about resource tradeoffs in sequential decision-making.</p>
+<p>The central <em>tool</em> for efficient allocation is a simple diagnostic: <strong>at any given stage, strength is
+gated by a <em>single binding resource</em> — capacity, search, data, or the quality of self-generated
+signal — and spending on any <em>non-binding</em> resource returns almost nothing.</strong> So the efficient move
+is always to <strong>identify the binding resource experimentally, then spend there.</strong> Which one binds is
+not obvious a priori and shifts as you relieve each (open-loop is capacity-bound; add search and you
+ride it up log-linearly until the evaluator's quality caps the return; then the evaluator — its
+<em>data</em>, not its parameter count in our regime — binds). This bottleneck analysis is not the paper's
+goal but its <strong>method</strong>: one instrument in the larger objective of spending a fixed budget
+efficiently.</p>
+<p><strong>Contributions.</strong>
+- <strong>Our headline method — a search-efficiency result:</strong> a wide→narrow MCTS <strong>cascade</strong> that funnels
+  the simulation budget through progressively narrower, deeper stages, matching flat MCTS at up to
+  <strong>4.8× less compute per move</strong> with a clean score/speed trade-off curve.
+- A parameter-efficiency result: <strong>~2800 Elo from 3.45M params</strong> via search, at constant memory.
+- A direct <strong>MCTS-vs-fixed-depth</strong> result: adaptive search beats and out-scales fixed depth.
+- An <strong>architecture-beats-scale</strong> finding (convolution ≫ MLP at equal data), with topology sweep.
+- A reproducible <strong>negative result</strong> on small-scale self-play (plateaus below supervision).
+- A <strong>teacher-free self-learning</strong> study: agreement is a validated <strong>confidence meter</strong>, but
+  self-play, a self-referential ladder, <strong>evolution</strong>, and plurality-voting committees all fail to
+  cross the plateau — a set of clean negative results with a methodological warning (noisy fitness
+  manufactures phantom gains).</p>
+<p>The paper's roadmap in one picture — the three sources of strength, all feeding a single learned
+evaluator:</p>
+<p><svg viewBox="0 0 660 470" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <defs><marker id="im" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#555"/></marker></defs>
+  <rect x="0" y="0" width="660" height="470" fill="#ffffff"/>
+  <text x="330" y="20" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1a2a3a">The decomposition — three sources of playing strength</text>
+  <rect x="255" y="34" width="150" height="46" rx="8" fill="#eef4fb" stroke="#2c7fb8" stroke-width="1.5"/>
+  <text x="330" y="56" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a2a3a">MODEL CAPACITY</text>
+  <text x="330" y="71" text-anchor="middle" font-size="9" fill="#666">parameters · memory</text>
+  <line x1="330" y1="80" x2="330" y2="104" stroke="#555" stroke-width="1.6" marker-end="url(#im)"/>
+  <rect x="233" y="106" width="194" height="56" rx="8" fill="#e3eefa" stroke="#2c7fb8" stroke-width="2.8"/>
+  <text x="330" y="130" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1a2a3a">LEARNED EVALUATOR</text>
+  <text x="330" y="147" text-anchor="middle" font-size="9" fill="#555">the value net — sets the ceiling</text>
+  <path d="M 300 162 L 192 220" fill="none" stroke="#555" stroke-width="1.6" marker-end="url(#im)"/>
+  <path d="M 360 162 L 478 220" fill="none" stroke="#555" stroke-width="1.6" marker-end="url(#im)"/>
+  <rect x="95" y="222" width="176" height="54" rx="8" fill="#fdf0e6" stroke="#e6550d" stroke-width="1.5"/>
+  <text x="183" y="245" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a2e06">SEARCH</text>
+  <text x="183" y="262" text-anchor="middle" font-size="9" fill="#666">inference-time compute</text>
+  <rect x="389" y="222" width="192" height="54" rx="8" fill="#f2eef8" stroke="#756bb1" stroke-width="1.5"/>
+  <text x="485" y="245" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#463b7a">SELF-LEARNING</text>
+  <text x="485" y="262" text-anchor="middle" font-size="9" fill="#666">self-generated information</text>
+  <line x1="183" y1="276" x2="183" y2="306" stroke="#555" stroke-width="1.6" marker-end="url(#im)"/>
+  <line x1="485" y1="276" x2="485" y2="306" stroke="#555" stroke-width="1.6" marker-end="url(#im)"/>
+  <rect x="95" y="308" width="176" height="54" rx="8" fill="#fff7f2" stroke="#e6550d" stroke-width="1.2"/>
+  <text x="183" y="331" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#7a2e06">Extract knowledge</text>
+  <text x="183" y="348" text-anchor="middle" font-size="9" fill="#666">approach the ceiling</text>
+  <rect x="389" y="308" width="192" height="54" rx="8" fill="#f8f5fc" stroke="#756bb1" stroke-width="1.2"/>
+  <text x="485" y="328" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#463b7a">Improve the evaluator</text>
+  <text x="485" y="345" text-anchor="middle" font-size="8.5" fill="#b5322e">only if signal quality rises</text>
+  <path d="M 183 362 L 300 402" fill="none" stroke="#555" stroke-width="1.6" marker-end="url(#im)"/>
+  <path d="M 485 362 L 360 402" fill="none" stroke="#555" stroke-width="1.6" marker-end="url(#im)"/>
+  <rect x="255" y="404" width="150" height="46" rx="8" fill="#e9f7ee" stroke="#31a354" stroke-width="2"/>
+  <text x="330" y="432" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1a5e2f">PERFORMANCE</text>
+</svg></p>
+<hr />
+<h2>2. Problem Setup and Methods</h2>
+<h3>2.1 Representation</h3>
+<ul>
+<li><strong>Position → move</strong> as a 4096-way (64×64 from–to) classification (promotions default to queen).</li>
+<li><strong>Side-to-move normalization:</strong> the board is re-oriented so the mover is always "White" (mirror +
+  color-swap for Black), so one network serves both players and the turn needs no bit. (Hence
+  <code>Eval(P) = Eval(mirror(P))</code> exactly, and a move's value reads off as <code>Eval(B) + Eval(null) − 1</code>;
+  measured mean tempo ≈ +0.15, up to +0.77 in tactical shots, negative in zugzwang.)</li>
+<li><strong>Encoding:</strong> <em>one-hot</em> = 64×12 piece planes + 5 meta = <strong>773 floats</strong> (reshaped to 8×8×12 + 5 = 17
+  channels for convolution), used throughout. Against a compact <em>packed</em> encoding (one 4-bit code per
+  square, 69 floats) at equal budget and data, one-hot is decisively stronger (<strong>84.9 vs 142.5 mean
+  CPL</strong>): nets learn categorical piece-type features far more readily than an arbitrary ordinal code,
+  and convolution <em>requires</em> the per-type planes a packed board cannot provide.</li>
+</ul>
+<h3>2.2 Labels and objective</h3>
+<ul>
+<li><strong>Supervised data:</strong> the full public Lichess cloud-eval database — <strong>394,669,566 positions</strong>
+  (79 shards), each with Stockfish multi-PV win-probabilities.</li>
+<li><strong>Hard objective:</strong> cross-entropy to the single best move (bounded by imitation).</li>
+<li><strong>Soft objective:</strong> cross-entropy to an <em>advantage-weighted distribution</em> over legal moves
+  (<code>softmax(vᵢ/τ)</code>). Soft is not bounded by copying one move and generalizes better.</li>
+</ul>
+<h3>2.3 Evaluation</h3>
+<ul>
+<li><strong>Elo via a Stockfish ladder</strong> (random baseline, then SF at set UCI_Elo rungs), 20–80
+  games/rung; Elo fit by maximum-likelihood against the known rung ratings.</li>
+<li><strong>Methodological caveat (important):</strong> if the player beats the top rung, the Elo estimate
+  <strong>compresses/extrapolates</strong>, so we raised the ladder as the player improved (SF-1700 → 2100 →
+  2700 → 3000). Absolute numbers carry systematic uncertainty; <strong>relative gains measured on the
+  same ladder are the robust results</strong> (treat absolutes as ±100). Where two methods are compared,
+  they are always run on the <em>same</em> ladder and seeds.</li>
+</ul>
+<h3>2.4 Hardware</h3>
+<ul>
+<li>Two Apple-Silicon <strong>Mac Studios (M3 Ultra, 256 GB each)</strong>, MLX framework, 40 Gbps bridge.</li>
+</ul>
+<h3>2.5 Reproducibility (evaluation protocol)</h3>
+<p>A fixed protocol makes every Elo/CPL figure comparable across methods:
+- <strong>Engine:</strong> Stockfish 18 as ladder opponent and CPL oracle; opponents at fixed <code>UCI_Elo</code> rungs,
+  movetime <strong>0.03–0.04 s</strong>; CPL at <strong>fixed depth 12</strong>.
+- <strong>Ladder:</strong> a random anchor plus <code>UCI_Elo</code> rungs (e.g. 1700/2000/2300, 2400/2700/3000), Elo by
+  maximum-likelihood fit; <strong>20–40 games/rung</strong>; margin ≈ $\pm 400/\sqrt{n}\cdot 2$ (<strong>±100</strong> typical)
+  — rely on <em>relative</em> same-ladder deltas.
+- <strong>Openings/seeds:</strong> sampled from the Lichess <code>2013-01</code> PGN, replayed to plies 6–16, both colors;
+  seed 0 by default, and any two compared methods use the <strong>same</strong> ladder, openings, and seeds.
+- <strong>Caveats:</strong> the ladder <strong>compresses</strong> once the player beats the top rung (we raised it as strength
+  grew), and at 0.03–0.04 s Stockfish plays <strong>below</strong> nominal <code>UCI_Elo</code> — internally consistent, not
+  calibrated to over-the-board Elo. Exact scripts are in the repo.</p>
+<hr />
+<h2>3. Stage 1 — Open Loop (single-pass policy)</h2>
+<h3>3.1 Topology sweep — architecture beats scale</h3>
+<p>At fixed moderate data (18M positions) we swept eight architectures:</p>
+<table>
+<thead>
+<tr>
+<th>Topology</th>
+<th style="text-align: right;">params</th>
+<th style="text-align: right;">Elo</th>
+<th>note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>conv (64×10 / 96×8)</strong></td>
+<td style="text-align: right;">2.8–3.4M</td>
+<td style="text-align: right;"><strong>1476</strong></td>
+<td>best &amp; most efficient</td>
+</tr>
+<tr>
+<td>constant-width MLP (1024×6)</td>
+<td style="text-align: right;">10.2M</td>
+<td style="text-align: right;">1108–1233</td>
+<td>best plain MLP</td>
+</tr>
+<tr>
+<td>dual-path (wide+deep, gated)</td>
+<td style="text-align: right;">2.8M</td>
+<td style="text-align: right;">1082</td>
+<td>ties MLP at 3.5× fewer params</td>
+</tr>
+<tr>
+<td>factored head (from/to)</td>
+<td style="text-align: right;">6.2M</td>
+<td style="text-align: right;">782</td>
+<td>−450</td>
+</tr>
+<tr>
+<td>funnel (1024→64)</td>
+<td style="text-align: right;">1.8M</td>
+<td style="text-align: right;">582</td>
+<td>narrowing hurts</td>
+</tr>
+<tr>
+<td>pyramid (64→1024)</td>
+<td style="text-align: right;">5.0M</td>
+<td style="text-align: right;">431</td>
+<td>bad</td>
+</tr>
+<tr>
+<td>bottleneck (512→8)</td>
+<td style="text-align: right;">0.5M</td>
+<td style="text-align: right;">340</td>
+<td>broken</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Topology conclusion.</strong> Only <strong>constant-width</strong> and <strong>convolution</strong> are competitive; every taper,
+factoring, or bottleneck loses badly, because it destroys positional information before the head uses
+it, while convolution <strong>reuses local patterns via weight sharing</strong> (learns a motif once, not per
+square). The rule: <strong>match the prior to the domain's structure (spatial locality) rather than adding
+width.</strong> A 3.45M conv matched a 14.4M MLP using <strong>22× less data</strong> — architecture, not parameter count,
+set the strength.</p>
+<h3>3.2 Scaling laws (width and data)</h3>
+<ul>
+<li><strong>Width (MLP, hard):</strong> W1024 (14.4M) → 1449; W2048 (47.7M) → 1501: <strong>+52 Elo for 3.3× params</strong>
+  — sharply diminishing. Top-1 accuracy saturates ~0.41 regardless of width.</li>
+<li><strong>Data (W1024):</strong> 1127 / 1207 / 1300 / 1382 / 1411 at 23 / 47 / 94 / 187 / <strong>375M</strong> positions —
+  large early gains, then <strong>+29 on the last doubling</strong> → saturates near the DB's 394M limit.</li>
+</ul>
+<p><svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="300" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 1 — data scaling saturates (MLP W1024, Elo vs positions)</text>
+  <line x1="60" y1="250" x2="590" y2="250" stroke="#333" stroke-width="1.5"/>
+  <line x1="60" y1="250" x2="60" y2="45" stroke="#333" stroke-width="1.5"/>
+  <text x="30" y="150" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 30 150)">Elo</text>
+  <text x="325" y="285" text-anchor="middle" font-size="11" fill="#333">positions (millions, log-ish spacing)</text>
+  <polyline points="90,232 190,203 290,163 390,133 560,126" fill="none" stroke="#2c7fb8" stroke-width="2.5"/>
+  <circle cx="90" cy="232" r="4" fill="#2c7fb8"/><circle cx="190" cy="203" r="4" fill="#2c7fb8"/><circle cx="290" cy="163" r="4" fill="#2c7fb8"/><circle cx="390" cy="133" r="4" fill="#2c7fb8"/><circle cx="560" cy="126" r="4" fill="#2c7fb8"/>
+  <text x="90" y="225" text-anchor="middle" font-size="9" fill="#333">1127</text>
+  <text x="290" y="156" text-anchor="middle" font-size="9" fill="#333">1300</text>
+  <text x="560" y="119" text-anchor="middle" font-size="9" fill="#333">1411</text>
+  <text x="90" y="265" text-anchor="middle" font-size="9" fill="#666">23</text>
+  <text x="190" y="265" text-anchor="middle" font-size="9" fill="#666">47</text>
+  <text x="290" y="265" text-anchor="middle" font-size="9" fill="#666">94</text>
+  <text x="390" y="265" text-anchor="middle" font-size="9" fill="#666">187</text>
+  <text x="560" y="265" text-anchor="middle" font-size="9" fill="#666">375</text>
+</svg></p>
+<h3>3.3 Objective and open-loop ceiling</h3>
+<p>Soft beats hard by <strong>+94–113 Elo</strong> at subset scale; top-1 saturates while Elo keeps improving via
+blunder-rate reduction (<strong>top-1 is a misleading metric</strong>). Best open-loop recipe = <strong>conv + soft +
+full 394M data</strong>, with a <strong>ceiling ≈ 2150 Elo</strong>. Cost: 3.45M params, <strong>14 MB</strong>, <strong>~176 MFLOP /
+~1.5 ms per move</strong> — cheap, but capped: no amount of width or data pushed a single pass past ~2150.</p>
+<hr />
+<h2>4. Stage 2 — Closed Loop / Inference-Time Compute (search on a value function)</h2>
+<p>We add a scalar head <strong>Eval(N) ∈ [0,1]</strong> = <em>expected score for the side to move</em> (held-out <strong>MAE
+0.088, correlation 0.877</strong> — an excellent value function). Search uses the zero-sum identity — our
+value after a move is <code>1 − Eval(child)</code> — so one network plays both sides; terminals return exact
+0 / 0.5 / 1.</p>
+<h3>4.1 MCTS vs fixed-depth — the core comparison</h3>
+<p>We compared two search families on the same value net and ladder:</p>
+<ul>
+<li><strong>Fixed-depth alpha-beta</strong> (negamax, policy move-ordering, quiescence at leaves):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>depth</th>
+<th style="text-align: right;">raw</th>
+<th style="text-align: right;">search</th>
+<th style="text-align: right;">gain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align: right;">1661</td>
+<td style="text-align: right;">1627</td>
+<td style="text-align: right;"><strong>−34</strong> (1-ply hurts — can't see the reply)</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align: right;">1685</td>
+<td style="text-align: right;">1788</td>
+<td style="text-align: right;">+103</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align: right;">1895</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">+110</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align: right;">1914</td>
+<td style="text-align: right;">2152</td>
+<td style="text-align: right;">+238</td>
+</tr>
+<tr>
+<td>6</td>
+<td style="text-align: right;">2128</td>
+<td style="text-align: right;"><strong>2575</strong></td>
+<td style="text-align: right;">+447</td>
+</tr>
+<tr>
+<td>7</td>
+<td style="text-align: right;">2187</td>
+<td style="text-align: right;">2513</td>
+<td style="text-align: right;">plateau ~2550</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Adaptive MCTS/PUCT</strong> (<code>Q + c·P·√N/(1+n)</code>, value-head leaves, negamax backup):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>sims</th>
+<th style="text-align: right;">search Elo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td style="text-align: right;">2411</td>
+</tr>
+<tr>
+<td>200</td>
+<td style="text-align: right;">2530</td>
+</tr>
+<tr>
+<td>400</td>
+<td style="text-align: right;">2610 (2661 @ 40 games/rung)</td>
+</tr>
+<tr>
+<td><strong>800</strong></td>
+<td style="text-align: right;"><strong>2749 ≈ top-human (~2800)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result.</strong> (i) <strong>1-ply search <em>hurts</em> a strong policy</strong> — it commits to a capture without seeing the
+recapture; depth is where lookahead pays. (ii) <strong>MCTS beats alpha-beta at equal compute and keeps
+scaling</strong> where fixed depth plateaus (~2550): uniform depth spends equal effort on every branch and
+<em>amplifies the value net's noise</em>, while MCTS <strong>allocates search adaptively to sharp lines and
+averages over it.</strong> MCTS wins Stage 2, reaching ~2800 on the fixed 3.45M net.</p>
+<p><svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 2 — MCTS out-scales fixed-depth search</text>
+  <line x1="60" y1="270" x2="590" y2="270" stroke="#333" stroke-width="1.5"/>
+  <line x1="60" y1="270" x2="60" y2="45" stroke="#333" stroke-width="1.5"/>
+  <text x="30" y="160" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 30 160)">search Elo</text>
+  <text x="325" y="305" text-anchor="middle" font-size="11" fill="#333">compute per move  (→ more search)</text>
+  <polyline points="100,265 160,236 220,197 280,171 400,95 470,106" fill="none" stroke="#d95f0e" stroke-width="2.5"/>
+  <circle cx="100" cy="265" r="4" fill="#d95f0e"/><circle cx="160" cy="236" r="4" fill="#d95f0e"/><circle cx="220" cy="197" r="4" fill="#d95f0e"/><circle cx="280" cy="171" r="4" fill="#d95f0e"/><circle cx="400" cy="95" r="4" fill="#d95f0e"/><circle cx="470" cy="106" r="4" fill="#d95f0e"/>
+  <text x="500" y="110" font-size="10" fill="#d95f0e">alpha-beta (plateau ~2550)</text>
+  <polyline points="220,125 300,104 400,90 540,65" fill="none" stroke="#2c7fb8" stroke-width="2.5"/>
+  <circle cx="220" cy="125" r="4" fill="#2c7fb8"/><circle cx="300" cy="104" r="4" fill="#2c7fb8"/><circle cx="400" cy="90" r="4" fill="#2c7fb8"/><circle cx="540" cy="65" r="4" fill="#2c7fb8"/>
+  <text x="360" y="55" font-size="10" fill="#2c7fb8">MCTS (keeps rising → ~2800)</text>
+  <line x1="60" y1="63" x2="590" y2="63" stroke="#999" stroke-dasharray="4 3" stroke-width="1"/>
+  <text x="580" y="59" text-anchor="end" font-size="9" fill="#666">~2800 top-human</text>
+</svg></p>
+<h3>4.2 Search efficiency — the wide→narrow MCTS cascade (new)</h3>
+<p>Given MCTS wins, does the <strong>allocation</strong> of a fixed sim budget matter? The <strong>cascade</strong> runs MCTS in
+<em>stages</em>: a <strong>wide</strong> stage (all moves, high <code>c_puct</code>, few sims) ranks broadly and passes its top-k by
+visit count to a <strong>narrower, deeper</strong> stage (fewer moves, more sims, lower <code>c_puct</code>), funnelling the
+budget onto survivors; a shared eval cache carries value-net calls forward.</p>
+<p>A controlled <strong>N = 1→10 sweep</strong> (one consistent rule generates each funnel; all 800 total sims;
+same tall ladder, seeds, and openings) gives the full trade-off curve:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"># levels</th>
+<th style="text-align: right;">Elo (±89)</th>
+<th style="text-align: right;">ms/move</th>
+<th style="text-align: right;">speedup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1 (flat MCTS)</td>
+<td style="text-align: right;">2683</td>
+<td style="text-align: right;">1330</td>
+<td style="text-align: right;">1.0×</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2605</td>
+<td style="text-align: right;">903</td>
+<td style="text-align: right;">1.5×</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2506</td>
+<td style="text-align: right;">541</td>
+<td style="text-align: right;">2.5×</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2543</td>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">4.4×</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2570</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;"><strong>4.8×</strong></td>
+</tr>
+<tr>
+<td style="text-align: right;">beam-minimax cascade (fixed depth)</td>
+<td style="text-align: right;">2487</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">inferior primitive</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result.</strong> Across all ten funnels Elo stays within a <strong>single ±89 band</strong> (2506–2683, mean ~2580) —
+<strong>no significant variation within our ±89 uncertainty</strong> — while speed rises <strong>monotonically to 4.8×
+at N = 10.</strong> Funnelling wide→narrow is a <strong>near-pure efficiency win</strong>: it holds flat-MCTS strength
+while cutting per-move compute ~5×, because the survivors reaching the deep stages are the same moves
+flat MCTS would have searched anyway — the funnel just stops paying for moves it has already ranked
+out. The practical dial: <strong>more levels = same strength, cheaper.</strong> (The fixed-depth <em>beam</em> cascade is
+a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)</p>
+<p><svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 2 — cascade: Elo flat within noise, speed rises to 4.8×</text>
+  <rect x="60" y="113" width="500" height="126" fill="#2c7fb8" opacity="0.08"/>
+  <text x="70" y="127" font-size="9" fill="#2c7fb8">±89 noise band — Elo ~flat across all N</text>
+  <line x1="60" y1="270" x2="560" y2="270" stroke="#333" stroke-width="1.5"/>
+  <line x1="60" y1="270" x2="60" y2="45" stroke="#2c7fb8" stroke-width="1.5"/>
+  <line x1="560" y1="270" x2="560" y2="45" stroke="#e6550d" stroke-width="1.5"/>
+  <text x="28" y="160" text-anchor="middle" font-size="11" fill="#2c7fb8" transform="rotate(-90 28 160)">Elo</text>
+  <text x="595" y="160" text-anchor="middle" font-size="11" fill="#e6550d" transform="rotate(-90 595 160)">speed ×</text>
+  <text x="310" y="305" text-anchor="middle" font-size="11" fill="#333"># cascade levels (1 = flat MCTS,  800 sims throughout)</text>
+  <polyline points="90,96 140,151 190,151 240,96 290,195 340,221 390,151 440,188 490,195 540,176" fill="none" stroke="#2c7fb8" stroke-width="2"/>
+  <circle cx="90" cy="96" r="3.5" fill="#2c7fb8"/><circle cx="140" cy="151" r="3.5" fill="#2c7fb8"/><circle cx="190" cy="151" r="3.5" fill="#2c7fb8"/><circle cx="240" cy="96" r="3.5" fill="#2c7fb8"/><circle cx="290" cy="195" r="3.5" fill="#2c7fb8"/><circle cx="340" cy="221" r="3.5" fill="#2c7fb8"/><circle cx="390" cy="151" r="3.5" fill="#2c7fb8"/><circle cx="440" cy="188" r="3.5" fill="#2c7fb8"/><circle cx="490" cy="195" r="3.5" fill="#2c7fb8"/><circle cx="540" cy="176" r="3.5" fill="#2c7fb8"/>
+  <text x="90" y="88" text-anchor="middle" font-size="9" fill="#2c7fb8">2683</text>
+  <text x="540" y="168" text-anchor="middle" font-size="9" fill="#2c7fb8">2570</text>
+  <polyline points="90,260 140,253 190,238 240,220 290,206 340,191 390,174 440,160 490,97 540,78" fill="none" stroke="#e6550d" stroke-width="2" stroke-dasharray="5 3"/>
+  <circle cx="90" cy="260" r="3.5" fill="#e6550d"/><circle cx="140" cy="253" r="3.5" fill="#e6550d"/><circle cx="190" cy="238" r="3.5" fill="#e6550d"/><circle cx="240" cy="220" r="3.5" fill="#e6550d"/><circle cx="290" cy="206" r="3.5" fill="#e6550d"/><circle cx="340" cy="191" r="3.5" fill="#e6550d"/><circle cx="390" cy="174" r="3.5" fill="#e6550d"/><circle cx="440" cy="160" r="3.5" fill="#e6550d"/><circle cx="490" cy="97" r="3.5" fill="#e6550d"/><circle cx="540" cy="78" r="3.5" fill="#e6550d"/>
+  <text x="90" y="252" text-anchor="middle" font-size="9" fill="#e6550d">1.0×</text>
+  <text x="540" y="72" text-anchor="middle" font-size="9" fill="#e6550d">4.8×</text>
+  <text x="90" y="284" text-anchor="middle" font-size="8" fill="#666">1</text>
+  <text x="140" y="284" text-anchor="middle" font-size="8" fill="#666">2</text>
+  <text x="190" y="284" text-anchor="middle" font-size="8" fill="#666">3</text>
+  <text x="240" y="284" text-anchor="middle" font-size="8" fill="#666">4</text>
+  <text x="290" y="284" text-anchor="middle" font-size="8" fill="#666">5</text>
+  <text x="340" y="284" text-anchor="middle" font-size="8" fill="#666">6</text>
+  <text x="390" y="284" text-anchor="middle" font-size="8" fill="#666">7</text>
+  <text x="440" y="284" text-anchor="middle" font-size="8" fill="#666">8</text>
+  <text x="490" y="284" text-anchor="middle" font-size="8" fill="#666">9</text>
+  <text x="540" y="284" text-anchor="middle" font-size="8" fill="#666">10</text>
+</svg></p>
+<h3>4.3 The two-dimensional cost (memory vs GPU-cycles)</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Stage 1 (open)</th>
+<th>Stage 2 (closed)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Memory</strong></td>
+<td>14 MB</td>
+<td><strong>14 MB — search adds ~0</strong></td>
+</tr>
+<tr>
+<td><strong>GPU cycles/move</strong></td>
+<td>1 pass, ~1.5 ms</td>
+<td>~800 passes, ~1.3 s (or ~0.6 s cascaded)</td>
+</tr>
+<tr>
+<td><strong>Elo</strong></td>
+<td>~2150 (capped)</td>
+<td><strong>~2800 (scales with compute)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stage 1 buys Elo with <em>memory</em> and saturates; Stage 2 buys Elo with <em>GPU cycles</em> and keeps
+climbing</strong> — and the cascade shows most of those cycles were waste (up to 4.8× recoverable). The
+central practical result: <strong>strength is compute, not parameters.</strong></p>
+<h3>4.4 Search latency — what a second of thinking costs, and buys</h3>
+<p>Strength from search is not free: every simulation is a neural-network forward pass, so Elo is
+paid for in wall-clock. Measured on the Mac Studio (M3 Ultra, MLX) across the three operating
+points:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th style="text-align: right;">Elo (abs. ladder)</th>
+<th style="text-align: right;">Latency / move</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open-loop (raw policy)</td>
+<td style="text-align: right;">~2448</td>
+<td style="text-align: right;"><strong>~2 ms</strong></td>
+</tr>
+<tr>
+<td>MCTS-800</td>
+<td style="text-align: right;"><strong>2734 ±76</strong></td>
+<td style="text-align: right;"><strong>~1.3 s</strong></td>
+</tr>
+<tr>
+<td>MCTS-1600</td>
+<td style="text-align: right;"><strong>2780 ±82</strong></td>
+<td style="text-align: right;">~1.9 s</td>
+</tr>
+<tr>
+<td>MCTS-3200</td>
+<td style="text-align: right;"><strong>2839 ±76</strong></td>
+<td style="text-align: right;">~3.8 s</td>
+</tr>
+<tr>
+<td>MCTS-6400</td>
+<td style="text-align: right;"><strong>2903 ±82</strong></td>
+<td style="text-align: right;">~7 s</td>
+</tr>
+<tr>
+<td>MCTS-12800</td>
+<td style="text-align: right;"><strong>2967 ±115</strong></td>
+<td style="text-align: right;">~14 s</td>
+</tr>
+</tbody>
+</table>
+<p><em>All on the same Stockfish high ladder (2500/2800/3050). The round ~2150 / ~2800 headline figures
+used elsewhere sit within the stated </em><em>±100</em><em> ladder uncertainty of these precise values.</em></p>
+<p>Three observations:</p>
+<p><strong>1. Search scales <em>log-linearly</em> — ~+55 Elo per doubling, no saturation through 12800.</strong> The first
+slice is huge and cheap (MCTS-800 alone adds <strong>+286</strong> over the raw policy, 2448→2734); past that, each
+<em>doubling</em> adds a steady <strong>~+55–64 Elo</strong> (2734→2780→2839→2903→2967), unbroken to <strong>16× the base
+budget</strong> — cumulative <strong>+233</strong>, far above the ±~100 noise. <em>(An earlier "saturation at 3200" claim came
+from a noisy </em><em>head-to-head</em><em> sweep, +12/+260/+191 per rung; the clean absolute curve supersedes it,
+and head-to-head deltas inflate via ceiling compression — 3200-vs-800 reads +260 h2h but +105
+absolute.)</em> So with a fixed evaluator search keeps paying, and we <strong>never reach its ceiling</strong> (tested
+to 16×): marginal Elo <em>per compute</em> falls, but the curve does not flatten.</p>
+<p><strong>2. Latency scales <em>sub-linearly</em> with sims — a red flag, not a feature.</strong> MCTS-3200 does 4× the
+simulations of MCTS-800 yet is only ~2.8× slower. The cause: this search evaluates leaves <strong>one
+position at a time (batch = 1)</strong>, so each forward pass is dominated by fixed GPU-launch overhead
+rather than compute — the M3 Ultra is massively under-utilised. Effective throughput is only
+<strong>~600 leaf-evaluations per second</strong>, and adding sims mostly amortises the fixed per-move cost.</p>
+<p><strong>3. The latency is an implementation artefact, not a hardware or method limit.</strong> Batched neural-MCTS
+engines evaluate many leaves per forward pass and reach <strong>~10k–80k nodes/second</strong> (Leela; AlphaZero on
+TPUs) — 20–100× our batch-1 throughput. We implemented and measured that fix (next), and it changes
+none of the strength conclusions, only their price.</p>
+<p><strong>GPU utilisation — batch-1 is an implementation <em>limitation</em>, and we measured the fix.</strong> The batch-1
+search (obs 2) leaves the M3 Ultra's cores <strong>idle between launches</strong> at only <strong>~600 nps</strong>, so the
+latencies above are <strong>pessimistic upper bounds</strong>: strength is fixed by <strong>N (nodes searched)</strong>, latency
+by <strong>N ÷ throughput</strong>, and our throughput is on the floor.</p>
+<p>The standard fix is <strong>batched-leaf evaluation</strong> (gather many tree leaves via <em>virtual loss</em>, evaluate
+them in a single GPU launch). We implemented it (<code>BatchedMCTSPlayer</code>, <code>search.py</code>) and <strong>measured</strong> it
+on the same net and positions — the same nodes searched, only the launch pattern changed:</p>
+<table>
+<thead>
+<tr>
+<th>Search</th>
+<th style="text-align: right;">Throughput</th>
+<th style="text-align: right;">Speedup vs batch-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>batch-1</strong> (as used above)</td>
+<td style="text-align: right;">~600 nps</td>
+<td style="text-align: right;">1.0×</td>
+</tr>
+<tr>
+<td>batched, 32 leaves/launch</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>13×</strong></td>
+</tr>
+<tr>
+<td>batched, 64 leaves/launch</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>23×</strong></td>
+</tr>
+<tr>
+<td>batched, 128 leaves/launch</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>37×</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>(ratios measured under light concurrent load, so conservative.)</em> A <strong>~13–37×</strong> per-move speedup at
+identical strength is enough to run <strong>MCTS-3200 well below today's MCTS-800 latency</strong>. <strong>The batch-1
+numbers should therefore be read as a ceiling on cost, not the method's efficiency</strong>, and the true
+strength-vs-latency curve sits far to the left of the one we plot.</p>
+<p>Two caveats. First, the gain is <strong>hardware-dependent</strong> — it equals the <em>idle parallelism you can
+reclaim</em>: the wide M3 Ultra leaves much for a 14 MB batch-1 workload, but on a small GPU/CPU or an
+accelerator already <strong>saturated by a large network</strong> (AlphaZero/Leela), there are no idle cores and
+deeper search costs full, <strong>linear</strong> price. Second, batched selection uses momentarily stale tree
+stats, so it is a hair less sample-efficient per node — second-order, not changing the
+order-of-magnitude speedup.</p>
+<h3>4.5 Does a bigger evaluator raise the ceiling? (a capacity sweep)</h3>
+<p>Search still climbs at 12800, but each doubling buys less, so the route higher is a <em>better
+evaluator</em>. We <strong>add parameters</strong> at fixed depth (8) and identical recipe — only width varies.</p>
+<p><strong>A correction first.</strong> An initial screen mislabelled a width-136 net "2×"; it is in fact <strong>1.4×</strong>
+(4.81M params), because the policy/value heads scale ~linearly with width, so total parameters grow
+far slower than the conv body's width². On a fixed <strong>~50M-position</strong> subset:</p>
+<table>
+<thead>
+<tr>
+<th>Net</th>
+<th style="text-align: right;">Params</th>
+<th style="text-align: right;">raw policy</th>
+<th style="text-align: right;">MCTS-800</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1× (w96)</td>
+<td style="text-align: right;">3.45M</td>
+<td style="text-align: right;">2298</td>
+<td style="text-align: right;">2631</td>
+</tr>
+<tr>
+<td>1.4× (w136)</td>
+<td style="text-align: right;">4.81M</td>
+<td style="text-align: right;">2366</td>
+<td style="text-align: right;"><strong>2649</strong></td>
+</tr>
+<tr>
+<td>Δ</td>
+<td style="text-align: right;">+1.4×</td>
+<td style="text-align: right;">+68</td>
+<td style="text-align: right;"><strong>+18</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>+18 Elo with search — not significant within our ±107 uncertainty.</strong> For contrast, <em>8× more data</em>
+moves the same architecture <strong>~+90</strong>.</p>
+<p><strong>But that screen is confounded</strong> — both nets saw only ~50M positions, so a wider net had little
+extra signal to fill its room. Repeating on the <strong>full ~394M data</strong>, matched to the 2734 baseline:</p>
+<table>
+<thead>
+<tr>
+<th>Capacity (full data)</th>
+<th style="text-align: right;">Params</th>
+<th style="text-align: right;">MCTS-800</th>
+<th style="text-align: right;">Δ vs 1×</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1× (w96)</td>
+<td style="text-align: right;">3.45M</td>
+<td style="text-align: right;">2734</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>1.4× (w136)</td>
+<td style="text-align: right;">4.81M</td>
+<td style="text-align: right;"><strong>2794</strong></td>
+<td style="text-align: right;"><strong>+60</strong></td>
+</tr>
+<tr>
+<td>2× (w184)</td>
+<td style="text-align: right;">7.04M</td>
+<td style="text-align: right;"><em>training</em></td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>4× (w288)</td>
+<td style="text-align: right;">14.2M</td>
+<td style="text-align: right;"><em>training</em></td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p>Already diagnostic: the 1.4×-vs-1× gap <strong>widens from +18 (50M) to +60 (full data)</strong> — within ±110
+noise, but the <em>direction</em> says the 50M null was <strong>data starvation</strong>, not inert capacity. The
+<strong>2×/4× points (training)</strong> decide whether the curve keeps climbing or flattens near ~2794. Either way
+the scoped claim holds: <strong>capacity is the weakest lever <em>in this data regime</em></strong>, not "parameters never
+matter" — at AlphaZero/LLM scale, capacity-bound with abundant data, more parameters clearly help.</p>
+<p>The study's lever ranking, all same-ladder:</p>
+<table>
+<thead>
+<tr>
+<th>Lever</th>
+<th style="text-align: right;">Elo moved</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Search</strong> (open → 12800 sims)</td>
+<td style="text-align: right;"><strong>+286, then ~+55 / doubling</strong> (log-linear, unsaturated)</td>
+<td>×2 latency / doubling</td>
+</tr>
+<tr>
+<td><strong>Data</strong> (10 shards → full 79)</td>
+<td style="text-align: right;"><strong>~+90</strong></td>
+<td>8× training data</td>
+</tr>
+<tr>
+<td><strong>Capacity</strong> (1× → 1.4×, at 50M)</td>
+<td style="text-align: right;"><strong>~0</strong> (n.s.; full-data sweep running)</td>
+<td>more params &amp; compute</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Search dominates, data second, capacity last in this regime</strong> — the sharpest reading being the
+thesis: <strong>one lever binds at each stage; an experiment tells you which. Here it was data and search,
+not capacity.</strong></p>
+<hr />
+<h2>5. Stage 3 — Self-Learning (no external engine, no labels)</h2>
+<p><strong>Why this stage is the whole point.</strong> Stages 1–2 leaned on Stockfish labels — a shortcut that exists
+only because chess already has a superhuman evaluator and a labeled database. The generic goal is the
+opposite: a <strong>new field with no data and no evaluator</strong> (a novel game, an unsolved control/scheduling
+problem, a design task), where you can neither imitate a teacher nor score positions with an
+off-the-shelf engine — you have only the <strong>environment's rules</strong>. Stage 3 discards every external
+crutch (no Stockfish, no labels) to test whether strength can be <strong>bootstrapped from self-play and
+outcomes alone</strong> — the case for any genuinely new problem. The loop: the net plays itself with MCTS,
+trains toward the visit distribution (policy) and game result (value), and repeats. We studied five
+approaches — self-play, a self-referential ladder, a committee, evolution, and weight merging — and
+they converge on one story.</p>
+<h3>5.1 Self-play expert iteration (AlphaZero-style)</h3>
+<p>Two failure modes were fixed: <strong>cold-start draw-collapse</strong> (a weak net can't force mates, so games
+drift to draws and the value head gets no signal — fixed with Dirichlet root noise) and <strong>warm-start
+forgetting</strong> (hard training on tiny self-play slices overwrote the supervised policy, 2150→1407 —
+fixed with a replay buffer + gentle LR). Stabilized and parallelized to 16× throughput, the raw policy
+<strong>plateaus ~1950–2030 — below the ~2150 supervised baseline.</strong></p>
+<p><strong>Negative result (clean).</strong> At two-machine scale, <strong>self-play converges <em>below</em> supervision.</strong>
+Strength does rise with game volume — a real scaling signal — but the achievable volume plateaus under
+the 394M-supervised net; crossing it needs orders-of-magnitude more games (AlphaZero used ~1000× ours).
+<strong>Scale is the binding constraint.</strong></p>
+<p><svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="300" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 3 — self-play plateaus below the supervised baseline</text>
+  <line x1="60" y1="250" x2="590" y2="250" stroke="#333" stroke-width="1.5"/>
+  <line x1="60" y1="250" x2="60" y2="45" stroke="#333" stroke-width="1.5"/>
+  <text x="30" y="150" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 30 150)">raw policy Elo</text>
+  <text x="325" y="285" text-anchor="middle" font-size="11" fill="#333">self-play iterations</text>
+  <line x1="60" y1="82" x2="590" y2="82" stroke="#31a354" stroke-dasharray="5 3" stroke-width="1.5"/>
+  <text x="585" y="77" text-anchor="end" font-size="10" fill="#31a354">supervised ~2150</text>
+  <polyline points="80,60 150,226 260,133 380,116 560,110" fill="none" stroke="#c51b8a" stroke-width="2.5"/>
+  <circle cx="80" cy="60" r="4" fill="#c51b8a"/><circle cx="150" cy="226" r="4" fill="#c51b8a"/><circle cx="260" cy="133" r="4" fill="#c51b8a"/><circle cx="560" cy="110" r="4" fill="#c51b8a"/>
+  <text x="150" y="240" text-anchor="middle" font-size="9" fill="#c51b8a">1407 (forgetting)</text>
+  <text x="470" y="103" text-anchor="middle" font-size="9" fill="#c51b8a">plateau ~2000</text>
+</svg></p>
+<h3>5.2 Committee / diversity — teacher-free confidence (new)</h3>
+<p>If the bottleneck is the <em>evaluator</em>, the cheap way to improve one without a bigger net is to
+<strong>ensemble diverse nets</strong>. We tested whether <strong>independently-started models diverge (disagree →
+uncertain) or converge (agree → likely correct)</strong> — making agreement a confidence meter with no
+oracle.</p>
+<p><strong>Validated.</strong> Over 400 positions scored against Stockfish depth-12 (measurement only), agreement
+strongly predicts correctness:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">members agree</th>
+<th style="text-align: center;">centipawn-loss ↓</th>
+<th style="text-align: center;">matches SF-best ↑ (same-arch / diverse)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">all disagree</td>
+<td style="text-align: center;">77.9</td>
+<td style="text-align: center;">22% / 37%</td>
+</tr>
+<tr>
+<td style="text-align: center;">majority</td>
+<td style="text-align: center;">40.0</td>
+<td style="text-align: center;">49% / 58%</td>
+</tr>
+<tr>
+<td style="text-align: center;">unanimous</td>
+<td style="text-align: center;"><strong>19.7</strong></td>
+<td style="text-align: center;"><strong>65% / 94%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="300" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 3 — committee agreement predicts correctness</text>
+  <line x1="70" y1="250" x2="590" y2="250" stroke="#333" stroke-width="1.5"/>
+  <line x1="70" y1="250" x2="70" y2="45" stroke="#333" stroke-width="1.5"/>
+  <text x="34" y="150" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 34 150)">matches SF-best move</text>
+  <text x="330" y="285" text-anchor="middle" font-size="11" fill="#333">committee agreement</text>
+  <polyline points="150,178 330,137 510,67" fill="none" stroke="#756bb1" stroke-width="2.5"/>
+  <circle cx="150" cy="178" r="4" fill="#756bb1"/><circle cx="330" cy="137" r="4" fill="#756bb1"/><circle cx="510" cy="67" r="4" fill="#756bb1"/>
+  <text x="510" y="60" text-anchor="middle" font-size="9" fill="#756bb1">94%</text>
+  <text x="540" y="80" font-size="9" fill="#756bb1">diverse</text>
+  <polyline points="150,207 330,155 510,123" fill="none" stroke="#2ca25f" stroke-width="2.5" stroke-dasharray="5 3"/>
+  <circle cx="150" cy="207" r="4" fill="#2ca25f"/><circle cx="330" cy="155" r="4" fill="#2ca25f"/><circle cx="510" cy="123" r="4" fill="#2ca25f"/>
+  <text x="540" y="126" font-size="9" fill="#2ca25f">same-arch</text>
+  <text x="150" y="268" text-anchor="middle" font-size="9" fill="#666">disagree</text>
+  <text x="330" y="268" text-anchor="middle" font-size="9" fill="#666">majority</text>
+  <text x="510" y="268" text-anchor="middle" font-size="9" fill="#666">unanimous</text>
+</svg></p>
+<p><strong>But plurality voting does <em>not</em> reliably de-bias — a committee-size sweep (3/5/7/9 agents) shows
+why.</strong> Growing the committee from a correlated conv-soft trio outward:</p>
+<table>
+<thead>
+<tr>
+<th>agents</th>
+<th>added views</th>
+<th style="text-align: right;">consensus CPL</th>
+<th style="text-align: right;">best member</th>
+<th style="text-align: right;">oracle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>conv-soft ×3</td>
+<td style="text-align: right;">54.7</td>
+<td style="text-align: right;">49.8</td>
+<td style="text-align: right;">29.6</td>
+</tr>
+<tr>
+<td>5</td>
+<td>+MLP +hard-objective</td>
+<td style="text-align: right;"><strong>48.0</strong></td>
+<td style="text-align: right;">46.8</td>
+<td style="text-align: right;">22.2</td>
+</tr>
+<tr>
+<td>7</td>
+<td>+2 conv-soft (data slices)</td>
+<td style="text-align: right;">54.8</td>
+<td style="text-align: right;">52.2</td>
+<td style="text-align: right;">20.8</td>
+</tr>
+<tr>
+<td>9</td>
+<td>+MLP +hard</td>
+<td style="text-align: right;">56.0</td>
+<td style="text-align: right;">53.1</td>
+<td style="text-align: right;">19.9</td>
+</tr>
+</tbody>
+</table>
+<p>Three findings. (i) <strong>Plurality never clearly beats the best member</strong> — consensus is slightly <em>worse</em>
+at every size, gaps (~1–5 CPL) inside the ~±3 CPL measurement noise. (ii) <strong>Balance beats count</strong> —
+the 5-agent committee (diverse MLP + hard-objective = 40% of the vote) is best; <em>adding correlated
+members</em> (conv-soft data-slices at 7, 9) lets that bloc dominate and reverts the gain. <strong>More agents ≠
+better.</strong> (iii) <strong>The oracle
+(best member per position, ~20–30 CPL) is 2–3× better than the vote</strong> — the diversity <em>contains</em> the
+information, but plurality <em>cannot extract it</em>, because it is dominated by the largest correlated
+bloc.</p>
+<p><strong>Lesson.</strong> The committee robustly gives a <strong>confidence meter</strong> (agreement→correctness) but a <strong>weak
+aggregator</strong>: plurality does not reliably beat the best member. The large oracle headroom needs a
+<strong>better aggregator</strong> (soft-averaging, confidence-weighted routing) and <strong>balanced</strong>, not merely
+numerous, diversity — a de-biased ensemble is the most promising route to the ceiling search and
+self-play can't reach, but plurality is not it.</p>
+<p><svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1a2a3a">Stage 3 — committee size: plurality never beats the best member; oracle unrealized</text>
+  <line x1="70" y1="270" x2="560" y2="270" stroke="#333" stroke-width="1.5"/>
+  <line x1="70" y1="270" x2="70" y2="42" stroke="#333" stroke-width="1.5"/>
+  <text x="30" y="160" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 30 160)">centipawn loss ↓ better</text>
+  <text x="315" y="300" text-anchor="middle" font-size="11" fill="#333">committee size (agents)</text>
+  <polyline points="130,239 270,206 410,240 550,245" fill="none" stroke="#e6550d" stroke-width="2.5"/>
+  <circle cx="130" cy="239" r="4" fill="#e6550d"/><circle cx="270" cy="206" r="4" fill="#e6550d"/><circle cx="410" cy="240" r="4" fill="#e6550d"/><circle cx="550" cy="245" r="4" fill="#e6550d"/>
+  <text x="270" y="199" text-anchor="middle" font-size="9" fill="#e6550d">48.0</text>
+  <text x="583" y="245" text-anchor="end" font-size="9" fill="#e6550d">consensus (vote)</text>
+  <polyline points="130,215 270,200 410,227 550,231" fill="none" stroke="#2c7fb8" stroke-width="2" stroke-dasharray="5 3"/>
+  <circle cx="130" cy="215" r="3.5" fill="#2c7fb8"/><circle cx="270" cy="200" r="3.5" fill="#2c7fb8"/><circle cx="410" cy="227" r="3.5" fill="#2c7fb8"/><circle cx="550" cy="231" r="3.5" fill="#2c7fb8"/>
+  <text x="583" y="214" text-anchor="end" font-size="9" fill="#2c7fb8">best member</text>
+  <polyline points="130,116 270,80 410,73 550,69" fill="none" stroke="#2ca25f" stroke-width="2.5"/>
+  <circle cx="130" cy="116" r="4" fill="#2ca25f"/><circle cx="270" cy="80" r="4" fill="#2ca25f"/><circle cx="410" cy="73" r="4" fill="#2ca25f"/><circle cx="550" cy="69" r="4" fill="#2ca25f"/>
+  <text x="583" y="72" text-anchor="end" font-size="9" fill="#2ca25f">oracle (best/position)</text>
+  <text x="270" y="132" text-anchor="middle" font-size="8.5" fill="#888" font-style="italic">5 = best balance</text>
+  <text x="315" y="180" text-anchor="middle" font-size="9" fill="#999" font-style="italic">gap the vote can't capture ↕</text>
+  <text x="130" y="286" text-anchor="middle" font-size="9" fill="#666">3</text>
+  <text x="270" y="286" text-anchor="middle" font-size="9" fill="#666">5</text>
+  <text x="410" y="286" text-anchor="middle" font-size="9" fill="#666">7</text>
+  <text x="550" y="286" text-anchor="middle" font-size="9" fill="#666">9</text>
+</svg></p>
+<p><strong>A third combination — averaging <em>evaluations inside the search</em> — also fails.</strong> Averaging the K
+models' value at every MCTS leaf, at equal compute (ensemble at 200 sims = 600 passes/move vs a single
+model at 600 sims), scored <strong>2222 vs 2282, a −60 Elo <em>loss</em>:</strong> the ensemble searches 3× less tree, and
+de-biasing correlated evaluations doesn't justify tripling per-leaf cost. So all three combinations —
+plurality, weight merging (§5.4), and in-search averaging — fail to beat a single model, for one root
+cause: <strong>the members' errors are too correlated to cancel.</strong> Genuinely independent evaluators
+(cross-family, cross-data) are the prerequisite.</p>
+<h3>5.3 Evolution — mutate / play / score (a plateau-escape attempt)</h3>
+<p>Gradient self-play optimizes a <em>proxy</em> (the net's own biased targets); we tested whether
+<strong>derivative-free evolution</strong> — optimizing the <em>true</em> objective, "did this mutant win games" — could
+escape the plateau. Each generation: mutate the plateaued net into 16 offspring (Gaussian weight
+noise), play each against a <strong>frozen copy</strong> (a fixed anchor, so fitness <em>is</em> "how well do you beat the
+plateau"), and crown the best only if it survives a confirmation match. A first version selecting
+against the <em>moving</em> champion drifted <strong>downward</strong> — beating your immediate parent is non-transitive
+in chess; the fixed anchor fixes that.</p>
+<p><strong>Result: a null, and a methodological warning.</strong> The run <em>appeared</em> to escape — champ-vs-plateau
+climbed to 0.567 (+47 Elo), passing a 120-game confirmation — but a <strong>clean 400-game, low-temperature
+re-match found the "evolved" champion is −24 to −41 Elo <em>worse</em>.</strong> The gain was an artifact of noisy
+high-temperature fitness over small samples with best-of-16 selection bias — a <strong>phantom</strong> that
+vanished under proper measurement; annealing the mutation scale (σ 0.03→0.12) found nothing better. So
+evolution did not escape either: neither gradient self-play, a self-referential ladder, nor evolution
+crosses the ~2000 wall, and since the same net reaches ~2150 under <em>supervised</em> labels, the wall is
+<strong>not capacity</strong> but the ceiling of any <em>self-generated</em> signal. (Practitioner note: relative-fitness
+selection over small stochastic samples manufactures phantom gains — trust only a large, low-variance
+re-measurement.)</p>
+<p><svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="300" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1a2a3a">Stage 3 — evolution: the "escape" was a phantom of noisy fitness</text>
+  <line x1="90" y1="150" x2="560" y2="150" stroke="#333" stroke-width="1.5"/>
+  <text x="565" y="154" font-size="9" fill="#666">0 (= plateau)</text>
+  <text x="34" y="150" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 34 150)">Elo vs plateaued net</text>
+  <rect x="170" y="56" width="120" height="94" fill="#e6550d" fill-opacity="0.28" stroke="#e6550d" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="230" y="48" text-anchor="middle" font-size="13" font-weight="bold" fill="#e6550d">+47</text>
+  <text x="230" y="175" text-anchor="middle" font-size="9.5" fill="#e6550d">noisy 120-game fitness</text>
+  <text x="230" y="188" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#e6550d">(phantom)</text>
+  <rect x="360" y="150" width="120" height="60" fill="#555555"/>
+  <text x="420" y="226" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">−30</text>
+  <text x="420" y="130" text-anchor="middle" font-size="9.5" fill="#333">clean 400-game re-match</text>
+  <text x="420" y="118" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#333">(reality)</text>
+  <text x="310" y="270" text-anchor="middle" font-size="10" fill="#999" font-style="italic">the apparent escape reversed under proper measurement — no self-generated signal crossed the wall</text>
+</svg></p>
+<h3>5.4 Model merging — can we <em>average</em> diverse models into one?</h3>
+<p>The weight-space alternative to a voting committee is to <strong>average coefficients into one network</strong>.
+We tested it on conv-96×8 members from different seeds/data/objectives, scored by mean <strong>CPL</strong> vs
+Stockfish depth-12 (members ~60 ≈ 2000-level; ~260 ≈ random):</p>
+<table>
+<thead>
+<tr>
+<th>merge</th>
+<th>starting points</th>
+<th style="text-align: right;">CPL ↓</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>naive average</td>
+<td>different-start (diverse)</td>
+<td style="text-align: right;">261</td>
+<td>collapse</td>
+</tr>
+<tr>
+<td>Git Re-Basin aligned</td>
+<td>different-start (diverse)</td>
+<td style="text-align: right;">268</td>
+<td>still collapse</td>
+</tr>
+<tr>
+<td>naive average (<strong>model soup</strong>)</td>
+<td><strong>same init</strong></td>
+<td style="text-align: right;">58.8</td>
+<td>works (~parent)</td>
+</tr>
+<tr>
+<td>aligned (net + permuted twin)</td>
+<td>identical</td>
+<td style="text-align: right;">72</td>
+<td>perfect recovery <em>(verification)</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Naive averaging of different-start nets collapses</strong> (261): independent nets sit in different loss
+basins related by neuron permutations, so averaging misaligned neurons cancels signal. The known fix,
+<strong>permutation alignment (Git Re-Basin)</strong>, we implemented and <strong>verified correct</strong> — it recovers a net
+<em>exactly</em> from a known random permutation (72 CPL). Yet on real different-start members it <strong>still
+collapses</strong> (268), for a fundamental reason: Git Re-Basin assumes nets learn the <em>same features in a
+different order</em>; ours learned <strong>genuinely different features</strong> (different seeds <em>and</em> data <em>and</em>
+objectives), which no permutation aligns. A <strong>model soup</strong> (children from the <em>same</em> checkpoint)
+averages fine (58.8), because a shared start keeps them in one basin.</p>
+<p><strong>Conclusion.</strong> Weight-averaging works only within a shared basin. The very diversity that makes an
+ensemble valuable (§5.2) is what makes the members' <strong>weights un-averageable</strong> — diverse models
+combine at <em>inference</em>, not in weight space; so the "better aggregator" must live at inference
+(soft-averaging, confidence routing), not in merging.</p>
+<hr />
+<h2>6. Comparison to existing systems — parameters, performance, and speed</h2>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th style="text-align: right;">Params (memory)</th>
+<th style="text-align: right;">Strength (Elo)</th>
+<th>Search / move</th>
+<th style="text-align: right;">Elo per M-param</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>This work — raw policy</strong></td>
+<td style="text-align: right;"><strong>3.45M</strong> (14 MB)</td>
+<td style="text-align: right;">~2150</td>
+<td>1 forward pass (~1.5 ms)</td>
+<td style="text-align: right;">~620</td>
+</tr>
+<tr>
+<td><strong>This work — + MCTS-800</strong></td>
+<td style="text-align: right;"><strong>3.45M</strong> (14 MB)</td>
+<td style="text-align: right;"><strong>~2800</strong></td>
+<td>800 net passes (~1.0 s; ~0.6 s cascaded)</td>
+<td style="text-align: right;"><strong>~810</strong></td>
+</tr>
+<tr>
+<td>Maia (human-like)</td>
+<td style="text-align: right;">~few M</td>
+<td style="text-align: right;">~1100–1900</td>
+<td>1 forward pass</td>
+<td style="text-align: right;">~300–500</td>
+</tr>
+<tr>
+<td>AlphaZero (chess, 2017)</td>
+<td style="text-align: right;">~40–90M</td>
+<td style="text-align: right;">~3400+</td>
+<td>800 MCTS sims (big-net passes)</td>
+<td style="text-align: right;">~40–85</td>
+</tr>
+<tr>
+<td>Leela Chess Zero (modern)</td>
+<td style="text-align: right;">~100–400M+</td>
+<td style="text-align: right;">~3500+</td>
+<td>~1–8k MCTS nodes</td>
+<td style="text-align: right;">~10–35</td>
+</tr>
+<tr>
+<td>Stockfish (NNUE)</td>
+<td style="text-align: right;">~tens of M (quantized)</td>
+<td style="text-align: right;">~3600+</td>
+<td><strong>millions of alpha-beta nodes/s</strong></td>
+<td style="text-align: right;">~100–150</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Two axes — size and speed.</strong>
+- <strong>Parameters:</strong> our net is <strong>~10–25× smaller than AlphaZero, 30–100× smaller than large Leela</strong>,
+  yet reaches ~2800 with search — the extreme point on Elo-per-million-parameters. This is an
+  <strong>efficiency framing, not a superiority claim</strong>: top engines are 600–800 Elo stronger and optimize
+  <em>absolute</em> strength, not parameters-per-Elo; the point is only that parameter count is <em>not</em> what
+  buys their last few hundred Elo (a better value function and far more search are).
+- <strong>Speed:</strong> AlphaZero/Leela use a similar sim count but each sim is a <strong>big-net</strong> pass (10–100× our
+  network); our sim is a 14 MB pass (~1.5 ms), cascade-recoverable a further ~1.6–4.8×. Our batch-1
+  search runs at only ~600 nps vs ~10k–80k batched (§4.4). Stockfish is the opposite regime — a tiny
+  quantized net at millions of nodes/s. The structure is identical throughout — a learned <strong>evaluator
+  queried by search</strong> — and <strong>parameter count is not what separates them.</strong></p>
+<p><svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Parameter efficiency — strength vs network size (log scale)</text>
+  <line x1="70" y1="270" x2="590" y2="270" stroke="#333" stroke-width="1.5"/>
+  <line x1="70" y1="270" x2="70" y2="45" stroke="#333" stroke-width="1.5"/>
+  <text x="34" y="160" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 34 160)">strength (Elo)</text>
+  <text x="330" y="305" text-anchor="middle" font-size="11" fill="#333">parameters (millions, log)  →  bigger net</text>
+  <text x="110" y="286" text-anchor="middle" font-size="9" fill="#888">3M</text>
+  <text x="300" y="286" text-anchor="middle" font-size="9" fill="#888">30M</text>
+  <text x="470" y="286" text-anchor="middle" font-size="9" fill="#888">300M</text>
+  <circle cx="118" cy="153" r="6" fill="#2c7fb8"/><text x="118" y="143" text-anchor="middle" font-size="9" font-weight="bold" fill="#2c7fb8">This work ~2800</text>
+  <text x="118" y="170" text-anchor="middle" font-size="8" fill="#2c7fb8">3.45M</text>
+  <circle cx="150" cy="297" r="5" fill="#888"/><text x="150" y="255" text-anchor="middle" font-size="9" fill="#666"></text>
+  <text x="165" y="292" font-size="9" fill="#666">Maia ~1600</text>
+  <circle cx="300" cy="57" r="5" fill="#e6550d"/><text x="300" y="50" text-anchor="middle" font-size="9" fill="#e6550d">Stockfish ~3600</text>
+  <circle cx="360" cy="81" r="5" fill="#756bb1"/><text x="360" y="74" text-anchor="middle" font-size="9" fill="#756bb1">AlphaZero ~3400</text>
+  <circle cx="455" cy="69" r="5" fill="#31a354"/><text x="470" y="64" text-anchor="middle" font-size="9" fill="#31a354">Leela ~3500</text>
+  <text x="130" y="230" font-size="9" fill="#2c7fb8" font-style="italic">← far-left/high = most parameter-efficient</text>
+</svg></p>
+<p><strong>Honest gap.</strong> Top engines sit ~600–800 Elo above ~2800, bought with <strong>far more search <em>and</em> a
+much better value net</strong> (massive training). Our number is an <em>efficiency</em> point — most strength per
+parameter — not an engine-matching claim, and it carries ladder uncertainty (±100).</p>
+<hr />
+<h2>7. Discussion — the unifying conclusion</h2>
+<p>Across every experiment, one factor was the recurring binding constraint — sharper than "the network
+is the bottleneck": <strong>the <em>quality of the information reaching the evaluator</em> (its training signal),
+not the loop around it</strong> (an empirical regularity of our regime, not a theorem). The organizing law is
+<strong>strength = evaluator × search</strong>, and it explains everything once we define <em>information</em> precisely:
+by <strong>new information</strong> we mean <strong>novel empirical data from <em>outside</em> the closed system of the net and
+its training set</strong> — not a re-encoding of what is already latent. Supervision and scale inject it
+directly; every other method divides on one question — <strong>does it have an external ground-truth oracle
+to query?</strong></p>
+<ul>
+<li><strong>Within-move search, voting, and merging do not</strong> — they operate on fixed representations, so they
+  only <em>extract</em> information already present (cut variance, sharpen, filter), never create what is
+  absent.</li>
+<li><strong>Self-play and evolution can — but only through the environment.</strong> In a <strong>closed-form,
+  perfect-information</strong> game the <em>rules are a perfect external oracle</em>: search queries terminal
+  outcomes outside any dataset — exactly how AlphaZero/Leela inject information no human game contains
+  and surpass human play. This is a property of the <em>environment</em>: in an <strong>open-ended, semantic</strong>
+  domain (language) with no external verifier, the identical loop has nothing to query and collapses
+  into hallucination — it can only redistribute.</li>
+<li><strong>Our chess result sits in the oracle-rich regime and still plateaued</strong> — because at two-Mac-Studio
+  compute the search was too weak to extract much from that oracle, <em>not</em> because it was absent. A
+  <strong>scale</strong> limit, not evidence against self-play.</li>
+</ul>
+<p>None of this makes redistribution <em>useless</em>: variance reduction, sharpening, and filtering are how you
+<strong>reach</strong> a ceiling cheaply — indispensable engineering. The narrow claim is about the <em>absolute</em>
+ceiling: <strong>only information from outside the closed system can raise it.</strong></p>
+<ul>
+<li><strong>Architecture &gt; parameters.</strong> The right prior (spatial locality + weight sharing) beats raw width —
+  a 14 MB conv reaches strength a 3× larger MLP cannot.</li>
+<li><strong>Search &gt; scale, but search cannot exceed the net.</strong> MCTS bought +650 Elo (2150→2800) at zero extra
+  parameters and out-scaled fixed depth — yet flat MCTS and the cascade hit the <em>same</em> wall on the same
+  net, because search cuts the net's <em>variance</em> (averaging noisy calls), not its <em>bias</em> (systematic
+  blind spots). The cascade's win was <strong>efficiency (up to 4.8× cheaper), not strength.</strong></li>
+<li><strong>No self-generated signal crosses the wall — we tried three.</strong> Gradient self-play, a self-referential
+  ladder, and evolution (given the fairest shot; its +47-Elo "escape" was noise that reversed to −30)
+  all plateau. The same net reaches ~2150 under supervised labels, so the wall is <strong>not capacity</strong> but
+  the ceiling of a system's signal about <em>itself</em> — a <strong>scale</strong> statement (at AlphaZero-scale compute,
+  self-play bootstraps far past this).</li>
+<li><strong>A better <em>evaluator</em> is the only lever — and harder than it looks.</strong> The committee's agreement
+  predicts correctness, but <strong>plurality voting never clearly beats the best member</strong> (correlated blocs
+  dominate; balance beats count); the per-position oracle is <strong>2–3× better than the vote</strong>, so the
+  information is there but needs a <strong>better aggregator</strong> (soft-averaging / confidence-routing), not more
+  agents.</li>
+<li><strong>Control-theory unification.</strong> Open loop = feedforward; closed loop = MPC; self-play = iterative
+  learning control — and in all three the learned <em>evaluator</em> caps performance.</li>
+</ul>
+<h3>7.1 The knob–bottleneck map — every experiment, including the failures, is a diagnosis</h3>
+<p>Read as a set, the study's experiments form a <strong>diagnostic map</strong>: each result — <em>especially</em> each
+null — localizes the binding bottleneck by ruling a lever in or out. A failed experiment is not
+wasted compute; it is a measurement that says <em>"strength is not gated here — look elsewhere."</em></p>
+<table>
+<thead>
+<tr>
+<th>Knob turned</th>
+<th>Result</th>
+<th>Diagnosis → what binds</th>
+<th>Move it implies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Architecture</strong> (conv vs MLP)</td>
+<td>large gain</td>
+<td>bias-bound — wrong prior caps a big net</td>
+<td>fix the inductive bias <em>before</em> scaling</td>
+</tr>
+<tr>
+<td><strong>Capacity</strong> (2× params @ 50M)</td>
+<td>~0 (null)</td>
+<td><em>not</em> capacity-bound in this data regime</td>
+<td>add data, not parameters (here)</td>
+</tr>
+<tr>
+<td><strong>Data</strong> (10 → 79 shards)</td>
+<td>+~90</td>
+<td>data/signal-bound</td>
+<td>more, more-diverse labels</td>
+</tr>
+<tr>
+<td><strong>Search amount</strong> (open → 12800 sims)</td>
+<td>+286, then ~+55/doubling (log-linear)</td>
+<td>search extracts value; evaluator caps its <em>return</em></td>
+<td>keep searching; raise the evaluator to lift the ceiling</td>
+</tr>
+<tr>
+<td><strong>Search allocation</strong> (cascade shape)</td>
+<td>flat (±noise)</td>
+<td><em>not</em> allocation-bound at fixed budget</td>
+<td>reallocate for <strong>speed</strong>, not strength</td>
+</tr>
+<tr>
+<td><strong>Search implementation</strong> (batch-1)</td>
+<td>latency only</td>
+<td>throughput-bound by engineering</td>
+<td>batch leaves → 13–37× speed, same strength</td>
+</tr>
+<tr>
+<td><strong>Self-play signal</strong></td>
+<td>plateau</td>
+<td>self-signal-quality-bound</td>
+<td>can't exceed its own signal at this scale</td>
+</tr>
+<tr>
+<td><strong>Selection pressure</strong> (evolution)</td>
+<td>phantom, reversed</td>
+<td><em>measurement-noise</em>-bound (fake gain)</td>
+<td>re-measure cleanly before believing</td>
+</tr>
+<tr>
+<td><strong>Aggregation</strong> (voting 3–9 agents)</td>
+<td>no gain</td>
+<td>correlated-error-bound</td>
+<td>need <em>diversity</em>, not more voters</td>
+</tr>
+<tr>
+<td><strong>Aggregation</strong> (ensemble-eval, merging)</td>
+<td>no gain</td>
+<td>combining ≠ creating knowledge</td>
+<td>extracts existing signal, creates none</td>
+</tr>
+<tr>
+<td><strong>Self-distillation</strong> (fixed set)</td>
+<td>dropped</td>
+<td>data-<em>diversity</em>-bound (overfit)</td>
+<td>many diverse positions, not repetition</td>
+</tr>
+</tbody>
+</table>
+<p>Three things fall out:</p>
+<p><strong>1. Nulls are the most information-dense results.</strong> A knob that moves nothing <em>localizes</em> the
+bottleneck away from itself — the parameter null said "capacity isn't binding (here)," the cascade
+flat-line "allocation isn't," the voting sweep "more agents isn't." The one trap is <strong>mistaking noise
+for signal</strong> (evolution's phantom +47 that reversed to −30), so every promising delta was re-measured.</p>
+<p><strong>2. The binding lever <em>moves</em> as you relieve it.</strong> Strength is a <em>chain</em>: bias- then capacity-bound
+(open-loop) → search-bound → evaluator-bound (by its <strong>data</strong>, not parameter count). You cannot skip a
+link — parameters into a data-bound net, or sims into a saturated search, buy almost nothing.</p>
+<p><strong>3. The map is the roadmap.</strong> The diagnosis <em>is</em> the next move: open-loop capped ⇒ add search;
+search saturated ⇒ a better <em>evaluator</em> (more/better data); self-signal plateaued ⇒ a better <em>signal
+source</em> (external labels, or AlphaZero-scale self-play). <strong>Identify the binding lever, relieve exactly
+that, re-measure, repeat</strong> — the loop that transfers to a genuinely new domain with no engine or
+dataset to imitate.</p>
+<hr />
+<h2>8. Limitations and Future Work</h2>
+<ul>
+<li>Absolute Elo carries systematic uncertainty near the ladder top; relative same-ladder gains are
+  the robust claims.</li>
+<li>Stage 3 is compute-limited (two machines); results characterize the <em>small-scale</em> regime.</li>
+<li>Stage-3 fitness/aggregation is noise-limited at our scale: relative-fitness selection with small,
+  stochastic samples produced a <strong>phantom</strong> evolution "escape" that reversed under a 400-game
+  re-match, and plurality de-biasing gaps sit inside the ~±3 CPL measurement noise. Larger,
+  lower-variance evaluation is needed to resolve small effects.</li>
+<li><strong>Next levers, in priority order:</strong> (1) a <strong>better value function</strong> (the true ceiling) via
+  more/better search-labeled data or large-scale self-play; (2) a <strong>better ensemble aggregator</strong> —
+  soft-averaging and confidence-weighted <em>routing</em> (per-position oracle 2–3× above plurality) with
+  <em>balanced</em> cross-family diversity, not more agents; (3) <strong>batched/parallel MCTS</strong> and transposition
+  tables for throughput; (4) endgame tablebases and tuned <code>c_puct</code>. All converge on one place:
+  <strong>improve the evaluation, and both the closed-loop and self-play ceilings rise together.</strong></li>
+</ul>
+<hr />
+<h2>9. Conclusion</h2>
+<p><svg viewBox="0 0 680 370" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <defs>
+    <marker id="cah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#444"/></marker>
+    <marker id="cap" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#756bb1"/></marker>
+  </defs>
+  <rect x="0" y="0" width="680" height="370" fill="#ffffff"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a2a3a">strength = evaluator × search</text>
+  <text x="340" y="50" text-anchor="middle" font-size="11" fill="#666">the evaluator sets the ceiling; search sets how close you get to it</text>
+<rect x="28" y="95" width="156" height="62" rx="8" fill="#eef4fb" stroke="#2c7fb8" stroke-width="1.5"/>
+  <text x="106" y="120" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1a2a3a">INFORMATION</text>
+  <text x="106" y="139" text-anchor="middle" font-size="9.5" fill="#555">labels · data · scale</text>
+<rect x="262" y="95" width="156" height="62" rx="8" fill="#eef4fb" stroke="#2c7fb8" stroke-width="2.8"/>
+  <text x="340" y="117" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1a2a3a">EVALUATOR</text>
+  <text x="340" y="133" text-anchor="middle" font-size="9.5" fill="#555">net quality = the ceiling</text>
+  <text x="340" y="148" text-anchor="middle" font-size="8.5" fill="#999">(the bottleneck)</text>
+<rect x="496" y="95" width="156" height="62" rx="8" fill="#fdf0e6" stroke="#e6550d" stroke-width="1.5"/>
+  <text x="574" y="120" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a2e06">PERFORMANCE</text>
+  <text x="574" y="139" text-anchor="middle" font-size="9.5" fill="#555">how strong it plays</text>
+<line x1="184" y1="126" x2="258" y2="126" stroke="#444" stroke-width="1.6" marker-end="url(#cah)"/>
+  <text x="221" y="118" text-anchor="middle" font-size="9" fill="#2c7fb8">sets ceiling</text>
+  <line x1="418" y1="126" x2="492" y2="126" stroke="#444" stroke-width="1.6" marker-end="url(#cah)"/>
+  <text x="455" y="118" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#e6550d">× search</text>
+  <text x="455" y="145" text-anchor="middle" font-size="8" fill="#999">extracts value</text>
+<rect x="205" y="255" width="270" height="56" rx="8" fill="#f2eef8" stroke="#756bb1" stroke-width="1.5"/>
+  <text x="340" y="278" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#463b7a">SELF-LEARNING</text>
+  <text x="340" y="296" text-anchor="middle" font-size="9" fill="#555">self-play · evolution · voting · merging</text>
+<path d="M 340 255 L 340 159" fill="none" stroke="#756bb1" stroke-width="1.6" marker-end="url(#cap)"/>
+  <text x="352" y="205" font-size="9" fill="#756bb1">feeds back to the evaluator …</text>
+  <text x="352" y="222" font-size="9" font-weight="bold" fill="#b5322e">… but lifts the ceiling ONLY if it adds NEW information;</text>
+  <text x="352" y="235" font-size="9" fill="#b5322e">rearranging what is already there just plateaus.</text>
+<text x="340" y="345" text-anchor="middle" font-size="9.5" font-style="italic" fill="#666">search cuts variance, not bias — the ceiling is the quality of the information the evaluator was given</text>
+</svg></p>
+<p>This paper treated playing strength as an <strong>efficient-allocation problem</strong>: given a fixed budget of
+parameters, data, search, and latency, how do you spend it for the most capability? Measured resource
+by resource, the efficient mix is rarely "more parameters" — a 14 MB net reaches <strong>~2800 Elo by
+<em>thinking<em> (search), not </em>growing</em></strong> — the same capability, a far cheaper mix. This is <em>efficiency</em>,
+not a denial of scale: the first full-data capacity point already nudges up (1× 2734 → 1.4× 2794), and
+<strong>if the 2×/4× points keep climbing, parameters become co-dominant once data-starvation is relieved.</strong>
+Adaptive MCTS out-scales fixed-depth search; the cascade matches it at 4.8× less compute (strength
+bought back as <em>latency</em>, not parameters). Self-learning is honestly negative: self-play, a
+self-referential ladder, and evolution all <strong>fail to cross the ~2000 plateau</strong> (evolution's escape was
+noise), and plurality committees don't reliably de-bias — though <strong>agreement is a robust teacher-free
+confidence signal</strong>.</p>
+<p>Above all, the <strong>method</strong> transfers: at each stage a <em>single lever binds</em> and only an experiment
+reveals which. Open-loop was <strong>capacity-bound</strong>; adding search made us <strong>search-bound</strong> (search paying
+<strong>log-linearly, ~+55 Elo/doubling, unsaturated through 12800</strong>); then the evaluator binds — and at our
+data scale by its <strong>data</strong>, not its parameter count (1.4× more params bought <strong>~0 Elo</strong>; a full
+1×/1.4×/2×/4× sweep is running). The recurring constraint, from every direction we pushed, was <strong>the
+quality of the information reaching the evaluator</strong> (§7): supervision, data, and search help; voting
+and merging only reorganize what the net already encodes; self-play and evolution <em>can</em> inject
+information, but only through an <strong>external oracle</strong>, so our plateau is a <strong>compute-scale limit, not
+evidence that self-play fails</strong> (AlphaZero/Leela break past human play with far more of it). What
+transfers is a quantified recipe and an explicit <strong>diagnostic</strong> for finding the binding lever.</p>
+<p><strong>Beyond chess.</strong> The decomposition — <strong>capacity, inference-time search, self-generated information</strong>
+— is domain-agnostic: the same three levers and the evaluator-vs-compute trade-off recur in planning,
+robotics, scheduling, compiler optimization, and scientific design, each with an evaluator, a
+decision-time search budget, and a self-improvement loop capped by its own signal quality. We measured
+none of those domains — only that the <em>decomposition</em> and its diagnostic (find the binding lever
+before investing) are what transfer, and likely outlast the chess numbers.</p>
+<p><strong>The clearest current echo is in large language models.</strong> The 2024–25 shift to <strong>inference-time
+compute</strong> — o1/o3, DeepSeek-R1, reasoning models — is this thesis at frontier scale: a fixed base
+model made far stronger by <em>searching over reasoning at decision time</em> (sampling, self-consistency,
+tree-of-thought) rather than by adding parameters. The mapping is direct: our <em>evaluator</em> ↔ their
+<strong>base model/verifier</strong>, our <em>search</em> ↔ their <strong>reasoning budget</strong>, our <em>self-play</em> ↔ their
+<strong>STaR-style self-training</strong> — with the same limit: search and self-training <strong>convert what the model
+already latently knows into better answers; they cannot inject knowledge it never learned.</strong> That is
+exactly why reasoning models pair search with <strong>external verifiers or ground-truth reward</strong> (code that
+runs, math that checks, tools that return facts) — the oracle that lets the loop add information. A
+model with no such oracle should, by our framework, <strong>plateau</strong>.</p>
+<p><strong>A test for what comes next.</strong> The framework is a <strong>predictive filter</strong>: pre-screen any future
+<em>synthetic-data breakthrough</em> or <em>recursively self-improving architecture</em> with one question — <strong>does
+it inject information from outside its closed system</strong> (new empirical data, supervision, or an external
+oracle: a verifier, a simulator, the physical world)? If yes, it can raise the ceiling; if it only
+re-processes what its own models contain, our results predict it will <strong>plateau</strong>. Recursive
+self-improvement compounds where an external oracle exists (a game's rules, a theorem checker, a
+compiler, a market) and stalls where none does — a claim about the <em>source</em> of information, not the
+method's ingenuity.
+- <code>chessnet/model.py</code> — conv/MLP/dual-path + value head. <code>chessnet/search.py</code> — alpha-beta,
+  MCTS/PUCT, quiescence, the wide→narrow cascade (<code>MultiStageMCTSPlayer</code>).
+  <code>chessnet/committee.py</code> — ensemble inference + agreement signal.
+  <code>chessnet/train.py</code> — soft/hard + value training. <code>scripts/selfplay.py</code> — self-play iteration.
+- <strong>Best model:</strong> <code>runs/conv_value_llm1</code> (conv-96×8 + value, 3.45M params).
+- <strong>Key hyperparameters:</strong> conv width 96, depth 8; lr 5e-4 (train) / 1e-4 (self-play); gradient
+  clip 1.0; MCTS c_puct 1.5; Dirichlet α 0.3; replay buffer 120K–300K.</p></body></html>
