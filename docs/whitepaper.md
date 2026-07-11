@@ -37,10 +37,14 @@ regime we could run.)
 The unifying principle is **strength = evaluator × search**: search sets how *closely* you approach
 the evaluator's ceiling; the evaluator sets *where* that ceiling is. And across all three stages the
 binding constraint consistently emerged as **the quality of the information reaching the evaluator**
-— its training signal — rather than the machinery around it. **Search *extracts* information already
-represented by the evaluator (cutting variance, not bias); it cannot create information absent from
-it.** Self-play, voting, evolution and merging fail for the same reason — none injects *new*
-information — while supervision and scale succeed because they do. The method is as transferable as the numbers: **at each stage a single lever
+— its training signal — rather than the machinery around it. **Within a move, search *extracts*
+information already represented by the evaluator (cutting variance, not bias); it cannot create
+information absent from it.** Voting and merging fail for the same reason — they only reorganize what
+the net already encodes. **Self-play and evolution are different in kind**: they *could* inject new
+information (search reveals the environment's ground truth via lookahead), but **at our compute they
+did not exceed supervision — a *scale* limit, not a theoretical one.** AlphaZero and Leela decisively
+break past human play with orders of magnitude more self-play than two Mac Studios can run; our
+plateau characterizes the regime we could reach, and is **not** a claim that self-play fails. The method is as transferable as the numbers: **at each stage a single lever
 binds — only an experiment reveals which — so effort on any non-binding lever returns almost
 nothing.**
 
@@ -88,6 +92,12 @@ before investing in it — as it is the individual numbers.
   the simulation budget through progressively narrower, deeper stages, matching flat MCTS at up to
   **4.8× less compute per move** with a clean score/speed trade-off curve.
 - A parameter-efficiency result: **~2800 Elo from 3.45M params** via search, at constant memory.
+- **The efficiency numbers are a floor, not a ceiling.** Every result here uses a deliberately
+  simple **batch-1** search — one leaf per forward pass, **no parallel leaf batching and no virtual
+  loss** — running at only **~600 nodes/s**, so the M3 Ultra sits largely *idle* during search.
+  Batched-leaf MCTS (a contained change, quantified in §4.4) leaves an estimated **10–50× per-move
+  speedup untapped**: the true efficiency ceiling of this approach is far above what we benchmark,
+  and every latency figure in this paper is an **upper bound** on what the method costs.
 - A direct **MCTS-vs-fixed-depth** result: adaptive search beats and out-scales fixed depth.
 - An **architecture-beats-scale** finding (convolution ≫ MLP at equal data), with topology sweep.
 - A reproducible **negative result** on small-scale self-play (plateaus below supervision).
@@ -795,8 +805,12 @@ state this as an empirical regularity of the regime we tested, not a theorem. Th
 search sets how *closely* you approach the ceiling, the evaluator sets *where* it is, and the
 evaluator is only ever as good as the information it was given. This one statement explains
 everything below — supervision and scale lift the ceiling because they inject *new* information;
-search, self-play, voting, evolution and merging do not, because they can only **extract information
-already represented, not create what is absent**.
+within-move search, voting and merging cannot, because they only **extract information already
+represented, not create what is absent**. Self-play and evolution are the exception in principle —
+their search taps the environment's ground truth, so **at sufficient scale they do inject new
+information (this is exactly how AlphaZero/Leela surpass human play)** — but at our compute the
+signal they generated never exceeded supervision. That plateau is a **scale limit of two Mac
+Studios, not a limit of self-play.**
 
 - **Architecture > parameters.** The right prior (spatial locality + weight sharing) beats raw
   width; a 14 MB conv reaches strength a 3× larger MLP cannot.
@@ -952,8 +966,11 @@ better evaluator (better labels, more data, more capacity *once data-matched*, m
 better *aggregator* than plurality) raised it. Stated at its sharpest, and as an empirical pattern
 rather than a proof: **the quality of the information reaching the evaluator was the binding
 constraint** — which is why supervision, data, and search help (they add or extract information) and
-why voting, evolution, merging and self-play do not (they can only extract or rearrange information
-already there, never create what is absent). A quantified recipe, an explicit **diagnostic** for finding the binding lever, and an honest
+why voting and merging do not (they only reorganize what is already there). **Self-play and evolution
+are a deliberate exception we must state precisely:** their search *can* inject new information from
+the environment, and **at AlphaZero/Leela scale it provably breaks past human supervision** — our
+plateau is a limit of the compute we had (two Mac Studios), **not evidence that self-play fails**.
+A quantified recipe, an explicit **diagnostic** for finding the binding lever, and an honest
 map of the limits — for compact, search-driven sequential decision-making in general.
 
 **Beyond chess.** Chess is only the controlled environment; the decomposition — **model capacity,
