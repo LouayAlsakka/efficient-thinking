@@ -25,8 +25,8 @@ blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
              color: #333; background: #f6f8fa; font-style: italic; }
 a { color: #0969da; }
 img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
-</style></head><body><h1>Efficient Thinking: Tradeoffs in Game-Playing AI</h1>
-<h2>Parameters vs Search vs Self-Learning — a Three-Stage Chess Study of Where Strength Comes From</h2>
+</style></head><body><h1>Efficient Thinking: Resource Allocation in Game-Playing AI</h1>
+<h2>Spending Parameters, Data, Search, and Latency Efficiently for Maximum Playing Strength — an Empirical Framework, Demonstrated in Chess</h2>
 <p><strong>Louay Alsakka</strong> · July 8, 2026</p>
 <p><strong>A white paper on parameter-efficient game AI.</strong></p>
 <p><strong>Code &amp; trained model:</strong> <a href="https://github.com/louayalsakka/efficient-thinking">github.com/louayalsakka/efficient-thinking</a></p>
@@ -36,10 +36,14 @@ spending a fixed budget to buy strength, and each capped by the same wall: the q
 learned evaluator.</em></p>
 <hr />
 <h2>Abstract</h2>
-<p>We ask where playing strength comes from — <strong>network capacity, search, or self-learning</strong> — using a
-deliberately tiny model on modest hardware. A <strong>3.45M-parameter (14 MB) convolutional net</strong> plays at
-<strong>~2150 Elo</strong> as a single forward pass; adding <strong>Monte-Carlo Tree Search (MCTS)</strong> lifts the <em>same
-weights</em> to <strong>~2800</strong> with <strong>zero extra parameters</strong>. Strength is bought with <strong>compute, not size</strong>.</p>
+<p><strong>This paper asks one engineering question: given finite resources — parameters (memory), training
+data, inference-time search, and latency — how do you spend them <em>efficiently</em> to reach a target
+playing strength?</strong> We treat chess as a clean, fully-measurable testbed and map the tradeoff curves
+directly, resource by resource. With a deliberately tiny model on modest hardware, a <strong>3.45M-parameter
+(14 MB) convolutional net</strong> plays at <strong>~2150 Elo</strong> as a single forward pass; adding <strong>Monte-Carlo Tree
+Search (MCTS)</strong> lifts the <em>same weights</em> to <strong>~2800</strong> with <strong>zero extra parameters</strong> — strength bought
+with <strong>compute, not size</strong>. That single result is the thesis in miniature: the same capability can be
+purchased with very different resource mixes, and the efficient mix is rarely "more parameters".</p>
 <p>Three contributions. <strong>(1)</strong> A <strong>wide→narrow MCTS cascade</strong> that funnels the simulation budget
 through progressively narrower, deeper stages <strong>matches flat MCTS at up to ~4.8× less compute per
 move</strong> — our most practical result. <strong>(2)</strong> A direct <strong>MCTS-vs-fixed-depth</strong> comparison: adaptive
@@ -98,26 +102,36 @@ method fails to beat a single model. Treat those as the paper's claims; treat 28
 </ol>
 <hr />
 <h2>1. Introduction</h2>
-<p>Modern game AI conflates three separable questions:
-1. <strong>Open loop</strong> — how strong is a single forward pass (pure "intuition")?
-2. <strong>Closed loop</strong> — how much does <em>search</em> (lookahead on a learned value function) add?
-3. <strong>Self-learning</strong> — can the system improve <em>itself</em>, with no external teacher?</p>
-<p>We treat these as three stages of increasing autonomy and measure each independently. The framing
-is explicitly <strong>control-theoretic</strong> (Bertsekas 2022, <em>Lessons from AlphaZero for Optimal, Model
-Predictive, and Adaptive Control</em>): the open-loop policy is a <strong>feedforward controller</strong>,
-closed-loop search is <strong>model-predictive control</strong> (receding-horizon planning with a learned
-terminal cost), and self-play is <strong>iterative/adaptive learning control</strong>. Chess is only a
-testbed; the goal is a <em>generic</em> recipe for sequential decision-making, and this study quantifies
-what each ingredient buys.</p>
-<p>A second theme is <strong>methodological</strong>, and is the paper's most transferable lesson: <strong>at any given
-stage, strength is gated by a <em>single binding bottleneck</em> — capacity, search, data, or the quality
-of self-generated signal — and pouring effort into any <em>non-binding</em> lever returns almost nothing.</strong>
-Which lever binds is not obvious a priori and shifts as you relieve each one (open-loop is
-capacity-bound; add search and you ride it up (log-linearly) until the evaluator's quality caps the
-return; then the evaluator —
-its <em>data</em>, not its parameter count in our regime — binds). The practical contribution is therefore
-as much a <strong>diagnostic discipline</strong> — run a controlled experiment to identify the binding lever
-before investing in it — as it is the individual numbers.</p>
+<p><strong>Every AI system spends finite resources to buy capability</strong> — parameters (memory), training data,
+inference-time computation, latency, and human supervision. The engineering question is rarely "how
+do I maximize any one of them" but <strong>"how do I <em>allocate</em> them efficiently to reach a target level of
+performance?"</strong> More capacity, more data, more search, and more supervision each raise strength — but
+each carries a cost, and to a large degree they <em>substitute</em> for one another. This paper is an
+<strong>empirical study of those tradeoffs</strong>: we fix the objective (playing strength) and measure what each
+resource actually buys, and where spending on one is wasted because a <em>different</em> resource is the
+binding constraint. We claim <strong>no solved optimal-allocation rule</strong> — the contribution is a <em>framework</em>
+and a set of <em>measured tradeoff curves</em>, demonstrated in chess as a clean, fully-observable testbed.</p>
+<p>The study runs as <strong>three allocation questions</strong> of increasing autonomy:
+1. <strong>Open loop — spend on capacity/architecture.</strong> What single-forward-pass strength can a fixed
+   memory budget buy, and does the right architecture beat raw parameter count?
+2. <strong>Closed loop — spend on inference-time search.</strong> How much does search on a learned value function
+   add per unit of compute and latency, and how <em>cheaply</em> can that strength be bought?
+3. <strong>Self-learning — spend without supervision.</strong> With no labels, where should compute go — self-play,
+   committees, evolution, merging — and does any of it pay?</p>
+<p>We measure each independently. The framing is also <strong>control-theoretic</strong> (Bertsekas 2022, <em>Lessons
+from AlphaZero for Optimal, Model Predictive, and Adaptive Control</em>): open-loop policy = feedforward
+controller, closed-loop search = model-predictive control (receding-horizon planning with a learned
+terminal cost), self-play = iterative/adaptive learning control. Chess is only the testbed; the goal
+is a <em>generic</em> way to reason about resource tradeoffs in sequential decision-making.</p>
+<p>The central <em>tool</em> for efficient allocation is a simple diagnostic: <strong>at any given stage, strength is
+gated by a <em>single binding resource</em> — capacity, search, data, or the quality of self-generated
+signal — and spending on any <em>non-binding</em> resource returns almost nothing.</strong> So the efficient move
+is always to <strong>identify the binding resource experimentally, then spend there.</strong> Which one binds is
+not obvious a priori and shifts as you relieve each (open-loop is capacity-bound; add search and you
+ride it up log-linearly until the evaluator's quality caps the return; then the evaluator — its
+<em>data</em>, not its parameter count in our regime — binds). This bottleneck analysis is not the paper's
+goal but its <strong>method</strong>: one instrument in the larger objective of spending a fixed budget
+efficiently.</p>
 <p><strong>Contributions.</strong>
 - <strong>Our headline method — a search-efficiency result:</strong> a wide→narrow MCTS <strong>cascade</strong> that funnels
   the simulation budget through progressively narrower, deeper stages, matching flat MCTS at up to
@@ -1399,9 +1413,13 @@ domain that has no engine and no dataset to imitate.</p>
   <text x="352" y="235" font-size="9" fill="#b5322e">rearranging what is already there just plateaus.</text>
 <text x="340" y="345" text-anchor="middle" font-size="9.5" font-style="italic" fill="#666">search cuts variance, not bias — the ceiling is the quality of the information the evaluator was given</text>
 </svg></p>
-<p>A 14 MB, 3.45M-parameter network reaches <strong>~2800 Elo by <em>thinking</em> (MCTS search), not by <em>growing</em>
-(parameters)</strong>. Adaptive MCTS beats and out-scales fixed-depth search; a wide→narrow MCTS cascade
-matches it at up to 4.8× less compute. On the self-learning side the results are honestly negative:
+<p>This paper treated playing strength as an <strong>efficient-allocation problem</strong>: given a fixed budget of
+parameters, data, inference-time search, and latency, how do you spend it to buy the most capability?
+The answer, measured resource by resource, is that the efficient mix is rarely "more parameters." A
+14 MB, 3.45M-parameter network reaches <strong>~2800 Elo by <em>thinking</em> (MCTS search), not by <em>growing</em>
+(parameters)</strong> — the same capability, a far cheaper resource mix. Adaptive MCTS beats and out-scales
+fixed-depth search; a wide→narrow MCTS cascade matches it at up to 4.8× less compute (buying strength
+back as <em>latency</em> rather than parameters). On the self-learning side the results are honestly negative:
 self-play, a self-referential ladder, and derivative-free evolution all <strong>fail to cross the ~2000
 plateau</strong> (evolution's apparent escape was a noise artifact), and plurality-voting committees do not
 reliably de-bias — though model <strong>agreement is a robust teacher-free confidence signal</strong>.</p>
