@@ -82,7 +82,11 @@ def _despan_svgs(html):
 
 
 def main():
-    text = open(MD).read()
+    import sys
+    md = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else MD   # optional input .md
+    HTML = md[:-3] + ".html"
+    PDF = md[:-3] + ".pdf"
+    text = open(md).read()
     body = markdown.markdown(
         text, extensions=["tables", "fenced_code", "sane_lists", "attr_list"])
     body = _despan_svgs(body)
