@@ -103,29 +103,34 @@ converts what the evaluator already knows into stronger play; it cannot lift the
 
 ## 1. Introduction
 
-**Every AI system spends finite resources to buy capability** — parameters (memory), training data,
-inference-time computation, latency, and human supervision. The engineering question is rarely "how
-do I maximize any one of them" but **"how do I *allocate* them efficiently to reach a target level of
-performance?"** More capacity, more data, more search, and more supervision each raise strength — but
-each carries a cost, and to a large degree they *substitute* for one another. This paper is an
-**empirical study of those tradeoffs**: we fix the objective (playing strength) and measure what each
-resource actually buys, and where spending on one is wasted because a *different* resource is the
-binding constraint. We claim **no solved optimal-allocation rule** — the contribution is a *framework*
-and a set of *measured tradeoff curves*, demonstrated in chess as a clean, fully-observable testbed.
+**Every AI system faces an economic problem.** Capability is purchased with finite resources — model
+capacity (memory), training data, inference-time computation, latency, and human supervision. The
+engineering objective is not to maximize any one resource but to **maximize capability per unit
+cost**: more capacity, data, search, or supervision each raise strength, but each carries a cost and
+to a large degree they *substitute* for one another. This paper presents an **empirical framework for
+measuring those tradeoffs**, using chess as a clean, fully-observable testbed — we fix the objective
+(playing strength) and measure what each resource buys, and where spending on one is wasted because a
+*different* resource is the binding constraint. We claim **no solved optimal-allocation rule**; the
+contribution is the framework and a set of *measured tradeoff curves*.
 
-The study runs as **three allocation questions** of increasing autonomy:
-1. **Open loop — spend on capacity/architecture.** What single-forward-pass strength can a fixed
-   memory budget buy, and does the right architecture beat raw parameter count?
-2. **Closed loop — spend on inference-time search.** How much does search on a learned value function
-   add per unit of compute and latency, and how *cheaply* can that strength be bought?
-3. **Self-learning — spend without supervision.** With no labels, where should compute go — self-play,
-   committees, evolution, merging — and does any of it pay?
+The argument is a three-level hierarchy: **(1) AI resource allocation** — the main thesis; **(2) the
+evaluator–search decomposition** — the analytical model of how capacity and search combine into
+strength; and **(3) binding-bottleneck analysis** — the diagnostic that identifies, at any stage,
+which single resource to spend on next.
+
+The experiments are **three allocation questions** of increasing autonomy:
+1. **Stage 1 (open loop):** given a fixed memory budget, **what architecture buys the most
+   capability?**
+2. **Stage 2 (closed loop):** given a fixed evaluator, **what is the cheapest way to buy additional
+   strength with inference-time computation?**
+3. **Stage 3 (self-learning):** without external labels, **what is the most efficient way to improve
+   the evaluator?**
 
 We measure each independently. The framing is also **control-theoretic** (Bertsekas 2022, *Lessons
 from AlphaZero for Optimal, Model Predictive, and Adaptive Control*): open-loop policy = feedforward
-controller, closed-loop search = model-predictive control (receding-horizon planning with a learned
-terminal cost), self-play = iterative/adaptive learning control. Chess is only the testbed; the goal
-is a *generic* way to reason about resource tradeoffs in sequential decision-making.
+controller, closed-loop search = model-predictive control, self-play = iterative/adaptive learning
+control. Chess is only the testbed; the goal is a *generic* way to reason about resource tradeoffs in
+sequential decision-making.
 
 The central *tool* for efficient allocation is a simple diagnostic: **at any given stage, strength is
 gated by a *single binding resource* — capacity, search, data, or the quality of self-generated
@@ -501,7 +506,7 @@ on the same net and positions — the same nodes searched, only the launch patte
 | batched, 64 leaves/launch | — | **23×** |
 | batched, 128 leaves/launch | — | **37×** |
 
-*(ratios measured under light concurrent load, so conservative.)* A **~13–37×** per-move speedup at
+*(ratios measured under concurrent GPU load, so approximate; a clean solo-GPU figure is pending.)* A **~13–37×** per-move speedup at
 identical strength is enough to run **MCTS-3200 well below today's MCTS-800 latency**. **The batch-1
 numbers should therefore be read as a ceiling on cost, not the method's efficiency**, and the true
 strength-vs-latency curve sits far to the left of the one we plot.

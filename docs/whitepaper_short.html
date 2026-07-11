@@ -108,27 +108,31 @@ method fails to beat a single model. Treat those as the paper's claims; treat 28
 </ol>
 <hr />
 <h2>1. Introduction</h2>
-<p><strong>Every AI system spends finite resources to buy capability</strong> — parameters (memory), training data,
-inference-time computation, latency, and human supervision. The engineering question is rarely "how
-do I maximize any one of them" but <strong>"how do I <em>allocate</em> them efficiently to reach a target level of
-performance?"</strong> More capacity, more data, more search, and more supervision each raise strength — but
-each carries a cost, and to a large degree they <em>substitute</em> for one another. This paper is an
-<strong>empirical study of those tradeoffs</strong>: we fix the objective (playing strength) and measure what each
-resource actually buys, and where spending on one is wasted because a <em>different</em> resource is the
-binding constraint. We claim <strong>no solved optimal-allocation rule</strong> — the contribution is a <em>framework</em>
-and a set of <em>measured tradeoff curves</em>, demonstrated in chess as a clean, fully-observable testbed.</p>
-<p>The study runs as <strong>three allocation questions</strong> of increasing autonomy:
-1. <strong>Open loop — spend on capacity/architecture.</strong> What single-forward-pass strength can a fixed
-   memory budget buy, and does the right architecture beat raw parameter count?
-2. <strong>Closed loop — spend on inference-time search.</strong> How much does search on a learned value function
-   add per unit of compute and latency, and how <em>cheaply</em> can that strength be bought?
-3. <strong>Self-learning — spend without supervision.</strong> With no labels, where should compute go — self-play,
-   committees, evolution, merging — and does any of it pay?</p>
+<p><strong>Every AI system faces an economic problem.</strong> Capability is purchased with finite resources — model
+capacity (memory), training data, inference-time computation, latency, and human supervision. The
+engineering objective is not to maximize any one resource but to <strong>maximize capability per unit
+cost</strong>: more capacity, data, search, or supervision each raise strength, but each carries a cost and
+to a large degree they <em>substitute</em> for one another. This paper presents an <strong>empirical framework for
+measuring those tradeoffs</strong>, using chess as a clean, fully-observable testbed — we fix the objective
+(playing strength) and measure what each resource buys, and where spending on one is wasted because a
+<em>different</em> resource is the binding constraint. We claim <strong>no solved optimal-allocation rule</strong>; the
+contribution is the framework and a set of <em>measured tradeoff curves</em>.</p>
+<p>The argument is a three-level hierarchy: <strong>(1) AI resource allocation</strong> — the main thesis; <strong>(2) the
+evaluator–search decomposition</strong> — the analytical model of how capacity and search combine into
+strength; and <strong>(3) binding-bottleneck analysis</strong> — the diagnostic that identifies, at any stage,
+which single resource to spend on next.</p>
+<p>The experiments are <strong>three allocation questions</strong> of increasing autonomy:
+1. <strong>Stage 1 (open loop):</strong> given a fixed memory budget, <strong>what architecture buys the most
+   capability?</strong>
+2. <strong>Stage 2 (closed loop):</strong> given a fixed evaluator, <strong>what is the cheapest way to buy additional
+   strength with inference-time computation?</strong>
+3. <strong>Stage 3 (self-learning):</strong> without external labels, <strong>what is the most efficient way to improve
+   the evaluator?</strong></p>
 <p>We measure each independently. The framing is also <strong>control-theoretic</strong> (Bertsekas 2022, <em>Lessons
 from AlphaZero for Optimal, Model Predictive, and Adaptive Control</em>): open-loop policy = feedforward
-controller, closed-loop search = model-predictive control (receding-horizon planning with a learned
-terminal cost), self-play = iterative/adaptive learning control. Chess is only the testbed; the goal
-is a <em>generic</em> way to reason about resource tradeoffs in sequential decision-making.</p>
+controller, closed-loop search = model-predictive control, self-play = iterative/adaptive learning
+control. Chess is only the testbed; the goal is a <em>generic</em> way to reason about resource tradeoffs in
+sequential decision-making.</p>
 <p>The central <em>tool</em> for efficient allocation is a simple diagnostic: <strong>at any given stage, strength is
 gated by a <em>single binding resource</em> — capacity, search, data, or the quality of self-generated
 signal — and spending on any <em>non-binding</em> resource returns almost nothing.</strong> So the efficient move
@@ -661,7 +665,7 @@ on the same net and positions — the same nodes searched, only the launch patte
 </tr>
 </tbody>
 </table>
-<p><em>(ratios measured under light concurrent load, so conservative.)</em> A <strong>~13–37×</strong> per-move speedup at
+<p><em>(ratios measured under concurrent GPU load, so approximate; a clean solo-GPU figure is pending.)</em> A <strong>~13–37×</strong> per-move speedup at
 identical strength is enough to run <strong>MCTS-3200 well below today's MCTS-800 latency</strong>. <strong>The batch-1
 numbers should therefore be read as a ceiling on cost, not the method's efficiency</strong>, and the true
 strength-vs-latency curve sits far to the left of the one we plot.</p>
