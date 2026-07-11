@@ -40,8 +40,8 @@ self-referential ladder, evolution, and plurality voting all fail to cross the p
 confirming it). (A small-scale statement: AlphaZero-scale self-play bootstraps far past its start.)
 
 The unifying principle — the **evaluator–search decomposition** — is **strength = evaluator ×
-search**: search sets how *closely* you reach the evaluator's ceiling, the evaluator sets *where* it
-is, and that ceiling is **the quality of the information the evaluator was trained on**. Within a
+search**: search sets how *closely* you approach the evaluator's ceiling; the evaluator sets *where
+that ceiling is* — and that ceiling is **the quality of the information the evaluator was trained on**. Within a
 move, search *converts* the net's latent information into better decisions (cutting variance, not
 bias); it cannot create what the net never learned — the reason voting and merging don't help either.
 **Self-play and evolution differ in kind**: they *can* inject new information from the environment, so
