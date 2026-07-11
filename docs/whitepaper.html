@@ -431,16 +431,17 @@ averages over it.</strong> MCTS wins Stage 2, reaching ~2800 on the fixed 3.45M 
   <text x="580" y="59" text-anchor="end" font-size="9" fill="#666">~2800 top-human</text>
 </svg></p>
 <h3>4.2 Search efficiency — the wide→narrow MCTS cascade (new)</h3>
-<p><strong>Where the cascade comes from — grandmaster intuition.</strong> The cascade is not a standard MCTS variant;
-it mechanizes how strong <em>human</em> players search under a finite clock and finite mental compute. A
-grandmaster does not walk the game tree blindly. They first use <strong>intuition — a learned evaluation —
-to spot the few candidate moves worth considering</strong> (a <em>wide, shallow</em> scan); they then progressively
-<strong>prune to the strongest lines and calculate those deeper</strong>, trading horizontal breadth for vertical
-depth <em>in stages</em>, so that expensive deep calculation is spent only on moves that survived the cheap
-scan; at the end they carry <strong>one or two candidate lines very deep</strong> (17–20 plies in sharp positions).
-The cascade is a direct mechanization of that staged <strong>wide→narrow</strong> allocation of a scarce compute
-budget — the same resource-economy a human brings to a ticking clock, which is exactly why it recovers
-so much wasted search.</p>
+<p><strong>Where the cascade comes from — expert human analysis.</strong> The cascade is not a standard MCTS variant;
+it was inspired by the resource-allocation principle <strong>visible in how expert human players analyze
+under a finite clock and finite mental effort</strong>. A grandmaster does not walk the game tree blindly:
+they first use <strong>intuition — a learned evaluation — to spot the few candidate moves worth
+considering</strong> (a <em>wide, shallow</em> scan), then progressively <strong>prune to the strongest lines and
+calculate those deeper</strong>, trading breadth for depth <em>in stages</em>, and at the end carry <strong>one or two
+lines very deep</strong> (17–20 plies in sharp positions). The cascade <strong>operationalizes the same
+resource-allocation principle observed in expert human analysis</strong>: spend inexpensive computation
+broadly, then reserve expensive computation for the few candidates that remain plausible — which is
+exactly why it recovers so much otherwise-wasted search. (We claim the <em>principle</em>, not a precise
+cognitive model.)</p>
 <p>Given MCTS wins, does the <strong>allocation</strong> of a fixed sim budget matter? The <strong>cascade</strong> runs MCTS in
 <em>stages</em>: a <strong>wide</strong> stage (all moves, high <code>c_puct</code>, few sims) ranks broadly and passes its top-k by
 visit count to a <strong>narrower, deeper</strong> stage (fewer moves, more sims, lower <code>c_puct</code>), funnelling the
