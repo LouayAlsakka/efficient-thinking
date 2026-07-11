@@ -420,22 +420,24 @@ points:
 | MCTS-1600 | **2780 ±82** | ~1.9 s |
 | MCTS-3200 | **2839 ±76** | ~3.8 s |
 | MCTS-6400 | **2903 ±82** | ~7 s |
+| MCTS-12800 | **2967 ±115** | ~14 s |
 
 *All on the same Stockfish high ladder (2500/2800/3050). The round ~2150 / ~2800 headline figures
 used elsewhere sit within the stated **±100** ladder uncertainty of these precise values.*
 
 Three observations:
 
-**1. Search scales *log-linearly* — ~+55 Elo per doubling, no saturation observed through 6400.**
+**1. Search scales *log-linearly* — ~+55 Elo per doubling, no saturation observed through 12800.**
 The *first* slice of search is huge and cheap: MCTS-800 alone adds **+286** over the raw policy
-(2448→2734). Past that, each *doubling* of simulations adds a steady **~+55 Elo** (2734 → 2780 →
-2839 → 2903) — a clean logarithmic climb whose cumulative 800→6400 gain (**+169**) is well above the
-±82 noise, even though single doublings sit within it. *(An earlier draft claimed "saturation at
-3200" from a **head-to-head** sims-sweep; that measurement was noisy and non-monotonic — +12/+260/+191
-per rung — and the clean absolute-ladder curve supersedes it. Head-to-head deltas also **inflate**
-absolute gains via ceiling compression: 3200-vs-800 reads +260 head-to-head but only +105 absolute.)*
-So more inference-time compute keeps paying — with a fixed evaluator, ~+55 Elo per doubling — and we
-have **not** reached this net's search ceiling by 6400; the marginal Elo *per compute* falls, but the
+(2448→2734). Past that, each *doubling* of simulations adds a steady **~+55–64 Elo** (2734 → 2780 →
+2839 → 2903 → 2967) — a clean logarithmic climb, unbroken to **16× the base budget**, whose cumulative
+800→12800 gain (**+233**) is far above the ±~100 noise, even though single doublings sit within it.
+*(An earlier draft claimed "saturation at 3200" from a **head-to-head** sims-sweep; that measurement
+was noisy and non-monotonic — +12/+260/+191 per rung — and the clean absolute-ladder curve supersedes
+it. Head-to-head deltas also **inflate** absolute gains via ceiling compression: 3200-vs-800 reads
++260 head-to-head but only +105 absolute.)* So more inference-time compute keeps paying — with a fixed
+evaluator, ~+55 Elo per doubling — and we **never reach this net's search ceiling** (tested to 12800,
+16×); the marginal Elo *per compute* falls, but the
 curve itself does not flatten in the range measured.
 
 **2. Latency scales *sub-linearly* with sims — a red flag, not a feature.** MCTS-3200 does 4× the
@@ -507,21 +509,30 @@ so parameters grow far slower than width². On a fixed **~50M-position** subset:
 uncertainty.** For contrast, on the same architecture *8× more data* (10 shards → full 79) moves Elo
 **~+90**.
 
-**But this screen is confounded, and a full sweep is resolving it.** Both nets saw only ~50M
-positions — 8× less than the full-data baseline — so a wider net had little extra signal to fill its
-extra room. We are therefore running a **capacity sweep on the full ~394M data**: 1× (3.45M), 1.4×
-(4.81M), **2× (w184, 7.04M)**, and **4× (w288, 14.2M)**, all matched to the 2734 full-data baseline.
-Its shape is diagnostic: **a curve that rises with capacity** ⇒ capacity *does* lift the ceiling once
-data-fed (the 50M null was starvation); **a curve that stays flat** ⇒ capacity is inert at this data
-scale and *data/signal is the binding constraint*. Either way the scoped claim is **"more parameters
-were not the binding lever *in this data regime*,"** not "parameters never matter" — at AlphaZero/LLM
-scale, where models are capacity-bound and data abundant, more parameters clearly do help.
+**But this screen is confounded, and a full-data sweep is resolving it.** Both nets above saw only
+~50M positions — 8× less than the baseline — so a wider net had little extra signal to fill its extra
+room. We therefore repeat the sweep on the **full ~394M data**, matched to the 2734 baseline:
+
+| Capacity (full data) | Params | MCTS-800 | Δ vs 1× |
+|---|---:|---:|---:|
+| 1× (w96) | 3.45M | 2734 | — |
+| 1.4× (w136) | 4.81M | **2794** | **+60** |
+| 2× (w184) | 7.04M | *training* | — |
+| 4× (w288) | 14.2M | *training* | — |
+
+The first point is already diagnostic: the 1.4×-vs-1× gap **widens from +18 (at 50M) to +60 (at full
+data)** — still within the ±~110 noise, but the *direction* says the 50M null was **data starvation**,
+not capacity being inert. The **2× and 4× points (training)** decide whether the curve keeps climbing
+(capacity genuinely lifts the ceiling once data-matched) or flattens near ~2794 (capacity saturates
+fast at this scale). Either way the scoped claim holds — **capacity is the weakest of the levers *in
+this data regime*, not "parameters never matter"**: at AlphaZero/LLM scale, where models are
+capacity-bound and data abundant, more parameters clearly do help.
 
 Subject to that running sweep, the lever ranking of the study, all on the same ladder, reads:
 
 | Lever | Elo moved | Cost |
 |---|---:|---|
-| **Search** (open → 6400 sims) | **+286, then ~+55 / doubling** (log-linear, unsaturated) | ×2 latency / doubling |
+| **Search** (open → 12800 sims) | **+286, then ~+55 / doubling** (log-linear, unsaturated) | ×2 latency / doubling |
 | **Data** (10 shards → full 79) | **~+90** | 8× training data |
 | **Capacity** (1× → 1.4×, at 50M) | **~0** (n.s.; full-data sweep running) | more params & compute |
 
@@ -882,7 +893,7 @@ wasted compute; it is a measurement that says *"strength is not gated here — l
 | **Architecture** (conv vs MLP) | large gain | bias-bound — wrong prior caps a big net | fix the inductive bias *before* scaling |
 | **Capacity** (2× params @ 50M) | ~0 (null) | *not* capacity-bound in this data regime | add data, not parameters (here) |
 | **Data** (10 → 79 shards) | +~90 | data/signal-bound | more, more-diverse labels |
-| **Search amount** (open → 6400 sims) | +286, then ~+55/doubling (log-linear) | search extracts value; evaluator caps its *return* | keep searching; raise the evaluator to lift the ceiling |
+| **Search amount** (open → 12800 sims) | +286, then ~+55/doubling (log-linear) | search extracts value; evaluator caps its *return* | keep searching; raise the evaluator to lift the ceiling |
 | **Search allocation** (cascade shape) | flat (±noise) | *not* allocation-bound at fixed budget | reallocate for **speed**, not strength |
 | **Search implementation** (batch-1) | latency only | throughput-bound by engineering | batch leaves → 10–50× speed, same strength |
 | **Self-play signal** | plateau | self-signal-quality-bound | can't exceed its own signal at this scale |
@@ -986,7 +997,7 @@ reliably de-bias — though model **agreement is a robust teacher-free confidenc
 Above all, the **method** transfers: at each stage a *single lever binds*, effort on the others is
 nearly wasted, and only a controlled experiment reveals which. Open-loop was **capacity-bound**;
 adding search made us **search-bound** — and search keeps paying **log-linearly (~+55 Elo per
-doubling, unsaturated through 6400 sims)**, so the ceiling is set by the evaluator, not by running
+doubling, unsaturated through 12800 sims)**, so the ceiling is set by the evaluator, not by running
 out of search; then the evaluator itself binds — and at our data scale it was **data-bound**, not
 capacity-bound: adding parameters at fixed data (1.4×) bought **~0 Elo** (a full 1×/1.4×/2×/4×
 capacity sweep on the complete dataset is running to confirm capacity stays inert once well-fed). The transferable *observation*, recurring from every direction we pushed, is that

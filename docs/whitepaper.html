@@ -600,21 +600,27 @@ points:</p>
 <td style="text-align: right;"><strong>2903 ±82</strong></td>
 <td style="text-align: right;">~7 s</td>
 </tr>
+<tr>
+<td>MCTS-12800</td>
+<td style="text-align: right;"><strong>2967 ±115</strong></td>
+<td style="text-align: right;">~14 s</td>
+</tr>
 </tbody>
 </table>
 <p><em>All on the same Stockfish high ladder (2500/2800/3050). The round ~2150 / ~2800 headline figures
 used elsewhere sit within the stated </em><em>±100</em><em> ladder uncertainty of these precise values.</em></p>
 <p>Three observations:</p>
-<p><strong>1. Search scales <em>log-linearly</em> — ~+55 Elo per doubling, no saturation observed through 6400.</strong>
+<p><strong>1. Search scales <em>log-linearly</em> — ~+55 Elo per doubling, no saturation observed through 12800.</strong>
 The <em>first</em> slice of search is huge and cheap: MCTS-800 alone adds <strong>+286</strong> over the raw policy
-(2448→2734). Past that, each <em>doubling</em> of simulations adds a steady <strong>~+55 Elo</strong> (2734 → 2780 →
-2839 → 2903) — a clean logarithmic climb whose cumulative 800→6400 gain (<strong>+169</strong>) is well above the
-±82 noise, even though single doublings sit within it. <em>(An earlier draft claimed "saturation at
-3200" from a </em><em>head-to-head</em><em> sims-sweep; that measurement was noisy and non-monotonic — +12/+260/+191
-per rung — and the clean absolute-ladder curve supersedes it. Head-to-head deltas also </em><em>inflate</em><em>
-absolute gains via ceiling compression: 3200-vs-800 reads +260 head-to-head but only +105 absolute.)</em>
-So more inference-time compute keeps paying — with a fixed evaluator, ~+55 Elo per doubling — and we
-have <strong>not</strong> reached this net's search ceiling by 6400; the marginal Elo <em>per compute</em> falls, but the
+(2448→2734). Past that, each <em>doubling</em> of simulations adds a steady <strong>~+55–64 Elo</strong> (2734 → 2780 →
+2839 → 2903 → 2967) — a clean logarithmic climb, unbroken to <strong>16× the base budget</strong>, whose cumulative
+800→12800 gain (<strong>+233</strong>) is far above the ±~100 noise, even though single doublings sit within it.
+<em>(An earlier draft claimed "saturation at 3200" from a </em><em>head-to-head</em><em> sims-sweep; that measurement
+was noisy and non-monotonic — +12/+260/+191 per rung — and the clean absolute-ladder curve supersedes
+it. Head-to-head deltas also </em><em>inflate</em><em> absolute gains via ceiling compression: 3200-vs-800 reads
++260 head-to-head but only +105 absolute.)</em> So more inference-time compute keeps paying — with a fixed
+evaluator, ~+55 Elo per doubling — and we <strong>never reach this net's search ceiling</strong> (tested to 12800,
+16×); the marginal Elo <em>per compute</em> falls, but the
 curve itself does not flatten in the range measured.</p>
 <p><strong>2. Latency scales <em>sub-linearly</em> with sims — a red flag, not a feature.</strong> MCTS-3200 does 4× the
 simulations of MCTS-800 yet is only ~2.8× slower. The cause: this search evaluates leaves <strong>one
@@ -723,15 +729,52 @@ so parameters grow far slower than width². On a fixed <strong>~50M-position</st
 <p><strong>+18 Elo with search — no statistically significant difference within our ±107 Elo evaluation
 uncertainty.</strong> For contrast, on the same architecture <em>8× more data</em> (10 shards → full 79) moves Elo
 <strong>~+90</strong>.</p>
-<p><strong>But this screen is confounded, and a full sweep is resolving it.</strong> Both nets saw only ~50M
-positions — 8× less than the full-data baseline — so a wider net had little extra signal to fill its
-extra room. We are therefore running a <strong>capacity sweep on the full ~394M data</strong>: 1× (3.45M), 1.4×
-(4.81M), <strong>2× (w184, 7.04M)</strong>, and <strong>4× (w288, 14.2M)</strong>, all matched to the 2734 full-data baseline.
-Its shape is diagnostic: <strong>a curve that rises with capacity</strong> ⇒ capacity <em>does</em> lift the ceiling once
-data-fed (the 50M null was starvation); <strong>a curve that stays flat</strong> ⇒ capacity is inert at this data
-scale and <em>data/signal is the binding constraint</em>. Either way the scoped claim is <strong>"more parameters
-were not the binding lever <em>in this data regime</em>,"</strong> not "parameters never matter" — at AlphaZero/LLM
-scale, where models are capacity-bound and data abundant, more parameters clearly do help.</p>
+<p><strong>But this screen is confounded, and a full-data sweep is resolving it.</strong> Both nets above saw only
+~50M positions — 8× less than the baseline — so a wider net had little extra signal to fill its extra
+room. We therefore repeat the sweep on the <strong>full ~394M data</strong>, matched to the 2734 baseline:</p>
+<table>
+<thead>
+<tr>
+<th>Capacity (full data)</th>
+<th style="text-align: right;">Params</th>
+<th style="text-align: right;">MCTS-800</th>
+<th style="text-align: right;">Δ vs 1×</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1× (w96)</td>
+<td style="text-align: right;">3.45M</td>
+<td style="text-align: right;">2734</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>1.4× (w136)</td>
+<td style="text-align: right;">4.81M</td>
+<td style="text-align: right;"><strong>2794</strong></td>
+<td style="text-align: right;"><strong>+60</strong></td>
+</tr>
+<tr>
+<td>2× (w184)</td>
+<td style="text-align: right;">7.04M</td>
+<td style="text-align: right;"><em>training</em></td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>4× (w288)</td>
+<td style="text-align: right;">14.2M</td>
+<td style="text-align: right;"><em>training</em></td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p>The first point is already diagnostic: the 1.4×-vs-1× gap <strong>widens from +18 (at 50M) to +60 (at full
+data)</strong> — still within the ±~110 noise, but the <em>direction</em> says the 50M null was <strong>data starvation</strong>,
+not capacity being inert. The <strong>2× and 4× points (training)</strong> decide whether the curve keeps climbing
+(capacity genuinely lifts the ceiling once data-matched) or flattens near ~2794 (capacity saturates
+fast at this scale). Either way the scoped claim holds — <strong>capacity is the weakest of the levers <em>in
+this data regime</em>, not "parameters never matter"</strong>: at AlphaZero/LLM scale, where models are
+capacity-bound and data abundant, more parameters clearly do help.</p>
 <p>Subject to that running sweep, the lever ranking of the study, all on the same ladder, reads:</p>
 <table>
 <thead>
@@ -743,7 +786,7 @@ scale, where models are capacity-bound and data abundant, more parameters clearl
 </thead>
 <tbody>
 <tr>
-<td><strong>Search</strong> (open → 6400 sims)</td>
+<td><strong>Search</strong> (open → 12800 sims)</td>
 <td style="text-align: right;"><strong>+286, then ~+55 / doubling</strong> (log-linear, unsaturated)</td>
 <td>×2 latency / doubling</td>
 </tr>
@@ -1236,7 +1279,7 @@ wasted compute; it is a measurement that says <em>"strength is not gated here �
 <td>more, more-diverse labels</td>
 </tr>
 <tr>
-<td><strong>Search amount</strong> (open → 6400 sims)</td>
+<td><strong>Search amount</strong> (open → 12800 sims)</td>
 <td>+286, then ~+55/doubling (log-linear)</td>
 <td>search extracts value; evaluator caps its <em>return</em></td>
 <td>keep searching; raise the evaluator to lift the ceiling</td>
@@ -1365,7 +1408,7 @@ reliably de-bias — though model <strong>agreement is a robust teacher-free con
 <p>Above all, the <strong>method</strong> transfers: at each stage a <em>single lever binds</em>, effort on the others is
 nearly wasted, and only a controlled experiment reveals which. Open-loop was <strong>capacity-bound</strong>;
 adding search made us <strong>search-bound</strong> — and search keeps paying <strong>log-linearly (~+55 Elo per
-doubling, unsaturated through 6400 sims)</strong>, so the ceiling is set by the evaluator, not by running
+doubling, unsaturated through 12800 sims)</strong>, so the ceiling is set by the evaluator, not by running
 out of search; then the evaluator itself binds — and at our data scale it was <strong>data-bound</strong>, not
 capacity-bound: adding parameters at fixed data (1.4×) bought <strong>~0 Elo</strong> (a full 1×/1.4×/2×/4×
 capacity sweep on the complete dataset is running to confirm capacity stays inert once well-fed). The transferable <em>observation</em>, recurring from every direction we pushed, is that
