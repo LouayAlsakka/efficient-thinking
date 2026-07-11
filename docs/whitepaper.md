@@ -335,6 +335,18 @@ averages over it.** MCTS wins Stage 2, reaching ~2800 on the fixed 3.45M net.
 </svg>
 
 ### 4.2 Search efficiency — the wide→narrow MCTS cascade (new)
+
+**Where the cascade comes from — grandmaster intuition.** The cascade is not a standard MCTS variant;
+it mechanizes how strong *human* players search under a finite clock and finite mental compute. A
+grandmaster does not walk the game tree blindly. They first use **intuition — a learned evaluation —
+to spot the few candidate moves worth considering** (a *wide, shallow* scan); they then progressively
+**prune to the strongest lines and calculate those deeper**, trading horizontal breadth for vertical
+depth *in stages*, so that expensive deep calculation is spent only on moves that survived the cheap
+scan; at the end they carry **one or two candidate lines very deep** (17–20 plies in sharp positions).
+The cascade is a direct mechanization of that staged **wide→narrow** allocation of a scarce compute
+budget — the same resource-economy a human brings to a ticking clock, which is exactly why it recovers
+so much wasted search.
+
 Given MCTS wins, does the **allocation** of a fixed sim budget matter? The **cascade** runs MCTS in
 *stages*: a **wide** stage (all moves, high `c_puct`, few sims) ranks broadly and passes its top-k by
 visit count to a **narrower, deeper** stage (fewer moves, more sims, lower `c_puct`), funnelling the
