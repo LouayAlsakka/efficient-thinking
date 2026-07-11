@@ -272,6 +272,14 @@ def train(cfg: RunConfig, dataset):
                 grads = _clip_grads(grads, cfg.grad_clip)
             opt.update(model, grads)
             mx.eval(model.parameters(), opt.state)
+            if step % 500 == 0:                      # periodic GPU cache flush: mitigates the
+                try:                                 # sporadic Metal buffer-fragmentation hang
+                    mx.metal.clear_cache()           # seen on long conv runs (benign; no math change)
+                except Exception:
+                    try:
+                        mx.clear_cache()
+                    except Exception:
+                        pass
             if step % cfg.log_every == 0:
                 rate = (step + 1) * cfg.batch_size / (time.time() - t0)
                 print(f"  epoch {epoch} step {step} loss {loss.item():.4f} "

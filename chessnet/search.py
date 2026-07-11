@@ -305,6 +305,103 @@ class MCTSPlayer:
         return moves, idxs, probs
 
 
+class BatchedMCTSPlayer(MCTSPlayer):
+    """MCTS with parallel leaf collection (virtual loss) + BATCHED leaf evaluation — the fix for the
+    batch-1 throughput bottleneck. Each wave descends up to `batch` paths from the root, applying a
+    virtual loss so they diverge, then evaluates all distinct collected leaves in ONE forward pass
+    (fills the GPU) instead of one-at-a-time. Same search in expectation as MCTSPlayer; the point is
+    throughput. Virtual loss adds (N+=vl, W+=vl) to each node on the descended path — raising its
+    value from its own mover's view, so the parent's score (1 - child.q()) drops and later paths in
+    the wave avoid it — and is removed at back-up."""
+
+    def __init__(self, model, batch: int = 32, virtual_loss: int = 1, **kw):
+        super().__init__(model, **kw)
+        self.batch = batch
+        self.vl = virtual_loss
+
+    def _policy_value_batch(self, boards):
+        """One forward pass over many boards → list of (legal_moves, priors, value)."""
+        xs = mx.array(np.stack([self.encode(b) for b in boards]))
+        logits, v = self.model(xs, return_value=True)
+        logits = np.array(logits); v = np.array(v).reshape(-1)
+        out = []
+        for i, b in enumerate(boards):
+            mirrored = b.turn == chess.BLACK
+            legal = list(b.legal_moves)
+            z = np.array([logits[i][move_to_index(mv, mirrored)] for mv in legal])
+            z = z - z.max(); p = np.exp(z); p = p / p.sum()
+            out.append((legal, p, float(v[i])))
+        return out
+
+    def _descend(self, board, root):
+        """Select root→leaf, applying virtual loss to each node on the path."""
+        node = root
+        node.N += self.vl; node.W += self.vl
+        path = [node]
+        while node.expanded:
+            sqrtN = math.sqrt(node.N)
+            best_u, best_mv, best_child = -1e30, None, None
+            for mv, ch in node.children.items():
+                q = (1.0 - ch.q()) if ch.N else 0.5
+                u = q + self.c_puct * ch.P * sqrtN / (1 + ch.N)
+                if u > best_u:
+                    best_u, best_mv, best_child = u, mv, ch
+            board.push(best_mv)
+            node = best_child
+            node.N += self.vl; node.W += self.vl
+            path.append(node)
+        return path, board, _terminal_score(board)
+
+    def _backup(self, path, v):
+        for node in reversed(path):
+            node.N -= self.vl; node.W -= self.vl     # remove virtual loss
+            node.N += 1; node.W += v                 # real back-up (alternate perspective)
+            v = 1.0 - v
+
+    def _run(self, board, root_moves=None):
+        root = _Node(0.0)
+        self._simulate(board.copy(), root)           # first sim expands the root (single eval)
+        if root_moves is not None and root.children:
+            keep = {mv: ch for mv, ch in root.children.items() if mv in root_moves}
+            if keep:
+                tot = sum(ch.P for ch in keep.values()) or 1.0
+                for ch in keep.values():
+                    ch.P /= tot
+                root.children = keep
+        if self.dir_alpha > 0 and root.children:
+            noise = self._rng.dirichlet([self.dir_alpha] * len(root.children))
+            for (mv, ch), n in zip(root.children.items(), noise):
+                ch.P = (1 - self.dir_eps) * ch.P + self.dir_eps * float(n)
+        remaining = self.sims - 1
+        while remaining > 0:
+            wave = min(self.batch, remaining)
+            order = []; bucket = {}                   # leaf_node -> [board, term, [paths]]
+            for _ in range(wave):
+                path, b, term = self._descend(board.copy(), root)
+                leaf = path[-1]
+                if leaf in bucket:
+                    bucket[leaf][2].append(path)
+                else:
+                    bucket[leaf] = [b, term, [path]]; order.append(leaf)
+            to_eval = [l for l in order if bucket[l][1] is None and not l.expanded]
+            res = dict(zip(to_eval, self._policy_value_batch([bucket[l][0] for l in to_eval]))) if to_eval else {}
+            for leaf in order:
+                b, term, paths = bucket[leaf]
+                if term is not None:
+                    v = term
+                elif leaf in res:
+                    legal, priors, v = res[leaf]
+                    for mv, p in zip(legal, priors):
+                        leaf.children[mv] = _Node(float(p))
+                    leaf.expanded = True
+                else:
+                    v = leaf.q() if leaf.N else 0.5   # already expanded (rare same-wave collision)
+                for path in paths:
+                    self._backup(path, v)
+            remaining -= wave
+        return root
+
+
 # ============================================================================
 # Cascade search — a SEQUENTIAL funnel over search SHAPES (wide→square→narrow).
 # Stage 1 looks at many candidate moves but shallow (cheap, prunes junk); each
