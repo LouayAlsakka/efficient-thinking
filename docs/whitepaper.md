@@ -28,34 +28,26 @@ parameters". *(If you remember three numbers, remember these: a **14 MB evaluato
 search**, and **4.8× search efficiency** from the cascade.)*
 
 **The primary contribution is an empirical *framework* for allocating finite AI resources —
-parameters, data, search, and latency — to a fixed capability goal, with measured tradeoff curves for
-each; the staged MCTS cascade is its sharpest concrete demonstration.** Three specific results
-support it. **(1)** A **wide→narrow MCTS cascade** that funnels the simulation budget through
-progressively narrower, deeper stages **matches flat MCTS at up to ~4.8× less compute per move** —
-our most practical result. **(2)** A direct **MCTS-vs-fixed-depth** comparison: adaptive
-search both beats alpha-beta at equal compute and *keeps scaling*, while fixed depth plateaus.
-**(3)** A **teacher-free self-learning** study (self-play, a self-referential ladder, evolution,
-committees): one robust positive — **agreement predicts correctness**, a confidence signal needing
-no oracle — and honest negatives — none of these crosses the self-play plateau, and plurality voting
-does not de-bias. A **capacity sweep** agrees: adding parameters at fixed data (1.4×, 3.45M→4.81M)
-moves strength **~0**, while 8× more *data* moves it ~+90 — capacity is the *weakest* lever in this
-regime (a full 1×/1.4×/2×/4× sweep on the complete dataset is in progress to confirm it). (A
-small-scale statement: AlphaZero-scale self-play bootstraps far past its start; we characterize the
-regime we could run.)
+parameters, data, search, latency — to a fixed capability goal, with measured tradeoff curves; the
+staged MCTS cascade is its sharpest demonstration.** Three results support it. **(1)** A **wide→narrow
+MCTS cascade** matching flat MCTS at up to **~4.8× less compute per move** — our most practical result.
+**(2)** A direct **MCTS-vs-fixed-depth** comparison: adaptive search beats alpha-beta at equal compute
+and *keeps scaling*, while fixed depth plateaus. **(3)** A **teacher-free self-learning** study: one
+robust positive — **agreement predicts correctness** — and honest negatives — self-play, a
+self-referential ladder, evolution, and plurality voting all fail to cross the plateau or de-bias. A
+**capacity sweep** agrees: 1.4× more parameters at fixed data (3.45M→4.81M) move strength **~0** while
+8× more *data* moves it **~+90** — capacity is the *weakest* lever here (a full 1×/1.4×/2×/4× sweep is
+confirming it). (A small-scale statement: AlphaZero-scale self-play bootstraps far past its start.)
 
 The unifying principle — the **evaluator–search decomposition** — is **strength = evaluator ×
-search**: search sets how *closely* you approach the evaluator's ceiling; the evaluator sets *where*
-that ceiling is. And across all three stages the
-binding constraint consistently emerged as **the quality of the information reaching the evaluator**
-— its training signal — rather than the machinery around it. **Within a move, search *converts* the
-evaluator's latent information into stronger decisions through computation (cutting variance, not
-bias); it cannot create information the evaluator never learned.** Voting and merging fail for the same reason — they only reorganize what
-the net already encodes. **Self-play and evolution are different in kind**: they *could* inject new
-information (search reveals the environment's ground truth via lookahead), but **at our compute they
-did not exceed supervision — a *scale* limit, not a theoretical one.** AlphaZero and Leela decisively
-break past human play with orders of magnitude more self-play than two Mac Studios can run; our
-plateau characterizes the regime we could reach, and is **not** a claim that self-play fails. The method is as transferable as the numbers: **at each stage a single lever
-binds — only an experiment reveals which — so effort on any non-binding lever returns almost
+search**: search sets how *closely* you approach the evaluator's ceiling; the evaluator sets *where
+that ceiling is* — and that ceiling is **the quality of the information the evaluator was trained on**. Within a
+move, search *converts* the net's latent information into better decisions (cutting variance, not
+bias); it cannot create what the net never learned — the reason voting and merging don't help either.
+**Self-play and evolution differ in kind**: they *can* inject new information from the environment, so
+at AlphaZero scale they break past human play, but **at two-Mac-Studio compute they plateau — a
+*scale* limit, not a claim that self-play fails.** The method is as transferable as the numbers: **at
+each stage one lever binds; only an experiment reveals which, so effort on any other returns almost
 nothing.**
 
 **Headline:** *A 14 MB evaluator plus adaptive search reaches ~2800-class play, and a staged MCTS
@@ -196,24 +188,16 @@ evaluator:
 ## 2. Problem Setup and Methods
 
 ### 2.1 Representation
-- **Position → move** as a 4096-way (64×64 from–to) classification. Promotions default to queen.
-- **Side-to-move normalization:** the board is always presented from the mover's perspective
-  (mirror + color-swap for Black), so one network serves both players.
-- **Encodings:** *onehot* = 64 squares × 12 piece planes + 5 meta bits = **773 floats**
-  (used throughout). For convolutions the 773-vector reshapes to **8×8×12 piece planes** + 5 meta
-  planes = 17 input channels. We compared this to a compact *packed* encoding (one integer code
-  per square, 64+5 = **69 floats** — a 4-bit-per-square board). On an identical MLP, budget, and
-  data, **one-hot is decisively stronger — 84.9 vs 142.5 mean centipawn-loss** — because a network
-  learns clean categorical piece-type features far more readily than an arbitrary *ordinal* code
-  (where code 7 vs 8 carry a spurious "closeness"), and, crucially, convolution *requires*
-  per-piece-type planes, which a packed 8×8×1 integer board cannot provide. Packed is a
-  compact-but-harder-to-learn ablation; one-hot is the workhorse.
-- **No side-to-move feature:** the turn is not a bit — the board is *re-oriented* so the side to
-  move is always "White" (mirror + color-swap for Black), so one evaluator serves both players and
-  the turn is carried by the orientation. (This is why `Eval(P)` equals `Eval(mirror(P))` exactly,
-  and why the value of the move can be read off as `Eval(B) + Eval(null-move) − 1` — the deviation
-  from that mirror symmetry; measured mean tempo ≈ +0.15, up to +0.77 in tactical shots and
-  negative in zugzwang.)
+- **Position → move** as a 4096-way (64×64 from–to) classification (promotions default to queen).
+- **Side-to-move normalization:** the board is re-oriented so the mover is always "White" (mirror +
+  color-swap for Black), so one network serves both players and the turn needs no bit. (Hence
+  `Eval(P) = Eval(mirror(P))` exactly, and a move's value reads off as `Eval(B) + Eval(null) − 1`;
+  measured mean tempo ≈ +0.15, up to +0.77 in tactical shots, negative in zugzwang.)
+- **Encoding:** *one-hot* = 64×12 piece planes + 5 meta = **773 floats** (reshaped to 8×8×12 + 5 = 17
+  channels for convolution), used throughout. Against a compact *packed* encoding (one 4-bit code per
+  square, 69 floats) at equal budget and data, one-hot is decisively stronger (**84.9 vs 142.5 mean
+  CPL**): nets learn categorical piece-type features far more readily than an arbitrary ordinal code,
+  and convolution *requires* the per-type planes a packed board cannot provide.
 
 ### 2.2 Labels and objective
 - **Supervised data:** the full public Lichess cloud-eval database — **394,669,566 positions**
@@ -235,24 +219,17 @@ evaluator:
 - Two Apple-Silicon **Mac Studios (M3 Ultra, 256 GB each)**, MLX framework, 40 Gbps bridge.
 
 ### 2.5 Reproducibility (evaluation protocol)
-Every Elo/CPL figure in this paper uses a fixed protocol so numbers are comparable across methods:
-- **Engine:** Stockfish 18 as both the ladder opponent and the CPL oracle; opponents run at
-  fixed `UCI_Elo` rungs, movetime **0.03–0.04 s** (stated per experiment). CPL uses Stockfish at
-  **fixed depth 12** (depth-limited, so CPU contention slows but does not weaken it).
-- **Ladder:** a random-mover anchor plus `UCI_Elo` rungs (e.g. 1700/2000/2300, 2400/2700/3000);
-  Elo is the maximum-likelihood fit vs the known rung ratings. **Games per rung: 20–40** (stated
-  per table). The reported margin is a crude $\pm 400/\sqrt{n}\cdot 2$ (≈$\pm$89 at 20 games/rung,
-  ≈$\pm$100 typical) — treat all absolutes as **±100** and rely on *relative* same-ladder deltas.
-- **Openings:** sampled from the public Lichess PGN (`2013-01`), replayed to plies 6–16 for a
-  diverse, balanced start book; both colors played from each opening.
-- **Seeds:** default seed 0 (stated where varied); openings, ladder, and match seeds are fixed so a
-  method's eval is reproducible, and any two methods compared are always run on the **same** ladder,
-  openings, and seeds.
-- **Known caveats:** (i) the ladder **compresses** once the player beats the top rung — we raised
-  the ladder as strength grew, and near-top absolutes carry extra uncertainty; (ii) at movetime
-  0.03–0.04 s Stockfish plays **below** its nominal `UCI_Elo`, so the ladder is internally
-  consistent but not calibrated to over-the-board Elo. Code, the trained model, and the exact
-  scripts are in the repository.
+A fixed protocol makes every Elo/CPL figure comparable across methods:
+- **Engine:** Stockfish 18 as ladder opponent and CPL oracle; opponents at fixed `UCI_Elo` rungs,
+  movetime **0.03–0.04 s**; CPL at **fixed depth 12**.
+- **Ladder:** a random anchor plus `UCI_Elo` rungs (e.g. 1700/2000/2300, 2400/2700/3000), Elo by
+  maximum-likelihood fit; **20–40 games/rung**; margin ≈ $\pm 400/\sqrt{n}\cdot 2$ (**±100** typical)
+  — rely on *relative* same-ladder deltas.
+- **Openings/seeds:** sampled from the Lichess `2013-01` PGN, replayed to plies 6–16, both colors;
+  seed 0 by default, and any two compared methods use the **same** ladder, openings, and seeds.
+- **Caveats:** the ladder **compresses** once the player beats the top rung (we raised it as strength
+  grew), and at 0.03–0.04 s Stockfish plays **below** nominal `UCI_Elo` — internally consistent, not
+  calibrated to over-the-board Elo. Exact scripts are in the repo.
 
 ---
 
@@ -271,14 +248,12 @@ At fixed moderate data (18M positions) we swept eight architectures:
 | pyramid (64→1024) | 5.0M | 431 | bad |
 | bottleneck (512→8) | 0.5M | 340 | broken |
 
-**Topology conclusion.** Only two shapes are competitive — **constant-width** and
-**convolution** — and every *taper, factoring, or exotic bottleneck loses badly.* The reason is
-inductive bias: a taper or bottleneck destroys positional information before the head can use it,
-while convolution **reuses local tactical patterns across the board via weight sharing**, so it
-learns a motif once instead of relearning it per square. The practical rule that falls out:
-**pick the prior that matches the domain's structure (spatial locality) rather than adding raw
-width.** A 3.45M-param conv matched a 14.4M-param MLP using **22× less data** — architecture,
-not parameter count, set the strength.
+**Topology conclusion.** Only **constant-width** and **convolution** are competitive; every taper,
+factoring, or bottleneck loses badly, because it destroys positional information before the head uses
+it, while convolution **reuses local patterns via weight sharing** (learns a motif once, not per
+square). The rule: **match the prior to the domain's structure (spatial locality) rather than adding
+width.** A 3.45M conv matched a 14.4M MLP using **22× less data** — architecture, not parameter count,
+set the strength.
 
 ### 3.2 Scaling laws (width and data)
 - **Width (MLP, hard):** W1024 (14.4M) → 1449; W2048 (47.7M) → 1501: **+52 Elo for 3.3× params**
@@ -315,10 +290,9 @@ full 394M data**, with a **ceiling ≈ 2150 Elo**. Cost: 3.45M params, **14 MB**
 
 ## 4. Stage 2 — Closed Loop / Inference-Time Compute (search on a value function)
 
-We add a scalar head **Eval(N) ∈ [0,1]** = *expected score for the side to move*
-(`P(win)+½P(draw)`), trained on the eval-DB win-probabilities (held-out **MAE 0.088, correlation
-0.877** — an excellent value function). Search uses the zero-sum complement identity: our value
-after a move is `1 − Eval(child)`, so one network plays both sides; terminal nodes return exact
+We add a scalar head **Eval(N) ∈ [0,1]** = *expected score for the side to move* (held-out **MAE
+0.088, correlation 0.877** — an excellent value function). Search uses the zero-sum identity — our
+value after a move is `1 − Eval(child)` — so one network plays both sides; terminals return exact
 0 / 0.5 / 1.
 
 ### 4.1 MCTS vs fixed-depth — the core comparison
@@ -344,12 +318,11 @@ We compared two search families on the same value net and ladder:
   | 400 | 2610 (2661 @ 40 games/rung) |
   | **800** | **2749 ≈ top-human (~2800)** |
 
-**Result.** Two clean findings. (i) **1-ply search *hurts* a strong policy** — it commits to a
-capture without seeing the recapture; depth is where lookahead starts paying. (ii) **MCTS both
-beats alpha-beta at equal compute and keeps scaling** where fixed depth plateaus (~2550). Fixed
-uniform depth spends the same effort on every branch and *amplifies the value net's noise* at the
-leaves; MCTS instead **allocates search adaptively to sharp lines and averages over that noise.**
-MCTS is the Stage-2 winner and reaches ~2800 on the fixed 3.45M value net.
+**Result.** (i) **1-ply search *hurts* a strong policy** — it commits to a capture without seeing the
+recapture; depth is where lookahead pays. (ii) **MCTS beats alpha-beta at equal compute and keeps
+scaling** where fixed depth plateaus (~2550): uniform depth spends equal effort on every branch and
+*amplifies the value net's noise*, while MCTS **allocates search adaptively to sharp lines and
+averages over it.** MCTS wins Stage 2, reaching ~2800 on the fixed 3.45M net.
 
 <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
@@ -369,11 +342,10 @@ MCTS is the Stage-2 winner and reaches ~2800 on the fixed 3.45M value net.
 </svg>
 
 ### 4.2 Search efficiency — the wide→narrow MCTS cascade (new)
-Given that MCTS wins, we asked whether the **allocation** of a fixed simulation budget matters.
-The **cascade** runs MCTS in *stages* with different knobs — a **wide** stage (all moves, high
-`c_puct`, few sims) ranks broadly and passes its top-k by visit count to a **narrower, deeper**
-stage (fewer moves, more sims, lower `c_puct`), funnelling the budget onto the survivors. A shared
-evaluation cache carries value-net calls forward between stages.
+Given MCTS wins, does the **allocation** of a fixed sim budget matter? The **cascade** runs MCTS in
+*stages*: a **wide** stage (all moves, high `c_puct`, few sims) ranks broadly and passes its top-k by
+visit count to a **narrower, deeper** stage (fewer moves, more sims, lower `c_puct`), funnelling the
+budget onto survivors; a shared eval cache carries value-net calls forward.
 
 A controlled **N = 1→10 sweep** (one consistent rule generates each funnel; all 800 total sims;
 same tall ladder, seeds, and openings) gives the full trade-off curve:
@@ -387,17 +359,13 @@ same tall ladder, seeds, and openings) gives the full trade-off curve:
 | 10 | 2570 | 275 | **4.8×** |
 | beam-minimax cascade (fixed depth) | 2487 | — | inferior primitive |
 
-**Result.** Across all ten funnels the Elo stays inside a **single ±89 Elo band** (range
-2506–2683, mean ~2580) — **no statistically significant variation was observed within our ±89 Elo
-evaluation uncertainty** — while speed improves **monotonically to 4.8× at
-N = 10.** Funnelling the budget wide→narrow is therefore a **near-pure efficiency win**: it holds
-flat-MCTS strength while cutting per-move compute up to ~5×, because the survivors that reach the
-deep stages are the same moves flat MCTS would have spent its budget on anyway — the funnel just
-stops paying to search moves it has already ranked out. Any softening at the sharpest funnels is
-within measurement noise (20 games/rung). The practical dial is simply **more levels = the same
-strength, cheaper** — turn it up until the noise floor or your latency budget stops you. (The
-fixed-depth *beam* cascade, by contrast, is a genuinely weaker primitive at 2487 — adaptive MCTS
-stages matter.)
+**Result.** Across all ten funnels Elo stays within a **single ±89 band** (2506–2683, mean ~2580) —
+**no significant variation within our ±89 uncertainty** — while speed rises **monotonically to 4.8×
+at N = 10.** Funnelling wide→narrow is a **near-pure efficiency win**: it holds flat-MCTS strength
+while cutting per-move compute ~5×, because the survivors reaching the deep stages are the same moves
+flat MCTS would have searched anyway — the funnel just stops paying for moves it has already ranked
+out. The practical dial: **more levels = same strength, cheaper.** (The fixed-depth *beam* cascade is
+a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)
 
 <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
@@ -461,18 +429,14 @@ used elsewhere sit within the stated **±100** ladder uncertainty of these preci
 
 Three observations:
 
-**1. Search scales *log-linearly* — ~+55 Elo per doubling, no saturation observed through 12800.**
-The *first* slice of search is huge and cheap: MCTS-800 alone adds **+286** over the raw policy
-(2448→2734). Past that, each *doubling* of simulations adds a steady **~+55–64 Elo** (2734 → 2780 →
-2839 → 2903 → 2967) — a clean logarithmic climb, unbroken to **16× the base budget**, whose cumulative
-800→12800 gain (**+233**) is far above the ±~100 noise, even though single doublings sit within it.
-*(An earlier draft claimed "saturation at 3200" from a **head-to-head** sims-sweep; that measurement
-was noisy and non-monotonic — +12/+260/+191 per rung — and the clean absolute-ladder curve supersedes
-it. Head-to-head deltas also **inflate** absolute gains via ceiling compression: 3200-vs-800 reads
-+260 head-to-head but only +105 absolute.)* So more inference-time compute keeps paying — with a fixed
-evaluator, ~+55 Elo per doubling — and we **never reach this net's search ceiling** (tested to 12800,
-16×); the marginal Elo *per compute* falls, but the
-curve itself does not flatten in the range measured.
+**1. Search scales *log-linearly* — ~+55 Elo per doubling, no saturation through 12800.** The first
+slice is huge and cheap (MCTS-800 alone adds **+286** over the raw policy, 2448→2734); past that, each
+*doubling* adds a steady **~+55–64 Elo** (2734→2780→2839→2903→2967), unbroken to **16× the base
+budget** — cumulative **+233**, far above the ±~100 noise. *(An earlier "saturation at 3200" claim came
+from a noisy **head-to-head** sweep, +12/+260/+191 per rung; the clean absolute curve supersedes it,
+and head-to-head deltas inflate via ceiling compression — 3200-vs-800 reads +260 h2h but +105
+absolute.)* So with a fixed evaluator search keeps paying, and we **never reach its ceiling** (tested
+to 16×): marginal Elo *per compute* falls, but the curve does not flatten.
 
 **2. Latency scales *sub-linearly* with sims — a red flag, not a feature.** MCTS-3200 does 4× the
 simulations of MCTS-800 yet is only ~2.8× slower. The cause: this search evaluates leaves **one
@@ -480,20 +444,15 @@ position at a time (batch = 1)**, so each forward pass is dominated by fixed GPU
 rather than compute — the M3 Ultra is massively under-utilised. Effective throughput is only
 **~600 leaf-evaluations per second**, and adding sims mostly amortises the fixed per-move cost.
 
-**3. The latency is an implementation artefact, not a hardware or method limit.** Batched
-neural-MCTS engines evaluate many tree leaves in a single forward pass and reach **~10k–80k
-nodes/second** (modern Leela; AlphaZero on TPUs) — 20–100× our throughput on comparable or better
-accelerators. Batching the leaf evaluations here (32–256 leaves per pass) would plausibly cut
-per-move latency **13–37×**, which means **the +260 Elo from 3200-sim search could be had at
-roughly today's 800-sim wall-clock.** This is the single largest piece of engineering headroom in
-the system — and it changes none of the strength conclusions, only their price.
+**3. The latency is an implementation artefact, not a hardware or method limit.** Batched neural-MCTS
+engines evaluate many leaves per forward pass and reach **~10k–80k nodes/second** (Leela; AlphaZero on
+TPUs) — 20–100× our batch-1 throughput. We implemented and measured that fix (next), and it changes
+none of the strength conclusions, only their price.
 
-**GPU utilisation — batch-1 is an implementation *limitation*, and we measured the fix.** All latency
-figures above use a deliberately simple **batch-1** search: one leaf per forward pass. On the wide
-M3 Ultra that leaves the accelerator's thousands of cores **idle between launches** — throughput is
-launch-bound at only **~600 nodes/s**. So the latencies above are **pessimistic upper bounds**, not
-the method's true cost: a move's *strength* is fixed by **N (nodes searched)**, but its *latency* is
-**N ÷ throughput**, and our throughput is left on the floor.
+**GPU utilisation — batch-1 is an implementation *limitation*, and we measured the fix.** The batch-1
+search (obs 2) leaves the M3 Ultra's cores **idle between launches** at only **~600 nps**, so the
+latencies above are **pessimistic upper bounds**: strength is fixed by **N (nodes searched)**, latency
+by **N ÷ throughput**, and our throughput is on the floor.
 
 The standard fix is **batched-leaf evaluation** (gather many tree leaves via *virtual loss*, evaluate
 them in a single GPU launch). We implemented it (`BatchedMCTSPlayer`, `search.py`) and **measured** it
@@ -511,25 +470,21 @@ identical strength is enough to run **MCTS-3200 well below today's MCTS-800 late
 numbers should therefore be read as a ceiling on cost, not the method's efficiency**, and the true
 strength-vs-latency curve sits far to the left of the one we plot.
 
-Two caveats keep this honest. First, the gain is **hardware-dependent**: it equals the *idle
-parallelism you can reclaim*. The M3 Ultra is a wide accelerator a 14 MB batch-1 workload barely
-touches, so there is much to reclaim; on a small GPU/CPU, or an accelerator already **saturated by a
-large network** (AlphaZero/Leela, whose single forward pass fills the device), there are no idle cores
-and deeper search costs full, **linear** price. Second, batched selection uses momentarily stale tree
-statistics, so it is a hair less sample-efficient *per node* than sequential MCTS — a second-order
-effect that does not change the order-of-magnitude speedup.
+Two caveats. First, the gain is **hardware-dependent** — it equals the *idle parallelism you can
+reclaim*: the wide M3 Ultra leaves much for a 14 MB batch-1 workload, but on a small GPU/CPU or an
+accelerator already **saturated by a large network** (AlphaZero/Leela), there are no idle cores and
+deeper search costs full, **linear** price. Second, batched selection uses momentarily stale tree
+stats, so it is a hair less sample-efficient per node — second-order, not changing the
+order-of-magnitude speedup.
 
 ### 4.5 Does a bigger evaluator raise the ceiling? (a capacity sweep)
 
-Section 4.4 shows search still climbing at 6400 — the ceiling isn't reached *by search*, but each
-doubling of compute buys less, so the practical route higher is a *better evaluator*. The direct
-test is to **add parameters** and ask whether the whole curve lifts. We sweep capacity at fixed
-depth (8) and identical recipe, so the only variable is width.
+Search still climbs at 12800, but each doubling buys less, so the route higher is a *better
+evaluator*. We **add parameters** at fixed depth (8) and identical recipe — only width varies.
 
-**A correction first.** An initial screen compared 1× (width 96, 3.45M params) against a wider net
-(width 136) we first mislabelled "2×". It is in fact **1.4×** — 4.81M params: the conv body scales
-as width² but the policy/value heads scale ~linearly with width and are a large share of the total,
-so parameters grow far slower than width². On a fixed **~50M-position** subset:
+**A correction first.** An initial screen mislabelled a width-136 net "2×"; it is in fact **1.4×**
+(4.81M params), because the policy/value heads scale ~linearly with width, so total parameters grow
+far slower than the conv body's width². On a fixed **~50M-position** subset:
 
 | Net | Params | raw policy | MCTS-800 |
 |---|---:|---:|---:|
@@ -537,13 +492,11 @@ so parameters grow far slower than width². On a fixed **~50M-position** subset:
 | 1.4× (w136) | 4.81M | 2366 | **2649** |
 | Δ | +1.4× | +68 | **+18** |
 
-**+18 Elo with search — no statistically significant difference within our ±107 Elo evaluation
-uncertainty.** For contrast, on the same architecture *8× more data* (10 shards → full 79) moves Elo
-**~+90**.
+**+18 Elo with search — not significant within our ±107 uncertainty.** For contrast, *8× more data*
+moves the same architecture **~+90**.
 
-**But this screen is confounded, and a full-data sweep is resolving it.** Both nets above saw only
-~50M positions — 8× less than the baseline — so a wider net had little extra signal to fill its extra
-room. We therefore repeat the sweep on the **full ~394M data**, matched to the 2734 baseline:
+**But that screen is confounded** — both nets saw only ~50M positions, so a wider net had little
+extra signal to fill its room. Repeating on the **full ~394M data**, matched to the 2734 baseline:
 
 | Capacity (full data) | Params | MCTS-800 | Δ vs 1× |
 |---|---:|---:|---:|
@@ -552,15 +505,13 @@ room. We therefore repeat the sweep on the **full ~394M data**, matched to the 2
 | 2× (w184) | 7.04M | *training* | — |
 | 4× (w288) | 14.2M | *training* | — |
 
-The first point is already diagnostic: the 1.4×-vs-1× gap **widens from +18 (at 50M) to +60 (at full
-data)** — still within the ±~110 noise, but the *direction* says the 50M null was **data starvation**,
-not capacity being inert. The **2× and 4× points (training)** decide whether the curve keeps climbing
-(capacity genuinely lifts the ceiling once data-matched) or flattens near ~2794 (capacity saturates
-fast at this scale). Either way the scoped claim holds — **capacity is the weakest of the levers *in
-this data regime*, not "parameters never matter"**: at AlphaZero/LLM scale, where models are
-capacity-bound and data abundant, more parameters clearly do help.
+Already diagnostic: the 1.4×-vs-1× gap **widens from +18 (50M) to +60 (full data)** — within ±110
+noise, but the *direction* says the 50M null was **data starvation**, not inert capacity. The
+**2×/4× points (training)** decide whether the curve keeps climbing or flattens near ~2794. Either way
+the scoped claim holds: **capacity is the weakest lever *in this data regime***, not "parameters never
+matter" — at AlphaZero/LLM scale, capacity-bound with abundant data, more parameters clearly help.
 
-Subject to that running sweep, the lever ranking of the study, all on the same ladder, reads:
+The study's lever ranking, all same-ladder:
 
 | Lever | Elo moved | Cost |
 |---|---:|---|
@@ -568,46 +519,36 @@ Subject to that running sweep, the lever ranking of the study, all on the same l
 | **Data** (10 shards → full 79) | **~+90** | 8× training data |
 | **Capacity** (1× → 1.4×, at 50M) | **~0** (n.s.; full-data sweep running) | more params & compute |
 
-**Search is the dominant lever, data second, and — *in this data regime* — raw capacity last**:
-adding parameters was the weakest intervention we tried, pending the full-data sweep. The sharpest reading is not "parameters never matter" but the study's real thesis:
-**at each stage exactly one lever binds, and identifying *which* — by experiment — is what tells you
-how to move forward. Here it was data and search, not capacity.**
+**Search dominates, data second, capacity last in this regime** — the sharpest reading being the
+thesis: **one lever binds at each stage; an experiment tells you which. Here it was data and search,
+not capacity.**
 
 ---
 
 ## 5. Stage 3 — Self-Learning (no external engine, no labels)
 
-**Why this stage is the whole point.** Stages 1–2 leaned on Stockfish labels — a shortcut that
-*only exists because chess already has a superhuman evaluator and a massive labeled database.* The
-generic goal is the opposite situation: a **new field where no training data and no existing
-evaluator exist** — a novel game, an unsolved control or scheduling problem, a scientific-design
-task. There you *cannot* imitate a teacher because there is none, and you *cannot* score positions
-with an off-the-shelf engine because none has been built. The only thing you have is the
-**environment's rules**: which actions are legal, and, eventually, whether you succeeded. Stage 3
-deliberately discards every external crutch — no Stockfish, no labels — to test whether strength
-can be **bootstrapped from self-play and outcomes alone.** This is the transferable question:
-Stages 1–2 measure what search and capacity buy *when a teacher is available*; Stage 3 measures
-whether the recipe can **stand on its own in a domain where Stages 1–2 are simply impossible** —
-which is precisely the case for any genuinely new problem.
-
-The loop: the net plays itself with MCTS, trains toward the visit distribution (improved policy)
-and game result (value), and repeats. The only external input is the rules. We studied five
+**Why this stage is the whole point.** Stages 1–2 leaned on Stockfish labels — a shortcut that exists
+only because chess already has a superhuman evaluator and a labeled database. The generic goal is the
+opposite: a **new field with no data and no evaluator** (a novel game, an unsolved control/scheduling
+problem, a design task), where you can neither imitate a teacher nor score positions with an
+off-the-shelf engine — you have only the **environment's rules**. Stage 3 discards every external
+crutch (no Stockfish, no labels) to test whether strength can be **bootstrapped from self-play and
+outcomes alone** — the case for any genuinely new problem. The loop: the net plays itself with MCTS,
+trains toward the visit distribution (policy) and game result (value), and repeats. We studied five
 approaches — self-play, a self-referential ladder, a committee, evolution, and weight merging — and
 they converge on one story.
 
 ### 5.1 Self-play expert iteration (AlphaZero-style)
-The net plays itself with MCTS, trains toward the visit distribution (improved policy) and game
-result (value), and repeats. Two failure modes appeared and were fixed: **cold-start draw-collapse**
-(a weak net can't force mates, so games drift to draws and the value head gets no signal — fixed
-with Dirichlet root-exploration noise) and **warm-start forgetting** (training hard on tiny
-self-play slices overwrote the supervised policy, 2150 → 1407 — fixed with a replay buffer and a
-gentle learning rate). Stabilized, and even parallelized to 16× throughput (300K replay buffer,
-eval cache), the raw policy **plateaus ~1950–2030 — below the ~2150 supervised baseline.**
+Two failure modes were fixed: **cold-start draw-collapse** (a weak net can't force mates, so games
+drift to draws and the value head gets no signal — fixed with Dirichlet root noise) and **warm-start
+forgetting** (hard training on tiny self-play slices overwrote the supervised policy, 2150→1407 —
+fixed with a replay buffer + gentle LR). Stabilized and parallelized to 16× throughput, the raw policy
+**plateaus ~1950–2030 — below the ~2150 supervised baseline.**
 
 **Negative result (clean).** At two-machine scale, **self-play converges *below* supervision.**
-Self-play strength *does* rise with game volume — a real scaling signal — but the *achievable*
-volume here plateaus under a 394M-supervised net; crossing it needs orders-of-magnitude more games
-(AlphaZero used ~1000× ours). **Scale is the binding constraint.**
+Strength does rise with game volume — a real scaling signal — but the achievable volume plateaus under
+the 394M-supervised net; crossing it needs orders-of-magnitude more games (AlphaZero used ~1000× ours).
+**Scale is the binding constraint.**
 
 <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="300" fill="#ffffff"/>
@@ -625,10 +566,10 @@ volume here plateaus under a 394M-supervised net; crossing it needs orders-of-ma
 </svg>
 
 ### 5.2 Committee / diversity — teacher-free confidence (new)
-If the bottleneck is the *evaluator*, the cheap way to improve one without training a bigger net
-is to **ensemble diverse nets**. We tested the hypothesis that **multiple independently-started
-models either diverge (disagree → uncertain) or converge (agree → likely correct)** — making
-agreement a self-contained confidence meter with no oracle.
+If the bottleneck is the *evaluator*, the cheap way to improve one without a bigger net is to
+**ensemble diverse nets**. We tested whether **independently-started models diverge (disagree →
+uncertain) or converge (agree → likely correct)** — making agreement a confidence meter with no
+oracle.
 
 **Validated.** Over 400 positions scored against Stockfish depth-12 (measurement only), agreement
 strongly predicts correctness:
@@ -668,23 +609,20 @@ why.** Growing the committee from a correlated conv-soft trio outward:
 | 7 | +2 conv-soft (data slices) | 54.8 | 52.2 | 20.8 |
 | 9 | +MLP +hard | 56.0 | 53.1 | 19.9 |
 
-Three findings. (i) **Plurality never clearly beats the best single member** — consensus is slightly
-*worse* at every size, and the gaps (~1–5 CPL) sit inside the Stockfish-measurement noise (~±3 CPL);
-an earlier apparent "consensus beats best" was itself within that noise. (ii) **Balance beats
-count** — the 5-agent committee, where the diverse MLP + hard-objective members are 40% of the vote,
-is by far the best; *adding correlated members* (the conv-soft data-slice nets at 7 and 9) lets that
-bloc dominate the plurality and reverts the gain. **More agents ≠ better.** (iii) **The oracle
+Three findings. (i) **Plurality never clearly beats the best member** — consensus is slightly *worse*
+at every size, gaps (~1–5 CPL) inside the ~±3 CPL measurement noise. (ii) **Balance beats count** —
+the 5-agent committee (diverse MLP + hard-objective = 40% of the vote) is best; *adding correlated
+members* (conv-soft data-slices at 7, 9) lets that bloc dominate and reverts the gain. **More agents ≠
+better.** (iii) **The oracle
 (best member per position, ~20–30 CPL) is 2–3× better than the vote** — the diversity *contains* the
 information, but plurality *cannot extract it*, because it is dominated by the largest correlated
 bloc.
 
-**Lesson.** The committee gives one thing robustly and one thing not: a **confidence meter**
-(agreement→correctness, validated repeatedly) — but **plurality voting is a weak aggregator** that
-does not reliably reduce error below the best member. Capturing the large oracle headroom needs a
-**better aggregator** (soft probability-averaging, or confidence-weighted routing that trusts the
-per-position agreement) and **balanced**, not merely numerous, diversity. A de-biased ensemble
-evaluator remains the most promising route to lift the ceiling that search and self-play cannot —
-but plurality is not it.
+**Lesson.** The committee robustly gives a **confidence meter** (agreement→correctness) but a **weak
+aggregator**: plurality does not reliably beat the best member. The large oracle headroom needs a
+**better aggregator** (soft-averaging, confidence-weighted routing) and **balanced**, not merely
+numerous, diversity — a de-biased ensemble is the most promising route to the ceiling search and
+self-play can't reach, but plurality is not it.
 
 <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
@@ -711,42 +649,34 @@ but plurality is not it.
   <text x="550" y="286" text-anchor="middle" font-size="9" fill="#666">9</text>
 </svg>
 
-**And a third way to combine them — averaging *evaluations inside the search* — also fails.** The
-most direct use of the committee is to average the K models' value estimates at every MCTS leaf (a
-de-biased evaluator *inside* the tree; ELO-weightable; blending *continuous* values, so a single
-overconfident member can't dominate). At equal compute — the ensemble at 200 sims (600 passes/move)
-vs a single model at 600 sims — it scored **2222 vs 2282, a −60 Elo *loss*:** the ensemble searches
-3× less tree, and the small de-biasing from averaging *correlated* evaluations does not justify
-tripling the per-leaf cost. **More search beats a marginally-cleaner-but-shallower one.** So all
-three ways to combine the committee — plurality voting, weight merging (§5.4), and in-search value
-averaging — fail to beat a single model, for the same root cause: **the members' errors are too
-correlated to cancel.** Genuinely independent evaluators (cross-family, cross-data), not more of the
-same, are the prerequisite.
+**A third combination — averaging *evaluations inside the search* — also fails.** Averaging the K
+models' value at every MCTS leaf, at equal compute (ensemble at 200 sims = 600 passes/move vs a single
+model at 600 sims), scored **2222 vs 2282, a −60 Elo *loss*:** the ensemble searches 3× less tree, and
+de-biasing correlated evaluations doesn't justify tripling per-leaf cost. So all three combinations —
+plurality, weight merging (§5.4), and in-search averaging — fail to beat a single model, for one root
+cause: **the members' errors are too correlated to cancel.** Genuinely independent evaluators
+(cross-family, cross-data) are the prerequisite.
 
 ### 5.3 Evolution — mutate / play / score (a plateau-escape attempt)
 
-Gradient self-play optimizes a *proxy* (the net's own biased value targets); we tested whether
-**derivative-free evolution**, which optimizes the *true* objective — did this mutant win games —
-could escape the plateau where gradients stalled. From the plateaued net: each generation mutate it
-into 16 offspring (Gaussian weight noise), play each against a **frozen copy of the plateaued net**
-(a fixed anchor, so "fitness" *is* "how well do you beat the plateau"), and crown the best only if
-it survives a larger confirmation match. A first, naive version selecting against the *moving*
-champion drifted **downward** — beating your immediate parent is non-transitive in chess and does
-not imply getting stronger; the fixed anchor fixes that.
+Gradient self-play optimizes a *proxy* (the net's own biased targets); we tested whether
+**derivative-free evolution** — optimizing the *true* objective, "did this mutant win games" — could
+escape the plateau. Each generation: mutate the plateaued net into 16 offspring (Gaussian weight
+noise), play each against a **frozen copy** (a fixed anchor, so fitness *is* "how well do you beat the
+plateau"), and crown the best only if it survives a confirmation match. A first version selecting
+against the *moving* champion drifted **downward** — beating your immediate parent is non-transitive
+in chess; the fixed anchor fixes that.
 
-**Result: a null result, and a methodological warning.** The run *appeared* to escape — champ-vs-
-plateau climbed to 0.567 (+47 Elo) and passed a 120-game confirmation. But a **clean 400-game,
-low-temperature re-match found the "evolved" champion is actually −24 to −41 Elo *worse* than the
-plateaued net.** The apparent gain was an artifact of noisy, high-temperature fitness over small
-samples with best-of-16 selection bias — a **phantom improvement** that vanished under proper
-measurement. Annealing the mutation scale up (σ 0.03→0.12) found nothing better; larger mutations
-only degraded the net. So **evolution did not escape the plateau either** — and neither gradient
-self-play, a self-referential ladder, nor evolution crosses the ~2000 wall. Since the identical net
-reaches ~2150 under *supervised* labels, the wall is **not capacity** but the ceiling of any
-*self-generated* signal: a system cannot lift itself past the quality of the signal it produces
-about itself. (Methodological note for practitioners: relative-fitness selection with small,
-stochastic samples manufactures phantom gains; only a large, low-variance re-measurement can be
-trusted — we nearly reported a false escape and caught it only by measuring properly.)
+**Result: a null, and a methodological warning.** The run *appeared* to escape — champ-vs-plateau
+climbed to 0.567 (+47 Elo), passing a 120-game confirmation — but a **clean 400-game, low-temperature
+re-match found the "evolved" champion is −24 to −41 Elo *worse*.** The gain was an artifact of noisy
+high-temperature fitness over small samples with best-of-16 selection bias — a **phantom** that
+vanished under proper measurement; annealing the mutation scale (σ 0.03→0.12) found nothing better. So
+evolution did not escape either: neither gradient self-play, a self-referential ladder, nor evolution
+crosses the ~2000 wall, and since the same net reaches ~2150 under *supervised* labels, the wall is
+**not capacity** but the ceiling of any *self-generated* signal. (Practitioner note: relative-fitness
+selection over small stochastic samples manufactures phantom gains — trust only a large, low-variance
+re-measurement.)
 
 <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="300" fill="#ffffff"/>
@@ -767,11 +697,9 @@ trusted — we nearly reported a false escape and caught it only by measuring pr
 
 ### 5.4 Model merging — can we *average* diverse models into one?
 
-A committee combines diverse models at *inference* (voting). The weight-space alternative is to
-**average their coefficients into a single network** ("marriage of coefficients"). We tested it on
-several conv-96×8 members from different seeds / data / objectives, scored by mean **centipawn loss
-(CPL)** against Stockfish depth-12 (lower is better; the members sit at ~60, i.e. ~2000-level, and
-~260 is near-random).
+The weight-space alternative to a voting committee is to **average coefficients into one network**.
+We tested it on conv-96×8 members from different seeds/data/objectives, scored by mean **CPL** vs
+Stockfish depth-12 (members ~60 ≈ 2000-level; ~260 ≈ random):
 
 | merge | starting points | CPL ↓ | verdict |
 |---|---|---:|---|
@@ -780,22 +708,18 @@ several conv-96×8 members from different seeds / data / objectives, scored by m
 | naive average (**model soup**) | **same init** | 58.8 | works (~parent) |
 | aligned (net + permuted twin) | identical | 72 | perfect recovery *(verification)* |
 
-**Naive averaging of different-random-start nets collapses** (261 vs ~60): independent networks sit
-in different loss basins related by neuron permutations, so averaging misaligned neurons cancels
-signal. The known fix is **permutation alignment (Git Re-Basin):** match net B's neurons to net A's
-before averaging. We implemented it for the residual conv tower (one shared residual-stream
-permutation, a per-block hidden permutation, plus the reduce and value heads) and **verified it is
-correct** — it recovers a network *exactly* from a known random permutation (72 CPL = the original).
-Yet on the *real* different-start members it **still collapses** (268). The reason is fundamental:
-Git Re-Basin assumes independent networks learn the *same features in a different order*; ours
-learned **genuinely different features** (different seeds *and* data *and* objectives), and no
-permutation aligns different features. By contrast a **model soup** — two children fine-tuned from
-the *same* checkpoint — averages fine (58.8), because a shared start keeps them in one basin.
+**Naive averaging of different-start nets collapses** (261): independent nets sit in different loss
+basins related by neuron permutations, so averaging misaligned neurons cancels signal. The known fix,
+**permutation alignment (Git Re-Basin)**, we implemented and **verified correct** — it recovers a net
+*exactly* from a known random permutation (72 CPL). Yet on real different-start members it **still
+collapses** (268), for a fundamental reason: Git Re-Basin assumes nets learn the *same features in a
+different order*; ours learned **genuinely different features** (different seeds *and* data *and*
+objectives), which no permutation aligns. A **model soup** (children from the *same* checkpoint)
+averages fine (58.8), because a shared start keeps them in one basin.
 
-**Conclusion.** Weight-averaging only works within a shared basin. The very diversity that makes an
-ensemble valuable (uncorrelated errors, informative agreement, §5.2) is exactly what makes the
-members' **weights un-averageable** — diverse models can be combined at *inference*, not in weight
-space. This also sharpens the "better aggregator" question: it must live at inference time
+**Conclusion.** Weight-averaging works only within a shared basin. The very diversity that makes an
+ensemble valuable (§5.2) is what makes the members' **weights un-averageable** — diverse models
+combine at *inference*, not in weight space; so the "better aggregator" must live at inference
 (soft-averaging, confidence routing), not in merging.
 
 ---
@@ -811,23 +735,17 @@ space. This also sharpens the "better aggregator" question: it must live at infe
 | Leela Chess Zero (modern) | ~100–400M+ | ~3500+ | ~1–8k MCTS nodes | ~10–35 |
 | Stockfish (NNUE) | ~tens of M (quantized) | ~3600+ | **millions of alpha-beta nodes/s** | ~100–150 |
 
-**Two axes at once — size and speed.**
-- **Parameters:** our net is **~10–25× smaller than AlphaZero and 30–100× smaller than large Leela
-  transformers**, yet reaches ~2800 with search. On *Elo-per-million-parameters* it is the extreme
-  point. **This is an *efficiency* framing, not a superiority claim** — top engines optimize
-  *absolute strength*, not parameters-per-Elo, and are 600–800 Elo stronger; the point is only that
-  parameter count is *not* what buys their last few hundred Elo (a much better value function and far
-  more search are). Read the table as "most strength per parameter," never as "better than."
-- **Speed:** the two paradigms differ. AlphaZero/Leela use a **similar sim count** (~hundreds–
-  thousands) but each sim is a **big-net** forward pass, so their per-move cost is dominated by a
-  10–100× larger network; our sim is a 14 MB pass (~1.5 ms), and the **cascade recovers a further
-  ~1.6–4.8×**. But our search runs its leaf evaluations **one at a time (batch 1)** — only ~600
-  nodes/second versus ~10k–80k for batched engines, so **13–37× of per-move latency is left on the
-  table** purely to implementation (§4.4), independent of the strength results. Stockfish is the
-  opposite regime — a small, heavily-quantized net evaluated at
-  **millions of nodes/second** under alpha-beta. The structure is the same across all of them — a
-  learned **evaluator queried by search** — and **every strong engine is search-heavy; parameter
-  count is not what separates them.**
+**Two axes — size and speed.**
+- **Parameters:** our net is **~10–25× smaller than AlphaZero, 30–100× smaller than large Leela**,
+  yet reaches ~2800 with search — the extreme point on Elo-per-million-parameters. This is an
+  **efficiency framing, not a superiority claim**: top engines are 600–800 Elo stronger and optimize
+  *absolute* strength, not parameters-per-Elo; the point is only that parameter count is *not* what
+  buys their last few hundred Elo (a better value function and far more search are).
+- **Speed:** AlphaZero/Leela use a similar sim count but each sim is a **big-net** pass (10–100× our
+  network); our sim is a 14 MB pass (~1.5 ms), cascade-recoverable a further ~1.6–4.8×. Our batch-1
+  search runs at only ~600 nps vs ~10k–80k batched (§4.4). Stockfish is the opposite regime — a tiny
+  quantized net at millions of nodes/s. The structure is identical throughout — a learned **evaluator
+  queried by search** — and **parameter count is not what separates them.**
 
 <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
@@ -857,62 +775,50 @@ parameter — not an engine-matching claim, and it carries ladder uncertainty (�
 
 ## 7. Discussion — the unifying conclusion
 
-Across every experiment we ran, one factor consistently emerged as the dominant limit — and in a
-sharper form than "the network is the bottleneck": **the *quality of the information reaching the
-evaluator* (its training signal) was the recurring binding constraint, not the loop around it.** We
-state this as an empirical regularity of the regime we tested, not a theorem. The organizing law is **strength = evaluator × search**:
-search sets how *closely* you approach the ceiling, the evaluator sets *where* it is, and the
-evaluator is only ever as good as the information it was given. This explains everything below, once
-we are precise about *information*. By **new information** we mean **novel empirical data from
-*outside* the closed system of the network and its training set** — not a re-encoding of what is
-already latent in it. Supervision and scale inject it directly; every other method divides on one
-question — **does it have an external ground-truth oracle to query?**
+Across every experiment, one factor was the recurring binding constraint — sharper than "the network
+is the bottleneck": **the *quality of the information reaching the evaluator* (its training signal),
+not the loop around it** (an empirical regularity of our regime, not a theorem). The organizing law is
+**strength = evaluator × search**, and it explains everything once we define *information* precisely:
+by **new information** we mean **novel empirical data from *outside* the closed system of the net and
+its training set** — not a re-encoding of what is already latent. Supervision and scale inject it
+directly; every other method divides on one question — **does it have an external ground-truth oracle
+to query?**
 
-- **Within-move search, voting, and merging do not.** They operate on fixed representations, so they
-  only *extract* information already present — cutting variance, sharpening, filtering — never
-  creating what is absent.
+- **Within-move search, voting, and merging do not** — they operate on fixed representations, so they
+  only *extract* information already present (cut variance, sharpen, filter), never create what is
+  absent.
 - **Self-play and evolution can — but only through the environment.** In a **closed-form,
-  perfect-information** game the *rules are a perfect, external, infinite oracle*: search queries
-  terminal outcomes that lie outside any dataset — exactly how AlphaZero and Leela inject information
-  no human game contains and surpass human play. This is a property of the *environment*, not of
-  self-play: in an **open-ended, semantic** domain (natural language) with no external verifier, the
-  identical loop has nothing to query and collapses into hallucination or mode-collapse — it can only
-  redistribute.
-- **Our chess result sits in the oracle-rich regime and still plateaued** — because at
-  two-Mac-Studio compute the search was too weak to extract much from that oracle, *not* because the
-  oracle was absent. The plateau is a **scale** limit, not evidence against self-play.
+  perfect-information** game the *rules are a perfect external oracle*: search queries terminal
+  outcomes outside any dataset — exactly how AlphaZero/Leela inject information no human game contains
+  and surpass human play. This is a property of the *environment*: in an **open-ended, semantic**
+  domain (language) with no external verifier, the identical loop has nothing to query and collapses
+  into hallucination — it can only redistribute.
+- **Our chess result sits in the oracle-rich regime and still plateaued** — because at two-Mac-Studio
+  compute the search was too weak to extract much from that oracle, *not* because it was absent. A
+  **scale** limit, not evidence against self-play.
 
-None of this makes redistribution *useless*: variance reduction, sharpening, alignment, and filtering
-are how you **reach** a ceiling cheaply and reliably — indispensable engineering. The claim is narrow,
-and about the *absolute* ceiling: **only information from outside the closed system can raise it.**
+None of this makes redistribution *useless*: variance reduction, sharpening, and filtering are how you
+**reach** a ceiling cheaply — indispensable engineering. The narrow claim is about the *absolute*
+ceiling: **only information from outside the closed system can raise it.**
 
-- **Architecture > parameters.** The right prior (spatial locality + weight sharing) beats raw
-  width; a 14 MB conv reaches strength a 3× larger MLP cannot.
-- **Search > scale, at constant memory — but search cannot exceed the net.** MCTS bought +650 Elo
-  (2150→2800) with zero extra parameters and out-scaled fixed depth. Yet flat MCTS and the cascade
-  hit the *same* 2691 wall on the same ladder, because they query the *same* value net. Search
-  reduces the net's *variance* (random error, via averaging many calls) but not its *bias*
-  (systematic blind spots) — and deep uniform search even *amplifies* bias. The cascade's win was
-  therefore **efficiency (up to 4.8× cheaper), not strength.**
-- **No self-generated signal crosses the wall — we tried three.** Gradient self-play plateaus below
-  its teacher; a self-referential Elo ladder never promotes; and derivative-free **evolution**, given
-  the fairest shot (unbiased game-outcome fitness, annealed exploration), also fails — its apparent
-  +47-Elo escape was a **noise artifact** that reversed to −30 under a clean 400-game re-match. Since
-  the *same* net reaches ~2150 under supervised labels, the wall — **at this scale and compute** — is
-  **not capacity** but the ceiling of the signal these methods generate about *themselves*: external
-  information (a bigger net, more search, stronger labels) lifted it, recycling the current one did
-  not. *(This is a small-scale statement, not a universal one: given AlphaZero-scale compute, self-play
-  is known to bootstrap far past its initial model; we characterize the regime we could actually run.)*
-- **A better *evaluator* is the only lever — but it is harder than it looks.** The committee gives a
-  robust, teacher-free **confidence signal** (agreement predicts correctness), yet **plurality voting
-  does not reliably de-bias**: across a 3/5/7/9-agent sweep the consensus never clearly beat the best
-  single member, and correlated majority blocs dominate it (balance beats count). The diversity
-  *contains* the information — the per-position oracle is 2–3× better than the vote — but extracting
-  it needs a **better aggregator** (soft-averaging / confidence-routing) and *balanced* diversity, not
-  more agents. Improving the evaluation is the right goal; naive ensembling is not yet the way.
-- **Control-theory unification.** Open loop = feedforward; closed loop = MPC/receding-horizon;
-  self-play = iterative learning control — the same three knobs recur in any sequential-decision
-  domain, and in all three the learned *evaluator* is what caps performance.
+- **Architecture > parameters.** The right prior (spatial locality + weight sharing) beats raw width —
+  a 14 MB conv reaches strength a 3× larger MLP cannot.
+- **Search > scale, but search cannot exceed the net.** MCTS bought +650 Elo (2150→2800) at zero extra
+  parameters and out-scaled fixed depth — yet flat MCTS and the cascade hit the *same* wall on the same
+  net, because search cuts the net's *variance* (averaging noisy calls), not its *bias* (systematic
+  blind spots). The cascade's win was **efficiency (up to 4.8× cheaper), not strength.**
+- **No self-generated signal crosses the wall — we tried three.** Gradient self-play, a self-referential
+  ladder, and evolution (given the fairest shot; its +47-Elo "escape" was noise that reversed to −30)
+  all plateau. The same net reaches ~2150 under supervised labels, so the wall is **not capacity** but
+  the ceiling of a system's signal about *itself* — a **scale** statement (at AlphaZero-scale compute,
+  self-play bootstraps far past this).
+- **A better *evaluator* is the only lever — and harder than it looks.** The committee's agreement
+  predicts correctness, but **plurality voting never clearly beats the best member** (correlated blocs
+  dominate; balance beats count); the per-position oracle is **2–3× better than the vote**, so the
+  information is there but needs a **better aggregator** (soft-averaging / confidence-routing), not more
+  agents.
+- **Control-theory unification.** Open loop = feedforward; closed loop = MPC; self-play = iterative
+  learning control — and in all three the learned *evaluator* caps performance.
 
 ### 7.1 The knob–bottleneck map — every experiment, including the failures, is a diagnosis
 
@@ -934,28 +840,22 @@ wasted compute; it is a measurement that says *"strength is not gated here — l
 | **Aggregation** (ensemble-eval, merging) | no gain | combining ≠ creating knowledge | extracts existing signal, creates none |
 | **Self-distillation** (fixed set) | dropped | data-*diversity*-bound (overfit) | many diverse positions, not repetition |
 
-Three things fall out of the map:
+Three things fall out:
 
-**1. Nulls are the most information-dense results.** A knob that moves nothing has *localized* the
-bottleneck away from itself — the 2×-parameter null said "capacity isn't binding (here)," the cascade
-flat-line said "allocation isn't binding," the voting sweep said "more agents isn't binding." Each
-redirected effort onto the lever that *was* binding. Cleanly measured negatives are the signposts; the
-one methodological trap is **mistaking noise for signal** (evolution's phantom +47 that reversed to
-−30), which is why every promising delta was re-measured before belief.
+**1. Nulls are the most information-dense results.** A knob that moves nothing *localizes* the
+bottleneck away from itself — the parameter null said "capacity isn't binding (here)," the cascade
+flat-line "allocation isn't," the voting sweep "more agents isn't." The one trap is **mistaking noise
+for signal** (evolution's phantom +47 that reversed to −30), so every promising delta was re-measured.
 
-**2. The binding lever *moves* as you relieve it.** Strength is a *chain* of bottlenecks, not one:
-open-loop is **bias- then capacity-bound** → give it the right architecture and search and it becomes
-**search-bound** → exhaust search (~3200 sims) and it becomes **evaluator-bound**, where the evaluator
-is limited by its **data/signal**, not — in our regime — its parameter count. You cannot skip a link:
-parameters poured into a data-bound net, or sims into a saturated search, buy almost nothing.
+**2. The binding lever *moves* as you relieve it.** Strength is a *chain*: bias- then capacity-bound
+(open-loop) → search-bound → evaluator-bound (by its **data**, not parameter count). You cannot skip a
+link — parameters into a data-bound net, or sims into a saturated search, buy almost nothing.
 
-**3. The map is the roadmap.** At each stage the diagnosis *is* the next move: open-loop capped ⇒ the
-unlock is the *loop* (search), not a bigger net; search saturated ⇒ the unlock is a better *evaluator*
-(more/better data, or scale once data-matched), not more sims; self-signal plateaued ⇒ the unlock is a
-better *signal source* (external labels, or AlphaZero-scale self-play), not more iterations or fancier
-aggregation of the same weak signal. **Identify the binding lever, relieve exactly that, re-measure,
-repeat.** That loop — more than any single Elo number — is what this study offers a genuinely new
-domain that has no engine and no dataset to imitate.
+**3. The map is the roadmap.** The diagnosis *is* the next move: open-loop capped ⇒ add search;
+search saturated ⇒ a better *evaluator* (more/better data); self-signal plateaued ⇒ a better *signal
+source* (external labels, or AlphaZero-scale self-play). **Identify the binding lever, relieve exactly
+that, re-measure, repeat** — the loop that transfers to a genuinely new domain with no engine or
+dataset to imitate.
 
 ---
 
@@ -967,13 +867,12 @@ domain that has no engine and no dataset to imitate.
   stochastic samples produced a **phantom** evolution "escape" that reversed under a 400-game
   re-match, and plurality de-biasing gaps sit inside the ~±3 CPL measurement noise. Larger,
   lower-variance evaluation is needed to resolve small effects.
-- **Next levers, in priority order:** (1) a **better value function** — the true ceiling — via more
-  and better search-labeled data or large-scale self-play; (2) a **better ensemble aggregator** —
-  soft probability-averaging and confidence-weighted *routing* (the per-position oracle is 2–3×
-  above plurality), with *balanced* cross-family diversity rather than more agents; (3)
-  **batched/parallel MCTS** (virtual loss) and transposition tables for throughput; (4) endgame
-  tablebases and tuned `c_puct`. All roads converge on the same place: **improve the evaluation, and
-  both the closed-loop and self-play ceilings rise together.**
+- **Next levers, in priority order:** (1) a **better value function** (the true ceiling) via
+  more/better search-labeled data or large-scale self-play; (2) a **better ensemble aggregator** —
+  soft-averaging and confidence-weighted *routing* (per-position oracle 2–3× above plurality) with
+  *balanced* cross-family diversity, not more agents; (3) **batched/parallel MCTS** and transposition
+  tables for throughput; (4) endgame tablebases and tuned `c_puct`. All converge on one place:
+  **improve the evaluation, and both the closed-loop and self-play ceilings rise together.**
 
 ---
 
@@ -1020,76 +919,54 @@ domain that has no engine and no dataset to imitate.
 </svg>
 
 This paper treated playing strength as an **efficient-allocation problem**: given a fixed budget of
-parameters, data, inference-time search, and latency, how do you spend it to buy the most capability?
-The answer, measured resource by resource, is that the efficient mix is rarely "more parameters." A
-14 MB, 3.45M-parameter network reaches **~2800 Elo by *thinking* (MCTS search), not by *growing*
-(parameters)** — the same capability, a far cheaper resource mix. This is a claim about *efficiency*,
-not a denial of scale: our first full-data capacity point already nudges up (1× 2734 → 1.4× 2794), and
-**if the 2×/4× points continue to climb, parameters become a co-dominant lever once the data-starvation
-bottleneck is relieved** — "thinking, not growing" is the *efficient* choice under our budget, not a
-law that growing never helps. Adaptive MCTS beats and out-scales fixed-depth search; a wide→narrow
-MCTS cascade matches it at up to 4.8× less compute (buying strength back as *latency* rather than
-parameters). On the self-learning side the results are honestly negative:
-self-play, a self-referential ladder, and derivative-free evolution all **fail to cross the ~2000
-plateau** (evolution's apparent escape was a noise artifact), and plurality-voting committees do not
-reliably de-bias — though model **agreement is a robust teacher-free confidence signal**.
+parameters, data, search, and latency, how do you spend it for the most capability? Measured resource
+by resource, the efficient mix is rarely "more parameters" — a 14 MB net reaches **~2800 Elo by
+*thinking* (search), not *growing*** — the same capability, a far cheaper mix. This is *efficiency*,
+not a denial of scale: the first full-data capacity point already nudges up (1× 2734 → 1.4× 2794), and
+**if the 2×/4× points keep climbing, parameters become co-dominant once data-starvation is relieved.**
+Adaptive MCTS out-scales fixed-depth search; the cascade matches it at 4.8× less compute (strength
+bought back as *latency*, not parameters). Self-learning is honestly negative: self-play, a
+self-referential ladder, and evolution all **fail to cross the ~2000 plateau** (evolution's escape was
+noise), and plurality committees don't reliably de-bias — though **agreement is a robust teacher-free
+confidence signal**.
 
-Above all, the **method** transfers: at each stage a *single lever binds*, effort on the others is
-nearly wasted, and only a controlled experiment reveals which. Open-loop was **capacity-bound**;
-adding search made us **search-bound** — and search keeps paying **log-linearly (~+55 Elo per
-doubling, unsaturated through 12800 sims)**, so the ceiling is set by the evaluator, not by running
-out of search; then the evaluator itself binds — and at our data scale it was **data-bound**, not
-capacity-bound: adding parameters at fixed data (1.4×) bought **~0 Elo** (a full 1×/1.4×/2×/4×
-capacity sweep on the complete dataset is running to confirm capacity stays inert once well-fed). The transferable *observation*, recurring from every direction we pushed, is that
-**evaluator quality consistently emerged as the dominant limiting factor** — search extracts the
-information already represented by the net but cannot create what is absent, and **at our scale**
-self-generated signal did not cross the supervised ceiling; only a
-better evaluator (better labels, more data, more capacity *once data-matched*, more search, or a
-better *aggregator* than plurality) raised it. Stated at its sharpest, and as an empirical pattern
-rather than a proof: **the quality of the information reaching the evaluator was the binding
-constraint** — which is why supervision, data, and search help (they add or extract information) and
-why voting and merging do not (they only reorganize what is already there). **Self-play and evolution
-are a deliberate exception we must state precisely:** their search *can* inject new information from
-the environment, and **at AlphaZero/Leela scale it provably breaks past human supervision** — our
-plateau is a limit of the compute we had (two Mac Studios), **not evidence that self-play fails**.
-A quantified recipe, an explicit **diagnostic** for finding the binding lever, and an honest
-map of the limits — for compact, search-driven sequential decision-making in general.
+Above all, the **method** transfers: at each stage a *single lever binds* and only an experiment
+reveals which. Open-loop was **capacity-bound**; adding search made us **search-bound** (search paying
+**log-linearly, ~+55 Elo/doubling, unsaturated through 12800**); then the evaluator binds — and at our
+data scale by its **data**, not its parameter count (1.4× more params bought **~0 Elo**; a full
+1×/1.4×/2×/4× sweep is running). The recurring constraint, from every direction we pushed, was **the
+quality of the information reaching the evaluator** (§7): supervision, data, and search help; voting
+and merging only reorganize what the net already encodes; self-play and evolution *can* inject
+information, but only through an **external oracle**, so our plateau is a **compute-scale limit, not
+evidence that self-play fails** (AlphaZero/Leela break past human play with far more of it). What
+transfers is a quantified recipe and an explicit **diagnostic** for finding the binding lever.
 
-**Beyond chess.** Chess is only the controlled environment; the decomposition — **model capacity,
-inference-time search, and self-generated information** — is domain-agnostic. The same three levers,
-and the same trade-off between evaluator quality and inference-time computation, recur in planning
-systems, robotics, scheduling, program and compiler optimization, and scientific/experimental design:
-each has a learned or hand-built evaluator, a search or rollout budget spent at decision time, and
-some notion of self-improvement whose value is likewise capped by the quality of the signal it can
-generate about itself. We make no claim to have measured those domains — only that the *decomposition*
-and its diagnostic (find the binding lever before investing in it) are what transfer, and are, we
-believe, the contribution most likely to outlast the chess numbers.
+**Beyond chess.** The decomposition — **capacity, inference-time search, self-generated information**
+— is domain-agnostic: the same three levers and the evaluator-vs-compute trade-off recur in planning,
+robotics, scheduling, compiler optimization, and scientific design, each with an evaluator, a
+decision-time search budget, and a self-improvement loop capped by its own signal quality. We measured
+none of those domains — only that the *decomposition* and its diagnostic (find the binding lever
+before investing) are what transfer, and likely outlast the chess numbers.
 
 **The clearest current echo is in large language models.** The 2024–25 shift to **inference-time
-compute** — OpenAI's o1/o3, DeepSeek-R1, and reasoning models generally — is exactly this paper's
-thesis at frontier scale: a fixed base model made far stronger by *searching over reasoning at
-decision time* (sampling, self-consistency, tree-of-thought, long chains-of-thought) rather than by
-adding parameters. Our chess result — **+286 Elo and a further log-linear climb from search on a
-frozen 14 MB net** — is the same tradeoff in miniature: **capability purchased with inference-time
-computation instead of memory.** The mapping is direct: our *evaluator* is their **base model /
-verifier**, our *search* is their **reasoning/sampling budget**, our *self-play* is their **STaR-style
-self-training** — and the same limit applies, sharply: search and self-training only **convert what
-the model already latently knows into better answers; they cannot inject knowledge it never learned.**
-That is precisely why reasoning models pair inference-time search with **external verifiers or
-ground-truth reward** (code that runs, math that checks, tools that return facts) — the external
-oracle that lets the loop add information rather than merely rearrange it. A model with no such oracle
-should, by our framework, **plateau** — the identical prediction our chess self-play makes.
+compute** — o1/o3, DeepSeek-R1, reasoning models — is this thesis at frontier scale: a fixed base
+model made far stronger by *searching over reasoning at decision time* (sampling, self-consistency,
+tree-of-thought) rather than by adding parameters. The mapping is direct: our *evaluator* ↔ their
+**base model/verifier**, our *search* ↔ their **reasoning budget**, our *self-play* ↔ their
+**STaR-style self-training** — with the same limit: search and self-training **convert what the model
+already latently knows into better answers; they cannot inject knowledge it never learned.** That is
+exactly why reasoning models pair search with **external verifiers or ground-truth reward** (code that
+runs, math that checks, tools that return facts) — the oracle that lets the loop add information. A
+model with no such oracle should, by our framework, **plateau**.
 
-**A test for what comes next.** The framework is not only a post-mortem — it is a **predictive
-filter**. Any future claim of a *synthetic-data breakthrough* or a *recursively self-improving
-architecture* can be pre-screened with one question: **does it inject information from outside its
-closed system** — new empirical data, human supervision, or an external ground-truth oracle (a
-verifier, a simulator, the physical world)? If it does, it can raise the ceiling. If it merely
-re-processes what its own models already contain — however cleverly — our results predict it will
-**plateau**. Recursive self-improvement compounds precisely where an external oracle exists to be
-exploited (a game's rules, a theorem checker, a compiler, a market, a lab), and stalls where one does
-not. That is a claim about the *source* of information, not the ingenuity of the method — and it
-should hold well beyond chess.
+**A test for what comes next.** The framework is a **predictive filter**: pre-screen any future
+*synthetic-data breakthrough* or *recursively self-improving architecture* with one question — **does
+it inject information from outside its closed system** (new empirical data, supervision, or an external
+oracle: a verifier, a simulator, the physical world)? If yes, it can raise the ceiling; if it only
+re-processes what its own models contain, our results predict it will **plateau**. Recursive
+self-improvement compounds where an external oracle exists (a game's rules, a theorem checker, a
+compiler, a market) and stalls where none does — a claim about the *source* of information, not the
+method's ingenuity.
 - `chessnet/model.py` — conv/MLP/dual-path + value head. `chessnet/search.py` — alpha-beta,
   MCTS/PUCT, quiescence, the wide→narrow cascade (`MultiStageMCTSPlayer`).
   `chessnet/committee.py` — ensemble inference + agreement signal.
