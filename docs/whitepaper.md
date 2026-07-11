@@ -34,12 +34,13 @@ regime (a full 1×/1.4×/2×/4× sweep on the complete dataset is in progress to
 small-scale statement: AlphaZero-scale self-play bootstraps far past its start; we characterize the
 regime we could run.)
 
-The unifying principle is **strength = evaluator × search**: search sets how *closely* you approach
-the evaluator's ceiling; the evaluator sets *where* that ceiling is. And across all three stages the
+The unifying principle — the **evaluator–search decomposition** — is **strength = evaluator ×
+search**: search sets how *closely* you approach the evaluator's ceiling; the evaluator sets *where*
+that ceiling is. And across all three stages the
 binding constraint consistently emerged as **the quality of the information reaching the evaluator**
-— its training signal — rather than the machinery around it. **Within a move, search *extracts*
-information already represented by the evaluator (cutting variance, not bias); it cannot create
-information absent from it.** Voting and merging fail for the same reason — they only reorganize what
+— its training signal — rather than the machinery around it. **Within a move, search *converts* the
+evaluator's latent information into stronger decisions through computation (cutting variance, not
+bias); it cannot create information the evaluator never learned.** Voting and merging fail for the same reason — they only reorganize what
 the net already encodes. **Self-play and evolution are different in kind**: they *could* inject new
 information (search reveals the environment's ground truth via lookahead), but **at our compute they
 did not exceed supervision — a *scale* limit, not a theoretical one.** AlphaZero and Leela decisively
@@ -49,9 +50,9 @@ binds — only an experiment reveals which — so effort on any non-binding leve
 nothing.**
 
 **Headline:** *A 14 MB evaluator plus adaptive search reaches ~2800-class play, and a staged MCTS
-**cascade** recovers up to **4.8× compute** at little Elo cost — thinking, not growing. The organizing
-law is **strength = evaluator × search**: search extracts value, but the ceiling is the **quality of
-the information the evaluator was given.***
+**cascade** recovers up to **4.8× compute** at little Elo cost — thinking, not growing. Search
+converts what the evaluator already knows into stronger play; it cannot lift the ceiling set by the
+**quality of the information the evaluator was given.***
 
 > **Read the numbers carefully.** Absolute Elo is measured against a Stockfish ladder and carries
 > **±~100 systematic uncertainty** near the top rung — "~2800" is an *efficiency indicator, not an
@@ -59,6 +60,26 @@ the information the evaluator was given.***
 > **robust** results are the *relative*, same-ladder ones: MCTS beats and out-scales fixed depth,
 > the cascade holds Elo while cutting compute up to 4.8×, and every Stage-3 aggregation/self-learning
 > method fails to beat a single model. Treat those as the paper's claims; treat 2800 as a headline.
+
+---
+
+## Key Takeaways
+
+*Five findings — enough to understand the paper on one page.*
+
+1. **Search dominates parameters in this regime.** On a *fixed* evaluator, adding search buys **+286
+   Elo** over the raw policy and keeps climbing **~+55 per doubling** of simulations; *doubling the
+   parameters at fixed data added ~0*. Strength came from **thinking, not growing**.
+2. **A wide→narrow MCTS cascade recovers up to 4.8× compute.** Funnelling the simulation budget
+   through progressively narrower, deeper stages **matches flat-MCTS strength at a fraction of the
+   per-move cost** — our most practical result.
+3. **Adaptive MCTS out-scales fixed-depth search.** At equal compute MCTS **beats** alpha-beta and
+   **keeps scaling**, where fixed-depth search plateaus.
+4. **Model agreement predicts correctness.** Where independent models agree they are more often
+   right — a **teacher-free confidence signal**, and a result independent of chess.
+5. **Find the binding bottleneck experimentally.** At each stage exactly one lever binds — capacity,
+   search, data, or the quality of self-generated signal — and effort on any *other* returns almost
+   nothing. The transferable contribution is this **diagnostic**, not any single Elo number.
 
 ---
 
@@ -761,8 +782,9 @@ space. This also sharpens the "better aggregator" question: it must live at infe
   nodes/second versus ~10k–80k for batched engines, so **10–50× of per-move latency is left on the
   table** purely to implementation (§4.4), independent of the strength results. Stockfish is the
   opposite regime — a small, heavily-quantized net evaluated at
-  **millions of nodes/second** under alpha-beta. The common structure: **strength = evaluator ×
-  search; every strong engine is search-heavy, and parameter count is not what separates them.**
+  **millions of nodes/second** under alpha-beta. The structure is the same across all of them — a
+  learned **evaluator queried by search** — and **every strong engine is search-heavy; parameter
+  count is not what separates them.**
 
 <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>

@@ -52,12 +52,13 @@ moves strength <strong>~0</strong>, while 8× more <em>data</em> moves it ~+90 �
 regime (a full 1×/1.4×/2×/4× sweep on the complete dataset is in progress to confirm it). (A
 small-scale statement: AlphaZero-scale self-play bootstraps far past its start; we characterize the
 regime we could run.)</p>
-<p>The unifying principle is <strong>strength = evaluator × search</strong>: search sets how <em>closely</em> you approach
-the evaluator's ceiling; the evaluator sets <em>where</em> that ceiling is. And across all three stages the
+<p>The unifying principle — the <strong>evaluator–search decomposition</strong> — is <strong>strength = evaluator ×
+search</strong>: search sets how <em>closely</em> you approach the evaluator's ceiling; the evaluator sets <em>where</em>
+that ceiling is. And across all three stages the
 binding constraint consistently emerged as <strong>the quality of the information reaching the evaluator</strong>
-— its training signal — rather than the machinery around it. <strong>Within a move, search <em>extracts</em>
-information already represented by the evaluator (cutting variance, not bias); it cannot create
-information absent from it.</strong> Voting and merging fail for the same reason — they only reorganize what
+— its training signal — rather than the machinery around it. <strong>Within a move, search <em>converts</em> the
+evaluator's latent information into stronger decisions through computation (cutting variance, not
+bias); it cannot create information the evaluator never learned.</strong> Voting and merging fail for the same reason — they only reorganize what
 the net already encodes. <strong>Self-play and evolution are different in kind</strong>: they <em>could</em> inject new
 information (search reveals the environment's ground truth via lookahead), but <strong>at our compute they
 did not exceed supervision — a <em>scale</em> limit, not a theoretical one.</strong> AlphaZero and Leela decisively
@@ -66,9 +67,9 @@ plateau characterizes the regime we could reach, and is <strong>not</strong> a c
 binds — only an experiment reveals which — so effort on any non-binding lever returns almost
 nothing.</strong></p>
 <p><strong>Headline:</strong> <em>A 14 MB evaluator plus adaptive search reaches ~2800-class play, and a staged MCTS
-</em><em>cascade</em><em> recovers up to </em><em>4.8× compute</em><em> at little Elo cost — thinking, not growing. The organizing
-law is </em><em>strength = evaluator × search</em><em>: search extracts value, but the ceiling is the </em><em>quality of
-the information the evaluator was given.</em>**</p>
+</em><em>cascade</em><em> recovers up to </em><em>4.8× compute</em><em> at little Elo cost — thinking, not growing. Search
+converts what the evaluator already knows into stronger play; it cannot lift the ceiling set by the
+</em><em>quality of the information the evaluator was given.</em>**</p>
 <blockquote>
 <p><strong>Read the numbers carefully.</strong> Absolute Elo is measured against a Stockfish ladder and carries
 <strong>±~100 systematic uncertainty</strong> near the top rung — "~2800" is an <em>efficiency indicator, not an
@@ -77,6 +78,24 @@ engine-matching claim</em>, and it is the single easiest figure for a skeptic to
 the cascade holds Elo while cutting compute up to 4.8×, and every Stage-3 aggregation/self-learning
 method fails to beat a single model. Treat those as the paper's claims; treat 2800 as a headline.</p>
 </blockquote>
+<hr />
+<h2>Key Takeaways</h2>
+<p><em>Five findings — enough to understand the paper on one page.</em></p>
+<ol>
+<li><strong>Search dominates parameters in this regime.</strong> On a <em>fixed</em> evaluator, adding search buys <strong>+286
+   Elo</strong> over the raw policy and keeps climbing <strong>~+55 per doubling</strong> of simulations; <em>doubling the
+   parameters at fixed data added ~0</em>. Strength came from <strong>thinking, not growing</strong>.</li>
+<li><strong>A wide→narrow MCTS cascade recovers up to 4.8× compute.</strong> Funnelling the simulation budget
+   through progressively narrower, deeper stages <strong>matches flat-MCTS strength at a fraction of the
+   per-move cost</strong> — our most practical result.</li>
+<li><strong>Adaptive MCTS out-scales fixed-depth search.</strong> At equal compute MCTS <strong>beats</strong> alpha-beta and
+   <strong>keeps scaling</strong>, where fixed-depth search plateaus.</li>
+<li><strong>Model agreement predicts correctness.</strong> Where independent models agree they are more often
+   right — a <strong>teacher-free confidence signal</strong>, and a result independent of chess.</li>
+<li><strong>Find the binding bottleneck experimentally.</strong> At each stage exactly one lever binds — capacity,
+   search, data, or the quality of self-generated signal — and effort on any <em>other</em> returns almost
+   nothing. The transferable contribution is this <strong>diagnostic</strong>, not any single Elo number.</li>
+</ol>
 <hr />
 <h2>1. Introduction</h2>
 <p>Modern game AI conflates three separable questions:
@@ -1100,8 +1119,9 @@ space. This also sharpens the "better aggregator" question: it must live at infe
   nodes/second versus ~10k–80k for batched engines, so <strong>10–50× of per-move latency is left on the
   table</strong> purely to implementation (§4.4), independent of the strength results. Stockfish is the
   opposite regime — a small, heavily-quantized net evaluated at
-  <strong>millions of nodes/second</strong> under alpha-beta. The common structure: <strong>strength = evaluator ×
-  search; every strong engine is search-heavy, and parameter count is not what separates them.</strong></p>
+  <strong>millions of nodes/second</strong> under alpha-beta. The structure is the same across all of them — a
+  learned <strong>evaluator queried by search</strong> — and <strong>every strong engine is search-heavy; parameter
+  count is not what separates them.</strong></p>
 <p><svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
   <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Parameter efficiency — strength vs network size (log scale)</text>
