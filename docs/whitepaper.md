@@ -21,11 +21,16 @@ data, inference-time search, and latency — how do you spend them *efficiently*
 playing strength?** We treat chess as a clean, fully-measurable testbed and map the tradeoff curves
 directly, resource by resource. With a deliberately tiny model on modest hardware, a **14 MB**
 convolutional evaluator (3.45M params) plays at ~2150 Elo as a single forward pass; adding
-**Monte-Carlo Tree Search (MCTS)** lifts the *same weights* to **~2800** with zero extra parameters —
-strength bought with **compute, not size**. That single result is the thesis in miniature: the same
-capability can be purchased with very different resource mixes, and the efficient mix is rarely "more
-parameters". *(If you remember three numbers, remember these: a **14 MB evaluator**, **~2800 with
-search**, and **4.8× search efficiency** from the cascade.)*
+**Monte-Carlo Tree Search (MCTS)** lifts the *same weights* to **~2800** with zero extra parameters
+(**+286 Elo over the raw policy from pure inference compute**, same-ladder) — strength bought with
+**compute, not size**. **The ~2800 target is deliberate, not a ceiling we failed to exceed:** ~2800
+is Super-GM / peak-human level, and our question is *how small a model can match top-human capability
+when augmented by search* — the human-peak band (which ~2800 ±100 brackets) is the intended
+saturation point, not a race against 3500-Elo engines. That single result is the thesis in miniature:
+the same capability can be purchased with very different resource mixes, and the efficient mix is
+rarely "more parameters". *(If you remember three numbers, remember these: a **14 MB evaluator**,
+**+286 Elo from search alone** (→ ~2800, human-peak), and **4.8× search efficiency** from the
+cascade.)*
 
 **The primary contribution is an empirical *framework* for allocating finite AI resources —
 parameters, data, search, latency — to a fixed capability goal, with measured tradeoff curves; the
@@ -58,9 +63,17 @@ converts what the evaluator already knows into stronger play; it cannot lift the
 > **Read the numbers carefully.** Absolute Elo is measured against a Stockfish ladder and carries
 > **±~100 systematic uncertainty** near the top rung — "~2800" is an *efficiency indicator, not an
 > engine-matching claim*, and it is the single easiest figure for a skeptic to attack. The
-> **robust** results are the *relative*, same-ladder ones: MCTS beats and out-scales fixed depth,
-> the cascade holds Elo while cutting compute up to 4.8×, and every Stage-3 aggregation/self-learning
-> method fails to beat a single model. Treat those as the paper's claims; treat 2800 as a headline.
+> **robust** results are the *relative*, same-ladder ones: search adds **+286 Elo** over the raw
+> policy, MCTS beats and out-scales fixed depth, the cascade holds Elo while cutting compute up to
+> 4.8×, and every Stage-3 aggregation/self-learning method fails to beat a single model. Treat those
+> as the paper's claims; treat 2800 as a headline.
+
+> **Target calibration (design philosophy).** We aimed at the **human-peak band (~2800, Super-GM)**
+> *on purpose*, not as a failed attempt to beat engines. For human-facing applications, matching top
+> human capability is the efficient saturation point; pushing a model to 3500 Elo (machine-only
+> territory) spends compute where it stops mattering. The study is therefore "how small a model, plus
+> how little search, reaches human-peak" — **maximum efficiency at the human ceiling**, not a race
+> for absolute strength.
 
 **Established results vs. regime-limited observations.** We separate the two explicitly:
 
@@ -402,12 +415,16 @@ a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)
 | | Stage 1 (open) | Stage 2 (closed) |
 |---|---|---|
 | **Memory** | 14 MB | **14 MB — search adds ~0** |
-| **GPU cycles/move** | 1 pass, ~1.5 ms | ~800 passes, ~1.3 s (or ~0.6 s cascaded) |
+| **GPU cycles/move** (batch-1) | 1 pass, ~1.5 ms | ~800 passes, ~1.3 s (or ~0.6 s cascaded) |
+| **GPU cycles/move** (batched, §4.4) | — | **~13–37× less — MCTS-3200 below batch-1 MCTS-800** |
 | **Elo** | ~2150 (capped) | **~2800 (scales with compute)** |
 
 **Stage 1 buys Elo with *memory* and saturates; Stage 2 buys Elo with *GPU cycles* and keeps
-climbing** — and the cascade shows most of those cycles were waste (up to 4.8× recoverable). The
-central practical result: **strength is compute, not parameters.**
+climbing** — and the cascade shows most of those cycles were waste (up to 4.8× recoverable). Note
+that the ~1.3 s is a **batch-1 implementation artefact**, not the method's cost: batched-leaf
+evaluation (§4.4, measured 13–37×) makes even MCTS-3200 cheaper than batch-1 MCTS-800, so the true
+latency axis sits far below what we plot (clean solo-GPU figure pending). The central practical
+result stands regardless: **strength is compute, not parameters.**
 
 ### 4.4 Search latency — what a second of thinking costs, and buys
 
@@ -795,7 +812,13 @@ to query?**
   into hallucination — it can only redistribute.
 - **Our chess result sits in the oracle-rich regime and still plateaued** — because at two-Mac-Studio
   compute the search was too weak to extract much from that oracle, *not* because it was absent. A
-  **scale** limit, not evidence against self-play.
+  **scale** limit, not evidence against self-play. *Mechanistically*, the escape is search depth:
+  at AlphaZero scale a **massive per-move search budget** turns the game rules into a strong enough
+  oracle to systematically discover deep tactical/strategic truths, generate targets that *exceed* the
+  current net, and encode them by training — a self-reinforcing loop that breaks the
+  weak-search/draw-collapse plateau. Our budget produces self-targets no better than the net that made
+  them, so the loop has nothing to climb; the missing ingredient is **oracle-extraction compute**, not
+  a different algorithm.
 
 None of this makes redistribution *useless*: variance reduction, sharpening, and filtering are how you
 **reach** a ceiling cheaply — indispensable engineering. The narrow claim is about the *absolute*
