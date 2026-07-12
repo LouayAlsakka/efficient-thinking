@@ -300,16 +300,25 @@ set the strength.</p>
 </ul>
 <p><svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="300" fill="#ffffff"/>
-  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 1 — data scaling saturates (MLP W1024, Elo vs positions)</text>
+  <text x="310" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a2a3a">Stage 1 — data scaling saturates per architecture; the right architecture lifts the ceiling</text>
   <line x1="60" y1="250" x2="590" y2="250" stroke="#333" stroke-width="1.5"/>
-  <line x1="60" y1="250" x2="60" y2="45" stroke="#333" stroke-width="1.5"/>
-  <text x="30" y="150" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 30 150)">Elo</text>
+  <line x1="60" y1="250" x2="60" y2="40" stroke="#333" stroke-width="1.5"/>
+  <text x="28" y="150" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 28 150)">Elo</text>
   <text x="325" y="285" text-anchor="middle" font-size="11" fill="#333">positions (millions, log-ish spacing)</text>
-  <polyline points="90,232 190,203 290,163 390,133 560,126" fill="none" stroke="#2c7fb8" stroke-width="2.5"/>
-  <circle cx="90" cy="232" r="4" fill="#2c7fb8"/><circle cx="190" cy="203" r="4" fill="#2c7fb8"/><circle cx="290" cy="163" r="4" fill="#2c7fb8"/><circle cx="390" cy="133" r="4" fill="#2c7fb8"/><circle cx="560" cy="126" r="4" fill="#2c7fb8"/>
-  <text x="90" y="225" text-anchor="middle" font-size="9" fill="#333">1127</text>
-  <text x="290" y="156" text-anchor="middle" font-size="9" fill="#333">1300</text>
-  <text x="560" y="119" text-anchor="middle" font-size="9" fill="#333">1411</text>
+  <text x="55" y="197" text-anchor="end" font-size="8" fill="#999">1400</text>
+  <text x="55" y="122" text-anchor="end" font-size="8" fill="#999">1800</text>
+  <text x="55" y="57" text-anchor="end" font-size="8" fill="#999">2150</text>
+  <line x1="60" y1="54" x2="590" y2="54" stroke="#e6550d" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="586" y="49" text-anchor="end" font-size="9.5" font-weight="bold" fill="#e6550d">conv + soft + full 394M → ~2150 (best open-loop ceiling)</text>
+  <circle cx="560" cy="54" r="4.5" fill="#e6550d"/>
+  <polyline points="90,245 190,230 290,213 390,196 560,192" fill="none" stroke="#2c7fb8" stroke-width="2.5"/>
+  <circle cx="90" cy="245" r="4" fill="#2c7fb8"/><circle cx="190" cy="230" r="4" fill="#2c7fb8"/><circle cx="290" cy="213" r="4" fill="#2c7fb8"/><circle cx="390" cy="196" r="4" fill="#2c7fb8"/><circle cx="560" cy="192" r="4" fill="#2c7fb8"/>
+  <text x="90" y="239" text-anchor="middle" font-size="9" fill="#2c7fb8">1127</text>
+  <text x="560" y="205" text-anchor="middle" font-size="9" fill="#2c7fb8">1411</text>
+  <text x="470" y="182" font-size="9" fill="#2c7fb8">MLP W1024 (data alone → saturates ~1411)</text>
+  <path d="M 575 188 L 575 60" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#s1a)"/>
+  <text x="582" y="130" font-size="8.5" fill="#666" transform="rotate(-90 582 130)">switch architecture (+740 Elo)</text>
+  <defs><marker id="s1a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#999"/></marker></defs>
   <text x="90" y="265" text-anchor="middle" font-size="9" fill="#666">23</text>
   <text x="190" y="265" text-anchor="middle" font-size="9" fill="#666">47</text>
   <text x="290" y="265" text-anchor="middle" font-size="9" fill="#666">94</text>
