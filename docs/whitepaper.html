@@ -556,7 +556,7 @@ a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)</p>
 <tr>
 <td><strong>GPU cycles/move</strong> (batched, §4.4)</td>
 <td>—</td>
-<td><strong>~13–37× less — MCTS-3200 below batch-1 MCTS-800</strong></td>
+<td><strong>~6–12× less — MCTS-3200 below batch-1 MCTS-800</strong></td>
 </tr>
 <tr>
 <td><strong>Elo</strong></td>
@@ -568,7 +568,7 @@ a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)</p>
 <p><strong>Stage 1 buys Elo with <em>memory</em> and saturates; Stage 2 buys Elo with <em>GPU cycles</em> and keeps
 climbing</strong> — and the cascade shows most of those cycles were waste (up to 4.8× recoverable). Note
 that the ~1.3 s is a <strong>batch-1 implementation artefact</strong>, not the method's cost: batched-leaf
-evaluation (§4.4, measured 13–37×) makes even MCTS-3200 cheaper than batch-1 MCTS-800, so the true
+evaluation (§4.4, measured 6–12×) makes even MCTS-3200 cheaper than batch-1 MCTS-800, so the true
 latency axis sits far below what we plot (clean solo-GPU figure pending). The central practical
 result stands regardless: <strong>strength is compute, not parameters.</strong></p>
 <h3>4.4 Search latency — what a second of thinking costs, and buys</h3>
@@ -654,30 +654,36 @@ on the same net and positions — the same nodes searched, only the launch patte
 <tbody>
 <tr>
 <td><strong>batch-1</strong> (as used above)</td>
-<td style="text-align: right;">~600 nps</td>
+<td style="text-align: right;">633 nps</td>
 <td style="text-align: right;">1.0×</td>
 </tr>
 <tr>
+<td>batched, 16 leaves/launch</td>
+<td style="text-align: right;">3.9k nps</td>
+<td style="text-align: right;">6.2×</td>
+</tr>
+<tr>
 <td>batched, 32 leaves/launch</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;"><strong>13×</strong></td>
+<td style="text-align: right;">4.7k nps</td>
+<td style="text-align: right;">7.5×</td>
 </tr>
 <tr>
 <td>batched, 64 leaves/launch</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;"><strong>23×</strong></td>
+<td style="text-align: right;">5.5k nps</td>
+<td style="text-align: right;">8.6×</td>
 </tr>
 <tr>
 <td>batched, 128 leaves/launch</td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;"><strong>37×</strong></td>
+<td style="text-align: right;">7.4k nps</td>
+<td style="text-align: right;"><strong>11.6×</strong></td>
 </tr>
 </tbody>
 </table>
-<p><em>(ratios measured under concurrent GPU load, so approximate; a clean solo-GPU figure is pending.)</em> A <strong>~13–37×</strong> per-move speedup at
-identical strength is enough to run <strong>MCTS-3200 well below today's MCTS-800 latency</strong>. <strong>The batch-1
-numbers should therefore be read as a ceiling on cost, not the method's efficiency</strong>, and the true
-strength-vs-latency curve sits far to the left of the one we plot.</p>
+<p><em>(clean solo-GPU measurement on the M3 Ultra; a first reading taken under concurrent load over-stated
+the ratio, so we report the solo figures.)</em> A <strong>~6–12×</strong> per-move speedup at identical strength is
+enough to run <strong>MCTS-3200 (~0.4 s/move batched) well below today's batch-1 MCTS-800 (~1.3 s)</strong>. <strong>The
+batch-1 numbers should therefore be read as a ceiling on cost, not the method's efficiency</strong>, and the
+true strength-vs-latency curve sits well to the left of the one we plot.</p>
 <p>Two caveats. First, the gain is <strong>hardware-dependent</strong> — it equals the <em>idle parallelism you can
 reclaim</em>: the wide M3 Ultra leaves much for a 14 MB batch-1 workload, but on a small GPU/CPU or an
 accelerator already <strong>saturated by a large network</strong> (AlphaZero/Leela), there are no idle cores and
@@ -743,14 +749,14 @@ extra signal to fill its room. Repeating on the <strong>full ~394M data</strong>
 <tr>
 <td>1.4× (w136)</td>
 <td style="text-align: right;">4.81M</td>
-<td style="text-align: right;"><strong>2794</strong></td>
-<td style="text-align: right;"><strong>+60</strong></td>
+<td style="text-align: right;">2794</td>
+<td style="text-align: right;">+60</td>
 </tr>
 <tr>
-<td>2× (w184)</td>
-<td style="text-align: right;">7.04M</td>
-<td style="text-align: right;"><em>training</em></td>
-<td style="text-align: right;">—</td>
+<td><strong>2× (w184)</strong></td>
+<td style="text-align: right;"><strong>7.04M</strong></td>
+<td style="text-align: right;"><strong>2766</strong></td>
+<td style="text-align: right;"><strong>+32</strong></td>
 </tr>
 <tr>
 <td>4× (w288)</td>
@@ -760,11 +766,15 @@ extra signal to fill its room. Repeating on the <strong>full ~394M data</strong>
 </tr>
 </tbody>
 </table>
-<p>Already diagnostic: the 1.4×-vs-1× gap <strong>widens from +18 (50M) to +60 (full data)</strong> — within ±110
-noise, but the <em>direction</em> says the 50M null was <strong>data starvation</strong>, not inert capacity. The
-<strong>2×/4× points (training)</strong> decide whether the curve keeps climbing or flattens near ~2794. Either way
-the scoped claim holds: <strong>capacity is the weakest lever <em>in this data regime</em></strong>, not "parameters never
-matter" — at AlphaZero/LLM scale, capacity-bound with abundant data, more parameters clearly help.</p>
+<p><strong>The curve is flat within noise</strong> — 2734 / 2794 / 2766 all sit inside ±82 of each other, with the 2×
+even a touch <em>below</em> the 1.4×. So the 1.4×'s +60 was noise, not a rising trend: <strong>doubling the
+parameters on full data adds nothing significant</strong> — capacity stays inert even when well-fed, which
+<em>confirms</em> rather than softens "thinking, not growing". One honest caveat: the 2×'s raw policy (2413)
+is slightly below the smaller nets' (~2448), hinting the larger net is mildly <strong>under-trained at a
+fixed 1-epoch budget</strong> — so "capacity is inert" holds at <em>matched training</em>, not matched convergence
+(the 4× point, still training, will test the endpoint). The scoped claim stands: <strong>capacity is the
+weakest lever <em>in this data regime</em></strong>, not "parameters never matter" — at AlphaZero/LLM scale,
+capacity-bound with abundant data, more parameters clearly help.</p>
 <p>The study's lever ranking, all same-ladder:</p>
 <table>
 <thead>
@@ -786,8 +796,8 @@ matter" — at AlphaZero/LLM scale, capacity-bound with abundant data, more para
 <td>8× training data</td>
 </tr>
 <tr>
-<td><strong>Capacity</strong> (1× → 1.4×, at 50M)</td>
-<td style="text-align: right;"><strong>~0</strong> (n.s.; full-data sweep running)</td>
+<td><strong>Capacity</strong> (1× → 2×, <strong>full data</strong>)</td>
+<td style="text-align: right;"><strong>~0</strong> (n.s.; flat 2734/2794/2766)</td>
 <td>more params &amp; compute</td>
 </tr>
 </tbody>
@@ -1246,7 +1256,7 @@ wasted compute; it is a measurement that says <em>"strength is not gated here �
 <td><strong>Search implementation</strong> (batch-1)</td>
 <td>latency only</td>
 <td>throughput-bound by engineering</td>
-<td>batch leaves → 13–37× speed, same strength</td>
+<td>batch leaves → 6–12× speed, same strength</td>
 </tr>
 <tr>
 <td><strong>Self-play signal</strong></td>

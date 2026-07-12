@@ -409,13 +409,13 @@ a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)
 |---|---|---|
 | **Memory** | 14 MB | **14 MB — search adds ~0** |
 | **GPU cycles/move** (batch-1) | 1 pass, ~1.5 ms | ~800 passes, ~1.3 s (or ~0.6 s cascaded) |
-| **GPU cycles/move** (batched, §4.4) | — | **~13–37× less — MCTS-3200 below batch-1 MCTS-800** |
+| **GPU cycles/move** (batched, §4.4) | — | **~6–12× less — MCTS-3200 below batch-1 MCTS-800** |
 | **Elo** | ~2150 (capped) | **~2800 (scales with compute)** |
 
 **Stage 1 buys Elo with *memory* and saturates; Stage 2 buys Elo with *GPU cycles* and keeps
 climbing** — and the cascade shows most of those cycles were waste (up to 4.8× recoverable). Note
 that the ~1.3 s is a **batch-1 implementation artefact**, not the method's cost: batched-leaf
-evaluation (§4.4, measured 13–37×) makes even MCTS-3200 cheaper than batch-1 MCTS-800, so the true
+evaluation (§4.4, measured 6–12×) makes even MCTS-3200 cheaper than batch-1 MCTS-800, so the true
 latency axis sits far below what we plot (clean solo-GPU figure pending). The central practical
 result stands regardless: **strength is compute, not parameters.**
 
@@ -470,15 +470,17 @@ on the same net and positions — the same nodes searched, only the launch patte
 
 | Search | Throughput | Speedup vs batch-1 |
 |---|---:|---:|
-| **batch-1** (as used above) | ~600 nps | 1.0× |
-| batched, 32 leaves/launch | — | **13×** |
-| batched, 64 leaves/launch | — | **23×** |
-| batched, 128 leaves/launch | — | **37×** |
+| **batch-1** (as used above) | 633 nps | 1.0× |
+| batched, 16 leaves/launch | 3.9k nps | 6.2× |
+| batched, 32 leaves/launch | 4.7k nps | 7.5× |
+| batched, 64 leaves/launch | 5.5k nps | 8.6× |
+| batched, 128 leaves/launch | 7.4k nps | **11.6×** |
 
-*(ratios measured under concurrent GPU load, so approximate; a clean solo-GPU figure is pending.)* A **~13–37×** per-move speedup at
-identical strength is enough to run **MCTS-3200 well below today's MCTS-800 latency**. **The batch-1
-numbers should therefore be read as a ceiling on cost, not the method's efficiency**, and the true
-strength-vs-latency curve sits far to the left of the one we plot.
+*(clean solo-GPU measurement on the M3 Ultra; a first reading taken under concurrent load over-stated
+the ratio, so we report the solo figures.)* A **~6–12×** per-move speedup at identical strength is
+enough to run **MCTS-3200 (~0.4 s/move batched) well below today's batch-1 MCTS-800 (~1.3 s)**. **The
+batch-1 numbers should therefore be read as a ceiling on cost, not the method's efficiency**, and the
+true strength-vs-latency curve sits well to the left of the one we plot.
 
 Two caveats. First, the gain is **hardware-dependent** — it equals the *idle parallelism you can
 reclaim*: the wide M3 Ultra leaves much for a 14 MB batch-1 workload, but on a small GPU/CPU or an
@@ -511,15 +513,19 @@ extra signal to fill its room. Repeating on the **full ~394M data**, matched to 
 | Capacity (full data) | Params | MCTS-800 | Δ vs 1× |
 |---|---:|---:|---:|
 | 1× (w96) | 3.45M | 2734 | — |
-| 1.4× (w136) | 4.81M | **2794** | **+60** |
-| 2× (w184) | 7.04M | *training* | — |
+| 1.4× (w136) | 4.81M | 2794 | +60 |
+| **2× (w184)** | **7.04M** | **2766** | **+32** |
 | 4× (w288) | 14.2M | *training* | — |
 
-Already diagnostic: the 1.4×-vs-1× gap **widens from +18 (50M) to +60 (full data)** — within ±110
-noise, but the *direction* says the 50M null was **data starvation**, not inert capacity. The
-**2×/4× points (training)** decide whether the curve keeps climbing or flattens near ~2794. Either way
-the scoped claim holds: **capacity is the weakest lever *in this data regime***, not "parameters never
-matter" — at AlphaZero/LLM scale, capacity-bound with abundant data, more parameters clearly help.
+**The curve is flat within noise** — 2734 / 2794 / 2766 all sit inside ±82 of each other, with the 2×
+even a touch *below* the 1.4×. So the 1.4×'s +60 was noise, not a rising trend: **doubling the
+parameters on full data adds nothing significant** — capacity stays inert even when well-fed, which
+*confirms* rather than softens "thinking, not growing". One honest caveat: the 2×'s raw policy (2413)
+is slightly below the smaller nets' (~2448), hinting the larger net is mildly **under-trained at a
+fixed 1-epoch budget** — so "capacity is inert" holds at *matched training*, not matched convergence
+(the 4× point, still training, will test the endpoint). The scoped claim stands: **capacity is the
+weakest lever *in this data regime***, not "parameters never matter" — at AlphaZero/LLM scale,
+capacity-bound with abundant data, more parameters clearly help.
 
 The study's lever ranking, all same-ladder:
 
@@ -527,7 +533,7 @@ The study's lever ranking, all same-ladder:
 |---|---:|---|
 | **Search** (open → 12800 sims) | **+286, then ~+55 / doubling** (log-linear, unsaturated) | ×2 latency / doubling |
 | **Data** (10 shards → full 79) | **~+90** | 8× training data |
-| **Capacity** (1× → 1.4×, at 50M) | **~0** (n.s.; full-data sweep running) | more params & compute |
+| **Capacity** (1× → 2×, **full data**) | **~0** (n.s.; flat 2734/2794/2766) | more params & compute |
 
 **Search dominates, data second, capacity last in this regime** — the sharpest reading being the
 thesis: **one lever binds at each stage; an experiment tells you which. Here it was data and search,
@@ -849,7 +855,7 @@ wasted compute; it is a measurement that says *"strength is not gated here — l
 | **Data** (10 → 79 shards) | +~90 | data/signal-bound | more, more-diverse labels |
 | **Search amount** (open → 12800 sims) | +286, then ~+55/doubling (log-linear) | search extracts value; evaluator caps its *return* | keep searching; raise the evaluator to lift the ceiling |
 | **Search allocation** (cascade shape) | flat (±noise) | *not* allocation-bound at fixed budget | reallocate for **speed**, not strength |
-| **Search implementation** (batch-1) | latency only | throughput-bound by engineering | batch leaves → 13–37× speed, same strength |
+| **Search implementation** (batch-1) | latency only | throughput-bound by engineering | batch leaves → 6–12× speed, same strength |
 | **Self-play signal** | plateau | self-signal-quality-bound | can't exceed its own signal at this scale |
 | **Selection pressure** (evolution) | phantom, reversed | *measurement-noise*-bound (fake gain) | re-measure cleanly before believing |
 | **Aggregation** (voting 3–9 agents) | no gain | correlated-error-bound | need *diversity*, not more voters |
