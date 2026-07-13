@@ -83,7 +83,7 @@ require a local **Stockfish** binary. The raw dataset is large (~100 GB) and is 
 *Efficient Thinking II* generalizes the evaluator×search decomposition to another game (Connect-4)
 and to **LLM reasoning**, and introduces **GELO** — a calibrated, cross-domain capability scale
 (one logistic latent-ability model unifying Elo, Bradley–Terry, and IRT). Early results reproduce the
-core law out of chess: search scales reasoning accuracy but saturates at a *consensus* ceiling that a
+core pattern out of chess: search scales reasoning accuracy but saturates at a *consensus* ceiling that a
 **perfect verifier breaks (+14.2 pts)** — the "evaluator is the bottleneck" finding, in language.
 In progress — see [`docs/whitepaper2.md`](docs/whitepaper2.md) and [`docs/gelo.md`](docs/gelo.md).
 

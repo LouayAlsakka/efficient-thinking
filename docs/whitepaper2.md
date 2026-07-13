@@ -1,13 +1,14 @@
-# Efficient Thinking II — Generalizing the Evaluator × Search Law Across Games and Reasoning
+# Efficient Thinking II — An Evaluator × Search Pattern Across Games and Reasoning
 ## Spending capability across domains — from a solved game to language reasoning
 
 > Status legend: **[SOLID]** measured & checked · **[PRELIMINARY]** first run, under-powered.
 
 ## Abstract
-Efficient Thinking I established, in chess, that capability decomposes as **strength = evaluator ×
+Efficient Thinking I observed, in chess, that capability decomposes as **strength = evaluator ×
 search**: a fixed evaluator (one forward pass) sets a base level, inference-time search multiplies it,
 and self-learning plateaus because the *learned evaluator* is the binding constraint. This paper asks
-whether that law is specific to chess or general. We test it in two directions — a *simpler* solved game
+whether that pattern recurs beyond chess or is specific to it. We report recurring empirical
+patterns observed under deliberately modest compute — not proven laws. We test it in two directions — a *simpler* solved game
 (Connect-4) and a *non-game* domain (LLM mathematical reasoning) — and, to make the numbers comparable
 across domains, we introduce **GELO**, a calibrated cross-domain capability scale. The decomposition
 transfers cleanly: search is a large, portable lever that scales with inference compute and then
@@ -115,6 +116,8 @@ information the evaluator doesn't already contain; raising the ceiling requires 
 oracle).**
 
 ## 5. Synthesis — what transfers, what shifts, what binds
+We report these as recurring empirical patterns — consistent across the domains and scales we tested,
+not claimed as laws:
 1. **The decomposition transfers.** *Strength = evaluator × search* holds in a solved game and in
    language reasoning, on one calibrated scale (GELO). Search is a large, portable lever that scales
    with inference compute and then **saturates against the evaluator's ceiling** — Elo-vs-sims in chess,
@@ -123,7 +126,8 @@ oracle).**
    thin evaluator (12k Connect-4 labels; a verifier-free consensus) makes search look all-important;
    feeding the evaluator (50k labels; a real verifier) rebalances it. There is no domain-intrinsic
    split — only how much you have spent on each side.
-3. **The evaluator is the universal binding constraint**, shown three independent ways: reasoning
+3. **The evaluator is consistently the binding constraint** across our experiments, shown three
+   independent ways: reasoning
    consensus is broken only by a better *verifier* (+14.2); Connect-4 self-training is limited by
    value-head quality, not search budget; chess self-improvement stalls exactly when the evaluator is
    too weak for search to generate improving targets.
