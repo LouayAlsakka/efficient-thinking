@@ -91,6 +91,12 @@ the plateau — and *why* is the result.**
   miniature. But strength **plateaus at ~+400 GELO** (below 1-ply search) and **4× more search per move
   did not raise it** — it only sharpened the evaluator's calibration. More search budget is not the
   missing ingredient.
+- **[SOLID]** **The plateau is a (near) seed-independent attractor.** Warm-starting Connect-4 self-play
+  from the *supervised* +644 net does not preserve it: the first self-play iteration erodes it to +189,
+  then it recovers to a **~+480–500 plateau** — a little above the from-scratch +400 (the seed leaves a
+  small lasting trace) but well below the +644 it started from and the +798 achievable with data.
+  Self-play pulls a *better* evaluator down toward its own signal quality rather than building on it —
+  the same erosion seen in the chess self-learned test (1214→833).
 - **[SOLID, negative]** **Chess from scratch stalled at the random floor** — open-loop Elo bounced
   254–384 with no climb over 44 iters (~1,400 self-play games). Not a method failure but a data-volume
   wall: bootstrapping chess from *random* needs orders of magnitude more games than two Macs generate.
