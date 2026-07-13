@@ -1,0 +1,53 @@
+{
+  "config": {
+    "iters": 2,
+    "games": 4,
+    "sims": 24,
+    "epochs": 4,
+    "batch": 256,
+    "lr": 0.001,
+    "buffer": 20000,
+    "channels": 64,
+    "blocks": 4,
+    "eval_every": 1,
+    "eval_games": 8,
+    "holdout": 40,
+    "init": null,
+    "seed": 0,
+    "out": "games/results/c4_selfplay.json"
+  },
+  "ladder": {
+    "random": 0.0,
+    "depth-1": 804.0,
+    "depth-2": 954.0,
+    "depth-3": 963.0
+  },
+  "history": [
+    {
+      "iter": 1,
+      "buf": 47,
+      "value_mae": 0.486,
+      "decisive_sign_acc": 0.825,
+      "gelo": 154.0,
+      "ladder_scores": {
+        "random": 0.75,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 2,
+      "buf": 111,
+      "value_mae": 0.577,
+      "decisive_sign_acc": 0.25,
+      "gelo": -12.0,
+      "ladder_scores": {
+        "random": 0.5,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    }
+  ]
+}
