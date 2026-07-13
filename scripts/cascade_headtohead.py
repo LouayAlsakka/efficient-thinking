@@ -75,7 +75,12 @@ def main():
                        "games": n, "cascade_score": round(frac, 4), "W": w, "D": d, "L": l,
                        "elo_diff": round(elo(frac), 1), "ci95": [round(lo, 1), round(hi, 1)]},
                       open(args.out, "w"), indent=2)
-    print(f"[h2h] done. Cascade is {'indistinguishable from' if abs(elo(sA/args.games))<1.96*math.sqrt(0.25/args.games)*400/math.log(10) else 'different from'} flat within the 95% CI.", flush=True)
+    frac = sA / args.games
+    se = math.sqrt(max(frac * (1 - frac), 1e-9) / args.games)
+    lo, hi = elo(frac - 1.96 * se), elo(frac + 1.96 * se)
+    verdict = "indistinguishable from" if lo <= 0 <= hi else ("STRONGER than" if lo > 0 else "WEAKER than")
+    print(f"[h2h] done. {args.games} games: cascade {frac*100:.1f}%, Elo diff {elo(frac):+.0f} "
+          f"[{lo:+.0f}, {hi:+.0f}] -> cascade is {verdict} flat MCTS-{args.sims}.", flush=True)
 
 
 if __name__ == "__main__":
