@@ -32,8 +32,11 @@ calibrated opponents. Small conv net (policy + value), PUCT MCTS = closed loop.
 - **[SOLID]** Calibrated ladder: random 0 → **depth-1 +804** → depth-2..6 +954..+1070. **The first ply of
   tactics is the single biggest step** (+804), bigger than all five deeper steps combined — diminishing
   returns on search, quantified. The heuristic ladder *saturates*.
-- **[PENDING]** Open-loop ceiling vs data (12k/30k/50k labels) — to separate "simpler game → search
-  dominates" from "under-trained evaluator → search dominates." (50k gen finishing.)
+- **[SOLID]** Open-loop ceiling vs data: GELO **+642 (12k) → +747 (24k) → +798 (50k)** — the raw net
+  reaches **depth-1 parity (+804) at 50k**. So the "net loses to 1-ply search" gap was mostly
+  *under-training*, not the game being inherently search-dominated: the evaluator catches up to
+  low-depth search once given data. Honest correction to §2's first read — the lever balance was partly
+  a starved-evaluator artifact. (Whether open-loop climbs *past* depth-1 with more data = the extension.)
 
 ## 3. Arm B — reasoning (LLM)
 The mapping (the conceptual spine):
@@ -50,8 +53,10 @@ The mapping (the conceptual spine):
   as N:1→16 — search scales reasoning like MCTS sims scale chess. *Confounded* by truncation/temperature;
   superseded by the clean run.
 - **[PENDING]** Clean sweep (greedy pass@1 baseline, 1024-token budget, 120 problems, N≤32) — running.
-- **[PENDING]** Evaluator-quality ablation: accuracy-vs-N at different verifier qualities (perfect checker →
-  noisy reward model → self-judgment) — the direct "is the evaluator the bottleneck?" test in language.
+- **[PENDING/running]** Evaluator-quality ablation (`reason_ablation.py`, llm2): self-consistency@N
+  (verifier-free consensus) vs oracle-best-of-N@N (perfect verifier) from the same samples. The gap =
+  accuracy a *perfect evaluator* unlocks over consensus = the direct "is the evaluator the bottleneck?"
+  test in language.
 
 ## 4. Stage 3 — evaluator-first self-training (does the flywheel climb, and where does it plateau?)
 The idea (from the series' self-improvement thread): *fix the evaluator first* — distill better-than-current
@@ -64,7 +69,10 @@ follows. Connect-4 is the ideal testbed: perfect ground truth to measure the eva
   1-ply search (+804)**. Likely under-resourced (small sims/games/iters, single-rollout value targets) rather
   than a fundamental ceiling.
 - **[PENDING]** Stronger run (more sims/games/iters, multi-rollout value targets, warm-start-from-supervised
-  to test "can it beat the supervised ceiling?") to locate the *true* plateau; then port the recipe to chess.
+  to test "can it beat the supervised ceiling?") to locate the *true* plateau.
+- **[PENDING/running]** **Chess port — the flagship test** (`scripts/chess_evalfirst.py`, llm1): AlphaZero
+  expert iteration from scratch with strong-search MCTS targets, distilled value-first. Does high-fidelity
+  search break the prior ~2000 from-scratch plateau? Watching open-loop Elo climb from the ~300 random floor.
 
 ## 5. Synthesis — what transfers, what shifts (to write as results land)
 - The **evaluator × search decomposition transfers** (games + reasoning).
