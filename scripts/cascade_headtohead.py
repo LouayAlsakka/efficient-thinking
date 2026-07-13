@@ -42,18 +42,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-dir", default="runs/conv_value_llm1")
     ap.add_argument("--casc-N", type=int, default=10, help="cascade stage count (flat = 1)")
-    ap.add_argument("--sims", type=int, default=800, help="identical total budget for both sides")
+    ap.add_argument("--sims", type=int, default=800, help="cascade total budget")
+    ap.add_argument("--flat-sims", type=int, default=None,
+                    help="flat MCTS sims (default = --sims for equal-budget; set lower to match wall-clock)")
     ap.add_argument("--games", type=int, default=400)
     ap.add_argument("--pgn", default="data/lichess/2013-12.pgn")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="runs/cascade_h2h.json")
     args = ap.parse_args()
 
+    flat_sims = args.flat_sims or args.sims
     model, cfg = load_run(args.run_dir)
-    flat = MultiStageMCTSPlayer(model, encoding=cfg.encoding, stages=make_stages(1, args.sims), seed=1)
+    flat = MultiStageMCTSPlayer(model, encoding=cfg.encoding, stages=make_stages(1, flat_sims), seed=1)
     casc = MultiStageMCTSPlayer(model, encoding=cfg.encoding, stages=make_stages(args.casc_N, args.sims), seed=2)
     openings = load_openings(args.pgn, max(64, args.games // 2))
-    print(f"[h2h] cascade(N={args.casc_N}) vs flat MCTS-{args.sims} | {args.games} games | net={args.run_dir}", flush=True)
+    mode = "EQUAL-SIMS" if flat_sims == args.sims else f"EQUAL-WALLCLOCK (flat={flat_sims} sims)"
+    print(f"[h2h] cascade(N={args.casc_N},{args.sims}) vs flat MCTS-{flat_sims} [{mode}] | {args.games} games | net={args.run_dir}", flush=True)
     print(f"      cascade stages: {make_stages(args.casc_N, args.sims)}", flush=True)
 
     sA = 0.0; w = d = l = 0
