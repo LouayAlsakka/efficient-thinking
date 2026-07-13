@@ -11,7 +11,6 @@ multiple models can be co-calibrated.
 """
 import argparse, json, re, time, random
 from collections import Counter
-from mlx_lm import load, generate
 
 
 def extract_boxed(text):
@@ -48,6 +47,7 @@ def normalize(s):
 
 
 def solve(model, tok, q, temp, max_tokens):
+    from mlx_lm import generate
     msgs = [{"role": "user", "content": q + "\nPlease reason step by step, and put your final answer within \\boxed{}."}]
     pr = tok.apply_chat_template(msgs, add_generation_prompt=True)
     kw = {"max_tokens": max_tokens, "verbose": False}
@@ -85,6 +85,7 @@ def main():
         picked += [(lv, r) for r in by_level[lv][:args.per_level]]
     print(f"[math] {args.model} | {len(picked)} problems ({args.per_level}/level) | N={args.nmax}", flush=True)
 
+    from mlx_lm import load
     model, tok = load(args.model)
     t0 = time.time()
     per_problem = []                                    # (level, greedy_correct, sc_correct)
