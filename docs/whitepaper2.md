@@ -78,6 +78,12 @@ self-consistency) and serial/depth (long chain-of-thought); o1/R1 scaled the ser
   correct answer is *in the sample set* 91.7% of the time; consensus simply can't select it. So in
   language, exactly as in chess, **the verifier is the binding constraint** — and with a perfect
   evaluator, search keeps paying off well past where consensus stalls.
+- **[SOLID]** **Evaluator-quality *gradient*** — accuracy vs a verifier of tunable per-item accuracy q
+  (N=16): a smooth, monotonic climb from **75.0% at q=0.5 (verifier-free consensus) → 88.3% at q=1.0
+  (perfect verifier)** — 77.7 / 80.6 / 83.0 / 85.9 at q=0.6/0.7/0.8/0.9. Capability scales *continuously*
+  with evaluator quality (~+2.6 points per 0.1 of verifier accuracy); there is no threshold — **every
+  increment of a better evaluator buys capability.** The full curve behind the two-point +14.2 ablation,
+  and the cleanest statement of the thesis in language: to go further, improve the evaluator.
 
 ## 4. Self-improvement — can the flywheel raise the evaluator with no external teacher?
 The self-improvement idea, stated value-first: *fix the evaluator first* — distill better-than-current
