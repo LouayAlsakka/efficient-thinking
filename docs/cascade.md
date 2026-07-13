@@ -11,14 +11,18 @@ cascade**: instead of one flat search over all legal moves, a fixed budget of *B
 candidate moves briefly and prune the obvious junk; later stages spend the remaining budget only on the
 handful of survivors, searched deeper and more greedily. Because expensive deep search (and the value-
 net evaluations it drives) is confined to a shrinking candidate set, the same nominal budget resolves in
-far less wall-clock per move. On a small in-house convolutional policy+value network evaluated against a
-Stockfish rating ladder, a 10-stage cascade reaches the **same playing strength as flat MCTS within
-measurement noise while using ~4.8× less time per move** (275 ms vs. 1330 ms at a fixed 800-simulation
-budget). We report this as a *promising, not yet statistically established* result: our per-configuration
-Elo estimates carry ±89-point uncertainty, so the honest claim is *no measurable strength loss at large
-compute savings*. We outline the experiments needed to make it rigorous — fixed-budget head-to-head
-matches at scale, and replication inside a strong open-source engine (KataGo, Leela Zero/Leela Chess
-Zero).
+far less wall-clock per move. On a Stockfish rating ladder the cascade *appeared* to hold flat-MCTS
+strength at up to 4.8× less time per move — but that ladder measurement carried ±89-Elo uncertainty, and
+**this paper's main result is that the apparent free lunch does not survive a rigorous test.** In direct,
+thousands-of-games head-to-head matches we find: **at an equal simulation budget the cascade is
+significantly *weaker* than flat MCTS** (≈ −200 Elo, confidence intervals excluding zero), and **at
+equal wall-clock it is statistically *indistinguishable*** (−17 Elo, 95% CI [−66, +31]). In other words
+the cascade trades strength-per-simulation for speed at very close to a one-for-one rate: it lands on the
+*same* strength-versus-time curve as flat MCTS, with **no net efficiency gain**. We report this as a
+cautionary, and we think useful, negative result — a reminder that ladder-noise can manufacture an
+efficiency claim, and a template for testing one properly. Whether a cascade can beat flat MCTS inside a
+strong open-source engine (KataGo, Leela Zero/Leela Chess Zero) remains open, but our evidence on a small
+network says the default expectation should be *no gain*.
 
 ## 1. Introduction
 Test-time search is the dominant lever in modern game-playing systems: given a fixed network, more
@@ -95,23 +99,40 @@ that survived scrutiny.
 | 9 | 2543 | 300 | 4.4× | 20→…→1 (9 stages) |
 | 10 | 2570 | 275 | **4.8×** | 20→…→1 (10 stages) |
 
-Two readings, kept separate on purpose:
+**5.1 What the ladder suggested.** Rating each configuration against the Stockfish ladder, wall-clock per
+move falls monotonically with N — up to **4.8× faster** at N=10 (1330 → 275 ms) — while ladder Elo stays
+in a band (2506–2683) whose members are *statistically indistinguishable* at ±89 (20 games/rung). Taken
+at face value this reads "same strength, up to 4.8× cheaper." **That reading is wrong**, and the rest of
+this section shows why.
 
-- **Solid (measured):** at a fixed 800-simulation budget, funnelling the budget wide→narrow cuts
-  **wall-clock per move by up to 4.8×** (1330 → 275 ms). This is a direct, low-variance measurement — the
-  narrowed search performs far fewer new value-net expansions for the same nominal budget.
-- **Suggestive (not yet significant):** across the sweep, Elo stays in a band (2506–2683) whose members
-  are **statistically indistinguishable** on the ladder — every estimate carries ±89 (20 games/rung).
-  Points such as N=4 (2683, 1.8×) and N=7 (2605, 2.8×) match flat MCTS most cleanly.
+**5.2 Direct head-to-head at equal simulations.** A *paired* match — cascade vs. flat, same network, same
+budget, alternating colours, played to a confidence interval — is far more sensitive to a strength
+*difference* than each side's absolute ladder rating. It reveals that at an equal **800-simulation**
+budget the cascade is **significantly weaker** than flat MCTS at every N tested:
 
-> **Correction from a direct head-to-head (in progress).** The ±89 ladder noise turns out to hide a real
-> effect. A *paired* cascade-vs-flat match at identical budget — far more sensitive than each side's
-> absolute ladder rating — shows the aggressive **N=10 cascade is significantly *weaker* than flat**
-> (Elo difference ≈ **−223**, 95% CI excluding 0). So the "no measurable loss at 4.8×" reading was an
-> artifact of coarse measurement, not a property of the method. We are now running the paired match
-> across N to locate the largest speedup at which the cascade's Elo-difference CI still includes zero;
-> **that** — not the raw 4.8× — will be the honest headline. This is precisely the failure mode a
-> reference-engine, high-N-games evaluation is meant to catch, and it validates insisting on it.
+| comparison (equal 800 sims) | games | cascade score | Elo diff | 95% CI |
+|--|--:|--:|--:|--:|
+| N=4 cascade vs flat | 30 | 25.0% | **−191** | [−391, −67] |
+| N=10 cascade vs flat | 30 | 21.7% | **−223** | [−451, −97] |
+
+Both CIs exclude zero: the ±89 ladder had **masked a real ~200-Elo loss**. The early wide-shallow stages,
+with few simulations spread over a large candidate set, prune good moves that flat MCTS keeps.
+
+**5.3 Direct head-to-head at equal wall-clock — the decisive test.** The cascade is *faster*, so the fair
+efficiency question is: at **equal thinking time**, is it stronger? We match wall-clock by giving flat
+MCTS the simulation count that costs the same ~275 ms as the N=10 cascade (≈165 sims) and play 200 games:
+
+| comparison (equal ~275 ms) | games | cascade score | Elo diff | 95% CI |
+|--|--:|--:|--:|--:|
+| N=10 cascade (800 sims) vs flat (165 sims) | 200 | 47.5% | **−17** | **[−66, +31]** |
+
+The interval **includes zero**: at equal wall-clock the cascade and flat MCTS are **statistically
+indistinguishable**. The cascade's per-simulation weakness (§5.2) and its speed (§5.1) very nearly cancel.
+
+**5.4 Conclusion of the results.** The wide→narrow cascade **provides no net efficiency gain** over flat
+MCTS on this network: it is weaker at equal simulations and break-even at equal wall-clock, i.e. it sits
+on the *same* strength-versus-time curve as flat MCTS. The apparent "4.8× at equal strength" was an
+artifact of ±89 ladder noise, not a property of the method.
 
 ## 6. Limitations and the path to a rigorous result
 We deliberately under-claim. Three gaps must be closed before this is a defensible efficiency result:
@@ -132,10 +153,15 @@ We view the present numbers as motivation to run (1)–(2), not as a substitute 
 
 ## 7. Conclusion
 Spending a fixed MCTS budget in a wide-to-narrow cascade concentrates the costly value-net evaluations on
-moves that survive a cheap wide pass, and on a small chess network it preserves playing strength (within
-measurement noise) at up to 4.8× less time per move. The idea is simple, orthogonal to the network, and
-has one interpretable knob. Whether it yields a *statistically significant* gain on a strong reference
-engine is the open question we intend to answer next.
+the moves that survive a cheap wide pass — an appealing idea with one interpretable knob. On a coarse
+rating ladder it looked like a 4.8× efficiency win. But a rigorous paired evaluation says otherwise: the
+cascade is significantly weaker at equal simulations and statistically indistinguishable at equal
+wall-clock, so on this network it delivers **no net gain** over flat MCTS. We report it as a useful
+negative — both because a clean null is worth recording, and because it is a concrete case of coarse
+measurement (±89-Elo ladder ratings) manufacturing an efficiency claim that a direct, high-N-games
+head-to-head dissolves. The method may still help inside a stronger engine or with a better-tuned taper;
+absent that evidence, the honest default is that wide→narrow funnelling buys speed and loses exactly as
+much strength, landing back on the flat-MCTS strength–time curve.
 
 ## Acknowledgements
 We thank Rémi Coulom for feedback that sharpened the scope and the evidentiary bar of this note.
