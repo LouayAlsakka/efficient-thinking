@@ -130,6 +130,14 @@ def main():
     buf = deque(maxlen=args.buffer)
     hist = []
     t0 = time.time()
+    # iter-0 baseline: warm-start strength BEFORE any self-training (so the curve shows climb vs start)
+    try:
+        elo, margin = eval_open_loop_elo(net, cfg, args.eval_games, openings, args.ladder, args.seed)
+        hist.append({"iter": 0, "buf": 0, "open_loop_elo": round(elo), "margin": round(margin)})
+        print(f"  it  0 (baseline) OPEN-LOOP Elo={elo:.0f}±{margin:.0f}", flush=True)
+        json.dump({"config": vars(args), "history": hist}, open(os.path.join(args.run_dir, "evalfirst.json"), "w"), indent=2)
+    except Exception as e:
+        print(f"  [baseline eval failed: {e}]", flush=True)
     for it in range(1, args.iters + 1):
         player = BatchedMCTSPlayer(net, batch=args.batch_mcts, encoding=cfg.encoding, sims=args.sims,
                                    dirichlet_alpha=0.3, dirichlet_eps=0.25, seed=args.seed + it)
