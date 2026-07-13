@@ -78,14 +78,16 @@ follows. Connect-4 is the ideal testbed: perfect ground truth to measure the eva
   This is a compute/data-volume wall, not a method failure: from *random*, chess self-play needs orders
   of magnitude more games than two Macs produce overnight to discover basic tactics. A clean, honest
   negative that supports the compute-bound reading of the earlier ~2000 plateau.
-- **[PENDING/running]** **Chess warm-start eval-first — "distill search into the policy"** (from
-  `runs/conv_value_full`). Diagnosis correction: that net is *value-focused* — raw **open-loop only 385**,
-  but its value head drove ~2500+ *with* MCTS. So the test is: MCTS self-play (guided by the strong value
-  head) generates strong visit-policy targets; distilling them should pull the weak OPEN-LOOP policy UP
-  from 385 toward the search level (internalize search). Relaunched with sims=160 (overcome the weak
-  prior) + lr=3e-4 (protect the value head), iter-0 baseline logged. Huge headroom; the cleanest
-  achievable chess plateau-break test at our compute. (First warm-start attempt used lr=1e-3/sims=80 —
-  too weak-targeted to move the policy.)
+- **[SOLID, negative]** **Chess warm-start eval-first ALSO stalled** (from `conv_value_full`, whose raw
+  open-loop is only ~385; the ~2800 was always via MCTS). Open-loop stayed flat ~300–326 across both
+  attempts (sims 80 *and* 160, lr 1e-3 *and* 3e-4). Combined with the from-scratch stall, this is a
+  coherent boundary condition: **eval-first ("distill search into the policy") hits a bootstrap barrier
+  when the seed policy is weak** — MCTS quality depends on the policy prior, so at feasible sim counts the
+  search cannot overcome a near-random prior to produce targets strong enough to improve the policy. A
+  chess plateau-break this way needs a *decent seed policy* (a strong-policy net **with** a value head —
+  not available off-the-shelf here) or cascade-level search / far more compute. Notably the Connect-4
+  analog *does* climb off the floor — the barrier is complexity/compute-dependent, consistent with the
+  external-oracle thesis. (Chess thread rested; llm1 repurposed to the stronger Connect-4 run.)
 
 ## 5. Synthesis — what transfers, what shifts (to write as results land)
 - The **evaluator × search decomposition transfers** (games + reasoning).
