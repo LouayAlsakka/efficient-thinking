@@ -101,9 +101,17 @@ Two readings, kept separate on purpose:
   **wall-clock per move by up to 4.8×** (1330 → 275 ms). This is a direct, low-variance measurement — the
   narrowed search performs far fewer new value-net expansions for the same nominal budget.
 - **Suggestive (not yet significant):** across the sweep, Elo stays in a band (2506–2683) whose members
-  are **statistically indistinguishable** — every estimate carries ±89 (20 games/rung), so the honest
-  statement is *no measurable strength loss* out to ~4.8× speedup, not a proven equality. Points such as
-  N=4 (2683, 1.8×) and N=7 (2605, 2.8×) match flat MCTS most cleanly.
+  are **statistically indistinguishable** on the ladder — every estimate carries ±89 (20 games/rung).
+  Points such as N=4 (2683, 1.8×) and N=7 (2605, 2.8×) match flat MCTS most cleanly.
+
+> **Correction from a direct head-to-head (in progress).** The ±89 ladder noise turns out to hide a real
+> effect. A *paired* cascade-vs-flat match at identical budget — far more sensitive than each side's
+> absolute ladder rating — shows the aggressive **N=10 cascade is significantly *weaker* than flat**
+> (Elo difference ≈ **−223**, 95% CI excluding 0). So the "no measurable loss at 4.8×" reading was an
+> artifact of coarse measurement, not a property of the method. We are now running the paired match
+> across N to locate the largest speedup at which the cascade's Elo-difference CI still includes zero;
+> **that** — not the raw 4.8× — will be the honest headline. This is precisely the failure mode a
+> reference-engine, high-N-games evaluation is meant to catch, and it validates insisting on it.
 
 ## 6. Limitations and the path to a rigorous result
 We deliberately under-claim. Three gaps must be closed before this is a defensible efficiency result:
