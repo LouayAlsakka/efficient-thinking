@@ -78,11 +78,14 @@ follows. Connect-4 is the ideal testbed: perfect ground truth to measure the eva
   This is a compute/data-volume wall, not a method failure: from *random*, chess self-play needs orders
   of magnitude more games than two Macs produce overnight to discover basic tactics. A clean, honest
   negative that supports the compute-bound reading of the earlier ~2000 plateau.
-- **[PENDING/running]** **Chess warm-start eval-first — the definitive method test** (from
-  `runs/conv_value_full`, ~2150 open-loop). Sidesteps the bootstrap wall: does distilling MCTS-improved
-  (~2400-level) self-play outcomes push the OPEN-LOOP net *above* its ~2150 supervised ceiling
-  (internalize search) — or degrade it? This is the chess plateau-break we can actually measure at our
-  compute.
+- **[PENDING/running]** **Chess warm-start eval-first — "distill search into the policy"** (from
+  `runs/conv_value_full`). Diagnosis correction: that net is *value-focused* — raw **open-loop only 385**,
+  but its value head drove ~2500+ *with* MCTS. So the test is: MCTS self-play (guided by the strong value
+  head) generates strong visit-policy targets; distilling them should pull the weak OPEN-LOOP policy UP
+  from 385 toward the search level (internalize search). Relaunched with sims=160 (overcome the weak
+  prior) + lr=3e-4 (protect the value head), iter-0 baseline logged. Huge headroom; the cleanest
+  achievable chess plateau-break test at our compute. (First warm-start attempt used lr=1e-3/sims=80 —
+  too weak-targeted to move the policy.)
 
 ## 5. Synthesis — what transfers, what shifts (to write as results land)
 - The **evaluator × search decomposition transfers** (games + reasoning).
