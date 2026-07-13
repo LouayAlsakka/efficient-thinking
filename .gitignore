@@ -32,3 +32,5 @@ docs/arxiv/*.tar.gz
 *.log
 *.tmp
 scratchpad/
+
+!docs/gelo.md
