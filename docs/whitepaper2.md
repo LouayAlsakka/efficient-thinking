@@ -56,10 +56,13 @@ The mapping (the conceptual spine):
   wasted *on this evaluator*. That directly motivates the evaluator-quality ablation: a perfect verifier
   should break through the 77.5% consensus ceiling. (The earlier "26%→54%" was a 512-token truncation
   artifact — retired.)
-- **[PENDING/running]** Evaluator-quality ablation (`reason_ablation.py`, llm2): self-consistency@N
-  (verifier-free consensus) vs oracle-best-of-N@N (perfect verifier) from the same samples. The gap =
-  accuracy a *perfect evaluator* unlocks over consensus = the direct "is the evaluator the bottleneck?"
-  test in language.
+- **[SOLID]** Evaluator-quality ablation (120 GSM8K, N≤32): self-consistency (verifier-free consensus)
+  saturates at **77.5%**; oracle-best-of-N (perfect verifier) climbs to **91.7% and is still rising at
+  N=32**. **Evaluator-gap = +14.2 points.** The correct answer is *in* the sample set 91.7% of the time —
+  consensus just can't select it. So the 77.5% ceiling is an **evaluator ceiling, not a policy or search
+  ceiling**: in reasoning the *verifier* is the binding constraint — the "evaluator is the bottleneck"
+  law from chess, quantified in language. (Corollary: with a perfect verifier, search keeps paying off
+  well past where consensus saturates.)
 
 ## 4. Stage 3 — evaluator-first self-training (does the flywheel climb, and where does it plateau?)
 The idea (from the series' self-improvement thread): *fix the evaluator first* — distill better-than-current
@@ -87,7 +90,16 @@ follows. Connect-4 is the ideal testbed: perfect ground truth to measure the eva
   chess plateau-break this way needs a *decent seed policy* (a strong-policy net **with** a value head —
   not available off-the-shelf here) or cascade-level search / far more compute. Notably the Connect-4
   analog *does* climb off the floor — the barrier is complexity/compute-dependent, consistent with the
-  external-oracle thesis. (Chess thread rested; llm1 repurposed to the stronger Connect-4 run.)
+  external-oracle thesis.
+- **[SOLID, negative]** **The proper Stage-3 test — eval-first from a *self-learned* plateau net**
+  (`selfplay_warm`, open-loop **1214**, value head; sidesteps the bootstrap trap — it's off the floor
+  and self-learned, not supervised). Result: open-loop **did not climb** — it held/slightly degraded
+  (~900–1120) across 40 iters, never rising above the 1214 baseline. Root cause fits the whole picture:
+  MCTS@160 on this net's value head doesn't play far enough above 1214 to generate *improving* targets,
+  so distillation can't lift the policy. **The binding constraint is value-head (evaluator) quality, not
+  the method or the search budget** — search extracts what the evaluator represents; a mediocre evaluator
+  yields no self-improvement. Breaking the plateau needs a *better evaluator* = an external oracle
+  (Stage 2), which is exactly what the reasoning ablation shows too (a perfect verifier unlocks +14.2).
 
 ## 5. Synthesis — what transfers, what shifts (to write as results land)
 - The **evaluator × search decomposition transfers** (games + reasoning).
