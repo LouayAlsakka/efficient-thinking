@@ -49,10 +49,13 @@ The mapping (the conceptual spine):
   scaled the serial axis; RLVR *internalizes* search into the policy (vs AlphaZero keeping it external) — a
   new degree of freedom this series should name.
 
-- **[PRELIMINARY]** First accuracy-vs-N sweep (Qwen-4B, GSM8K): self-consistency lifted accuracy 26%→54%
-  as N:1→16 — search scales reasoning like MCTS sims scale chess. *Confounded* by truncation/temperature;
-  superseded by the clean run.
-- **[PENDING]** Clean sweep (greedy pass@1 baseline, 1024-token budget, 120 problems, N≤32) — running.
+- **[SOLID]** Clean accuracy-vs-N sweep (Qwen-4B, GSM8K, 120 problems, 1024-token budget): greedy
+  pass@1 = **66.7%**; self-consistency@N = 69.2 (N=1) → 73.3 (4) → **77.5 (16) → 77.5 (32)**. **Search
+  lifts accuracy +8–11 points over greedy, then saturates at ~77.5% by N=16.** The saturation is the
+  key hook: majority vote (a verifier-*free* evaluator) stops helping — so past ~N=16 more search is
+  wasted *on this evaluator*. That directly motivates the evaluator-quality ablation: a perfect verifier
+  should break through the 77.5% consensus ceiling. (The earlier "26%→54%" was a 512-token truncation
+  artifact — retired.)
 - **[PENDING/running]** Evaluator-quality ablation (`reason_ablation.py`, llm2): self-consistency@N
   (verifier-free consensus) vs oracle-best-of-N@N (perfect verifier) from the same samples. The gap =
   accuracy a *perfect evaluator* unlocks over consensus = the direct "is the evaluator the bottleneck?"
@@ -70,9 +73,16 @@ follows. Connect-4 is the ideal testbed: perfect ground truth to measure the eva
   than a fundamental ceiling.
 - **[PENDING]** Stronger run (more sims/games/iters, multi-rollout value targets, warm-start-from-supervised
   to test "can it beat the supervised ceiling?") to locate the *true* plateau.
-- **[PENDING/running]** **Chess port — the flagship test** (`scripts/chess_evalfirst.py`, llm1): AlphaZero
-  expert iteration from scratch with strong-search MCTS targets, distilled value-first. Does high-fidelity
-  search break the prior ~2000 from-scratch plateau? Watching open-loop Elo climb from the ~300 random floor.
+- **[SOLID, negative]** **Chess from-scratch eval-first stalled at the random floor** (`chess_evalfirst.py`,
+  llm1): open-loop Elo bounced 254–384 with *no climb* across 44 iters (~2h, ~1,400 self-play games).
+  This is a compute/data-volume wall, not a method failure: from *random*, chess self-play needs orders
+  of magnitude more games than two Macs produce overnight to discover basic tactics. A clean, honest
+  negative that supports the compute-bound reading of the earlier ~2000 plateau.
+- **[PENDING/running]** **Chess warm-start eval-first — the definitive method test** (from
+  `runs/conv_value_full`, ~2150 open-loop). Sidesteps the bootstrap wall: does distilling MCTS-improved
+  (~2400-level) self-play outcomes push the OPEN-LOOP net *above* its ~2150 supervised ceiling
+  (internalize search) — or degrade it? This is the chess plateau-break we can actually measure at our
+  compute.
 
 ## 5. Synthesis — what transfers, what shifts (to write as results land)
 - The **evaluator × search decomposition transfers** (games + reasoning).
