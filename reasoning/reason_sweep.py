@@ -41,7 +41,7 @@ def main():
     ap.add_argument("--problems", type=int, default=50)
     ap.add_argument("--nmax", type=int, default=16, help="samples/problem; sweep N reads off subsets")
     ap.add_argument("--temp", type=float, default=0.8)
-    ap.add_argument("--max-tokens", type=int, default=512)
+    ap.add_argument("--max-tokens", type=int, default=1024)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="reasoning/sweep_results.json")
     args = ap.parse_args()
@@ -54,13 +54,16 @@ def main():
 
     model, tok = load(args.model)
     t0 = time.time()
-    all_samples = []
+    all_samples, greedy = [], []
     for i, p in enumerate(probs):
+        greedy.append(sample_once(model, tok, p["question"], 0.0, args.max_tokens))   # clean pass@1 baseline
         all_samples.append([sample_once(model, tok, p["question"], args.temp, args.max_tokens)
                             for _ in range(args.nmax)])
         if (i + 1) % 10 == 0:
             el = time.time() - t0
             print(f"  {i+1}/{len(probs)}  ({el/(i+1):.1f}s/prob, ETA {el/(i+1)*(len(probs)-i-1)/60:.0f}min)", flush=True)
+
+    greedy_acc = 100.0 * sum(str(a) == str(g) for a, g in zip(greedy, golds)) / len(probs)
 
     Ns = [n for n in [1, 2, 4, 8, 16, 32, 64] if n <= args.nmax]
     print("\n>>> accuracy vs inference compute (self-consistency@N):", flush=True)
@@ -74,10 +77,14 @@ def main():
         acc = 100.0 * correct / len(probs)
         curve.append((N, round(acc, 1)))
         print(f"  N={N:<3d}  accuracy={acc:.1f}%", flush=True)
+    print(f"\n>>> greedy pass@1 (clean baseline): {greedy_acc:.1f}%", flush=True)
     if len(curve) > 1:
-        print(f"\n>>> pass@1 → sc@{Ns[-1]}: {curve[0][1]:.1f}% → {curve[-1][1]:.1f}%  "
+        print(f">>> temp sc@1 → sc@{Ns[-1]}: {curve[0][1]:.1f}% → {curve[-1][1]:.1f}%  "
               f"(+{curve[-1][1]-curve[0][1]:.1f} pts from search)", flush=True)
-    json.dump({"model": args.model, "problems": len(probs), "temp": args.temp, "curve": curve},
+        print(f">>> vs clean greedy baseline: {greedy_acc:.1f}% → {curve[-1][1]:.1f}%  "
+              f"(+{curve[-1][1]-greedy_acc:.1f} pts from search)", flush=True)
+    json.dump({"model": args.model, "problems": len(probs), "temp": args.temp,
+               "max_tokens": args.max_tokens, "greedy_pass1": round(greedy_acc, 1), "curve": curve},
               open(args.out, "w"), indent=2)
     print(f"[sweep] wrote {args.out}", flush=True)
 
