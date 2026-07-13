@@ -21,7 +21,7 @@ import mlx.core as mx
 import mlx.nn as nn
 import mlx.optimizers as optim
 from connect4 import C4, value01 as true_value01
-from connect4_ab import ab_best
+from connect4_ab import ab_best, value01 as oracle_value01
 from c4_net import C4Net
 from c4_mcts import search, visit_probs, policy_move
 from c4_calibrate import match, place_agent
@@ -34,13 +34,16 @@ LADDER_FN = {"random": lambda s: random.choice(s.legal()),
              "depth-3": lambda s: ab_best(s, 3)[0]}
 
 
-def self_play_game(net, sims, np_rng, py_rng, temp_moves=10):
-    """One self-play game. Returns list of (encode[84], visit_probs[7], value in {0,0.5,1})."""
+def self_play_game(net, sims, np_rng, py_rng, temp_moves=10, oracle_depth=None):
+    """One self-play game. Returns list of (encode[84], visit_probs[7], value).
+    value = game outcome (self-generated) by default, OR the external-oracle value01 at `oracle_depth`
+    when set — the positive control: does an external oracle (not self-play outcomes) break the plateau?"""
     s = C4(); turn = 0; ply = 0; hist = []
     while s.terminal() is None and s.legal():
         root = search(net, s, sims=sims, dirichlet=0.25, dir_alpha=1.0, rng=np_rng)
         vp = visit_probs(root)
-        hist.append((s.encode(), vp, turn))
+        oval = oracle_value01(s, oracle_depth) if oracle_depth is not None else None
+        hist.append((s.encode(), vp, turn, oval))
         if ply < temp_moves and vp.sum() > 0:
             move = int(np_rng.choice(7, p=vp))
         else:
@@ -48,13 +51,15 @@ def self_play_game(net, sims, np_rng, py_rng, temp_moves=10):
         if not s.can_play(move):
             move = s.legal()[0]
         s = s.play(move); turn ^= 1; ply += 1
-    t = s.terminal()
+    if oracle_depth is not None:                                  # external-oracle value targets
+        return [(enc, vp, oval) for (enc, vp, p, oval) in hist]
+    t = s.terminal()                                              # self-generated game-outcome targets
     if t == "win":
         winner = 1 - turn
         val = lambda p: 1.0 if p == winner else 0.0
     else:
         val = lambda p: 0.5
-    return [(enc, vp, val(p)) for (enc, vp, p) in hist]
+    return [(enc, vp, val(p)) for (enc, vp, p, oval) in hist]
 
 
 def build_holdout(n, py_rng):
@@ -95,6 +100,9 @@ def main():
     ap.add_argument("--eval-games", type=int, default=24)
     ap.add_argument("--holdout", type=int, default=150)
     ap.add_argument("--init", default=None, help="warm-start net (else from scratch)")
+    ap.add_argument("--oracle-value", action="store_true",
+                    help="POSITIVE CONTROL: value target = external oracle (not self-play outcome)")
+    ap.add_argument("--oracle-depth", type=int, default=6, help="ab depth for the oracle value target")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="games/results/c4_selfplay.json")
     args = ap.parse_args()
@@ -139,8 +147,9 @@ def main():
     t0 = time.time()
     for it in range(1, args.iters + 1):
         net.eval()
+        od = args.oracle_depth if args.oracle_value else None
         for g in range(args.games):
-            buf.extend(self_play_game(net, args.sims, np_rng, py_rng))
+            buf.extend(self_play_game(net, args.sims, np_rng, py_rng, oracle_depth=od))
         # train on the replay buffer
         net.train()
         data = list(buf)
