@@ -1,10 +1,10 @@
-# Generalizing Efficient Thinking: The Evaluator × Search Law Across Games and Reasoning
-## Paper 2 of the Efficient-Thinking series — a living draft (findings accumulate as they land)
+# Efficient Thinking II — Generalizing the Evaluator × Search Law Across Games and Reasoning
+## A living draft (findings accumulate as they land)
 
 > Status legend: **[SOLID]** measured & checked · **[PRELIMINARY]** first run, under-powered · **[PENDING]** running / planned.
 
 ## Abstract (stub)
-Paper 1 established, in chess, that capability decomposes as **strength = evaluator × search**, that search
+Efficient Thinking I (the chess paper) established that capability decomposes as **strength = evaluator × search**, that search
 scales log-linearly with inference compute, and that the evaluator's ceiling is set by whether an external
 oracle supplies information the model can't generate itself. This paper asks whether that law is *specific
 to chess* or *general*. We test it in two directions — a simpler game (Connect-4) and a non-game domain
