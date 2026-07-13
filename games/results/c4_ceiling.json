@@ -1,0 +1,32 @@
+[
+  {
+    "size": 12000,
+    "open_loop_gelo": 642,
+    "scores": {
+      "random": 1.0,
+      "depth-1": 0.38,
+      "depth-2": 0.06,
+      "depth-3": 0.1
+    }
+  },
+  {
+    "size": 24000,
+    "open_loop_gelo": 747,
+    "scores": {
+      "random": 1.0,
+      "depth-1": 0.42,
+      "depth-2": 0.23,
+      "depth-3": 0.21
+    }
+  },
+  {
+    "size": 50000,
+    "open_loop_gelo": 798,
+    "scores": {
+      "random": 1.0,
+      "depth-1": 0.55,
+      "depth-2": 0.1,
+      "depth-3": 0.4
+    }
+  }
+]
