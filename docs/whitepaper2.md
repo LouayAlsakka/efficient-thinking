@@ -113,6 +113,14 @@ the plateau — and *why* is the result.**
   (`selfplay_warm`, open-loop 1214, off the floor, self-learned) — **did not climb; it degraded**
   (1214 → 833 over ~50 iters). MCTS on this net's value head doesn't play far enough above 1214 to
   produce improving targets, so distillation erodes rather than lifts.
+- **[SOLID, positive control]** **An external oracle breaks the plateau.** Change *only* the value target
+  — from the self-play game outcome to an **external oracle** (a depth-6 solver value), leaving the
+  self-play loop otherwise identical — and Connect-4 self-training **climbs past the ~+400 plateau**:
+  GELO +265 → +394 → +539 → **+601 and still rising** (oracle-value MAE 0.36 → 0.32). This is the flip
+  side that completes the story: the same loop that plateaus at +400 on self-generated signal climbs
+  toward the *oracle's* level once the value target carries external information. Self-play doesn't fail
+  because the *method* is wrong; it fails because self-generated signal has no information the evaluator
+  lacks — supply it externally and the flywheel turns.
 
 **Why it can't work for free (the theory the experiments support).** A Monte-Carlo rollout *does* give
 the true value of a position — but the true value *under the current level of play* (the model plays
