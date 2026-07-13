@@ -41,3 +41,6 @@ games/*.npz
 games/*.safetensors
 games/results/*.safetensors
 reasoning/data/
+!docs/cascade.md
+!docs/cascade.html
+!docs/cascade.pdf

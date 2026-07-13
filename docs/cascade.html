@@ -1,0 +1,213 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
+@page { size: A4; margin: 20mm 18mm; }
+body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
+       line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
+       font-size: 15px; }
+h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
+     padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
+h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
+     margin-top: 34px; }
+h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
+p, li { font-size: 15px; }
+strong { color: #111; }
+code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
+       padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
+pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
+      overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
+pre code { background: none; color: #24292e; padding: 0; }
+table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
+th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+th { background: #2c3e50; color: #fff; }
+tr:nth-child(even) td { background: #f6f8fa; }
+td[align="right"], th[align="right"] { text-align: right; }
+hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
+blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
+             color: #333; background: #f6f8fa; font-style: italic; }
+a { color: #0969da; }
+img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+</style></head><body><h1>Budget-Funnelled Monte-Carlo Tree Search</h1>
+<h2>A wide-to-narrow cascade that spends a fixed simulation budget where it matters</h2>
+<p><strong>Louay Alsakka</strong> · 2026 · <em>working paper / technical report</em></p>
+<h2>Abstract</h2>
+<p>Monte-Carlo Tree Search (MCTS) with a policy+value network spends most of its simulation budget
+re-searching moves that a shallow look already reveals to be poor. We describe a simple <strong>staged
+cascade</strong>: instead of one flat search over all legal moves, a fixed budget of <em>B</em> simulations is run in
+<em>N</em> stages that funnel from <strong>wide-and-shallow to narrow-and-deep</strong> — early stages look at many
+candidate moves briefly and prune the obvious junk; later stages spend the remaining budget only on the
+handful of survivors, searched deeper and more greedily. Because expensive deep search (and the value-
+net evaluations it drives) is confined to a shrinking candidate set, the same nominal budget resolves in
+far less wall-clock per move. On a small in-house convolutional policy+value network evaluated against a
+Stockfish rating ladder, a 10-stage cascade reaches the <strong>same playing strength as flat MCTS within
+measurement noise while using ~4.8× less time per move</strong> (275 ms vs. 1330 ms at a fixed 800-simulation
+budget). We report this as a <em>promising, not yet statistically established</em> result: our per-configuration
+Elo estimates carry ±89-point uncertainty, so the honest claim is <em>no measurable strength loss at large
+compute savings</em>. We outline the experiments needed to make it rigorous — fixed-budget head-to-head
+matches at scale, and replication inside a strong open-source engine (KataGo, Leela Zero/Leela Chess
+Zero).</p>
+<h2>1. Introduction</h2>
+<p>Test-time search is the dominant lever in modern game-playing systems: given a fixed network, more
+simulations buy more strength [Silver 2018; Jones 2021]. But not all simulations are equally useful. In
+a typical position most legal moves are quickly seen to be bad; a flat MCTS nonetheless allocates
+exploration to them through the PUCT prior [Rosin 2011; Silver 2017], and — more importantly for
+wall-clock — expands and evaluates their subtrees with the value network. The expensive resource is the
+<strong>network evaluation per newly expanded leaf</strong>, and a flat search spreads it thinly across the full
+move set.</p>
+<p>This paper studies a minimal way to concentrate that resource: a <strong>budget-funnelled cascade</strong>. The idea
+is old in spirit — humans and classical engines both narrow a candidate list before calculating deeply —
+but we phrase it as an explicit <em>schedule over search shape</em> on top of an AlphaZero-style policy+value
+MCTS, with the number of stages as a single free knob. Our contribution is (i) the concrete
+formulation, (ii) an efficiency measurement on a chess network against a calibrated Stockfish ladder,
+and (iii) an honest account of what it does and does not yet establish.</p>
+<h2>2. Related work</h2>
+<p><strong>MCTS and selectivity.</strong> MCTS originates with Coulom's selectivity-and-backup formulation [Coulom
+2006] and the UCT bandit analysis of Kocsis and Szepesvári [2006]; see Browne et al. [2012] for a
+survey. Our cascade is a search-<em>control</em> strategy layered on standard PUCT MCTS [Rosin 2011] as used in
+AlphaGo/AlphaZero [Silver 2016; Silver 2017; Silver 2018].</p>
+<p><strong>Narrowing the candidate set.</strong> Progressive strategies — progressive widening and progressive
+unpruning — grow the considered move set as visits accumulate [Coulom 2007; Chaslot 2008]; our cascade
+runs the <em>opposite</em> schedule at the root, starting wide and <em>shrinking</em> the candidate set across stages,
+while re-investing the freed budget in depth. Rapid Action Value Estimation shares information across
+moves to focus search [Gelly 2011]; playout-cap and simulation-count variation are used in KataGo for
+training efficiency [Wu 2019]. Classical alpha-beta engines achieve related focus via iterative
+deepening and candidate pre-selection; the novelty here is packaging wide→narrow funnelling as a tunable
+multi-stage schedule for neural MCTS.</p>
+<p><strong>Test-time compute.</strong> That search scales strength roughly log-linearly in simulations is documented for
+board games [Jones 2021] and echoed by recent inference-time-compute work in language models. The
+cascade targets the <em>efficiency</em> of that curve — the same strength at lower cost — rather than its
+ceiling.</p>
+<h2>3. Method</h2>
+<p>Let a position have legal moves <code>M</code>, a policy+value network <code>f</code>, and a total budget of <code>B</code> simulations.
+A cascade is a list of <code>N</code> stages, each a triple <code>(k_i, s_i, c_i)</code>:</p>
+<ul>
+<li><code>k_i</code> — the number of candidate root moves the stage is allowed to search (the <em>width</em>);</li>
+<li><code>s_i</code> — simulations spent in the stage, with <code>Σ s_i = B</code>;</li>
+<li><code>c_i</code> — the PUCT exploration constant for the stage.</li>
+</ul>
+<p>The candidate set starts as the top-<code>k_1</code> moves by policy prior. Stage <code>i</code> runs <code>s_i</code> PUCT simulations
+restricted to its candidate set; the top-<code>k_{i+1}</code> moves by visit count then pass to the next stage.
+Visit counts and the value cache carry across stages, so deeper stages refine — rather than restart —
+the estimates on survivors. After the final stage (<code>k_N = 1</code>) the most-visited move is played.</p>
+<p>We use one monotone rule so that <code>N</code> is the only knob: widths shrink geometrically <code>20 → 1</code>, exploration
+falls linearly <code>c: 4.5 → 0.2</code> (broad early, greedy late), and the budget is weighted toward the later,
+narrower stages (<code>Σ s_i = B = 800</code>). <code>N = 1</code> recovers plain flat MCTS-800. Intuitively, the wide-shallow
+front cheaply discards junk, and the deep-narrow tail spends the value-net evaluations only on moves
+that survived scrutiny.</p>
+<h2>4. Experimental setup</h2>
+<ul>
+<li><strong>Network.</strong> A 3.45M-parameter convolutional policy+value network (raw single-pass strength ≈ 2262
+  Elo on the ladder below), deliberately small; MLX on Apple Silicon.</li>
+<li><strong>Opponents / rating.</strong> Matches against a Stockfish <code>UCI_Elo</code> ladder (rungs 2400/2700/3000) plus a
+  random-mover anchor; model Elo is a maximum-likelihood performance rating over the ladder. <strong>20 games
+  per rung</strong>, 40 ms/move for the Stockfish side, real Lichess openings.</li>
+<li><strong>Budget.</strong> A fixed <code>B = 800</code> simulations for every configuration, so the comparison isolates <em>how</em> the
+  budget is spent, not <em>how much</em>.</li>
+<li><strong>Speed.</strong> Wall-clock ms/move measured on a fixed probe set (opening, middlegame, tactical).</li>
+</ul>
+<h2>5. Results</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">Elo (±89)</th>
+<th style="text-align: right;">ms/move</th>
+<th style="text-align: right;">speedup</th>
+<th style="text-align: left;">schedule (width×sims, wide→narrow)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1 (flat)</td>
+<td style="text-align: right;">2683</td>
+<td style="text-align: right;">1330</td>
+<td style="text-align: right;">1.0×</td>
+<td style="text-align: left;">800 sims over all moves</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2605</td>
+<td style="text-align: right;">903</td>
+<td style="text-align: right;">1.5×</td>
+<td style="text-align: left;">20→4→1</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2683</td>
+<td style="text-align: right;">724</td>
+<td style="text-align: right;">1.8×</td>
+<td style="text-align: left;">20→7→3→1</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2605</td>
+<td style="text-align: right;">475</td>
+<td style="text-align: right;">2.8×</td>
+<td style="text-align: left;">20→…→1 (7 stages)</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2543</td>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">4.4×</td>
+<td style="text-align: left;">20→…→1 (9 stages)</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2570</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;"><strong>4.8×</strong></td>
+<td style="text-align: left;">20→…→1 (10 stages)</td>
+</tr>
+</tbody>
+</table>
+<p>Two readings, kept separate on purpose:</p>
+<ul>
+<li><strong>Solid (measured):</strong> at a fixed 800-simulation budget, funnelling the budget wide→narrow cuts
+  <strong>wall-clock per move by up to 4.8×</strong> (1330 → 275 ms). This is a direct, low-variance measurement — the
+  narrowed search performs far fewer new value-net expansions for the same nominal budget.</li>
+<li><strong>Suggestive (not yet significant):</strong> across the sweep, Elo stays in a band (2506–2683) whose members
+  are <strong>statistically indistinguishable</strong> — every estimate carries ±89 (20 games/rung), so the honest
+  statement is <em>no measurable strength loss</em> out to ~4.8× speedup, not a proven equality. Points such as
+  N=4 (2683, 1.8×) and N=7 (2605, 2.8×) match flat MCTS most cleanly.</li>
+</ul>
+<h2>6. Limitations and the path to a rigorous result</h2>
+<p>We deliberately under-claim. Three gaps must be closed before this is a defensible efficiency result:</p>
+<ol>
+<li><strong>Statistical significance.</strong> ±89 Elo from 20 games/rung is too coarse. The clean test is a <strong>direct
+   head-to-head match, cascade vs. flat MCTS at an identical budget</strong>, over thousands of games, reporting
+   an Elo difference with confidence intervals (and, for the efficiency claim, matched <em>strength</em> at
+   measured <em>nodes/wall-clock</em>).</li>
+<li><strong>One small network, one game.</strong> Results on a 3.45M chess net may not transfer. The convincing
+   demonstration is replication inside a <strong>state-of-the-art open-source engine — KataGo or Leela
+   Zero/Leela Chess Zero</strong> — showing an improvement (or a compute saving at equal strength) against that
+   engine's own flat MCTS.</li>
+<li><strong>Confounds.</strong> Wall-clock mixes cache effects and batch sizes; a fair comparison should also report
+   value-net evaluations and node counts, and control the batched-evaluation path identically across
+   arms.</li>
+</ol>
+<p>We view the present numbers as motivation to run (1)–(2), not as a substitute for them.</p>
+<h2>7. Conclusion</h2>
+<p>Spending a fixed MCTS budget in a wide-to-narrow cascade concentrates the costly value-net evaluations on
+moves that survive a cheap wide pass, and on a small chess network it preserves playing strength (within
+measurement noise) at up to 4.8× less time per move. The idea is simple, orthogonal to the network, and
+has one interpretable knob. Whether it yields a <em>statistically significant</em> gain on a strong reference
+engine is the open question we intend to answer next.</p>
+<h2>Acknowledgements</h2>
+<p>We thank Rémi Coulom for feedback that sharpened the scope and the evidentiary bar of this note.</p>
+<h2>References</h2>
+<ul>
+<li>Browne, C. et al. (2012). <em>A Survey of Monte Carlo Tree Search Methods.</em> IEEE Trans. Comput. Intell. AI Games 4(1).</li>
+<li>Chaslot, G. et al. (2008). <em>Progressive Strategies for Monte-Carlo Tree Search.</em> New Mathematics and Natural Computation 4(3).</li>
+<li>Coulom, R. (2006). <em>Efficient Selectivity and Backup Operators in Monte-Carlo Tree Search.</em> Computers and Games 2006.</li>
+<li>Coulom, R. (2007). <em>Computing Elo Ratings of Move Patterns in the Game of Go.</em> ICGA Journal 30(4).</li>
+<li>Gelly, S., Silver, D. (2011). <em>Monte-Carlo Tree Search and Rapid Action Value Estimation in Computer Go.</em> Artificial Intelligence 175(11).</li>
+<li>Jones, A. L. (2021). <em>Scaling Scaling Laws with Board Games.</em> arXiv:2104.03113.</li>
+<li>Kocsis, L., Szepesvári, C. (2006). <em>Bandit Based Monte-Carlo Planning.</em> ECML 2006.</li>
+<li>Rosin, C. D. (2011). <em>Multi-Armed Bandits with Episode Context.</em> Annals of Mathematics and Artificial Intelligence 61(3).</li>
+<li>Silver, D. et al. (2016). <em>Mastering the Game of Go with Deep Neural Networks and Tree Search.</em> Nature 529.</li>
+<li>Silver, D. et al. (2017). <em>Mastering the Game of Go without Human Knowledge.</em> Nature 550.</li>
+<li>Silver, D. et al. (2018). <em>A General Reinforcement Learning Algorithm that Masters Chess, Shogi and Go through Self-Play.</em> Science 362.</li>
+<li>Wu, D. J. (2019). <em>Accelerating Self-Play Learning in Go.</em> arXiv:1902.10565 (KataGo).</li>
+</ul>
+<p><strong>Software resources.</strong> Stockfish (https://stockfishchess.org) · Leela Chess Zero (https://lczero.org) ·
+KataGo (https://github.com/lightvector/KataGo) · MLX (https://github.com/ml-explore/mlx). Code and the
+cascade sweep for this note: https://github.com/LouayAlsakka/efficient-thinking.</p></body></html>
