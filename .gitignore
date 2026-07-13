@@ -34,3 +34,4 @@ docs/arxiv/*.tar.gz
 scratchpad/
 
 !docs/gelo.md
+!docs/whitepaper2.md

@@ -1,0 +1,300 @@
+{
+  "config": {
+    "iters": 40,
+    "games": 24,
+    "sims": 64,
+    "epochs": 4,
+    "batch": 256,
+    "lr": 0.001,
+    "buffer": 20000,
+    "channels": 64,
+    "blocks": 4,
+    "eval_every": 2,
+    "eval_games": 30,
+    "holdout": 160,
+    "init": null,
+    "seed": 0,
+    "out": "games/results/c4_selfplay_scratch.json"
+  },
+  "ladder": {
+    "random": 0.0,
+    "depth-1": 804.0,
+    "depth-2": 954.0,
+    "depth-3": 963.0
+  },
+  "history": [
+    {
+      "iter": 1,
+      "buf": 501,
+      "value_mae": 0.479,
+      "decisive_sign_acc": 0.512,
+      "gelo": 119.0,
+      "ladder_scores": {
+        "random": 0.7,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 2,
+      "buf": 961,
+      "value_mae": 0.477,
+      "decisive_sign_acc": 0.525,
+      "gelo": 97.0,
+      "ladder_scores": {
+        "random": 0.67,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 4,
+      "buf": 1960,
+      "value_mae": 0.473,
+      "decisive_sign_acc": 0.519,
+      "gelo": 119.0,
+      "ladder_scores": {
+        "random": 0.7,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 6,
+      "buf": 2796,
+      "value_mae": 0.477,
+      "decisive_sign_acc": 0.512,
+      "gelo": 189.0,
+      "ladder_scores": {
+        "random": 0.8,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 8,
+      "buf": 3624,
+      "value_mae": 0.465,
+      "decisive_sign_acc": 0.537,
+      "gelo": 317.0,
+      "ladder_scores": {
+        "random": 0.87,
+        "depth-1": 0.07,
+        "depth-2": 0.03,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 10,
+      "buf": 4570,
+      "value_mae": 0.465,
+      "decisive_sign_acc": 0.544,
+      "gelo": 369.0,
+      "ladder_scores": {
+        "random": 0.93,
+        "depth-1": 0.1,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 12,
+      "buf": 5492,
+      "value_mae": 0.456,
+      "decisive_sign_acc": 0.544,
+      "gelo": 330.0,
+      "ladder_scores": {
+        "random": 0.87,
+        "depth-1": 0.1,
+        "depth-2": 0.02,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 14,
+      "buf": 6363,
+      "value_mae": 0.446,
+      "decisive_sign_acc": 0.569,
+      "gelo": 177.0,
+      "ladder_scores": {
+        "random": 0.77,
+        "depth-1": 0.0,
+        "depth-2": 0.02,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 16,
+      "buf": 7243,
+      "value_mae": 0.431,
+      "decisive_sign_acc": 0.575,
+      "gelo": 291.0,
+      "ladder_scores": {
+        "random": 0.87,
+        "depth-1": 0.03,
+        "depth-2": 0.03,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 18,
+      "buf": 8136,
+      "value_mae": 0.439,
+      "decisive_sign_acc": 0.562,
+      "gelo": 291.0,
+      "ladder_scores": {
+        "random": 0.87,
+        "depth-1": 0.07,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 20,
+      "buf": 8965,
+      "value_mae": 0.438,
+      "decisive_sign_acc": 0.569,
+      "gelo": 239.0,
+      "ladder_scores": {
+        "random": 0.8,
+        "depth-1": 0.03,
+        "depth-2": 0.0,
+        "depth-3": 0.03
+      }
+    },
+    {
+      "iter": 22,
+      "buf": 9879,
+      "value_mae": 0.444,
+      "decisive_sign_acc": 0.569,
+      "gelo": 317.0,
+      "ladder_scores": {
+        "random": 0.93,
+        "depth-1": 0.03,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 24,
+      "buf": 10945,
+      "value_mae": 0.434,
+      "decisive_sign_acc": 0.581,
+      "gelo": 463.0,
+      "ladder_scores": {
+        "random": 0.93,
+        "depth-1": 0.23,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 26,
+      "buf": 11997,
+      "value_mae": 0.426,
+      "decisive_sign_acc": 0.569,
+      "gelo": 343.0,
+      "ladder_scores": {
+        "random": 0.8,
+        "depth-1": 0.17,
+        "depth-2": 0.03,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 28,
+      "buf": 12947,
+      "value_mae": 0.412,
+      "decisive_sign_acc": 0.588,
+      "gelo": 394.0,
+      "ladder_scores": {
+        "random": 0.9,
+        "depth-1": 0.17,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 30,
+      "buf": 13992,
+      "value_mae": 0.43,
+      "decisive_sign_acc": 0.569,
+      "gelo": 418.0,
+      "ladder_scores": {
+        "random": 0.9,
+        "depth-1": 0.2,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 32,
+      "buf": 14958,
+      "value_mae": 0.436,
+      "decisive_sign_acc": 0.575,
+      "gelo": 418.0,
+      "ladder_scores": {
+        "random": 0.9,
+        "depth-1": 0.2,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 34,
+      "buf": 15851,
+      "value_mae": 0.409,
+      "decisive_sign_acc": 0.6,
+      "gelo": 406.0,
+      "ladder_scores": {
+        "random": 0.9,
+        "depth-1": 0.17,
+        "depth-2": 0.02,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 36,
+      "buf": 16838,
+      "value_mae": 0.401,
+      "decisive_sign_acc": 0.606,
+      "gelo": 304.0,
+      "ladder_scores": {
+        "random": 0.83,
+        "depth-1": 0.1,
+        "depth-2": 0.02,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 38,
+      "buf": 17874,
+      "value_mae": 0.4,
+      "decisive_sign_acc": 0.619,
+      "gelo": 381.0,
+      "ladder_scores": {
+        "random": 0.87,
+        "depth-1": 0.17,
+        "depth-2": 0.0,
+        "depth-3": 0.02
+      }
+    },
+    {
+      "iter": 40,
+      "buf": 18871,
+      "value_mae": 0.405,
+      "decisive_sign_acc": 0.594,
+      "gelo": 406.0,
+      "ladder_scores": {
+        "random": 0.8,
+        "depth-1": 0.28,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    }
+  ]
+}
