@@ -146,7 +146,66 @@ self-consistency) and serial/depth (long chain-of-thought); o1/R1 scaled the ser
   with evaluator quality (~+2.6 points per 0.1 of verifier accuracy); there is no threshold — <strong>every
   increment of a better evaluator buys capability.</strong> The full curve behind the two-point +14.2 ablation,
   and the cleanest statement of the thesis in language: to go further, improve the evaluator.</li>
+<li><strong>[SOLID]</strong> <strong>Search barely improves the <em>evaluator<em> — an asymmetry with the policy.</em><em> Running the
+  master judge with self-consistency (majority of N judgments) raised its agreement with the verifier
+  only </em><em>72.5% → 75.0% (N:1→5)</em><em> — a ~+2.5-point nudge, versus the </em><em>+8–11 points</em><em> self-consistency buys
+  a </em>policy<em>. The reason is instructive: a policy benefits from many attempts because </em>some<em> land on the
+  answer and search selects them; but if the judge can't reason a problem out, repeating the judgment
+  reproduces the same </em>systematic<em> error — search only helps where the evaluator is </em>randomly<em> uncertain,
+  not systematically wrong. So you can partly buy back a weak </em>policy<em> with compute, but </em><em>not a weak
+  </em>evaluator</em></strong> — which is exactly why the evaluator's <em>quality</em>, not its search budget, is the binding
+  constraint.</li>
 </ul>
+<h3>The efficient-thinking frontier — size vs. search in reasoning</h3>
+<p>The core efficiency question made concrete: for a fixed compute budget, spend it on a <em>bigger model</em> or on
+<em>more search over a smaller one</em>? We sweep a clean size ladder (Qwen2.5 0.5B/1.5B/3B) × self-consistency N
+on GSM8K.</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th style="text-align: right;">params</th>
+<th style="text-align: right;">greedy</th>
+<th style="text-align: right;">sc@4</th>
+<th style="text-align: right;">sc@16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen2.5-0.5B</td>
+<td style="text-align: right;">0.5B</td>
+<td style="text-align: right;">30.0%</td>
+<td style="text-align: right;">25.0%</td>
+<td style="text-align: right;">41.2%</td>
+</tr>
+<tr>
+<td>Qwen2.5-1.5B</td>
+<td style="text-align: right;">1.5B</td>
+<td style="text-align: right;">48.8%</td>
+<td style="text-align: right;">50.0%</td>
+<td style="text-align: right;">58.8%</td>
+</tr>
+<tr>
+<td>Qwen2.5-3B</td>
+<td style="text-align: right;">3.0B</td>
+<td style="text-align: right;">67.5%</td>
+<td style="text-align: right;">76.2%</td>
+<td style="text-align: right;">83.8%</td>
+</tr>
+</tbody>
+</table>
+<p>Plotting accuracy vs. compute (≈ params × N), <strong>every small-model-plus-search point is dominated by a
+bigger model with less search:</strong> 3B greedy (67.5%, compute ≈ 3) beats 0.5B@N=16 (41.2%, ≈ 8) <em>and</em>
+1.5B@N=16 (58.8%, ≈ 24). So in reasoning, <strong>base-model size dominates search on the compute-efficiency
+frontier</strong> — the <em>opposite</em> of the chess result, where search on a fixed 3.45M net was the efficient
+lever.</p>
+<p>The reconciliation is the thesis itself: <em>search extracts what the model already contains.</em> The chess net
+was already strong on its task (~2150 open-loop), so search extracted a lot; these small LLMs are too weak
+on GSM8K for search to rescue — you cannot self-consistency your way up from a model that rarely finds the
+answer at all. <strong>Search complements a competent base; it cannot substitute for one.</strong> "Buy search, not
+size" holds only above a base-competence threshold; below it, size (base capability) dominates. (Compute
+≈ params × N is a coarse proxy — self-consistency N counts full generations — but the domination is large
+enough to survive it.)</p>
 <h2>4. Self-improvement — can the flywheel raise the evaluator with no external teacher?</h2>
 <p>The self-improvement idea, stated value-first: <em>fix the evaluator first</em> — distill better-than-current
 value/policy targets (Monte-Carlo rollouts / MCTS-backed, anchored on real terminal outcomes) back into

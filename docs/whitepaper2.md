@@ -107,6 +107,31 @@ self-consistency) and serial/depth (long chain-of-thought); o1/R1 scaled the ser
   *evaluator*** — which is exactly why the evaluator's *quality*, not its search budget, is the binding
   constraint.
 
+### The efficient-thinking frontier — size vs. search in reasoning
+The core efficiency question made concrete: for a fixed compute budget, spend it on a *bigger model* or on
+*more search over a smaller one*? We sweep a clean size ladder (Qwen2.5 0.5B/1.5B/3B) × self-consistency N
+on GSM8K.
+
+| model | params | greedy | sc@4 | sc@16 |
+|---|---:|---:|---:|---:|
+| Qwen2.5-0.5B | 0.5B | 30.0% | 25.0% | 41.2% |
+| Qwen2.5-1.5B | 1.5B | 48.8% | 50.0% | 58.8% |
+| Qwen2.5-3B | 3.0B | 67.5% | 76.2% | 83.8% |
+
+Plotting accuracy vs. compute (≈ params × N), **every small-model-plus-search point is dominated by a
+bigger model with less search:** 3B greedy (67.5%, compute ≈ 3) beats 0.5B@N=16 (41.2%, ≈ 8) *and*
+1.5B@N=16 (58.8%, ≈ 24). So in reasoning, **base-model size dominates search on the compute-efficiency
+frontier** — the *opposite* of the chess result, where search on a fixed 3.45M net was the efficient
+lever.
+
+The reconciliation is the thesis itself: *search extracts what the model already contains.* The chess net
+was already strong on its task (~2150 open-loop), so search extracted a lot; these small LLMs are too weak
+on GSM8K for search to rescue — you cannot self-consistency your way up from a model that rarely finds the
+answer at all. **Search complements a competent base; it cannot substitute for one.** "Buy search, not
+size" holds only above a base-competence threshold; below it, size (base capability) dominates. (Compute
+≈ params × N is a coarse proxy — self-consistency N counts full generations — but the domination is large
+enough to survive it.)
+
 ## 4. Self-improvement — can the flywheel raise the evaluator with no external teacher?
 The self-improvement idea, stated value-first: *fix the evaluator first* — distill better-than-current
 value/policy targets (Monte-Carlo rollouts / MCTS-backed, anchored on real terminal outcomes) back into

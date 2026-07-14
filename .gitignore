@@ -52,3 +52,4 @@ reasoning/data/
 !docs/gelo.html
 !docs/gelo.pdf
 !reasoning/arena_gelo_anchored.json
+!reasoning/frontier_*.json

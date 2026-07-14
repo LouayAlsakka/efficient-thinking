@@ -1,0 +1,29 @@
+{
+  "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+  "problems": 80,
+  "temp": 0.8,
+  "max_tokens": 1024,
+  "greedy_pass1": 48.8,
+  "curve": [
+    [
+      1,
+      43.8
+    ],
+    [
+      2,
+      43.8
+    ],
+    [
+      4,
+      50.0
+    ],
+    [
+      8,
+      58.8
+    ],
+    [
+      16,
+      58.8
+    ]
+  ]
+}
