@@ -1,0 +1,15 @@
+{
+  "metric": "greedy",
+  "anchor": 1500.0,
+  "level_difficulty": {
+    "1": 1273,
+    "2": 1435,
+    "3": 1490,
+    "4": 1590,
+    "5": 1712
+  },
+  "model_gelo": {
+    "Kimi-Dev-72B-4bit": 1717,
+    "Qwen2.5-1.5B-Instruct-4bit": 1517
+  }
+}

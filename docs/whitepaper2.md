@@ -31,13 +31,12 @@ question."
   assumed. The scale is anchored random := 0.
 - **[SOLID]** **Reasoning on the same scale.** The identical logistic/IRT machinery applied to MATH
   difficulty tiers (levels 1–5 as the calibrated "opponent ladder") yields a **monotonic difficulty
-  scale on one GELO axis** — L1 +1276 → L2 +1421 → L3 +1493 → L4 +1587 → L5 +1723 (~+110 GELO/level) —
-  and places a solver on it by ability (Qwen2.5-1.5B at **+1516**, between the L3/L4 difficulty it
-  half-solves). A chess rating, a Connect-4 rating, and a reasoning ability now live on **one logistic
-  scale** — the cross-domain-commensurable claim, delivered. *Caveats:* a fully-calibrated multi-model
-  IRT needs ≥2 cleanly-measured models; a second candidate (a 4-bit 4B) gave artifact-low scores from
-  unreliable `\boxed` answer-extraction, so we report a single-model (relative) fit and are adding a
-  fixed extractor plus a strong third anchor (Kimi-72B, running).
+  ladder on one GELO axis** — L1 +1273 → L2 +1435 → L3 +1490 → L4 +1590 → L5 +1712 (~+110 GELO/level) —
+  and places solvers on it by ability, correctly ordered: **Qwen2.5-1.5B at +1517, Kimi-Dev-72B at
+  +1717** (a ~200-GELO gap; each sits near the difficulty tier it half-solves). A chess rating, a
+  Connect-4 rating, and a reasoning ability now live on **one logistic scale** — the cross-domain-
+  commensurable claim, delivered and multi-model-calibrated. (A third candidate, a 4-bit 4B, was dropped:
+  unreliable `\boxed` answer-extraction gave implausibly low scores — a measurement, not ability, issue.)
 
 ## 2. Arm A — a simpler game (Connect-4)
 The *simple* end of the complexity spectrum. Connect-4 is solved, so the exact solver is a perfect

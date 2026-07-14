@@ -128,6 +128,9 @@ MCTS the simulation count that costs the same ~275 ms as the N=10 cascade (≈16
 
 The interval **includes zero**: at equal wall-clock the cascade and flat MCTS are **statistically
 indistinguishable**. The cascade's per-simulation weakness (§5.2) and its speed (§5.1) very nearly cancel.
+A milder cascade (N=7, ~475 ms) vs. flat at matched time (285 sims) over 150 games gives −58 Elo, 95% CI
+[−117, −3] — marginally *weaker*. So across the N we tested the cascade is **never stronger** than flat
+MCTS at equal wall-clock; the best case is a statistical tie.
 
 **5.4 Conclusion of the results.** The wide→narrow cascade **provides no net efficiency gain** over flat
 MCTS on this network: it is weaker at equal simulations and break-even at equal wall-clock, i.e. it sits

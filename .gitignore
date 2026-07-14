@@ -46,3 +46,4 @@ reasoning/data/
 !docs/cascade.pdf
 !reasoning/reason_gelo.json
 !reasoning/reason_gelo_clean.json
+!reasoning/reason_gelo_2model.json
