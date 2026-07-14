@@ -169,6 +169,16 @@ not claimed as laws:
    verifier unlocks +14.2 in reasoning, and Stockfish labels carried chess to ~2800. *Training creates
    information; search extracts it; neither creates what an external oracle must supply.*
 
+## Vignette — capability-per-parameter, made vivid
+Asked to play raw chess against the same Stockfish ladder used in Efficient Thinking I, a **frontier
+general LLM (Kimi-K2.5)** scores ~56% vs a random mover, **0% vs Stockfish-1320**, and frequently
+cannot even emit a legal move — a performance rating of **≈341 GELO** (barely above random). The 3.45M-
+parameter *specialist* from Paper I plays **~2150 open-loop and ~2800 with search**. A tiny, correctly-
+shaped evaluator beats a giant generalist by **~1,800–2,500 GELO at the generalist's own game.** Scale is
+not what buys task capability; the right evaluator (and search over it) is. (Measured on llm1 via the
+Bedrock endpoint; small sample, and part of the gap is the LLM's difficulty producing legal moves — but
+the order of magnitude is unambiguous.)
+
 ## Reproducibility
 Code and data generators for both arms are in the repo: `games/` (Connect-4 engine, oracle,
 net/MCTS/eval/calibrate/self-play) and `reasoning/` (GSM8K accuracy-vs-N sweep and the evaluator-quality
