@@ -1,0 +1,17 @@
+{
+  "names": [
+    "Qwen2.5-0.5B-Instruct-4bit",
+    "Qwen2.5-1.5B-Instruct-4bit",
+    "Qwen2.5-3B-Instruct-4bit",
+    "Qwen3.5-4B-MLX-4bit",
+    "Kimi-K2.5"
+  ],
+  "judge_gelo": {
+    "Qwen2.5-0.5B-Instruct-4bit": 2297,
+    "Qwen2.5-1.5B-Instruct-4bit": 2562,
+    "Qwen2.5-3B-Instruct-4bit": 2509,
+    "Qwen3.5-4B-MLX-4bit": 2743,
+    "Kimi-K2.5": 2800
+  },
+  "judge_vs_truth_agreement": 0.7175925925925926
+}

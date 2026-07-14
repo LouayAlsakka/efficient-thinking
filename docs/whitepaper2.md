@@ -29,14 +29,19 @@ question."
 - **[SOLID]** First calibration (Connect-4): logistic goodness-of-fit **0.058** (mean |predicted −
   observed| pairwise win-rate) → the Elo model genuinely *fits* the game; ratings are earned, not
   assumed. The scale is anchored random := 0.
-- **[SOLID]** **Reasoning on the same scale.** The identical logistic/IRT machinery applied to MATH
-  difficulty tiers (levels 1–5 as the calibrated "opponent ladder") yields a **monotonic difficulty
-  ladder on one GELO axis** — L1 +1273 → L2 +1435 → L3 +1490 → L4 +1590 → L5 +1712 (~+110 GELO/level) —
-  and places solvers on it by ability, correctly ordered: **Qwen2.5-1.5B at +1517, Kimi-Dev-72B at
-  +1717** (a ~200-GELO gap; each sits near the difficulty tier it half-solves). A chess rating, a
-  Connect-4 rating, and a reasoning ability now live on **one logistic scale** — the cross-domain-
-  commensurable claim, delivered and multi-model-calibrated. (A third candidate, a 4-bit 4B, was dropped:
-  unreliable `\boxed` answer-extraction gave implausibly low scores — a measurement, not ability, issue.)
+- **[SOLID]** **Reasoning on the same scale — two routes, one axis.** A chess rating, a Connect-4 rating,
+  and a reasoning ability now live on **one logistic GELO axis**, via either route in `docs/gelo.md`:
+  - *Primary — pairwise ("beat another LLM"):* five models answer the same MATH problems and a **master
+    judge (Kimi-K2.5)** scores every head-to-head → Bradley-Terry GELO, **anchored Kimi-K2.5 := 2800**
+    (the "GM" of the set), the small models placed below with headroom: **Qwen3.5-4B +2743 ·
+    Qwen2.5-1.5B +2562 · Qwen2.5-3B +2509 · Qwen2.5-0.5B +2297.** The 0.5B sits ~500 GELO below the
+    frontier; the mid-models bunch within noise (50 questions). The judge agrees with the ground-truth
+    verifier on **72%** of decisive pairs — decent, but *itself evaluator-limited*: a referee can only
+    rank as well as it can reason, the thesis applied to the judge (and why on *checkable* tasks the
+    verifier still beats an LLM judge). The anchor value is free (400 GELO = 10×); we set 2800 so the
+    numbers read like chess (elite ≈ 2800, room down toward a novice floor).
+  - *Secondary — difficulty-anchored (IRT):* the same machinery against MATH difficulty tiers gives a
+    monotonic ladder (L1 +1273 → L5 +1712, ~+110/level) and places a model by which tier it half-solves.
 
 ## 2. Arm A — a simpler game (Connect-4)
 The *simple* end of the complexity spectrum. Connect-4 is solved, so the exact solver is a perfect

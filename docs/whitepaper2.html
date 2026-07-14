@@ -55,14 +55,19 @@ question."
 - <strong>[SOLID]</strong> First calibration (Connect-4): logistic goodness-of-fit <strong>0.058</strong> (mean |predicted −
   observed| pairwise win-rate) → the Elo model genuinely <em>fits</em> the game; ratings are earned, not
   assumed. The scale is anchored random := 0.
-- <strong>[SOLID]</strong> <strong>Reasoning on the same scale.</strong> The identical logistic/IRT machinery applied to MATH
-  difficulty tiers (levels 1–5 as the calibrated "opponent ladder") yields a <strong>monotonic difficulty
-  ladder on one GELO axis</strong> — L1 +1273 → L2 +1435 → L3 +1490 → L4 +1590 → L5 +1712 (~+110 GELO/level) —
-  and places solvers on it by ability, correctly ordered: <strong>Qwen2.5-1.5B at +1517, Kimi-Dev-72B at
-  +1717</strong> (a ~200-GELO gap; each sits near the difficulty tier it half-solves). A chess rating, a
-  Connect-4 rating, and a reasoning ability now live on <strong>one logistic scale</strong> — the cross-domain-
-  commensurable claim, delivered and multi-model-calibrated. (A third candidate, a 4-bit 4B, was dropped:
-  unreliable <code>\boxed</code> answer-extraction gave implausibly low scores — a measurement, not ability, issue.)</p>
+- <strong>[SOLID]</strong> <strong>Reasoning on the same scale — two routes, one axis.</strong> A chess rating, a Connect-4 rating,
+  and a reasoning ability now live on <strong>one logistic GELO axis</strong>, via either route in <code>docs/gelo.md</code>:
+  - <em>Primary — pairwise ("beat another LLM"):</em> five models answer the same MATH problems and a <strong>master
+    judge (Kimi-K2.5)</strong> scores every head-to-head → Bradley-Terry GELO, <strong>anchored Kimi-K2.5 := 2800</strong>
+    (the "GM" of the set), the small models placed below with headroom: <strong>Qwen3.5-4B +2743 ·
+    Qwen2.5-1.5B +2562 · Qwen2.5-3B +2509 · Qwen2.5-0.5B +2297.</strong> The 0.5B sits ~500 GELO below the
+    frontier; the mid-models bunch within noise (50 questions). The judge agrees with the ground-truth
+    verifier on <strong>72%</strong> of decisive pairs — decent, but <em>itself evaluator-limited</em>: a referee can only
+    rank as well as it can reason, the thesis applied to the judge (and why on <em>checkable</em> tasks the
+    verifier still beats an LLM judge). The anchor value is free (400 GELO = 10×); we set 2800 so the
+    numbers read like chess (elite ≈ 2800, room down toward a novice floor).
+  - <em>Secondary — difficulty-anchored (IRT):</em> the same machinery against MATH difficulty tiers gives a
+    monotonic ladder (L1 +1273 → L5 +1712, ~+110/level) and places a model by which tier it half-solves.</p>
 <h2>2. Arm A — a simpler game (Connect-4)</h2>
 <p>The <em>simple</em> end of the complexity spectrum. Connect-4 is solved, so the exact solver is a perfect
 oracle and a depth-limited alpha-beta gives a calibrated opponent ladder. A small conv net (policy +
@@ -216,6 +221,15 @@ not claimed as laws:
    that injects new information. The positive proof is the flip side of every negative here — a perfect
    verifier unlocks +14.2 in reasoning, and Stockfish labels carried chess to ~2800. <em>Training creates
    information; search extracts it; neither creates what an external oracle must supply.</em></p>
+<h2>Vignette — capability-per-parameter, made vivid</h2>
+<p>Asked to play raw chess against the same Stockfish ladder used in Efficient Thinking I, a <strong>frontier
+general LLM (Kimi-K2.5)</strong> scores ~56% vs a random mover, <strong>0% vs Stockfish-1320</strong>, and frequently
+cannot even emit a legal move — a performance rating of <strong>≈341 GELO</strong> (barely above random). The 3.45M-
+parameter <em>specialist</em> from Paper I plays <strong>~2150 open-loop and ~2800 with search</strong>. A tiny, correctly-
+shaped evaluator beats a giant generalist by <strong>~1,800–2,500 GELO at the generalist's own game.</strong> Scale is
+not what buys task capability; the right evaluator (and search over it) is. (Measured on llm1 via the
+Bedrock endpoint; small sample, and part of the gap is the LLM's difficulty producing legal moves — but
+the order of magnitude is unambiguous.)</p>
 <h2>Reproducibility</h2>
 <p>Code and data generators for both arms are in the repo: <code>games/</code> (Connect-4 engine, oracle,
 net/MCTS/eval/calibrate/self-play) and <code>reasoning/</code> (GSM8K accuracy-vs-N sweep and the evaluator-quality
