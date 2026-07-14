@@ -1,5 +1,5 @@
 # Efficient Thinking II — An Evaluator × Search Pattern Across Games and Reasoning
-## From a solved game to language reasoning, measured on one calibrated scale
+## Across games, language reasoning, and sequential control — measured on one calibrated scale
 
 **Louay Alsakka** · 2026 · *working paper*
 
