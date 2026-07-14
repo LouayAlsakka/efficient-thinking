@@ -44,3 +44,5 @@ reasoning/data/
 !docs/cascade.md
 !docs/cascade.html
 !docs/cascade.pdf
+!reasoning/reason_gelo.json
+!reasoning/reason_gelo_clean.json

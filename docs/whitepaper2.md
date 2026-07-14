@@ -29,6 +29,15 @@ question."
 - **[SOLID]** First calibration (Connect-4): logistic goodness-of-fit **0.058** (mean |predicted −
   observed| pairwise win-rate) → the Elo model genuinely *fits* the game; ratings are earned, not
   assumed. The scale is anchored random := 0.
+- **[SOLID]** **Reasoning on the same scale.** The identical logistic/IRT machinery applied to MATH
+  difficulty tiers (levels 1–5 as the calibrated "opponent ladder") yields a **monotonic difficulty
+  scale on one GELO axis** — L1 +1276 → L2 +1421 → L3 +1493 → L4 +1587 → L5 +1723 (~+110 GELO/level) —
+  and places a solver on it by ability (Qwen2.5-1.5B at **+1516**, between the L3/L4 difficulty it
+  half-solves). A chess rating, a Connect-4 rating, and a reasoning ability now live on **one logistic
+  scale** — the cross-domain-commensurable claim, delivered. *Caveats:* a fully-calibrated multi-model
+  IRT needs ≥2 cleanly-measured models; a second candidate (a 4-bit 4B) gave artifact-low scores from
+  unreliable `\boxed` answer-extraction, so we report a single-model (relative) fit and are adding a
+  fixed extractor plus a strong third anchor (Kimi-72B, running).
 
 ## 2. Arm A — a simpler game (Connect-4)
 The *simple* end of the complexity spectrum. Connect-4 is solved, so the exact solver is a perfect
