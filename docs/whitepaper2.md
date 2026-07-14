@@ -116,7 +116,8 @@ the plateau — and *why* is the result.**
 - **[SOLID, positive control]** **An external oracle breaks the plateau.** Change *only* the value target
   — from the self-play game outcome to an **external oracle** (a depth-6 solver value), leaving the
   self-play loop otherwise identical — and Connect-4 self-training **climbs past the ~+400 plateau**:
-  GELO +265 → +394 → +539 → **+601 and still rising** (oracle-value MAE 0.36 → 0.32). This is the flip
+  GELO +265 → +539 → **+719 by iteration 60** (oracle-value MAE 0.36 → 0.31), heading toward the
+  oracle's own level — vs ~+400 where the self-generated-target loop stalls. This is the flip
   side that completes the story: the same loop that plateaus at +400 on self-generated signal climbs
   toward the *oracle's* level once the value target carries external information. Self-play doesn't fail
   because the *method* is wrong; it fails because self-generated signal has no information the evaluator
