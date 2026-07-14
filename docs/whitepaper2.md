@@ -20,8 +20,8 @@ external oracle). We also find a sharp cross-domain *contrast*: in reasoning, ba
 search** on the compute-efficiency frontier — the opposite of chess — which the same thesis explains
 (search extracts what a model already contains; a base too weak to solve leaves nothing to extract). We
 report these as recurring empirical patterns observed under deliberately modest compute (two Apple-Silicon
-machines), not as proven laws — but the through-line is consistent: **the evaluator is the bottleneck, in
-every domain we tested.**
+machines), not as proven laws. **Across the domains and compute budgets studied here, one through-line is
+consistent: the evaluator — not parameters or search budget — is the binding constraint.**
 
 ## 1. Introduction
 Modern game-playing and reasoning systems both gain most of their capability from two levers that are
@@ -40,7 +40,7 @@ with a natural verifier (a checkable final answer). Our contributions:
    reasoning ability are directly comparable, with a *calibrate-first* protocol and a goodness-of-fit gate.
 2. **The decomposition transfers** (§3–§4): evaluator × search holds in Connect-4 and in reasoning; the
    evaluator/search *balance* shifts with which side you have starved.
-3. **The evaluator is the binding constraint** (§4): a perfect verifier breaks a search-saturated ceiling
+3. **The evaluator is the binding constraint, in every setting we test** (§4): a perfect verifier breaks a search-saturated ceiling
    (+14.2), verifier quality traces a continuous capability curve, and — a subtle asymmetry — search
    improves a *policy* but barely improves the *evaluator*.
 4. **Self-improvement can't beat its own signal** (§5): five experiments across two games fail to break
@@ -201,7 +201,8 @@ cannot add information the evaluator doesn't already contain; raising the ceilin
    (50k labels; a real verifier) rebalances. There is no domain-intrinsic split — only how much you have
    spent on each side. In reasoning the same logic flips the *frontier*: below a competence threshold,
    size (base capability) dominates search.
-3. **The evaluator is consistently the binding constraint**, shown independently: reasoning consensus is
+3. **Across the domains and compute budgets studied here, the evaluator is consistently the binding
+   constraint**, shown independently: reasoning consensus is
    broken only by a better verifier (+14.2), and by a *graded* verifier (75 → 88); Connect-4 self-training
    is limited by value-head quality, not search budget; chess self-improvement stalls exactly when the
    evaluator is too weak for search to generate improving targets; and even the *judge* is
