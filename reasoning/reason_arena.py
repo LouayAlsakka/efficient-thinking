@@ -35,7 +35,10 @@ def generate(args):
     out = {"questions": [{"problem": r["problem"], "gold": r.get("answer"), "level": r["level"]} for r in picked],
            "answers": {}}
     for m in models:
-        model, tok = load(m)
+        try:
+            model, tok = load(m)
+        except Exception as e:
+            print(f"[arena] SKIP {m}: {e}", flush=True); continue
         sampler = make_sampler(temp=args.temp)
         outs = []
         for r in picked:
@@ -43,8 +46,8 @@ def generate(args):
             pr = tok.apply_chat_template(msgs, add_generation_prompt=True)
             outs.append(gen(model, tok, prompt=pr, max_tokens=args.max_tokens, sampler=sampler, verbose=False))
         out["answers"][m.split("/")[-1]] = outs
+        json.dump(out, open(args.out, "w"))                 # incremental save (crash-safe)
         print(f"[arena] generated {len(outs)} answers for {m.split('/')[-1]}", flush=True)
-    json.dump(out, open(args.out, "w"))
     print(f"[arena] wrote {args.out} ({len(models)} contestants x {len(picked)} questions)", flush=True)
 
 
