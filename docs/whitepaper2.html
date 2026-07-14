@@ -1,0 +1,223 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
+@page { size: A4; margin: 20mm 18mm; }
+body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
+       line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
+       font-size: 15px; }
+h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
+     padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
+h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
+     margin-top: 34px; }
+h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
+p, li { font-size: 15px; }
+strong { color: #111; }
+code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
+       padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
+pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
+      overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
+pre code { background: none; color: #24292e; padding: 0; }
+table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
+th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+th { background: #2c3e50; color: #fff; }
+tr:nth-child(even) td { background: #f6f8fa; }
+td[align="right"], th[align="right"] { text-align: right; }
+hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
+blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
+             color: #333; background: #f6f8fa; font-style: italic; }
+a { color: #0969da; }
+img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+</style></head><body><h1>Efficient Thinking II — An Evaluator × Search Pattern Across Games and Reasoning</h1>
+<h2>Spending capability across domains — from a solved game to language reasoning</h2>
+<blockquote>
+<p>Status legend: <strong>[SOLID]</strong> measured &amp; checked · <strong>[PRELIMINARY]</strong> first run, under-powered.</p>
+</blockquote>
+<h2>Abstract</h2>
+<p>Efficient Thinking I observed, in chess, that capability decomposes as <strong>strength = evaluator ×
+search</strong>: a fixed evaluator (one forward pass) sets a base level, inference-time search multiplies it,
+and self-learning plateaus because the <em>learned evaluator</em> is the binding constraint. This paper asks
+whether that pattern recurs beyond chess or is specific to it. We report recurring empirical
+patterns observed under deliberately modest compute — not proven laws. We test it in two directions — a <em>simpler</em> solved game
+(Connect-4) and a <em>non-game</em> domain (LLM mathematical reasoning) — and, to make the numbers comparable
+across domains, we introduce <strong>GELO</strong>, a calibrated cross-domain capability scale. The decomposition
+transfers cleanly: search is a large, portable lever that scales with inference compute and then
+saturates against the evaluator's ceiling. Most sharply, in reasoning a perfect verifier breaks a
+consensus ceiling that more search cannot (<strong>+14.2 points</strong>), and across four self-improvement
+experiments the plateau never breaks — because <strong>you cannot improve the evaluator for free; self-play
+converges to its own level of play, and climbing past it requires importing information (a better
+oracle).</strong> The evaluator is the bottleneck, in every domain we tested.</p>
+<h2>1. The measurement: GELO (Generalized Elo)</h2>
+<p>Full spec: <code>docs/gelo.md</code>. Capability is a latent ability θ on one logistic model that unifies chess
+Elo, Bradley–Terry, and item-response theory (Rasch): P(win/solve) = 1/(1+10^(−(θ−d)/400)). We keep
+chess's constants (<strong>400 GELO = 10× better; 120 GELO = one doubling</strong>), so a chess GELO <em>is</em> a chess
+Elo, and add a <em>calibrate-first</em> protocol: build a reference ladder → fit ratings from a cross-table →
+<strong>gate on logistic goodness-of-fit</strong> → pin interpretable anchors → only then rate agents. GELO is what
+lets a chess result and a reasoning result be stated on the same axis, read as "N× better per game/
+question."
+- <strong>[SOLID]</strong> First calibration (Connect-4): logistic goodness-of-fit <strong>0.058</strong> (mean |predicted −
+  observed| pairwise win-rate) → the Elo model genuinely <em>fits</em> the game; ratings are earned, not
+  assumed. The scale is anchored random := 0.
+- <strong>[SOLID]</strong> <strong>Reasoning on the same scale.</strong> The identical logistic/IRT machinery applied to MATH
+  difficulty tiers (levels 1–5 as the calibrated "opponent ladder") yields a <strong>monotonic difficulty
+  ladder on one GELO axis</strong> — L1 +1273 → L2 +1435 → L3 +1490 → L4 +1590 → L5 +1712 (~+110 GELO/level) —
+  and places solvers on it by ability, correctly ordered: <strong>Qwen2.5-1.5B at +1517, Kimi-Dev-72B at
+  +1717</strong> (a ~200-GELO gap; each sits near the difficulty tier it half-solves). A chess rating, a
+  Connect-4 rating, and a reasoning ability now live on <strong>one logistic scale</strong> — the cross-domain-
+  commensurable claim, delivered and multi-model-calibrated. (A third candidate, a 4-bit 4B, was dropped:
+  unreliable <code>\boxed</code> answer-extraction gave implausibly low scores — a measurement, not ability, issue.)</p>
+<h2>2. Arm A — a simpler game (Connect-4)</h2>
+<p>The <em>simple</em> end of the complexity spectrum. Connect-4 is solved, so the exact solver is a perfect
+oracle and a depth-limited alpha-beta gives a calibrated opponent ladder. A small conv net (policy +
+value) is the evaluator; PUCT MCTS is the closed loop.</p>
+<ul>
+<li><strong>[SOLID]</strong> <strong>Calibrated ladder</strong>: random 0 → <strong>depth-1 +804</strong> → depth-2..6 +954..+1070. The <strong>first
+  ply of tactics is the single biggest step</strong> (+804) — larger than all five deeper steps combined. The
+  heuristic search ladder saturates fast: diminishing returns on search depth, quantified on a
+  calibrated axis.</li>
+<li><strong>[SOLID]</strong> <strong>Evaluator × search decomposition</strong> (12k oracle labels): open-loop (raw net) <strong>+644
+  GELO</strong>, closed-loop (MCTS 200) <strong>+880 GELO</strong> → <strong>search lift ≈ +236 GELO (~4× per game)</strong> — the same
+  order as chess's search lift. The decomposition transfers.</li>
+<li><strong>[SOLID]</strong> <strong>The lever balance is data-dependent, not intrinsic.</strong> With only 12k labels the raw net
+  loses even to 1-ply search, which reads as "search-dominated." But tracing the open-loop ceiling vs
+  data — GELO <strong>+642 (12k) → +747 (24k) → +798 (50k)</strong> — the raw net <strong>reaches depth-1 parity (+804) at
+  50k</strong>. So the apparent search-dominance was mostly a <em>starved evaluator</em>: given data, the evaluator
+  catches up to low-depth search. The honest statement is that the evaluator/search balance shifts with
+  how much you have spent on the evaluator, in either direction.</li>
+</ul>
+<h2>3. Arm B — reasoning (LLM)</h2>
+<p>The conceptual mapping (chess → language):</p>
+<table>
+<thead>
+<tr>
+<th>chess</th>
+<th>LLM reasoning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>position</td>
+<td>partial reasoning trace</td>
+</tr>
+<tr>
+<td>policy (move priors)</td>
+<td>next-step distribution</td>
+</tr>
+<tr>
+<td><strong>evaluation: P(win)</strong></td>
+<td><strong>P(this reasoning is correct)</strong> — [0,1]</td>
+</tr>
+<tr>
+<td>terminal result (win/loss)</td>
+<td><strong>verifier on the final answer</strong> (perfect in math/code)</td>
+</tr>
+<tr>
+<td>MCTS search</td>
+<td>inference-time compute over reasoning paths</td>
+</tr>
+<tr>
+<td>training the net</td>
+<td>RL / fine-tune — <strong>RLVR = AlphaZero's loop in language</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Two structural notes that this series should name: the evaluator's output is a <strong>calibrated P(correct)</strong>
+— binary from a verifier, scalar from a reward/PRM, vote-fraction from self-consistency — and a
+<em>well-calibrated</em> one is the open problem. And search has <strong>two axes</strong> — parallel/width (best-of-N,
+self-consistency) and serial/depth (long chain-of-thought); o1/R1 scaled the serial axis, and RLVR
+<em>internalizes</em> search into the policy rather than keeping it external as AlphaZero does.</p>
+<ul>
+<li><strong>[SOLID]</strong> <strong>Search scales reasoning accuracy, then saturates</strong> (Qwen-4B, GSM8K, 120 problems,
+  1024-token budget): greedy pass@1 = <strong>66.7%</strong>; self-consistency@N = 69.2 (N=1) → 73.3 (4) → <strong>77.5
+  (16) → 77.5 (32)</strong>. Search buys <strong>+8–11 points</strong> over greedy — the reasoning analog of Elo-vs-sims —
+  then <strong>saturates at ~77.5% by N=16</strong>. Majority vote is a <em>verifier-free</em> evaluator, and it stops
+  helping.</li>
+<li><strong>[SOLID]</strong> <strong>The saturation is an <em>evaluator</em> ceiling, not a policy or search ceiling.</strong> From the
+  same samples, self-consistency (consensus) saturates at 77.5% while <strong>oracle-best-of-N (a perfect
+  verifier) climbs to 91.7% and is still rising at N=32</strong> — an <strong>evaluator-gap of +14.2 points</strong>. The
+  correct answer is <em>in the sample set</em> 91.7% of the time; consensus simply can't select it. So in
+  language, exactly as in chess, <strong>the verifier is the binding constraint</strong> — and with a perfect
+  evaluator, search keeps paying off well past where consensus stalls.</li>
+<li><strong>[SOLID]</strong> <strong>Evaluator-quality <em>gradient</em></strong> — accuracy vs a verifier of tunable per-item accuracy q
+  (N=16): a smooth, monotonic climb from <strong>75.0% at q=0.5 (verifier-free consensus) → 88.3% at q=1.0
+  (perfect verifier)</strong> — 77.7 / 80.6 / 83.0 / 85.9 at q=0.6/0.7/0.8/0.9. Capability scales <em>continuously</em>
+  with evaluator quality (~+2.6 points per 0.1 of verifier accuracy); there is no threshold — <strong>every
+  increment of a better evaluator buys capability.</strong> The full curve behind the two-point +14.2 ablation,
+  and the cleanest statement of the thesis in language: to go further, improve the evaluator.</li>
+</ul>
+<h2>4. Self-improvement — can the flywheel raise the evaluator with no external teacher?</h2>
+<p>The self-improvement idea, stated value-first: <em>fix the evaluator first</em> — distill better-than-current
+value/policy targets (Monte-Carlo rollouts / MCTS-backed, anchored on real terminal outcomes) back into
+the net; strength follows. We tested this across a solved game and chess, five ways. <strong>It never broke
+the plateau — and <em>why</em> is the result.</strong></p>
+<ul>
+<li><strong>[SOLID]</strong> <strong>Connect-4, from scratch — the evaluator improves but strength plateaus.</strong> Self-play
+  expert iteration lifted the evaluator (oracle value-MAE 0.48 → 0.40 → <strong>0.355</strong> with more search) and
+  strength tracked it early (GELO +119 → ~+400), confirming <em>fix-the-evaluator-and-strength-follows</em> in
+  miniature. But strength <strong>plateaus at ~+400 GELO</strong> (below 1-ply search) and <strong>4× more search per move
+  did not raise it</strong> — it only sharpened the evaluator's calibration. More search budget is not the
+  missing ingredient.</li>
+<li><strong>[SOLID]</strong> <strong>The plateau is a (near) seed-independent attractor.</strong> Warm-starting Connect-4 self-play
+  from the <em>supervised</em> +644 net does not preserve it: the first self-play iteration erodes it to +189,
+  then it recovers to a <strong>~+480–500 plateau</strong> — a little above the from-scratch +400 (the seed leaves a
+  small lasting trace) but well below the +644 it started from and the +798 achievable with data.
+  Self-play pulls a <em>better</em> evaluator down toward its own signal quality rather than building on it —
+  the same erosion seen in the chess self-learned test (1214→833).</li>
+<li><strong>[SOLID, negative]</strong> <strong>Chess from scratch stalled at the random floor</strong> — open-loop Elo bounced
+  254–384 with no climb over 44 iters (~1,400 self-play games). Not a method failure but a data-volume
+  wall: bootstrapping chess from <em>random</em> needs orders of magnitude more games than two Macs generate.</li>
+<li><strong>[SOLID, negative]</strong> <strong>Chess warm-start (weak-policy seed) stalled</strong> at ~300–326 across sim/LR
+  settings. Root cause: a <strong>bootstrap barrier</strong> — MCTS quality depends on the policy prior, so from a
+  near-random prior the search cannot play well enough to generate improving targets.</li>
+<li><strong>[SOLID, negative]</strong> <strong>The proper test — chess eval-first from a <em>self-learned</em> plateau net</strong>
+  (<code>selfplay_warm</code>, open-loop 1214, off the floor, self-learned) — <strong>did not climb; it degraded</strong>
+  (1214 → 833 over ~50 iters). MCTS on this net's value head doesn't play far enough above 1214 to
+  produce improving targets, so distillation erodes rather than lifts.</li>
+<li><strong>[SOLID, positive control]</strong> <strong>An external oracle breaks the plateau.</strong> Change <em>only</em> the value target
+  — from the self-play game outcome to an <strong>external oracle</strong> (a depth-6 solver value), leaving the
+  self-play loop otherwise identical — and Connect-4 self-training <strong>climbs past the ~+400 plateau</strong>:
+  GELO +265 → +539 → <strong>+719 by iteration 60</strong> (oracle-value MAE 0.36 → 0.31), heading toward the
+  oracle's own level — vs ~+400 where the self-generated-target loop stalls. This is the flip
+  side that completes the story: the same loop that plateaus at +400 on self-generated signal climbs
+  toward the <em>oracle's</em> level once the value target carries external information. Self-play doesn't fail
+  because the <em>method</em> is wrong; it fails because self-generated signal has no information the evaluator
+  lacks — supply it externally and the flywheel turns. (Seed-independent: warm-starting from the +644
+  supervised net with the same oracle targets similarly reaches ~+676 — it is the <em>target source</em>, not
+  the starting point, that matters.)</li>
+</ul>
+<p><strong>Why it can't work for free (the theory the experiments support).</strong> A Monte-Carlo rollout <em>does</em> give
+the true value of a position — but the true value <em>under the current level of play</em> (the model plays
+both sides). Training on those labels converges the evaluator to a perfectly-calibrated evaluator <em>of
+its own level</em> — accurate, and <strong>capped there</strong>: no move better than the current level ever appears in
+the games, so none can be learned. The <em>only</em> way rollouts push past the current level is to play them
+<em>above</em> it — with search — and then the per-iteration gain equals the <strong>search-over-policy margin</strong> (how
+much MCTS beats the bare net). That margin is itself bounded by evaluator quality: a mediocre evaluator
+yields weak search, hence a small margin, hence no climb. This is precisely AlphaZero's engine — and
+precisely why it needs <em>deep</em> search × <em>millions</em> of games: a large margin sustained over many
+iterations. At our scale the margin was too small to cross the plateau. <strong>Self-play cannot add
+information the evaluator doesn't already contain; raising the ceiling requires importing it (a better
+oracle).</strong></p>
+<h2>5. Synthesis — what transfers, what shifts, what binds</h2>
+<p>We report these as recurring empirical patterns — consistent across the domains and scales we tested,
+not claimed as laws:
+1. <strong>The decomposition transfers.</strong> <em>Strength = evaluator × search</em> holds in a solved game and in
+   language reasoning, on one calibrated scale (GELO). Search is a large, portable lever that scales
+   with inference compute and then <strong>saturates against the evaluator's ceiling</strong> — Elo-vs-sims in chess,
+   accuracy-vs-N in reasoning, GELO-vs-MCTS in Connect-4.
+2. <strong>The lever balance shifts with spend.</strong> Whichever currency is <em>starved</em> dominates the returns: a
+   thin evaluator (12k Connect-4 labels; a verifier-free consensus) makes search look all-important;
+   feeding the evaluator (50k labels; a real verifier) rebalances it. There is no domain-intrinsic
+   split — only how much you have spent on each side.
+3. <strong>The evaluator is consistently the binding constraint</strong> across our experiments, shown three
+   independent ways: reasoning
+   consensus is broken only by a better <em>verifier</em> (+14.2); Connect-4 self-training is limited by
+   value-head quality, not search budget; chess self-improvement stalls exactly when the evaluator is
+   too weak for search to generate improving targets.
+4. <strong>Self-improvement has a rate, and it is the search-over-policy margin.</strong> You cannot fix the
+   evaluator for free: self-generated signal converges to the system's own level. Climbing requires
+   either search that plays above the current policy (bounded by the evaluator) or an external oracle
+   that injects new information. The positive proof is the flip side of every negative here — a perfect
+   verifier unlocks +14.2 in reasoning, and Stockfish labels carried chess to ~2800. <em>Training creates
+   information; search extracts it; neither creates what an external oracle must supply.</em></p>
+<h2>Reproducibility</h2>
+<p>Code and data generators for both arms are in the repo: <code>games/</code> (Connect-4 engine, oracle,
+net/MCTS/eval/calibrate/self-play) and <code>reasoning/</code> (GSM8K accuracy-vs-N sweep and the evaluator-quality
+ablation, via <code>mlx_lm</code>). GELO's calibrator (<code>games/c4_calibrate.py</code>) prints the goodness-of-fit gate.
+Large datasets and model weights are regenerable and not committed.</p></body></html>

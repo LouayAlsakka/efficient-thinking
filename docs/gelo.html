@@ -1,0 +1,123 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
+@page { size: A4; margin: 20mm 18mm; }
+body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
+       line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
+       font-size: 15px; }
+h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
+     padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
+h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
+     margin-top: 34px; }
+h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
+p, li { font-size: 15px; }
+strong { color: #111; }
+code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
+       padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
+pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
+      overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
+pre code { background: none; color: #24292e; padding: 0; }
+table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
+th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+th { background: #2c3e50; color: #fff; }
+tr:nth-child(even) td { background: #f6f8fa; }
+td[align="right"], th[align="right"] { text-align: right; }
+hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
+blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
+             color: #333; background: #f6f8fa; font-style: italic; }
+a { color: #0969da; }
+img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+</style></head><body><h1>GELO — Generalized Elo</h1>
+<p>A universal capability scale for games, reasoning, and any domain where "A beats B" (or "A solves what
+B can't") is measurable. GELO keeps chess Elo's constants — so a chess GELO <em>is</em> a chess Elo — and adds
+a domain-independent calibration protocol plus an intuitive "how many times better" readout.</p>
+<h2>The model</h2>
+<p>Every agent has a latent ability θ (in GELO points); every opponent/problem has a difficulty d. The
+probability the agent wins / solves is the logistic</p>
+<pre><code>P = 1 / (1 + 10^(-(θ - d)/400))
+</code></pre>
+<p>This is simultaneously chess Elo, Bradley-Terry, and item-response theory (Rasch) — one model. What
+differs across domains is only <em>what we calibrate θ against</em>.</p>
+<h2>The two constants (inherited from chess Elo)</h2>
+<ul>
+<li><strong>400 GELO = 10x better</strong> (a "decade" of odds).  P = 91%.</li>
+<li><strong>120 GELO = 2x better</strong> (one doubling / one "bit").  Since 400·log10(2) = 120.4.</li>
+</ul>
+<p>From these, the readout for any gap D:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">gap D</th>
+<th style="text-align: center;">P(win)</th>
+<th style="text-align: center;">odds ("x better")</th>
+<th style="text-align: left;">out of N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">120</td>
+<td style="text-align: center;">67%</td>
+<td style="text-align: center;">2x</td>
+<td style="text-align: left;">wins 2 of 3</td>
+</tr>
+<tr>
+<td style="text-align: right;">200</td>
+<td style="text-align: center;">76%</td>
+<td style="text-align: center;">3.2x</td>
+<td style="text-align: left;">wins ~3 of 4</td>
+</tr>
+<tr>
+<td style="text-align: right;">400</td>
+<td style="text-align: center;">91%</td>
+<td style="text-align: center;">10x</td>
+<td style="text-align: left;">wins ~10 of 11</td>
+</tr>
+<tr>
+<td style="text-align: right;">600</td>
+<td style="text-align: center;">97%</td>
+<td style="text-align: center;">32x</td>
+<td style="text-align: left;">wins ~31 of 32</td>
+</tr>
+<tr>
+<td style="text-align: right;">1700</td>
+<td style="text-align: center;">~99.99%</td>
+<td style="text-align: center;">~16000x (2^14)</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table>
+<p>odds(D) = 10^(D/400);  doublings(D) = D/120.4.</p>
+<h2>Why the chess intuition is self-consistent (worked example)</h2>
+<ul>
+<li><strong>"200 points = wins 3 of 4":</strong> odds(200) = 10^0.5 = 3.2 : 1 → 76%. ✓</li>
+<li><strong>"top human ≈ 2^14 better than a beginner":</strong> beginner ~600, master/GM-territory ~2300 → gap 1700 →
+  doublings = 1700/120.4 = 14.1 → <strong>2^14</strong>. ✓</li>
+<li><strong>Reasoning example:</strong> Engine A = 1100, B = 1300 (gap 200) → B is ~3.2x better per question: on the
+  items that discriminate them, B is right ~3x as often as A (76% head-to-head).</li>
+</ul>
+<h2>Calibration protocol ("calibrate first, then use")</h2>
+<ol>
+<li><strong>Reference ladder</strong> — a monotonic set of reference opponents/difficulties we control: floor
+   (random / novice) → … → ceiling (perfect play / human-elite).</li>
+<li><strong>Cross-table</strong>, not single win-rates — round-robin among rungs (agents that only ever beat one
+   opponent give a fake rating).</li>
+<li><strong>Fit</strong> θ for every rung by MLE (Bradley-Terry / Zermelo-MM), convert to GELO (400 = 10x).</li>
+<li><strong>Calibration gate</strong> — check the logistic actually fits: mean |predicted − observed| pairwise
+   win-rate. If a game's draw / first-move structure breaks the logistic, we learn that <em>before</em>
+   quoting ratings. (Connect-4: 0.058 → fits well.)</li>
+<li><strong>Anchor</strong> to interpretable milestones (below), then <strong>place agents</strong> by 1-param MLE vs the ladder.</li>
+</ol>
+<h2>Interpretable anchors (the "what does the number mean" layer)</h2>
+<ul>
+<li><strong>Chess (human population, FIDE):</strong> 600 novice · 1200 club · 2000 Expert · 2200 CM/NM · 2300 FM ·
+  2400 IM · 2500 GM (~1,700 worldwide) · 2800+ world-elite.</li>
+<li><strong>Connect-4:</strong> random = floor · <code>ab_best</code> depth-d = "d-ply tactical lookahead" · solver = perfect.</li>
+<li><strong>Reasoning:</strong> difficulty tiers with known human solve-rates (GSM8K → MATH L1–5 → olympiad), fit by
+  IRT; anchor θ to human-solver percentiles.</li>
+</ul>
+<p>Cross-domain comparability comes from anchoring each domain to percentiles of its reference
+distribution: "θ = 2000" then means the same <em>odds vs a calibrated ladder / percentile toward the
+ceiling</em> in any domain — comparable by construction, not by analogy.</p>
+<h2>Report GELO two ways</h2>
+<ul>
+<li><strong>GELO points</strong> (continuity with chess: 2800 still means 2800).</li>
+<li><strong>Doublings</strong> = GELO/120 (the "2^N better" reading), when a bits-of-capability framing is clearer.</li>
+</ul></body></html>
