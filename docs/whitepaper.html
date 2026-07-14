@@ -40,7 +40,7 @@ learned evaluator.</em></p>
 data, inference-time search, and latency — how do you spend them <em>efficiently</em> to reach a target
 playing strength?</strong> Using chess as a clean, fully-measurable testbed, we map the tradeoff curves
 resource by resource. A <strong>14 MB</strong> convolutional evaluator (3.45M params) plays at ~2150 Elo as a
-single forward pass; adding <strong>Monte-Carlo Tree Search (MCTS)</strong> lifts the <em>same weights</em> to <strong>~2800</strong> —
+single forward pass; adding <strong>Monte-Carlo Tree Search (MCTS)</strong> [Coulom 2006; Kocsis &amp; Szepesvári 2006] lifts the <em>same weights</em> to <strong>~2800</strong> —
 a same-ladder gain of <strong>+286 Elo from inference compute alone</strong>, with zero extra parameters. Since
 ~2800 is Super-GM / peak-human level, the study is really <em>how small a model can reach top-human
 capability when augmented by search</em>: the same capability, bought with <strong>compute, not size</strong>.</p>
@@ -826,7 +826,7 @@ outcomes alone</strong> — the case for any genuinely new problem. The loop: th
 trains toward the visit distribution (policy) and game result (value), and repeats. We studied five
 approaches — self-play, a self-referential ladder, a committee, evolution, and weight merging — and
 they converge on one story.</p>
-<h3>5.1 Self-play expert iteration (AlphaZero-style)</h3>
+<h3>5.1 Self-play expert iteration (AlphaZero-style [Silver et al. 2018; Anthony et al. 2017])</h3>
 <p>Two failure modes were fixed: <strong>cold-start draw-collapse</strong> (a weak net can't force mates, so games
 drift to draws and the value head gets no signal — fixed with Dirichlet root noise) and <strong>warm-start
 forgetting</strong> (hard training on tiny self-play slices overwrote the supervised policy, 2150→1407 —
@@ -1131,6 +1131,8 @@ combine at <em>inference</em>, not in weight space; so the "better aggregator" m
 </tr>
 </tbody>
 </table>
+<p><em>Systems compared:</em> AlphaZero [Silver et al. 2018], Leela Chess Zero, Stockfish, Maia
+[McIlroy-Young et al. 2020], KataGo [Wu 2019]; test-time-compute scaling in games [Jones 2021].</p>
 <p><strong>Two axes — size and speed.</strong>
 - <strong>Parameters:</strong> our net is <strong>~10–25× smaller than AlphaZero, 30–100× smaller than large Leela</strong>,
   yet reaches ~2800 with search — the extreme point on Elo-per-million-parameters. This is an
@@ -1431,11 +1433,12 @@ and maps directly onto other AI systems (we measured only chess; these are the t
 <p>The <em>decomposition</em> and its diagnostic (find the binding lever before investing) are what transfer,
 and likely outlast the chess numbers.</p>
 <p><strong>The clearest current echo is in large language models.</strong> The 2024–25 shift to <strong>inference-time
-compute</strong> — o1/o3, DeepSeek-R1, reasoning models — is this thesis at frontier scale: a fixed base
-model made far stronger by <em>searching over reasoning at decision time</em> (sampling, self-consistency,
-tree-of-thought) rather than by adding parameters. The mapping is direct: our <em>evaluator</em> ↔ their
+compute</strong> — o1/o3 [OpenAI 2024], DeepSeek-R1 [DeepSeek-AI 2025], reasoning models — is this thesis at
+frontier scale: a fixed base model made far stronger by <em>searching over reasoning at decision time</em>
+(sampling, self-consistency [Wang et al. 2023], tree-of-thought [Yao et al. 2023]) rather than by adding
+parameters. The mapping is direct: our <em>evaluator</em> ↔ their
 <strong>base model/verifier</strong>, our <em>search</em> ↔ their <strong>reasoning budget</strong>, our <em>self-play</em> ↔ their
-<strong>STaR-style self-training</strong> — with the same limit: search and self-training <strong>convert what the model
+<strong>STaR-style self-training</strong> [Zelikman et al. 2022] — with the same limit: search and self-training <strong>convert what the model
 already latently knows into better answers; they cannot inject knowledge it never learned.</strong> That is
 exactly why reasoning models pair search with <strong>external verifiers or ground-truth reward</strong> (code that
 runs, math that checks, tools that return facts) — the oracle that lets the loop add information. A
@@ -1454,4 +1457,30 @@ method's ingenuity.
   <code>chessnet/train.py</code> — soft/hard + value training. <code>scripts/selfplay.py</code> — self-play iteration.
 - <strong>Best model:</strong> <code>runs/conv_value_llm1</code> (conv-96×8 + value, 3.45M params).
 - <strong>Key hyperparameters:</strong> conv width 96, depth 8; lr 5e-4 (train) / 1e-4 (self-play); gradient
-  clip 1.0; MCTS c_puct 1.5; Dirichlet α 0.3; replay buffer 120K–300K.</p></body></html>
+  clip 1.0; MCTS c_puct 1.5; Dirichlet α 0.3; replay buffer 120K–300K.</p>
+<h2>References</h2>
+<p><strong>Search (MCTS / tree search).</strong> Coulom, R. (2006), <em>Efficient Selectivity and Backup Operators in
+Monte-Carlo Tree Search</em>, Computers and Games. · Kocsis, L. &amp; Szepesvári, C. (2006), <em>Bandit Based
+Monte-Carlo Planning</em> (UCT), ECML. · Rosin, C. D. (2011), <em>Multi-Armed Bandits with Episode Context</em>
+(PUCT), Ann. Math. AI. · Browne, C. et al. (2012), <em>A Survey of Monte Carlo Tree Search Methods</em>, IEEE
+TCIAIG. · Chaslot, G. et al. (2008), <em>Progressive Strategies for Monte-Carlo Tree Search</em> (progressive
+widening). · Knuth, D. &amp; Moore, R. (1975), <em>An Analysis of Alpha-Beta Pruning</em>, Artif. Intell.</p>
+<p><strong>Learned evaluator + search / self-play.</strong> Silver, D. et al. (2016), <em>Mastering the Game of Go with
+Deep Neural Networks and Tree Search</em> (AlphaGo), Nature. · Silver, D. et al. (2017), <em>Mastering the Game
+of Go without Human Knowledge</em> (AlphaGo Zero), Nature. · Silver, D. et al. (2018), <em>A General
+Reinforcement Learning Algorithm that Masters Chess, Shogi and Go through Self-Play</em> (AlphaZero),
+Science. · Anthony, T., Tian, Z. &amp; Barber, D. (2017), <em>Thinking Fast and Slow with Deep Learning and
+Tree Search</em> (expert iteration), NeurIPS. · Wu, D. J. (2019), <em>Accelerating Self-Play Learning in Go</em>
+(KataGo), arXiv:1902.10565. · Bertsekas, D. (2022), <em>Lessons from AlphaZero for Optimal, Model
+Predictive, and Adaptive Control</em>.</p>
+<p><strong>Chess / games modelling &amp; scaling.</strong> McIlroy-Young, R. et al. (2020), <em>Aligning Superhuman AI with
+Human Behavior: Chess as a Model System</em> (Maia), KDD. · Jones, A. L. (2021), <em>Scaling Scaling Laws with
+Board Games</em>, arXiv:2104.03113. · Wortsman, M. et al. (2022), <em>Model Soups</em>, ICML.</p>
+<p><strong>Inference-time compute in LLMs (the frontier echo).</strong> OpenAI (2024), <em>Learning to Reason with LLMs</em>
+(o1). · DeepSeek-AI (2025), <em>DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement
+Learning</em>, arXiv:2501.12948. · Wang, X. et al. (2023), <em>Self-Consistency Improves Chain-of-Thought
+Reasoning in Language Models</em>, ICLR. · Yao, S. et al. (2023), <em>Tree of Thoughts</em>, NeurIPS. · Zelikman, Y.
+et al. (2022), <em>STaR: Bootstrapping Reasoning with Reasoning</em>, NeurIPS.</p>
+<p><strong>Software &amp; data.</strong> Stockfish (stockfishchess.org) — ladder opponent and label oracle. · Leela Chess
+Zero (lczero.org). · Lichess cloud-evaluation database (database.lichess.org) — supervised labels. ·
+MLX (github.com/ml-explore/mlx) — training/inference framework.</p></body></html>

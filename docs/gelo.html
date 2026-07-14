@@ -103,8 +103,35 @@ differs across domains is only <em>what we calibrate θ against</em>.</p>
 <li><strong>Calibration gate</strong> — check the logistic actually fits: mean |predicted − observed| pairwise
    win-rate. If a game's draw / first-move structure breaks the logistic, we learn that <em>before</em>
    quoting ratings. (Connect-4: 0.058 → fits well.)</li>
-<li><strong>Anchor</strong> to interpretable milestones (below), then <strong>place agents</strong> by 1-param MLE vs the ladder.</li>
+<li><strong>Anchor</strong> to interpretable milestones (below), then <strong>place agents</strong> (next section).</li>
 </ol>
+<h2>Placing an agent — two equivalent routes</h2>
+<p>Step 5 can be done two ways. Both are the <em>same</em> logistic model (400 = 10×); they differ only in <strong>what
+you anchor to</strong>, and they agree by construction.</p>
+<p><strong>(A) Against a reference ladder — opponent-/difficulty-anchored.</strong> Play the agent against the calibrated
+rungs (Stockfish rungs; <code>ab_best</code> depths; MATH difficulty tiers) and read its GELO off the ladder by
+1-parameter MLE. The "opponent" is a rung or a problem's difficulty. This is how the chess, Connect-4,
+and (via IRT over difficulty tiers) reasoning numbers here were produced. Convenient when you have a
+graded ladder.</p>
+<p><strong>(B) Pairwise, agent-vs-agent — reference-model-anchored.</strong> Two agents answer the <strong>same</strong> items; a
+judge decides each head-to-head; GELO comes from the win/loss/draw <strong>cross-table</strong> (Bradley–Terry), with
+one agent <strong>pinned as the reference</strong> (e.g. a strong model := 2800, or a small one := 2000) and the rest
+placed relative to it. Here the "players" are the <em>agents themselves</em> — the tightest analogy to chess and
+identical to the LMSYS-Arena rating. Convenient when you have a set of comparable agents and a meaningful
+reference. The <strong>judge</strong> is the crux:
+- <em>Verifiable domain</em> (math, code): the <strong>verifier</strong> is the judge — right beats wrong, both-right /
+  both-wrong = draw. Objective, no model bias; <strong>preferred whenever a checkable answer exists</strong> (don't
+  add a judge model where a checker suffices).
+- <em>Open-ended domain</em> (explanations, proofs-in-prose, "which answer is better"): a <strong>master judge</strong> — a
+  model deliberately <em>stronger</em> than either contestant (e.g. a frontier model, or Kimi via an API) —
+  decides each pair. Two caveats, both of which are just this series' thesis turned on the referee:
+  (i) the rating is only as trustworthy as the judge; on items near or above the <em>judge's own</em> ceiling
+  the <strong>judge becomes the bottleneck</strong> (evaluator-limited, exactly as elsewhere here); (ii) control
+  judge self-preference/style bias — blind the source and randomize presentation order.</p>
+<p>The choice of reference (2800, 2000, …) is free — it only fixes <em>where the origin sits</em>; the constants
+(400 = 10×, 120 = one doubling) make every gap from it meaningful (a model 400 below the reference loses
+~10:1 on the items that discriminate them). You can also <strong>mix</strong>: place a few agents on a graded ladder,
+then chain the rest pairwise off those anchors.</p>
 <h2>Interpretable anchors (the "what does the number mean" layer)</h2>
 <ul>
 <li><strong>Chess (human population, FIDE):</strong> 600 novice · 1200 club · 2000 Expert · 2200 CM/NM · 2300 FM ·

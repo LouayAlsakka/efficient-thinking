@@ -20,7 +20,7 @@ learned evaluator.*
 data, inference-time search, and latency — how do you spend them *efficiently* to reach a target
 playing strength?** Using chess as a clean, fully-measurable testbed, we map the tradeoff curves
 resource by resource. A **14 MB** convolutional evaluator (3.45M params) plays at ~2150 Elo as a
-single forward pass; adding **Monte-Carlo Tree Search (MCTS)** lifts the *same weights* to **~2800** —
+single forward pass; adding **Monte-Carlo Tree Search (MCTS)** [Coulom 2006; Kocsis & Szepesvári 2006] lifts the *same weights* to **~2800** —
 a same-ladder gain of **+286 Elo from inference compute alone**, with zero extra parameters. Since
 ~2800 is Super-GM / peak-human level, the study is really *how small a model can reach top-human
 capability when augmented by search*: the same capability, bought with **compute, not size**.
@@ -563,7 +563,7 @@ trains toward the visit distribution (policy) and game result (value), and repea
 approaches — self-play, a self-referential ladder, a committee, evolution, and weight merging — and
 they converge on one story.
 
-### 5.1 Self-play expert iteration (AlphaZero-style)
+### 5.1 Self-play expert iteration (AlphaZero-style [Silver et al. 2018; Anthony et al. 2017])
 Two failure modes were fixed: **cold-start draw-collapse** (a weak net can't force mates, so games
 drift to draws and the value head gets no signal — fixed with Dirichlet root noise) and **warm-start
 forgetting** (hard training on tiny self-play slices overwrote the supervised policy, 2150→1407 —
@@ -759,6 +759,9 @@ combine at *inference*, not in weight space; so the "better aggregator" must liv
 | AlphaZero (chess, 2017) | ~40–90M | ~3400+ | 800 MCTS sims (big-net passes) | ~40–85 |
 | Leela Chess Zero (modern) | ~100–400M+ | ~3500+ | ~1–8k MCTS nodes | ~10–35 |
 | Stockfish (NNUE) | ~tens of M (quantized) | ~3600+ | **millions of alpha-beta nodes/s** | ~100–150 |
+
+*Systems compared:* AlphaZero [Silver et al. 2018], Leela Chess Zero, Stockfish, Maia
+[McIlroy-Young et al. 2020], KataGo [Wu 2019]; test-time-compute scaling in games [Jones 2021].
 
 **Two axes — size and speed.**
 - **Parameters:** our net is **~10–25× smaller than AlphaZero, 30–100× smaller than large Leela**,
@@ -989,11 +992,12 @@ The *decomposition* and its diagnostic (find the binding lever before investing)
 and likely outlast the chess numbers.
 
 **The clearest current echo is in large language models.** The 2024–25 shift to **inference-time
-compute** — o1/o3, DeepSeek-R1, reasoning models — is this thesis at frontier scale: a fixed base
-model made far stronger by *searching over reasoning at decision time* (sampling, self-consistency,
-tree-of-thought) rather than by adding parameters. The mapping is direct: our *evaluator* ↔ their
+compute** — o1/o3 [OpenAI 2024], DeepSeek-R1 [DeepSeek-AI 2025], reasoning models — is this thesis at
+frontier scale: a fixed base model made far stronger by *searching over reasoning at decision time*
+(sampling, self-consistency [Wang et al. 2023], tree-of-thought [Yao et al. 2023]) rather than by adding
+parameters. The mapping is direct: our *evaluator* ↔ their
 **base model/verifier**, our *search* ↔ their **reasoning budget**, our *self-play* ↔ their
-**STaR-style self-training** — with the same limit: search and self-training **convert what the model
+**STaR-style self-training** [Zelikman et al. 2022] — with the same limit: search and self-training **convert what the model
 already latently knows into better answers; they cannot inject knowledge it never learned.** That is
 exactly why reasoning models pair search with **external verifiers or ground-truth reward** (code that
 runs, math that checks, tools that return facts) — the oracle that lets the loop add information. A
@@ -1014,3 +1018,35 @@ method's ingenuity.
 - **Best model:** `runs/conv_value_llm1` (conv-96×8 + value, 3.45M params).
 - **Key hyperparameters:** conv width 96, depth 8; lr 5e-4 (train) / 1e-4 (self-play); gradient
   clip 1.0; MCTS c_puct 1.5; Dirichlet α 0.3; replay buffer 120K–300K.
+
+## References
+
+**Search (MCTS / tree search).** Coulom, R. (2006), *Efficient Selectivity and Backup Operators in
+Monte-Carlo Tree Search*, Computers and Games. · Kocsis, L. & Szepesvári, C. (2006), *Bandit Based
+Monte-Carlo Planning* (UCT), ECML. · Rosin, C. D. (2011), *Multi-Armed Bandits with Episode Context*
+(PUCT), Ann. Math. AI. · Browne, C. et al. (2012), *A Survey of Monte Carlo Tree Search Methods*, IEEE
+TCIAIG. · Chaslot, G. et al. (2008), *Progressive Strategies for Monte-Carlo Tree Search* (progressive
+widening). · Knuth, D. & Moore, R. (1975), *An Analysis of Alpha-Beta Pruning*, Artif. Intell.
+
+**Learned evaluator + search / self-play.** Silver, D. et al. (2016), *Mastering the Game of Go with
+Deep Neural Networks and Tree Search* (AlphaGo), Nature. · Silver, D. et al. (2017), *Mastering the Game
+of Go without Human Knowledge* (AlphaGo Zero), Nature. · Silver, D. et al. (2018), *A General
+Reinforcement Learning Algorithm that Masters Chess, Shogi and Go through Self-Play* (AlphaZero),
+Science. · Anthony, T., Tian, Z. & Barber, D. (2017), *Thinking Fast and Slow with Deep Learning and
+Tree Search* (expert iteration), NeurIPS. · Wu, D. J. (2019), *Accelerating Self-Play Learning in Go*
+(KataGo), arXiv:1902.10565. · Bertsekas, D. (2022), *Lessons from AlphaZero for Optimal, Model
+Predictive, and Adaptive Control*.
+
+**Chess / games modelling & scaling.** McIlroy-Young, R. et al. (2020), *Aligning Superhuman AI with
+Human Behavior: Chess as a Model System* (Maia), KDD. · Jones, A. L. (2021), *Scaling Scaling Laws with
+Board Games*, arXiv:2104.03113. · Wortsman, M. et al. (2022), *Model Soups*, ICML.
+
+**Inference-time compute in LLMs (the frontier echo).** OpenAI (2024), *Learning to Reason with LLMs*
+(o1). · DeepSeek-AI (2025), *DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement
+Learning*, arXiv:2501.12948. · Wang, X. et al. (2023), *Self-Consistency Improves Chain-of-Thought
+Reasoning in Language Models*, ICLR. · Yao, S. et al. (2023), *Tree of Thoughts*, NeurIPS. · Zelikman, Y.
+et al. (2022), *STaR: Bootstrapping Reasoning with Reasoning*, NeurIPS.
+
+**Software & data.** Stockfish (stockfishchess.org) — ladder opponent and label oracle. · Leela Chess
+Zero (lczero.org). · Lichess cloud-evaluation database (database.lichess.org) — supervised labels. ·
+MLX (github.com/ml-explore/mlx) — training/inference framework.
