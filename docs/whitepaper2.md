@@ -130,7 +130,9 @@ the plateau — and *why* is the result.**
   side that completes the story: the same loop that plateaus at +400 on self-generated signal climbs
   toward the *oracle's* level once the value target carries external information. Self-play doesn't fail
   because the *method* is wrong; it fails because self-generated signal has no information the evaluator
-  lacks — supply it externally and the flywheel turns.
+  lacks — supply it externally and the flywheel turns. (Seed-independent: warm-starting from the +644
+  supervised net with the same oracle targets similarly reaches ~+676 — it is the *target source*, not
+  the starting point, that matters.)
 
 **Why it can't work for free (the theory the experiments support).** A Monte-Carlo rollout *does* give
 the true value of a position — but the true value *under the current level of play* (the model plays
