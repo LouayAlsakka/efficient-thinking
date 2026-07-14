@@ -15,8 +15,16 @@ evaluator spends it — the thesis, operationalised. Two stages (generate on GPU
   # llm1 (boto3): the evaluator spends the samples
   python3 reason_bestofn.py score --data reasoning/bestofn_samples.json
 """
-import argparse, json, random
+import argparse, json, random, re
 from collections import Counter
+
+
+def extract(text):                                       # GSM8K answer extraction (mlx-free, for llm1)
+    m = re.findall(r"####\s*(-?[0-9][0-9,]*)", text or "")
+    if m:
+        return m[-1].replace(",", "")
+    nums = re.findall(r"-?\d[\d,]*", text or "")
+    return nums[-1].replace(",", "") if nums else None
 
 
 def generate(args):
@@ -60,7 +68,6 @@ def kimi_pick(rt, problem, cands):
 
 def score(args):
     import boto3
-    from reason_sweep import extract
     d = json.load(open(args.data)); items = d["items"]
     rt = boto3.client("bedrock-runtime", region_name="us-east-1")
     Ns = [n for n in (2, 4, 8, 16) if n <= len(items[0]["samples"])]
