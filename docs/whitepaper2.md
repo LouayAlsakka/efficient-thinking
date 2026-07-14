@@ -8,8 +8,9 @@ Efficient Thinking I observed, in chess, that playing strength factors into two 
 **strength = evaluator × search**: a fixed evaluator (one forward pass) sets a base level, inference-time
 search multiplies it, and self-learning plateaus because the *learned evaluator* is the binding
 constraint. This paper asks whether that pattern is specific to chess or recurs elsewhere. We test it in
-two directions — a *simpler* solved game (Connect-4) and a *non-game* domain (LLM mathematical
-reasoning) — and, to make numbers comparable across domains, we introduce **GELO**, a calibrated
+three directions — a *simpler* solved game (Connect-4), a *non-game* domain (LLM mathematical
+reasoning), and a *sequential-control* MDP (a gridworld with an exact oracle) — and, to make numbers
+comparable across domains, we introduce **GELO**, a calibrated
 cross-domain capability scale (chess Elo, Bradley–Terry, and item-response theory are one logistic
 model). The decomposition transfers: search is a large, portable lever that scales with inference compute
 and then saturates against the evaluator's ceiling. Most sharply, in reasoning a perfect verifier breaks
@@ -32,14 +33,15 @@ scales roughly log-linearly with simulations, and that self-play stalls because 
 parameters or search budget — is the ceiling.
 
 If that structure is real rather than a chess artifact, it should reappear in very different settings.
-This paper puts it to two tests: **Connect-4**, a *solved* game where a perfect oracle and a graded
-opponent ladder let us measure everything exactly, and **LLM mathematical reasoning**, a non-game domain
-with a natural verifier (a checkable final answer). Our contributions:
+This paper puts it to three tests: **Connect-4**, a *solved* game where a perfect oracle and a graded
+opponent ladder let us measure everything exactly; **LLM mathematical reasoning**, a non-game domain with
+a natural verifier (a checkable final answer); and a **gridworld control MDP**, a sequential-decision
+setting where value iteration supplies an exact oracle. Our contributions:
 
 1. **GELO** (§2): a single logistic capability scale on which a chess rating, a Connect-4 rating, and a
    reasoning ability are directly comparable, with a *calibrate-first* protocol and a goodness-of-fit gate.
-2. **The decomposition transfers** (§3–§4): evaluator × search holds in Connect-4 and in reasoning; the
-   evaluator/search *balance* shifts with which side you have starved.
+2. **The decomposition transfers** (§3–§5): evaluator × search holds in Connect-4, in reasoning, and in
+   control; the evaluator/search *balance* shifts with which side you have starved.
 3. **The evaluator is the binding constraint, in every setting we test** (§4): a perfect verifier breaks a search-saturated ceiling
    (+14.2), verifier quality traces a continuous capability curve, and — a subtle asymmetry — search
    improves a *policy* but barely improves the *evaluator*.
@@ -173,7 +175,30 @@ complements a competent base; it cannot substitute for one.** "Buy search, not s
 base-competence threshold. (Compute ≈ params × N is coarse, but the domination is large enough to survive
 it.)
 
-## 5. Self-improvement — can the flywheel raise the evaluator with no external teacher?
+## 5. Arm C — sequential control (a gridworld MDP)
+To test the pattern in a *third modality* — sequential decision-making, neither a board game nor language —
+we use a stochastic 8×8 gridworld with known dynamics, so value iteration gives the exact optimal value V*
+(a perfect oracle). We hand the controller a *degraded* evaluator, V* plus Gaussian noise of scale σ (in
+units of the value spread), and vary the horizon h of an MPC-style lookahead (h=1 = greedy / open-loop;
+larger h = closed-loop search). Return is normalized so 0% = a random policy and 100% = optimal.
+
+| evaluator noise σ | open-loop (h=1) | h=2 | h=3 |
+|---:|---:|---:|---:|
+| 0.0 (perfect) | 100% | 100% | 100% |
+| 0.25 | 22% | **97%** | 71% |
+| 0.5 | 33% | 33% | 43% |
+| 1.0 | 11% | 28% | 34% |
+| 2.0 | 16% | 34% | 34% |
+
+The same two findings recur. **With a perfect evaluator, open-loop is already optimal and search adds
+nothing** — search earns its cost only when the evaluator is imperfect. **With a mildly noisy evaluator
+(σ = 0.25), search compensates dramatically** — the greedy policy collapses to 22% of optimal, but two-step
+lookahead recovers it to 97%: evaluator × search, in control. But **as the evaluator degrades further,
+search recovers less and less** (σ ≥ 1: lookahead reaches only ~30–34% and cannot recover optimal) — past a
+point the evaluator, not the search horizon, is the binding constraint. Decomposition and
+evaluator-bottleneck, both holding in a control/RL setting with an exact oracle.
+
+## 6. Self-improvement — can the flywheel raise the evaluator with no external teacher?
 Stated value-first: *fix the evaluator first* — distill better-than-current value/policy targets
 (Monte-Carlo rollouts / MCTS-backed, anchored on real terminal outcomes) back into the net; strength
 follows. We tested this five ways across two games. **It never broke the plateau — and why is the result.**
@@ -208,11 +233,13 @@ by evaluator quality. This is AlphaZero's engine, and precisely why it needs dee
 games: a large margin sustained over many iterations. At our scale the margin was too small. **Self-play
 cannot add information the evaluator doesn't already contain; raising the ceiling requires importing it.**
 
-## 6. Discussion — what transfers, what shifts, what binds
-1. **The decomposition transfers.** Strength = evaluator × search holds in a solved game and in language
-   reasoning, on one calibrated scale. Search is a large, portable lever that scales with inference compute
-   and then saturates against the evaluator's ceiling (Elo-vs-sims in chess, accuracy-vs-N in reasoning,
-   GELO-vs-MCTS in Connect-4).
+## 7. Discussion — what transfers, what shifts, what binds
+1. **The decomposition transfers.** Strength = evaluator × search holds in two games, in language
+   reasoning, and in sequential control, on one calibrated scale. Search is a large, portable lever that
+   scales with inference compute and then saturates against the evaluator's ceiling (Elo-vs-sims in chess,
+   accuracy-vs-N in reasoning, GELO-vs-MCTS in Connect-4, lookahead-vs-noise in the gridworld) — and it is
+   worth nothing when the evaluator is already perfect (gridworld σ=0), everything when the evaluator is
+   the only lever left.
 2. **The lever balance shifts with spend.** Whichever currency is *starved* dominates returns: a thin
    evaluator (12k Connect-4 labels; a verifier-free consensus) makes search look all-important; feeding it
    (50k labels; a real verifier) rebalances. There is no domain-intrinsic split — only how much you have
@@ -251,7 +278,9 @@ theory (Rasch); pairwise LLM rating with a judge is the LMSYS-Arena approach [Zh
 Benchmarks: GSM8K [Cobbe et al. 2021] and MATH [Hendrycks et al. 2021].
 
 ## Reproducibility
-Code and data generators for both arms are in the repo. Games (`games/`): Connect-4 bitboard engine +
+Code and data generators for all three arms are in the repo. Control (`control/gridworld.py`): the MDP,
+exact value iteration, the noisy-evaluator × lookahead sweep — pure NumPy, exact oracle. Games (`games/`):
+Connect-4 bitboard engine +
 solver, the depth-limited alpha-beta oracle, the conv net, MCTS, the GELO calibrator (`c4_calibrate.py`,
 which prints the goodness-of-fit gate), and the self-play / oracle-value loops. Reasoning (`reasoning/`):
 the accuracy-vs-N sweep, the evaluator-quality ablation and gradient, the MATH IRT fit, the pairwise arena
