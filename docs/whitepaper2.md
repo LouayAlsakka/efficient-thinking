@@ -127,6 +127,14 @@ resulting accuracy climbs smoothly from **75.0% at q=0.5 (verifier-free consensu
 verifier accuracy. There is no threshold: *every* increment of a better evaluator buys capability. To go
 further, improve the evaluator.
 
+**A *real* evaluator — not just a perfect one — extracts more than consensus.** Selecting among N
+Qwen-1.5B samples with the Kimi-K2.5 judge as an (imperfect) scorer beats majority vote at every N and
+captures most of the consensus→oracle headroom: at N=8, self-consistency **65.0%** → **Kimi-best-of-N
+75.0%** → oracle **83.3%** (and at N=4, 61.7% → 73.3% → 81.7%). A stronger *selector* buys ~+10 points on
+the *same* samples — so "more search" pays far more when a better evaluator *spends* it than when majority
+vote does. This is the deployable form of the +14.2 result: to turn search into capability, improve the
+selector, not just raise N.
+
 **Search improves a policy but barely an evaluator.** Running the master judge itself with
 self-consistency (majority of N judgments) raised agreement with the verifier only **72.5% → 75.0%
 (N:1→5)** — a ~+2.5-point nudge, versus the +8–11 points self-consistency buys a *policy*. The reason is

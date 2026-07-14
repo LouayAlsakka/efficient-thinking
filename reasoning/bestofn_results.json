@@ -1,0 +1,23 @@
+{
+  "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+  "curve": [
+    {
+      "N": 2,
+      "self_consistency": 51.7,
+      "kimi_best_of_n": 66.7,
+      "oracle_best_of_n": 66.7
+    },
+    {
+      "N": 4,
+      "self_consistency": 61.7,
+      "kimi_best_of_n": 73.3,
+      "oracle_best_of_n": 81.7
+    },
+    {
+      "N": 8,
+      "self_consistency": 65.0,
+      "kimi_best_of_n": 75.0,
+      "oracle_best_of_n": 83.3
+    }
+  ]
+}
