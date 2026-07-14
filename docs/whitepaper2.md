@@ -143,6 +143,15 @@ but if a judge cannot reason a problem out, repeating the judgment reproduces th
 So you can partly buy back a weak *policy* with compute, but **not a weak *evaluator*** — which is exactly
 why the evaluator's quality, not its search budget, binds.
 
+**The serial axis (thinking length) saturates fast for a base model.** Measuring the *other* search axis —
+greedy accuracy vs generation budget — Qwen-1.5B climbs 7.5% (128 tok) → 41.2 (256) → **48.8% (512), then
+flat** through 2048; Qwen-3B similarly 5.0 → 41.2 → **67.5% (512+), flat.** The gain is almost entirely a
+*don't-truncate* effect: a non-thinking base model finishes its chain of thought in ~512 tokens and stops,
+so extra budget buys nothing. Genuine o1/R1-style serial scaling requires a model *trained* to keep
+deliberating. So of the two search axes, **parallel (more samples, a better selector) is the live lever
+for an untrained base model, while the serial axis is capped at "enough room to finish"** — once more,
+search extracts only what the model already contains.
+
 **The efficient-thinking frontier — size vs. search.** The core efficiency question, concretely: for a
 fixed compute budget, spend it on a bigger model or on more search over a smaller one? Sweeping a clean
 size ladder (Qwen2.5 0.5B/1.5B/3B) × self-consistency N on GSM8K:
