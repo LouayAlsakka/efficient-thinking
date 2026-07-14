@@ -97,6 +97,15 @@ self-consistency) and serial/depth (long chain-of-thought); o1/R1 scaled the ser
   with evaluator quality (~+2.6 points per 0.1 of verifier accuracy); there is no threshold — **every
   increment of a better evaluator buys capability.** The full curve behind the two-point +14.2 ablation,
   and the cleanest statement of the thesis in language: to go further, improve the evaluator.
+- **[SOLID]** **Search barely improves the *evaluator* — an asymmetry with the policy.** Running the
+  master judge with self-consistency (majority of N judgments) raised its agreement with the verifier
+  only **72.5% → 75.0% (N:1→5)** — a ~+2.5-point nudge, versus the **+8–11 points** self-consistency buys
+  a *policy*. The reason is instructive: a policy benefits from many attempts because *some* land on the
+  answer and search selects them; but if the judge can't reason a problem out, repeating the judgment
+  reproduces the same *systematic* error — search only helps where the evaluator is *randomly* uncertain,
+  not systematically wrong. So you can partly buy back a weak *policy* with compute, but **not a weak
+  *evaluator*** — which is exactly why the evaluator's *quality*, not its search budget, is the binding
+  constraint.
 
 ## 4. Self-improvement — can the flywheel raise the evaluator with no external teacher?
 The self-improvement idea, stated value-first: *fix the evaluator first* — distill better-than-current
