@@ -25,6 +25,40 @@ def gold(ans):
     return ans.split("####")[-1].strip().replace(",", "")
 
 
+def extract_boxed(text):                                   # MATH \boxed{} extraction (mlx-free)
+    text = text or ""
+    i = text.rfind("\\boxed")
+    if i == -1:
+        nums = re.findall(r"-?\d[\d,]*\.?\d*", text)
+        return nums[-1].replace(",", "") if nums else None
+    j = text.find("{", i)
+    if j == -1:
+        return None
+    depth, out = 0, []
+    for c in text[j:]:
+        if c == "{":
+            depth += 1
+            if depth == 1:
+                continue
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                break
+        out.append(c)
+    return "".join(out)
+
+
+def normalize(s):
+    if s is None:
+        return None
+    s = s.strip()
+    for a, b in [("\\left", ""), ("\\right", ""), ("\\!", ""), ("\\,", ""), ("\\ ", ""),
+                 (" ", ""), ("$", ""), ("dfrac", "frac"), ("tfrac", "frac"), ("\\cdot", ""),
+                 ("\\{", ""), ("\\}", ""), ("^{\\circ}", ""), ("^\\circ", "")]:
+        s = s.replace(a, b)
+    return s.rstrip(".").strip()
+
+
 def generate(a):
     from mlx_lm import load, batch_generate
     from mlx_lm.sample_utils import make_sampler
@@ -35,16 +69,20 @@ def generate(a):
     print(f"[cache] {a.model} | {len(probs)} problems × {a.nmax} samples (batched) → {a.out} (resume @ {done})", flush=True)
     model, tok = load(a.model)
     sampler = make_sampler(temp=a.temp)
+    qfield = "problem" if a.math else "question"
+    instr = ("\nPlease reason step by step, and put your final answer within \\boxed{}." if a.math
+             else "\nThink step by step, then end with: #### <number>")
+    goldfn = (lambda p: p["answer"]) if a.math else (lambda p: gold(p["answer"]))
     for i, p in enumerate(probs):
         if i < done:
             continue
-        msgs = [{"role": "user", "content": p["question"] + "\nThink step by step, then end with: #### <number>"}]
+        msgs = [{"role": "user", "content": p[qfield] + instr}]
         pr = tok.apply_chat_template(msgs, add_generation_prompt=True)
         # batch all nmax samples of this problem in one call (same prompt, temp>0 → diverse)
         r = batch_generate(model, tok, prompts=[pr] * a.nmax, max_tokens=a.max_tokens,
                            sampler=sampler, verbose=False)
         with open(a.out, "a") as f:
-            f.write(json.dumps({"gold": gold(p["answer"]), "samples": r.texts}) + "\n")
+            f.write(json.dumps({"gold": goldfn(p), "samples": r.texts}) + "\n")
         if (i + 1) % 25 == 0:
             print(f"  {os.path.basename(a.out)} {i+1}/{len(probs)}", flush=True)
     print(f"[cache] DONE {a.out}", flush=True)
@@ -57,7 +95,10 @@ def score(a):
     for fn in files:
         items = [json.loads(l) for l in open(fn)]
         nmax = min(len(it["samples"]) for it in items)
-        ext = [([extract(s) for s in it["samples"][:nmax]], str(it["gold"])) for it in items]
+        if a.math:
+            ext = [([normalize(extract_boxed(s)) for s in it["samples"][:nmax]], normalize(str(it["gold"]))) for it in items]
+        else:
+            ext = [([extract(s) for s in it["samples"][:nmax]], str(it["gold"])) for it in items]
         n = len(ext)
         row = {"cache": os.path.basename(fn), "n": n, "nmax": nmax}
         # pass@1 = mean single-sample accuracy; sc@N = majority; oracle@N = any-correct
@@ -93,16 +134,21 @@ def main():
     ap = argparse.ArgumentParser(); sub = ap.add_subparsers(dest="cmd", required=True)
     g = sub.add_parser("generate")
     g.add_argument("--model", required=True)
-    g.add_argument("--data", default="reasoning/data/gsm8k_test.jsonl")
+    g.add_argument("--data", default=None)
+    g.add_argument("--math", action="store_true", help="MATH mode: \\boxed{} answers, problem field")
     g.add_argument("--problems", type=int, default=300); g.add_argument("--nmax", type=int, default=32)
     g.add_argument("--temp", type=float, default=0.8); g.add_argument("--max-tokens", type=int, default=1024)
     g.add_argument("--seed", type=int, default=0); g.add_argument("--out", required=True)
     g.set_defaults(func=generate)
     s = sub.add_parser("score")
     s.add_argument("--glob", default="reasoning/cache/gsm8k_*.jsonl")
+    s.add_argument("--math", action="store_true")
     s.add_argument("--out", default="reasoning/cache_scores.json")
     s.set_defaults(func=score)
-    a = ap.parse_args(); a.func(a)
+    a0 = ap.parse_args()
+    if getattr(a0, "data", None) is None and getattr(a0, "cmd", "") == "generate":
+        a0.data = "reasoning/data/math500.jsonl" if a0.math else "reasoning/data/gsm8k_test.jsonl"
+    return a0.func(a0)
 
 
 if __name__ == "__main__":
