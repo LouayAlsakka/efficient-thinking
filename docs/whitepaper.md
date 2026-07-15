@@ -27,8 +27,9 @@ capability when augmented by search*: the same capability, bought with **compute
 
 **The primary contribution is an empirical *framework* for allocating finite AI resources —
 parameters, data, search, latency — to a fixed capability goal, with measured tradeoff curves; the
-staged MCTS cascade is its sharpest demonstration.** Three results support it: **(1)** a **wide→narrow
-MCTS cascade** matching flat MCTS at up to **~4.8× less compute per move**; **(2)** a direct
+framework is demonstrated across its levers.** Three results support it: **(1)** a wide→narrow MCTS
+**cascade** that *appeared* ~4.8× cheaper at equal strength but which a rigorous head-to-head **retracts**
+(§4.2, companion paper); **(2)** a direct
 **MCTS-vs-fixed-depth** comparison — adaptive search beats alpha-beta at equal compute and *keeps
 scaling* while fixed depth plateaus; and **(3)** a **teacher-free self-learning** study with one
 robust positive — **agreement predicts correctness** — and honest negatives — self-play, a
@@ -59,9 +60,10 @@ converts what the evaluator already knows into stronger play; it cannot lift the
 1. **Search dominates parameters in this regime.** On a *fixed* evaluator, adding search buys **+286
    Elo** over the raw policy and keeps climbing **~+55 per doubling** of simulations; *doubling the
    parameters at fixed data added ~0*. Strength came from **thinking, not growing**.
-2. **A wide→narrow MCTS cascade recovers up to 4.8× compute.** Funnelling the simulation budget
-   through progressively narrower, deeper stages **matches flat-MCTS strength at a fraction of the
-   per-move cost** — our most practical result.
+2. **The cascade's efficiency claim did not survive scrutiny (retracted).** A wide→narrow MCTS cascade
+   *looked* ~4.8× cheaper at equal strength on the ±89 ladder, but a rigorous paired head-to-head found
+   **no net gain** (weaker at equal sims, break-even at equal wall-clock; §4.2) — a lesson in how coarse
+   measurement manufactures a result.
 3. **Adaptive MCTS out-scales fixed-depth search.** At equal compute MCTS **beats** alpha-beta and
    **keeps scaling**, where fixed-depth search plateaus.
 4. **Model agreement predicts correctness.** Where independent models agree they are more often
@@ -122,10 +124,11 @@ the human ceiling, not absolute strength.
 **How to read the numbers.** Absolute Elo is measured against a Stockfish ladder and carries **±~100
 systematic uncertainty** near the top rung; treat "~2800" as a headline calibrated to the human-peak
 band. The paper's *claims* are the **relative, same-ladder** results, which do not depend on that
-calibration: search adds **+286 Elo** over the raw policy, MCTS out-scales fixed-depth search, the
-cascade holds Elo at up to 4.8× less compute, and every Stage-3 aggregation method fails to beat a
-single model. We further separate **established** results (robust, relative — the cascade, adaptive
-search scaling, agreement-predicts-correctness) from **regime-limited observations** true only at our
+calibration: search adds **+286 Elo** over the raw policy, MCTS out-scales fixed-depth search, and every
+Stage-3 aggregation method fails to beat a single model. (The cascade's ladder-based efficiency claim is
+the exception — retracted by a head-to-head; §4.2.) We further separate **established** results (robust,
+relative — adaptive search scaling, agreement-predicts-correctness) from **regime-limited observations**
+true only at our
 compute (the self-play plateau, flat parameter scaling, evolution's non-escape), which we expect to
 change at AlphaZero/LLM scale.
 
@@ -387,17 +390,17 @@ same tall ladder, seeds, and openings) gives the full trade-off curve:
 | 10 | 2570 | 275 | **4.8×** |
 | beam-minimax cascade (fixed depth) | 2487 | — | inferior primitive |
 
-**Result.** Across all ten funnels Elo stays within a **single ±89 band** (2506–2683, mean ~2580) —
-**no significant variation within our ±89 uncertainty** — while speed rises **monotonically to 4.8×
-at N = 10.** Funnelling wide→narrow is a **near-pure efficiency win**: it holds flat-MCTS strength
-while cutting per-move compute ~5×, because the survivors reaching the deep stages are the same moves
-flat MCTS would have searched anyway — the funnel just stops paying for moves it has already ranked
-out. The practical dial: **more levels = same strength, cheaper.** (The fixed-depth *beam* cascade is
+**Result (ladder view — retracted; see the correction above).** Across all ten funnels Elo stays within a
+**single ±89 band** (2506–2683, mean ~2580) while speed rises monotonically to 4.8× at N = 10. On the
+ladder this *looked* like a near-pure efficiency win — flat-MCTS strength at ~5× less compute. It is not:
+the paired head-to-head (correction above) shows the cascade is significantly weaker at equal sims and only
+break-even at equal wall-clock. The apparent win was an artifact of the ±89 ladder's inability to resolve a
+~200-Elo difference. (The fixed-depth *beam* cascade is
 a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)
 
 <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
-  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 2 — cascade: Elo flat within noise, speed rises to 4.8×</text>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 2 — cascade (ladder view; equal-strength claim retracted, §4.2)</text>
   <rect x="60" y="113" width="500" height="126" fill="#2c7fb8" opacity="0.08"/>
   <text x="70" y="127" font-size="9" fill="#2c7fb8">±89 noise band — Elo ~flat across all N</text>
   <line x1="60" y1="270" x2="560" y2="270" stroke="#333" stroke-width="1.5"/>
@@ -435,7 +438,7 @@ a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)
 | **Elo** | ~2150 (capped) | **~2800 (scales with compute)** |
 
 **Stage 1 buys Elo with *memory* and saturates; Stage 2 buys Elo with *GPU cycles* and keeps
-climbing** — and the cascade shows most of those cycles were waste (up to 4.8× recoverable). Note
+climbing** — (a cascade appeared to recover ~4.8× of those cycles, but that efficiency claim is retracted — §4.2). Note
 that the ~1.3 s is a **batch-1 implementation artefact**, not the method's cost: batched-leaf
 evaluation (§4.4, measured 6–12×) makes even MCTS-3200 cheaper than batch-1 MCTS-800, so the true
 latency axis sits far below what we plot (clean solo-GPU figure pending). The central practical
@@ -783,7 +786,7 @@ combine at *inference*, not in weight space; so the "better aggregator" must liv
   *absolute* strength, not parameters-per-Elo; the point is only that parameter count is *not* what
   buys their last few hundred Elo (a better value function and far more search are).
 - **Speed:** AlphaZero/Leela use a similar sim count but each sim is a **big-net** pass (10–100× our
-  network); our sim is a 14 MB pass (~1.5 ms), cascade-recoverable a further ~1.6–4.8×. Our batch-1
+  network); our sim is a 14 MB pass (~1.5 ms), Our batch-1
   search runs at only ~600 nps vs ~10k–80k batched (§4.4). Stockfish is the opposite regime — a tiny
   quantized net at millions of nodes/s. The structure is identical throughout — a learned **evaluator
   queried by search** — and **parameter count is not what separates them.**
@@ -853,7 +856,7 @@ ceiling: **only information from outside the closed system can raise it.**
 - **Search > scale, but search cannot exceed the net.** MCTS bought +650 Elo (2150→2800) at zero extra
   parameters and out-scaled fixed depth — yet flat MCTS and the cascade hit the *same* wall on the same
   net, because search cuts the net's *variance* (averaging noisy calls), not its *bias* (systematic
-  blind spots). The cascade's win was **efficiency (up to 4.8× cheaper), not strength.**
+  blind spots). (The cascade's apparent efficiency win was retracted by a head-to-head — §4.2.)
 - **No self-generated signal crosses the wall — we tried three.** Gradient self-play, a self-referential
   ladder, and evolution (given the fairest shot; its +47-Elo "escape" was noise that reversed to −30)
   all plateau. The same net reaches ~2150 under supervised labels, so the wall is **not capacity** but
@@ -971,7 +974,7 @@ by resource, the efficient mix is rarely "more parameters" — a 14 MB net reach
 *thinking* (search), not *growing*** — the same capability, a far cheaper mix. This is *efficiency*,
 not a denial of scale: the first full-data capacity point already nudges up (1× 2734 → 1.4× 2794), and
 **if the 2×/4× points keep climbing, parameters become co-dominant once data-starvation is relieved.**
-Adaptive MCTS out-scales fixed-depth search; the cascade matches it at 4.8× less compute (strength
+Adaptive MCTS out-scales fixed-depth search; a wide→narrow cascade *appeared* to match it at less compute but is retracted (§4.2) (strength
 bought back as *latency*, not parameters). Self-learning is honestly negative: self-play, a
 self-referential ladder, and evolution all **fail to cross the ~2000 plateau** (evolution's escape was
 noise), and plurality committees don't reliably de-bias — though **agreement is a robust teacher-free
@@ -995,7 +998,7 @@ and maps directly onto other AI systems (we measured only chess; these are the t
 | Chess finding | General principle | Where it transfers |
 |---|---|---|
 | **strength = evaluator × search** | capability = model quality × inference-time compute | LLM reasoning (base model × sampling/tree-of-thought); robotics (value net × planning horizon); theorem proving (heuristic × search depth) |
-| **cascade: 4.8× cheaper search** | spend a fixed decision-time budget wide→narrow | LLM reasoning under latency SLAs; model-predictive control; any anytime search |
+| **cascade: no net gain (retracted, §4.2)** | spend a fixed decision-time budget wide→narrow | LLM reasoning under latency SLAs; model-predictive control; any anytime search |
 | **search extracts, can't create — needs an oracle** | self-improvement is capped without external ground truth | LLM self-training needs verifiers; RL needs an environment; scientific discovery needs experiments |
 | **capacity is the weakest lever when data-starved** | don't scale parameters ahead of data | compute-optimal (Chinchilla) scaling; collect data before growing nets |
 | **agreement predicts correctness; voting doesn't de-bias** | consensus is a confidence meter, not an accuracy booster (correlated errors) | ensemble uncertainty / OOD detection; caution on naïve model-averaging |
