@@ -397,6 +397,24 @@ starved into dominance, and the one row that breaks a plateau is the one that in
    value target breaks the Connect-4 plateau; Stockfish labels carried chess to ~2800. *Training creates
    information; search extracts it; neither creates what an external oracle must supply.*
 
+**When to spend on what — the resource rollup.** The lever–limit map above is indexed by *experiment*
+(what each run diagnosed); its transpose is indexed by *resource* (when to spend on each) — the
+practitioner's view, one row per box/arrow of Figure 1:
+
+| resource | when it binds | when it doesn't | evidence |
+|---|---|---|---|
+| **training data** | starved evaluator (early Connect-4; every LLM fine-tune) | no ceiling reached in our range | data sweeps, both arms (§3–§4) |
+| **evaluator quality** | whenever search has saturated | never observed slack | +14.2 gap · graded 75→88 · judge asymmetry (§4) |
+| **search** | competent-but-unextracted evaluator (chess 2448 base; gridworld σ=0.25) | below base competence (frontier); at perfection (σ=0) | +286 / +236 lifts · 22%→97% · size≫search (§4–§5) |
+| **capacity** | never, in our regimes | everywhere tested — and *harmful* at low data | grid + seed collapses (§3); ET-I capacity sweep |
+| **external information** | at every self-improvement plateau | — (always the ceiling-raiser) | oracle control +400→+719 · +14.2 verifier · Stockfish labels (§6) |
+
+Read as an allocation rule: spend on the evaluator until search stops saturating, spend on search only
+above a competence threshold, and note the two entries that make this a *measurement* rather than a menu —
+**capacity never binds in any regime we tested** (and hurts when data is thin), while **external
+information is the only lever that raises the ceiling at all**, which is why the three internal levers are
+not the complete menu the other four rows might suggest.
+
 **A vignette — capability per parameter, made vivid.** Asked to play raw chess against the same Stockfish
 ladder as Efficient Thinking I, a frontier general LLM (Kimi-K2.5) scores ~56% vs a random mover, **0% vs
 Stockfish-1320**, and often cannot even emit a legal move — a performance rating of **≈341 GELO**. The

@@ -657,6 +657,56 @@ starved into dominance, and the one row that breaks a plateau is the one that in
    value target breaks the Connect-4 plateau; Stockfish labels carried chess to ~2800. <em>Training creates
    information; search extracts it; neither creates what an external oracle must supply.</em></li>
 </ol>
+<p><strong>When to spend on what — the resource rollup.</strong> The lever–limit map above is indexed by <em>experiment</em>
+(what each run diagnosed); its transpose is indexed by <em>resource</em> (when to spend on each) — the
+practitioner's view, one row per box/arrow of Figure 1:</p>
+<table>
+<thead>
+<tr>
+<th>resource</th>
+<th>when it binds</th>
+<th>when it doesn't</th>
+<th>evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>training data</strong></td>
+<td>starved evaluator (early Connect-4; every LLM fine-tune)</td>
+<td>no ceiling reached in our range</td>
+<td>data sweeps, both arms (§3–§4)</td>
+</tr>
+<tr>
+<td><strong>evaluator quality</strong></td>
+<td>whenever search has saturated</td>
+<td>never observed slack</td>
+<td>+14.2 gap · graded 75→88 · judge asymmetry (§4)</td>
+</tr>
+<tr>
+<td><strong>search</strong></td>
+<td>competent-but-unextracted evaluator (chess 2448 base; gridworld σ=0.25)</td>
+<td>below base competence (frontier); at perfection (σ=0)</td>
+<td>+286 / +236 lifts · 22%→97% · size≫search (§4–§5)</td>
+</tr>
+<tr>
+<td><strong>capacity</strong></td>
+<td>never, in our regimes</td>
+<td>everywhere tested — and <em>harmful</em> at low data</td>
+<td>grid + seed collapses (§3); ET-I capacity sweep</td>
+</tr>
+<tr>
+<td><strong>external information</strong></td>
+<td>at every self-improvement plateau</td>
+<td>— (always the ceiling-raiser)</td>
+<td>oracle control +400→+719 · +14.2 verifier · Stockfish labels (§6)</td>
+</tr>
+</tbody>
+</table>
+<p>Read as an allocation rule: spend on the evaluator until search stops saturating, spend on search only
+above a competence threshold, and note the two entries that make this a <em>measurement</em> rather than a menu —
+<strong>capacity never binds in any regime we tested</strong> (and hurts when data is thin), while <strong>external
+information is the only lever that raises the ceiling at all</strong>, which is why the three internal levers are
+not the complete menu the other four rows might suggest.</p>
 <p><strong>A vignette — capability per parameter, made vivid.</strong> Asked to play raw chess against the same Stockfish
 ladder as Efficient Thinking I, a frontier general LLM (Kimi-K2.5) scores ~56% vs a random mover, <strong>0% vs
 Stockfish-1320</strong>, and often cannot even emit a legal move — a performance rating of <strong>≈341 GELO</strong>. The
