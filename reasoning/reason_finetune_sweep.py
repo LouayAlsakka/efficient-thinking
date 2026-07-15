@@ -15,6 +15,7 @@ import argparse, json, os, re, subprocess, sys, urllib.request
 
 GSM_TRAIN_URL = "https://raw.githubusercontent.com/openai/grade-school-math/master/grade_school_math/data/train.jsonl"
 INSTR = "\nThink step by step, then end with: #### <number>"
+BASE_PROMPT = "Question: {q}\nAnswer:"   # plain-text scaffold for a non-instruct base model (no chat template)
 
 
 def gold(ans):
@@ -42,15 +43,20 @@ def clean_answer(ans):
     return re.sub(r"<<[^>]*>>", "", ans)
 
 
-def write_lora_data(rows, ddir):
-    """mlx_lm lora expects <ddir>/train.jsonl + valid.jsonl in chat format."""
+def write_lora_data(rows, ddir, base=False):
+    """mlx_lm lora expects <ddir>/train.jsonl + valid.jsonl. Chat format for instruct models,
+    plain prompt/completion for a base (non-instruct) model."""
     os.makedirs(ddir, exist_ok=True)
     def dump(rs, fn):
         with open(os.path.join(ddir, fn), "w") as f:
             for r in rs:
-                msgs = [{"role": "user", "content": r["question"] + INSTR},
-                        {"role": "assistant", "content": clean_answer(r["answer"])}]
-                f.write(json.dumps({"messages": msgs}) + "\n")
+                if base:
+                    rec = {"prompt": BASE_PROMPT.format(q=r["question"]),
+                           "completion": " " + clean_answer(r["answer"])}
+                else:
+                    rec = {"messages": [{"role": "user", "content": r["question"] + INSTR},
+                                        {"role": "assistant", "content": clean_answer(r["answer"])}]}
+                f.write(json.dumps(rec) + "\n")
     n_val = max(4, len(rows) // 20)
     dump(rows[n_val:], "train.jsonl")
     dump(rows[:n_val], "valid.jsonl")
@@ -66,13 +72,16 @@ def finetune(model, ddir, adir, iters, batch, lr, layers):
     subprocess.run(cmd, check=True)
 
 
-def evaluate(model, adir, tests, max_tokens):
+def evaluate(model, adir, tests, max_tokens, base=False):
     from mlx_lm import load, generate as gen
     m, tok = load(model, adapter_path=adir) if adir else load(model)
     correct = 0
     for i, p in enumerate(tests):
-        msgs = [{"role": "user", "content": p["question"] + INSTR}]
-        pr = tok.apply_chat_template(msgs, add_generation_prompt=True)
+        if base:
+            pr = tok.encode(BASE_PROMPT.format(q=p["question"]))
+        else:
+            pr = tok.apply_chat_template([{"role": "user", "content": p["question"] + INSTR}],
+                                         add_generation_prompt=True)
         out = gen(m, tok, prompt=pr, max_tokens=max_tokens, verbose=False)   # greedy (default)
         correct += (extract(out) == gold(p["answer"]))
         if (i + 1) % 50 == 0:
@@ -82,18 +91,25 @@ def evaluate(model, adir, tests, max_tokens):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="mlx-community/Qwen2.5-0.5B-Instruct-4bit")
+    ap.add_argument("--model", default=None)
+    ap.add_argument("--base", action="store_true",
+                    help="fine-tune a non-instruct BASE model (plain prompt/completion, no chat template) "
+                         "— the clean 'climb from a low floor' curve without warm-start erosion")
     ap.add_argument("--sizes", default="0,64,256,1024,4096")
     ap.add_argument("--epochs", type=float, default=3.0)   # fixed EPOCHS → more data does more real training
     ap.add_argument("--iters", type=int, default=0)        # >0 overrides epochs with a fixed iter count
     ap.add_argument("--batch", type=int, default=4)
-    ap.add_argument("--lr", type=float, default=5e-5)      # gentle: avoid clobbering the competent base
+    ap.add_argument("--lr", type=float, default=0.0)       # 0 → auto: 1e-4 base (needs to learn) / 5e-5 instruct
     ap.add_argument("--layers", type=int, default=8)
     ap.add_argument("--eval", type=int, default=150)
     ap.add_argument("--max-tokens", type=int, default=512)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="reasoning/finetune_sweep_results.json")
     a = ap.parse_args()
+    if a.model is None:
+        a.model = "mlx-community/Qwen2.5-0.5B-4bit" if a.base else "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+    if a.lr == 0.0:
+        a.lr = 1e-4 if a.base else 5e-5
 
     import random
     train = load_train(); random.Random(a.seed).shuffle(train)
@@ -107,15 +123,15 @@ def main():
     curve = []
     for N in sizes:
         if N == 0:
-            acc = evaluate(a.model, None, tests, a.max_tokens)          # base model, no fine-tune
+            acc = evaluate(a.model, None, tests, a.max_tokens, a.base)   # base model, no fine-tune
             print(f"[ft] N=0 (base, no fine-tune)  acc={acc}%", flush=True)
         else:
             ddir = f"reasoning/ft_data_{N}"; adir = f"reasoning/ft_adapter_{N}"
-            write_lora_data(train[:N], ddir)
+            write_lora_data(train[:N], ddir, a.base)
             iters = a.iters if a.iters > 0 else max(20, int(a.epochs * N / a.batch))
             print(f"[ft] N={N}: {iters} iters ≈ {a.epochs} epochs @ batch {a.batch}, lr {a.lr}", flush=True)
             finetune(a.model, ddir, adir, iters, a.batch, a.lr, a.layers)
-            acc = evaluate(a.model, adir, tests, a.max_tokens)
+            acc = evaluate(a.model, adir, tests, a.max_tokens, a.base)
             print(f"[ft] N={N} training examples  acc={acc}%", flush=True)
         curve.append({"train_size": N, "accuracy": acc})
         json.dump({"model": a.model, "iters": a.iters, "eval_n": len(tests), "curve": curve},
