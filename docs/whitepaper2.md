@@ -60,9 +60,10 @@ setting where value iteration supplies an exact oracle. Our contributions:
    reasoning ability are directly comparable, with a *calibrate-first* protocol and a goodness-of-fit gate.
 2. **The decomposition transfers** (§3–§5): evaluator × search holds in Connect-4, in reasoning, and in
    control; the evaluator/search *balance* shifts with which side you have starved.
-3. **The evaluator is the binding constraint, in every setting we test** (§4): a perfect verifier breaks a search-saturated ceiling
-   (+14.2), verifier quality traces a continuous capability curve, and — a subtle asymmetry — search
-   improves a *policy* but barely improves the *evaluator*.
+3. **The evaluator bottleneck as a gradient and an asymmetry — not just a gap** (§4): *that* a verifier
+   beats consensus is established [Cobbe et al. 2021; Lightman et al. 2023]; our contribution is that
+   capability is *smooth* in verifier accuracy q (75→88%, no threshold — a curve, not a point), and that
+   search improves a *policy* ~4× more than it improves the *evaluator* (a mechanism, not just an endpoint).
 4. **Self-improvement can't beat its own signal** (§5): five experiments across two games fail to break
    the plateau with self-generated targets; a single change — swapping in an external oracle — breaks it.
 5. **A cross-domain contrast** (§4): in reasoning, base-model size dominates search on the
@@ -271,6 +272,25 @@ complements a competent base; it cannot substitute for one.** "Buy search, not s
 base-competence threshold. (Compute ≈ params × N is coarse, but the domination is large enough to survive
 it.)
 
+**Relation to compute-optimal test-time scaling.** The result to *not* claim here is "size beats search" —
+Snell et al. [2024] show the size-vs-search answer is regime-dependent (search wins on easier problems for
+capable models), and Brown et al. [2024] show repeated sampling scales coverage over four orders of
+magnitude; taken at face value ours is a below-threshold special case of a more nuanced known picture. What
+their work leaves open is *where* the boundary is and *why* — their compute-optimal policy is
+difficulty-adaptive, implying a competence threshold without characterizing it. That is the gap we fill:
+(i) we **identify the boundary as base competence** — below it, search extracts nothing because the base
+rarely contains the answer at all; (ii) the same evaluator × search decomposition **predicts the flip from
+first principles**; and (iii) — the asset no LLM study has — we **reproduce the identical threshold in the
+gridworld (§5) with a perfect oracle**, where at σ=0 search is worthless and at σ=0.25 it recovers 22%→97%,
+so the crossover appears with *no* language-model confound. The framing is therefore "Snell et al. show the
+frontier is regime-dependent; we identify the boundary as base competence, derive it from the
+decomposition, and reproduce it under an exact oracle." Brown et al. *strengthen* rather than pre-empt us:
+their finding that coverage scales but precision does not is exactly our **+14.2 verifier gap** (§4) seen at
+scale — the answer is in the sample set, selection is the bottleneck — so their large-n result and our
+small-n one agree. The cross-domain GELO scale (§2) is the domain-agnostic instrument for *locating* this
+crossover, from search-rich chess (~2150 open-loop, search extracts +286) to search-poor GSM8K (0.5–3B,
+search cannot rescue).
+
 **The training-data lever — a fine-tuning sweep.** Size and search are two of the three levers; the third
 is *training data*, which Connect-4 carries (§3) but which we can also place directly in language. We
 LoRA-fine-tune one fixed model (Qwen2.5-0.5B-Instruct) on an increasing number of GSM8K examples at *fixed
@@ -318,6 +338,16 @@ evaluator-bottleneck, both holding in a control/RL setting with an exact oracle.
 Stated value-first: *fix the evaluator first* — distill better-than-current value/policy targets
 (Monte-Carlo rollouts / MCTS-backed, anchored on real terminal outcomes) back into the net; strength
 follows. We tested this five ways across two games. **It never broke the plateau — and why is the result.**
+
+**Relation to self-improving-LM work.** ReST [Gulcehre et al. 2023] and Self-Rewarding LMs [Yuan et al.
+2024] report self-improvement that *does* work — so "self-improvement plateaus" is emphatically **not** our
+claim; stated baldly it is counterexampled. The difference is what the reward signal carries: those systems
+inject external information *implicitly* — a verifier, human-preference-seeded reward, or filtered gold
+answers — so the flywheel is never truly closed. Our contribution is the **controlled isolation**: the
+signal *source* is the single manipulated variable with the loop otherwise frozen, which lets us show not
+*that* self-improvement works but *which ingredient makes it work*. The oracle-target positive control
+below (self-play outcome → external oracle, **+400 → +719**, loop otherwise identical) is exactly that
+counterfactual — the one the at-scale positive results, valuable as they are, do not isolate.
 
 - **Connect-4, from scratch:** the evaluator improves (oracle value-MAE 0.48 → 0.355 with more search) and
   strength tracks it early (GELO +119 → ~+400), confirming *fix-the-evaluator-and-strength-follows* in
@@ -466,10 +496,27 @@ The evaluator-plus-search structure is the AlphaZero family [Silver et al. 2016;
 [Anthony et al. 2017] as its self-play loop and KataGo [Wu 2019] as a strong open reference. The
 inference-time-compute view of reasoning — o1/R1 [OpenAI 2024; DeepSeek-AI 2025], self-consistency [Wang et
 al. 2023], tree-of-thought [Yao et al. 2023], STaR-style bootstrapping [Zelikman et al. 2022] — is the same
-lever at frontier scale; Jones [2021] documents test-time-compute scaling in board games. Our capability
-scale is the classical logistic latent-ability model shared by Elo, Bradley–Terry, and item-response
-theory (Rasch); pairwise LLM rating with a judge is the LMSYS-Arena approach [Zheng et al. 2023].
-Benchmarks: GSM8K [Cobbe et al. 2021] and MATH [Hendrycks et al. 2021].
+lever at frontier scale; Jones [2021] documents test-time-compute scaling in board games.
+
+Three lines are closest to our reasoning results, and we position *against* them rather than merely
+alongside — for each, what they establish and what the controlled/cross-domain version adds.
+**Compute-optimal test-time scaling** — Snell et al. [2024] (test-time compute can beat extra parameters,
+regime-dependently) and Brown et al. [2024] (coverage scales with repeated sampling over four orders of
+magnitude) — establishes the *above-threshold* half of our frontier and implies a competence boundary; we
+identify that boundary as base competence, derive it from the evaluator × search decomposition, and
+reproduce it under a *perfect oracle* in the gridworld where no LLM confound exists (§4–§5). Brown et al.'s
+"coverage scales, precision does not" is our +14.2 verifier gap at scale, so their large-n result agrees
+with our small-n one. **Verifier / process-reward supervision** — Cobbe et al. [2021], Lightman et al.
+[2023] — establishes that a verifier beats consensus; our contribution is the *gradient* (capability smooth
+in verifier accuracy q, no threshold) and the policy-vs-judge *asymmetry* (search helps a policy ~4× more
+than a judge) (§4). **Self-improving language models** — ReST [Gulcehre et al. 2023], Self-Rewarding LMs
+[Yuan et al. 2024] — report self-improvement that works; we contribute the *controlled isolation* showing
+the signal *source* is the operative variable, with an external-oracle positive control the at-scale
+results do not isolate (§6).
+
+Our capability scale is the classical logistic latent-ability model shared by Elo, Bradley–Terry, and
+item-response theory (Rasch); pairwise LLM rating with a judge is the LMSYS-Arena approach [Zheng et al.
+2023]. Benchmarks: GSM8K [Cobbe et al. 2021] and MATH [Hendrycks et al. 2021].
 
 ## Reproducibility
 Code and data generators for all three arms are in the repo. Control (`control/gridworld.py`): the MDP,
@@ -539,19 +586,24 @@ noise (e.g. the mid-model GELO bunching) we say so.
 
 ## References
 - Anthony, T., Tian, Z. & Barber, D. (2017). *Thinking Fast and Slow with Deep Learning and Tree Search.* NeurIPS.
+- Brown, B. et al. (2024). *Large Language Monkeys: Scaling Inference Compute with Repeated Sampling.* arXiv:2407.21787.
 - Browne, C. et al. (2012). *A Survey of Monte Carlo Tree Search Methods.* IEEE TCIAIG.
 - Cobbe, K. et al. (2021). *Training Verifiers to Solve Math Word Problems* (GSM8K). arXiv:2110.14168.
 - Coulom, R. (2006). *Efficient Selectivity and Backup Operators in Monte-Carlo Tree Search.* Computers and Games.
 - DeepSeek-AI (2025). *DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via RL.* arXiv:2501.12948.
+- Gulcehre, C. et al. (2023). *Reinforced Self-Training (ReST) for Language Modeling.* arXiv:2308.08998.
 - Hendrycks, D. et al. (2021). *Measuring Mathematical Problem Solving with the MATH Dataset.* NeurIPS.
 - Jones, A. L. (2021). *Scaling Scaling Laws with Board Games.* arXiv:2104.03113.
 - Kocsis, L. & Szepesvári, C. (2006). *Bandit Based Monte-Carlo Planning* (UCT). ECML.
+- Lightman, H. et al. (2023). *Let's Verify Step by Step.* arXiv:2305.20050 (ICLR 2024).
 - OpenAI (2024). *Learning to Reason with LLMs* (o1).
 - Rosin, C. D. (2011). *Multi-Armed Bandits with Episode Context* (PUCT). Ann. Math. AI.
 - Silver, D. et al. (2016; 2017; 2018). *Mastering Go / Go without Human Knowledge / a General RL Algorithm* (AlphaGo, AlphaGo Zero, AlphaZero). Nature; Nature; Science.
+- Snell, C., Lee, J., Xu, K. & Kumar, A. (2024). *Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters.* arXiv:2408.03314.
 - Wang, X. et al. (2023). *Self-Consistency Improves Chain-of-Thought Reasoning.* ICLR.
 - Wu, D. J. (2019). *Accelerating Self-Play Learning in Go* (KataGo). arXiv:1902.10565.
 - Yao, S. et al. (2023). *Tree of Thoughts.* NeurIPS.
+- Yuan, W. et al. (2024). *Self-Rewarding Language Models.* arXiv:2401.10020.
 - Zelikman, Y. et al. (2022). *STaR: Bootstrapping Reasoning with Reasoning.* NeurIPS.
 - Zheng, L. et al. (2023). *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena.* NeurIPS.
 - **Software/data:** Stockfish · MLX · mlx-lm · AWS Bedrock (Kimi-K2.5) · Lichess cloud evals · HuggingFaceH4/MATH-500.
