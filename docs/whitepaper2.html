@@ -153,6 +153,21 @@ either direction.</p>
 reward model, vote-fraction from self-consistency — and a <em>well-calibrated</em> one is the open problem; and
 search has two axes — parallel (best-of-N, self-consistency) and serial (long chain-of-thought), the
 latter <em>internalized</em> into the policy by RLVR rather than kept external as in AlphaZero.</p>
+<p><strong>How search is implemented here — granularity and who evaluates.</strong> This is worth stating concretely,
+because an LLM is not a game engine. An LLM has <strong>no built-in correctness-evaluator</strong>: its only native
+scorer is the next-token softmax, which judges token <em>plausibility</em> (what word comes next), never answer
+<em>correctness</em>. Every search result below therefore operates at <strong>whole-answer granularity</strong> with an
+<strong>external</strong> evaluator, by a uniform procedure: sample N <em>complete</em> answers from the policy (temperature</p>
+<blockquote>
+<p>0, so the N chains-of-thought actually differ), let each run to completion (hundreds of tokens),
+extract its final answer, then apply a <strong>selector</strong> over the <em>finished</em> set — majority vote (a
+verifier-free evaluator), a checkable verifier (perfect), or the Kimi-K2.5 judge (a real, imperfect
+model). We do <strong>not</strong> score or branch per token, nor per reasoning step — that would be tree-of-thought
+with a process-reward model, which we leave to future work. The two search knobs are thus <strong>N</strong> (how many
+answers) and the <strong>selector</strong> (how you pick), both entirely external to the frozen weights. This is the
+language analog of AlphaZero's split: the policy <em>proposes</em> a full line of play, and a <em>separate</em> value
+function <em>judges</em> it — and here, as there, the judge is the ceiling.</p>
+</blockquote>
 <p><strong>Search scales accuracy, then saturates.</strong> Qwen-4B on GSM8K (120 problems, 1024-token budget): greedy
 pass@1 = <strong>66.7%</strong>; self-consistency@N = 69.2 (N=1) → 73.3 (4) → <strong>77.5 (16) → 77.5 (32)</strong> — search buys
 <strong>+8–11 points</strong> (the analog of Elo-vs-sims) and then saturates by N=16. Majority vote is a <em>verifier-free</em>
@@ -377,6 +392,52 @@ which prints the goodness-of-fit gate), and the self-play / oracle-value loops. 
 the accuracy-vs-N sweep, the evaluator-quality ablation and gradient, the MATH IRT fit, the pairwise arena
 + master-judge (Bedrock), the judge-scaling test, and the size×search frontier. Large datasets and model
 weights are regenerable and not committed.</p>
+<h2>Appendix A — Experimental setup, per result</h2>
+<p>So the "what we did" is explicit and reproducible, the exact knobs behind each headline number:</p>
+<p><strong>Arm A — Connect-4 / GELO (<code>games/</code>).</strong>
+- <em>Opponent ladder &amp; calibration</em> (<code>c4_calibrate.py</code>, <code>connect4_ab.py</code>): opponents are random plus
+  depth-<em>d</em> alpha-beta (d = 1…6) against the perfect solver's move ordering. Ratings are fit by logistic
+  MLE from the full round-robin <strong>cross-table</strong> (not per-opponent win-rates); the goodness-of-fit gate is
+  mean |predicted − observed| pairwise win-rate = <strong>0.058</strong>; anchor <strong>random := 0</strong>.
+- <em>Evaluator net</em> (<code>c4_net.py</code>): a small conv policy+value network trained on <strong>oracle-solver labels</strong>
+  (value = game-theoretic value, policy = solver move distribution). Data-size sweep uses 12k / 24k / 50k
+  label subsets.
+- <em>Placing an agent</em> (<code>place_agent</code>): the agent plays <strong>24–40 games per rung</strong> vs each ladder rung; the
+  win-rate vector is fit to the ladder's GELO by the same logistic model. Open-loop = greedy on the policy
+  head; closed-loop = <strong>PUCT MCTS, 200 simulations</strong>.
+- <em>Which-lever diagnostic</em> (<code>c4_diagnostic.py</code>): a data (3k–50k) × capacity (small ≈0.3M / large ≈4M
+  params) grid, each cell placed both open- and closed-loop, to read where data / capacity / search each
+  bind.</p>
+<p><strong>Arm B — reasoning (<code>reasoning/</code>), all Qwen2.5-Instruct-4bit under MLX.</strong>
+- <em>Self-consistency &amp; oracle-best-of-N</em> (<code>reason_math_sweep.py</code>): <strong>Qwen-4B</strong>, GSM8K test, <strong>120
+  problems</strong>, temperature <strong>0.8</strong>, <strong>1024</strong>-token budget, <strong>N ∈ {1,4,16,32}</strong>; final answer via
+  <code>#### &lt;number&gt;</code> regex; oracle-best-of-N = "is any of the N correct vs gold."
+- <em>Graded verifier</em> (same samples): a synthetic selector with per-item accuracy <strong>q ∈ {0.5…1.0}</strong>.
+- <em>Kimi-best-of-N</em> (<code>reason_bestofn.py</code>): <strong>Qwen-1.5B</strong>, <strong>60 problems</strong>, temp 0.8, <strong>N ∈ {2,4,8}</strong>;
+  selector = <strong>Kimi-K2.5</strong> (Bedrock, temp 0) picking the correct candidate index — blinded to the gold.
+- <em>Judge scaling</em> (<code>reason_arena.py</code> judge, majority over repeats): Kimi judgments aggregated over
+  <strong>N ∈ {1…5}</strong>; agreement measured against the ground-truth verifier on decisive pairs.
+- <em>Serial axis</em> (<code>reason_serial.py</code>): <strong>greedy</strong> (temp 0), max-tokens ∈ <strong>{128,256,512,1024,2048}</strong>,
+  Qwen-1.5B and 3B.
+- <em>Size × search frontier</em>: Qwen <strong>{0.5B,1.5B,3B}</strong>, GSM8K, greedy + sc@{4,16}; compute proxy ≈ params × N.
+- <em>Pairwise reasoning-GELO</em> (<code>reason_arena.py</code>): <strong>5 models</strong> on <strong>50 MATH problems</strong>; <strong>every</strong> ordered
+  pair scored by the Kimi-K2.5 judge (<strong>blinded, answer-order randomized</strong>); ratings by Bradley–Terry MLE
+  (<code>bt_elo</code>), anchor <strong>Kimi := 2800</strong>; the verifier cross-check gives the 72% judge-agreement figure.
+- <em>Difficulty-anchored GELO</em> (<code>reason_gelo_irt.py</code>): the same models vs MATH difficulty tiers L1–L5, Rasch
+  (1-parameter IRT) fit.</p>
+<p><strong>Arm C — control (<code>control/gridworld.py</code>).</strong> 8×8 gridworld, slip 0.1, γ = 0.95, scattered pits; exact
+<strong>V*</strong> by value iteration; degraded evaluator = V* + σ·(value-spread)·𝒩(0,1); MPC lookahead <strong>h ∈
+{1,2,3}</strong> (h Bellman backups, then greedy). Return = mean discounted reward over <strong>400 episodes</strong>,
+normalized to [random = 0, optimal = 100].</p>
+<p><strong>§6 self-improvement.</strong> Connect-4 (<code>c4_selfplay.py</code>): self-play games each iteration; value target =
+game <strong>outcome</strong> (baseline) vs <strong>depth-6 oracle value</strong> (<code>--oracle-value</code>, the positive control), loop
+otherwise identical; strength re-placed vs the ladder every iteration. Chess uses the analogous loop from
+three seeds (from-scratch / weak-policy warm-start / a self-learned +1214 net).</p>
+<p><strong>Infrastructure &amp; honest limits.</strong> Two Apple-Silicon machines: <strong>MLX / mlx-lm</strong> for all Qwen inference
+and net training; <strong>AWS Bedrock</strong> (<code>moonshotai.kimi-k2.5</code>, us-east-1) for the master judge and the
+frontier-LLM chess vignette. Samples are deliberately modest (50–120 problems, 24–40 games/rung), so we
+report <strong>effect sizes and recurring patterns, not tight confidence intervals</strong>; where a result is within
+noise (e.g. the mid-model GELO bunching) we say so.</p>
 <h2>References</h2>
 <ul>
 <li>Anthony, T., Tian, Z. &amp; Barber, D. (2017). <em>Thinking Fast and Slow with Deep Learning and Tree Search.</em> NeurIPS.</li>
