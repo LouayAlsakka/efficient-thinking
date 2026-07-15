@@ -22,6 +22,10 @@
     {
       "train_size": 4096,
       "accuracy": 24.0
+    },
+    {
+      "train_size": 7000,
+      "accuracy": 26.7
     }
   ]
 }

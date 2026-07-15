@@ -409,6 +409,7 @@ measure greedy accuracy on 150 held-out problems:</p>
 <th style="text-align: right;">256</th>
 <th style="text-align: right;">1024</th>
 <th style="text-align: right;">4096</th>
+<th style="text-align: right;">7000 (full)</th>
 </tr>
 </thead>
 <tbody>
@@ -418,18 +419,20 @@ measure greedy accuracy on 150 held-out problems:</p>
 <td style="text-align: right;">19.3%</td>
 <td style="text-align: right;">20.0%</td>
 <td style="text-align: right;">22.7%</td>
-<td style="text-align: right;"><strong>24.0%</strong></td>
+<td style="text-align: right;">24.0%</td>
+<td style="text-align: right;"><strong>26.7%</strong></td>
 </tr>
 </tbody>
 </table>
 <p>Two honest readings. <strong>The data lever is real and unsaturated:</strong> among fine-tunes, accuracy rises
-monotonically with data (<strong>19.3% → 24.0%</strong>, +4.7 points, still climbing at 4096) — the language analog of
-Connect-4's open-loop-ceiling-vs-labels curve. <strong>But narrow fine-tuning of a competent base first costs
-what it later buys back:</strong> every fine-tune sits <em>below</em> the 35.3% pretrained base, because ≤4k task
-examples trade away some of the model's broad pretrained capability for GSM8K surface form, and data has to
-repurchase it — the exact echo of Connect-4's <em>warm-start erosion</em> (a strong evaluator pulled down toward a
-narrower signal, recovering as the signal grows). The lever is the same everywhere; whether it climbs from
-a floor or first digs a hole depends on how competent the evaluator already was.</p>
+monotonically with data (<strong>19.3% → 26.7%</strong>, +7.4 points across 64 → the full 7k train set, <em>still climbing
+at the last point</em>) — the language analog of Connect-4's open-loop-ceiling-vs-labels curve. <strong>But narrow
+fine-tuning of a competent base first costs what it slowly buys back:</strong> every fine-tune sits <em>below</em> the
+35.3% pretrained base — even at the entire GSM8K train set — because a few thousand task examples trade
+away some of the model's broad pretrained capability for GSM8K surface form, and data repurchases it only
+gradually. This is the exact echo of Connect-4's <em>warm-start erosion</em> (a strong evaluator pulled down
+toward a narrower signal, recovering as the signal grows). The lever is the same everywhere; whether it
+climbs from a floor or first digs a hole depends on how competent the evaluator already was.</p>
 <h2>5. Arm C — sequential control (a gridworld MDP)</h2>
 <p>To test the pattern in a <em>third modality</em> — sequential decision-making, neither a board game nor language —
 we use a stochastic 8×8 gridworld with known dynamics, so value iteration gives the exact optimal value V<em>
@@ -559,7 +562,7 @@ Each row varies one lever and reports which link ended up binding:</p>
 <td>reasoning</td>
 <td>training-data size</td>
 <td><strong>evaluator (data)</strong>, unsaturated</td>
-<td>19.3% → 24.0% monotonic in N</td>
+<td>19.3% → 26.7% monotonic in N</td>
 </tr>
 <tr>
 <td>consensus vs oracle-best-of-N</td>

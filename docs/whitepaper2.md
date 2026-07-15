@@ -276,18 +276,19 @@ LoRA-fine-tune one fixed model (Qwen2.5-0.5B-Instruct) on an increasing number o
 epochs* (so more data does proportionally more training, isolating the data axis), cleaned targets, and
 measure greedy accuracy on 150 held-out problems:
 
-| train examples | 0 (base) | 64 | 256 | 1024 | 4096 |
-|---:|---:|---:|---:|---:|---:|
-| accuracy | 35.3% | 19.3% | 20.0% | 22.7% | **24.0%** |
+| train examples | 0 (base) | 64 | 256 | 1024 | 4096 | 7000 (full) |
+|---:|---:|---:|---:|---:|---:|---:|
+| accuracy | 35.3% | 19.3% | 20.0% | 22.7% | 24.0% | **26.7%** |
 
 Two honest readings. **The data lever is real and unsaturated:** among fine-tunes, accuracy rises
-monotonically with data (**19.3% → 24.0%**, +4.7 points, still climbing at 4096) — the language analog of
-Connect-4's open-loop-ceiling-vs-labels curve. **But narrow fine-tuning of a competent base first costs
-what it later buys back:** every fine-tune sits *below* the 35.3% pretrained base, because ≤4k task
-examples trade away some of the model's broad pretrained capability for GSM8K surface form, and data has to
-repurchase it — the exact echo of Connect-4's *warm-start erosion* (a strong evaluator pulled down toward a
-narrower signal, recovering as the signal grows). The lever is the same everywhere; whether it climbs from
-a floor or first digs a hole depends on how competent the evaluator already was.
+monotonically with data (**19.3% → 26.7%**, +7.4 points across 64 → the full 7k train set, *still climbing
+at the last point*) — the language analog of Connect-4's open-loop-ceiling-vs-labels curve. **But narrow
+fine-tuning of a competent base first costs what it slowly buys back:** every fine-tune sits *below* the
+35.3% pretrained base — even at the entire GSM8K train set — because a few thousand task examples trade
+away some of the model's broad pretrained capability for GSM8K surface form, and data repurchases it only
+gradually. This is the exact echo of Connect-4's *warm-start erosion* (a strong evaluator pulled down
+toward a narrower signal, recovering as the signal grows). The lever is the same everywhere; whether it
+climbs from a floor or first digs a hole depends on how competent the evaluator already was.
 
 ## 5. Arm C — sequential control (a gridworld MDP)
 To test the pattern in a *third modality* — sequential decision-making, neither a board game nor language —
@@ -357,7 +358,7 @@ Each row varies one lever and reports which link ended up binding:
 | open- vs closed-loop | Connect-4 | search (MCTS) | search *extracts* | +236 GELO search lift |
 | ceiling vs data | Connect-4 | evaluator data | **evaluator** | +642 → +798; depth-1 parity at 50k |
 | data × capacity × search | Connect-4 | all three | **evaluator (data)**; capacity slack | small net ≥ large open-loop; open-loop ↑ with data |
-| fine-tuning data sweep | reasoning | training-data size | **evaluator (data)**, unsaturated | 19.3% → 24.0% monotonic in N |
+| fine-tuning data sweep | reasoning | training-data size | **evaluator (data)**, unsaturated | 19.3% → 26.7% monotonic in N |
 | consensus vs oracle-best-of-N | reasoning | selector quality | **evaluator** | **+14.2** (verifier ≫ consensus) |
 | graded verifier | reasoning | evaluator accuracy q | **evaluator** | smooth 75% → 88% |
 | Kimi-best-of-N | reasoning | a *real* selector | **evaluator** | 65% → 75% at N=8 |
