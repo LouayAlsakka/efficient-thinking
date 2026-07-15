@@ -323,20 +323,23 @@ we use a stochastic 8×8 gridworld with known dynamics, so value iteration gives
 units of the value spread), and vary the horizon h of an MPC-style lookahead (h=1 = greedy / open-loop;
 larger h = closed-loop search). Return is normalized so 0% = a random policy and 100% = optimal.
 
+Averaged over **8 independent grids** (mean ± sd; % of optimal):
+
 | evaluator noise σ | open-loop (h=1) | h=2 | h=3 |
 |---:|---:|---:|---:|
-| 0.0 (perfect) | 100% | 100% | 100% |
-| 0.25 | 22% | **97%** | 71% |
-| 0.5 | 33% | 33% | 43% |
-| 1.0 | 11% | 28% | 34% |
-| 2.0 | 16% | 34% | 34% |
+| 0.0 (perfect) | 100 ± 0 | 100 ± 0 | 100 ± 0 |
+| 0.25 | 48 ± 28 | 81 ± 19 | **96 ± 10** |
+| 0.5 | 27 ± 7 | 53 ± 28 | 74 ± 25 |
+| 1.0 | 24 ± 7 | 34 ± 11 | 46 ± 22 |
 
-The same two findings recur. **With a perfect evaluator, open-loop is already optimal and search adds
-nothing** — search earns its cost only when the evaluator is imperfect. **With a mildly noisy evaluator
-(σ = 0.25), search compensates dramatically** — the greedy policy collapses to 22% of optimal, but two-step
-lookahead recovers it to 97%: evaluator × search, in control. But **as the evaluator degrades further,
-search recovers less and less** (σ ≥ 1: lookahead reaches only ~30–34% and cannot recover optimal) — past a
-point the evaluator, not the search horizon, is the binding constraint. Decomposition and
+The same two findings recur, and multi-grid averaging **sharpens the search axis into a monotone**: at every
+imperfect σ, deeper lookahead helps — **h=1 < h=2 < h=3** — with no inversion (a single-grid run had shown a
+spurious h=3 < h=2 dip that averaging reveals as noise, sd ≈ 20–28 pp). **With a perfect evaluator, open-loop
+is already optimal and search adds nothing** — search earns its cost only when the evaluator is imperfect.
+**With a mildly noisy evaluator (σ = 0.25), search compensates dramatically** — greedy sits at 48% of
+optimal, three-step lookahead recovers it to 96%: evaluator × search, in control. But **as the evaluator
+degrades, each step of search recovers less** (σ = 1.0: even h=3 reaches only ~46% and cannot recover
+optimal) — past a point the evaluator, not the search horizon, is the binding constraint. Decomposition and
 evaluator-bottleneck, both holding in a control/RL setting with an exact oracle.
 
 ## 6. Self-improvement — can the flywheel raise the evaluator with no external teacher?
@@ -581,11 +584,12 @@ game **outcome** (baseline) vs **depth-6 oracle value** (`--oracle-value`, the p
 otherwise identical; strength re-placed vs the ladder every iteration. Chess uses the analogous loop from
 three seeds (from-scratch / weak-policy warm-start / a self-learned +1214 net).
 
-**Infrastructure & honest limits.** Two Apple-Silicon machines: **MLX / mlx-lm** for all Qwen inference
-and net training; **AWS Bedrock** (`moonshotai.kimi-k2.5`, us-east-1) for the master judge and the
-frontier-LLM chess vignette. Samples are deliberately modest (50–120 problems, 24–40 games/rung), so we
-report **effect sizes and recurring patterns, not tight confidence intervals**; where a result is within
-noise (e.g. the mid-model GELO bunching) we say so.
+**Infrastructure.** Two **Apple M3 Ultra** machines (each 275 GB unified memory, ~819 GB/s): **MLX /
+mlx-lm** for all Qwen inference and net training — batched sampling (`batch_generate`) makes 32-completion
+caches and models up to **72B** tractable; **AWS Bedrock** (`moonshotai.kimi-k2.5`, us-east-1) for the
+master judge and the frontier-LLM chess vignette. Early exploratory sweeps used modest samples (50–120
+problems); the powered reruns (§3–§5) use 300–500-problem, 32-sample caches and multi-seed/multi-grid
+averaging, and we flag any result still reported at exploratory power.
 
 ## References
 - Anthony, T., Tian, Z. & Barber, D. (2017). *Thinking Fast and Slow with Deep Learning and Tree Search.* NeurIPS.

@@ -472,6 +472,7 @@ we use a stochastic 8×8 gridworld with known dynamics, so value iteration gives
 (a perfect oracle). We hand the controller a </em>degraded<em> evaluator, V</em> plus Gaussian noise of scale σ (in
 units of the value spread), and vary the horizon h of an MPC-style lookahead (h=1 = greedy / open-loop;
 larger h = closed-loop search). Return is normalized so 0% = a random policy and 100% = optimal.</p>
+<p>Averaged over <strong>8 independent grids</strong> (mean ± sd; % of optimal):</p>
 <table>
 <thead>
 <tr>
@@ -484,42 +485,38 @@ larger h = closed-loop search). Return is normalized so 0% = a random policy and
 <tbody>
 <tr>
 <td style="text-align: right;">0.0 (perfect)</td>
-<td style="text-align: right;">100%</td>
-<td style="text-align: right;">100%</td>
-<td style="text-align: right;">100%</td>
+<td style="text-align: right;">100 ± 0</td>
+<td style="text-align: right;">100 ± 0</td>
+<td style="text-align: right;">100 ± 0</td>
 </tr>
 <tr>
 <td style="text-align: right;">0.25</td>
-<td style="text-align: right;">22%</td>
-<td style="text-align: right;"><strong>97%</strong></td>
-<td style="text-align: right;">71%</td>
+<td style="text-align: right;">48 ± 28</td>
+<td style="text-align: right;">81 ± 19</td>
+<td style="text-align: right;"><strong>96 ± 10</strong></td>
 </tr>
 <tr>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">33%</td>
-<td style="text-align: right;">33%</td>
-<td style="text-align: right;">43%</td>
+<td style="text-align: right;">27 ± 7</td>
+<td style="text-align: right;">53 ± 28</td>
+<td style="text-align: right;">74 ± 25</td>
 </tr>
 <tr>
 <td style="text-align: right;">1.0</td>
-<td style="text-align: right;">11%</td>
-<td style="text-align: right;">28%</td>
-<td style="text-align: right;">34%</td>
-</tr>
-<tr>
-<td style="text-align: right;">2.0</td>
-<td style="text-align: right;">16%</td>
-<td style="text-align: right;">34%</td>
-<td style="text-align: right;">34%</td>
+<td style="text-align: right;">24 ± 7</td>
+<td style="text-align: right;">34 ± 11</td>
+<td style="text-align: right;">46 ± 22</td>
 </tr>
 </tbody>
 </table>
-<p>The same two findings recur. <strong>With a perfect evaluator, open-loop is already optimal and search adds
-nothing</strong> — search earns its cost only when the evaluator is imperfect. <strong>With a mildly noisy evaluator
-(σ = 0.25), search compensates dramatically</strong> — the greedy policy collapses to 22% of optimal, but two-step
-lookahead recovers it to 97%: evaluator × search, in control. But <strong>as the evaluator degrades further,
-search recovers less and less</strong> (σ ≥ 1: lookahead reaches only ~30–34% and cannot recover optimal) — past a
-point the evaluator, not the search horizon, is the binding constraint. Decomposition and
+<p>The same two findings recur, and multi-grid averaging <strong>sharpens the search axis into a monotone</strong>: at every
+imperfect σ, deeper lookahead helps — <strong>h=1 &lt; h=2 &lt; h=3</strong> — with no inversion (a single-grid run had shown a
+spurious h=3 &lt; h=2 dip that averaging reveals as noise, sd ≈ 20–28 pp). <strong>With a perfect evaluator, open-loop
+is already optimal and search adds nothing</strong> — search earns its cost only when the evaluator is imperfect.
+<strong>With a mildly noisy evaluator (σ = 0.25), search compensates dramatically</strong> — greedy sits at 48% of
+optimal, three-step lookahead recovers it to 96%: evaluator × search, in control. But <strong>as the evaluator
+degrades, each step of search recovers less</strong> (σ = 1.0: even h=3 reaches only ~46% and cannot recover
+optimal) — past a point the evaluator, not the search horizon, is the binding constraint. Decomposition and
 evaluator-bottleneck, both holding in a control/RL setting with an exact oracle.</p>
 <h2>6. Self-improvement — can the flywheel raise the evaluator with no external teacher?</h2>
 <p>Stated value-first: <em>fix the evaluator first</em> — distill better-than-current value/policy targets
@@ -869,11 +866,12 @@ normalized to [random = 0, optimal = 100].</p>
 game <strong>outcome</strong> (baseline) vs <strong>depth-6 oracle value</strong> (<code>--oracle-value</code>, the positive control), loop
 otherwise identical; strength re-placed vs the ladder every iteration. Chess uses the analogous loop from
 three seeds (from-scratch / weak-policy warm-start / a self-learned +1214 net).</p>
-<p><strong>Infrastructure &amp; honest limits.</strong> Two Apple-Silicon machines: <strong>MLX / mlx-lm</strong> for all Qwen inference
-and net training; <strong>AWS Bedrock</strong> (<code>moonshotai.kimi-k2.5</code>, us-east-1) for the master judge and the
-frontier-LLM chess vignette. Samples are deliberately modest (50–120 problems, 24–40 games/rung), so we
-report <strong>effect sizes and recurring patterns, not tight confidence intervals</strong>; where a result is within
-noise (e.g. the mid-model GELO bunching) we say so.</p>
+<p><strong>Infrastructure.</strong> Two <strong>Apple M3 Ultra</strong> machines (each 275 GB unified memory, ~819 GB/s): <strong>MLX /
+mlx-lm</strong> for all Qwen inference and net training — batched sampling (<code>batch_generate</code>) makes 32-completion
+caches and models up to <strong>72B</strong> tractable; <strong>AWS Bedrock</strong> (<code>moonshotai.kimi-k2.5</code>, us-east-1) for the
+master judge and the frontier-LLM chess vignette. Early exploratory sweeps used modest samples (50–120
+problems); the powered reruns (§3–§5) use 300–500-problem, 32-sample caches and multi-seed/multi-grid
+averaging, and we flag any result still reported at exploratory power.</p>
 <h2>References</h2>
 <ul>
 <li>Anthony, T., Tian, Z. &amp; Barber, D. (2017). <em>Thinking Fast and Slow with Deep Learning and Tree Search.</em> NeurIPS.</li>
