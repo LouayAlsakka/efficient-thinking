@@ -291,25 +291,30 @@ small-n one agree. The cross-domain GELO scale (§2) is the domain-agnostic inst
 crossover, from search-rich chess (~2150 open-loop, search extracts +286) to search-poor GSM8K (0.5–3B,
 search cannot rescue).
 
-**The training-data lever — a fine-tuning sweep.** Size and search are two of the three levers; the third
-is *training data*, which Connect-4 carries (§3) but which we can also place directly in language. We
-LoRA-fine-tune one fixed model (Qwen2.5-0.5B-Instruct) on an increasing number of GSM8K examples at *fixed
-epochs* (so more data does proportionally more training, isolating the data axis), cleaned targets, and
-measure greedy accuracy on 150 held-out problems:
+**The training-data lever — a fine-tuning sweep, from two starting points.** Size and search are two of the
+three levers; the third is *training data*, which Connect-4 carries (§3) but which we can also place
+directly in language. We LoRA-fine-tune **two** 0.5B models — the **instruct** model and the **non-instruct
+base** (bf16) — on an increasing number of GSM8K examples at *fixed epochs* (so more data does
+proportionally more training, isolating the data axis), cleaned targets, greedy accuracy on 150 held-out
+problems:
 
-| train examples | 0 (base) | 64 | 256 | 1024 | 4096 | 7000 (full) |
-|---:|---:|---:|---:|---:|---:|---:|
-| accuracy | 35.3% | 19.3% | 20.0% | 22.7% | 24.0% | **26.7%** |
+| train examples | 0 (zero-shot) | 64 | 256 | 1024 | 4096 | 7000 (full) |
+|---|---:|---:|---:|---:|---:|---:|
+| **base (bf16)** — from a low floor | 1.3% | 16.0 | 15.3 | 17.3 | 24.0 | **26.0%** |
+| **instruct** — from a competent floor | 35.3% | 19.3 | 20.0 | 22.7 | 24.0 | **26.7%** |
 
-Two honest readings. **The data lever is real and unsaturated:** among fine-tunes, accuracy rises
-monotonically with data (**19.3% → 26.7%**, +7.4 points across 64 → the full 7k train set, *still climbing
-at the last point*) — the language analog of Connect-4's open-loop-ceiling-vs-labels curve. **But narrow
-fine-tuning of a competent base first costs what it slowly buys back:** every fine-tune sits *below* the
-35.3% pretrained base — even at the entire GSM8K train set — because a few thousand task examples trade
-away some of the model's broad pretrained capability for GSM8K surface form, and data repurchases it only
-gradually. This is the exact echo of Connect-4's *warm-start erosion* (a strong evaluator pulled down
-toward a narrower signal, recovering as the signal grows). The lever is the same everywhere; whether it
-climbs from a floor or first digs a hole depends on how competent the evaluator already was.
+The two curves *converge*, and the convergence is the finding. The **base model climbs from a 1.3% floor**
+— the textbook data-scaling curve, more data monotonically buying capability. The **instruct model dips
+below its 35.3% zero-shot floor and slowly recovers** — *warm-start erosion*: a few thousand narrow
+examples first trade away broad pretrained capability for GSM8K surface form, then rebuild it. Yet **both
+land at ~26% at the full 7k train set**: the *data* sets the attractor level, while the *pretrained
+starting point* governs only the **direction of approach** — climb up to it from below, or fall to it from
+above. This is the language echo of Connect-4's warm-start erosion (a strong evaluator pulled toward the
+data-determined level), now shown from *both* sides on one benchmark. The training-data lever is real and
+unsaturated (still rising at 7k), and how competent the evaluator already was sets the *sign of the first
+step*, not the destination. (The base run required full precision: at 4-bit the same LoRA fine-tune was
+unstable — degenerate generation at low data — which is itself a caution about drawing data-scaling
+conclusions from quantized small-model fine-tunes.)
 
 ## 5. Arm C — sequential control (a gridworld MDP)
 To test the pattern in a *third modality* — sequential decision-making, neither a board game nor language —
@@ -466,15 +471,13 @@ part of the gap is the LLM's difficulty producing legal moves — but the order 
 - **Reasoning search is whole-answer only.** We test the parallel axis (best-of-N, self-consistency) and
   the serial axis (thinking length), but not *process-reward tree search* (per-step evaluation / MCTS over
   reasoning steps) — the richest form, and the natural next experiment.
-- **Reasoning fine-tuning stayed below the pretrained baseline.** The language data lever (§4) is a LoRA
-  sweep on Qwen2.5-0.5B-Instruct up to the full 7k-example GSM8K train set; accuracy climbs monotonically
-  with data (19.3% → 26.7%) but never reaches the 35.3% zero-shot base — the warm-start-erosion regime, in
-  which a few thousand narrow examples cannot out-train what broad pretraining already supplied (itself
-  on-thesis: you cannot cheaply out-train the pretrained evaluator). We also ran the *non-instruct base*
-  model as a confound-free check for a "climb from a low floor" curve; at 0.5B/4-bit its LoRA fine-tuning
-  was **unstable** — noisy, non-monotonic, with degenerate generation at low data — and also sat below its
-  12% zero-shot floor, so it did *not* yield a cleaner curve. A full-precision or larger base, and larger
-  data, are the untested routes to a genuine from-floor climb.
+- **Reasoning fine-tuning is small-scale and precision-sensitive.** The language data lever (§4) is a LoRA
+  sweep on two 0.5B models up to the full 7k-example GSM8K train set; both climb with data and converge to
+  ~26% (instruct dipping below its 35.3% base — warm-start erosion — while the bf16 base climbs cleanly from
+  a 1.3% floor). One caution worth stating: at **4-bit** the base-model fine-tune was unstable (degenerate
+  generation, non-monotonic); the clean curve required **full precision** — so data-scaling conclusions
+  from quantized small-model fine-tunes should be treated with care. Larger models and larger data are the
+  untested routes to confirm the ~26% attractor is genuinely data-set and not a 0.5B capacity ceiling.
 - **Four domains is not universality.** Go, continuous/robotic control, and code are the obvious next
   tests; the framework predicts the same evaluator-bound in each, and predicts *where* it should shift
   (starve the evaluator and search dominates; strengthen it and search saturates).
