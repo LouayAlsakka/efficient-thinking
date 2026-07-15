@@ -43,8 +43,10 @@ Search *converts* the net's latent information into better decisions; it cannot 
 never learned. And the method transfers beyond the numbers: **at each stage one lever binds, and only
 an experiment reveals which — so effort on any other returns almost nothing.**
 
-**Headline:** *A 14 MB evaluator plus adaptive search reaches ~2800-class play, and a staged MCTS
-**cascade** recovers up to **4.8× compute** at little Elo cost — thinking, not growing. Search
+**Headline:** *A 14 MB evaluator plus adaptive search reaches ~2800-class play — thinking, not growing.*
+(A staged MCTS **cascade** *appeared* to recover ~4.8× compute at little Elo cost, but a rigorous
+head-to-head later **retracted** that as a ladder-noise artifact — see the §4.2 correction; the robust
+claim is the parameter-efficiency of evaluator + search, not the cascade.) Search
 converts what the evaluator already knows into stronger play; it cannot lift the ceiling set by the
 **quality of the information the evaluator was given.***
 
@@ -128,10 +130,12 @@ compute (the self-play plateau, flat parameter scaling, evolution's non-escape),
 change at AlphaZero/LLM scale.
 
 **Contributions.**
-- **Our headline method — a search-efficiency result:** a wide→narrow MCTS **cascade** that funnels
-  the simulation budget through progressively narrower, deeper stages, matching flat MCTS at up to
-  **4.8× less compute per move** with a clean score/speed trade-off curve.
-- A parameter-efficiency result: **~2800 Elo from 3.45M params** via search, at constant memory.
+- **The robust result — parameter efficiency:** **~2800 Elo from 3.45M params** via search, at constant
+  memory — strength bought with thinking, not growing.
+- **A search-efficiency *negative* (corrected):** a wide→narrow MCTS **cascade** looked ~4.8× cheaper at
+  equal strength on the ±89 ladder, but a rigorous head-to-head (companion *cascade* paper) found **no net
+  gain** — weaker at equal sims, break-even at equal wall-clock. A cautionary tale about measurement noise
+  (§4.2), not a recommended method.
 - A direct **MCTS-vs-fixed-depth** result: adaptive search beats and out-scales fixed depth.
 - An **architecture-beats-scale** finding (convolution ≫ MLP at equal data), with topology sweep.
 - A reproducible **negative result** on small-scale self-play (plateaus below supervision).
@@ -344,6 +348,15 @@ averages over it.** MCTS wins Stage 2, reaching ~2800 on the fixed 3.45M net.
 </svg>
 
 ### 4.2 Search efficiency — the wide→narrow MCTS cascade (new)
+
+> **Correction (post-publication).** The equal-strength claim in this subsection rests on ±89-Elo
+> *ladder* ratings — too coarse to detect a real difference. A rigorous **paired head-to-head** (cascade
+> vs. flat MCTS, thousands of games; reported in the companion *cascade* white paper) overturns it: the
+> cascade is **significantly *weaker* at equal simulations** (≈ −200 Elo) and only **statistically
+> indistinguishable at equal wall-clock** (−17 Elo, 95% CI [−66, +31]) — i.e. **no net efficiency gain.**
+> The "4.8× at equal strength" was a measurement artifact of the coarse ladder. The original analysis is
+> kept below for the record, but its cascade-efficiency conclusion is **retracted** in favour of the
+> head-to-head result; treat the cascade as a cautionary tale about ladder noise, not a recommended method.
 
 **Where the cascade comes from — expert human analysis.** The cascade is not a standard MCTS variant;
 it was inspired by the resource-allocation principle **visible in how expert human players analyze
