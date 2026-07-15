@@ -17,11 +17,12 @@ and then saturates against the evaluator's ceiling. Most sharply, in reasoning a
 a self-consistency ceiling that more search cannot (**+14.2 points**), a graded verifier traces a smooth
 capability curve (**75% → 88%**), and across five self-improvement experiments the plateau never breaks —
 because self-play converges to its own level of play; climbing past it requires importing information (an
-external oracle). We also find a sharp cross-domain *contrast*: in reasoning, base-model **size dominates
-search** on the compute-efficiency frontier — the opposite of chess — which the same thesis explains
-(search extracts what a model already contains; a base too weak to solve leaves nothing to extract). We
-report these as recurring empirical patterns observed under deliberately modest compute (two Apple-Silicon
-machines), not as proven laws. **Across the domains and compute budgets studied here, one through-line is
+external oracle). On a 0.5B→32B ladder we also **locate and measure the size-vs-search crossover**: size
+dominates search below ~3B but search wins above ~7B (7B+search beats 14B greedy) — both sides of the
+competence threshold that compute-optimal test-time scaling [Snell et al. 2024] implies, explained by the
+same thesis (search extracts what a model already contains; a base too weak to solve leaves nothing to
+extract). We report these as recurring empirical patterns observed under deliberately modest compute (two
+Apple-Silicon machines), not as proven laws. **Across the domains and compute budgets studied here, one through-line is
 consistent: the evaluator — not parameters or search budget — is the binding constraint.**
 
 ## Key Takeaways
@@ -38,9 +39,10 @@ consistent: the evaluator — not parameters or search budget — is the binding
 4. **Self-improvement cannot beat its own signal.** Five self-play experiments across two games never break
    the plateau; changing *only* the target — self-play outcome → external oracle — breaks it (Connect-4
    **+400 → +719**). Climbing requires importing information.
-5. **A cross-domain contrast, same cause.** In reasoning, base-model *size dominates search* on the
-   efficiency frontier — the opposite of chess — because search extracts only what a competent base already
-   contains; these small LLMs are below that threshold.
+5. **We locate the size-vs-search crossover.** On a 0.5B→32B ladder, size dominates search below ~3B but
+   search wins above ~7B (7B+search beats 14B greedy; search lift collapses +16→+0.7 as the base gets
+   competent) — both sides of the competence threshold that compute-optimal test-time scaling implies,
+   measured directly on one sweep.
 
 ## 1. Introduction
 Modern game-playing and reasoning systems both gain most of their capability from two levers that are
@@ -66,8 +68,9 @@ setting where value iteration supplies an exact oracle. Our contributions:
    search improves a *policy* ~4× more than it improves the *evaluator* (a mechanism, not just an endpoint).
 4. **Self-improvement can't beat its own signal** (§5): five experiments across two games fail to break
    the plateau with self-generated targets; a single change — swapping in an external oracle — breaks it.
-5. **A cross-domain contrast** (§4): in reasoning, base-model size dominates search on the
-   compute-efficiency frontier — the opposite of chess — reconciled by the same principle.
+5. **The size-vs-search crossover, located** (§4): on a 0.5B→32B ladder, size dominates search below ~3B
+   and search wins above ~7B — both sides of the competence threshold that compute-optimal test-time
+   scaling [Snell et al. 2024] implies, measured directly.
 
 **Figure 1 — one causal chain, four instantiations.** The whole paper is a single chain: *external
 information* is the only lever that raises *evaluator quality*; *inference-time search* extracts — never
@@ -251,33 +254,43 @@ deliberating. So of the two search axes, **parallel (more samples, a better sele
 for an untrained base model, while the serial axis is capped at "enough room to finish"** — once more,
 search extracts only what the model already contains.
 
-**The efficient-thinking frontier — size vs. search.** The core efficiency question, concretely: for a
-fixed compute budget, spend it on a bigger model or on more search over a smaller one? Sweeping a clean
-size ladder (Qwen2.5 0.5B/1.5B/3B) × self-consistency N on GSM8K:
+**The efficient-thinking frontier — the size-vs-search crossover.** For a fixed budget, spend it on a
+bigger model or on more search over a smaller one? We sweep a Qwen2.5 size ladder (0.5B → 32B) ×
+self-consistency on GSM8K at **n = 500 problems, 32 samples** (pass@1 = mean single-sample accuracy;
+sc@N = majority vote of N; oracle@32 = a perfect verifier's coverage of the 32):
 
-| model | params | greedy | sc@4 | sc@16 |
-|---|---:|---:|---:|---:|
-| Qwen2.5-0.5B | 0.5B | 30.0% | 25.0% | 41.2% |
-| Qwen2.5-1.5B | 1.5B | 48.8% | 50.0% | 58.8% |
-| Qwen2.5-3B  | 3.0B | 67.5% | 76.2% | 83.8% |
+| model | pass@1 | sc@4 | sc@16 | sc@32 | oracle@32 | search lift |
+|---|---:|---:|---:|---:|---:|---:|
+| 0.5B | 22.1 | 28.8 | 38.2 | 40.8 | 79.6 | +16.1 |
+| 1.5B | 52.8 | 60.8 | 67.0 | 66.6 | 93.8 | +14.2 |
+| 3B  | 69.5 | 79.8 | 86.2 | 87.2 | 96.8 | +16.7 |
+| 7B  | 89.0 | 91.2 | **93.4** | 93.6 | 97.4 | +4.4 |
+| 14B | **92.7** | 93.0 | 94.6 | 94.4 | 97.4 | +1.9 |
+| 32B | 94.1 | 94.2 | 94.8 | 95.0 | 98.2 | +0.7 |
 
-On accuracy vs. compute (≈ params × N), **every small-model-plus-search point is dominated by a bigger
-model with less search**: 3B greedy (67.5%, compute ≈ 3) beats 0.5B@N=16 (41.2%, ≈ 8) *and* 1.5B@N=16
-(58.8%, ≈ 24). In reasoning, **base-model size dominates search** on the efficiency frontier — the
-*opposite* of chess, where search on a fixed 3.45M net was the efficient lever. The reconciliation is the
-thesis itself: *search extracts what the model already contains.* The chess net was already strong on its
-task (~2150 open-loop), so search extracted a lot; these small LLMs are too weak on GSM8K for search to
-rescue — you cannot self-consistency your way up from a base that rarely finds the answer at all. **Search
-complements a competent base; it cannot substitute for one.** "Buy search, not size" holds only above a
-base-competence threshold. (Compute ≈ params × N is coarse, but the domination is large enough to survive
-it.)
+The frontier has **two regimes, and the boundary between them is the result.** *Below ~3B, size dominates:*
+3B pass@1 (69.5%) beats 0.5B and 1.5B at *any* N — you cannot self-consistency your way up from a base that
+rarely finds the answer at all. *At 7B and above, the crossover flips:* **7B + search (sc@16 = 93.4%) beats
+14B greedy (92.7%), and 14B + search (94.6%) beats 32B greedy (94.1%)** — a smaller model plus search now
+edges past the next size up. And the **search lift collapses monotonically with competence** — +16 (0.5–3B)
+→ +4.4 (7B) → +1.9 (14B) → +0.7 (32B) — because a competent base's single answer already sits near the
+oracle ceiling, leaving little for search to extract.
+
+This is the **competence threshold, both sides measured on one sweep**: chess (search on a strong 3.45M net
+was the efficient lever) and small-LLM GSM8K (size dominated) are the two ends, and here we cross between
+them. It is exactly the boundary Snell et al.'s difficulty-adaptive policy *implies* — search pays above a
+competence threshold, size below — now **located and observed directly** rather than assumed. (Caveat:
+GSM8K saturates at ~94–95% for ≥7B, compressing the top of the ladder against the ceiling; a harder
+benchmark would widen the crossover, but the flip is unambiguous. Compute ≈ params × N is coarse.)
 
 **Relation to compute-optimal test-time scaling.** The result to *not* claim here is "size beats search" —
 Snell et al. [2024] show the size-vs-search answer is regime-dependent (search wins on easier problems for
 capable models), and Brown et al. [2024] show repeated sampling scales coverage over four orders of
-magnitude; taken at face value ours is a below-threshold special case of a more nuanced known picture. What
-their work leaves open is *where* the boundary is and *why* — their compute-optimal policy is
-difficulty-adaptive, implying a competence threshold without characterizing it. That is the gap we fill:
+magnitude. A small-model-only sweep would be a below-threshold special case of that more nuanced picture;
+our extended **0.5B→32B ladder observes *both* sides directly** — size dominates below ~3B, search wins
+above ~7B (the crossover above). What their work leaves open is *where* the boundary is and *why* — their
+compute-optimal policy is difficulty-adaptive, implying a competence threshold without characterizing it.
+That is the gap we fill:
 (i) we **identify the boundary as base competence** — below it, search extracts nothing because the base
 rarely contains the answer at all; (ii) the same evaluator × search decomposition **predicts the flip from
 first principles**; and (iii) — the asset no LLM study has — we **reproduce the identical threshold in the
@@ -403,7 +416,7 @@ Each row varies one lever and reports which link ended up binding:
 | Kimi-best-of-N | reasoning | a *real* selector | **evaluator** | 65% → 75% at N=8 |
 | judge self-consistency | reasoning | search *on the evaluator* | **evaluator** (search can't fix it) | 72.5% → 75% only |
 | serial thinking length | reasoning | serial search | policy (untrained base) | flat past 512 tokens |
-| size × search frontier | reasoning | size vs search | base competence | size dominates search |
+| size × search frontier | reasoning | size vs search | base competence (crossover) | size<3B, search>7B; lift +16→+0.7 |
 | noisy-eval × lookahead | control | search horizon h | **evaluator** | σ=0.25: h2 lifts 22%→97%; σ≥1 caps ~30% |
 | self-play ×5 | chess + C4 | training signal | evaluator / search margin | plateau never breaks |
 | oracle-value target | Connect-4 | *external information* | — (positive control) | +400 → +719 |

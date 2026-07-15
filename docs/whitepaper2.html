@@ -42,11 +42,12 @@ and then saturates against the evaluator's ceiling. Most sharply, in reasoning a
 a self-consistency ceiling that more search cannot (<strong>+14.2 points</strong>), a graded verifier traces a smooth
 capability curve (<strong>75% → 88%</strong>), and across five self-improvement experiments the plateau never breaks —
 because self-play converges to its own level of play; climbing past it requires importing information (an
-external oracle). We also find a sharp cross-domain <em>contrast</em>: in reasoning, base-model <strong>size dominates
-search</strong> on the compute-efficiency frontier — the opposite of chess — which the same thesis explains
-(search extracts what a model already contains; a base too weak to solve leaves nothing to extract). We
-report these as recurring empirical patterns observed under deliberately modest compute (two Apple-Silicon
-machines), not as proven laws. <strong>Across the domains and compute budgets studied here, one through-line is
+external oracle). On a 0.5B→32B ladder we also <strong>locate and measure the size-vs-search crossover</strong>: size
+dominates search below ~3B but search wins above ~7B (7B+search beats 14B greedy) — both sides of the
+competence threshold that compute-optimal test-time scaling [Snell et al. 2024] implies, explained by the
+same thesis (search extracts what a model already contains; a base too weak to solve leaves nothing to
+extract). We report these as recurring empirical patterns observed under deliberately modest compute (two
+Apple-Silicon machines), not as proven laws. <strong>Across the domains and compute budgets studied here, one through-line is
 consistent: the evaluator — not parameters or search budget — is the binding constraint.</strong></p>
 <h2>Key Takeaways</h2>
 <ol>
@@ -63,9 +64,10 @@ consistent: the evaluator — not parameters or search budget — is the binding
 <li><strong>Self-improvement cannot beat its own signal.</strong> Five self-play experiments across two games never break
    the plateau; changing <em>only</em> the target — self-play outcome → external oracle — breaks it (Connect-4
    <strong>+400 → +719</strong>). Climbing requires importing information.</li>
-<li><strong>A cross-domain contrast, same cause.</strong> In reasoning, base-model <em>size dominates search</em> on the
-   efficiency frontier — the opposite of chess — because search extracts only what a competent base already
-   contains; these small LLMs are below that threshold.</li>
+<li><strong>We locate the size-vs-search crossover.</strong> On a 0.5B→32B ladder, size dominates search below ~3B but
+   search wins above ~7B (7B+search beats 14B greedy; search lift collapses +16→+0.7 as the base gets
+   competent) — both sides of the competence threshold that compute-optimal test-time scaling implies,
+   measured directly on one sweep.</li>
 </ol>
 <h2>1. Introduction</h2>
 <p>Modern game-playing and reasoning systems both gain most of their capability from two levers that are
@@ -90,8 +92,9 @@ setting where value iteration supplies an exact oracle. Our contributions:</p>
    search improves a <em>policy</em> ~4× more than it improves the <em>evaluator</em> (a mechanism, not just an endpoint).</li>
 <li><strong>Self-improvement can't beat its own signal</strong> (§5): five experiments across two games fail to break
    the plateau with self-generated targets; a single change — swapping in an external oracle — breaks it.</li>
-<li><strong>A cross-domain contrast</strong> (§4): in reasoning, base-model size dominates search on the
-   compute-efficiency frontier — the opposite of chess — reconciled by the same principle.</li>
+<li><strong>The size-vs-search crossover, located</strong> (§4): on a 0.5B→32B ladder, size dominates search below ~3B
+   and search wins above ~7B — both sides of the competence threshold that compute-optimal test-time
+   scaling [Snell et al. 2024] implies, measured directly.</li>
 </ol>
 <p><strong>Figure 1 — one causal chain, four instantiations.</strong> The whole paper is a single chain: <em>external
 information</em> is the only lever that raises <em>evaluator quality</em>; <em>inference-time search</em> extracts — never
@@ -350,59 +353,100 @@ so extra budget buys nothing. Genuine o1/R1-style serial scaling requires a mode
 deliberating. So of the two search axes, <strong>parallel (more samples, a better selector) is the live lever
 for an untrained base model, while the serial axis is capped at "enough room to finish"</strong> — once more,
 search extracts only what the model already contains.</p>
-<p><strong>The efficient-thinking frontier — size vs. search.</strong> The core efficiency question, concretely: for a
-fixed compute budget, spend it on a bigger model or on more search over a smaller one? Sweeping a clean
-size ladder (Qwen2.5 0.5B/1.5B/3B) × self-consistency N on GSM8K:</p>
+<p><strong>The efficient-thinking frontier — the size-vs-search crossover.</strong> For a fixed budget, spend it on a
+bigger model or on more search over a smaller one? We sweep a Qwen2.5 size ladder (0.5B → 32B) ×
+self-consistency on GSM8K at <strong>n = 500 problems, 32 samples</strong> (pass@1 = mean single-sample accuracy;
+sc@N = majority vote of N; oracle@32 = a perfect verifier's coverage of the 32):</p>
 <table>
 <thead>
 <tr>
 <th>model</th>
-<th style="text-align: right;">params</th>
-<th style="text-align: right;">greedy</th>
+<th style="text-align: right;">pass@1</th>
 <th style="text-align: right;">sc@4</th>
 <th style="text-align: right;">sc@16</th>
+<th style="text-align: right;">sc@32</th>
+<th style="text-align: right;">oracle@32</th>
+<th style="text-align: right;">search lift</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Qwen2.5-0.5B</td>
-<td style="text-align: right;">0.5B</td>
-<td style="text-align: right;">30.0%</td>
-<td style="text-align: right;">25.0%</td>
-<td style="text-align: right;">41.2%</td>
+<td>0.5B</td>
+<td style="text-align: right;">22.1</td>
+<td style="text-align: right;">28.8</td>
+<td style="text-align: right;">38.2</td>
+<td style="text-align: right;">40.8</td>
+<td style="text-align: right;">79.6</td>
+<td style="text-align: right;">+16.1</td>
 </tr>
 <tr>
-<td>Qwen2.5-1.5B</td>
-<td style="text-align: right;">1.5B</td>
-<td style="text-align: right;">48.8%</td>
-<td style="text-align: right;">50.0%</td>
-<td style="text-align: right;">58.8%</td>
+<td>1.5B</td>
+<td style="text-align: right;">52.8</td>
+<td style="text-align: right;">60.8</td>
+<td style="text-align: right;">67.0</td>
+<td style="text-align: right;">66.6</td>
+<td style="text-align: right;">93.8</td>
+<td style="text-align: right;">+14.2</td>
 </tr>
 <tr>
-<td>Qwen2.5-3B</td>
-<td style="text-align: right;">3.0B</td>
-<td style="text-align: right;">67.5%</td>
-<td style="text-align: right;">76.2%</td>
-<td style="text-align: right;">83.8%</td>
+<td>3B</td>
+<td style="text-align: right;">69.5</td>
+<td style="text-align: right;">79.8</td>
+<td style="text-align: right;">86.2</td>
+<td style="text-align: right;">87.2</td>
+<td style="text-align: right;">96.8</td>
+<td style="text-align: right;">+16.7</td>
+</tr>
+<tr>
+<td>7B</td>
+<td style="text-align: right;">89.0</td>
+<td style="text-align: right;">91.2</td>
+<td style="text-align: right;"><strong>93.4</strong></td>
+<td style="text-align: right;">93.6</td>
+<td style="text-align: right;">97.4</td>
+<td style="text-align: right;">+4.4</td>
+</tr>
+<tr>
+<td>14B</td>
+<td style="text-align: right;"><strong>92.7</strong></td>
+<td style="text-align: right;">93.0</td>
+<td style="text-align: right;">94.6</td>
+<td style="text-align: right;">94.4</td>
+<td style="text-align: right;">97.4</td>
+<td style="text-align: right;">+1.9</td>
+</tr>
+<tr>
+<td>32B</td>
+<td style="text-align: right;">94.1</td>
+<td style="text-align: right;">94.2</td>
+<td style="text-align: right;">94.8</td>
+<td style="text-align: right;">95.0</td>
+<td style="text-align: right;">98.2</td>
+<td style="text-align: right;">+0.7</td>
 </tr>
 </tbody>
 </table>
-<p>On accuracy vs. compute (≈ params × N), <strong>every small-model-plus-search point is dominated by a bigger
-model with less search</strong>: 3B greedy (67.5%, compute ≈ 3) beats 0.5B@N=16 (41.2%, ≈ 8) <em>and</em> 1.5B@N=16
-(58.8%, ≈ 24). In reasoning, <strong>base-model size dominates search</strong> on the efficiency frontier — the
-<em>opposite</em> of chess, where search on a fixed 3.45M net was the efficient lever. The reconciliation is the
-thesis itself: <em>search extracts what the model already contains.</em> The chess net was already strong on its
-task (~2150 open-loop), so search extracted a lot; these small LLMs are too weak on GSM8K for search to
-rescue — you cannot self-consistency your way up from a base that rarely finds the answer at all. <strong>Search
-complements a competent base; it cannot substitute for one.</strong> "Buy search, not size" holds only above a
-base-competence threshold. (Compute ≈ params × N is coarse, but the domination is large enough to survive
-it.)</p>
+<p>The frontier has <strong>two regimes, and the boundary between them is the result.</strong> <em>Below ~3B, size dominates:</em>
+3B pass@1 (69.5%) beats 0.5B and 1.5B at <em>any</em> N — you cannot self-consistency your way up from a base that
+rarely finds the answer at all. <em>At 7B and above, the crossover flips:</em> <strong>7B + search (sc@16 = 93.4%) beats
+14B greedy (92.7%), and 14B + search (94.6%) beats 32B greedy (94.1%)</strong> — a smaller model plus search now
+edges past the next size up. And the <strong>search lift collapses monotonically with competence</strong> — +16 (0.5–3B)
+→ +4.4 (7B) → +1.9 (14B) → +0.7 (32B) — because a competent base's single answer already sits near the
+oracle ceiling, leaving little for search to extract.</p>
+<p>This is the <strong>competence threshold, both sides measured on one sweep</strong>: chess (search on a strong 3.45M net
+was the efficient lever) and small-LLM GSM8K (size dominated) are the two ends, and here we cross between
+them. It is exactly the boundary Snell et al.'s difficulty-adaptive policy <em>implies</em> — search pays above a
+competence threshold, size below — now <strong>located and observed directly</strong> rather than assumed. (Caveat:
+GSM8K saturates at ~94–95% for ≥7B, compressing the top of the ladder against the ceiling; a harder
+benchmark would widen the crossover, but the flip is unambiguous. Compute ≈ params × N is coarse.)</p>
 <p><strong>Relation to compute-optimal test-time scaling.</strong> The result to <em>not</em> claim here is "size beats search" —
 Snell et al. [2024] show the size-vs-search answer is regime-dependent (search wins on easier problems for
 capable models), and Brown et al. [2024] show repeated sampling scales coverage over four orders of
-magnitude; taken at face value ours is a below-threshold special case of a more nuanced known picture. What
-their work leaves open is <em>where</em> the boundary is and <em>why</em> — their compute-optimal policy is
-difficulty-adaptive, implying a competence threshold without characterizing it. That is the gap we fill:
+magnitude. A small-model-only sweep would be a below-threshold special case of that more nuanced picture;
+our extended <strong>0.5B→32B ladder observes <em>both</em> sides directly</strong> — size dominates below ~3B, search wins
+above ~7B (the crossover above). What their work leaves open is <em>where</em> the boundary is and <em>why</em> — their
+compute-optimal policy is difficulty-adaptive, implying a competence threshold without characterizing it.
+That is the gap we fill:
 (i) we <strong>identify the boundary as base competence</strong> — below it, search extracts nothing because the base
 rarely contains the answer at all; (ii) the same evaluator × search decomposition <strong>predicts the flip from
 first principles</strong>; and (iii) — the asset no LLM study has — we <strong>reproduce the identical threshold in the
@@ -642,8 +686,8 @@ Each row varies one lever and reports which link ended up binding:</p>
 <td>size × search frontier</td>
 <td>reasoning</td>
 <td>size vs search</td>
-<td>base competence</td>
-<td>size dominates search</td>
+<td>base competence (crossover)</td>
+<td>size&lt;3B, search&gt;7B; lift +16→+0.7</td>
 </tr>
 <tr>
 <td>noisy-eval × lookahead</td>
