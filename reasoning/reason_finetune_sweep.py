@@ -37,6 +37,11 @@ def load_train(path="reasoning/data/gsm8k_train.jsonl"):
     return [json.loads(l) for l in open(path)]
 
 
+def clean_answer(ans):
+    """Strip GSM8K's <<calc=annotations>> surface noise; keep the reasoning text and the #### answer."""
+    return re.sub(r"<<[^>]*>>", "", ans)
+
+
 def write_lora_data(rows, ddir):
     """mlx_lm lora expects <ddir>/train.jsonl + valid.jsonl in chat format."""
     os.makedirs(ddir, exist_ok=True)
@@ -44,7 +49,7 @@ def write_lora_data(rows, ddir):
         with open(os.path.join(ddir, fn), "w") as f:
             for r in rs:
                 msgs = [{"role": "user", "content": r["question"] + INSTR},
-                        {"role": "assistant", "content": r["answer"]}]
+                        {"role": "assistant", "content": clean_answer(r["answer"])}]
                 f.write(json.dumps({"messages": msgs}) + "\n")
     n_val = max(4, len(rows) // 20)
     dump(rows[n_val:], "train.jsonl")
@@ -79,9 +84,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="mlx-community/Qwen2.5-0.5B-Instruct-4bit")
     ap.add_argument("--sizes", default="0,64,256,1024,4096")
-    ap.add_argument("--iters", type=int, default=400)
+    ap.add_argument("--epochs", type=float, default=3.0)   # fixed EPOCHS → more data does more real training
+    ap.add_argument("--iters", type=int, default=0)        # >0 overrides epochs with a fixed iter count
     ap.add_argument("--batch", type=int, default=4)
-    ap.add_argument("--lr", type=float, default=1e-4)
+    ap.add_argument("--lr", type=float, default=5e-5)      # gentle: avoid clobbering the competent base
     ap.add_argument("--layers", type=int, default=8)
     ap.add_argument("--eval", type=int, default=150)
     ap.add_argument("--max-tokens", type=int, default=512)
@@ -95,7 +101,8 @@ def main():
     random.Random(a.seed + 1).shuffle(tests); tests = tests[:a.eval]
     sizes = [int(s) for s in a.sizes.split(",")]
 
-    print(f"[ft] model={a.model} | fixed compute: {a.iters} iters, batch {a.batch} (isolates DATA) | "
+    budget = f"{a.iters} fixed iters" if a.iters > 0 else f"{a.epochs} epochs"
+    print(f"[ft] model={a.model} | {budget} @ batch {a.batch}, lr {a.lr} | cleaned targets | "
           f"eval on {len(tests)} held-out GSM8K", flush=True)
     curve = []
     for N in sizes:
@@ -105,7 +112,9 @@ def main():
         else:
             ddir = f"reasoning/ft_data_{N}"; adir = f"reasoning/ft_adapter_{N}"
             write_lora_data(train[:N], ddir)
-            finetune(a.model, ddir, adir, a.iters, a.batch, a.lr, a.layers)
+            iters = a.iters if a.iters > 0 else max(20, int(a.epochs * N / a.batch))
+            print(f"[ft] N={N}: {iters} iters ≈ {a.epochs} epochs @ batch {a.batch}, lr {a.lr}", flush=True)
+            finetune(a.model, ddir, adir, iters, a.batch, a.lr, a.layers)
             acc = evaluate(a.model, adir, tests, a.max_tokens)
             print(f"[ft] N={N} training examples  acc={acc}%", flush=True)
         curve.append({"train_size": N, "accuracy": acc})

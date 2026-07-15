@@ -1,0 +1,58 @@
+[
+  {
+    "data": 3000,
+    "cap": "small~0.3M",
+    "open": 512,
+    "closed": 659,
+    "lift": 147
+  },
+  {
+    "data": 12000,
+    "cap": "small~0.3M",
+    "open": 673,
+    "closed": 790,
+    "lift": 117
+  },
+  {
+    "data": 24000,
+    "cap": "small~0.3M",
+    "open": 659,
+    "closed": 869,
+    "lift": 210
+  },
+  {
+    "data": 50000,
+    "cap": "small~0.3M",
+    "open": 801,
+    "closed": 1023,
+    "lift": 222
+  },
+  {
+    "data": 3000,
+    "cap": "large~4M",
+    "open": 406,
+    "closed": 620,
+    "lift": 214
+  },
+  {
+    "data": 12000,
+    "cap": "large~4M",
+    "open": 566,
+    "closed": 833,
+    "lift": 267
+  },
+  {
+    "data": 24000,
+    "cap": "large~4M",
+    "open": 183,
+    "closed": 1074,
+    "lift": 891
+  },
+  {
+    "data": 50000,
+    "cap": "large~4M",
+    "open": 739,
+    "closed": 996,
+    "lift": 257
+  }
+]

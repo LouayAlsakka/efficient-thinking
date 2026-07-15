@@ -1,0 +1,27 @@
+{
+  "model": "mlx-community/Qwen2.5-0.5B-Instruct-4bit",
+  "iters": 0,
+  "eval_n": 150,
+  "curve": [
+    {
+      "train_size": 0,
+      "accuracy": 35.3
+    },
+    {
+      "train_size": 64,
+      "accuracy": 19.3
+    },
+    {
+      "train_size": 256,
+      "accuracy": 20.0
+    },
+    {
+      "train_size": 1024,
+      "accuracy": 22.7
+    },
+    {
+      "train_size": 4096,
+      "accuracy": 24.0
+    }
+  ]
+}

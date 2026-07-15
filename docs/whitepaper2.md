@@ -156,6 +156,26 @@ search-dominance was mostly a *starved evaluator*: fed data, it catches up to lo
 statement is that the evaluator/search balance moves with how much you have spent on the evaluator — in
 either direction.
 
+**Which lever binds — a data × capacity × search grid.** To separate the three levers directly, we sweep
+training data (3k–50k) × network capacity (small ≈0.3M / large ≈4M params), placing each net both
+open-loop (raw) and closed-loop (MCTS-100). Open-loop GELO:
+
+| data | small (~0.3M) | large (~4M) | search lift (small, +MCTS) |
+|---:|---:|---:|---:|
+| 3k  | +512 | +406 | +147 |
+| 12k | +673 | +566 | +117 |
+| 24k | +659 | +659\* | +210 |
+| 50k | **+801** | +739 | +222 |
+
+Three readings, one per lever. **Data binds:** open-loop climbs with data on both nets, reaching depth-1
+parity (~+804) by 50k. **Capacity is slack — and at low data, harmful:** the *larger* net never beats the
+small one open-loop (it is worse at 3k/12k/50k) and is *high-variance* where data is thin (the 24k-large
+cell varied +278…+762 across seeds; \*median +659) — extra parameters with too little data add noise, not
+skill. **Search is a large multiplier that most rescues a starved evaluator:** MCTS adds +117…+222 GELO on
+the small net, and its biggest rescues land exactly where the raw evaluator is weakest. So at this scale
+the binding constraint is *data* (evaluator quality), capacity is slack, and search compensates — the same
+ordering Paper I found in chess (search ≫ data ≫ capacity), here separated cell by cell.
+
 ## 4. Arm B — reasoning (LLM)
 The mapping from chess to language:
 
@@ -250,6 +270,25 @@ complements a competent base; it cannot substitute for one.** "Buy search, not s
 base-competence threshold. (Compute ≈ params × N is coarse, but the domination is large enough to survive
 it.)
 
+**The training-data lever — a fine-tuning sweep.** Size and search are two of the three levers; the third
+is *training data*, which Connect-4 carries (§3) but which we can also place directly in language. We
+LoRA-fine-tune one fixed model (Qwen2.5-0.5B-Instruct) on an increasing number of GSM8K examples at *fixed
+epochs* (so more data does proportionally more training, isolating the data axis), cleaned targets, and
+measure greedy accuracy on 150 held-out problems:
+
+| train examples | 0 (base) | 64 | 256 | 1024 | 4096 |
+|---:|---:|---:|---:|---:|---:|
+| accuracy | 35.3% | 19.3% | 20.0% | 22.7% | **24.0%** |
+
+Two honest readings. **The data lever is real and unsaturated:** among fine-tunes, accuracy rises
+monotonically with data (**19.3% → 24.0%**, +4.7 points, still climbing at 4096) — the language analog of
+Connect-4's open-loop-ceiling-vs-labels curve. **But narrow fine-tuning of a competent base first costs
+what it later buys back:** every fine-tune sits *below* the 35.3% pretrained base, because ≤4k task
+examples trade away some of the model's broad pretrained capability for GSM8K surface form, and data has to
+repurchase it — the exact echo of Connect-4's *warm-start erosion* (a strong evaluator pulled down toward a
+narrower signal, recovering as the signal grows). The lever is the same everywhere; whether it climbs from
+a floor or first digs a hole depends on how competent the evaluator already was.
+
 ## 5. Arm C — sequential control (a gridworld MDP)
 To test the pattern in a *third modality* — sequential decision-making, neither a board game nor language —
 we use a stochastic 8×8 gridworld with known dynamics, so value iteration gives the exact optimal value V*
@@ -317,6 +356,8 @@ Each row varies one lever and reports which link ended up binding:
 |---|---|---|---|---|
 | open- vs closed-loop | Connect-4 | search (MCTS) | search *extracts* | +236 GELO search lift |
 | ceiling vs data | Connect-4 | evaluator data | **evaluator** | +642 → +798; depth-1 parity at 50k |
+| data × capacity × search | Connect-4 | all three | **evaluator (data)**; capacity slack | small net ≥ large open-loop; open-loop ↑ with data |
+| fine-tuning data sweep | reasoning | training-data size | **evaluator (data)**, unsaturated | 19.3% → 24.0% monotonic in N |
 | consensus vs oracle-best-of-N | reasoning | selector quality | **evaluator** | **+14.2** (verifier ≫ consensus) |
 | graded verifier | reasoning | evaluator accuracy q | **evaluator** | smooth 75% → 88% |
 | Kimi-best-of-N | reasoning | a *real* selector | **evaluator** | 65% → 75% at N=8 |
@@ -375,9 +416,11 @@ part of the gap is the LLM's difficulty producing legal moves — but the order 
 - **Reasoning search is whole-answer only.** We test the parallel axis (best-of-N, self-consistency) and
   the serial axis (thinking length), but not *process-reward tree search* (per-step evaluation / MCTS over
   reasoning steps) — the richest form, and the natural next experiment.
-- **Reasoning used off-the-shelf base models.** The data lever in the LLM domain is carried by Connect-4;
-  a fine-tuning data-size sweep (LoRA on increasing GSM8K, fixed compute) is in progress to place the
-  *training-data* lever directly in reasoning, alongside the size and search levers already mapped.
+- **Reasoning fine-tuning was small-scale.** The training-data lever in language (§4) is a LoRA sweep on a
+  single 0.5B model up to 4k GSM8K examples; the monotonic climb is clear but starts below the pretrained
+  base (the warm-start-erosion regime). A from-*base* (non-instruct) model, larger data, and full
+  fine-tuning would show the data lever climbing from a lower floor without that confound — a cleaner but
+  heavier experiment.
 - **Four domains is not universality.** Go, continuous/robotic control, and code are the obvious next
   tests; the framework predicts the same evaluator-bound in each, and predicts *where* it should shift
   (starve the evaluator and search dominates; strengthen it and search saturates).
@@ -449,6 +492,10 @@ So the "what we did" is explicit and reproducible, the exact knobs behind each h
   (`bt_elo`), anchor **Kimi := 2800**; the verifier cross-check gives the 72% judge-agreement figure.
 - *Difficulty-anchored GELO* (`reason_gelo_irt.py`): the same models vs MATH difficulty tiers L1–L5, Rasch
   (1-parameter IRT) fit.
+- *Training-data lever* (`reason_finetune_sweep.py`): LoRA fine-tune Qwen2.5-0.5B-Instruct (8 layers,
+  lr 5e-5) on **N ∈ {64,256,1024,4096}** GSM8K examples at **fixed 3 epochs** (so iters scale with N —
+  isolates *data*, not optimization budget), calculator-annotation targets stripped; greedy accuracy on
+  150 held-out problems, N=0 = base model.
 
 **Arm C — control (`control/gridworld.py`).** 8×8 gridworld, slip 0.1, γ = 0.95, scattered pits; exact
 **V\*** by value iteration; degraded evaluator = V\* + σ·(value-spread)·𝒩(0,1); MPC lookahead **h ∈
