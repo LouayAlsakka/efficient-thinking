@@ -26,13 +26,13 @@ def gold(ans):
 
 
 def generate(a):
-    from mlx_lm import load, generate as gen
+    from mlx_lm import load, batch_generate
     from mlx_lm.sample_utils import make_sampler
     probs = [json.loads(l) for l in open(a.data)]
     random.Random(a.seed).shuffle(probs); probs = probs[:a.problems]
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     done = sum(1 for _ in open(a.out)) if os.path.exists(a.out) else 0
-    print(f"[cache] {a.model} | {len(probs)} problems × {a.nmax} samples → {a.out} (resume @ {done})", flush=True)
+    print(f"[cache] {a.model} | {len(probs)} problems × {a.nmax} samples (batched) → {a.out} (resume @ {done})", flush=True)
     model, tok = load(a.model)
     sampler = make_sampler(temp=a.temp)
     for i, p in enumerate(probs):
@@ -40,10 +40,11 @@ def generate(a):
             continue
         msgs = [{"role": "user", "content": p["question"] + "\nThink step by step, then end with: #### <number>"}]
         pr = tok.apply_chat_template(msgs, add_generation_prompt=True)
-        samples = [gen(model, tok, prompt=pr, max_tokens=a.max_tokens, sampler=sampler, verbose=False)
-                   for _ in range(a.nmax)]
+        # batch all nmax samples of this problem in one call (same prompt, temp>0 → diverse)
+        r = batch_generate(model, tok, prompts=[pr] * a.nmax, max_tokens=a.max_tokens,
+                           sampler=sampler, verbose=False)
         with open(a.out, "a") as f:
-            f.write(json.dumps({"gold": gold(p["answer"]), "samples": samples}) + "\n")
+            f.write(json.dumps({"gold": gold(p["answer"]), "samples": r.texts}) + "\n")
         if (i + 1) % 25 == 0:
             print(f"  {os.path.basename(a.out)} {i+1}/{len(probs)}", flush=True)
     print(f"[cache] DONE {a.out}", flush=True)
