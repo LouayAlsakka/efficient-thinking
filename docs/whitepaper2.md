@@ -24,6 +24,24 @@ report these as recurring empirical patterns observed under deliberately modest 
 machines), not as proven laws. **Across the domains and compute budgets studied here, one through-line is
 consistent: the evaluator — not parameters or search budget — is the binding constraint.**
 
+## Key Takeaways
+1. **One decomposition, four domains.** *Strength = evaluator × search* holds in chess (ET-I), a second
+   solved game (Connect-4), LLM mathematical reasoning, and a control MDP — measured on one calibrated
+   scale (GELO). Figure 1 is the whole paper: external information → evaluator quality → search →
+   capability.
+2. **Search is a large, portable lever that saturates at the evaluator's ceiling.** It is worth *nothing*
+   when the evaluator is already perfect (gridworld σ=0) and *everything* when the evaluator is the only
+   lever left — but it can only *extract* what the evaluator already contains, never create it.
+3. **The evaluator is consistently the binding constraint.** A *perfect* verifier breaks a search-saturated
+   reasoning ceiling that more search cannot (**+14.2 points**); a *graded* verifier traces a smooth curve
+   (**75% → 88%**); and even the master judge is itself evaluator-limited (search barely improves it).
+4. **Self-improvement cannot beat its own signal.** Five self-play experiments across two games never break
+   the plateau; changing *only* the target — self-play outcome → external oracle — breaks it (Connect-4
+   **+400 → +719**). Climbing requires importing information.
+5. **A cross-domain contrast, same cause.** In reasoning, base-model *size dominates search* on the
+   efficiency frontier — the opposite of chess — because search extracts only what a competent base already
+   contains; these small LLMs are below that threshold.
+
 ## 1. Introduction
 Modern game-playing and reasoning systems both gain most of their capability from two levers that are
 easy to conflate: a *learned evaluator* (a network's single-pass judgement) and *search* (spending
@@ -49,6 +67,49 @@ setting where value iteration supplies an exact oracle. Our contributions:
    the plateau with self-generated targets; a single change — swapping in an external oracle — breaks it.
 5. **A cross-domain contrast** (§4): in reasoning, base-model size dominates search on the
    compute-efficiency frontier — the opposite of chess — reconciled by the same principle.
+
+**Figure 1 — one causal chain, four instantiations.** The whole paper is a single chain: *external
+information* is the only lever that raises *evaluator quality*; *inference-time search* extracts — never
+creates — what the evaluator already contains; the two compose into *capability* (strength = evaluator ×
+search). Each arrow carries a load-bearing result of this work.
+
+```text
+        ┌──────────────────────────────────┐
+        │        EXTERNAL INFORMATION       │
+        │      oracle · verifier · teacher  │
+        └────────────────┬─────────────────┘
+                         │   ← the only lever that raises the ceiling;
+                         ▼      self-play alone cannot (§6)
+        ┌──────────────────────────────────┐
+        │         EVALUATOR QUALITY         │
+        │        single-pass judgement      │
+        └────────────────┬─────────────────┘
+                         │   ← search EXTRACTS what is here;
+                         ▼      it cannot create what is absent (§4–§5)
+        ┌──────────────────────────────────┐
+        │        INFERENCE-TIME SEARCH      │
+        │       look further before acting  │
+        └────────────────┬─────────────────┘
+                         │   ← multiplies the evaluator,
+                         ▼      then saturates at its ceiling
+        ┌──────────────────────────────────┐
+        │             CAPABILITY            │
+        └──────────────────────────────────┘
+```
+
+The unification is that the *same skeleton* instantiates in every domain we test — the four checkmarks are
+earned by the mapping below, not asserted:
+
+| chain link | Chess (ET-I) | Connect-4 (§3) | LLM reasoning (§4) | Gridworld (§5) |
+|---|---|---|---|---|
+| external information | Stockfish labels | perfect solver | verifier / RLVR signal | value iteration (V\*) |
+| → **evaluator quality** | 3.45M value net | conv value net | P(answer correct) | V̂ = V\* + noise |
+| → **inference-time search** | MCTS simulations | PUCT MCTS | best-of-N / self-consistency | h-step lookahead |
+| → **capability** | ~2150 → 2800 Elo | GELO vs ladder | GSM8K / MATH accuracy | % of optimal |
+| **pattern holds?** | ✓ | ✓ | ✓ | ✓ |
+
+Read top-to-bottom it is a causal chain; read left-to-right it is the claim that one mechanism spans games,
+language, and control. Every quantitative result below measures one arrow in one column.
 
 ## 2. GELO: one scale across domains
 Capability is a latent ability θ on one logistic model that unifies chess Elo, Bradley–Terry, and
@@ -248,6 +309,27 @@ games: a large margin sustained over many iterations. At our scale the margin wa
 cannot add information the evaluator doesn't already contain; raising the ceiling requires importing it.**
 
 ## 7. Discussion — what transfers, what shifts, what binds
+
+**The lever–limit map — every experiment, including the failures, is a diagnosis of one link in Figure 1.**
+Each row varies one lever and reports which link ended up binding:
+
+| experiment | domain | lever varied | what bound it | evidence |
+|---|---|---|---|---|
+| open- vs closed-loop | Connect-4 | search (MCTS) | search *extracts* | +236 GELO search lift |
+| ceiling vs data | Connect-4 | evaluator data | **evaluator** | +642 → +798; depth-1 parity at 50k |
+| consensus vs oracle-best-of-N | reasoning | selector quality | **evaluator** | **+14.2** (verifier ≫ consensus) |
+| graded verifier | reasoning | evaluator accuracy q | **evaluator** | smooth 75% → 88% |
+| Kimi-best-of-N | reasoning | a *real* selector | **evaluator** | 65% → 75% at N=8 |
+| judge self-consistency | reasoning | search *on the evaluator* | **evaluator** (search can't fix it) | 72.5% → 75% only |
+| serial thinking length | reasoning | serial search | policy (untrained base) | flat past 512 tokens |
+| size × search frontier | reasoning | size vs search | base competence | size dominates search |
+| noisy-eval × lookahead | control | search horizon h | **evaluator** | σ=0.25: h2 lifts 22%→97%; σ≥1 caps ~30% |
+| self-play ×5 | chess + C4 | training signal | evaluator / search margin | plateau never breaks |
+| oracle-value target | Connect-4 | *external information* | — (positive control) | +400 → +719 |
+
+Read down the "what bound it" column: **evaluator** recurs; search binds only where the evaluator was
+starved into dominance, and the one row that breaks a plateau is the one that injects external information.
+
 1. **The decomposition transfers.** Strength = evaluator × search holds in two games, in language
    reasoning, and in sequential control, on one calibrated scale. Search is a large, portable lever that
    scales with inference compute and then saturates against the evaluator's ceiling (Elo-vs-sims in chess,
@@ -279,6 +361,37 @@ Stockfish-1320**, and often cannot even emit a legal move — a performance rati
 correctly-shaped evaluator beats a giant generalist by **~1,800–2,500 GELO at the generalist's own game.**
 Scale is not what buys task capability; the right evaluator (and search over it) is. (Small sample, and
 part of the gap is the LLM's difficulty producing legal moves — but the order of magnitude is unambiguous.)
+
+## 8. Limitations and Future Work
+- **Modest compute and sample sizes.** Everything runs on two Apple-Silicon machines: 50–120 problems per
+  reasoning point, 24–40 games per ladder rung. We report *effect sizes and recurring patterns, not tight
+  confidence intervals*; where a result is within noise (the mid-model GELO bunching) we say so. The claims
+  are scoped to the domains and compute regimes examined here — a recurring empirical pattern, not a proven
+  law.
+- **GELO is a common scale, not a universal difficulty.** The cross-domain numbers share one logistic model
+  and chess's constants *by construction*; "2500 in reasoning" and "2500 in chess" sit on the same ruler
+  but are not claimed to be the same underlying difficulty. Each domain is calibrated *within* itself
+  (goodness-of-fit gate); the shared constants make the *shapes* comparable, not the absolute levels.
+- **Reasoning search is whole-answer only.** We test the parallel axis (best-of-N, self-consistency) and
+  the serial axis (thinking length), but not *process-reward tree search* (per-step evaluation / MCTS over
+  reasoning steps) — the richest form, and the natural next experiment.
+- **Reasoning used off-the-shelf base models.** The data lever in the LLM domain is carried by Connect-4;
+  a fine-tuning data-size sweep (LoRA on increasing GSM8K, fixed compute) is in progress to place the
+  *training-data* lever directly in reasoning, alongside the size and search levers already mapped.
+- **Four domains is not universality.** Go, continuous/robotic control, and code are the obvious next
+  tests; the framework predicts the same evaluator-bound in each, and predicts *where* it should shift
+  (starve the evaluator and search dominates; strengthen it and search saturates).
+
+## 9. Conclusion
+Across four domains — two games, language reasoning, and sequential control — capability decomposes the
+same way: a single-pass **evaluator** sets the level, **search** multiplies it and then saturates, and only
+**external information** raises the ceiling. On one calibrated scale (GELO) the pattern is visible as a
+family of the same curve (Elo-vs-sims, accuracy-vs-N, GELO-vs-MCTS, return-vs-horizon), and the
+lever–limit map (§7) shows every experiment — the +14.2 verifier gap, the graded 75→88 curve, the five
+self-play plateaus, the one oracle-value break — diagnosing the *same* link. The compact statement is
+Figure 1: **training creates information, search extracts it, and neither creates what an external oracle
+must supply.** Within the domains and budgets studied here, the evaluator — not parameters, not search
+budget — is what binds.
 
 ## Related work
 The evaluator-plus-search structure is the AlphaZero family [Silver et al. 2016; 2017; 2018] built on MCTS
