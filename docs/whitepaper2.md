@@ -418,11 +418,15 @@ part of the gap is the LLM's difficulty producing legal moves — but the order 
 - **Reasoning search is whole-answer only.** We test the parallel axis (best-of-N, self-consistency) and
   the serial axis (thinking length), but not *process-reward tree search* (per-step evaluation / MCTS over
   reasoning steps) — the richest form, and the natural next experiment.
-- **Reasoning fine-tuning was small-scale.** The training-data lever in language (§4) is a LoRA sweep on a
-  single 0.5B model up to 4k GSM8K examples; the monotonic climb is clear but starts below the pretrained
-  base (the warm-start-erosion regime). A from-*base* (non-instruct) model, larger data, and full
-  fine-tuning would show the data lever climbing from a lower floor without that confound — a cleaner but
-  heavier experiment.
+- **Reasoning fine-tuning stayed below the pretrained baseline.** The language data lever (§4) is a LoRA
+  sweep on Qwen2.5-0.5B-Instruct up to the full 7k-example GSM8K train set; accuracy climbs monotonically
+  with data (19.3% → 26.7%) but never reaches the 35.3% zero-shot base — the warm-start-erosion regime, in
+  which a few thousand narrow examples cannot out-train what broad pretraining already supplied (itself
+  on-thesis: you cannot cheaply out-train the pretrained evaluator). We also ran the *non-instruct base*
+  model as a confound-free check for a "climb from a low floor" curve; at 0.5B/4-bit its LoRA fine-tuning
+  was **unstable** — noisy, non-monotonic, with degenerate generation at low data — and also sat below its
+  12% zero-shot floor, so it did *not* yield a cleaner curve. A full-precision or larger base, and larger
+  data, are the untested routes to a genuine from-floor climb.
 - **Four domains is not universality.** Go, continuous/robotic control, and code are the obvious next
   tests; the framework predicts the same evaluator-bound in each, and predicts *where* it should shift
   (starve the evaluator and search dominates; strengthen it and search saturates).
