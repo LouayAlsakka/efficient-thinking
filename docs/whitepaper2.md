@@ -17,7 +17,7 @@ and then saturates against the evaluator's ceiling. Most sharply, in reasoning a
 a self-consistency ceiling that more search cannot (**+14.2 points**), a graded verifier traces a smooth
 capability curve (**75% → 88%**), and across five self-improvement experiments the plateau never breaks —
 because self-play converges to its own level of play; climbing past it requires importing information (an
-external oracle). On a 0.5B→32B ladder we also **locate and measure the size-vs-search crossover**: size
+external oracle). On a 0.5B→72B ladder we also **locate and measure the size-vs-search crossover**: size
 dominates search below ~3B but search wins above ~7B (7B+search beats 14B greedy) — both sides of the
 competence threshold that compute-optimal test-time scaling [Snell et al. 2024] implies, explained by the
 same thesis (search extracts what a model already contains; a base too weak to solve leaves nothing to
@@ -39,7 +39,7 @@ consistent: the evaluator — not parameters or search budget — is the binding
 4. **Self-improvement cannot beat its own signal.** Five self-play experiments across two games never break
    the plateau; changing *only* the target — self-play outcome → external oracle — breaks it (Connect-4
    **+400 → +719**). Climbing requires importing information.
-5. **We locate the size-vs-search crossover.** On a 0.5B→32B ladder, size dominates search below ~3B but
+5. **We locate the size-vs-search crossover.** On a 0.5B→72B ladder, size dominates search below ~3B but
    search wins above ~7B (7B+search beats 14B greedy; search lift collapses +16→+0.7 as the base gets
    competent) — both sides of the competence threshold that compute-optimal test-time scaling implies,
    measured directly on one sweep.
@@ -68,7 +68,7 @@ setting where value iteration supplies an exact oracle. Our contributions:
    search improves a *policy* ~4× more than it improves the *evaluator* (a mechanism, not just an endpoint).
 4. **Self-improvement can't beat its own signal** (§5): five experiments across two games fail to break
    the plateau with self-generated targets; a single change — swapping in an external oracle — breaks it.
-5. **The size-vs-search crossover, located** (§4): on a 0.5B→32B ladder, size dominates search below ~3B
+5. **The size-vs-search crossover, located** (§4): on a 0.5B→72B ladder, size dominates search below ~3B
    and search wins above ~7B — both sides of the competence threshold that compute-optimal test-time
    scaling [Snell et al. 2024] implies, measured directly.
 
@@ -255,7 +255,7 @@ for an untrained base model, while the serial axis is capped at "enough room to 
 search extracts only what the model already contains.
 
 **The efficient-thinking frontier — the size-vs-search crossover.** For a fixed budget, spend it on a
-bigger model or on more search over a smaller one? We sweep a Qwen2.5 size ladder (0.5B → 32B) ×
+bigger model or on more search over a smaller one? We sweep a Qwen2.5 size ladder (0.5B → 72B) ×
 self-consistency on GSM8K at **n = 500 problems, 32 samples** (pass@1 = mean single-sample accuracy;
 sc@N = majority vote of N; oracle@32 = a perfect verifier's coverage of the 32):
 
@@ -267,14 +267,17 @@ sc@N = majority vote of N; oracle@32 = a perfect verifier's coverage of the 32):
 | 7B  | 89.0 | 91.2 | **93.4** | 93.6 | 97.4 | +4.4 |
 | 14B | **92.7** | 93.0 | 94.6 | 94.4 | 97.4 | +1.9 |
 | 32B | 94.1 | 94.2 | 94.8 | 95.0 | 98.2 | +0.7 |
+| 72B | 94.1 | 95.0 | 94.8 | 95.0 | 97.8 | +0.7 |
 
-The frontier has **two regimes, and the boundary between them is the result.** *Below ~3B, size dominates:*
+The frontier has **two regimes plus a ceiling, and the boundary between the regimes is the result.** *Below ~3B, size dominates:*
 3B pass@1 (69.5%) beats 0.5B and 1.5B at *any* N — you cannot self-consistency your way up from a base that
 rarely finds the answer at all. *At 7B and above, the crossover flips:* **7B + search (sc@16 = 93.4%) beats
 14B greedy (92.7%), and 14B + search (94.6%) beats 32B greedy (94.1%)** — a smaller model plus search now
 edges past the next size up. And the **search lift collapses monotonically with competence** — +16 (0.5–3B)
-→ +4.4 (7B) → +1.9 (14B) → +0.7 (32B) — because a competent base's single answer already sits near the
-oracle ceiling, leaving little for search to extract.
+→ +4.4 (7B) → +1.9 (14B) → +0.7 (32B/72B) — because a competent base's single answer already sits near the
+oracle ceiling, leaving little for search to extract. And beyond 32B the *benchmark* saturates — 32B and
+72B tie at 94.1% pass@1 — so past that point neither lever moves: it is the task ceiling, not size or
+search, that binds.
 
 This is the **competence threshold, both sides measured on one sweep**: chess (search on a strong 3.45M net
 was the efficient lever) and small-LLM GSM8K (size dominated) are the two ends, and here we cross between
@@ -287,7 +290,7 @@ benchmark would widen the crossover, but the flip is unambiguous. Compute ≈ pa
 Snell et al. [2024] show the size-vs-search answer is regime-dependent (search wins on easier problems for
 capable models), and Brown et al. [2024] show repeated sampling scales coverage over four orders of
 magnitude. A small-model-only sweep would be a below-threshold special case of that more nuanced picture;
-our extended **0.5B→32B ladder observes *both* sides directly** — size dominates below ~3B, search wins
+our extended **0.5B→72B ladder observes *both* sides directly** — size dominates below ~3B, search wins
 above ~7B (the crossover above). What their work leaves open is *where* the boundary is and *why* — their
 compute-optimal policy is difficulty-adaptive, implying a competence threshold without characterizing it.
 That is the gap we fill:
