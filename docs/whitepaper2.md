@@ -160,21 +160,22 @@ either direction.
 training data (3k–50k) × network capacity (small ≈0.3M / large ≈4M params), placing each net both
 open-loop (raw) and closed-loop (MCTS-100). Open-loop GELO:
 
-| data | small (~0.3M) | large (~4M) | search lift (small, +MCTS) |
+| data | small (~0.3M) open | large (~4M) open, 3-seed mean ± sd | search lift (small, +MCTS) |
 |---:|---:|---:|---:|
-| 3k  | +512 | +406 | +147 |
-| 12k | +673 | +566 | +117 |
-| 24k | +659 | +659\* | +210 |
-| 50k | **+801** | +739 | +222 |
+| 3k  | +512 | +278 ± 70 | +147 |
+| 12k | +673 | +616 ± 92 | +117 |
+| 24k | +659 | +665 ± 64 | +210 |
+| 50k | **+801** | +651 ± 266 | +222 |
 
-Three readings, one per lever. **Data binds:** open-loop climbs with data on both nets, reaching depth-1
-parity (~+804) by 50k. **Capacity is slack — and at low data, harmful:** the *larger* net never beats the
-small one open-loop (it is worse at 3k/12k/50k) and is *high-variance* where data is thin (the 24k-large
-cell varied +278…+762 across seeds; \*median +659) — extra parameters with too little data add noise, not
-skill. **Search is a large multiplier that most rescues a starved evaluator:** MCTS adds +117…+222 GELO on
-the small net, and its biggest rescues land exactly where the raw evaluator is weakest. So at this scale
-the binding constraint is *data* (evaluator quality), capacity is slack, and search compensates — the same
-ordering Paper I found in chess (search ≫ data ≫ capacity), here separated cell by cell.
+Three readings, one per lever. **Data binds:** open-loop climbs with data, the small net reaching depth-1
+parity (~+804) by 50k. **Capacity is slack — and at low data, harmful:** the *larger* net's mean never
+beats the small one open-loop (it is *below* at 3k/12k/50k, level at 24k) and is *high-variance*, with
+occasional collapses (the 50k-large seeds were +796/+879/**+278**; sd 266) — extra parameters with too
+little data add noise, not skill. **Search is a large multiplier that most rescues a starved evaluator:**
+MCTS adds +117…+222 GELO on the small net, its biggest rescues landing exactly where the raw evaluator is
+weakest. So at this scale the binding constraint is *data* (evaluator quality), capacity is slack, and
+search compensates — the same ordering Paper I found in chess (search ≫ data ≫ capacity), here separated
+cell by cell (large-net cells averaged over 3 seeds; small-net and MCTS cells single-run).
 
 ## 4. Arm B — reasoning (LLM)
 The mapping from chess to language:

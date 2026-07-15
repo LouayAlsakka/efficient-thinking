@@ -217,8 +217,8 @@ open-loop (raw) and closed-loop (MCTS-100). Open-loop GELO:</p>
 <thead>
 <tr>
 <th style="text-align: right;">data</th>
-<th style="text-align: right;">small (~0.3M)</th>
-<th style="text-align: right;">large (~4M)</th>
+<th style="text-align: right;">small (~0.3M) open</th>
+<th style="text-align: right;">large (~4M) open, 3-seed mean ± sd</th>
 <th style="text-align: right;">search lift (small, +MCTS)</th>
 </tr>
 </thead>
@@ -226,37 +226,38 @@ open-loop (raw) and closed-loop (MCTS-100). Open-loop GELO:</p>
 <tr>
 <td style="text-align: right;">3k</td>
 <td style="text-align: right;">+512</td>
-<td style="text-align: right;">+406</td>
+<td style="text-align: right;">+278 ± 70</td>
 <td style="text-align: right;">+147</td>
 </tr>
 <tr>
 <td style="text-align: right;">12k</td>
 <td style="text-align: right;">+673</td>
-<td style="text-align: right;">+566</td>
+<td style="text-align: right;">+616 ± 92</td>
 <td style="text-align: right;">+117</td>
 </tr>
 <tr>
 <td style="text-align: right;">24k</td>
 <td style="text-align: right;">+659</td>
-<td style="text-align: right;">+659*</td>
+<td style="text-align: right;">+665 ± 64</td>
 <td style="text-align: right;">+210</td>
 </tr>
 <tr>
 <td style="text-align: right;">50k</td>
 <td style="text-align: right;"><strong>+801</strong></td>
-<td style="text-align: right;">+739</td>
+<td style="text-align: right;">+651 ± 266</td>
 <td style="text-align: right;">+222</td>
 </tr>
 </tbody>
 </table>
-<p>Three readings, one per lever. <strong>Data binds:</strong> open-loop climbs with data on both nets, reaching depth-1
-parity (~+804) by 50k. <strong>Capacity is slack — and at low data, harmful:</strong> the <em>larger</em> net never beats the
-small one open-loop (it is worse at 3k/12k/50k) and is <em>high-variance</em> where data is thin (the 24k-large
-cell varied +278…+762 across seeds; *median +659) — extra parameters with too little data add noise, not
-skill. <strong>Search is a large multiplier that most rescues a starved evaluator:</strong> MCTS adds +117…+222 GELO on
-the small net, and its biggest rescues land exactly where the raw evaluator is weakest. So at this scale
-the binding constraint is <em>data</em> (evaluator quality), capacity is slack, and search compensates — the same
-ordering Paper I found in chess (search ≫ data ≫ capacity), here separated cell by cell.</p>
+<p>Three readings, one per lever. <strong>Data binds:</strong> open-loop climbs with data, the small net reaching depth-1
+parity (~+804) by 50k. <strong>Capacity is slack — and at low data, harmful:</strong> the <em>larger</em> net's mean never
+beats the small one open-loop (it is <em>below</em> at 3k/12k/50k, level at 24k) and is <em>high-variance</em>, with
+occasional collapses (the 50k-large seeds were +796/+879/<strong>+278</strong>; sd 266) — extra parameters with too
+little data add noise, not skill. <strong>Search is a large multiplier that most rescues a starved evaluator:</strong>
+MCTS adds +117…+222 GELO on the small net, its biggest rescues landing exactly where the raw evaluator is
+weakest. So at this scale the binding constraint is <em>data</em> (evaluator quality), capacity is slack, and
+search compensates — the same ordering Paper I found in chess (search ≫ data ≫ capacity), here separated
+cell by cell (large-net cells averaged over 3 seeds; small-net and MCTS cells single-run).</p>
 <h2>4. Arm B — reasoning (LLM)</h2>
 <p>The mapping from chess to language:</p>
 <table>
