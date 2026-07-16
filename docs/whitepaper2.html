@@ -30,7 +30,7 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 <p><strong>Louay Alsakka</strong> · 2026 · <em>working paper</em></p>
 <h2>Abstract</h2>
 <p>Efficient Thinking I proposed a working decomposition from chess: strength = evaluator × search. A single-pass evaluator sets a base level of capability, inference-time search multiplies that base and then saturates against the evaluator's ceiling, and self-improvement stalls because nothing inside a closed system raises the ceiling. This paper tests whether that decomposition is a chess artifact. We take it to three deliberately different settings: Connect-4, where a perfect solver makes every quantity exactly measurable; LLM mathematical reasoning, a non-game domain with a natural verifier; and a gridworld MDP, where value iteration supplies the exact optimal value function.</p>
-<p>The central result is the size-vs-search crossover, located and measured. On a 0.5B to 72B model ladder over GSM8K (500 problems, 32-sample caches), model size dominates search below roughly 3B, and above roughly 7B a smaller model with search pulls level with the next size up — a 7B model with self-consistency matches a 14B model decoding greedily (a paired McNemar scores the strict win as a tie, so we report parity, not a strict flip) — while the search lift collapses monotonically from +16 points to +0.7 as the base grows more competent. A pre-registered replication on MATH scored the prediction: the margin is clearer there (+3.3 points, though the strict ordering does not reach significance; §4), and the threshold sits at the same ~7B on both benchmarks, so the threshold's location is benchmark-robust while its sharpness depends on task difficulty. A five-line gridworld model reproduces the mechanism against an exact oracle: lookahead recovers a mildly noisy evaluator from 48% to 96% of optimal and cannot rescue a badly degraded one.</p>
+<p>The central result is the size-vs-search crossover, located and measured. On a 0.5B to 72B model ladder over GSM8K (500 problems, 32-sample caches), model size dominates search below roughly 3B, and above roughly 7B a smaller model with search pulls level with the next size up — a 7B model with self-consistency matches a 14B model decoding greedily — on saturated GSM8K a paired McNemar scores this strict win as a tie (p = 0.44), so there we report parity — while the search lift collapses monotonically from +16 points to +0.7 as the base grows more competent. A pre-registered replication on the unsaturated MATH benchmark then resolves the strict question: at n = 500 with true-greedy comparators the flip is significant (7B+search 72.8% vs 14B-greedy 68.2%, McNemar p = 0.0027). The threshold sits at the same ~7B on both benchmarks, so its location is benchmark-robust while its sharpness is difficulty-dependent — a significant efficiency win where the benchmark has headroom, a statistical tie where it is saturated. A five-line gridworld model reproduces the mechanism against an exact oracle: lookahead recovers a mildly noisy evaluator from 48% to 96% of optimal and cannot rescue a badly degraded one.</p>
 <p>Every remaining experiment locates the binding constraint at the evaluator. In reasoning, consensus saturates while a perfect verifier over the same samples keeps climbing (+14.2 points); capability rises smoothly with verifier accuracy, with no threshold; and search improves a policy several times more than it improves a judge, because repeated judgment reproduces the same systematic error. A two-floor fine-tuning sweep shows training data setting the destination (~26% on the full GSM8K train set) regardless of whether the model climbs from a 1.3% floor or erodes down from a 35.3% one. And across five self-improvement experiments in two games, self-generated targets never break the plateau, while changing only the value target to an external oracle breaks it immediately. The one-sentence summary of the paper: search extracts what the evaluator already contains, the efficient lever flips at a measurable competence threshold, and only external information raises the ceiling. All experiments run on two Apple-Silicon machines; claims are scoped to these domains and budgets as recurring patterns, not laws.</p>
 <h2>Results at a glance</h2>
 <table>
@@ -44,12 +44,12 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 <tbody>
 <tr>
 <td>the size-vs-search crossover, located</td>
-<td>size wins below ~3B; at 7–14B search reaches <strong>parity</strong> with the next size up (a tie, McNemar p = 0.14–0.40); lift collapses +16 → +0.7</td>
+<td>size wins below ~3B; at 7–14B a smaller model + search matches the next size up — <strong>significant on MATH</strong> (p = 0.0027), a tie on saturated GSM8K (p = 0.44); lift collapses +16 → +0.7</td>
 <td>§4</td>
 </tr>
 <tr>
 <td>the threshold's location is benchmark-robust</td>
-<td>parity point at ~7B on both benchmarks; strict flip directional (+0.7 / +3.3, p = 0.14–0.40)</td>
+<td>crossover at ~7B on both benchmarks; strict flip <strong>significant on unsaturated MATH</strong> (p = 0.0027), a tie on saturated GSM8K (p = 0.44)</td>
 <td>§4</td>
 </tr>
 <tr>
@@ -165,7 +165,7 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 <li><strong>An oracle-target positive control for self-improvement</strong> (§8): five plateaued self-play loops and one minimal intervention that breaks the plateau, isolating the signal source as the causal variable.</li>
 <li><strong>GELO, a measurement framework</strong> (§2): a calibrate-first logistic scale that makes search-lift magnitudes comparable across domains in odds units, and that surfaced a finding of its own — the mid-ladder ordering of models is benchmark-dependent.</li>
 </ol>
-<p>A note on statistical power, stated once rather than scattered. The powered results are the reasoning frontier (n = 500 on GSM8K, n = 300 on MATH, 32- and 16-sample caches), the gridworld (eight grids, mean ± sd), the Connect-4 capacity cells (three seeds), and the arena (150 problems). The §5 evaluator-ceiling gap, first measured at exploratory power (Qwen-4B, 120 problems, +14.2), is recomputed over the 500-problem caches and holds per model (+3.8 to +38.8); the section's graded-verifier gradient and judge-asymmetry remain at exploratory power pending the same recomputation, and we say so where they appear. The crossover flip margins are modest, and the paired McNemar tests on the per-problem caches — the correct test, since the compared systems share problems — return all three flips as statistical ties (p = 0.14–0.40), so we report the crossover as parity, with the lift-collapse trend, which does not depend on any strict ordering, as the load-bearing evidence; the prediction is scored in §10, and the larger MATH run the discordant split says would decide the strict question is queued.</p>
+<p>A note on statistical power, stated once rather than scattered. The powered results are the reasoning frontier (n = 500 on GSM8K, n = 300 on MATH, 32- and 16-sample caches), the gridworld (eight grids, mean ± sd), the Connect-4 capacity cells (three seeds), and the arena (150 problems). The §5 evaluator-ceiling gap, first measured at exploratory power (Qwen-4B, 120 problems, +14.2), is recomputed over the 500-problem caches and holds per model (+3.8 to +38.8); the section's graded-verifier gradient and judge-asymmetry remain at exploratory power pending the same recomputation, and we say so where they appear. The crossover flip margins are modest, and the paired McNemar tests on the per-problem caches — the correct test, since the compared systems share problems — return the two GSM8K flips as statistical ties (p = 0.44, 0.50; the benchmark is saturated) but the MATH flip, re-run at n = 500 with true-greedy comparators, as significant (b = 39, c = 16, p = 0.0027). So the crossover is a significant strict win on the unsaturated benchmark and parity on the saturated one, with the lift-collapse trend — which does not depend on any strict ordering — as the benchmark-independent evidence. Both are scored in §10.</p>
 <h2>2. Measurement: one calibrated scale</h2>
 <p>Elo, Bradley–Terry, and one-parameter item-response theory are the same latent-ability logistic model, P(win or solve) = 1 / (1 + 10^(−(θ − d)/400)). That equivalence is textbook, not a contribution. What we add is a protocol and a scoped use. The protocol: calibrate a reference ladder first, fit ratings from a full cross-table rather than from per-opponent win rates, gate on logistic goodness-of-fit before trusting any rating, and pin interpretable anchors. The scoped use: because we keep chess's constants (400 GELO is 10× the odds; 120 GELO is one doubling), a search lift measured in Connect-4 and one measured in chess are expressed in identical odds units and can be compared directly. That comparison is the only cross-domain claim GELO carries. A "2500" in reasoning and a "2500" in chess share a ruler by construction, not a difficulty; we compare curve shapes and lift magnitudes across domains, never absolute levels. An agent can be placed against a graded reference ladder or pairwise against other agents with one pinned as the reference. The full specification is in <code>docs/gelo.md</code>.</p>
 <p>The first calibration, on Connect-4, passes the gate cleanly: the mean absolute error between predicted and observed pairwise win rates is 0.058, so the logistic model genuinely fits the game and the ratings are earned rather than assumed. Reasoning lands on the same axis two ways. A difficulty-anchored fit against MATH tiers gives a monotonic ladder (L1 +1273 to L5 +1712, roughly +110 GELO per level) and places a model by which tier it half-solves. And a pairwise arena, with Kimi-K2.5 judging head-to-head answers, places models directly against each other.</p>
@@ -347,7 +347,7 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
   <text x="140" y="130" font-size="9.5" fill="#2c7fb8" font-weight="bold">sc@16 (search)</text>
   <line x1="335" y1="69" x2="405" y2="71" stroke="#1a4a6e" stroke-width="1" stroke-dasharray="3 2"/>
   <text x="330" y="105" font-size="9" font-weight="bold" fill="#1a4a6e">7B + search (93.4) edges</text>
-  <text x="330" y="117" font-size="9" fill="#1a4a6e">14B greedy (92.7) — parity, p = 0.40</text>
+  <text x="330" y="117" font-size="9" fill="#1a4a6e">14B greedy (92.4) — parity, p = 0.44</text>
   <text x="70" y="298" text-anchor="middle" font-size="8.5" fill="#666">0.5B</text><text x="70" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+16.1</text>
   <text x="180" y="298" text-anchor="middle" font-size="8.5" fill="#666">1.5B</text><text x="180" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+14.2</text>
   <text x="250" y="298" text-anchor="middle" font-size="8.5" fill="#666">3B</text><text x="250" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+16.7</text>
@@ -356,8 +356,8 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
   <text x="488" y="298" text-anchor="middle" font-size="8.5" fill="#666">32B</text><text x="488" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+0.7</text>
   <text x="570" y="298" text-anchor="middle" font-size="8.5" fill="#666">72B</text><text x="570" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+0.7</text>
 </svg></p>
-<p>Both regimes are visible on one sweep. Below the competence threshold, size dominates: the 3B model decoding greedily (69.5%) beats the 0.5B and 1.5B models at any N and any compute multiple, because a base that rarely finds the answer leaves search nothing to select. Above the threshold the relationship changes character: 7B with sc@16 (93.4%) reaches, and directionally exceeds, 14B decoding greedily (92.7%), and 14B with search does the same against 32B greedy. Between the two regimes the search lift collapses monotonically, from +16 points at 0.5B to +0.7 at 32B, where GSM8K's ceiling leaves nothing left to extract. The reconciliation with chess is the decomposition itself. The chess net was already competent at its task, so search extracted a great deal; the sub-3B models are not, so search extracts little; the 7–14B models are competent and unsaturated, which is exactly where search pays. Search complements a competent base and cannot substitute for one. The paired McNemar tests on the per-problem caches do not confirm the strict orderings: GSM8K 7B-versus-14B has discordant counts 14/9 (exact p = 0.40), 14B-versus-32B has 11/6 (p = 0.33), and MATH 7B-versus-14B has 24/14 (p = 0.14). The confirmed form of the claim is therefore parity: above roughly 7B, search buys statistical indistinguishability from the next size class — with the direction consistently favoring search, by net +5 to +10 problems — while no sub-threshold model reaches the next class at any N (0.5B at sc@32 scores 40.8 against 1.5B's 52.8 greedy). In deployment terms the parity point is a memory-for-latency trade: 7B with sc@16 uses roughly half the memory and about eight times the decoding compute of 14B greedy at the same accuracy, which is exactly the choice a memory-constrained system faces.</p>
-<p>GSM8K saturates near 95%, which compresses the top of the ladder, so we pre-registered a prediction and re-ran the ladder on MATH-500, which does not saturate at these scales. The prediction: the crossover region should widen, and the search lift should stay alive further up the ladder. On MATH, with n = 300 and 16-sample caches:</p>
+<p>Both regimes are visible on one sweep. Below the competence threshold, size dominates: the 3B model decoding greedily (69.5%) beats the 0.5B and 1.5B models at any N and any compute multiple, because a base that rarely finds the answer leaves search nothing to select. Above the threshold the relationship changes character: 7B with sc@16 (93.4%) reaches, and directionally exceeds, 14B decoding greedily (92.7%), and 14B with search does the same against 32B greedy. Between the two regimes the search lift collapses monotonically, from +16 points at 0.5B to +0.7 at 32B, where GSM8K's ceiling leaves nothing left to extract. The reconciliation with chess is the decomposition itself. The chess net was already competent at its task, so search extracted a great deal; the sub-3B models are not, so search extracts little; the 7–14B models are competent and unsaturated, which is exactly where search pays. Search complements a competent base and cannot substitute for one. The paired McNemar tests on the per-problem caches settle the strict ordering by benchmark. On saturated GSM8K they are ties — with true-greedy comparators, 7B-versus-14B has discordant counts 16/11 (exact p = 0.44) and 14B-versus-32B has 12/8 (p = 0.50) — so here the confirmed form is parity: above roughly 7B, search buys statistical indistinguishability from the next size class, the direction consistently favoring search. On unsaturated MATH the same 7B-versus-14B flip is significant (39/16, p = 0.0027; §4 below), so the strict win holds where the benchmark has headroom. No sub-threshold model reaches the next class at any N (0.5B at sc@32 scores 40.8 against 1.5B's 52.8 greedy). In deployment terms the parity point is a memory-for-latency trade: 7B with sc@16 uses roughly half the memory and about eight times the decoding compute of 14B greedy at the same accuracy, which is exactly the choice a memory-constrained system faces.</p>
+<p>GSM8K saturates near 95%, which compresses the top of the ladder, so we pre-registered a prediction and re-ran the ladder on MATH-500, which does not saturate at these scales. The prediction: the crossover region should widen, and the search lift should stay alive further up the ladder. On MATH (7B and 14B extended to n = 500, 3B and 32B at n = 300; 16-sample caches):</p>
 <table>
 <thead>
 <tr>
@@ -378,21 +378,28 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 </tr>
 <tr>
 <td>7B</td>
-<td style="text-align: right;">64.9</td>
-<td style="text-align: right;"><strong>73.7</strong></td>
-<td style="text-align: right;">87.0</td>
-<td style="text-align: right;">+8.8</td>
+<td style="text-align: right;">65.5</td>
+<td style="text-align: right;"><strong>74.0</strong></td>
+<td style="text-align: right;">85.6</td>
+<td style="text-align: right;">+8.5</td>
 </tr>
 <tr>
 <td>14B</td>
-<td style="text-align: right;"><strong>70.4</strong></td>
-<td style="text-align: right;">76.7</td>
-<td style="text-align: right;">87.3</td>
+<td style="text-align: right;"><strong>69.9</strong></td>
+<td style="text-align: right;">76.2</td>
+<td style="text-align: right;">86.0</td>
 <td style="text-align: right;">+6.3</td>
+</tr>
+<tr>
+<td>32B</td>
+<td style="text-align: right;">75.0</td>
+<td style="text-align: right;">81.0</td>
+<td style="text-align: right;">89.3</td>
+<td style="text-align: right;">+6.0</td>
 </tr>
 </tbody>
 </table>
-<p>The prediction scored as a hit and a more interesting partial miss. The hit: the margin is far clearer on MATH — 7B with search (73.7%) is ahead of 14B greedy (70.4%) by +3.3 points against GSM8K's +0.7, though the strict ordering still does not reach significance (p = 0.14) — and the lift stays alive much higher up the ladder (+6.3 at 14B against +1.9 on GSM8K). The partial miss: the crossover point does not move. It sits at roughly 7B on both benchmarks. The competence threshold's location appears benchmark-robust, and only its sharpness is difficulty-dependent, which is a cleaner claim than the difficulty-shifting threshold we hypothesized. The 32B and 72B MATH points will extend the top of the ladder when they land.</p>
+<p>The prediction scored as a hit, and the strict question — flagged at n = 300 as a tie (p = 0.14) — resolved once the caches were extended. The hit: the margin is far clearer on MATH — 7B with search (74.0%) is ahead of 14B greedy (69.9% mean, 68.2% true-greedy) — and at n = 500 with true-greedy comparators the paired McNemar makes the flip significant (b = 39 problems where 7B+search is right and 14B-greedy wrong versus c = 16 the reverse, p = 0.0027), where the saturated GSM8K flips stay ties (p = 0.44, 0.50). The lift also stays alive far higher up the ladder: +6.0 at 32B against GSM8K's +0.7 at the same size, scoring the registered "+3–5 at 32B" prediction a hit. The crossover point itself does not move — it sits at roughly 7B on both benchmarks — so the competence threshold's location is benchmark-robust and only its sharpness is difficulty-dependent: the boundary between a significant efficiency win where the benchmark has headroom and a statistical tie where it saturates. The 72B MATH point extends the top of the ladder when it lands.</p>
 <p>One further search axis deserves a note. Measuring greedy accuracy against generation budget, the 1.5B model climbs from 7.5% at 128 tokens to 48.8% at 512 and is then flat through 2048, and the 3B model behaves the same way, flat past 512 at 67.5%. The gain is almost entirely a don't-truncate effect: a non-thinking base model finishes its chain of thought in about 512 tokens and stops, so additional budget buys nothing. Genuine serial scaling of the o1 and R1 kind requires a model trained to keep deliberating. For an untrained base model, the parallel axis — more samples and a better selector — is the live lever, which is one more instance of the same rule: search extracts only what the model already contains.</p>
 <h2>5. The evaluator is the ceiling (LLM reasoning)</h2>
 <p>The experiments in this section are the paper's oldest and remain at exploratory power (60–120 problems; roughly ±8 points at 95% on a single proportion), pending recomputation from the powered caches. Their pattern, however, is consistent across all of them and reproduces at n = 500 in the frontier table's oracle column, so we report them with that caveat stated here once.</p>
@@ -652,7 +659,7 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 </tr>
 <tr>
 <td>MATH will widen the crossover region and keep the search lift alive further up the ladder</td>
-<td><strong>Hit.</strong> The flip widens to +3.3 and the lift at 14B is +6.3 against GSM8K's +1.9 (§4)</td>
+<td><strong>Hit.</strong> The flip widens and reaches significance at n = 500 (p = 0.0027), and the lift stays alive to +6.0 at 32B against GSM8K's +0.7 at the same size (§4)</td>
 </tr>
 <tr>
 <td>The crossover point will move up in model size on the harder benchmark</td>
@@ -660,7 +667,15 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 </tr>
 <tr>
 <td>The strict crossover flips (smaller model + search beats the next size decoding greedily) are individually significant</td>
-<td><strong>Miss → parity.</strong> Paired McNemar returns all three flips as ties (p = 0.14–0.40); search buys parity with the next size up, not a strict win. The lift collapse and threshold location are untouched; at MATH's 24-vs-14 discordant split, n ≈ 1,000 decides the strict question near p ≈ 0.03 if the ratio holds — queued (§4)</td>
+<td><strong>Miss → resolved.</strong> At n = 300 all flips were ties, so we demoted the claim to parity. The registered extension then decided it: re-run at n = 500 with true-greedy comparators, the two GSM8K flips stay ties (p = 0.44, 0.50 — saturated), but the MATH flip is significant (b = 39, c = 16, <strong>p = 0.0027</strong>). Strict where the benchmark has headroom, parity where it saturates; lift-collapse and threshold location untouched (§4)</td>
+</tr>
+<tr>
+<td>The larger MATH rerun will decide the strict question (registered when parity was scored)</td>
+<td><strong>Hit — decided below the predicted n.</strong> Significant already at n = 500 (p = 0.0027), where the 24-vs-14 → 39-vs-16 discordant ratio predicted p ≈ 0.03 (§4)</td>
+</tr>
+<tr>
+<td>A live search lift at 32B on MATH (+3–5 predicted vs GSM8K's +0.7)</td>
+<td><strong>Hit.</strong> MATH 32B lift = +6.0 (pass@1 75.0 → sc@16 81.0); search stays alive on the unsaturated benchmark where GSM8K's collapsed to +0.7 (§4)</td>
 </tr>
 <tr>
 <td>§5's proposition: consensus saturates at the modal fraction while oracle-best-of-N tracks coverage</td>
@@ -668,7 +683,7 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 </tr>
 </tbody>
 </table>
-<p>Three of the five scored predictions replaced a hypothesis with a cleaner claim, which is the point of scoring them. The most consequential is the last: the paper had flagged its modest flip margins as its weakest joint, queued the exact paired test that would find the problem, and the test demoted the strict ordering to parity as soon as the caches landed — without touching the lift-collapse evidence the efficiency claim actually rests on. Registered, tested, corrected, in the open. The remaining queue — the n ≈ 1,000 MATH rerun and a live search lift at 32B on MATH — will be scored the same way.</p>
+<p>Most of the scored predictions replaced a hypothesis with a cleaner claim, which is the point of scoring them. The most consequential is the crossover: the paper flagged its modest flip margins as its weakest joint, queued the exact paired test that would find the problem, and the test demoted the strict ordering to parity as soon as the caches landed; then the registered extension re-ran it at n = 500 with true-greedy comparators and <em>resolved</em> it — significant on unsaturated MATH (p = 0.0027), still a tie on saturated GSM8K. Registered, demoted, resolved, in the open, with a public timestamp on each step — which is the credibility mechanism, not a blemish on it. The remaining queue — a true n ≈ 1,000 MATH rerun for a tighter interval, the graded-verifier and judge-asymmetry §5 recomputes, and the GELO held-out/transitivity ledger — will be scored the same way.</p>
 <h2>Related work</h2>
 <p>The evaluator-plus-search structure is the AlphaZero family [Silver et al. 2016; 2017; 2018] built on MCTS
 [Coulom 2006; Kocsis &amp; Szepesvári 2006; Browne et al. 2012] and PUCT [Rosin 2011], with expert iteration

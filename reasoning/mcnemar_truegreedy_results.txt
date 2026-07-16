@@ -1,0 +1,4 @@
+Definitive McNemar with TRUE-greedy comparators:
+GSM8K 7B+sc16 vs 14B (n=500): search 93.4% vs bigger-TRUE-greedy 92.4%  b=16 c=11  p=0.4421  -> tie/parity
+GSM8K 14B+sc16 vs 32B (n=500): search 94.6% vs bigger-TRUE-greedy 93.8%  b=12 c=8  p=0.5034  -> tie/parity
+MATH  7B+sc16 vs 14B (n=500): search 72.8% vs bigger-TRUE-greedy 68.2%  b=39 c=16  p=0.0027  -> SIGNIFICANT
