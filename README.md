@@ -21,7 +21,7 @@ with zero extra parameters** — strength bought with *thinking*, not *growing*.
 | Stage | Question | Result |
 |---|---|---|
 | **1 · Open loop** | how strong is one forward pass? | conv **≫** MLP at equal data; ceiling **~2150**, saturates with capacity/data |
-| **2 · Closed loop** | how much does search add? | MCTS **beats & out-scales** fixed-depth → **~2800** at 0 extra params; a wide→narrow **cascade** matches flat MCTS at up to **4.8× less compute** |
+| **2 · Closed loop** | how much does search add? | MCTS **beats & out-scales** fixed-depth → **~2800** at 0 extra params; the wide→narrow **cascade** looked ~4.8× cheaper on the rating ladder but a paired head-to-head disproves it — weaker at equal sims, break-even at equal wall-clock (see Paper I §4.2 / `docs/cascade.md`) |
 | **3 · Self-learning** | can it improve with no teacher/labels? | self-play, a self-referential ladder, **evolution**, and plurality-voting committees **all fail to cross ~2000**; model **agreement is a robust confidence signal**. The wall is the quality of *self-generated signal*, not capacity |
 
 **Unifying finding:** *the learned evaluator is the bottleneck.* Search redistributes the net's
@@ -38,7 +38,7 @@ pip install -r requirements.txt          # mlx, numpy, python-chess
 PYTHONPATH=. python scripts/eval_search.py --run-dir runs/conv_value_llm1 \
     --method mcts --sims 800 --ladder 2400,2700,3000 --games-per-rung 20
 
-# The wide→narrow MCTS cascade (same strength, ~1.6–4.8x faster):
+# The wide→narrow MCTS cascade (faster per move, but break-even at equal wall-clock — see cascade.md):
 PYTHONPATH=. python scripts/eval_search.py --run-dir runs/conv_value_llm1 \
     --method mstage --mstages 8:150:3.0,3:250:1.5,1:400:0.5 --ladder 2400,2700,3000
 ```
