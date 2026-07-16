@@ -1,108 +1,65 @@
-# Efficient Thinking II — An Evaluator × Search Pattern Across Games and Reasoning
-## Across games, language reasoning, and sequential control — measured on one calibrated scale
+# Efficient Thinking II: Where Search Pays and Where It Can't
+## Testing the evaluator × search decomposition in a solved game, language reasoning, and sequential control
 
 **Louay Alsakka** · 2026 · *working paper*
 
 ## Abstract
-Efficient Thinking I observed, in chess, that playing strength factors into two parts —
-**strength = evaluator × search**: a fixed evaluator (one forward pass) sets a base level, inference-time
-search multiplies it, and self-learning plateaus because the *learned evaluator* is the binding
-constraint. This paper asks whether that pattern is specific to chess or recurs elsewhere. We test it in
-three directions — a *simpler* solved game (Connect-4), a *non-game* domain (LLM mathematical
-reasoning), and a *sequential-control* MDP (a gridworld with an exact oracle) — and, to make numbers
-comparable across domains, we introduce **GELO**, a calibrated
-cross-domain capability scale (chess Elo, Bradley–Terry, and item-response theory are one logistic
-model). The decomposition transfers: search is a large, portable lever that scales with inference compute
-and then saturates against the evaluator's ceiling. Most sharply, in reasoning a perfect verifier breaks
-a self-consistency ceiling that more search cannot (**+14.2 points**), a graded verifier traces a smooth
-capability curve (**75% → 88%**), and across five self-improvement experiments the plateau never breaks —
-because self-play converges to its own level of play; climbing past it requires importing information (an
-external oracle). On a 0.5B→72B ladder we also **locate and measure the size-vs-search crossover**: size
-dominates search below ~3B but search wins above ~7B (7B+search beats 14B greedy) — both sides of the
-competence threshold that compute-optimal test-time scaling [Snell et al. 2024] implies, explained by the
-same thesis (search extracts what a model already contains; a base too weak to solve leaves nothing to
-extract). We report these as recurring empirical patterns observed under deliberately modest compute (two
-Apple-Silicon machines), not as proven laws. **Across the domains and compute budgets studied here, one through-line is
-consistent: the evaluator — not parameters or search budget — is the binding constraint.**
 
-## Key Takeaways
-1. **One decomposition, four domains.** *Strength = evaluator × search* holds in chess (ET-I), a second
-   solved game (Connect-4), LLM mathematical reasoning, and a control MDP — measured on one calibrated
-   scale (GELO). Figure 1 is the whole paper: external information → evaluator quality → search →
-   capability.
-2. **Search is a large, portable lever that saturates at the evaluator's ceiling.** It is worth *nothing*
-   when the evaluator is already perfect (gridworld σ=0) and *everything* when the evaluator is the only
-   lever left — but it can only *extract* what the evaluator already contains, never create it.
-3. **The evaluator is consistently the binding constraint.** A *perfect* verifier breaks a search-saturated
-   reasoning ceiling that more search cannot (**+14.2 points**); a *graded* verifier traces a smooth curve
-   (**75% → 88%**); and even the master judge is itself evaluator-limited (search barely improves it).
-4. **Self-improvement cannot beat its own signal.** Five self-play experiments across two games never break
-   the plateau; changing *only* the target — self-play outcome → external oracle — breaks it (Connect-4
-   **+400 → +719**). Climbing requires importing information.
-5. **We locate the size-vs-search crossover.** On a 0.5B→72B ladder, size dominates search below ~3B but
-   search wins above ~7B (7B+search beats 14B greedy; search lift collapses +16→+0.7 as the base gets
-   competent) — both sides of the competence threshold that compute-optimal test-time scaling implies,
-   measured directly on one sweep.
+Efficient Thinking I proposed a working decomposition from chess: strength = evaluator × search. A single-pass evaluator sets a base level of capability, inference-time search multiplies that base and then saturates against the evaluator's ceiling, and self-improvement stalls because nothing inside a closed system raises the ceiling. This paper tests whether that decomposition is a chess artifact. We take it to three deliberately different settings: Connect-4, where a perfect solver makes every quantity exactly measurable; LLM mathematical reasoning, a non-game domain with a natural verifier; and a gridworld MDP, where value iteration supplies the exact optimal value function.
+
+The central result is the size-vs-search crossover, located and measured. On a 0.5B to 72B model ladder over GSM8K (500 problems, 32-sample caches), model size dominates search below roughly 3B, search wins above roughly 7B — a 7B model with self-consistency beats a 14B model decoding greedily — and the search lift collapses monotonically from +16 points to +0.7 as the base grows more competent. A pre-registered replication on MATH scored the prediction: the flip is clearer there (+3.3 points), and the threshold sits at the same ~7B on both benchmarks, so the threshold's location is benchmark-robust while its sharpness depends on task difficulty. A five-line gridworld model reproduces the mechanism against an exact oracle: lookahead recovers a mildly noisy evaluator from 48% to 96% of optimal and cannot rescue a badly degraded one.
+
+Every remaining experiment locates the binding constraint at the evaluator. In reasoning, consensus saturates while a perfect verifier over the same samples keeps climbing (+14.2 points); capability rises smoothly with verifier accuracy, with no threshold; and search improves a policy several times more than it improves a judge, because repeated judgment reproduces the same systematic error. A two-floor fine-tuning sweep shows training data setting the destination (~26% on the full GSM8K train set) regardless of whether the model climbs from a 1.3% floor or erodes down from a 35.3% one. And across five self-improvement experiments in two games, self-generated targets never break the plateau, while changing only the value target to an external oracle breaks it immediately. The one-sentence summary of the paper: search extracts what the evaluator already contains, the efficient lever flips at a measurable competence threshold, and only external information raises the ceiling. All experiments run on two Apple-Silicon machines; claims are scoped to these domains and budgets as recurring patterns, not laws.
+
+## Results at a glance
+
+| finding | measurement | where |
+|---|---|---|
+| the size-vs-search crossover, located | size wins below ~3B; search wins at 7–14B; lift collapses +16 → +0.7 | §4 |
+| the threshold's location is benchmark-robust | flip +0.7 on GSM8K, +3.3 on MATH, both at ~7B | §4 |
+| the mechanism, in five lines of NumPy | lookahead recovers 48% → 96% at σ = 0.25; caps ~46% at σ = 1 | §3 |
+| the evaluator is the ceiling | +14.2 verifier gap; smooth 75 → 88% in verifier accuracy; a judge barely improves with search | §5 |
+| data sets the destination, not the path | two fine-tuning floors (1.3% and 35.3%) converge at ~26%; in Connect-4, data binds and capacity is slack | §6–§7 |
+| only external information raises the ceiling | five self-play plateaus; an oracle value target breaks one (+400 → +719), nothing else changed | §8 |
 
 ## 1. Introduction
-Modern game-playing and reasoning systems both gain most of their capability from two levers that are
-easy to conflate: a *learned evaluator* (a network's single-pass judgement) and *search* (spending
-inference-time compute to look further before committing). Efficient Thinking I separated them in chess
-and found that a tiny 3.45M-parameter network reaches ~2150 Elo open-loop and ~2800 with MCTS, that search
-scales roughly log-linearly with simulations, and that self-play stalls because the evaluator — not
-parameters or search budget — is the ceiling.
 
-If that structure is real rather than a chess artifact, it should reappear in very different settings.
-This paper puts it to three tests: **Connect-4**, a *solved* game where a perfect oracle and a graded
-opponent ladder let us measure everything exactly; **LLM mathematical reasoning**, a non-game domain with
-a natural verifier (a checkable final answer); and a **gridworld control MDP**, a sequential-decision
-setting where value iteration supplies an exact oracle. Our contributions:
+Modern game-playing systems and reasoning systems both buy most of their capability with two levers that are easy to conflate. The first is a learned evaluator: a network's single-pass judgement of a position, an answer, or a state. The second is search: spending inference-time compute to look further before committing. Efficient Thinking I separated the two in chess and found that a 3.45M-parameter network reaching roughly 2150 Elo open-loop reaches roughly 2800 with MCTS, that the search gain scales log-linearly in simulations, and that self-play stalls because the evaluator, not the parameter count or the search budget, sets the ceiling.
 
-1. **GELO** (§2): a single logistic capability scale on which a chess rating, a Connect-4 rating, and a
-   reasoning ability are directly comparable, with a *calibrate-first* protocol and a goodness-of-fit gate.
-2. **The decomposition transfers** (§3–§5): evaluator × search holds in Connect-4, in reasoning, and in
-   control; the evaluator/search *balance* shifts with which side you have starved.
-3. **The evaluator bottleneck as a gradient and an asymmetry — not just a gap** (§4): *that* a verifier
-   beats consensus is established [Cobbe et al. 2021; Lightman et al. 2023]; our contribution is that
-   capability is *smooth* in verifier accuracy q (75→88%, no threshold — a curve, not a point), and that
-   search improves a *policy* ~4× more than it improves the *evaluator* (a mechanism, not just an endpoint).
-4. **Self-improvement can't beat its own signal** (§5): five experiments across two games fail to break
-   the plateau with self-generated targets; a single change — swapping in an external oracle — breaks it.
-5. **The size-vs-search crossover, located** (§4): on a 0.5B→72B ladder, size dominates search below ~3B
-   and search wins above ~7B — both sides of the competence threshold that compute-optimal test-time
-   scaling [Snell et al. 2024] implies, measured directly.
+If that structure is real rather than an artifact of chess, it should reappear in settings that share nothing with chess but the two levers. This paper runs that test three ways. Connect-4 is solved, so a perfect oracle and a graded opponent ladder let us measure every quantity exactly. LLM mathematical reasoning is not a game at all, but it has a natural verifier in the checkable final answer. And a gridworld MDP is a sequential-control setting where value iteration hands us the exact optimal value function, so the evaluator can be degraded by a known amount and nothing else.
 
-**Figure 1 — one causal chain, four instantiations.** The whole paper is a single chain: *external
-information* is the only lever that raises *evaluator quality*; *inference-time search* extracts — never
-creates — what the evaluator already contains; the two compose into *capability* (strength = evaluator ×
-search). Each arrow carries a load-bearing result of this work.
+**Figure 1 — one causal chain, four instantiations.** The whole paper is a single chain: external information is the only lever that raises evaluator quality; inference-time search extracts, and never creates, what the evaluator already contains; and the two compose into capability. Each arrow carries a load-bearing result of this work. Figure 1 is the whole paper.
 
-```text
-        ┌──────────────────────────────────┐
-        │        EXTERNAL INFORMATION       │
-        │      oracle · verifier · teacher  │
-        └────────────────┬─────────────────┘
-                         │   ← the only lever that raises the ceiling;
-                         ▼      self-play alone cannot (§6)
-        ┌──────────────────────────────────┐
-        │         EVALUATOR QUALITY         │
-        │        single-pass judgement      │
-        └────────────────┬─────────────────┘
-                         │   ← search EXTRACTS what is here;
-                         ▼      it cannot create what is absent (§4–§5)
-        ┌──────────────────────────────────┐
-        │        INFERENCE-TIME SEARCH      │
-        │       look further before acting  │
-        └────────────────┬─────────────────┘
-                         │   ← multiplies the evaluator,
-                         ▼      then saturates at its ceiling
-        ┌──────────────────────────────────┐
-        │             CAPABILITY            │
-        └──────────────────────────────────┘
-```
+<svg viewBox="0 0 660 480" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <defs><marker id="f1a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#555"/></marker></defs>
+  <rect x="0" y="0" width="660" height="480" fill="#ffffff"/>
+  <text x="330" y="24" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1a2a3a">Figure 1 — one causal chain, four instantiations</text>
+  <rect x="215" y="42" width="230" height="52" rx="8" fill="#e9f7ee" stroke="#31a354" stroke-width="2"/>
+  <text x="330" y="64" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a5e2f">EXTERNAL INFORMATION</text>
+  <text x="330" y="82" text-anchor="middle" font-size="9" fill="#666">oracle · verifier · teacher</text>
+  <line x1="330" y1="94" x2="330" y2="140" stroke="#555" stroke-width="1.6" marker-end="url(#f1a)"/>
+  <text x="345" y="112" font-size="9" fill="#b5322e">the only lever that raises the ceiling;</text>
+  <text x="345" y="125" font-size="9" fill="#b5322e">self-play alone cannot (§6)</text>
+  <rect x="215" y="144" width="230" height="52" rx="8" fill="#e3eefa" stroke="#2c7fb8" stroke-width="2.8"/>
+  <text x="330" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a2a3a">EVALUATOR QUALITY</text>
+  <text x="330" y="184" text-anchor="middle" font-size="9" fill="#555">single-pass judgement — sets the ceiling</text>
+  <line x1="330" y1="196" x2="330" y2="242" stroke="#555" stroke-width="1.6" marker-end="url(#f1a)"/>
+  <text x="345" y="214" font-size="9" fill="#7a2e06">search EXTRACTS what is here;</text>
+  <text x="345" y="227" font-size="9" fill="#7a2e06">it cannot create what is absent (§4–§5)</text>
+  <rect x="215" y="246" width="230" height="52" rx="8" fill="#fdf0e6" stroke="#e6550d" stroke-width="1.5"/>
+  <text x="330" y="268" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a2e06">INFERENCE-TIME SEARCH</text>
+  <text x="330" y="286" text-anchor="middle" font-size="9" fill="#666">look further before acting</text>
+  <line x1="330" y1="298" x2="330" y2="344" stroke="#555" stroke-width="1.6" marker-end="url(#f1a)"/>
+  <text x="345" y="316" font-size="9" fill="#666">multiplies the evaluator,</text>
+  <text x="345" y="329" font-size="9" fill="#666">then saturates at its ceiling</text>
+  <rect x="215" y="348" width="230" height="46" rx="8" fill="#f2eef8" stroke="#756bb1" stroke-width="2"/>
+  <text x="330" y="376" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#463b7a">CAPABILITY</text>
+  <text x="330" y="424" text-anchor="middle" font-size="9.5" font-style="italic" fill="#666">training creates information · search extracts it · neither creates</text>
+  <text x="330" y="438" text-anchor="middle" font-size="9.5" font-style="italic" fill="#666">what an external oracle must supply</text>
+  <text x="330" y="462" text-anchor="middle" font-size="9" fill="#999">chess +286 lift · Connect-4 +236 lift · reasoning +14.2 verifier gap · gridworld 48% → 96% at h = 3</text>
+</svg>
 
-The unification is that the *same skeleton* instantiates in every domain we test — the four checkmarks are
-earned by the mapping below, not asserted:
+Read top to bottom, the figure is a causal chain. Read left to right across the table below, it is the claim that one mechanism spans games, language, and control. The bottom row is the load-bearing number each column earns; every quantitative result in the paper measures one arrow in one column.
 
 | chain link | Chess (ET-I) | Connect-4 (§3) | LLM reasoning (§4) | Gridworld (§5) |
 |---|---|---|---|---|
@@ -110,160 +67,81 @@ earned by the mapping below, not asserted:
 | → **evaluator quality** | 3.45M value net | conv value net | P(answer correct) | V̂ = V\* + noise |
 | → **inference-time search** | MCTS simulations | PUCT MCTS | best-of-N / self-consistency | h-step lookahead |
 | → **capability** | ~2150 → 2800 Elo | GELO vs ladder | GSM8K / MATH accuracy | % of optimal |
-| **pattern holds?** | ✓ | ✓ | ✓ | ✓ |
+| **load-bearing number** | +286 search lift | +236 search lift | +14.2 verifier gap | 48% → 96% at h = 3 |
 
-Read top-to-bottom it is a causal chain; read left-to-right it is the claim that one mechanism spans games,
-language, and control. Every quantitative result below measures one arrow in one column.
+Our contributions, in the order the paper develops them:
 
-## 2. GELO: one scale across domains
-Capability is a latent ability θ on one logistic model that unifies chess Elo, Bradley–Terry, and
-item-response theory (Rasch): P(win / solve) = 1 / (1 + 10^(−(θ − d)/400)). We keep chess's constants
-(**400 GELO = 10× the odds; 120 GELO = one doubling**), so a chess GELO *is* a chess Elo, and add a
-*calibrate-first* protocol: build a reference ladder → fit ratings from a cross-table (not single
-win-rates) → **gate on logistic goodness-of-fit** → pin interpretable anchors → only then rate agents.
-An agent can be placed two equivalent ways: against a graded **reference ladder** (opponents or
-difficulty tiers), or **pairwise agent-vs-agent** with one agent pinned as the reference. Full spec in
-`docs/gelo.md`.
+1. **The size-vs-search crossover, located and measured** (§4): on a 0.5B → 72B ladder, size dominates below ~3B and search wins above ~7B, with the search lift collapsing monotonically as the base grows competent. The replication on MATH was pre-registered and scored: the threshold's location is benchmark-robust; only its sharpness is difficulty-dependent.
+2. **A minimal exact-oracle model of the mechanism** (§3): a gridworld sweep of evaluator noise against search horizon, averaged over eight grids, showing that search compensates evaluator variance and cannot compensate evaluator bias.
+3. **The evaluator bottleneck as a gradient and an asymmetry, not just a gap** (§5): that a verifier beats consensus is established; we show capability is smooth in verifier accuracy, that a real imperfect judge captures most of the oracle headroom, and that search improves a policy several times more than it improves the judge itself.
+4. **The training-data lever, placed in both arms** (§6–§7): a Connect-4 data × capacity × search grid that separates the three levers cell by cell, and a two-floor language fine-tuning sweep in which the data determines where both curves land.
+5. **An oracle-target positive control for self-improvement** (§8): five plateaued self-play loops and one minimal intervention that breaks the plateau, isolating the signal source as the causal variable.
+6. **GELO, a measurement framework** (§2): a calibrate-first logistic scale that makes search-lift magnitudes comparable across domains in odds units, and that surfaced a finding of its own — the mid-ladder ordering of models is benchmark-dependent.
 
-The first calibration, on Connect-4, passes the gate cleanly: mean |predicted − observed| pairwise
-win-rate = **0.058** — the logistic model genuinely fits the game, so ratings are earned rather than
-assumed (scale anchored random := 0). And reasoning lands on the *same* axis via either route:
+A note on statistical power, stated once rather than scattered. The powered results are the reasoning frontier (n = 500 on GSM8K, n = 300 on MATH, 32- and 16-sample caches), the gridworld (eight grids, mean ± sd), the Connect-4 capacity cells (three seeds), and the arena (150 problems). The older evaluator experiments in §5 remain at exploratory power (60–120 problems, roughly ±8 points on a proportion) pending recomputation from the same caches, and we say so where they appear. The crossover flip margins are modest against naive confidence intervals; because the samples are paired on identical problems, McNemar tests on the per-problem caches are the correct confirmation and are queued for both benchmarks.
 
-- **Pairwise ("beat another LLM").** Five models answer the same MATH problems; a master judge (Kimi-K2.5)
-  scores every head-to-head → Bradley–Terry GELO, **anchored Kimi-K2.5 := 2800** (the "grandmaster" of the
-  set), the small models placed below with headroom: **Qwen3.5-4B +2743 · Qwen2.5-1.5B +2562 · Qwen2.5-3B
-  +2509 · Qwen2.5-0.5B +2297.** The 0.5B sits ~500 GELO below the frontier; mid-models bunch within noise
-  (50 questions). The judge agrees with the ground-truth verifier on **72%** of decisive pairs — decent,
-  but *itself evaluator-limited*: a referee can only rank as well as it can reason (which is also why, on
-  checkable tasks, the verifier still beats an LLM judge). The anchor value is free; we choose 2800 so the
-  numbers read like chess (elite ≈ 2800, room down toward a novice floor).
-  A **powered rerun** (150 MATH problems, five-model Qwen2.5 ladder 0.5B–14B, resilient concurrent judging)
-  raises judge–verifier agreement to **84%** and confirms the overall ordering (0.5B ≪ mid-ladder < 7B ≈
-  14B). One honest wrinkle survives the extra power: **1.5B and 3B tie on MATH** (ground-truth +2419 vs
-  +2392, within noise; clean-cache pass@1 30.6 vs 32.9) even though **3B clearly beats 1.5B on GSM8K** (69.5
-  vs 52.8 pass@1). The mid-ladder ordering is therefore *benchmark-dependent*, not a fixable small-sample
-  inversion — the honest upgrade of the earlier "illustrative only" caveat.
-- **Difficulty-anchored (IRT).** The same machinery against MATH difficulty tiers gives a monotonic ladder
-  (L1 +1273 → L5 +1712, ~+110 GELO/level) and places a model by which tier it half-solves.
+## 2. Measurement: one calibrated scale
 
-## 3. Arm A — a simpler game (Connect-4)
-Connect-4 is solved, so the exact solver is a perfect oracle and a depth-limited alpha-beta gives a
-calibrated opponent ladder. A small convolutional network (policy + value) is the evaluator; PUCT MCTS is
-the closed loop.
+Elo, Bradley–Terry, and one-parameter item-response theory are the same latent-ability logistic model, P(win or solve) = 1 / (1 + 10^(−(θ − d)/400)). That equivalence is textbook, not a contribution. What we add is a protocol and a scoped use. The protocol: calibrate a reference ladder first, fit ratings from a full cross-table rather than from per-opponent win rates, gate on logistic goodness-of-fit before trusting any rating, and pin interpretable anchors. The scoped use: because we keep chess's constants (400 GELO is 10× the odds; 120 GELO is one doubling), a search lift measured in Connect-4 and one measured in chess are expressed in identical odds units and can be compared directly. That comparison is the only cross-domain claim GELO carries. A "2500" in reasoning and a "2500" in chess share a ruler by construction, not a difficulty; we compare curve shapes and lift magnitudes across domains, never absolute levels. An agent can be placed against a graded reference ladder or pairwise against other agents with one pinned as the reference. The full specification is in `docs/gelo.md`.
 
-**A calibrated opponent ladder.** random 0 → **depth-1 +804** → depth-2…6 +954…+1070. The *first ply of
-tactics* is the single biggest step (+804) — larger than all five deeper plies combined — and the
-heuristic ladder then saturates: diminishing returns on search depth, quantified on a real axis.
+The first calibration, on Connect-4, passes the gate cleanly: the mean absolute error between predicted and observed pairwise win rates is 0.058, so the logistic model genuinely fits the game and the ratings are earned rather than assumed. Reasoning lands on the same axis two ways. A difficulty-anchored fit against MATH tiers gives a monotonic ladder (L1 +1273 to L5 +1712, roughly +110 GELO per level) and places a model by which tier it half-solves. And a pairwise arena, with Kimi-K2.5 judging head-to-head answers, places models directly against each other.
 
-**Evaluator × search decomposition** (12k oracle labels). Open-loop (raw net) **+644 GELO**, closed-loop
-(MCTS-200) **+880 GELO** → a **search lift of ≈ +236 GELO (~4× the odds per game)** — the same order as
-chess's search lift. The decomposition transfers to a second game.
+The arena also produced this paper's first scored prediction, and the prediction missed. An early 50-problem arena placed Qwen-1.5B above Qwen-3B, the opposite of their GSM8K accuracies, and we flagged the ordering as an under-powered artifact, expecting a powered rerun to fix it. The rerun (150 MATH problems, a five-model ladder, resilient concurrent judging) raised judge–verifier agreement from 72% to 84% and confirmed the coarse ordering (0.5B far below the mid-ladder, which sits below 7B ≈ 14B). But the inversion did not resolve into the expected order: 1.5B and 3B are statistically tied on MATH (ground-truth GELO +2419 versus +2392; clean-cache pass@1 30.6 versus 32.9) even though 3B clearly beats 1.5B on GSM8K (69.5 versus 52.8 pass@1). The honest conclusion is that the mid-ladder ordering is benchmark-dependent, not a fixable small-sample inversion. A benchmark separates two models only where its difficulty distribution carries information in their ability range; MATH evidently carries little between these two. The judge, at 84% agreement with the ground-truth verifier, is itself evaluator-limited: a referee can only rank as well as it can reason, which is why, on checkable tasks, a verifier still beats an LLM judge.
 
-**The lever balance is data-dependent, not intrinsic.** With only 12k labels the raw net loses even to
-1-ply search, which reads as "search-dominated." But tracing the open-loop ceiling against data — **+642
-(12k) → +747 (24k) → +798 (50k)** — the raw net reaches depth-1 parity (+804) by 50k. The apparent
-search-dominance was mostly a *starved evaluator*: fed data, it catches up to low-depth search. The honest
-statement is that the evaluator/search balance moves with how much you have spent on the evaluator — in
-either direction.
+## 3. The mechanism in five lines (gridworld) — Anchor 1
 
-**Which lever binds — a data × capacity × search grid.** To separate the three levers directly, we sweep
-training data (3k–50k) × network capacity (small ≈0.3M / large ≈4M params), placing each net both
-open-loop (raw) and closed-loop (MCTS-100). Open-loop GELO:
+Before any large experiment, the entire thesis can be reproduced in a setting with no confounds. We use a stochastic 8×8 gridworld with known dynamics, so value iteration gives the exact optimal value function V*. The controller receives a degraded evaluator, V* plus Gaussian noise of scale σ in units of the value spread, and plans with an MPC-style lookahead of horizon h, where h = 1 is greedy open-loop control. Return is normalized so that 0% is a random policy and 100% is optimal, and every cell is averaged over eight independent grid instances at 400 episodes each.
 
-| data | small (~0.3M) open | large (~4M) open, 3-seed mean ± sd | search lift (small, +MCTS) |
+| evaluator noise σ | open-loop (h=1) | h=2 | h=3 |
 |---:|---:|---:|---:|
-| 3k  | +512 | +278 ± 70 | +147 |
-| 12k | +673 | +616 ± 92 | +117 |
-| 24k | +659 | +665 ± 64 | +210 |
-| 50k | **+801** | +651 ± 266 | +222 |
+| 0.0 (perfect) | 100 ± 0 | 100 ± 0 | 100 ± 0 |
+| 0.25 | 48 ± 28 | 81 ± 19 | **96 ± 10** |
+| 0.5 | 27 ± 7 | 53 ± 28 | 74 ± 25 |
+| 1.0 | 24 ± 7 | 34 ± 11 | 46 ± 22 |
 
-Three readings, one per lever. **Data binds:** open-loop climbs with data, the small net reaching depth-1
-parity (~+804) by 50k. **Capacity is slack — and at low data, harmful:** the *larger* net's mean never
-beats the small one open-loop (it is *below* at 3k/12k/50k, level at 24k) and is *high-variance*, with
-occasional collapses (the 50k-large seeds were +796/+879/**+278**; sd 266) — extra parameters with too
-little data add noise, not skill. **Search is a large multiplier that most rescues a starved evaluator:**
-MCTS adds +117…+222 GELO on the small net, its biggest rescues landing exactly where the raw evaluator is
-weakest. So at this scale the binding constraint is *data* (evaluator quality), capacity is slack, and
-search compensates — the same ordering Paper I found in chess (search ≫ data ≫ capacity), here separated
-cell by cell (large-net cells averaged over 3 seeds; small-net and MCTS cells single-run).
+<svg viewBox="0 0 620 330" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="330" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Anchor 1 — search rescues a noisy evaluator, monotonically in h (8-grid mean ± sd)</text>
+  <line x1="70" y1="270" x2="590" y2="270" stroke="#333" stroke-width="1.5"/>
+  <line x1="70" y1="270" x2="70" y2="40" stroke="#333" stroke-width="1.5"/>
+  <text x="34" y="155" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 34 155)">% of optimal return</text>
+  <text x="330" y="305" text-anchor="middle" font-size="11" fill="#333">evaluator noise σ  →  worse evaluator</text>
+  <line x1="90" y1="102.8" x2="90" y2="226" stroke="#e6550d" stroke-width="0" opacity="0"/>
+  <polyline points="90,50 240,164.4 390,210.6 540,217.2" fill="none" stroke="#e6550d" stroke-width="2" stroke-dasharray="5 3"/>
+  <line x1="240" y1="102.8" x2="240" y2="226" stroke="#e6550d" stroke-width="1.2" opacity="0.45"/>
+  <line x1="390" y1="195.2" x2="390" y2="226" stroke="#e6550d" stroke-width="1.2" opacity="0.45"/>
+  <line x1="540" y1="201.8" x2="540" y2="232.6" stroke="#e6550d" stroke-width="1.2" opacity="0.45"/>
+  <circle cx="90" cy="50" r="4" fill="#e6550d"/><circle cx="240" cy="164.4" r="4" fill="#e6550d"/><circle cx="390" cy="210.6" r="4" fill="#e6550d"/><circle cx="540" cy="217.2" r="4" fill="#e6550d"/>
+  <text x="240" y="182" text-anchor="middle" font-size="9" fill="#e6550d">48</text>
+  <text x="566" y="222" font-size="9" fill="#e6550d">h=1</text>
+  <polyline points="90,50 240,91.8 390,153.4 540,195.2" fill="none" stroke="#756bb1" stroke-width="2" stroke-dasharray="2 3"/>
+  <line x1="240" y1="50" x2="240" y2="133.6" stroke="#756bb1" stroke-width="1.2" opacity="0.45"/>
+  <line x1="390" y1="91.8" x2="390" y2="215" stroke="#756bb1" stroke-width="1.2" opacity="0.45"/>
+  <line x1="540" y1="171" x2="540" y2="219.4" stroke="#756bb1" stroke-width="1.2" opacity="0.45"/>
+  <circle cx="90" cy="50" r="4" fill="#756bb1"/><circle cx="240" cy="91.8" r="4" fill="#756bb1"/><circle cx="390" cy="153.4" r="4" fill="#756bb1"/><circle cx="540" cy="195.2" r="4" fill="#756bb1"/>
+  <text x="252" y="88" font-size="9" fill="#756bb1">81</text>
+  <text x="566" y="192" font-size="9" fill="#756bb1">h=2</text>
+  <polyline points="90,50 240,58.8 390,107.2 540,168.8" fill="none" stroke="#2c7fb8" stroke-width="2.5"/>
+  <line x1="240" y1="36.8" x2="240" y2="80.8" stroke="#2c7fb8" stroke-width="1.2" opacity="0.5"/>
+  <line x1="390" y1="52.2" x2="390" y2="162.2" stroke="#2c7fb8" stroke-width="1.2" opacity="0.5"/>
+  <line x1="540" y1="120.4" x2="540" y2="217.2" stroke="#2c7fb8" stroke-width="1.2" opacity="0.5"/>
+  <circle cx="90" cy="50" r="4" fill="#2c7fb8"/><circle cx="240" cy="58.8" r="4.5" fill="#2c7fb8"/><circle cx="390" cy="107.2" r="4" fill="#2c7fb8"/><circle cx="540" cy="168.8" r="4" fill="#2c7fb8"/>
+  <text x="240" y="48" text-anchor="middle" font-size="9" font-weight="bold" fill="#2c7fb8">96</text>
+  <text x="566" y="165" font-size="9" fill="#2c7fb8">h=3</text>
+  <text x="90" y="286" text-anchor="middle" font-size="9" fill="#666">0</text>
+  <text x="240" y="286" text-anchor="middle" font-size="9" fill="#666">0.25</text>
+  <text x="390" y="286" text-anchor="middle" font-size="9" fill="#666">0.5</text>
+  <text x="540" y="286" text-anchor="middle" font-size="9" fill="#666">1.0</text>
+  <text x="330" y="248" text-anchor="middle" font-size="9" fill="#999" font-style="italic">σ = 1: even h = 3 caps ~46% — the evaluator binds</text>
+</svg>
 
-## 4. Arm B — reasoning (LLM)
-The mapping from chess to language:
+Three findings sit in this small table. With a perfect evaluator, search adds nothing: open-loop control is already optimal, and lookahead only earns its cost once the evaluator is imperfect. With a mildly noisy evaluator, search compensates dramatically and monotonically in horizon: at σ = 0.25 the greedy policy falls to 48% of optimal while three-step lookahead recovers 96%. And as the evaluator degrades further, search recovers less and less, capping near 46% at σ = 1 regardless of horizon. Past a point, the evaluator and not the search budget is the binding constraint. Search buys back evaluator variance; it cannot buy back evaluator bias. The single-grid version of this experiment initially showed h = 3 below h = 2 at σ = 0.25, and we hypothesized a mechanism for it; the eight-grid average shows the dip was noise (the per-cell standard deviations reach 28 points), and the effect is monotone in h at every imperfect σ. That correction is reported in §10 alongside the paper's other scored predictions.
 
-| chess | LLM reasoning |
-|---|---|
-| position | partial reasoning trace |
-| policy (move priors) | next-step distribution |
-| **evaluation: P(win)** | **P(this reasoning is correct)** ∈ [0,1] |
-| terminal result (win/loss) | **verifier on the final answer** (exact in math/code) |
-| MCTS search | inference-time compute over reasoning paths |
-| training the net | RL / fine-tune — RLVR is AlphaZero's loop in language |
+## 4. The crossover (LLM reasoning) — Anchor 2
 
-Two structural notes: the evaluator's output is a **P(correct)** — binary from a verifier, scalar from a
-reward model, vote-fraction from self-consistency — and a *well-calibrated* one is the open problem; and
-search has two axes — parallel (best-of-N, self-consistency) and serial (long chain-of-thought), the
-latter *internalized* into the policy by RLVR rather than kept external as in AlphaZero.
+The mapping from chess to language is direct. A position becomes a partial reasoning trace; the policy's move priors become the next-step distribution; the evaluation P(win) becomes P(this reasoning is correct); the terminal result becomes a verifier on the final answer, exact in mathematics; and MCTS becomes inference-time compute spent across reasoning paths. An LLM has no built-in correctness evaluator — its only native scorer is the next-token softmax, which judges plausibility, never correctness — so every search result below operates at whole-answer granularity with an external selector: sample N complete answers at temperature, then select by majority vote, by a checkable verifier, or by a real LLM judge. The two search knobs are N and the selector, both entirely external to the frozen weights.
 
-**How search is implemented here — granularity and who evaluates.** This is worth stating concretely,
-because an LLM is not a game engine. An LLM has **no built-in correctness-evaluator**: its only native
-scorer is the next-token softmax, which judges token *plausibility* (what word comes next), never answer
-*correctness*. Every search result below therefore operates at **whole-answer granularity** with an
-**external** evaluator, by a uniform procedure: sample N *complete* answers from the policy (temperature
-> 0, so the N chains-of-thought actually differ), let each run to completion (hundreds of tokens),
-extract its final answer, then apply a **selector** over the *finished* set — majority vote (a
-verifier-free evaluator), a checkable verifier (perfect), or the Kimi-K2.5 judge (a real, imperfect
-model). We do **not** score or branch per token, nor per reasoning step — that would be tree-of-thought
-with a process-reward model, which we leave to future work. The two search knobs are thus **N** (how many
-answers) and the **selector** (how you pick), both entirely external to the frozen weights. This is the
-language analog of AlphaZero's split: the policy *proposes* a full line of play, and a *separate* value
-function *judges* it — and here, as there, the judge is the ceiling.
-
-**Search scales accuracy, then saturates.** Qwen-4B on GSM8K (120 problems, 1024-token budget): greedy
-pass@1 = **66.7%**; self-consistency@N = 69.2 (N=1) → 73.3 (4) → **77.5 (16) → 77.5 (32)** — search buys
-**+8–11 points** (the analog of Elo-vs-sims) and then saturates by N=16. Majority vote is a *verifier-free*
-evaluator, and it stops helping.
-
-**The saturation is an *evaluator* ceiling, not a policy or search ceiling.** From the same samples,
-self-consistency saturates at 77.5% while **oracle-best-of-N (a perfect verifier) climbs to 91.7% and is
-still rising at N=32** — an evaluator gap of **+14.2 points**. The right answer is *in the sample set* 91.7%
-of the time; consensus just can't select it. In language, exactly as in chess, the verifier is the binding
-constraint — and with a perfect evaluator, search keeps paying past where consensus stalls.
-
-**A graded verifier draws a continuous capability curve.** Varying a verifier's per-item accuracy q, the
-resulting accuracy climbs smoothly from **75.0% at q=0.5 (verifier-free consensus) → 88.3% at q=1.0
-(perfect verifier)** — 77.7 / 80.6 / 83.0 / 85.9 at q = 0.6/0.7/0.8/0.9, about +2.6 points per 0.1 of
-verifier accuracy. There is no threshold: *every* increment of a better evaluator buys capability. To go
-further, improve the evaluator.
-
-**A *real* evaluator — not just a perfect one — extracts more than consensus.** Selecting among N
-Qwen-1.5B samples with the Kimi-K2.5 judge as an (imperfect) scorer beats majority vote at every N and
-captures most of the consensus→oracle headroom: at N=8, self-consistency **65.0%** → **Kimi-best-of-N
-75.0%** → oracle **83.3%** (and at N=4, 61.7% → 73.3% → 81.7%). A stronger *selector* buys ~+10 points on
-the *same* samples — so "more search" pays far more when a better evaluator *spends* it than when majority
-vote does. This is the deployable form of the +14.2 result: to turn search into capability, improve the
-selector, not just raise N.
-
-**Search improves a policy but barely an evaluator.** Running the master judge itself with
-self-consistency (majority of N judgments) raised agreement with the verifier only **72.5% → 75.0%
-(N:1→5)** — a ~+2.5-point nudge, versus the +8–11 points self-consistency buys a *policy*. The reason is
-instructive: a policy benefits because *some* of many attempts land on the answer and search selects them;
-but if a judge cannot reason a problem out, repeating the judgment reproduces the same *systematic* error.
-So you can partly buy back a weak *policy* with compute, but **not a weak *evaluator*** — which is exactly
-why the evaluator's quality, not its search budget, binds.
-
-**The serial axis (thinking length) saturates fast for a base model.** Measuring the *other* search axis —
-greedy accuracy vs generation budget — Qwen-1.5B climbs 7.5% (128 tok) → 41.2 (256) → **48.8% (512), then
-flat** through 2048; Qwen-3B similarly 5.0 → 41.2 → **67.5% (512+), flat.** The gain is almost entirely a
-*don't-truncate* effect: a non-thinking base model finishes its chain of thought in ~512 tokens and stops,
-so extra budget buys nothing. Genuine o1/R1-style serial scaling requires a model *trained* to keep
-deliberating. So of the two search axes, **parallel (more samples, a better selector) is the live lever
-for an untrained base model, while the serial axis is capped at "enough room to finish"** — once more,
-search extracts only what the model already contains.
-
-**The efficient-thinking frontier — the size-vs-search crossover.** For a fixed budget, spend it on a
-bigger model or on more search over a smaller one? We sweep a Qwen2.5 size ladder (0.5B → 72B) ×
-self-consistency on GSM8K at **n = 500 problems, 32 samples** (pass@1 = mean single-sample accuracy;
-sc@N = majority vote of N; oracle@32 = a perfect verifier's coverage of the 32):
+The core efficiency question is then concrete. For a fixed compute budget, is it better to buy a bigger model or more search over a smaller one? We swept a clean size ladder, Qwen2.5 from 0.5B to 72B, against self-consistency N on GSM8K, with 500 problems and 32-sample caches (sc@N is majority vote over N; oracle@32 is a perfect verifier's coverage of the same 32 samples):
 
 | model | pass@1 | sc@4 | sc@16 | sc@32 | oracle@32 | search lift |
 |---|---:|---:|---:|---:|---:|---:|
@@ -275,27 +153,40 @@ sc@N = majority vote of N; oracle@32 = a perfect verifier's coverage of the 32):
 | 32B | 94.1 | 94.2 | 94.8 | 95.0 | 98.2 | +0.7 |
 | 72B | 94.1 | 95.0 | 94.8 | 95.0 | 97.8 | +0.7 |
 
-The frontier has **two regimes plus a ceiling, and the boundary between the regimes is the result.** *Below ~3B, size dominates:*
-3B pass@1 (69.5%) beats 0.5B and 1.5B at *any* N — you cannot self-consistency your way up from a base that
-rarely finds the answer at all. *At 7B and above, the crossover flips:* **7B + search (sc@16 = 93.4%) beats
-14B greedy (92.7%), and 14B + search (94.6%) beats 32B greedy (94.1%)** — a smaller model plus search now
-edges past the next size up. And the **search lift collapses monotonically with competence** — +16 (0.5–3B)
-→ +4.4 (7B) → +1.9 (14B) → +0.7 (32B/72B) — because a competent base's single answer already sits near the
-oracle ceiling, leaving little for search to extract. And beyond 32B the *benchmark* saturates — 32B and
-72B tie at 94.1% pass@1 — so past that point neither lever moves: it is the task ceiling, not size or
-search, that binds.
+<svg viewBox="0 0 640 350" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="640" height="350" fill="#ffffff"/>
+  <text x="320" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Anchor 2 — the size-vs-search crossover (GSM8K, n = 500, 32-sample caches)</text>
+  <rect x="70" y="40" width="180" height="240" fill="#e6550d" opacity="0.05"/>
+  <rect x="300" y="40" width="160" height="240" fill="#2c7fb8" opacity="0.06"/>
+  <rect x="460" y="40" width="130" height="240" fill="#999999" opacity="0.08"/>
+  <text x="160" y="52" text-anchor="middle" font-size="9" fill="#7a2e06">size dominates (&lt;3B)</text>
+  <text x="380" y="52" text-anchor="middle" font-size="9" fill="#1a4a6e">search wins (7–14B)</text>
+  <text x="525" y="52" text-anchor="middle" font-size="9" fill="#666">task ceiling ~94–95%</text>
+  <line x1="70" y1="280" x2="590" y2="280" stroke="#333" stroke-width="1.5"/>
+  <line x1="70" y1="280" x2="70" y2="40" stroke="#333" stroke-width="1.5"/>
+  <text x="34" y="160" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90 34 160)">accuracy (%)</text>
+  <text x="330" y="330" text-anchor="middle" font-size="11" fill="#333">model size (log) — search lift (sc@16 − pass@1) shown under each</text>
+  <polyline points="70,274 180,186 250,138 335,82 405,71 488,67 570,67" fill="none" stroke="#e6550d" stroke-width="2"/>
+  <circle cx="70" cy="274" r="4" fill="#e6550d"/><circle cx="180" cy="186" r="4" fill="#e6550d"/><circle cx="250" cy="138" r="4" fill="#e6550d"/><circle cx="335" cy="82" r="4" fill="#e6550d"/><circle cx="405" cy="71" r="4" fill="#e6550d"/><circle cx="488" cy="67" r="4" fill="#e6550d"/><circle cx="570" cy="67" r="4" fill="#e6550d"/>
+  <polyline points="70,228 180,145 250,90 335,69 405,65 488,65 570,65" fill="none" stroke="#2c7fb8" stroke-width="2.5"/>
+  <circle cx="70" cy="228" r="4" fill="#2c7fb8"/><circle cx="180" cy="145" r="4" fill="#2c7fb8"/><circle cx="250" cy="90" r="4" fill="#2c7fb8"/><circle cx="335" cy="69" r="4.5" fill="#2c7fb8"/><circle cx="405" cy="65" r="4" fill="#2c7fb8"/><circle cx="488" cy="65" r="4" fill="#2c7fb8"/><circle cx="570" cy="65" r="4" fill="#2c7fb8"/>
+  <text x="140" y="230" font-size="9.5" fill="#e6550d">pass@1 (greedy)</text>
+  <text x="140" y="130" font-size="9.5" fill="#2c7fb8" font-weight="bold">sc@16 (search)</text>
+  <line x1="335" y1="69" x2="405" y2="71" stroke="#1a4a6e" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="330" y="105" font-size="9" font-weight="bold" fill="#1a4a6e">7B + search (93.4)</text>
+  <text x="330" y="117" font-size="9" fill="#1a4a6e">beats 14B greedy (92.7)</text>
+  <text x="70" y="298" text-anchor="middle" font-size="8.5" fill="#666">0.5B</text><text x="70" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+16.1</text>
+  <text x="180" y="298" text-anchor="middle" font-size="8.5" fill="#666">1.5B</text><text x="180" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+14.2</text>
+  <text x="250" y="298" text-anchor="middle" font-size="8.5" fill="#666">3B</text><text x="250" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+16.7</text>
+  <text x="335" y="298" text-anchor="middle" font-size="8.5" fill="#666">7B</text><text x="335" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+4.4</text>
+  <text x="405" y="298" text-anchor="middle" font-size="8.5" fill="#666">14B</text><text x="405" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+1.9</text>
+  <text x="488" y="298" text-anchor="middle" font-size="8.5" fill="#666">32B</text><text x="488" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+0.7</text>
+  <text x="570" y="298" text-anchor="middle" font-size="8.5" fill="#666">72B</text><text x="570" y="310" text-anchor="middle" font-size="8" fill="#2c7fb8">+0.7</text>
+</svg>
 
-This is the **competence threshold, both sides measured on one sweep**: chess (search on a strong 3.45M net
-was the efficient lever) and small-LLM GSM8K (size dominated) are the two ends, and here we cross between
-them. It is exactly the boundary Snell et al.'s difficulty-adaptive policy *implies* — search pays above a
-competence threshold, size below — now **located and observed directly** rather than assumed. (Caveat:
-GSM8K saturates at ~94–95% for ≥7B, compressing the top of the ladder against the ceiling; a harder
-benchmark would widen the crossover, but the flip is unambiguous. Compute ≈ params × N is coarse.)
+Both regimes are visible on one sweep. Below the competence threshold, size dominates: the 3B model decoding greedily (69.5%) beats the 0.5B and 1.5B models at any N and any compute multiple, because a base that rarely finds the answer leaves search nothing to select. Above the threshold, the ordering flips: 7B with sc@16 (93.4%) beats 14B decoding greedily (92.7%), and 14B with search edges 32B greedy. Between the two regimes the search lift collapses monotonically, from +16 points at 0.5B to +0.7 at 32B, where GSM8K's ceiling leaves nothing left to extract. The reconciliation with chess is the decomposition itself. The chess net was already competent at its task, so search extracted a great deal; the sub-3B models are not, so search extracts little; the 7–14B models are competent and unsaturated, which is exactly where search pays. Search complements a competent base and cannot substitute for one. The flip margins are modest against naive confidence intervals, and because the samples are paired on identical problems, McNemar tests on the per-problem caches are the queued confirmation.
 
-**The crossover on a harder benchmark (MATH) — a registered prediction, scored.** GSM8K's saturation
-compresses the top of the ladder, so we pre-registered a prediction and re-ran the ladder on MATH-500
-(unsaturated): *the crossover region should widen and the search lift should stay alive further up.* On
-MATH (n = 300, 16 samples):
+GSM8K saturates near 95%, which compresses the top of the ladder, so we pre-registered a prediction and re-ran the ladder on MATH-500, which does not saturate at these scales. The prediction: the crossover region should widen, and the search lift should stay alive further up the ladder. On MATH, with n = 300 and 16-sample caches:
 
 | model | pass@1 | sc@16 | oracle@16 | search lift |
 |---|---:|---:|---:|---:|
@@ -303,134 +194,57 @@ MATH (n = 300, 16 samples):
 | 7B  | 64.9 | **73.7** | 87.0 | +8.8 |
 | 14B | **70.4** | 76.7 | 87.3 | +6.3 |
 
-**Hit:** 7B + search (73.7%) beats 14B greedy (70.4%) by **+3.3** — a far clearer flip than GSM8K's +0.7 —
-and the lift stays alive much higher up (14B +6.3 on MATH vs +1.9 on GSM8K). **Partial miss (the more
-interesting result):** the crossover *point does not move* — it sits at **~7B on both benchmarks**. So the
-competence-threshold *location* is **benchmark-robust** while only its *sharpness* is difficulty-dependent —
-a cleaner claim than the difficulty-shifting threshold we hypothesized. (32B/72B extend the top; folded when
-they land.)
+The prediction scored as a hit and a more interesting partial miss. The hit: the flip is far clearer on MATH — 7B with search (73.7%) beats 14B greedy (70.4%) by +3.3 points against GSM8K's +0.7 — and the lift stays alive much higher up the ladder (+6.3 at 14B against +1.9 on GSM8K). The partial miss: the crossover point does not move. It sits at roughly 7B on both benchmarks. The competence threshold's location appears benchmark-robust, and only its sharpness is difficulty-dependent, which is a cleaner claim than the difficulty-shifting threshold we hypothesized. The 32B and 72B MATH points will extend the top of the ladder when they land.
 
-**Relation to compute-optimal test-time scaling.** The result to *not* claim here is "size beats search" —
-Snell et al. [2024] show the size-vs-search answer is regime-dependent (search wins on easier problems for
-capable models), and Brown et al. [2024] show repeated sampling scales coverage over four orders of
-magnitude. A small-model-only sweep would be a below-threshold special case of that more nuanced picture;
-our extended **0.5B→72B ladder observes *both* sides directly** — size dominates below ~3B, search wins
-above ~7B (the crossover above). What their work leaves open is *where* the boundary is and *why* — their
-compute-optimal policy is difficulty-adaptive, implying a competence threshold without characterizing it.
-That is the gap we fill:
-(i) we **identify the boundary as base competence** — below it, search extracts nothing because the base
-rarely contains the answer at all; (ii) the same evaluator × search decomposition **predicts the flip from
-first principles**; and (iii) — the asset no LLM study has — we **reproduce the identical threshold in the
-gridworld (§5) with a perfect oracle**, where at σ=0 search is worthless and at σ=0.25 it recovers 22%→97%,
-so the crossover appears with *no* language-model confound. The framing is therefore "Snell et al. show the
-frontier is regime-dependent; we identify the boundary as base competence, derive it from the
-decomposition, and reproduce it under an exact oracle." Brown et al. *strengthen* rather than pre-empt us:
-their finding that coverage scales but precision does not is exactly our **+14.2 verifier gap** (§4) seen at
-scale — the answer is in the sample set, selection is the bottleneck — so their large-n result and our
-small-n one agree. The cross-domain GELO scale (§2) is the domain-agnostic instrument for *locating* this
-crossover, from search-rich chess (~2150 open-loop, search extracts +286) to search-poor GSM8K (0.5–3B,
-search cannot rescue).
+One further search axis deserves a note. Measuring greedy accuracy against generation budget, the 1.5B model climbs from 7.5% at 128 tokens to 48.8% at 512 and is then flat through 2048, and the 3B model behaves the same way, flat past 512 at 67.5%. The gain is almost entirely a don't-truncate effect: a non-thinking base model finishes its chain of thought in about 512 tokens and stops, so additional budget buys nothing. Genuine serial scaling of the o1 and R1 kind requires a model trained to keep deliberating. For an untrained base model, the parallel axis — more samples and a better selector — is the live lever, which is one more instance of the same rule: search extracts only what the model already contains.
 
-**The training-data lever — a fine-tuning sweep, from two starting points.** Size and search are two of the
-three levers; the third is *training data*, which Connect-4 carries (§3) but which we can also place
-directly in language. We LoRA-fine-tune **two** 0.5B models — the **instruct** model and the **non-instruct
-base** (bf16) — on an increasing number of GSM8K examples at *fixed epochs* (so more data does
-proportionally more training, isolating the data axis), cleaned targets, greedy accuracy on 150 held-out
-problems:
+## 5. The evaluator is the ceiling (LLM reasoning)
+
+The experiments in this section are the paper's oldest and remain at exploratory power (60–120 problems; roughly ±8 points at 95% on a single proportion), pending recomputation from the powered caches. Their pattern, however, is consistent across all of them and reproduces at n = 500 in the frontier table's oracle column, so we report them with that caveat stated here once.
+
+Search scales accuracy and then saturates. Qwen-4B on GSM8K climbs from 66.7% greedy to 77.5% at sc@16 and stays there at sc@32. Majority vote is a verifier-free evaluator, and it stops helping. The saturation is an evaluator ceiling rather than a policy or search ceiling: over the very same samples, oracle-best-of-N, which is a perfect verifier, climbs to 91.7% and is still rising at N = 32. The right answer is in the sample set 91.7% of the time; consensus cannot select it. The gap is +14.2 points. That a verifier beats consensus is the founding observation of the verifier literature — it is why verifiers were trained in the first place [Cobbe et al. 2021; Lightman et al. 2023], and Brown et al. [2024] document the same coverage-versus-selection gap growing with N at frontier scale. What this paper adds is the placement of the gap inside the decomposition and the two results that follow.
+
+First, the gradient. Varying a synthetic verifier's per-item accuracy q over the same samples, capability rises smoothly from 75.0% at q = 0.5, which is verifier-free consensus, to 88.3% at q = 1.0, passing 77.7, 80.6, 83.0, and 85.9 along the way — about +2.6 points per 0.1 of verifier accuracy, with no threshold anywhere. Every increment of a better evaluator buys capability. A real, imperfect judge confirms the deployable middle of that curve: selecting among Qwen-1.5B samples with Kimi-K2.5 as the scorer beats majority vote at every N and captures most of the consensus-to-oracle headroom (at N = 8: consensus 65.0%, judge 75.0%, oracle 83.3%). A stronger selector buys about ten points on identical samples, so more search pays far more when a better evaluator spends it.
+
+Second, the asymmetry. Running the judge itself with self-consistency — majority over N repeated judgments — raises its agreement with the ground-truth verifier only from 72.5% to 75.0% as N goes from 1 to 5, a nudge of about +2.5 points, against the +8 to +11 points the same search buys a policy. The reason is instructive. A policy benefits from search because some among many attempts land on the answer and selection finds them; a judge that cannot reason a problem out reproduces the same systematic error on every repetition. Compute can partly buy back a weak policy. It cannot buy back a weak evaluator, and that is precisely why the evaluator's quality rather than its search budget binds.
+
+## 6. The levers separated in a solved game (Connect-4)
+
+Connect-4 is solved, so the exact solver is a perfect oracle and a depth-limited alpha-beta gives a calibrated opponent ladder: random at 0, depth-1 at +804, and depths 2 through 6 spanning +954 to +1070. The first ply of tactics is the single biggest step on the ladder, larger than the next five plies combined, after which the heuristic ladder saturates — diminishing returns on search depth, quantified on a real axis. A small convolutional network trained on 12k oracle labels is the evaluator, and PUCT MCTS is the closed loop. The decomposition transfers to a second game: the raw net places at +644 GELO open-loop and +880 with MCTS-200, a search lift of about +236 GELO, roughly 4× the odds per game and the same order as chess's +286 lift in identical units.
+
+The evaluator-versus-search balance is data-dependent rather than intrinsic. With only 12k labels the raw net loses even to 1-ply search, which reads as search dominance. Tracing the open-loop ceiling against training data, however, the raw net climbs from +642 at 12k to +747 at 24k and +798 at 50k, reaching depth-1 parity. The apparent dominance of search was mostly a starved evaluator. To separate the three levers directly, we swept training data against network capacity, placing every cell both open-loop and with MCTS-100:
+
+| data | small (~0.3M) open | large (~4M) open, 3-seed mean ± sd | search lift (small, +MCTS) |
+|---:|---:|---:|---:|
+| 3k  | +512 | +278 ± 70 | +147 |
+| 12k | +673 | +616 ± 92 | +117 |
+| 24k | +659 | +665 ± 64 | +210 |
+| 50k | **+801** | +651 ± 266 | +222 |
+
+The table carries one reading per lever. Data binds: the open-loop ceiling climbs with labels on both nets, and the small net reaches depth-1 parity by 50k. Capacity is slack, and at low data it is harmful: the larger net's mean never beats the small net open-loop, and it is seed-unstable, with the 50k cells landing at +796, +879, and +278 across three seeds (mean +651 ± 266, median +796 — one collapsed seed drags the mean, and even the median sits just below the small net's +801). Extra parameters with too little data add noise, not skill. And search is a large multiplier that rescues most exactly where the evaluator is weakest, adding between +117 and +222 GELO on the small net with its largest rescues at the smallest data sizes. At this scale the binding constraint is data, capacity is slack, and search compensates — the same ordering chess found, here separated cell by cell.
+
+## 7. The data lever in language (a two-floor fine-tuning sweep)
+
+Size and search are two of the three levers; the third is training data, which Connect-4 carries above and which can also be placed directly in language. We LoRA-fine-tune two 0.5B models — the instruction-tuned Qwen2.5-0.5B at 4-bit and the non-instruct base at bf16, since at 4-bit the base fine-tune was unstable — on an increasing number of GSM8K examples at fixed epochs, so that more data does proportionally more training and the sweep isolates the data axis. Greedy accuracy on 150 held-out problems:
 
 | train examples | 0 (zero-shot) | 64 | 256 | 1024 | 4096 | 7000 (full) |
 |---|---:|---:|---:|---:|---:|---:|
 | **base (bf16)** — from a low floor | 1.3% | 16.0 | 15.3 | 17.3 | 24.0 | **26.0%** |
 | **instruct** — from a competent floor | 35.3% | 19.3 | 20.0 | 22.7 | 24.0 | **26.7%** |
 
-The two curves *converge*, and the convergence is the finding. The **base model climbs from a 1.3% floor**
-— the textbook data-scaling curve, more data monotonically buying capability. The **instruct model dips
-below its 35.3% zero-shot floor and slowly recovers** — *warm-start erosion*: a few thousand narrow
-examples first trade away broad pretrained capability for GSM8K surface form, then rebuild it. Yet **both
-land at ~26% at the full 7k train set**: the *data* sets the attractor level, while the *pretrained
-starting point* governs only the **direction of approach** — climb up to it from below, or fall to it from
-above. This is the language echo of Connect-4's warm-start erosion (a strong evaluator pulled toward the
-data-determined level), now shown from *both* sides on one benchmark. The training-data lever is real and
-unsaturated (still rising at 7k), and how competent the evaluator already was sets the *sign of the first
-step*, not the destination. (The base run required full precision: at 4-bit the same LoRA fine-tune was
-unstable — degenerate generation at low data — which is itself a caution about drawing data-scaling
-conclusions from quantized small-model fine-tunes.)
+The two curves start from floors 34 points apart and converge. The base model climbs from a 1.3% floor to 26.0% at the full train set, a textbook data-scaling curve from nothing. The instruct model first falls from its 35.3% zero-shot floor to 19.3%, because a few thousand narrow examples trade away broad pretrained capability for GSM8K surface form, and then buys the loss back gradually, reaching 26.7% at the full set — the same warm-start erosion Connect-4's self-play showed when a strong evaluator was pulled down toward a narrower signal. Both curves land at roughly 26%. The data determines the destination; the pretrained starting point determines only the direction of approach. At 150 problems the load-bearing observations are the two monotone orderings, the 1.3-versus-35.3 floor gap, and the joint convergence band; the 26.0-versus-26.7 endpoint difference is indistinguishable at this sample size, which is consistent with, though not yet proof of, a shared data-determined attractor.
 
-## 5. Arm C — sequential control (a gridworld MDP)
-To test the pattern in a *third modality* — sequential decision-making, neither a board game nor language —
-we use a stochastic 8×8 gridworld with known dynamics, so value iteration gives the exact optimal value V*
-(a perfect oracle). We hand the controller a *degraded* evaluator, V* plus Gaussian noise of scale σ (in
-units of the value spread), and vary the horizon h of an MPC-style lookahead (h=1 = greedy / open-loop;
-larger h = closed-loop search). Return is normalized so 0% = a random policy and 100% = optimal.
+## 8. Self-improvement, and the one intervention that breaks the plateau
 
-Averaged over **8 independent grids** (mean ± sd; % of optimal):
+The self-improvement question, stated value-first: fix the evaluator by distilling better-than-current value and policy targets back into the net, and strength should follow. We tested the loop five ways across two games, and it never broke the plateau. In Connect-4 from scratch, the evaluator genuinely improves (oracle value error falls from 0.48 to 0.355) and strength tracks it early, climbing to about +400 GELO, and then it stops; quadrupling the search budget per move does not raise it. Warm-starting from the supervised +644 net does not preserve the head start: the first iteration erodes it to +189, and it recovers only to roughly +480–500, well below the seed. In chess, three variants fail three ways — from scratch, open-loop strength bounces between 254 and 384 with no climb over 44 iterations; warm-started from a weak-policy seed it stalls at 300–326, a bootstrap barrier, since MCTS target quality depends on the policy prior; and started from a genuinely self-learned 1214-Elo plateau net it degrades to 833, because search over that value head does not play far enough above 1214 to generate improving targets.
 
-| evaluator noise σ | open-loop (h=1) | h=2 | h=3 |
-|---:|---:|---:|---:|
-| 0.0 (perfect) | 100 ± 0 | 100 ± 0 | 100 ± 0 |
-| 0.25 | 48 ± 28 | 81 ± 19 | **96 ± 10** |
-| 0.5 | 27 ± 7 | 53 ± 28 | 74 ± 25 |
-| 1.0 | 24 ± 7 | 34 ± 11 | 46 ± 22 |
+The positive control isolates the cause. Changing only the value target, from the self-play outcome to an external depth-6 oracle, with the loop otherwise identical, Connect-4 self-training climbs past the +400 plateau to +719 by iteration 60, toward the oracle's own level, and the result is seed-independent: from the supervised +644 seed with oracle targets it reaches about +676. The target's information source, not the loop and not the starting point, is what matters.
 
-The same two findings recur, and multi-grid averaging **sharpens the search axis into a monotone**: at every
-imperfect σ, deeper lookahead helps — **h=1 < h=2 < h=3** — with no inversion (a single-grid run had shown a
-spurious h=3 < h=2 dip that averaging reveals as noise, sd ≈ 20–28 pp). **With a perfect evaluator, open-loop
-is already optimal and search adds nothing** — search earns its cost only when the evaluator is imperfect.
-**With a mildly noisy evaluator (σ = 0.25), search compensates dramatically** — greedy sits at 48% of
-optimal, three-step lookahead recovers it to 96%: evaluator × search, in control. But **as the evaluator
-degrades, each step of search recovers less** (σ = 1.0: even h=3 reaches only ~46% and cannot recover
-optimal) — past a point the evaluator, not the search horizon, is the binding constraint. Decomposition and
-evaluator-bottleneck, both holding in a control/RL setting with an exact oracle.
+Reported positive self-improvement results in the literature — ReST [Gulcehre et al. 2023], STaR [Zelikman et al. 2022], self-rewarding language models [Yuan et al. 2024] — are not counterexamples to this plateau; on inspection each injects external information implicitly, through a checkable verifier filtering the traces or human preference data seeding the reward model. What that literature lacks is the controlled isolation: our five loops and one positive control hold everything fixed except the signal source. The claim is therefore not that self-improvement fails, but something sharper: self-improvement succeeds exactly in proportion to the external information its signal carries. The mechanism is simple enough to state in three sentences. A Monte-Carlo rollout gives the true value of a position under the current level of play, so training on those labels converges the evaluator to a perfectly calibrated evaluator of its own level and caps it there, since no move better than the current level ever appears in the data. The only way rollouts push past the current level is to play them above it, with search, and then the per-iteration gain equals the search-over-policy margin, which is itself bounded by evaluator quality. This is AlphaZero's engine, and precisely why it needs deep search multiplied by millions of games; at our scale the margin was too small.
 
-## 6. Self-improvement — can the flywheel raise the evaluator with no external teacher?
-Stated value-first: *fix the evaluator first* — distill better-than-current value/policy targets
-(Monte-Carlo rollouts / MCTS-backed, anchored on real terminal outcomes) back into the net; strength
-follows. We tested this five ways across two games. **It never broke the plateau — and why is the result.**
+## 9. Synthesis: what transfers, what shifts, what binds
 
-**Relation to self-improving-LM work.** ReST [Gulcehre et al. 2023] and Self-Rewarding LMs [Yuan et al.
-2024] report self-improvement that *does* work — so "self-improvement plateaus" is emphatically **not** our
-claim; stated baldly it is counterexampled. The difference is what the reward signal carries: those systems
-inject external information *implicitly* — a verifier, human-preference-seeded reward, or filtered gold
-answers — so the flywheel is never truly closed. Our contribution is the **controlled isolation**: the
-signal *source* is the single manipulated variable with the loop otherwise frozen, which lets us show not
-*that* self-improvement works but *which ingredient makes it work*. The oracle-target positive control
-below (self-play outcome → external oracle, **+400 → +719**, loop otherwise identical) is exactly that
-counterfactual — the one the at-scale positive results, valuable as they are, do not isolate.
-
-- **Connect-4, from scratch:** the evaluator improves (oracle value-MAE 0.48 → 0.355 with more search) and
-  strength tracks it early (GELO +119 → ~+400), confirming *fix-the-evaluator-and-strength-follows* in
-  miniature — but strength plateaus at **~+400** and **4× more search per move did not raise it**. More
-  search budget is not the missing ingredient.
-- **The plateau is a (near) seed-independent attractor:** warm-starting from the supervised +644 net does
-  not preserve it — the first iteration erodes it to +189, then it recovers only to **~+480–500**, well
-  below the +644 seed. Self-play pulls a *better* evaluator down toward its own signal quality (the same
-  erosion as the chess self-learned test, 1214 → 833).
-- **Chess, three negatives:** from scratch, open-loop Elo bounced 254–384 with no climb over 44 iters
-  (~1,400 games) — a data-volume wall, not a method failure; warm-started from a weak-policy seed, it
-  stalled at 300–326 (a **bootstrap barrier**: MCTS quality depends on the policy prior, so a near-random
-  prior can't generate improving targets); and started from a genuinely self-learned 1214 plateau net, it
-  **degraded to 833** — search on that value head doesn't play far enough above 1214 to produce improving
-  targets.
-- **An external oracle breaks the plateau (positive control).** Change *only* the value target — from the
-  self-play outcome to an external depth-6 oracle, loop otherwise identical — and Connect-4 self-training
-  **climbs past ~+400 to +719 by iteration 60** (MAE 0.36 → 0.31), toward the oracle's own level. The same
-  loop that plateaus at +400 on self-generated signal climbs once the target carries external information.
-  (Seed-independent: from the +644 supervised seed with oracle targets it reaches ~+676 — the *target
-  source*, not the starting point, is what matters.)
-
-**Why it can't work for free.** A Monte-Carlo rollout gives the true value of a position — but *under the
-current level of play* (the model plays both sides). Training on those labels converges the evaluator to a
-perfectly-calibrated evaluator *of its own level*, capped there: no move better than the current level ever
-appears, so none can be learned. The only way rollouts push past the current level is to play them *above*
-it — with search — and then the per-iteration gain equals the **search-over-policy margin**, itself bounded
-by evaluator quality. This is AlphaZero's engine, and precisely why it needs deep search × millions of
-games: a large margin sustained over many iterations. At our scale the margin was too small. **Self-play
-cannot add information the evaluator doesn't already contain; raising the ceiling requires importing it.**
-
-## 7. Discussion — what transfers, what shifts, what binds
-
-**The lever–limit map — every experiment, including the failures, is a diagnosis of one link in Figure 1.**
-Each row varies one lever and reports which link ended up binding:
+Every experiment in the paper, including the failures, diagnoses one link in Figure 1. The map below lists each experiment by the lever it varied and the link that ended up binding:
 
 | experiment | domain | lever varied | what bound it | evidence |
 |---|---|---|---|---|
@@ -448,36 +262,7 @@ Each row varies one lever and reports which link ended up binding:
 | self-play ×5 | chess + C4 | training signal | evaluator / search margin | plateau never breaks |
 | oracle-value target | Connect-4 | *external information* | — (positive control) | +400 → +719 |
 
-Read down the "what bound it" column: **evaluator** recurs; search binds only where the evaluator was
-starved into dominance, and the one row that breaks a plateau is the one that injects external information.
-
-1. **The decomposition transfers.** Strength = evaluator × search holds in two games, in language
-   reasoning, and in sequential control, on one calibrated scale. Search is a large, portable lever that
-   scales with inference compute and then saturates against the evaluator's ceiling (Elo-vs-sims in chess,
-   accuracy-vs-N in reasoning, GELO-vs-MCTS in Connect-4, lookahead-vs-noise in the gridworld) — and it is
-   worth nothing when the evaluator is already perfect (gridworld σ=0), everything when the evaluator is
-   the only lever left.
-2. **The lever balance shifts with spend.** Whichever currency is *starved* dominates returns: a thin
-   evaluator (12k Connect-4 labels; a verifier-free consensus) makes search look all-important; feeding it
-   (50k labels; a real verifier) rebalances. There is no domain-intrinsic split — only how much you have
-   spent on each side. In reasoning the same logic flips the *frontier*: below a competence threshold,
-   size (base capability) dominates search.
-3. **Across the domains and compute budgets studied here, the evaluator is consistently the binding
-   constraint**, shown independently: reasoning consensus is
-   broken only by a better verifier (+14.2), and by a *graded* verifier (75 → 88); Connect-4 self-training
-   is limited by value-head quality, not search budget; chess self-improvement stalls exactly when the
-   evaluator is too weak for search to generate improving targets; and even the *judge* is
-   evaluator-limited (search barely improves it).
-4. **Self-improvement has a rate — the search-over-policy margin.** You cannot fix the evaluator for free:
-   self-generated signal converges to the system's own level. Climbing requires search that plays above the
-   current policy (bounded by the evaluator) or an external oracle that injects information. The positive
-   proof is the flip side of every negative here — a perfect verifier unlocks +14.2 in reasoning; an oracle
-   value target breaks the Connect-4 plateau; Stockfish labels carried chess to ~2800. *Training creates
-   information; search extracts it; neither creates what an external oracle must supply.*
-
-**When to spend on what — the resource rollup.** The lever–limit map above is indexed by *experiment*
-(what each run diagnosed); its transpose is indexed by *resource* (when to spend on each) — the
-practitioner's view, one row per box/arrow of Figure 1:
+Read down the "what bound it" column and the evaluator recurs; search binds only where the evaluator was starved into dominance or is competent but unextracted; and the one row that breaks a plateau is the one that injects external information. The same map, indexed by resource rather than by experiment, answers the practitioner's question of when each resource is worth spending on:
 
 | resource | when it binds | when it doesn't | evidence |
 |---|---|---|---|
@@ -487,54 +272,24 @@ practitioner's view, one row per box/arrow of Figure 1:
 | **capacity** | never, in our regimes | everywhere tested — and *harmful* at low data | grid + seed collapses (§3); ET-I capacity sweep |
 | **external information** | at every self-improvement plateau | — (always the ceiling-raiser) | oracle control +400→+719 · +14.2 verifier · Stockfish labels (§6) |
 
-Read as an allocation rule: spend on the evaluator until search stops saturating, spend on search only
-above a competence threshold, and note the two entries that make this a *measurement* rather than a menu —
-**capacity never binds in any regime we tested** (and hurts when data is thin), while **external
-information is the only lever that raises the ceiling at all**, which is why the three internal levers are
-not the complete menu the other four rows might suggest.
+Two rows carry the rollup. Capacity's honest cell is "never observed binding" — a resource whose answer here is never is what makes the table a measurement rather than a framework decoration. And external information is the row a three-lever menu would omit: the only entry that raises the evaluator's ceiling rather than spending against it, which is §8 in one line.
 
-**A vignette — capability per parameter, made vivid.** Asked to play raw chess against the same Stockfish
-ladder as Efficient Thinking I, a frontier general LLM (Kimi-K2.5) scores ~56% vs a random mover, **0% vs
-Stockfish-1320**, and often cannot even emit a legal move — a performance rating of **≈341 GELO**. The
-3.45M-parameter *specialist* from Paper I plays ~2150 open-loop and ~2800 with search. A tiny,
-correctly-shaped evaluator beats a giant generalist by **~1,800–2,500 GELO at the generalist's own game.**
-Scale is not what buys task capability; the right evaluator (and search over it) is. (Small sample, and
-part of the gap is the LLM's difficulty producing legal moves — but the order of magnitude is unambiguous.)
+The synthesis in prose is short. The decomposition transferred: strength = evaluator × search held in two games, in language reasoning, and in sequential control, on one calibrated scale, as the same saturating curve — Elo against simulations, accuracy against N, GELO against MCTS, return against horizon. The lever balance shifts with spend: whichever currency is starved dominates returns, a thin evaluator makes search look all-important, feeding it rebalances, and in reasoning the same logic produces the crossover, with size the efficient lever below the competence threshold and search the efficient lever above it. And the evaluator is consistently what binds, shown independently in every arm. Training creates information; search extracts it; neither creates what an external oracle must supply.
 
-## 8. Limitations and Future Work
-- **Modest compute and sample sizes.** Everything runs on two Apple-Silicon machines: 50–120 problems per
-  reasoning point, 24–40 games per ladder rung. We report *effect sizes and recurring patterns, not tight
-  confidence intervals*; where a result is within noise (the mid-model GELO bunching) we say so. The claims
-  are scoped to the domains and compute regimes examined here — a recurring empirical pattern, not a proven
-  law.
-- **GELO is a common scale, not a universal difficulty.** The cross-domain numbers share one logistic model
-  and chess's constants *by construction*; "2500 in reasoning" and "2500 in chess" sit on the same ruler
-  but are not claimed to be the same underlying difficulty. Each domain is calibrated *within* itself
-  (goodness-of-fit gate); the shared constants make the *shapes* comparable, not the absolute levels.
-- **Reasoning search is whole-answer only.** We test the parallel axis (best-of-N, self-consistency) and
-  the serial axis (thinking length), but not *process-reward tree search* (per-step evaluation / MCTS over
-  reasoning steps) — the richest form, and the natural next experiment.
-- **Reasoning fine-tuning is small-scale and precision-sensitive.** The language data lever (§4) is a LoRA
-  sweep on two 0.5B models up to the full 7k-example GSM8K train set; both climb with data and converge to
-  ~26% (instruct dipping below its 35.3% base — warm-start erosion — while the bf16 base climbs cleanly from
-  a 1.3% floor). One caution worth stating: at **4-bit** the base-model fine-tune was unstable (degenerate
-  generation, non-monotonic); the clean curve required **full precision** — so data-scaling conclusions
-  from quantized small-model fine-tunes should be treated with care. Larger models and larger data are the
-  untested routes to confirm the ~26% attractor is genuinely data-set and not a 0.5B capacity ceiling.
-- **Four domains is not universality.** Go, continuous/robotic control, and code are the obvious next
-  tests; the framework predicts the same evaluator-bound in each, and predicts *where* it should shift
-  (starve the evaluator and search dominates; strengthen it and search saturates).
+*A footnote vignette: asked to play raw chess against Paper I's ladder, a frontier general LLM (Kimi-K2.5) beats a random mover barely more than half the time, scores 0% against Stockfish-1320, and often cannot emit a legal move, while Paper I's 3.45M-parameter specialist plays at the ~2800 ladder band with search. We draw no cross-domain GELO number from this; the qualitative point is enough. Task capability is bought by the right evaluator plus search over it, not by scale alone.*
 
-## 9. Conclusion
-Across four domains — two games, language reasoning, and sequential control — capability decomposes the
-same way: a single-pass **evaluator** sets the level, **search** multiplies it and then saturates, and only
-**external information** raises the ceiling. On one calibrated scale (GELO) the pattern is visible as a
-family of the same curve (Elo-vs-sims, accuracy-vs-N, GELO-vs-MCTS, return-vs-horizon), and the
-lever–limit map (§7) shows every experiment — the +14.2 verifier gap, the graded 75→88 curve, the five
-self-play plateaus, the one oracle-value break — diagnosing the *same* link. The compact statement is
-Figure 1: **training creates information, search extracts it, and neither creates what an external oracle
-must supply.** Within the domains and budgets studied here, the evaluator — not parameters, not search
-budget — is what binds.
+## 10. Registered predictions, scored
+
+This research program's operating rule, inherited from Paper I's measurement-artifact autopsies, is that no delta is believed until it survives a low-variance re-measurement. Its prospective form is the registered prediction: state what the framework expects before the run, then score it. Four predictions have been scored so far.
+
+| prediction (registered before the run) | outcome |
+|---|---|
+| The single-grid h = 3 dip at σ = 0.25 is real (an optimizer's-curse mechanism) | **Miss.** The eight-grid average shows the dip was noise; search is monotone in h at every imperfect σ (§3) |
+| A powered arena will restore the GSM8K ordering (3B above 1.5B) | **Miss, and the more interesting outcome.** At 84% judge agreement, 1.5B and 3B genuinely tie on MATH; the mid-ladder ordering is benchmark-dependent (§2) |
+| MATH will widen the crossover region and keep the search lift alive further up the ladder | **Hit.** The flip widens to +3.3 and the lift at 14B is +6.3 against GSM8K's +1.9 (§4) |
+| The crossover point will move up in model size on the harder benchmark | **Miss, in the informative direction.** The threshold sits at ~7B on both benchmarks; its location is benchmark-robust and only its sharpness is difficulty-dependent (§4) |
+
+Two of the four misses replaced a hypothesis with a cleaner claim, which is the point of scoring them. The queued predictions — the McNemar confirmations of both flips, and a live search lift at 32B on MATH — will be scored the same way.
 
 ## Related work
 The evaluator-plus-search structure is the AlphaZero family [Silver et al. 2016; 2017; 2018] built on MCTS
@@ -563,6 +318,14 @@ results do not isolate (§6).
 Our capability scale is the classical logistic latent-ability model shared by Elo, Bradley–Terry, and
 item-response theory (Rasch); pairwise LLM rating with a judge is the LMSYS-Arena approach [Zheng et al.
 2023]. Benchmarks: GSM8K [Cobbe et al. 2021] and MATH [Hendrycks et al. 2021].
+
+## 11. Limitations and future work
+
+Sample sizes are stated per experiment, and the exploratory results of §5 remain the weakest numbers in the paper until the cache recomputation lands. GELO is a common scale, not a universal difficulty: the shared constants make curve shapes and lifts comparable across domains, and absolute cross-domain levels are never claimed — the benchmark-dependence result of §2 is a reminder of why. Reasoning search is whole-answer only; process-reward tree search over reasoning steps is the richest form and the natural next experiment. The language data lever never produced a fine-tune above the instruct model's zero-shot floor, and the bf16 base run, while clean, is one model at one size; a larger base and larger data are the untested routes to a from-floor curve that crosses the pretrained one. The gridworld is a minimal model by design. And four domains is not universality: Go, continuous and robotic control, and code are the obvious next tests, and the framework predicts both the same evaluator bound in each and where it should shift.
+
+## 12. Conclusion
+
+Across the four domains tested, capability decomposed the same way. A single-pass evaluator sets the level; search multiplies it and then saturates; the efficient lever flips at a measurable competence threshold whose location, in reasoning, is benchmark-robust; and only external information raises the ceiling. The compact statement remains Figure 1, and the compact evidence is the lever–limit map: thirteen experiments, including the failures, each diagnosing the same chain. Training creates information, search extracts it, and neither creates what an external oracle must supply. Within the domains and budgets studied here, the evaluator — not parameters, and not the search budget — is what binds.
 
 ## Reproducibility
 Code and data generators for all three arms are in the repo. Control (`control/gridworld.py`): the MDP,
@@ -615,15 +378,16 @@ So the "what we did" is explicit and reproducible, the exact knobs behind each h
   extraction) 0.5B→14B at n=300.
 - *Difficulty-anchored GELO* (`reason_gelo_irt.py`): the same models vs MATH difficulty tiers L1–L5, Rasch
   (1-parameter IRT) fit.
-- *Training-data lever* (`reason_finetune_sweep.py`): LoRA fine-tune Qwen2.5-0.5B-Instruct (8 layers,
-  lr 5e-5) on **N ∈ {64,256,1024,4096}** GSM8K examples at **fixed 3 epochs** (so iters scale with N —
+- *Training-data lever* (`reason_finetune_sweep.py`): LoRA fine-tune **two 0.5B models** — Qwen2.5-0.5B-Instruct
+  (4-bit) and Qwen2.5-0.5B base (**bf16**; 4-bit was unstable) — (8 layers, lr 5e-5) on
+  **N ∈ {64,256,1024,4096,7000 (full)}** GSM8K examples at **fixed 3 epochs** (so iters scale with N —
   isolates *data*, not optimization budget), calculator-annotation targets stripped; greedy accuracy on
   150 held-out problems, N=0 = base model.
 
 **Arm C — control (`control/gridworld.py`).** 8×8 gridworld, slip 0.1, γ = 0.95, scattered pits; exact
 **V\*** by value iteration; degraded evaluator = V\* + σ·(value-spread)·𝒩(0,1); MPC lookahead **h ∈
-{1,2,3}** (h Bellman backups, then greedy). Return = mean discounted reward over **400 episodes**,
-normalized to [random = 0, optimal = 100].
+{1,2,3}** (h Bellman backups, then greedy). Return = mean discounted reward over **400 episodes per grid, averaged over 8
+independent grid instances (mean ± sd)**, normalized to [random = 0, optimal = 100].
 
 **§6 self-improvement.** Connect-4 (`c4_selfplay.py`): self-play games each iteration; value target =
 game **outcome** (baseline) vs **depth-6 oracle value** (`--oracle-value`, the positive control), loop
@@ -634,8 +398,10 @@ three seeds (from-scratch / weak-policy warm-start / a self-learned +1214 net).
 mlx-lm** for all Qwen inference and net training — batched sampling (`batch_generate`) makes 32-completion
 caches and models up to **72B** tractable; **AWS Bedrock** (`moonshotai.kimi-k2.5`, us-east-1) for the
 master judge and the frontier-LLM chess vignette. Early exploratory sweeps used modest samples (50–120
-problems); the powered reruns (§3–§5) use 300–500-problem, 32-sample caches and multi-seed/multi-grid
-averaging, and we flag any result still reported at exploratory power.
+problems); the powered reruns so far are §3 (multi-seed), §5 (eight-grid averaging), and the §4
+size × search frontier (500-problem, 32-sample caches, 0.5B–72B), while the remaining §4 reasoning
+sweeps are still at exploratory power pending recompute from the caches — we flag exploratory-power
+results where they appear.
 
 ## References
 - Anthony, T., Tian, Z. & Barber, D. (2017). *Thinking Fast and Slow with Deep Learning and Tree Search.* NeurIPS.
