@@ -137,6 +137,12 @@ assumed (scale anchored random := 0). And reasoning lands on the *same* axis via
   but *itself evaluator-limited*: a referee can only rank as well as it can reason (which is also why, on
   checkable tasks, the verifier still beats an LLM judge). The anchor value is free; we choose 2800 so the
   numbers read like chess (elite ≈ 2800, room down toward a novice floor).
+  A **powered rerun** (150 MATH problems, five-model Qwen2.5 ladder 0.5B–14B, resilient concurrent judging)
+  raises judge–verifier agreement to **84%** and confirms the overall ordering (0.5B ≪ mid-ladder < 7B ≈
+  14B). One honest wrinkle survives the extra power: **1.5B and 3B tie on MATH** (ground-truth +2419 vs
+  +2392, within noise; clean-cache pass@1 30.6 vs 32.9) even though **3B clearly beats 1.5B on GSM8K** (69.5
+  vs 52.8 pass@1). The mid-ladder ordering is therefore *benchmark-dependent*, not a fixable small-sample
+  inversion — the honest upgrade of the earlier "illustrative only" caveat.
 - **Difficulty-anchored (IRT).** The same machinery against MATH difficulty tiers gives a monotonic ladder
   (L1 +1273 → L5 +1712, ~+110 GELO/level) and places a model by which tier it half-solves.
 
@@ -285,6 +291,24 @@ them. It is exactly the boundary Snell et al.'s difficulty-adaptive policy *impl
 competence threshold, size below — now **located and observed directly** rather than assumed. (Caveat:
 GSM8K saturates at ~94–95% for ≥7B, compressing the top of the ladder against the ceiling; a harder
 benchmark would widen the crossover, but the flip is unambiguous. Compute ≈ params × N is coarse.)
+
+**The crossover on a harder benchmark (MATH) — a registered prediction, scored.** GSM8K's saturation
+compresses the top of the ladder, so we pre-registered a prediction and re-ran the ladder on MATH-500
+(unsaturated): *the crossover region should widen and the search lift should stay alive further up.* On
+MATH (n = 300, 16 samples):
+
+| model | pass@1 | sc@16 | oracle@16 | search lift |
+|---|---:|---:|---:|---:|
+| 3B  | 32.9 | 51.7 | 75.0 | +18.8 |
+| 7B  | 64.9 | **73.7** | 87.0 | +8.8 |
+| 14B | **70.4** | 76.7 | 87.3 | +6.3 |
+
+**Hit:** 7B + search (73.7%) beats 14B greedy (70.4%) by **+3.3** — a far clearer flip than GSM8K's +0.7 —
+and the lift stays alive much higher up (14B +6.3 on MATH vs +1.9 on GSM8K). **Partial miss (the more
+interesting result):** the crossover *point does not move* — it sits at **~7B on both benchmarks**. So the
+competence-threshold *location* is **benchmark-robust** while only its *sharpness* is difficulty-dependent —
+a cleaner claim than the difficulty-shifting threshold we hypothesized. (32B/72B extend the top; folded when
+they land.)
 
 **Relation to compute-optimal test-time scaling.** The result to *not* claim here is "size beats search" —
 Snell et al. [2024] show the size-vs-search answer is regime-dependent (search wins on easier problems for
@@ -582,7 +606,13 @@ So the "what we did" is explicit and reproducible, the exact knobs behind each h
 - *Size × search frontier*: Qwen **{0.5B,1.5B,3B}**, GSM8K, greedy + sc@{4,16}; compute proxy ≈ params × N.
 - *Pairwise reasoning-GELO* (`reason_arena.py`): **5 models** on **50 MATH problems**; **every** ordered
   pair scored by the Kimi-K2.5 judge (**blinded, answer-order randomized**); ratings by Bradley–Terry MLE
-  (`bt_elo`), anchor **Kimi := 2800**; the verifier cross-check gives the 72% judge-agreement figure.
+  (`bt_elo`), anchor **Kimi := 2800**; the verifier cross-check gives the 72% judge-agreement figure. A
+  powered rerun (`reason_arena.py`, resilient concurrent Bedrock judging: shared client with
+  timeouts/retries, thread pool) over 150 MATH problems × the 5-model Qwen2.5 ladder gives **84%** agreement.
+- *Frontier at scale + MATH crossover* (`reason_cache.py`, `run_cache_ladder.sh`): sample-once-select-many
+  caches — 32 completions/problem via `batch_generate`, then sc@{1,4,16,32}, oracle-best-of-N, and the
+  graded-verifier curve computed post-hoc. GSM8K ladder 0.5B→72B at n=500; MATH ladder (`--math`, boxed
+  extraction) 0.5B→14B at n=300.
 - *Difficulty-anchored GELO* (`reason_gelo_irt.py`): the same models vs MATH difficulty tiers L1–L5, Rasch
   (1-parameter IRT) fit.
 - *Training-data lever* (`reason_finetune_sweep.py`): LoRA fine-tune Qwen2.5-0.5B-Instruct (8 layers,
