@@ -1,76 +1,37 @@
-# Efficient Thinking: An Empirical Framework for Resource Allocation in AI
-## Spending Parameters, Data, Search, and Latency Efficiently to Maximize Capability — Demonstrated in Chess
+# Efficient Thinking: Measuring What Capability Costs
+## Parameters, data, search, and latency in a small chess evaluator — and a diagnostic for finding which one binds
 
-**Louay Alsakka** · July 8, 2026
-
-**A white paper on parameter-efficient game AI.**
+**Louay Alsakka** · July 2026
 
 **Code & trained model:** [github.com/louayalsakka/efficient-thinking](https://github.com/louayalsakka/efficient-thinking)
-
-*The recurring theme is a set of **tradeoffs**: memory vs compute (Stage 1 vs 2), speed vs score
-(the search cascade), and diversity vs correlation (the committee) — each one a different way of
-spending a fixed budget to buy strength, and each capped by the same wall: the quality of the
-learned evaluator.*
 
 ---
 
 ## Abstract
 
-**This paper asks one engineering question: given finite resources — parameters (memory), training
-data, inference-time search, and latency — how do you spend them *efficiently* to reach a target
-playing strength?** Using chess as a clean, fully-measurable testbed, we map the tradeoff curves
-resource by resource. A **14 MB** convolutional evaluator (3.45M params) plays at ~2150 Elo as a
-single forward pass; adding **Monte-Carlo Tree Search (MCTS)** [Coulom 2006; Kocsis & Szepesvári 2006] lifts the *same weights* to **~2800** —
-a same-ladder gain of **+286 Elo from inference compute alone**, with zero extra parameters. Since
-~2800 is Super-GM / peak-human level, the study is really *how small a model can reach top-human
-capability when augmented by search*: the same capability, bought with **compute, not size**.
+Every AI system buys capability with the same finite resources — parameters, training data, inference-time compute, latency — and to a large degree they substitute for one another. This paper measures those tradeoffs directly, using chess as a fully observable testbed: one small convolutional evaluator (3.45M parameters, 14 MB), one fixed evaluation protocol, and one lever varied at a time.
 
-**The primary contribution is an empirical *framework* for allocating finite AI resources —
-parameters, data, search, latency — to a fixed capability goal, with measured tradeoff curves; the
-framework is demonstrated across its levers.** Three results support it: **(1)** a wide→narrow MCTS
-**cascade** that *appeared* ~4.8× cheaper at equal strength but which a rigorous head-to-head **retracts**
-(§4.2, companion paper); **(2)** a direct
-**MCTS-vs-fixed-depth** comparison — adaptive search beats alpha-beta at equal compute and *keeps
-scaling* while fixed depth plateaus; and **(3)** a **teacher-free self-learning** study with one
-robust positive — **agreement predicts correctness** — and honest negatives — self-play, a
-self-referential ladder, evolution, and plurality voting all fail to cross the plateau. A **capacity
-sweep** agrees: 1.4× more parameters at fixed data move strength **~0**, while 8× more *data* moves it
-**~+90** — capacity is the weakest lever in this regime.
+The central result is the size of the search lever on a frozen evaluator. On the same Stockfish ladder, adding MCTS lifts the raw policy by **+286 Elo at 800 simulations** (2448 → 2734), then a steady **~+55 Elo per doubling**, unsaturated through 12,800 simulations (2967, **+519 total**) — with zero additional parameters. Over the same period, growing the evaluator 1.4–2× at full data moved strength by an amount indistinguishable from noise, while 8× more training data moved it ~+90. In this regime the lever ranking is unambiguous: **search ≫ data ≫ capacity**. Adaptive MCTS also beats fixed-depth alpha-beta at equal compute and keeps scaling where fixed depth plateaus (~2550).
 
-The unifying principle — the **evaluator–search decomposition** — is **strength = evaluator ×
-search**: search sets how *closely* you approach the evaluator's ceiling, the evaluator sets *where
-that ceiling is*, and that ceiling is **the quality of the information the evaluator was trained on**.
-Search *converts* the net's latent information into better decisions; it cannot create what the net
-never learned. And the method transfers beyond the numbers: **at each stage one lever binds, and only
-an experiment reveals which — so effort on any other returns almost nothing.**
+A third study removes external supervision entirely. Self-play, a self-referential ladder, evolutionary selection, plurality voting, and weight merging all fail to lift the evaluator past its plateau at our two-machine scale; the one robust positive is that **inter-model agreement predicts correctness** (unanimous committees match Stockfish's best move 94% of the time vs 37% when all disagree) — a teacher-free confidence signal, though not an accuracy booster. These negatives are scoped: they characterize the small-compute regime, not self-play in general.
 
-**Headline:** *A 14 MB evaluator plus adaptive search reaches ~2800-class play — thinking, not growing.*
-(A staged MCTS **cascade** *appeared* to recover ~4.8× compute at little Elo cost, but a rigorous
-head-to-head later **retracted** that as a ladder-noise artifact — see the §4.2 correction; the robust
-claim is the parameter-efficiency of evaluator + search, not the cascade.) Search
-converts what the evaluator already knows into stronger play; it cannot lift the ceiling set by the
-**quality of the information the evaluator was given.***
+The unifying reading is a decomposition — **strength = evaluator × search**. Search converts what the evaluator already encodes into better decisions; the evaluator's ceiling is set by the quality of the information it was trained on; and nothing inside a closed system raises that ceiling without an external oracle. The transferable contribution is the method: at each stage exactly one resource binds, which one is not knowable a priori, and spending anywhere else returns almost nothing — so measure first, then spend. We also report, as a case study in that method, how a coarse ±89 rating ladder manufactured an apparent 4.8× search-efficiency win that a rigorous paired head-to-head then eliminated (§4.2).
+
+On calibration: absolute Elo here is internal ladder Elo — Stockfish rungs at fast movetime, with ±~100 systematic uncertainty near the top rung — and is not calibrated to over-the-board ratings. The searched system's ~2800-class ladder rating is consistent with the top-human band, but every claim in this paper is a relative, same-ladder comparison, which does not depend on that calibration.
 
 ---
 
 ## Key Takeaways
 
-*Five findings — enough to understand the paper on one page.*
+1. **Search dominates parameters in this regime.** On a frozen 3.45M evaluator, MCTS adds +286 Elo at 800 sims and ~+55 per doubling thereafter, unsaturated at 16× the base budget (+519 total, same ladder). Doubling parameters at full data added nothing distinguishable from noise. Strength came from thinking, not growing.
 
-1. **Search dominates parameters in this regime.** On a *fixed* evaluator, adding search buys **+286
-   Elo** over the raw policy and keeps climbing **~+55 per doubling** of simulations; *doubling the
-   parameters at fixed data added ~0*. Strength came from **thinking, not growing**.
-2. **The cascade's efficiency claim did not survive scrutiny (retracted).** A wide→narrow MCTS cascade
-   *looked* ~4.8× cheaper at equal strength on the ±89 ladder, but a rigorous paired head-to-head found
-   **no net gain** (weaker at equal sims, break-even at equal wall-clock; §4.2) — a lesson in how coarse
-   measurement manufactures a result.
-3. **Adaptive MCTS out-scales fixed-depth search.** At equal compute MCTS **beats** alpha-beta and
-   **keeps scaling**, where fixed-depth search plateaus.
-4. **Model agreement predicts correctness.** Where independent models agree they are more often
-   right — a **teacher-free confidence signal**, and a result independent of chess.
-5. **Find the binding bottleneck experimentally.** At each stage exactly one lever binds — capacity,
-   search, data, or the quality of self-generated signal — and effort on any *other* returns almost
-   nothing. The transferable contribution is this **diagnostic**, not any single Elo number.
+2. **Adaptive search out-scales fixed-depth search.** At equal compute MCTS beats alpha-beta, and it keeps climbing where fixed depth plateaus — uniform depth amplifies the value net's noise; adaptive allocation averages over it.
+
+3. **Data beats capacity when the evaluator binds.** 8× more training data moved strength ~+90; 1.4–2× more parameters moved it ~0. Capacity is the weakest lever in this data regime — a scoped claim, not "parameters never matter."
+
+4. **Model agreement predicts correctness.** Independently trained models that agree are far more often right (unanimous: 94% match with Stockfish-best, 19.7 mean CPL; full disagreement: 37%, 77.9 CPL) — a teacher-free confidence meter. But plurality voting never beat the best member: correlated errors don't cancel.
+
+5. **Measurement noise manufactures results — twice, in this study.** A wide→narrow MCTS cascade appeared 4.8× cheaper at equal strength on a ±89 ladder; a paired head-to-head showed no net gain (§4.2). Evolution appeared to escape the self-play plateau by +47 Elo; a clean 400-game re-match showed −24 to −41. The paper's operating rule fell out of these: no delta is believed until it survives a low-variance re-measurement.
 
 ---
 
@@ -115,37 +76,36 @@ ride it up log-linearly until the evaluator's quality caps the return; then the 
 goal but its **method**: one instrument in the larger objective of spending a fixed budget
 efficiently.
 
-**Target calibration.** We aim at the **human-peak band — ~2800 Elo, Super-Grandmaster level — by
-design.** For human-facing applications, matching top-human capability is the efficient saturation
-point; pushing to 3500 Elo (machine-only territory) spends compute where it stops mattering. The
-question is therefore *how small a model, plus how little search, reaches human-peak* — efficiency at
-the human ceiling, not absolute strength.
+**Target calibration.** We aim at the **~2800 band on our internal ladder — consistent with the top-human class — by design.** For human-facing applications, matching top-human capability is the efficient saturation point; pushing toward machine-only territory spends compute where it stops mattering. The question is therefore *how small a model, plus how little search, reaches that band* — efficiency at the human ceiling, not absolute strength. (All absolute figures in this paper are internal ladder Elo; see the calibration caveat in §2.3.)
 
 **How to read the numbers.** Absolute Elo is measured against a Stockfish ladder and carries **±~100
-systematic uncertainty** near the top rung; treat "~2800" as a headline calibrated to the human-peak
-band. The paper's *claims* are the **relative, same-ladder** results, which do not depend on that
+systematic uncertainty** near the top rung; treat "~2800" as a headline calibrated to the top-human band on this internal ladder. The paper's *claims* are the **relative, same-ladder** results, which do not depend on that
 calibration: search adds **+286 Elo** over the raw policy, MCTS out-scales fixed-depth search, and every
-Stage-3 aggregation method fails to beat a single model. (The cascade's ladder-based efficiency claim is
-the exception — retracted by a head-to-head; §4.2.) We further separate **established** results (robust,
+Stage-3 aggregation method fails to beat a single model. (§4.2 documents, as a case study, how this ladder's resolution once manufactured an apparent efficiency win.) We further separate **established** results (robust,
 relative — adaptive search scaling, agreement-predicts-correctness) from **regime-limited observations**
 true only at our
 compute (the self-play plateau, flat parameter scaling, evolution's non-escape), which we expect to
 change at AlphaZero/LLM scale.
 
 **Contributions.**
-- **The robust result — parameter efficiency:** **~2800 Elo from 3.45M params** via search, at constant
-  memory — strength bought with thinking, not growing.
-- **A search-efficiency *negative* (corrected):** a wide→narrow MCTS **cascade** looked ~4.8× cheaper at
-  equal strength on the ±89 ladder, but a rigorous head-to-head (companion *cascade* paper) found **no net
-  gain** — weaker at equal sims, break-even at equal wall-clock. A cautionary tale about measurement noise
-  (§4.2), not a recommended method.
-- A direct **MCTS-vs-fixed-depth** result: adaptive search beats and out-scales fixed depth.
-- An **architecture-beats-scale** finding (convolution ≫ MLP at equal data), with topology sweep.
-- A reproducible **negative result** on small-scale self-play (plateaus below supervision).
-- A **teacher-free self-learning** study: agreement is a validated **confidence meter**, but
-  self-play, a self-referential ladder, **evolution**, and plurality-voting committees all fail to
-  cross the plateau — a set of clean negative results with a methodological warning (noisy fitness
-  manufactures phantom gains).
+- **A measured lever ranking for a fixed capability target:** on one evaluator and one ladder, search
+  (+286, then ~+55/doubling, unsaturated), data (~+90 for 8×), capacity (~0 for 2× at full data) — with
+  the diagnostic that produced it: identify the binding resource experimentally, relieve exactly that,
+  re-measure, repeat.
+- **A direct MCTS-vs-fixed-depth comparison** on the same value net: adaptive search wins at equal
+  compute and keeps scaling where fixed depth plateaus.
+- **An architecture-beats-scale result:** a 3.45M convolutional net matches a 14.4M MLP with 22× less
+  data; every tapered or bottlenecked topology loses badly. The right inductive prior, not width, sets
+  open-loop strength.
+- **A teacher-free confidence signal, validated:** committee agreement predicts correctness — alongside
+  clean negatives showing that plurality voting, weight merging, and in-search ensemble averaging all
+  fail to beat a single model, because member errors are too correlated to cancel.
+- **Reproducible negative results on small-scale self-improvement:** self-play, a self-referential
+  ladder, and evolution all plateau below supervision at two-machine scale, with the failure mechanism
+  identified in each case.
+- **Two documented measurement-artifact autopsies** (the cascade, §4.2; evolution's phantom escape,
+  §5.3) — worked examples of how coarse or noisy evaluation manufactures effects, and the
+  re-measurement protocol that catches them.
 
 The paper's roadmap in one picture — the three sources of strength, all feeding a single learned
 evaluator:
@@ -230,6 +190,22 @@ A fixed protocol makes every Elo/CPL figure comparable across methods:
 - **Caveats:** the ladder **compresses** once the player beats the top rung (we raised it as strength
   grew), and at 0.03–0.04 s Stockfish plays **below** nominal `UCI_Elo` — internally consistent, not
   calibrated to over-the-board Elo. Exact scripts are in the repo.
+
+**Table 1 — canonical strength measurements (high ladder: SF 2500/2800/3050; every Elo claim in this
+paper routes through this table).**
+
+| Configuration | Ladder Elo | Δ vs raw |
+|---|---:|---:|
+| raw policy (1 forward pass) | 2448 | — |
+| MCTS-800 | 2734 ±76 | +286 |
+| MCTS-1600 | 2780 ±82 | +332 |
+| MCTS-3200 | 2839 ±76 | +391 |
+| MCTS-6400 | 2903 ±82 | +455 |
+| MCTS-12800 | 2967 ±115 | +519 |
+
+The rounded "~2150 open-loop / ~2800 searched" figures used in prose refer to the earlier
+calibration-band ladder and sit within the stated ±100 of these values; where precision matters, Table
+1 is authoritative.
 
 ---
 
@@ -325,7 +301,7 @@ We compared two search families on the same value net and ladder:
   | 100 | 2411 |
   | 200 | 2530 |
   | 400 | 2610 (2661 @ 40 games/rung) |
-  | **800** | **2749 ≈ top-human (~2800)** |
+  | **800** | **2749 (the ~2800 ladder band)** |
 
 **Result.** (i) **1-ply search *hurts* a strong policy** — it commits to a capture without seeing the
 recapture; depth is where lookahead pays. (ii) **MCTS beats alpha-beta at equal compute and keeps
@@ -350,36 +326,19 @@ averages over it.** MCTS wins Stage 2, reaching ~2800 on the fixed 3.45M net.
   <text x="580" y="59" text-anchor="end" font-size="9" fill="#666">~2800 top-human</text>
 </svg>
 
-### 4.2 Search efficiency — the wide→narrow MCTS cascade (new)
+### 4.2 Does allocation of a fixed search budget matter? (a case study in measurement noise)
 
-> **Correction (post-publication).** The equal-strength claim in this subsection rests on ±89-Elo
-> *ladder* ratings — too coarse to detect a real difference. A rigorous **paired head-to-head** (cascade
-> vs. flat MCTS, thousands of games; reported in the companion *cascade* white paper) overturns it: the
-> cascade is **significantly *weaker* at equal simulations** (≈ −200 Elo) and only **statistically
-> indistinguishable at equal wall-clock** (−17 Elo, 95% CI [−66, +31]) — i.e. **no net efficiency gain.**
-> The "4.8× at equal strength" was a measurement artifact of the coarse ladder. The original analysis is
-> kept below for the record, but its cascade-efficiency conclusion is **retracted** in favour of the
-> head-to-head result; treat the cascade as a cautionary tale about ladder noise, not a recommended method.
+Given that MCTS wins, a natural efficiency question follows: for a fixed simulation budget, does the
+*shape* of the search matter? We tested a wide→narrow **cascade**: a wide stage (all moves, high
+`c_puct`, few sims) ranks candidates broadly, passes its top-k by visit count to a narrower, deeper
+stage, and so on — funnelling the budget onto surviving lines, with a shared eval cache carrying
+value-net calls forward. The design mirrors how strong human players allocate finite calculation: a
+wide intuitive scan, progressive pruning, then one or two lines carried deep. (We claim the allocation
+principle, not a cognitive model.)
 
-**Where the cascade comes from — expert human analysis.** The cascade is not a standard MCTS variant;
-it was inspired by the resource-allocation principle **visible in how expert human players analyze
-under a finite clock and finite mental effort**. A grandmaster does not walk the game tree blindly:
-they first use **intuition — a learned evaluation — to spot the few candidate moves worth
-considering** (a *wide, shallow* scan), then progressively **prune to the strongest lines and
-calculate those deeper**, trading breadth for depth *in stages*, and at the end carry **one or two
-lines very deep** (17–20 plies in sharp positions). The cascade **operationalizes the same
-resource-allocation principle observed in expert human analysis**: spend inexpensive computation
-broadly, then reserve expensive computation for the few candidates that remain plausible — which is
-exactly why it recovers so much otherwise-wasted search. (We claim the *principle*, not a precise
-cognitive model.)
-
-Given MCTS wins, does the **allocation** of a fixed sim budget matter? The **cascade** runs MCTS in
-*stages*: a **wide** stage (all moves, high `c_puct`, few sims) ranks broadly and passes its top-k by
-visit count to a **narrower, deeper** stage (fewer moves, more sims, lower `c_puct`), funnelling the
-budget onto survivors; a shared eval cache carries value-net calls forward.
-
-A controlled **N = 1→10 sweep** (one consistent rule generates each funnel; all 800 total sims;
-same tall ladder, seeds, and openings) gives the full trade-off curve:
+**What the ladder said.** A controlled N = 1→10 sweep (one rule generating each funnel; 800 total sims;
+same ladder, seeds, and openings) showed Elo statistically flat across all funnels (2506–2683, all
+within a single ±89 band) while wall-clock fell monotonically to **4.8× faster** at N = 10:
 
 | # levels | Elo (±89) | ms/move | speedup |
 |---:|---:|---:|---:|
@@ -390,17 +349,11 @@ same tall ladder, seeds, and openings) gives the full trade-off curve:
 | 10 | 2570 | 275 | **4.8×** |
 | beam-minimax cascade (fixed depth) | 2487 | — | inferior primitive |
 
-**Result (ladder view — retracted; see the correction above).** Across all ten funnels Elo stays within a
-**single ±89 band** (2506–2683, mean ~2580) while speed rises monotonically to 4.8× at N = 10. On the
-ladder this *looked* like a near-pure efficiency win — flat-MCTS strength at ~5× less compute. It is not:
-the paired head-to-head (correction above) shows the cascade is significantly weaker at equal sims and only
-break-even at equal wall-clock. The apparent win was an artifact of the ±89 ladder's inability to resolve a
-~200-Elo difference. (The fixed-depth *beam* cascade is
-a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)
+On the ladder, this read as a near-pure efficiency win: flat-MCTS strength at ~5× less compute.
 
 <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
   <rect x="0" y="0" width="620" height="320" fill="#ffffff"/>
-  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">Stage 2 — cascade (ladder view; equal-strength claim retracted, §4.2)</text>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">4.2a — what the ±89 ladder showed: Elo flat, speed ×4.8</text>
   <rect x="60" y="113" width="500" height="126" fill="#2c7fb8" opacity="0.08"/>
   <text x="70" y="127" font-size="9" fill="#2c7fb8">±89 noise band — Elo ~flat across all N</text>
   <line x1="60" y1="270" x2="560" y2="270" stroke="#333" stroke-width="1.5"/>
@@ -429,16 +382,52 @@ a genuinely weaker primitive at 2487 — the adaptive MCTS stages matter.)
   <text x="540" y="284" text-anchor="middle" font-size="8" fill="#666">10</text>
 </svg>
 
+**What a rigorous test said.** The ladder's ±89 resolution is the whole story. A paired head-to-head —
+cascade vs. flat MCTS directly, thousands of games, matched openings and seeds — found the cascade is
+**significantly weaker at equal simulations (≈ −200 Elo)** and only statistically indistinguishable at
+equal wall-clock (**−17 Elo, 95% CI [−66, +31]**). The correct conclusion is **no net efficiency
+gain**: the cascade trades strength for speed at roughly par. The "4.8× at equal strength" was an
+artifact of a rating instrument too coarse to resolve a 200-Elo difference sitting inside its noise
+band.
+
+<svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="210" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">4.2b — what the paired head-to-head showed (cascade minus flat MCTS)</text>
+  <line x1="60" y1="170" x2="580" y2="170" stroke="#333" stroke-width="1.5"/>
+  <line x1="493" y1="45" x2="493" y2="170" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="493" y="188" text-anchor="middle" font-size="10" fill="#666">0 (no difference)</text>
+  <text x="147" y="188" text-anchor="middle" font-size="10" fill="#666">−200</text>
+  <text x="320" y="188" text-anchor="middle" font-size="10" fill="#666">−100</text>
+  <circle cx="147" cy="75" r="5" fill="#b5322e"/>
+  <text x="160" y="70" font-size="10" fill="#b5322e" font-weight="bold">equal simulations: ≈ −200 Elo (significantly weaker)</text>
+  <line x1="379" y1="130" x2="547" y2="130" stroke="#2c7fb8" stroke-width="2.5"/>
+  <line x1="379" y1="124" x2="379" y2="136" stroke="#2c7fb8" stroke-width="2"/>
+  <line x1="547" y1="124" x2="547" y2="136" stroke="#2c7fb8" stroke-width="2"/>
+  <circle cx="464" cy="130" r="5" fill="#2c7fb8"/>
+  <text x="230" y="118" font-size="10" fill="#2c7fb8" font-weight="bold">equal wall-clock: −17, 95% CI [−66, +31]</text>
+  <text x="230" y="132" font-size="9" fill="#666">CI crosses zero → break-even, no net gain</text>
+</svg>
+
+**What survives.** Two things. First, a negative allocation result with value of its own: at a fixed
+budget, MCTS's default allocation is already near-efficient — reshaping it buys speed only by paying
+strength, and the fixed-depth beam variant (2487) confirms the adaptive stages are what matter. Second,
+a methodological rule this paper then applied everywhere: an efficiency claim of the form "same
+strength, less compute" is only as strong as the equal-strength measurement, and a ladder rating with
+±89 error cannot certify equal strength between systems that may differ by 200. Every subsequent
+within-noise delta in this paper (the capacity sweep's +60, evolution's +47 in §5.3) was therefore
+re-measured with paired, low-variance protocols before being believed — and both, like the cascade,
+dissolved.
+
 ### 4.3 The two-dimensional cost (memory vs GPU-cycles)
 | | Stage 1 (open) | Stage 2 (closed) |
 |---|---|---|
 | **Memory** | 14 MB | **14 MB — search adds ~0** |
-| **GPU cycles/move** (batch-1) | 1 pass, ~1.5 ms | ~800 passes, ~1.3 s (or ~0.6 s cascaded) |
+| **GPU cycles/move** (batch-1) | 1 pass, ~1.5 ms | ~800 passes, ~1.3 s (batch-1) |
 | **GPU cycles/move** (batched, §4.4) | — | **~6–12× less — MCTS-3200 below batch-1 MCTS-800** |
 | **Elo** | ~2150 (capped) | **~2800 (scales with compute)** |
 
 **Stage 1 buys Elo with *memory* and saturates; Stage 2 buys Elo with *GPU cycles* and keeps
-climbing** — (a cascade appeared to recover ~4.8× of those cycles, but that efficiency claim is retracted — §4.2). Note
+climbing** (reallocating the same budget wide→narrow buys speed only at par strength — §4.2). Note
 that the ~1.3 s is a **batch-1 implementation artefact**, not the method's cost: batched-leaf
 evaluation (§4.4, measured 6–12×) makes even MCTS-3200 cheaper than batch-1 MCTS-800, so the true
 latency axis sits far below what we plot (clean solo-GPU figure pending). The central practical
@@ -563,6 +552,27 @@ The study's lever ranking, all same-ladder:
 **Search dominates, data second, capacity last in this regime** — the sharpest reading being the
 thesis: **one lever binds at each stage; an experiment tells you which. Here it was data and search,
 not capacity.**
+
+<svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:sans-serif">
+  <rect x="0" y="0" width="620" height="250" fill="#ffffff"/>
+  <text x="310" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a2a3a">The lever ranking — Elo moved per resource, same ladder</text>
+  <line x1="140" y1="40" x2="140" y2="215" stroke="#333" stroke-width="1.5"/>
+  <text x="132" y="65" text-anchor="end" font-size="11" fill="#333">search</text>
+  <rect x="140" y="50" width="420" height="24" rx="3" fill="#e6550d" opacity="0.85"/>
+  <line x1="371" y1="46" x2="371" y2="78" stroke="#7a2e06" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="371" y="42" text-anchor="middle" font-size="8.5" fill="#7a2e06">+286 @ 800 sims</text>
+  <text x="565" y="66" font-size="10" font-weight="bold" fill="#e6550d">+519 @ 12800 (unsaturated)</text>
+  <text x="132" y="130" text-anchor="end" font-size="11" fill="#333">data (8×)</text>
+  <rect x="140" y="115" width="73" height="24" rx="3" fill="#2c7fb8" opacity="0.85"/>
+  <text x="220" y="131" font-size="10" font-weight="bold" fill="#2c7fb8">~+90</text>
+  <text x="132" y="195" text-anchor="end" font-size="11" fill="#333">capacity (2×)</text>
+  <rect x="138" y="180" width="4" height="24" fill="#756bb1"/>
+  <line x1="74" y1="192" x2="206" y2="192" stroke="#756bb1" stroke-width="2"/>
+  <line x1="74" y1="186" x2="74" y2="198" stroke="#756bb1" stroke-width="2"/>
+  <line x1="206" y1="186" x2="206" y2="198" stroke="#756bb1" stroke-width="2"/>
+  <text x="214" y="196" font-size="10" font-weight="bold" fill="#756bb1">~0 (n.s., ±82)</text>
+  <text x="310" y="238" text-anchor="middle" font-size="10" fill="#666">Elo gained (same ladder; full-data capacity sweep, §4.5)</text>
+</svg>
 
 ---
 
@@ -770,7 +780,7 @@ combine at *inference*, not in weight space; so the "better aggregator" must liv
 | System | Params (memory) | Strength (Elo) | Search / move | Elo per M-param |
 |---|---:|---:|---|---:|
 | **This work — raw policy** | **3.45M** (14 MB) | ~2150 | 1 forward pass (~1.5 ms) | ~620 |
-| **This work — + MCTS-800** | **3.45M** (14 MB) | **~2800** | 800 net passes (~1.0 s; ~0.6 s cascaded) | **~810** |
+| **This work — + MCTS-800** | **3.45M** (14 MB) | **~2800** | 800 net passes (~1.3 s batch-1; ~0.2–0.4 s batched, §4.4) | **~810** |
 | Maia (human-like) | ~few M | ~1100–1900 | 1 forward pass | ~300–500 |
 | AlphaZero (chess, 2017) | ~40–90M | ~3400+ | 800 MCTS sims (big-net passes) | ~40–85 |
 | Leela Chess Zero (modern) | ~100–400M+ | ~3500+ | ~1–8k MCTS nodes | ~10–35 |
@@ -778,6 +788,15 @@ combine at *inference*, not in weight space; so the "better aggregator" must liv
 
 *Systems compared:* AlphaZero [Silver et al. 2018], Leela Chess Zero, Stockfish, Maia
 [McIlroy-Young et al. 2020], KataGo [Wu 2019]; test-time-compute scaling in games [Jones 2021].
+
+**What this adds beyond Jones [2021] and the engine community.** Jones establishes Elo-vs-compute scaling
+laws in board games, including train/test compute tradeoffs; the hobby-engine world (small Leela nets,
+Maia, countless Stockfish distillations) has long practiced small-net-plus-search. Neither is this paper's
+claim. What we add is the *per-lever decomposition on one fixed system* — search, data, and capacity each
+varied alone against one canonical ladder, with the diagnostic protocol and the two measurement-artifact
+autopsies (§4.2, §5.3) showing how easily this measurement goes wrong. The contribution is the
+lever-ranking methodology and its failure modes, demonstrated on chess because chess makes them exactly
+measurable — not the news that small nets plus search play strong chess.
 
 **Two axes — size and speed.**
 - **Parameters:** our net is **~10–25× smaller than AlphaZero, 30–100× smaller than large Leela**,
@@ -853,10 +872,10 @@ ceiling: **only information from outside the closed system can raise it.**
 
 - **Architecture > parameters.** The right prior (spatial locality + weight sharing) beats raw width —
   a 14 MB conv reaches strength a 3× larger MLP cannot.
-- **Search > scale, but search cannot exceed the net.** MCTS bought +650 Elo (2150→2800) at zero extra
+- **Search > scale, but search cannot exceed the net.** MCTS bought +286 to +519 Elo (2448 → 2734 → 2967, Table 1) at zero extra
   parameters and out-scaled fixed depth — yet flat MCTS and the cascade hit the *same* wall on the same
   net, because search cuts the net's *variance* (averaging noisy calls), not its *bias* (systematic
-  blind spots). (The cascade's apparent efficiency win was retracted by a head-to-head — §4.2.)
+  blind spots). (reallocating the budget trades strength for speed at par — §4.2.)
 - **No self-generated signal crosses the wall — we tried three.** Gradient self-play, a self-referential
   ladder, and evolution (given the fairest shot; its +47-Elo "escape" was noise that reversed to −30)
   all plateau. The same net reaches ~2150 under supervised labels, so the wall is **not capacity** but
@@ -882,7 +901,7 @@ wasted compute; it is a measurement that says *"strength is not gated here — l
 | **Capacity** (2× params @ 50M) | ~0 (null) | *not* capacity-bound in this data regime | add data, not parameters (here) |
 | **Data** (10 → 79 shards) | +~90 | data/signal-bound | more, more-diverse labels |
 | **Search amount** (open → 12800 sims) | +286, then ~+55/doubling (log-linear) | search extracts value; evaluator caps its *return* | keep searching; raise the evaluator to lift the ceiling |
-| **Search allocation** (cascade shape) | flat (±noise) | *not* allocation-bound at fixed budget | reallocate for **speed**, not strength |
+| **Search allocation** (cascade shape) | speed for strength at par (§4.2) | *not* allocation-bound at fixed budget | default MCTS allocation is already near-efficient |
 | **Search implementation** (batch-1) | latency only | throughput-bound by engineering | batch leaves → 6–12× speed, same strength |
 | **Self-play signal** | plateau | self-signal-quality-bound | can't exceed its own signal at this scale |
 | **Selection pressure** (evolution) | phantom, reversed | *measurement-noise*-bound (fake gain) | re-measure cleanly before believing |
@@ -911,7 +930,10 @@ dataset to imitate.
 
 ## 8. Limitations and Future Work
 - Absolute Elo carries systematic uncertainty near the ladder top; relative same-ladder gains are
-  the robust claims.
+  the robust claims. The ±100 systematic near the top rung is currently *estimated*, not measured: a
+  slow-movetime anchor series (one ladder rung replayed at tournament-realistic time controls) is queued
+  to measure the fast-movetime offset directly, and readers from the engine community should treat every
+  absolute figure as internal-ladder until that lands.
 - Stage 3 is compute-limited (two machines); results characterize the *small-scale* regime.
 - Stage-3 fitness/aggregation is noise-limited at our scale: relative-fitness selection with small,
   stochastic samples produced a **phantom** evolution "escape" that reversed under a 400-game
@@ -970,12 +992,10 @@ dataset to imitate.
 
 This paper treated playing strength as an **efficient-allocation problem**: given a fixed budget of
 parameters, data, search, and latency, how do you spend it for the most capability? Measured resource
-by resource, the efficient mix is rarely "more parameters" — a 14 MB net reaches **~2800 Elo by
-*thinking* (search), not *growing*** — the same capability, a far cheaper mix. This is *efficiency*,
+by resource, the efficient mix is rarely "more parameters" — a 14 MB net reaches the **~2800 ladder band by *thinking* (search), not *growing*** — the same capability, a far cheaper mix. This is *efficiency*,
 not a denial of scale: the first full-data capacity point already nudges up (1× 2734 → 1.4× 2794), and
 **if the 2×/4× points keep climbing, parameters become co-dominant once data-starvation is relieved.**
-Adaptive MCTS out-scales fixed-depth search; a wide→narrow cascade *appeared* to match it at less compute but is retracted (§4.2) (strength
-bought back as *latency*, not parameters). Self-learning is honestly negative: self-play, a
+Adaptive MCTS out-scales fixed-depth search; reallocating a fixed budget wide→narrow buys speed only at par strength (§4.2). Self-learning is honestly negative: self-play, a
 self-referential ladder, and evolution all **fail to cross the ~2000 plateau** (evolution's escape was
 noise), and plurality committees don't reliably de-bias — though **agreement is a robust teacher-free
 confidence signal**.
@@ -998,7 +1018,7 @@ and maps directly onto other AI systems (we measured only chess; these are the t
 | Chess finding | General principle | Where it transfers |
 |---|---|---|
 | **strength = evaluator × search** | capability = model quality × inference-time compute | LLM reasoning (base model × sampling/tree-of-thought); robotics (value net × planning horizon); theorem proving (heuristic × search depth) |
-| **cascade: no net gain (retracted, §4.2)** | spend a fixed decision-time budget wide→narrow | LLM reasoning under latency SLAs; model-predictive control; any anytime search |
+| **coarse metrics manufacture results (§4.2, §5.3)** | certify equal strength before claiming equal-strength efficiency | any "same quality, less compute" claim: distillation, quantization, pruning, cascades |
 | **search extracts, can't create — needs an oracle** | self-improvement is capped without external ground truth | LLM self-training needs verifiers; RL needs an environment; scientific discovery needs experiments |
 | **capacity is the weakest lever when data-starved** | don't scale parameters ahead of data | compute-optimal (Chinchilla) scaling; collect data before growing nets |
 | **agreement predicts correctness; voting doesn't de-bias** | consensus is a confidence meter, not an accuracy booster (correlated errors) | ensemble uncertainty / OOD detection; caution on naïve model-averaging |
@@ -1062,6 +1082,11 @@ Board Games*, arXiv:2104.03113. · Wortsman, M. et al. (2022), *Model Soups*, IC
 Learning*, arXiv:2501.12948. · Wang, X. et al. (2023), *Self-Consistency Improves Chain-of-Thought
 Reasoning in Language Models*, ICLR. · Yao, S. et al. (2023), *Tree of Thoughts*, NeurIPS. · Zelikman, Y.
 et al. (2022), *STaR: Bootstrapping Reasoning with Reasoning*, NeurIPS.
+
+**Ensembles, uncertainty & scaling.** Breiman, L. (1996), *Bagging Predictors*, Machine Learning. ·
+Lakshminarayanan, B., Pritzel, A. & Blundell, C. (2017), *Simple and Scalable Predictive Uncertainty
+Estimation using Deep Ensembles*, NeurIPS. · Hoffmann, J. et al. (2022), *Training Compute-Optimal
+Large Language Models* (Chinchilla), arXiv:2203.15556.
 
 **Software & data.** Stockfish (stockfishchess.org) — ladder opponent and label oracle. · Leela Chess
 Zero (lczero.org). · Lichess cloud-evaluation database (database.lichess.org) — supervised labels. ·
