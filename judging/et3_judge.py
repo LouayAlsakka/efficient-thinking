@@ -114,7 +114,7 @@ def main():
                          "pick_best_acc": round(100 * pb / m, 1), "majority_acc": round(100 * maj / m, 1),
                          "oracle_acc": round(100 * orc / m, 1),
                          "mean_gen_tok": round(gtok / m), "mean_judge_in_tok": round(jin / m)})
-            print(f"[e3] policy={ptag} judge={a.judge_params}B N={N}: pick-best={rows[-1]['pick_best_acc']} "
+            print(f"[e3] policy={ptag} judge={a.judge_params}B {a.mode} N={N}: sel={rows[-1]['pick_best_acc']} "
                   f"maj={rows[-1]['majority_acc']} oracle={rows[-1]['oracle_acc']} "
                   f"(judge_in≈{rows[-1]['mean_judge_in_tok']}tok)", flush=True)
             json.dump(rows, open(a.out, "w"), indent=2)
