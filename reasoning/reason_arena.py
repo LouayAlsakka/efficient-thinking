@@ -52,18 +52,32 @@ def generate(args):
 
 
 # ---------------- stage 2: master judge + Bradley-Terry Elo ------------------------------------------
-def kimi_judge(problem, ans_A, ans_B, model_id="moonshotai.kimi-k2.5", region="us-east-1"):
+def make_bedrock_client(region="us-east-1"):
     import boto3
-    rt = boto3.client("bedrock-runtime", region_name=region)
+    from botocore.config import Config
+    return boto3.client("bedrock-runtime", region_name=region,
+                        config=Config(read_timeout=40, connect_timeout=10,
+                                      retries={"max_attempts": 4, "mode": "adaptive"}))
+
+
+def kimi_judge(problem, ans_A, ans_B, rt=None, model_id="moonshotai.kimi-k2.5"):
+    """Return 'A'/'B'/'TIE'. Resilient: shared client, bounded retries, TIE on persistent failure."""
+    if rt is None:
+        rt = make_bedrock_client()
     sysp = ("You are a strict, impartial grader. Two assistants answered the same problem. Decide whose "
             "FINAL answer is correct (or, if neither is objectively checkable, which reasoning is better). "
             "Reply with EXACTLY one token: A, B, or TIE.")
     user = f"[Problem]\n{problem}\n\n[Assistant A]\n{ans_A}\n\n[Assistant B]\n{ans_B}\n\nWhich is better? A, B, or TIE."
     body = {"messages": [{"role": "system", "content": sysp}, {"role": "user", "content": user}],
             "max_tokens": 8, "temperature": 0.0}
-    r = json.loads(rt.invoke_model(modelId=model_id, body=json.dumps(body))["body"].read())
-    t = r["choices"][0]["message"]["content"].strip().upper()
-    return "A" if t.startswith("A") else ("B" if t.startswith("B") else "TIE")
+    for attempt in range(3):
+        try:
+            r = json.loads(rt.invoke_model(modelId=model_id, body=json.dumps(body))["body"].read())
+            t = r["choices"][0]["message"]["content"].strip().upper()
+            return "A" if t.startswith("A") else ("B" if t.startswith("B") else "TIE")
+        except Exception:
+            if attempt == 2:
+                return "TIE"    # give up on this pair rather than kill the whole run
 
 
 def bt_elo(names, W):
@@ -82,36 +96,45 @@ def bt_elo(names, W):
 def judge(args):
     d = json.load(open(args.answers)); Q = d["questions"]; A = d["answers"]
     names = list(A); n = len(names); idx = {m: i for i, m in enumerate(names)}
+    if getattr(args, "max_q", 0):
+        Q = Q[:args.max_q]
     rng = random.Random(args.seed)
     Wj = np.zeros((n, n)); Wt = np.zeros((n, n))          # judge cross-table; ground-truth cross-table
     jt_agree = jt_tot = 0
     from reason_math_sweep import extract_boxed, normalize   # for ground-truth scoring
-    for qi, q in enumerate(Q):
-        gold = normalize(q.get("gold"))
-        for i in range(n):
-            for j in range(i + 1, n):
-                mi, mj = names[i], names[j]
-                ai, aj = A[mi][qi], A[mj][qi]
-                flip = rng.random() < 0.5                  # randomize which model is shown as "A"
-                pa, pb = (aj, ai) if flip else (ai, aj)
-                v = kimi_judge(q["problem"], pa, pb)
-                if v == "TIE":
-                    Wj[i, j] += 0.5; Wj[j, i] += 0.5
-                else:
-                    first_wins = (v == "A")
-                    winner = (mj if flip else mi) if first_wins else (mi if flip else mj)
-                    loser = mj if winner == mi else mi
-                    Wj[idx[winner], idx[loser]] += 1
-                if gold is not None:                       # ground-truth (verifier) cross-table + judge check
-                    ci = normalize(extract_boxed(ai)) == gold
-                    cj = normalize(extract_boxed(aj)) == gold
-                    if ci != cj:
-                        tw, tl = (mi, mj) if ci else (mj, mi)
-                        Wt[idx[tw], idx[tl]] += 1
-                        jt_tot += 1
-                        jt_agree += (v != "TIE" and (winner == tw))
-        if (qi + 1) % 5 == 0:
-            print(f"  judged {qi+1}/{len(Q)} questions", flush=True)
+    from concurrent.futures import ThreadPoolExecutor
+    rt = make_bedrock_client()                              # ONE client, shared, with timeouts+retries
+
+    tasks = [(qi, i, j, rng.random() < 0.5)
+             for qi in range(len(Q)) for i in range(n) for j in range(i + 1, n)]
+
+    def run(task):
+        qi, i, j, flip = task
+        ai, aj = A[names[i]][qi], A[names[j]][qi]
+        pa, pb = (aj, ai) if flip else (ai, aj)
+        return task, kimi_judge(Q[qi]["problem"], pa, pb, rt=rt)
+
+    done = 0
+    with ThreadPoolExecutor(max_workers=args.workers) as ex:
+        for (qi, i, j, flip), v in ex.map(run, tasks):
+            mi, mj = names[i], names[j]
+            if v == "TIE":
+                Wj[i, j] += 0.5; Wj[j, i] += 0.5; winner = None
+            else:
+                first_wins = (v == "A")
+                winner = (mj if flip else mi) if first_wins else (mi if flip else mj)
+                Wj[idx[winner], idx[mj if winner == mi else mi]] += 1
+            gold = normalize(Q[qi].get("gold"))
+            if gold is not None:
+                ci = normalize(extract_boxed(A[mi][qi])) == gold
+                cj = normalize(extract_boxed(A[mj][qi])) == gold
+                if ci != cj:
+                    tw, tl = (mi, mj) if ci else (mj, mi)
+                    Wt[idx[tw], idx[tl]] += 1; jt_tot += 1
+                    jt_agree += (winner == tw)
+            done += 1
+            if done % 200 == 0:
+                print(f"  {done}/{len(tasks)} pair-judgments", flush=True)
 
     elo_j = bt_elo(names, Wj)
     if args.anchor_model in names:
@@ -153,6 +176,8 @@ def main():
     j.add_argument("--anchor-model", default=None, help="pin this contestant to --anchor GELO")
     j.add_argument("--anchor", type=float, default=2000.0)
     j.add_argument("--seed", type=int, default=0)
+    j.add_argument("--workers", type=int, default=12, help="concurrent Bedrock judge calls")
+    j.add_argument("--max-q", type=int, default=0, help="cap number of questions (0 = all)")
     j.add_argument("--out", default="reasoning/arena_gelo.json")
     j.set_defaults(func=judge)
     args = ap.parse_args()
