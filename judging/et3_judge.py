@@ -47,12 +47,39 @@ def pick_best(model, tok, gen, problem, cands, max_new=8):
     return 0, len(pr)
 
 
+def judge_pair(model, tok, gen, problem, ca, cb):
+    """One pairwise comparison — small context (2 candidates), avoids the long-list position bias."""
+    msgs = [{"role": "system", "content": "You are a strict math grader. Two candidate solutions to one "
+             "problem follow. Reply with ONLY 'A' or 'B' — whichever has the correct final answer."},
+            {"role": "user", "content": f"[Problem]\n{problem}\n\n[A]\n{ca}\n\n[B]\n{cb}\n\nWhich is correct, A or B?"}]
+    pr = tok.apply_chat_template(msgs, add_generation_prompt=True)
+    out = gen(model, tok, prompt=pr, max_tokens=4, verbose=False).strip().upper()
+    return (0 if out.startswith("A") else 1), len(pr)
+
+
+def pairwise_best(model, tok, gen, problem, cands, rng):
+    """Single-elimination pairwise tournament: N-1 small-context calls vs pick-best's one huge-context call.
+    Returns (winning_index, total_judge_input_tokens)."""
+    idx = list(range(len(cands))); rng.shuffle(idx); jin = 0
+    while len(idx) > 1:
+        nxt = []
+        for i in range(0, len(idx), 2):
+            if i + 1 >= len(idx):
+                nxt.append(idx[i]); continue
+            a, b = idx[i], idx[i + 1]
+            w, t = judge_pair(model, tok, gen, problem, cands[a], cands[b]); jin += t
+            nxt.append(a if w == 0 else b)
+        idx = nxt
+    return idx[0], jin
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--judge", required=True); ap.add_argument("--judge-params", type=float, required=True)
     ap.add_argument("--policies", required=True, help="comma list tag:params, caches at reasoning/cache/gsm8k_<tag>.jsonl")
     ap.add_argument("--data", default="reasoning/data/gsm8k_test.jsonl")
     ap.add_argument("--nlist", default="4,16"); ap.add_argument("--problems", type=int, default=200)
+    ap.add_argument("--mode", default="pick-best", choices=["pick-best", "pairwise"])
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     from mlx_lm import load, generate as gen
@@ -60,6 +87,7 @@ def main():
     golds = [str(p["answer"].split("####")[-1].strip().replace(",", "")) for p in probs]
     Ns = [int(x) for x in a.nlist.split(",")]
     model, tok = load(a.judge)
+    rng = random.Random(0)
     rows = []
     for spec in a.policies.split(","):
         ptag, pp = spec.split(":")
@@ -75,11 +103,14 @@ def main():
                 mc = Counter([x for x in ans if x]).most_common(1)
                 maj += bool(mc and str(mc[0][0]) == g)
                 orc += any(str(x) == g for x in ans)
-                pick, plen = pick_best(model, tok, gen, probs[i]["question"], subs)
+                if a.mode == "pairwise":
+                    pick, plen = pairwise_best(model, tok, gen, probs[i]["question"], subs, rng)
+                else:
+                    pick, plen = pick_best(model, tok, gen, probs[i]["question"], subs)
                 jin += plen
                 pb += (str(ans[pick]) == g)
             rows.append({"policy": ptag, "policy_params": float(pp), "judge": a.judge.split("/")[-1],
-                         "judge_params": a.judge_params, "N": N, "n": m,
+                         "judge_params": a.judge_params, "mode": a.mode, "N": N, "n": m,
                          "pick_best_acc": round(100 * pb / m, 1), "majority_acc": round(100 * maj / m, 1),
                          "oracle_acc": round(100 * orc / m, 1),
                          "mean_gen_tok": round(gtok / m), "mean_judge_in_tok": round(jin / m)})
