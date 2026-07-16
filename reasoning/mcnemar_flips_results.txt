@@ -1,0 +1,14 @@
+Paired McNemar — does search on the smaller model beat the bigger model with no search?
+
+GSM8K: 7B+sc@16  vs  14B single-shot  (n=500)
+   search 93.4%  vs  bigger-greedy 92.4%   (Δ=+1.0)
+   discordant: search-only-right b=14, bigger-only-right c=9   exact McNemar p=0.4049  → NOT significant
+
+MATH:  7B+sc@16  vs  14B single-shot  (n=300)
+   search 73.0%  vs  bigger-greedy 69.7%   (Δ=+3.3)
+   discordant: search-only-right b=24, bigger-only-right c=14   exact McNemar p=0.1433  → NOT significant
+
+GSM8K: 14B+sc@16 vs  32B single-shot  (n=500)
+   search 94.6%  vs  bigger-greedy 93.6%   (Δ=+1.0)
+   discordant: search-only-right b=11, bigger-only-right c=6   exact McNemar p=0.3323  → NOT significant
+
