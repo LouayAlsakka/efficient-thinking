@@ -1,0 +1,51 @@
+[
+  {
+    "model": "0.5B",
+    "n": 500,
+    "mode_A_correct": 38.2,
+    "sc_B": 39.2,
+    "delta": -1.0
+  },
+  {
+    "model": "1.5B",
+    "n": 500,
+    "mode_A_correct": 67.0,
+    "sc_B": 66.8,
+    "delta": 0.2
+  },
+  {
+    "model": "3B",
+    "n": 500,
+    "mode_A_correct": 86.2,
+    "sc_B": 85.8,
+    "delta": 0.4
+  },
+  {
+    "model": "7B",
+    "n": 500,
+    "mode_A_correct": 93.4,
+    "sc_B": 93.2,
+    "delta": 0.2
+  },
+  {
+    "model": "14B",
+    "n": 500,
+    "mode_A_correct": 94.6,
+    "sc_B": 94.4,
+    "delta": 0.2
+  },
+  {
+    "model": "32B",
+    "n": 500,
+    "mode_A_correct": 94.8,
+    "sc_B": 94.8,
+    "delta": 0.0
+  },
+  {
+    "model": "72B",
+    "n": 500,
+    "mode_A_correct": 94.8,
+    "sc_B": 94.6,
+    "delta": 0.2
+  }
+]
