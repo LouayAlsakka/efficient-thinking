@@ -80,6 +80,7 @@ def main():
     ap.add_argument("--data", default="reasoning/data/gsm8k_test.jsonl")
     ap.add_argument("--nlist", default="4,16"); ap.add_argument("--problems", type=int, default=200)
     ap.add_argument("--mode", default="pick-best", choices=["pick-best", "pairwise"])
+    ap.add_argument("--perproblem", action="store_true", help="save per-problem pick/maj/coverage (C1 McNemar, C2 bridge)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     from mlx_lm import load, generate as gen
@@ -96,24 +97,30 @@ def main():
         m = min(len(items), len(probs))
         for N in Ns:
             pb = maj = orc = 0; jin = gtok = 0
+            pick_ok = []; maj_ok = []; cov = []                       # per-problem outcomes (C1 McNemar, C2 bridge)
             for i in range(m):
                 subs = items[i]["samples"][:N]; g = golds[i]
                 ans = [extract(s) for s in subs]
                 gtok += sum(len(tok.encode(s)) for s in subs) / N        # avg policy gen tokens/sample
                 mc = Counter([x for x in ans if x]).most_common(1)
-                maj += bool(mc and str(mc[0][0]) == g)
-                orc += any(str(x) == g for x in ans)
+                mo = bool(mc and str(mc[0][0]) == g); maj += mo
+                cv = any(str(x) == g for x in ans); orc += cv
                 if a.mode == "pairwise":
                     pick, plen = pairwise_best(model, tok, gen, probs[i]["question"], subs, rng)
                 else:
                     pick, plen = pick_best(model, tok, gen, probs[i]["question"], subs)
                 jin += plen
-                pb += (str(ans[pick]) == g)
-            rows.append({"policy": ptag, "policy_params": float(pp), "judge": a.judge.split("/")[-1],
-                         "judge_params": a.judge_params, "mode": a.mode, "N": N, "n": m,
-                         "pick_best_acc": round(100 * pb / m, 1), "majority_acc": round(100 * maj / m, 1),
-                         "oracle_acc": round(100 * orc / m, 1),
-                         "mean_gen_tok": round(gtok / m), "mean_judge_in_tok": round(jin / m)})
+                po = (str(ans[pick]) == g); pb += po
+                if a.perproblem:
+                    pick_ok.append(int(po)); maj_ok.append(int(mo)); cov.append(int(cv))
+            row = {"policy": ptag, "policy_params": float(pp), "judge": a.judge.split("/")[-1],
+                   "judge_params": a.judge_params, "mode": a.mode, "N": N, "n": m,
+                   "pick_best_acc": round(100 * pb / m, 1), "majority_acc": round(100 * maj / m, 1),
+                   "oracle_acc": round(100 * orc / m, 1),
+                   "mean_gen_tok": round(gtok / m), "mean_judge_in_tok": round(jin / m)}
+            if a.perproblem:
+                row["pick_ok"] = pick_ok; row["maj_ok"] = maj_ok; row["cov"] = cov
+            rows.append(row)
             print(f"[e3] policy={ptag} judge={a.judge_params}B {a.mode} N={N}: sel={rows[-1]['pick_best_acc']} "
                   f"maj={rows[-1]['majority_acc']} oracle={rows[-1]['oracle_acc']} "
                   f"(judge_in≈{rows[-1]['mean_judge_in_tok']}tok)", flush=True)
