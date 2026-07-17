@@ -39,9 +39,8 @@ fast-weight variants, updates inside the forward pass) is registered as research
 - **V-E2 Forgetting ledger.** Personal q(t) tracked jointly with general capability (form-validity
   from ET-IV, GSM8K slice) across updates. Arms: full-adapter vs LoRA-rank ablation vs replay
   mixing. The two-floor erosion result (35.3 → 19.3 at N = 64) is the registered baseline danger.
-- **V-E3 Real continual study.** The ET-IV poet collaborator (and, product-side, one NiraNet
-  operator), multi-week: adapter updated between sessions, held-out-session q trajectory vs the
-  static-LoRA arm from ET-III E5. Human self-consistency measured (same rankings re-rated at a
+- **V-E3 Real continual study.** The ET-IV poet collaborator, multi-week: adapter updated between
+  sessions, held-out-session q trajectory vs the static-LoRA arm from ET-III E5. Human self-consistency measured (same rankings re-rated at a
   week's distance) and reported as the ceiling.
 - **V-E4 Bandwidth ablation.** Matched session counts, different feedback channels (1-bit
   accept/reject; choose-of-8; free-text critique distilled to pairs). Improvement-per-bit and
@@ -60,12 +59,11 @@ fast-weight variants, updates inside the forward pass) is registered as research
 - **P5.** Improvement transfers within-domain (her poetry) but not across (her legal drafting) at
   small adapter capacity — personalization is narrow before it is deep.
 
-## Product note (NiraNet)
+## Deployment note
 
-Per-dealer adapters continually trained on operator corrections are this paper's mechanism as a
-product: on-prem hardware means the training compute lives beside inference and the personalization
-weights never leave the customer's box — privacy as architecture. The paper and the product share a
-harness; V-E3's second subject is a deployment.
+Per-user adapters continually trained on that user's corrections are this paper's mechanism in a
+deployable form: on-device (Mac-mini-class) hardware means the training compute lives beside inference
+and the personalization weights never leave the user's machine — privacy as architecture.
 
 ## Honest scope
 

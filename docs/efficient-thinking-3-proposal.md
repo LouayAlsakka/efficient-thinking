@@ -41,9 +41,9 @@ Snell et al. (2024) optimize test-time compute *within* the policy, holding the 
 zero. The nearest neighbors leave exactly this gap.
 
 **It is the practitioner's question.** Anyone deploying best-of-N, reranking, or guarded generation
-is implicitly choosing a split today with no measurement behind it. (It is also, concretely, NiraNet's
-question: on a fixed-memory local machine, does the next gigabyte go to a bigger responder or a bigger
-checker?)
+is implicitly choosing a split today with no measurement behind it. (It is also, concretely, the
+on-device question: on a fixed-memory local machine, does the next gigabyte go to a bigger responder
+or a bigger checker?)
 
 **It inherits the Tier-1 infrastructure.** The GSM8K/MATH sample caches, the graded-verifier
 machinery, the GELO calibration, and the judge-agreement protocol from ET-II are the raw material;
@@ -182,8 +182,7 @@ stochastic cell; misses of §4's predictions reported with the same prominence a
    allocation curves with the optimal-s path overlaid (the "spend line").
 2. `judging/` in the repo: cache generators, judge harness (all three modes), frontier plotting, the
    q(j) audit — the same runnable-diagnostic convention as Arms A–C.
-3. A one-page practitioner protocol: probe → read q(j) and pass@N slope → choose s. (This is also the
-   NiraNet-internal artifact.)
+3. A one-page practitioner protocol: probe → read q(j) and pass@N slope → choose s.
 
 ---
 
