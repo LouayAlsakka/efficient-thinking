@@ -18,7 +18,7 @@ def mcnemar(a, b):
 
 
 rows = []
-for f in sorted(glob.glob("judging/e3_ra_*_p05.json")):
+for f in sorted(glob.glob("judging/e3_ra_*.json")):
     rows += [r for r in json.load(open(f)) if "pick_ok" in r]
 rows.sort(key=lambda r: (r["judge_params"], r["N"]))
 

@@ -13,6 +13,18 @@
   },
   {
     "judge_params": 7.0,
+    "N": 8,
+    "n": 150,
+    "pick_acc": 28.0,
+    "maj_acc": 32.7,
+    "delta": -4.7,
+    "b_judge_right": 13,
+    "c_maj_right": 20,
+    "p": 0.2962,
+    "verdict": "parity"
+  },
+  {
+    "judge_params": 7.0,
     "N": 16,
     "n": 150,
     "pick_acc": 35.3,
@@ -34,6 +46,18 @@
     "c_maj_right": 5,
     "p": 0.0066,
     "verdict": "WIN (sig)"
+  },
+  {
+    "judge_params": 14.0,
+    "N": 8,
+    "n": 150,
+    "pick_acc": 38.7,
+    "maj_acc": 32.7,
+    "delta": 6.0,
+    "b_judge_right": 16,
+    "c_maj_right": 7,
+    "p": 0.0931,
+    "verdict": "win-marginal"
   },
   {
     "judge_params": 14.0,
