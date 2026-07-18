@@ -1,0 +1,50 @@
+[
+  {
+    "judge_params": 7.0,
+    "N": 4,
+    "n": 150,
+    "pick_acc": 34.0,
+    "maj_acc": 25.3,
+    "delta": 8.7,
+    "b_judge_right": 18,
+    "c_maj_right": 5,
+    "p": 0.0106,
+    "verdict": "WIN (sig)"
+  },
+  {
+    "judge_params": 7.0,
+    "N": 16,
+    "n": 150,
+    "pick_acc": 35.3,
+    "maj_acc": 36.7,
+    "delta": -1.4,
+    "b_judge_right": 14,
+    "c_maj_right": 16,
+    "p": 0.8555,
+    "verdict": "parity"
+  },
+  {
+    "judge_params": 14.0,
+    "N": 4,
+    "n": 150,
+    "pick_acc": 34.7,
+    "maj_acc": 25.3,
+    "delta": 9.4,
+    "b_judge_right": 19,
+    "c_maj_right": 5,
+    "p": 0.0066,
+    "verdict": "WIN (sig)"
+  },
+  {
+    "judge_params": 14.0,
+    "N": 16,
+    "n": 150,
+    "pick_acc": 41.3,
+    "maj_acc": 36.7,
+    "delta": 4.6,
+    "b_judge_right": 21,
+    "c_maj_right": 14,
+    "p": 0.3105,
+    "verdict": "parity"
+  }
+]
