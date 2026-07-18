@@ -1,0 +1,625 @@
+{
+  "c1_mcnemar": [
+    {
+      "policy": "0.5B",
+      "judge_params": 7.0,
+      "N": 4,
+      "delta": 6.0,
+      "b": 16,
+      "c": 7,
+      "p": 0.0931,
+      "verdict": "marginal"
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 14.0,
+      "N": 4,
+      "delta": 8.0,
+      "b": 14,
+      "c": 2,
+      "p": 0.0042,
+      "verdict": "SURVIVES"
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 32.0,
+      "N": 4,
+      "delta": 11.4,
+      "b": 20,
+      "c": 3,
+      "p": 0.0005,
+      "verdict": "SURVIVES"
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 32.0,
+      "N": 16,
+      "delta": 6.0,
+      "b": 20,
+      "c": 11,
+      "p": 0.1496,
+      "verdict": "NOT sig"
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 72.0,
+      "N": 4,
+      "delta": 11.4,
+      "b": 21,
+      "c": 4,
+      "p": 0.0009,
+      "verdict": "SURVIVES"
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 72.0,
+      "N": 16,
+      "delta": 7.3,
+      "b": 21,
+      "c": 10,
+      "p": 0.0708,
+      "verdict": "marginal"
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 7.0,
+      "N": 4,
+      "delta": 2.7,
+      "b": 8,
+      "c": 4,
+      "p": 0.3877,
+      "verdict": "NOT sig"
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 7.0,
+      "N": 16,
+      "delta": 2.0,
+      "b": 12,
+      "c": 9,
+      "p": 0.6636,
+      "verdict": "NOT sig"
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 14.0,
+      "N": 4,
+      "delta": 8.0,
+      "b": 16,
+      "c": 4,
+      "p": 0.0118,
+      "verdict": "SURVIVES"
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 14.0,
+      "N": 16,
+      "delta": 5.3,
+      "b": 14,
+      "c": 6,
+      "p": 0.1153,
+      "verdict": "NOT sig"
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 32.0,
+      "N": 4,
+      "delta": 6.7,
+      "b": 12,
+      "c": 2,
+      "p": 0.0129,
+      "verdict": "SURVIVES"
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 32.0,
+      "N": 16,
+      "delta": 10.0,
+      "b": 20,
+      "c": 5,
+      "p": 0.0041,
+      "verdict": "SURVIVES"
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 72.0,
+      "N": 4,
+      "delta": 11.3,
+      "b": 19,
+      "c": 2,
+      "p": 0.0002,
+      "verdict": "SURVIVES"
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 72.0,
+      "N": 16,
+      "delta": 7.3,
+      "b": 18,
+      "c": 7,
+      "p": 0.0433,
+      "verdict": "SURVIVES"
+    },
+    {
+      "policy": "3B",
+      "judge_params": 14.0,
+      "N": 4,
+      "delta": 0.7,
+      "b": 6,
+      "c": 5,
+      "p": 1.0,
+      "verdict": "NOT sig"
+    },
+    {
+      "policy": "7B",
+      "judge_params": 32.0,
+      "N": 4,
+      "delta": 1.3,
+      "b": 2,
+      "c": 0,
+      "p": 0.5,
+      "verdict": "NOT sig"
+    },
+    {
+      "policy": "7B",
+      "judge_params": 32.0,
+      "N": 16,
+      "delta": 1.3,
+      "b": 2,
+      "c": 0,
+      "p": 0.5,
+      "verdict": "NOT sig"
+    },
+    {
+      "policy": "7B",
+      "judge_params": 72.0,
+      "N": 4,
+      "delta": 2.6,
+      "b": 5,
+      "c": 1,
+      "p": 0.2188,
+      "verdict": "NOT sig"
+    }
+  ],
+  "c2_bridge": [
+    {
+      "policy": "0.5B",
+      "judge_params": 1.5,
+      "N": 4,
+      "q_judge": 52.9,
+      "mode_correct": 25.3,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 1.5,
+      "N": 16,
+      "q_judge": 36.5,
+      "mode_correct": 36.7,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 3.0,
+      "N": 4,
+      "q_judge": 51.4,
+      "mode_correct": 25.3,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 3.0,
+      "N": 16,
+      "q_judge": 34.6,
+      "mode_correct": 36.7,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 7.0,
+      "N": 4,
+      "q_judge": 67.1,
+      "mode_correct": 25.3,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 7.0,
+      "N": 16,
+      "q_judge": 41.3,
+      "mode_correct": 36.7,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 14.0,
+      "N": 4,
+      "q_judge": 71.4,
+      "mode_correct": 25.3,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 14.0,
+      "N": 16,
+      "q_judge": 51.0,
+      "mode_correct": 36.7,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 32.0,
+      "N": 4,
+      "q_judge": 78.6,
+      "mode_correct": 25.3,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 32.0,
+      "N": 16,
+      "q_judge": 61.5,
+      "mode_correct": 36.7,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 72.0,
+      "N": 4,
+      "q_judge": 78.6,
+      "mode_correct": 25.3,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "0.5B",
+      "judge_params": 72.0,
+      "N": 16,
+      "q_judge": 63.5,
+      "mode_correct": 36.7,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 1.5,
+      "N": 4,
+      "q_judge": 69.0,
+      "mode_correct": 60.0,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 1.5,
+      "N": 16,
+      "q_judge": 60.9,
+      "mode_correct": 64.0,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 3.0,
+      "N": 4,
+      "q_judge": 73.3,
+      "mode_correct": 60.0,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 3.0,
+      "N": 16,
+      "q_judge": 61.6,
+      "mode_correct": 64.0,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 7.0,
+      "N": 4,
+      "q_judge": 81.0,
+      "mode_correct": 60.0,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 7.0,
+      "N": 16,
+      "q_judge": 71.7,
+      "mode_correct": 64.0,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 14.0,
+      "N": 4,
+      "q_judge": 87.9,
+      "mode_correct": 60.0,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 14.0,
+      "N": 16,
+      "q_judge": 75.4,
+      "mode_correct": 64.0,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 32.0,
+      "N": 4,
+      "q_judge": 86.2,
+      "mode_correct": 60.0,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 32.0,
+      "N": 16,
+      "q_judge": 80.4,
+      "mode_correct": 64.0,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 72.0,
+      "N": 4,
+      "q_judge": 92.2,
+      "mode_correct": 60.0,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "1.5B",
+      "judge_params": 72.0,
+      "N": 16,
+      "q_judge": 77.5,
+      "mode_correct": 64.0,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "3B",
+      "judge_params": 1.5,
+      "N": 4,
+      "q_judge": 79.2,
+      "mode_correct": 75.3,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 1.5,
+      "N": 16,
+      "q_judge": 62.0,
+      "mode_correct": 86.0,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 3.0,
+      "N": 4,
+      "q_judge": 83.1,
+      "mode_correct": 75.3,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 3.0,
+      "N": 16,
+      "q_judge": 61.3,
+      "mode_correct": 86.0,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 7.0,
+      "N": 4,
+      "q_judge": 82.3,
+      "mode_correct": 75.3,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 7.0,
+      "N": 16,
+      "q_judge": 71.1,
+      "mode_correct": 86.0,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 14.0,
+      "N": 4,
+      "q_judge": 87.7,
+      "mode_correct": 75.3,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "3B",
+      "judge_params": 14.0,
+      "N": 16,
+      "q_judge": 76.8,
+      "mode_correct": 86.0,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 32.0,
+      "N": 4,
+      "q_judge": 85.4,
+      "mode_correct": 75.3,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 32.0,
+      "N": 16,
+      "q_judge": 80.3,
+      "mode_correct": 86.0,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 72.0,
+      "N": 4,
+      "q_judge": 86.9,
+      "mode_correct": 75.3,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "3B",
+      "judge_params": 72.0,
+      "N": 16,
+      "q_judge": 74.6,
+      "mode_correct": 86.0,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 1.5,
+      "N": 4,
+      "q_judge": 91.7,
+      "mode_correct": 90.7,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 1.5,
+      "N": 16,
+      "q_judge": 89.7,
+      "mode_correct": 92.7,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 3.0,
+      "N": 4,
+      "q_judge": 91.0,
+      "mode_correct": 90.7,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 3.0,
+      "N": 16,
+      "q_judge": 92.4,
+      "mode_correct": 92.7,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 7.0,
+      "N": 4,
+      "q_judge": 93.1,
+      "mode_correct": 90.7,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 7.0,
+      "N": 16,
+      "q_judge": 88.3,
+      "mode_correct": 92.7,
+      "predicted_win": false,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 14.0,
+      "N": 4,
+      "q_judge": 92.4,
+      "mode_correct": 90.7,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 14.0,
+      "N": 16,
+      "q_judge": 93.1,
+      "mode_correct": 92.7,
+      "predicted_win": true,
+      "observed_win": false
+    },
+    {
+      "policy": "7B",
+      "judge_params": 32.0,
+      "N": 4,
+      "q_judge": 95.8,
+      "mode_correct": 90.7,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "7B",
+      "judge_params": 32.0,
+      "N": 16,
+      "q_judge": 97.2,
+      "mode_correct": 92.7,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "7B",
+      "judge_params": 72.0,
+      "N": 4,
+      "q_judge": 97.2,
+      "mode_correct": 90.7,
+      "predicted_win": true,
+      "observed_win": true
+    },
+    {
+      "policy": "7B",
+      "judge_params": 72.0,
+      "N": 16,
+      "q_judge": 89.7,
+      "mode_correct": 92.7,
+      "predicted_win": false,
+      "observed_win": false
+    }
+  ],
+  "c2_confusion": {
+    "tp": 18,
+    "tn": 14,
+    "fp": 16,
+    "fn": 0,
+    "agreement_pct": 66.7
+  }
+}
