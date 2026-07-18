@@ -112,3 +112,82 @@ Aesthetic ground truth at n = a-few-raters is a case study, not a population cla
 reported with their small-n uncertainty, and every human-rated result is scoped to these raters.
 The paper's contribution is the measurement design and the bounds (coverage, fidelity, Goodhart) in
 a domain the field mostly discusses qualitatively — not a claim about Poetry in general.
+
+---
+
+# Amendment 1 — E5 expanded (pre-registered before any data)
+
+Origin: the collaborating poet independently posed the design question this amendment encodes —
+"train an LLM to mimic my style (corpus) or train an evaluator to rank revisions (my scores)?" —
+and specified the training-example format (original line, proposed revisions, scores, optional
+rationale). Committed before any labels exist; timestamp is the registration.
+
+## E5 (revised): four arms plus combination, on the line-revision task
+
+- **(a) zero-shot judge** — base model selects among N revisions.
+- **(b) in-context judge** — same, conditioned on K of her scored examples in the prompt.
+- **(c) evaluator-LoRA** — small judge fine-tuned on her preference data (scores; rationales
+  optional per item, used when present).
+- **(d) policy-LoRA** — generator fine-tuned on her existing corpus only (zero new labeling
+  labor); selection by majority-style baseline.
+- **(e) combination** — policy-LoRA generator × evaluator-LoRA selector.
+
+All arms evaluated by her blind ranking of selected outputs (q against her choices), matched
+candidate counts, sessions ≤30 min, week-later re-rate subset for the self-consistency ceiling.
+
+## Label-efficiency protocol (replaces the flat "need 100")
+
+Evaluator-LoRA trained at checkpoints of 20 / 40 / 60 / (100 if reached) labels; q(#labels)
+reported as a curve. The marginal-value-per-label curve is a deliverable in itself (ET-V's
+exchange-rate metric, previewed). If archived editing sessions exist, mined accept/reject
+decisions enter as a zero-new-labor label source, reported separately from fresh scores.
+
+## Registered predictions (added to the proposal's P-list)
+
+- **P7 (coverage vs selection).** At matched candidate counts, policy-LoRA raises her blind
+  preference over the generic policy (coverage effect), and evaluator-LoRA selection beats
+  majority-style selection over the same candidates (selection effect); the combination (e)
+  beats either single arm. Framework basis: quality ≤ coverage × selection; the two training
+  routes raise different factors.
+- **P8 (surface-mimicry risk).** Policy-LoRA alone scores higher on automatic style-similarity
+  to her corpus than arm (e), while losing to (e) in her blind preference — imitation matches
+  surface statistics; preference training captures what she actually keeps. (If P8 misses and
+  corpus-only mimicry wins her blind preference, that is a strike against the evaluator-first
+  thesis in this domain and will be reported as such.)
+- **P9 (label efficiency).** q(#labels) is concave with visible diminishing returns by ~60
+  labels; the first 20 labels buy more q than the next 40.
+- **P10 (rationale value).** Items carrying rationales contribute more q per label than
+  score-only items (critique distillation), but not enough to justify mandatory rationales —
+  measured as ablation on the same checkpoints.
+
+## Evaluator structure: thresholds, then taste (added after design discussion, pre-data)
+
+The two-component evaluator is formalized as non-compensatory, not as a weighted score. Craft
+dimensions (meter/rhythm, sound, syllable-stress fit; counterpoint rules in music) act as
+**thresholds** — checkable where possible, judged where not — and the taste dimension is
+**maximized subject to** those thresholds. Rationale: aesthetic preferences are observed to be
+non-compensatory (perfect meaning does not buy back broken meter; a catchy line that means nothing
+fails regardless), and any compensatory aggregation collapses to a scalar evaluator, which is the
+regime Papers II–III already covered. Search order follows: expand candidates → trim by
+constraints first (cheap, exact) → rank survivors by taste (expensive, noisy). Judges are scored
+per dimension against the human rater, not only holistically; dominated candidates (worse on every
+dimension) are pruned before any human rating session, so the rater only ever sees the Pareto set.
+
+- **P11 (per-dimension q).** Per-dimension judging agrees with the human rater more than holistic
+  scalar judging of the same candidates: judge–human agreement (q) is higher when the judge scores
+  craft and taste separately and the comparison is assembled from parts than when it emits one
+  overall score. Secondary claim: per-dimension q is heterogeneous — the judge's craft-dimension q
+  (partially verifier-checkable) exceeds its taste-dimension q.
+- **P12 (Goodhart under thresholds).** At matched optimization pressure in E3, threshold-gated
+  selection (maximize taste subject to craft thresholds) reaches its human-rated quality turn
+  point later — at strictly higher pressure — than scalar-selection over a weighted aggregate of
+  the same dimensions. Mechanism: a scalar is hacked by maxing its most exploitable direction;
+  thresholds cap every escape route. (If P12 misses and the scalar turns later or equal, that is
+  evidence the threshold structure adds constraint cost without Goodhart protection, and will be
+  reported as such.)
+
+## Labor contract (protocol, not prediction)
+
+Zero mandatory rationales; sessions capped at 30 minutes; the policy arm proceeds with no new
+labor from her; every session's data produces a reported point on the q-curve, so no
+contribution is "partial" — the curve is the result at every size.
