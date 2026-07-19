@@ -35,6 +35,7 @@ scratchpad/
 
 !docs/gelo.md
 !docs/whitepaper2.md
+!docs/whitepaper3.md
 
 # --- Efficient Thinking II (generalization) — regenerable data & model weights ---
 games/*.npz
