@@ -7,19 +7,24 @@ positions, position bias is implicated and flagged in III's methods — the cell
 
   python judging/c3_position_diag.py
 """
-import json
+import json, argparse
 from collections import Counter
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from et3_judge import extract, pick_best, load_problems
 from mlx_lm import load, generate as gen
 
+ap = argparse.ArgumentParser()
+ap.add_argument("--judge", default="mlx-community/Qwen2.5-72B-Instruct-4bit")
+ap.add_argument("--out", default="judging/c3_position_diag.json")
+a = ap.parse_args()
+
 N = 16
 NPROB = 60
 probs = load_problems("reasoning/data/gsm8k_test.jsonl", NPROB)
 golds = [str(p["answer"].split("####")[-1].strip().replace(",", "")) for p in probs]
 items = [json.loads(l) for l in open("reasoning/cache/gsm8k_7B.jsonl")][:NPROB]
-model, tok = load("mlx-community/Qwen2.5-72B-Instruct-4bit")
+model, tok = load(a.judge)
 
 rows = []
 for i in range(min(len(items), len(probs))):
@@ -47,6 +52,7 @@ if miss_corr_pos:
 json.dump({"n": len(rows), "N": N, "policy": "7B", "judge": "72B",
            "chosen_hist": {str(k): hist.get(k, 0) for k in range(N)},
            "edge_chosen": edge, "mid_chosen": mid, "uniform_edge_expect": round(4*len(rows)/N, 1),
+           "judge_model": a.judge,
            "missed_correct_positions": Counter(miss_corr_pos), "rows": rows},
-          open("judging/c3_position_diag.json", "w"), indent=2, default=int)
-print("\n[C3] wrote judging/c3_position_diag.json")
+          open(a.out, "w"), indent=2, default=int)
+print(f"\n[C3] wrote {a.out}")
