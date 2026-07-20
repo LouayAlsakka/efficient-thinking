@@ -40,6 +40,21 @@ Scores **P1**: search yields large validity gains with the ET-II crossover struc
 collapsing as base competence grows). Analysis identical to the ET-II frontier: exact McNemar on
 paired cells for any claimed flip.
 
+E1 generation-pass requirements (fix before launch):
+- **Prompt set:** 100 distinct topics/themes per task, committed as a seed list before generation;
+  form instructions identical verbatim across all models (prompts fixed and unoptimized — the
+  ET-III rule applies; prompt engineering is a confound priced at zero and stated as such).
+- **True greedy for @1:** form-valid@1 uses greedy decoding, not a first temperature sample —
+  the Paper II flip-decider lesson, applied in advance this time. Temperature sampling for the
+  N > 1 caches; sample once, select many.
+- **Memorization guard:** models can achieve perfect meter by quoting memorized canon. Log
+  n-gram overlap of every generation against the item-7a canon corpus; report the overlap rate
+  per model and exclude high-overlap items from validity claims (threshold committed with the
+  script, not chosen after seeing results).
+- **OOV logging:** checker 1a's out-of-vocabulary rate recorded per model per cell; if any cell
+  exceeds the 10% flag, its validity numbers carry the caveat inline.
+- **Per-problem logging from the first cell** — no re-runs for p-values later.
+
 ## 3. E4 — music with a full verifier, machine-only
 
 Counterpoint continuation: given a cantus firmus (10 public-domain examples), generate the
