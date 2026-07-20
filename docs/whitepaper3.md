@@ -156,7 +156,8 @@ All grids, per-problem outcome files, pairwise and diagnostic runs, and the anal
 
 ## References
 
-- Alsakka, L. (2026). *Efficient Thinking I–II.* This series.
+- Alsakka, L. (2026). *Efficient Thinking I: Measuring What Capability Costs.* This series.
+- Alsakka, L. (2026). *Efficient Thinking II: Where Search Pays and Where It Can't.* This series.
 - Brown, B. et al. (2024). *Large Language Monkeys: Scaling Inference Compute with Repeated Sampling.* arXiv:2407.21787.
 - Cobbe, K. et al. (2021). *Training Verifiers to Solve Math Word Problems.* arXiv:2110.14168.
 - Liu, N. F. et al. (2023). *Lost in the Middle: How Language Models Use Long Contexts.* TACL.

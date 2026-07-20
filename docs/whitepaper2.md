@@ -1,7 +1,7 @@
 # Efficient Thinking II: Where Search Pays and Where It Can't
 ## Testing the evaluator × search decomposition in a solved game, language reasoning, and sequential control
 
-**Louay Alsakka** · July 17, 2026 · *v1.0.1*
+**Louay Alsakka** · July 17, 2026 · *v1.0.2*
 
 ## Abstract
 
@@ -416,6 +416,7 @@ sweeps are still at exploratory power pending recompute from the caches — we f
 results where they appear.
 
 ## References
+- Alsakka, L. (2026). *Efficient Thinking I: Measuring What Capability Costs.* This series.
 - Anthony, T., Tian, Z. & Barber, D. (2017). *Thinking Fast and Slow with Deep Learning and Tree Search.* NeurIPS.
 - Brown, B. et al. (2024). *Large Language Monkeys: Scaling Inference Compute with Repeated Sampling.* arXiv:2407.21787.
 - Browne, C. et al. (2012). *A Survey of Monte Carlo Tree Search Methods.* IEEE TCIAIG.
