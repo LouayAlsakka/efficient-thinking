@@ -1,4 +1,4 @@
-# Efficient Thinking — Series Execution Plan (III, IV, V + II tail)
+# Efficient Thinking — Series Execution Plan (III, IV, V, VI + II tail)
 
 Working doc for Louay and both agents. Numbering settled: III = Efficient Judging (running),
 IV = Search Where Taste Is the Evaluator (proposal ready), V = The Exchange Rate of Feedback
@@ -80,6 +80,17 @@ canonical text written from the numbers.
 - **Gate G3**: IV-E5 result exists → unpark. First build is V-E1's simulated-oracle harness (frozen
   persona rubric as the user), which shares IV's judging machinery.
 - V-E3's human arm reuses IV's rating infrastructure and consent; plan those forms once.
+
+## Track D — ET-VI: Label-Fidelity Instrument (parked, idle-time override)
+
+- Registered: `docs/et6-label-fidelity-spec.md` (arms E-A/E-B, predictions F1–F5). Commit is the timestamp.
+- Claim: a value net's ceiling is its label fidelity; total error |V_net − V*| decomposes as
+  fit |V_net − V^π| ⊕ label-bias |V^π − V*|, and the plateau is where fit drops below bias (F1).
+- Priority: idle machine time only, **behind** Track A's ET-III external-validation runs and Track B's
+  ET-IV machine queue; runs solely at Louay's explicit override (ET-VI is otherwise parked).
+- Build order: Connect-4 arm first (exact solver validates the instrument — F1–F3, F5), chess arm
+  second (Stockfish-WDL proxy oracle; F4 back-predicts the supervised ~2000 ceiling from label
+  fidelity). Per-position records committed from the first checkpoint (the per-problem lesson).
 
 ## Machine allocation (two Studios)
 
