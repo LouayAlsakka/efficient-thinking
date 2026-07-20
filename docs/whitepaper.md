@@ -15,7 +15,7 @@ The central result is the size of the search lever on a frozen evaluator. On the
 
 A third study removes external supervision entirely. Self-play, a self-referential ladder, evolutionary selection, plurality voting, and weight merging all fail to lift the evaluator past its plateau at our two-machine scale; the one robust positive is that **inter-model agreement predicts correctness** (unanimous committees match Stockfish's best move 94% of the time vs 37% when all disagree) — a teacher-free confidence signal, though not an accuracy booster. These negatives are scoped: they characterize the small-compute regime, not self-play in general.
 
-The unifying reading is a decomposition — **strength = evaluator × search**. Search converts what the evaluator already encodes into better decisions; the evaluator's ceiling is set by the quality of the information it was trained on; and nothing inside a closed system raises that ceiling without an external oracle. The transferable contribution is the method: at each stage exactly one resource binds, which one is not knowable a priori, and spending anywhere else returns almost nothing — so measure first, then spend. We also report, as a case study in that method, how a coarse ±89 rating ladder manufactured an apparent 4.8× search-efficiency win that a rigorous paired head-to-head then eliminated (§4.2).
+The unifying reading is a decomposition — **strength = evaluator × search**. Search converts what the evaluator already encodes into better decisions; the evaluator's ceiling is set by the quality of the information it was trained on; and in every closed loop we ran, nothing inside the system raised that ceiling — only an external oracle did. Whether that is a law or a limitation of our loops is an open question: a system might in principle improve its evaluator by better extracting information it already holds (coherence, calibration), and our experiments bound what we observed, not what is possible. The transferable contribution is the method: at each stage exactly one resource binds, which one is not knowable a priori, and spending anywhere else returns almost nothing — so measure first, then spend. We also report, as a case study in that method, how a coarse ±89 rating ladder manufactured an apparent 4.8× search-efficiency win that a rigorous paired head-to-head then eliminated (§4.2).
 
 On calibration: absolute Elo here is internal ladder Elo — Stockfish rungs at fast movetime, with ±~100 systematic uncertainty near the top rung — and is not calibrated to over-the-board ratings. The searched system's ~2800-class ladder rating is consistent with the top-human band, but every claim in this paper is a relative, same-ladder comparison, which does not depend on that calibration.
 
@@ -25,7 +25,7 @@ On calibration: absolute Elo here is internal ladder Elo — Stockfish rungs at 
 
 1. **Search dominates parameters in this regime.** On a frozen 3.45M evaluator, MCTS adds +286 Elo at 800 sims and ~+55 per doubling thereafter, unsaturated at 16× the base budget (+519 total, same ladder). Doubling parameters at full data added nothing distinguishable from noise. Strength came from thinking, not growing.
 
-2. **Adaptive search out-scales fixed-depth search.** At equal compute MCTS beats alpha-beta, and it keeps climbing where fixed depth plateaus — uniform depth amplifies the value net's noise; adaptive allocation averages over it.
+2. **Adaptive search out-scales fixed-depth search.** At equal compute MCTS beats alpha-beta, and it keeps climbing where fixed depth plateaus — uniform depth amplifies the value net's noise; adaptive allocation averages over it — minimax propagates the single most optimistic evaluation error to the root, while MCTS's visit-weighted averaging cancels errors across simulations (Appendix A).
 
 3. **Data beats capacity when the evaluator binds.** 8× more training data moved strength ~+90; 1.4–2× more parameters moved it ~0. Capacity is the weakest lever in this data regime — a scoped claim, not "parameters never matter."
 
@@ -868,7 +868,10 @@ to query?**
 
 None of this makes redistribution *useless*: variance reduction, sharpening, and filtering are how you
 **reach** a ceiling cheaply — indispensable engineering. The narrow claim is about the *absolute*
-ceiling: **only information from outside the closed system can raise it.**
+ceiling, and we state it at the strength our evidence licenses: **in every loop we tested, only
+information from outside the closed system raised it.** We did not observe — and cannot rule out —
+an internal route that improves the evaluator by better extracting information the system already
+holds; our loops bound what happened, not what is possible.
 
 - **Architecture > parameters.** The right prior (spatial locality + weight sharing) beats raw width —
   a 14 MB conv reaches strength a 3× larger MLP cannot.
@@ -1043,7 +1046,9 @@ model with no such oracle should, by our framework, **plateau**.
 *synthetic-data breakthrough* or *recursively self-improving architecture* with one question — **does
 it inject information from outside its closed system** (new empirical data, supervision, or an external
 oracle: a verifier, a simulator, the physical world)? If yes, it can raise the ceiling; if it only
-re-processes what its own models contain, our results predict it will **plateau**. Recursive
+re-processes what its own models contain, our results predict it will **plateau at the information
+already held** — internal re-processing may still improve how well that information is *extracted*
+(a real and unmeasured margin), but our results predict it cannot push past it. Recursive
 self-improvement compounds where an external oracle exists (a game's rules, a theorem checker, a
 compiler, a market) and stalls where none does — a claim about the *source* of information, not the
 method's ingenuity.
@@ -1054,6 +1059,34 @@ method's ingenuity.
 - **Best model:** `runs/conv_value_llm1` (conv-96×8 + value, 3.45M params).
 - **Key hyperparameters:** conv width 96, depth 8; lr 5e-4 (train) / 1e-4 (self-play); gradient
   clip 1.0; MCTS c_puct 1.5; Dirichlet α 0.3; replay buffer 120K–300K.
+
+## Appendix A — Why uniform depth loses to adaptive allocation with a noisy evaluator
+
+Fixed-depth minimax with a learned evaluator is a max-of-errors machine. Every leaf of a depth-d
+tree receives a score carrying the net's error, and minimax propagates the maximum (alternating
+with the minimum) upward. A maximum over many noisy estimates systematically selects the most
+optimistically wrong one — the optimizer's curse — so the deeper the uniform search, the more
+leaves are evaluated, and the more chances noise has to produce one spectacular overestimate that
+reaches the root and picks the move. One hallucinated winning evaluation outvotes fifty honest
+ones. A small illustration: with independent leaf noise of σ = 0.3 in value units, the expected
+maximum error over a thousand leaves is roughly 3σ ≈ 0.9 — larger than most true positional
+advantages at our level.
+
+MCTS differs in both statistics and allocation. A node's value is the visit-weighted mean of the
+evaluations beneath it, so independent errors partially cancel exactly where visit counts are
+highest; and the allocation rule concentrates those visits on the lines that matter, so the
+averaging is strongest precisely where the decision lives. The same noisy net feeds a max
+operator in one algorithm (an amplifier) and a weighted mean in the other (a filter).
+
+This is not a new phenomenon: it is game-tree pathology — the classical result that deeper
+minimax can yield worse decisions under noisy leaf evaluation (Nau 1979; Beal 1980; Pearl 1983)
+— reproduced here with a modern learned evaluator, whose error distribution is exactly the heavy,
+position-correlated kind the max operator exploits. (Classical engines tolerate deep minimax
+because handcrafted evaluations are cheap, consistent, and tamer in their errors.) The
+observation also foreshadows this series: averaging as noise-cancellation is why majority vote is
+so hard for a judge to beat, and the noise-versus-depth trade reappears as the gridworld's
+σ-versus-horizon curve in Paper II. The pathology citations are stated from standard secondary
+sources and should be verified against the originals before formal publication.
 
 ## References
 
