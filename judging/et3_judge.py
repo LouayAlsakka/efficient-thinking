@@ -77,22 +77,34 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--judge", required=True); ap.add_argument("--judge-params", type=float, required=True)
     ap.add_argument("--policies", required=True, help="comma list tag:params, caches at reasoning/cache/gsm8k_<tag>.jsonl")
-    ap.add_argument("--data", default="reasoning/data/gsm8k_test.jsonl")
+    ap.add_argument("--data", default=None)
+    ap.add_argument("--math", action="store_true", help="MATH mode: boxed extraction, math500 problems, math_<tag> caches")
     ap.add_argument("--nlist", default="4,16"); ap.add_argument("--problems", type=int, default=200)
     ap.add_argument("--mode", default="pick-best", choices=["pick-best", "pairwise"])
     ap.add_argument("--perproblem", action="store_true", help="save per-problem pick/maj/coverage (C1 McNemar, C2 bridge)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     from mlx_lm import load, generate as gen
-    probs = load_problems(a.data, a.problems)
-    golds = [str(p["answer"].split("####")[-1].strip().replace(",", "")) for p in probs]
+    if a.math:                                                        # reuse Paper II's exact MATH extraction/normalization
+        import sys
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "reasoning"))
+        from reason_cache import extract_boxed, normalize
+        ansfn = lambda s: normalize(extract_boxed(s))
+        qfield, cache_pre = "problem", "math"
+    else:
+        ansfn = extract
+        qfield, cache_pre = "question", "gsm8k"
+    data = a.data or ("reasoning/data/math500.jsonl" if a.math else "reasoning/data/gsm8k_test.jsonl")
+    probs = load_problems(data, a.problems)                           # seed-0 shuffle aligns index-for-index with the caches
+    golds = ([normalize(str(p["answer"])) for p in probs] if a.math
+             else [str(p["answer"].split("####")[-1].strip().replace(",", "")) for p in probs])
     Ns = [int(x) for x in a.nlist.split(",")]
     model, tok = load(a.judge)
     rng = random.Random(0)
     rows = []
     for spec in a.policies.split(","):
         ptag, pp = spec.split(":")
-        cache = f"reasoning/cache/gsm8k_{ptag}.jsonl"
+        cache = f"reasoning/cache/{cache_pre}_{ptag}.jsonl"
         items = [json.loads(l) for l in open(cache)][:a.problems]
         m = min(len(items), len(probs))
         for N in Ns:
@@ -100,15 +112,15 @@ def main():
             pick_ok = []; maj_ok = []; cov = []                       # per-problem outcomes (C1 McNemar, C2 bridge)
             for i in range(m):
                 subs = items[i]["samples"][:N]; g = golds[i]
-                ans = [extract(s) for s in subs]
+                ans = [ansfn(s) for s in subs]
                 gtok += sum(len(tok.encode(s)) for s in subs) / N        # avg policy gen tokens/sample
                 mc = Counter([x for x in ans if x]).most_common(1)
                 mo = bool(mc and str(mc[0][0]) == g); maj += mo
                 cv = any(str(x) == g for x in ans); orc += cv
                 if a.mode == "pairwise":
-                    pick, plen = pairwise_best(model, tok, gen, probs[i]["question"], subs, rng)
+                    pick, plen = pairwise_best(model, tok, gen, probs[i][qfield], subs, rng)
                 else:
-                    pick, plen = pick_best(model, tok, gen, probs[i]["question"], subs)
+                    pick, plen = pick_best(model, tok, gen, probs[i][qfield], subs)
                 jin += plen
                 po = (str(ans[pick]) == g); pb += po
                 if a.perproblem:
