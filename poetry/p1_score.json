@@ -1,0 +1,167 @@
+[
+  {
+    "policy": "0.5B",
+    "task": "lyric",
+    "valid_at1": 0.0,
+    "selected_at16": 39.0,
+    "lift": 39.0,
+    "gained": 39,
+    "lost": 0,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "1.5B",
+    "task": "lyric",
+    "valid_at1": 21.0,
+    "selected_at16": 77.0,
+    "lift": 56.0,
+    "gained": 56,
+    "lost": 0,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "14B",
+    "task": "lyric",
+    "valid_at1": 30.0,
+    "selected_at16": 72.0,
+    "lift": 42.0,
+    "gained": 42,
+    "lost": 0,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "3B",
+    "task": "lyric",
+    "valid_at1": 15.0,
+    "selected_at16": 83.0,
+    "lift": 68.0,
+    "gained": 68,
+    "lost": 0,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "7B",
+    "task": "lyric",
+    "valid_at1": 8.0,
+    "selected_at16": 47.0,
+    "lift": 39.0,
+    "gained": 41,
+    "lost": 2,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "0.5B",
+    "task": "sonnet",
+    "valid_at1": 0.0,
+    "selected_at16": 0.0,
+    "lift": 0.0,
+    "gained": 0,
+    "lost": 0,
+    "p": 1.0,
+    "verdict": "ns"
+  },
+  {
+    "policy": "1.5B",
+    "task": "sonnet",
+    "valid_at1": 0.0,
+    "selected_at16": 0.0,
+    "lift": 0.0,
+    "gained": 0,
+    "lost": 0,
+    "p": 1.0,
+    "verdict": "ns"
+  },
+  {
+    "policy": "14B",
+    "task": "sonnet",
+    "valid_at1": 6.0,
+    "selected_at16": 77.0,
+    "lift": 71.0,
+    "gained": 71,
+    "lost": 0,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "3B",
+    "task": "sonnet",
+    "valid_at1": 0.0,
+    "selected_at16": 10.0,
+    "lift": 10.0,
+    "gained": 10,
+    "lost": 0,
+    "p": 0.00195,
+    "verdict": "sig"
+  },
+  {
+    "policy": "7B",
+    "task": "sonnet",
+    "valid_at1": 8.0,
+    "selected_at16": 78.0,
+    "lift": 70.0,
+    "gained": 70,
+    "lost": 0,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "0.5B",
+    "task": "villanelle",
+    "valid_at1": 0.0,
+    "selected_at16": 0.0,
+    "lift": 0.0,
+    "gained": 0,
+    "lost": 0,
+    "p": 1.0,
+    "verdict": "ns"
+  },
+  {
+    "policy": "1.5B",
+    "task": "villanelle",
+    "valid_at1": 0.0,
+    "selected_at16": 0.0,
+    "lift": 0.0,
+    "gained": 0,
+    "lost": 0,
+    "p": 1.0,
+    "verdict": "ns"
+  },
+  {
+    "policy": "14B",
+    "task": "villanelle",
+    "valid_at1": 15.0,
+    "selected_at16": 76.0,
+    "lift": 61.0,
+    "gained": 63,
+    "lost": 2,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "3B",
+    "task": "villanelle",
+    "valid_at1": 3.0,
+    "selected_at16": 31.0,
+    "lift": 28.0,
+    "gained": 29,
+    "lost": 1,
+    "p": 0.0,
+    "verdict": "sig"
+  },
+  {
+    "policy": "7B",
+    "task": "villanelle",
+    "valid_at1": 18.0,
+    "selected_at16": 86.0,
+    "lift": 68.0,
+    "gained": 71,
+    "lost": 3,
+    "p": 0.0,
+    "verdict": "sig"
+  }
+]
