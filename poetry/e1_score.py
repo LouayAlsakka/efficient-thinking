@@ -19,6 +19,23 @@ from lyric_fit import check_lyric_fit
 
 _JUNK = re.compile(r"end of (sentence|text)|^note:|^here('s| is)|^sure[,!]|^i hope|^this |^\(", re.I)
 
+MEMORIZATION_THRESHOLD = 0.5      # committed before results: >50% of a generation's 4-grams in canon = memorized
+
+
+def _ngrams(text, n=4):
+    w = re.findall(r"[a-z']+", (text or "").lower())
+    return {tuple(w[i:i + n]) for i in range(len(w) - n + 1)} if len(w) >= n else set()
+
+
+_CANON_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "canon_reference.txt")
+_CANON_4GRAMS = _ngrams(open(_CANON_PATH).read()) if os.path.exists(_CANON_PATH) else set()
+
+
+def canon_overlap(text):
+    """Fraction of a generation's 4-grams that appear verbatim in the canon corpus (memorization signal)."""
+    g = _ngrams(text)
+    return (len(g & _CANON_4GRAMS) / len(g)) if g else 0.0
+
 
 def extract_lines(text, n_lines):
     """Pull the first n_lines verse-looking lines from a completion (strip numbering/quotes/markdown/junk)."""
@@ -36,12 +53,12 @@ def extract_lines(text, n_lines):
 
 
 def score_sample(sample, rec):
-    """Return (valid, score, meter_valid) for one sample. `valid` = full form (meter AND rhyme);
-    `meter_valid` = meter-only (ignore rhyme) — a robust secondary frontier when rhyme is scarce."""
+    """Return (valid, score, meter_valid, oov_rate) for one sample. `valid` = full form (meter AND
+    rhyme); `meter_valid` = meter-only (ignore rhyme, robust secondary frontier)."""
     task = rec["task"]
     lines = extract_lines(sample, rec["n_lines"])
     if len(lines) < rec["n_lines"]:
-        return False, 0.0, False                               # wrong number of lines = malformed
+        return False, 0.0, False, 0.0                          # wrong number of lines = malformed
     if task in ("sonnet", "villanelle"):
         checks = [check_iambic_pentameter(ln) for ln in lines]
         n_meter = sum(c["ok"] for c in checks)
@@ -49,51 +66,75 @@ def score_sample(sample, rec):
         rhyme = check_rhyme_scheme(lines, rec["scheme"])
         valid = meter_valid and rhyme["ok"]
         score = n_meter + (1.0 if rhyme["ok"] else 0.0) + sum(c["iamb_score"] for c in checks) / 10.0
-        return valid, score, meter_valid
-    else:  # lyric — single line, "meter" and "form" coincide
+        oov = sum(c["oov_rate"] for c in checks) / len(checks)
+        return valid, score, meter_valid, oov
+    else:  # lyric — single line, meter and form coincide
         c = check_lyric_fit(lines[0], rec["template"])
         v = bool(c["ok"])
-        return v, (1.0 if v else 0.0) + c["align_score"] / 10.0, v
+        return v, (1.0 if v else 0.0) + c["align_score"] / 10.0, v, 0.0
+
+
+def _by_id(path):
+    return {json.loads(l)["id"]: json.loads(l) for l in open(path)} if os.path.exists(path) else {}
 
 
 def main():
-    Ns = [1, 4, 16]
     cells = []
-    for path in sorted(glob.glob("poetry/cache/e1_*.jsonl")):
-        tag = os.path.basename(path)[3:-6]                     # e1_<tag>.jsonl
-        recs = [json.loads(l) for l in open(path)]
-        by_task = {}
-        for r in recs:
-            by_task.setdefault(r["task"], []).append(r)
-        for task, rs in sorted(by_task.items()):
-            scored = []
-            for r in rs:
-                vs = [score_sample(s, r) for s in r["samples"]]
-                scored.append(vs)                              # list of (valid,score) per sample
-            for N in Ns:
-                v1 = sel = orc = mv1 = msel = morc = 0; m = len(scored)
-                per = {"valid1": [], "sel": [], "orc": []}
-                for vs in scored:
-                    sub = vs[:N]
-                    valid1 = sub[0][0]
-                    best = max(range(len(sub)), key=lambda i: sub[i][1])
-                    selv = sub[best][0]
-                    orcv = any(v for v, _, _ in sub)
-                    v1 += valid1; sel += selv; orc += orcv
-                    mv1 += sub[0][2]; msel += sub[best][2]; morc += any(mv for _, _, mv in sub)
-                    per["valid1"].append(int(valid1)); per["sel"].append(int(selv)); per["orc"].append(int(orcv))
-                cells.append({"policy": tag, "task": task, "N": N, "n": m,
-                              "form_valid_at1": round(100 * v1 / m, 1),
-                              "verifier_selected_atN": round(100 * sel / m, 1),
-                              "oracle_any_atN": round(100 * orc / m, 1),
-                              "meter_valid_at1": round(100 * mv1 / m, 1),
-                              "meter_selected_atN": round(100 * msel / m, 1),
-                              "meter_oracle_atN": round(100 * morc / m, 1),
-                              "per_prompt": per})
-                print(f"  {tag:>4} {task:<10} N={N:>2}  valid@1={100*v1/m:5.1f} sel@N={100*sel/m:5.1f} "
-                      f"orc@N={100*orc/m:5.1f} | meter v@1={100*mv1/m:5.1f} sel@N={100*msel/m:5.1f} (n={m})")
+    for temp_path in sorted(glob.glob("poetry/cache/e1_*.jsonl")):
+        base = os.path.basename(temp_path)
+        if base.endswith("_greedy.jsonl"):
+            continue
+        tag = base[3:-6]                                       # e1_<tag>.jsonl
+        temp = _by_id(temp_path)
+        greedy = _by_id(f"poetry/cache/e1_{tag}_greedy.jsonl")  # true-greedy @1 (may be absent → falls back)
+        tasks = sorted({r["task"] for r in temp.values()})
+        for task in tasks:
+            ids = [i for i, r in temp.items() if r["task"] == task]
+            row = {"policy": tag, "task": task, "n": len(ids),
+                   "memorization_threshold": MEMORIZATION_THRESHOLD}
+            # --- @1: true greedy, memorized items excluded from validity ---
+            g_valid, g_meter, g_ov, oov_acc, n_g, n_mem = [], [], [], 0.0, 0, 0
+            for i in ids:
+                grec = greedy.get(i, {"samples": [temp[i]["samples"][0]], **temp[i]})  # fallback: 1st temp sample
+                s = grec["samples"][0]
+                v, _, mv, oov = score_sample(s, temp[i])
+                ov = canon_overlap(s); mem = ov > MEMORIZATION_THRESHOLD
+                n_g += 1; n_mem += mem; oov_acc += oov; g_ov.append(ov)
+                g_valid.append(None if mem else int(v)); g_meter.append(None if mem else int(mv))
+            kept = [x for x in g_valid if x is not None]
+            row["form_valid_at1"] = round(100 * sum(kept) / len(kept), 1) if kept else 0.0
+            mkept = [x for x in g_meter if x is not None]
+            row["meter_valid_at1"] = round(100 * sum(mkept) / len(mkept), 1) if mkept else 0.0
+            row["oov_rate"] = round(oov_acc / n_g, 3) if n_g else 0.0
+            row["oov_flag"] = row["oov_rate"] > 0.10
+            row["memorized_frac"] = round(n_mem / n_g, 3) if n_g else 0.0
+            row["greedy_used"] = bool(greedy)
+            # --- @N: temperature samples, memorized samples excluded from the candidate pool ---
+            per = {"g_valid": [x if x is not None else 0 for x in g_valid]}
+            for N in (4, 16):
+                sel = orc = msel = 0
+                selv_arr, orcv_arr = [], []
+                for i in ids:
+                    subs = temp[i]["samples"][:N]
+                    scored = [(*score_sample(s, temp[i]), canon_overlap(s)) for s in subs]
+                    pool = [x for x in scored if x[4] <= MEMORIZATION_THRESHOLD] or scored
+                    best = max(range(len(pool)), key=lambda k: pool[k][1])
+                    selv = int(pool[best][0]); orcv = int(any(x[0] for x in pool))
+                    msel += int(pool[best][2])
+                    sel += selv; orc += orcv; selv_arr.append(selv); orcv_arr.append(orcv)
+                m = len(ids)
+                row[f"verifier_selected_at{N}"] = round(100 * sel / m, 1)
+                row[f"oracle_any_at{N}"] = round(100 * orc / m, 1)
+                row[f"meter_selected_at{N}"] = round(100 * msel / m, 1)
+                per[f"sel{N}"] = selv_arr; per[f"orc{N}"] = orcv_arr
+            row["per_prompt"] = per
+            cells.append(row)
+            print(f"  {tag:>4} {task:<10} valid@1={row['form_valid_at1']:5.1f} "
+                  f"sel@4={row['verifier_selected_at4']:5.1f} sel@16={row['verifier_selected_at16']:5.1f} "
+                  f"orc@16={row['oracle_any_at16']:5.1f} | meter@1={row['meter_valid_at1']:5.1f} "
+                  f"oov={row['oov_rate']:.2f}{'!' if row['oov_flag'] else ''} mem={row['memorized_frac']:.2f} (n={m})")
     json.dump(cells, open("poetry/e1_scores.json", "w"), indent=2)
-    print(f"\n[E1] wrote poetry/e1_scores.json ({len(cells)} cells)")
+    print(f"\n[E1] wrote poetry/e1_scores.json ({len(cells)} rows). Greedy@1, memorized excluded (>{MEMORIZATION_THRESHOLD} 4-gram overlap).")
 
 
 if __name__ == "__main__":
