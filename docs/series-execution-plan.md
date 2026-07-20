@@ -1,4 +1,4 @@
-# Efficient Thinking — Series Execution Plan (III, IV, V, VI + II tail)
+# Efficient Thinking — Series Execution Plan (III, IV, V, VI, VII + II tail)
 
 Working doc for Louay and both agents. Numbering settled: III = Efficient Judging (running),
 IV = Search Where Taste Is the Evaluator (proposal ready), V = The Exchange Rate of Feedback
@@ -81,16 +81,32 @@ canonical text written from the numbers.
   persona rubric as the user), which shares IV's judging machinery.
 - V-E3's human arm reuses IV's rating infrastructure and consent; plan those forms once.
 
-## Track D — ET-VI: Label-Fidelity Instrument (parked, idle-time override)
+## Track D — ET-VI: The Label Ceiling (UNPARKED, games-only, idle-time)
 
-- Registered: `docs/et6-label-fidelity-spec.md` (arms E-A/E-B, predictions F1–F5). Commit is the timestamp.
+- Registered: `docs/efficient-thinking-6-concept.md` (concept) + `docs/et6-label-fidelity-spec.md`
+  (arms E-A/E-B, predictions F1–F5). Commit is the timestamp.
 - Claim: a value net's ceiling is its label fidelity; total error |V_net − V*| decomposes as
   fit |V_net − V^π| ⊕ label-bias |V^π − V*|, and the plateau is where fit drops below bias (F1).
-- Priority: idle machine time only, **behind** Track A's ET-III external-validation runs and Track B's
-  ET-IV machine queue; runs solely at Louay's explicit override (ET-VI is otherwise parked).
+  Explains Paper I §3's plateau mechanistically.
+- Priority: unparked (games-only, no IV/V dependency), but runs in **idle** machine time **behind**
+  Track A's ET-III external-validation runs and Track B's ET-IV machine queue.
 - Build order: Connect-4 arm first (exact solver validates the instrument — F1–F3, F5), chess arm
   second (Stockfish-WDL proxy oracle; F4 back-predicts the supervised ~2000 ceiling from label
   fidelity). Per-position records committed from the first checkpoint (the per-problem lesson).
+
+## Track E — ET-VII: The Elicitation Gap (parked; math arms unblockable on the ET-III harness)
+
+- Registered: `docs/efficient-thinking-7-concept.md`. Commit is the timestamp.
+- Theory: the Internal-Improvement Bound — internal computation cannot raise I(T; W) (data-processing
+  inequality) so realized accuracy A rises only toward the ceiling A*(W) already in the state; the
+  elicitation gap Δ = A* − A is what internal self-improvement is worth, and everything above A* must
+  be imported. Δ is empirical; the series takes no advance position on its size.
+- Experiments: E-E (probe Δ on GSM8K/MATH judging cells — ET-III harness + ground-truth caches),
+  E-D (coherence bootstrapping — the only internal route), E-C (ensemble decorrelation — ET-III
+  harness + Llama). Cross-registration: E-D's realized gains must not exceed E-E's probed Δ.
+- Priority: parked. The aesthetic arm waits on ET-IV's human-q machinery (G2); the math arms need
+  only the ET-III harness, so they unpark behind Tracks A/B/D without new infrastructure. Not
+  scheduled ahead of ET-VI.
 
 ## Machine allocation (two Studios)
 

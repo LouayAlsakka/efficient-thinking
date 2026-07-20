@@ -1,7 +1,7 @@
 # ET-VI E-A/E-B — Label-Fidelity Instrument: spec and registrations
 
-Registered before execution (commit timestamp = registration). Scope-rule note: ET-VI is parked;
-these two game-domain arms run only in idle machine time at Louay's explicit override, behind the
+Registered before execution (commit timestamp = registration). Scope-rule note: this spec belongs to ET-VI
+(The Label Ceiling), which is games-only and unparked; it runs in idle machine time behind the
 ET-III external-validation runs and the ET-IV machine queue.
 
 ## The claim under test
