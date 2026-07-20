@@ -26,6 +26,23 @@ If M1 lands and M3 holds, the paper's §8 hedge becomes a §3 cross-benchmark re
 calculus changes materially. If M1 misses (judges stay null despite weak consensus), that is a
 strike against the criterion's sufficiency framing and gets §7-scored at full prominence.
 
+## M1 scoring plan (frozen before the 72B tail completes; commit timestamp is the freeze)
+
+M1's confirmatory family is exactly the cells it named in advance: {32B, 72B} judges × 3B policy
+× N = 4, pick-best. Scoring rules, fixed pre-data:
+- Exact paired McNemar per cell; Bonferroni within the confirmatory family only (×2; if the 14B
+  boundary cell is also claimed, ×3).
+- **Hit**: both confirmatory cells significant after correction. **Partial**: one significant, or
+  both directionally positive with p in (0.05, 0.15] — reported as "direction confirmed,
+  significance marginal at n = 300," with the n-extension registered as the decider (the Paper II
+  flip-decider pattern). **Miss**: direction absent or reversed.
+- All other MATH cells (7B/14B judges; every N = 16 cell) are exploratory: reported with
+  p-values, never scored against M1. M4 (the N tax persists) is scored on the sign pattern of the
+  N = 16 column, not on any single cell.
+- No verdict language ("confirmed," "flips," "wins") enters any document before this plan's
+  outputs exist. Margins of +4-5 points at n = 300 are genuinely uncertain; either outcome is
+  fine, and the plan exists so the outcome is read, not argued.
+
 ## Run 2 — Llama family check (small, rides along)
 
 Llama-3.1-8B-Instruct (4-bit) as judge over the existing GSM8K caches: cells {0.5B, 1.5B, 3B}
