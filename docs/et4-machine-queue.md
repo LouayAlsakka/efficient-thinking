@@ -77,6 +77,41 @@ sampler, and q/self-consistency computation scripts with unit tests on synthetic
 Definition of done: a full dry-run session executed end-to-end with the persona oracle standing
 in for the rater, producing a q number from fake data through the real pipeline.
 
+## 7. General-taste track: the canon judge and canon policy (machine-only, pre-G2)
+
+Goal: the general-q versions of P7's two arms, built from public signals before any personal data
+exists. "Better poetry" decomposes as coverage × selection; this item builds both at crowd scale.
+
+- **7a. Contrast dataset.** Positives: public-domain canonical/anthologized poems (Gutenberg-era
+  and earlier ONLY — modern acclaimed poetry is copyrighted and the dataset must be
+  distributable). Graded negatives: amateur web verse (public-domain/CC only), model-generated
+  verse from the E1 ladder, and corrupted canon (line-shuffled, meter-broken via checker 1a).
+  Log provenance per item.
+- **7b. Canon judge.** Small Qwen + LoRA trained on the contrast (pairwise preference format,
+  reusing the amendment's data schema). Evaluate on held-out discrimination tiers: canon vs
+  corrupted (easy), canon vs amateur (mid), canon vs best model-generated (hard).
+- **7c. Canon policy.** Policy LoRA fine-tuned on the canon corpus (the coverage arm); E1's
+  form-validity frontier re-run on it to measure what canon-tuning does to formal competence.
+- **7d. Selection value.** Canon-judge pick-best over policy samples vs random and
+  form-checker-only selection, scored by independent scorers (frontier judge; the human arm
+  waits for G2). Small fields only (N = 4), pairwise protocol — ET-III's rules apply verbatim.
+
+Registered predictions:
+- **G1p.** Discrimination is tiered exactly as constructed: near-ceiling on corrupted, high on
+  amateur, weakest on best model-generated — the noise floor is easy, the frontier is not.
+- **G2p.** Canon-judge selection beats random and checker-only selection on independent scoring —
+  general taste has positive selection value over form alone.
+- **G3p (the ceiling).** The lift concentrates in bad-to-competent; among already-form-valid,
+  fluent candidates the canon judge's margin shrinks toward noise — crowd signal thins exactly
+  where greatness lives (the ensemble-bias prediction at data scale).
+- **G4p (the day-one personal measurement).** When G2 fires, the first session includes
+  canon-judge picks vs the poet's blind picks on identical fields: the disagreement rate is the
+  measured crowd-vs-personal taste distance, and the registered expectation is that it is large —
+  her complaint ("reverts to conventions") quantified.
+
+Guardrail: never evaluate the canon judge with the canon judge (Goodhart circularity); every
+selection-value claim uses an independent scorer, and nothing human-graded is claimed pre-G2.
+
 ## Standing rules and guardrails
 
 - Per-problem logging everywhere, from the first cell (no re-runs for p-values later).
