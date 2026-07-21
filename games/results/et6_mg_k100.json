@@ -1,0 +1,77 @@
+{
+  "value_games": 100,
+  "config": {
+    "value_games": 100,
+    "iters": 40,
+    "games": 16,
+    "sims": 64,
+    "epochs": 4,
+    "batch": 256,
+    "lr": 0.001,
+    "buffer": 20000,
+    "label_cap": 200,
+    "channels": 64,
+    "blocks": 4,
+    "eval_every": 4,
+    "holdout": 300,
+    "seed": 0,
+    "out": "games/results/et6_mg_k100.json"
+  },
+  "history": [
+    {
+      "iter": 1,
+      "value_mae": 0.48,
+      "gelo": 245.0
+    },
+    {
+      "iter": 4,
+      "value_mae": 0.471,
+      "gelo": 214.0
+    },
+    {
+      "iter": 8,
+      "value_mae": 0.46,
+      "gelo": 183.0
+    },
+    {
+      "iter": 12,
+      "value_mae": 0.449,
+      "gelo": 278.0
+    },
+    {
+      "iter": 16,
+      "value_mae": 0.442,
+      "gelo": 125.0
+    },
+    {
+      "iter": 20,
+      "value_mae": 0.435,
+      "gelo": 310.0
+    },
+    {
+      "iter": 24,
+      "value_mae": 0.431,
+      "gelo": 214.0
+    },
+    {
+      "iter": 28,
+      "value_mae": 0.428,
+      "gelo": 183.0
+    },
+    {
+      "iter": 32,
+      "value_mae": 0.426,
+      "gelo": 310.0
+    },
+    {
+      "iter": 36,
+      "value_mae": 0.418,
+      "gelo": 214.0
+    },
+    {
+      "iter": 40,
+      "value_mae": 0.411,
+      "gelo": 435.0
+    }
+  ]
+}
