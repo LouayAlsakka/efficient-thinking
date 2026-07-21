@@ -1,0 +1,112 @@
+[
+  {
+    "policy": "0.5B",
+    "n": 50,
+    "serial_final_valid": 0.0,
+    "parallel_selected_valid": 10.0,
+    "mean_matched_N": 14.3,
+    "serial_gt_parallel": 0,
+    "parallel_gt_serial": 5,
+    "p": 0.0625,
+    "serial_valid_by_round": [
+      0.0,
+      0.0,
+      0.0,
+      2.0,
+      2.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "verdict": "tie/ns"
+  },
+  {
+    "policy": "1.5B",
+    "n": 50,
+    "serial_final_valid": 6.0,
+    "parallel_selected_valid": 26.0,
+    "mean_matched_N": 10.3,
+    "serial_gt_parallel": 2,
+    "parallel_gt_serial": 12,
+    "p": 0.0129,
+    "serial_valid_by_round": [
+      8.0,
+      10.0,
+      10.0,
+      10.0,
+      8.0,
+      8.0,
+      6.0,
+      6.0,
+      6.0
+    ],
+    "verdict": "parallel>serial (P6 supported)"
+  },
+  {
+    "policy": "14B",
+    "n": 50,
+    "serial_final_valid": 12.0,
+    "parallel_selected_valid": 64.0,
+    "mean_matched_N": 10.2,
+    "serial_gt_parallel": 2,
+    "parallel_gt_serial": 28,
+    "p": 0.0,
+    "serial_valid_by_round": [
+      16.0,
+      10.0,
+      6.0,
+      6.0,
+      6.0,
+      6.0,
+      10.0,
+      8.0,
+      12.0
+    ],
+    "verdict": "parallel>serial (P6 supported)"
+  },
+  {
+    "policy": "3B",
+    "n": 50,
+    "serial_final_valid": 6.0,
+    "parallel_selected_valid": 30.0,
+    "mean_matched_N": 10.9,
+    "serial_gt_parallel": 1,
+    "parallel_gt_serial": 13,
+    "p": 0.0018,
+    "serial_valid_by_round": [
+      8.0,
+      6.0,
+      4.0,
+      6.0,
+      2.0,
+      2.0,
+      4.0,
+      6.0,
+      6.0
+    ],
+    "verdict": "parallel>serial (P6 supported)"
+  },
+  {
+    "policy": "7B",
+    "n": 50,
+    "serial_final_valid": 2.0,
+    "parallel_selected_valid": 48.0,
+    "mean_matched_N": 9.6,
+    "serial_gt_parallel": 0,
+    "parallel_gt_serial": 23,
+    "p": 0.0,
+    "serial_valid_by_round": [
+      2.0,
+      4.0,
+      2.0,
+      2.0,
+      2.0,
+      4.0,
+      2.0,
+      2.0,
+      2.0
+    ],
+    "verdict": "parallel>serial (P6 supported)"
+  }
+]
