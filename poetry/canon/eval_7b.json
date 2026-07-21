@@ -1,0 +1,15 @@
+{
+  "heldout_sizes": {
+    "hard_model": 4,
+    "easy_corrupted": 4
+  },
+  "base": {
+    "hard_model": 75.0,
+    "easy_corrupted": 50.0
+  },
+  "lora": {
+    "hard_model": 25.0,
+    "easy_corrupted": 50.0
+  },
+  "scale": "prototype n=34"
+}
