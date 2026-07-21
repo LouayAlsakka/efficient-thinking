@@ -1,0 +1,117 @@
+{
+  "M1": {
+    "verdict": "HIT \u2014 both confirmatory cells significant after Bonferroni",
+    "confirmatory": [
+      {
+        "judge": 32.0,
+        "delta": 4.0,
+        "b": 16,
+        "c": 4,
+        "p": 0.0118,
+        "p_bonf": 0.0236,
+        "pos": true
+      },
+      {
+        "judge": 72.0,
+        "delta": 4.6,
+        "b": 21,
+        "c": 7,
+        "p": 0.0125,
+        "p_bonf": 0.0251,
+        "pos": true
+      }
+    ]
+  },
+  "M2_violations": 0,
+  "M3_dominated": true,
+  "M4": {
+    "n16_positive": 0,
+    "n4_positive": 5
+  },
+  "grid": [
+    {
+      "judge": 7.0,
+      "policy": "3B",
+      "N": 4,
+      "delta": -1.4
+    },
+    {
+      "judge": 7.0,
+      "policy": "3B",
+      "N": 16,
+      "delta": -14.0
+    },
+    {
+      "judge": 14.0,
+      "policy": "3B",
+      "N": 4,
+      "delta": -0.4
+    },
+    {
+      "judge": 14.0,
+      "policy": "3B",
+      "N": 16,
+      "delta": -10.0
+    },
+    {
+      "judge": 14.0,
+      "policy": "7B",
+      "N": 4,
+      "delta": 2.0
+    },
+    {
+      "judge": 14.0,
+      "policy": "7B",
+      "N": 16,
+      "delta": -3.7
+    },
+    {
+      "judge": 32.0,
+      "policy": "3B",
+      "N": 4,
+      "delta": 4.0
+    },
+    {
+      "judge": 32.0,
+      "policy": "3B",
+      "N": 16,
+      "delta": -3.4
+    },
+    {
+      "judge": 32.0,
+      "policy": "7B",
+      "N": 4,
+      "delta": 2.6
+    },
+    {
+      "judge": 32.0,
+      "policy": "7B",
+      "N": 16,
+      "delta": -1.0
+    },
+    {
+      "judge": 72.0,
+      "policy": "3B",
+      "N": 4,
+      "delta": 4.6
+    },
+    {
+      "judge": 72.0,
+      "policy": "3B",
+      "N": 16,
+      "delta": -3.4
+    },
+    {
+      "judge": 72.0,
+      "policy": "7B",
+      "N": 4,
+      "delta": 2.6
+    },
+    {
+      "judge": 72.0,
+      "policy": "7B",
+      "N": 16,
+      "delta": -2.4
+    }
+  ]
+}
