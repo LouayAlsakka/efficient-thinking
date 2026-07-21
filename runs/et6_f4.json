@@ -1,0 +1,614 @@
+{
+  "run": "runs/conv_value_full",
+  "summary": {
+    "n": 120,
+    "net_regret": 0.345,
+    "label_regret_shallow_source": 0.004,
+    "mean_narrow_shift": 0.006,
+    "verdict": "CAPACITY/fit-bound",
+    "shallow_depth": 6,
+    "deep_depth": 20
+  },
+  "rows": [
+    {
+      "net_regret": 0.002,
+      "label_regret": 0.006,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.794,
+      "label_regret": 0.0,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.026,
+      "label_regret": 0.002,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.121,
+      "label_regret": 0.001,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.485,
+      "label_regret": 0.007,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.855,
+      "label_regret": 0.001,
+      "narrow_shift": 0.01
+    },
+    {
+      "net_regret": 0.475,
+      "label_regret": 0.004,
+      "narrow_shift": 0.005
+    },
+    {
+      "net_regret": 0.073,
+      "label_regret": 0.018,
+      "narrow_shift": 0.013
+    },
+    {
+      "net_regret": 0.366,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.083,
+      "label_regret": 0.015,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.472,
+      "label_regret": 0.0,
+      "narrow_shift": 0.007
+    },
+    {
+      "net_regret": 0.032,
+      "label_regret": 0.0,
+      "narrow_shift": 0.003
+    },
+    {
+      "net_regret": 0.044,
+      "label_regret": 0.003,
+      "narrow_shift": 0.01
+    },
+    {
+      "net_regret": 0.117,
+      "label_regret": 0.0,
+      "narrow_shift": 0.01
+    },
+    {
+      "net_regret": 0.908,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.53,
+      "label_regret": 0.002,
+      "narrow_shift": 0.004
+    },
+    {
+      "net_regret": 0.01,
+      "label_regret": 0.002,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.914,
+      "label_regret": 0.0,
+      "narrow_shift": 0.003
+    },
+    {
+      "net_regret": 0.077,
+      "label_regret": 0.003,
+      "narrow_shift": 0.006
+    },
+    {
+      "net_regret": 0.131,
+      "label_regret": 0.002,
+      "narrow_shift": 0.011
+    },
+    {
+      "net_regret": 0.342,
+      "label_regret": 0.017,
+      "narrow_shift": 0.011
+    },
+    {
+      "net_regret": 0.066,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.955,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.072,
+      "label_regret": 0.0,
+      "narrow_shift": 0.026
+    },
+    {
+      "net_regret": 0.816,
+      "label_regret": 0.007,
+      "narrow_shift": 0.007
+    },
+    {
+      "net_regret": 0.188,
+      "label_regret": 0.012,
+      "narrow_shift": 0.007
+    },
+    {
+      "net_regret": 0.826,
+      "label_regret": 0.004,
+      "narrow_shift": 0.009
+    },
+    {
+      "net_regret": 0.453,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.781,
+      "label_regret": 0.002,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.618,
+      "label_regret": 0.002,
+      "narrow_shift": 0.003
+    },
+    {
+      "net_regret": 0.034,
+      "label_regret": 0.003,
+      "narrow_shift": 0.004
+    },
+    {
+      "net_regret": 0.118,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.0,
+      "label_regret": 0.0,
+      "narrow_shift": 0.01
+    },
+    {
+      "net_regret": 0.103,
+      "label_regret": 0.0,
+      "narrow_shift": 0.013
+    },
+    {
+      "net_regret": 0.737,
+      "label_regret": 0.0,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.534,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.971,
+      "label_regret": 0.004,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.679,
+      "label_regret": 0.0,
+      "narrow_shift": 0.018
+    },
+    {
+      "net_regret": 0.017,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.288,
+      "label_regret": 0.004,
+      "narrow_shift": 0.011
+    },
+    {
+      "net_regret": 0.629,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.071,
+      "label_regret": 0.004,
+      "narrow_shift": 0.012
+    },
+    {
+      "net_regret": 0.359,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.647,
+      "label_regret": 0.0,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.43,
+      "label_regret": 0.0,
+      "narrow_shift": 0.006
+    },
+    {
+      "net_regret": 0.343,
+      "label_regret": 0.0,
+      "narrow_shift": 0.005
+    },
+    {
+      "net_regret": 0.163,
+      "label_regret": 0.008,
+      "narrow_shift": 0.003
+    },
+    {
+      "net_regret": 0.013,
+      "label_regret": 0.0,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.72,
+      "label_regret": 0.013,
+      "narrow_shift": 0.033
+    },
+    {
+      "net_regret": 0.106,
+      "label_regret": 0.0,
+      "narrow_shift": 0.007
+    },
+    {
+      "net_regret": 0.502,
+      "label_regret": 0.011,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.194,
+      "label_regret": 0.009,
+      "narrow_shift": 0.004
+    },
+    {
+      "net_regret": 0.623,
+      "label_regret": 0.008,
+      "narrow_shift": 0.018
+    },
+    {
+      "net_regret": 0.523,
+      "label_regret": 0.0,
+      "narrow_shift": 0.004
+    },
+    {
+      "net_regret": 0.16,
+      "label_regret": 0.002,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.004,
+      "label_regret": 0.001,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.94,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.051,
+      "label_regret": 0.006,
+      "narrow_shift": 0.004
+    },
+    {
+      "net_regret": 0.675,
+      "label_regret": 0.011,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.612,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.045,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.252,
+      "label_regret": 0.0,
+      "narrow_shift": 0.007
+    },
+    {
+      "net_regret": 0.077,
+      "label_regret": 0.013,
+      "narrow_shift": 0.039
+    },
+    {
+      "net_regret": 0.035,
+      "label_regret": 0.002,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.094,
+      "label_regret": 0.0,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.862,
+      "label_regret": 0.0,
+      "narrow_shift": 0.003
+    },
+    {
+      "net_regret": 0.3,
+      "label_regret": 0.012,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.4,
+      "label_regret": 0.005,
+      "narrow_shift": 0.011
+    },
+    {
+      "net_regret": 0.275,
+      "label_regret": 0.014,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.022,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.718,
+      "label_regret": 0.011,
+      "narrow_shift": 0.006
+    },
+    {
+      "net_regret": 0.027,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.069,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.119,
+      "label_regret": 0.001,
+      "narrow_shift": 0.011
+    },
+    {
+      "net_regret": 0.839,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.071,
+      "label_regret": 0.0,
+      "narrow_shift": 0.01
+    },
+    {
+      "net_regret": 0.159,
+      "label_regret": 0.005,
+      "narrow_shift": 0.007
+    },
+    {
+      "net_regret": 0.251,
+      "label_regret": 0.005,
+      "narrow_shift": 0.052
+    },
+    {
+      "net_regret": 0.111,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.079,
+      "label_regret": 0.007,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.231,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.044,
+      "label_regret": 0.005,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.876,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.107,
+      "label_regret": 0.005,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.014,
+      "label_regret": 0.0,
+      "narrow_shift": 0.026
+    },
+    {
+      "net_regret": 0.905,
+      "label_regret": 0.0,
+      "narrow_shift": 0.036
+    },
+    {
+      "net_regret": 0.449,
+      "label_regret": 0.0,
+      "narrow_shift": 0.005
+    },
+    {
+      "net_regret": 0.056,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.529,
+      "label_regret": 0.001,
+      "narrow_shift": 0.019
+    },
+    {
+      "net_regret": 0.085,
+      "label_regret": 0.017,
+      "narrow_shift": 0.004
+    },
+    {
+      "net_regret": 0.533,
+      "label_regret": 0.006,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.159,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.448,
+      "label_regret": 0.016,
+      "narrow_shift": 0.05
+    },
+    {
+      "net_regret": 0.171,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.024,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.004,
+      "label_regret": 0.002,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.022,
+      "label_regret": 0.0,
+      "narrow_shift": 0.003
+    },
+    {
+      "net_regret": 0.001,
+      "label_regret": 0.017,
+      "narrow_shift": 0.006
+    },
+    {
+      "net_regret": 0.09,
+      "label_regret": 0.001,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.127,
+      "label_regret": 0.004,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.059,
+      "label_regret": 0.016,
+      "narrow_shift": 0.017
+    },
+    {
+      "net_regret": 0.137,
+      "label_regret": 0.008,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.344,
+      "label_regret": 0.0,
+      "narrow_shift": 0.003
+    },
+    {
+      "net_regret": 0.829,
+      "label_regret": 0.0,
+      "narrow_shift": 0.003
+    },
+    {
+      "net_regret": 0.609,
+      "label_regret": 0.036,
+      "narrow_shift": 0.025
+    },
+    {
+      "net_regret": 0.003,
+      "label_regret": 0.0,
+      "narrow_shift": 0.008
+    },
+    {
+      "net_regret": 0.116,
+      "label_regret": 0.0,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.096,
+      "label_regret": 0.011,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.898,
+      "label_regret": 0.011,
+      "narrow_shift": 0.015
+    },
+    {
+      "net_regret": 0.651,
+      "label_regret": 0.0,
+      "narrow_shift": 0.019
+    },
+    {
+      "net_regret": 0.687,
+      "label_regret": 0.0,
+      "narrow_shift": 0.014
+    },
+    {
+      "net_regret": 0.91,
+      "label_regret": 0.014,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.059,
+      "label_regret": 0.002,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.215,
+      "label_regret": 0.0,
+      "narrow_shift": 0.002
+    },
+    {
+      "net_regret": 0.876,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.94,
+      "label_regret": 0.0,
+      "narrow_shift": 0.001
+    },
+    {
+      "net_regret": 0.5,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.007,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    },
+    {
+      "net_regret": 0.894,
+      "label_regret": 0.0,
+      "narrow_shift": 0.005
+    },
+    {
+      "net_regret": 0.057,
+      "label_regret": 0.0,
+      "narrow_shift": 0.0
+    }
+  ]
+}
