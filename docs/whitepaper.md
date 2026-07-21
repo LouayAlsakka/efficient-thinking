@@ -1078,17 +1078,32 @@ highest; and the allocation rule concentrates those visits on the lines that mat
 averaging is strongest precisely where the decision lives. The same noisy net feeds a max
 operator in one algorithm (an amplifier) and a weighted mean in the other (a filter).
 
-This is not a new phenomenon: it is game-tree pathology — the classical result that deeper
-minimax can yield worse decisions under noisy leaf evaluation (Nau 1979; Beal 1980; Pearl 1983)
-— reproduced here with a modern learned evaluator, whose error distribution is exactly the heavy,
-position-correlated kind the max operator exploits. (Classical engines tolerate deep minimax
-because handcrafted evaluations are cheap, consistent, and tamer in their errors.) The
-observation also foreshadows this series: averaging as noise-cancellation is why majority vote is
-so hard for a judge to beat, and the noise-versus-depth trade reappears as the gridworld's
-σ-versus-horizon curve in Paper II. The pathology citations are stated from standard secondary
-sources and should be verified against the originals before formal publication.
+This is not a new phenomenon: it is game-tree pathology, discovered by Nau (1979 thesis; Nau
+1982, 1983) and independently by Beal (1980), and analyzed by Pearl (1983) — the classical result
+that in broad families of game-tree models, deeper minimax yields *worse* decisions under noisy
+leaf evaluation. The literature's own resolution of why real chess engines mostly escape it is
+instructive for our setting: pathology arises when leaf errors are effectively independent, and
+real games escape largely because nearby positions have *dependent* values, so sibling errors
+correlate and the max operator has less noise to exploit. A learned evaluator changes the error
+structure in the dangerous direction: its mistakes are heavy-tailed and systematic on position
+*types* — when a motif fools the net, it fools it wherever the motif appears — and a deep uniform
+search does not merely sample that error surface, it *maximizes over it*, actively steering the
+principal variation toward the positions the net misjudges most optimistically. Later work
+extends the phenomenon to real-valued evaluations (Luštrek, Gams & Bratko 2006), the regime we
+are in. Classical engines tolerate deep minimax because handcrafted evaluations are cheap,
+consistent, and tamer in their tails. The observation also foreshadows this series: averaging as
+noise-cancellation is why majority vote is so hard for a judge to beat, and the noise-versus-depth
+trade reappears as the gridworld's σ-versus-horizon curve in Paper II.
 
 ## References
+
+**Search pathology (Appendix A).** Nau, D. S. (1982), *An Investigation of the Causes of Pathology
+in Games*, Artificial Intelligence 19(3), 257–278. · Nau, D. S. (1983), *Decision Quality as a
+Function of Search Depth on Game Trees*, JACM 30(4), 687–708. · Beal, D. F. (1980), *An Analysis of
+Minimax*, Advances in Computer Chess 2, Edinburgh University Press, 103–109. · Pearl, J. (1983),
+*On the Nature of Pathology in Game Searching*, Artificial Intelligence 20(4), 427–453. · Luštrek,
+M., Gams, M. & Bratko, I. (2006), *Is Real-Valued Minimax Pathological?*, Artificial Intelligence
+170, 620–642.
 
 **Search (MCTS / tree search).** Coulom, R. (2006), *Efficient Selectivity and Backup Operators in
 Monte-Carlo Tree Search*, Computers and Games. · Kocsis, L. & Szepesvári, C. (2006), *Bandit Based
