@@ -16,6 +16,7 @@ import numpy as np
 import mlx.core as mx
 from connect4 import C4, value01 as true_value01
 from c4_net import C4Net, masked_policy
+from c4_mcts import search, visit_probs
 
 
 def build_positions(n, rng):
@@ -48,28 +49,28 @@ def net_probs(net, s):
     return np.array(masked_policy(logits[0], s.legal()).tolist())
 
 
-def rollout_value(net, s0, k, rng):
-    """Win-rate from s0's side-to-move over k games, both sides sampling the net's policy head."""
+def rollout_value(net, s0, k, rng, mcts_sims=0, npr=None):
+    """Win-rate from s0's side-to-move over k games. mcts_sims=0 -> sample the net's policy head;
+    mcts_sims>0 -> play by net+MCTS (matching the policy that generated the training labels)."""
     wins = draws = 0
     for _ in range(k):
-        s = s0; ply0_mover = True
-        # side to move at s0 is 'us'; track parity
-        parity = 0
+        s = s0; parity = 0
         while s.terminal() is None and s.legal():
-            p = net_probs(net, s)
-            if p.sum() <= 0:
-                move = s.legal()[0]
+            if mcts_sims:
+                root = search(net, s, sims=mcts_sims, dirichlet=0.0, rng=npr)
+                vp = visit_probs(root)
+                move = int(rng.choice(7, p=vp)) if vp.sum() > 0 else s.legal()[0]
             else:
-                move = int(rng.choice(7, p=p / p.sum()))
-                if not s.can_play(move):
-                    move = s.legal()[0]
+                p = net_probs(net, s)
+                move = int(rng.choice(7, p=p / p.sum())) if p.sum() > 0 else s.legal()[0]
+            if not s.can_play(move):
+                move = s.legal()[0]
             s = s.play(move); parity ^= 1
         t = s.terminal()
         if t == "win":
-            # the player who just moved won; parity flipped after each move, so mover-who-won is (parity^1)
-            if parity == 1:      # us (s0 mover) made the last, winning move sequence parity
+            if parity == 1:                 # s0's side made the last, winning move
                 wins += 1
-        elif t == "draw":
+        elif t is not None:
             draws += 1
     return (wins + 0.5 * draws) / k
 
@@ -79,6 +80,7 @@ def main():
     ap.add_argument("--net", default="games/results/et6_ea_scratch.safetensors")
     ap.add_argument("--positions", type=int, default=150)
     ap.add_argument("--k", type=int, default=100)
+    ap.add_argument("--mcts-sims", type=int, default=0, help=">0: roll out V^pi under net+MCTS (label-generating policy)")
     ap.add_argument("--channels", type=int, default=64); ap.add_argument("--blocks", type=int, default=4)
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--out", default="games/results/et6_decomp.json")
@@ -91,7 +93,7 @@ def main():
     fit, bias, total, rows = [], [], [], []
     for i, (s, vstar) in enumerate(pos):
         vnet = net_value(net, s)
-        vpi = rollout_value(net, s, a.k, nprng)
+        vpi = rollout_value(net, s, a.k, nprng, mcts_sims=a.mcts_sims, npr=nprng)
         fit.append(abs(vnet - vpi)); bias.append(abs(vpi - vstar)); total.append(abs(vnet - vstar))
         rows.append({"v_net": round(vnet, 3), "v_pi": round(vpi, 3), "v_star": vstar})
         if (i + 1) % 50 == 0:
@@ -108,7 +110,7 @@ def main():
     print("\n[F2] label-bias vs rollout count k (mean flat, variance ~1/sqrt(k)):")
     sub = pos[:50]; f2 = {}
     for k in (10, 100, 1000):
-        biases = [abs(rollout_value(net, s, k, nprng) - vstar) for s, vstar in sub]
+        biases = [abs(rollout_value(net, s, k, nprng, mcts_sims=a.mcts_sims, npr=nprng) - vstar) for s, vstar in sub]
         f2[k] = {"mean": round(float(np.mean(biases)), 3), "std": round(float(np.std(biases)), 3)}
         print(f"  k={k:>4}  mean|V^pi-V*|={f2[k]['mean']:.3f}  std={f2[k]['std']:.3f}")
 
