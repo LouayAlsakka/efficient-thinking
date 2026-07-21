@@ -82,6 +82,7 @@ def main():
     ap.add_argument("--k", type=int, default=100)
     ap.add_argument("--mcts-sims", type=int, default=0, help=">0: roll out V^pi under net+MCTS (label-generating policy)")
     ap.add_argument("--channels", type=int, default=64); ap.add_argument("--blocks", type=int, default=4)
+    ap.add_argument("--skip-f2", action="store_true")
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--out", default="games/results/et6_decomp.json")
     a = ap.parse_args()
@@ -106,6 +107,11 @@ def main():
           f"(bias {'>' if F['label_bias'] > F['fit'] else '<='} fit) — "
           f"{'supports F1: net learned its labels, residual is in the labels' if F['label_bias'] > F['fit'] else 'against F1'}")
 
+    f2 = {}
+    if a.skip_f2:
+        json.dump({"F1": F, "F2_bias_vs_k": f2, "n_positions": len(pos), "k": a.k,
+                   "mcts_sims": a.mcts_sims, "rows": rows}, open(a.out, "w"), indent=2)
+        print(f"\n[et6] wrote {a.out} (F1 only, mcts_sims={a.mcts_sims})"); return
     # F2: label bias vs k on a subset
     print("\n[F2] label-bias vs rollout count k (mean flat, variance ~1/sqrt(k)):")
     sub = pos[:50]; f2 = {}
