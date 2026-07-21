@@ -1,0 +1,86 @@
+{
+  "dev_only": true,
+  "persona_rubric": "You are a discerning poetry critic who prizes vivid imagery, emotional resonance, musicality, and originality. Rate the following poem from 1 to 10 on overall aesthetic quality. Reply with ONLY the number.",
+  "rows": [
+    {
+      "selector": "scalar",
+      "N": 4,
+      "n": 27,
+      "persona": 7.96,
+      "form_valid_pct": 3.7,
+      "degeneracy": 0.152
+    },
+    {
+      "selector": "scalar",
+      "N": 8,
+      "n": 27,
+      "persona": 8.04,
+      "form_valid_pct": 3.7,
+      "degeneracy": 0.147
+    },
+    {
+      "selector": "scalar",
+      "N": 16,
+      "n": 27,
+      "persona": 8.19,
+      "form_valid_pct": 3.7,
+      "degeneracy": 0.144
+    },
+    {
+      "selector": "scalar",
+      "N": 32,
+      "n": 27,
+      "persona": 8.22,
+      "form_valid_pct": 3.7,
+      "degeneracy": 0.142
+    },
+    {
+      "selector": "scalar",
+      "N": 64,
+      "n": 27,
+      "persona": 8.26,
+      "form_valid_pct": 3.7,
+      "degeneracy": 0.143
+    },
+    {
+      "selector": "threshold",
+      "N": 4,
+      "n": 27,
+      "persona": 7.85,
+      "form_valid_pct": 22.2,
+      "degeneracy": 0.151
+    },
+    {
+      "selector": "threshold",
+      "N": 8,
+      "n": 27,
+      "persona": 7.93,
+      "form_valid_pct": 33.3,
+      "degeneracy": 0.126
+    },
+    {
+      "selector": "threshold",
+      "N": 16,
+      "n": 27,
+      "persona": 8.11,
+      "form_valid_pct": 55.6,
+      "degeneracy": 0.121
+    },
+    {
+      "selector": "threshold",
+      "N": 32,
+      "n": 27,
+      "persona": 7.85,
+      "form_valid_pct": 85.2,
+      "degeneracy": 0.091
+    },
+    {
+      "selector": "threshold",
+      "N": 64,
+      "n": 27,
+      "persona": 7.96,
+      "form_valid_pct": 92.6,
+      "degeneracy": 0.116
+    }
+  ]
+}
