@@ -31,6 +31,21 @@ the loops we built, priced.
 Full protocol and registered predictions F1–F5 are in et6-label-fidelity-spec.md (committed
 separately; that spec now belongs to this paper).
 
+## First data (status update, post-registration)
+
+E-A's Connect-4 arm has run, and F1's failure branch fired: at the plateau checkpoint, fit error
+(0.399) dominates label bias (0.240) under MCTS-matched labels — the net stopped improving while
+far from having learned its own labels, after an initial ambiguous result was flagged for a
+measurement caveat and re-run to a registered decider. F2 held (bias flat in rollout count). The
+paper's emerging story is therefore stage-dependent binding: fit/optimization binds first at this
+scale, and the label ceiling (real: bias 0.24) binds only above it — the series'
+measure-which-binds method applied to its own origin phenomenon. One consequence is registered as
+a new open question: Paper II §8's oracle control may have worked partly through label
+*learnability* (oracle targets are cleaner and easier to fit) and not only label *information*;
+disentangling the two (oracle labels with matched injected noise) is an E-A extension. The
+chess arm and F1's stage-wise form remain to be run; whether larger nets become label-bound is
+now the live question.
+
 ## Relation to the series
 
 Explains ET-I §3's anchor phenomenon; supplies ET-VII with the games-domain calibration of what
