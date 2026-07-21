@@ -1,0 +1,302 @@
+{
+  "config": {
+    "iters": 100,
+    "games": 24,
+    "sims": 64,
+    "epochs": 4,
+    "batch": 256,
+    "lr": 0.001,
+    "buffer": 20000,
+    "channels": 96,
+    "blocks": 6,
+    "eval_every": 5,
+    "eval_games": 24,
+    "holdout": 300,
+    "init": null,
+    "oracle_value": false,
+    "oracle_depth": 6,
+    "seed": 0,
+    "out": "games/results/et6_ea_big.json"
+  },
+  "ladder": {
+    "random": 0.0,
+    "depth-1": 804.0,
+    "depth-2": 954.0,
+    "depth-3": 963.0
+  },
+  "history": [
+    {
+      "iter": 1,
+      "buf": 547,
+      "value_mae": 0.492,
+      "decisive_sign_acc": 0.49,
+      "gelo": 42.0,
+      "ladder_scores": {
+        "random": 0.58,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 5,
+      "buf": 2178,
+      "value_mae": 0.46,
+      "decisive_sign_acc": 0.54,
+      "gelo": 183.0,
+      "ladder_scores": {
+        "random": 0.79,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 10,
+      "buf": 4228,
+      "value_mae": 0.41,
+      "decisive_sign_acc": 0.61,
+      "gelo": 214.0,
+      "ladder_scores": {
+        "random": 0.83,
+        "depth-1": 0.0,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 15,
+      "buf": 6190,
+      "value_mae": 0.412,
+      "decisive_sign_acc": 0.593,
+      "gelo": 406.0,
+      "ladder_scores": {
+        "random": 0.96,
+        "depth-1": 0.12,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 20,
+      "buf": 8297,
+      "value_mae": 0.404,
+      "decisive_sign_acc": 0.61,
+      "gelo": 375.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.12,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 25,
+      "buf": 10520,
+      "value_mae": 0.406,
+      "decisive_sign_acc": 0.603,
+      "gelo": 435.0,
+      "ladder_scores": {
+        "random": 1.0,
+        "depth-1": 0.12,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 30,
+      "buf": 12807,
+      "value_mae": 0.425,
+      "decisive_sign_acc": 0.577,
+      "gelo": 310.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.04,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 35,
+      "buf": 15112,
+      "value_mae": 0.419,
+      "decisive_sign_acc": 0.573,
+      "gelo": 463.0,
+      "ladder_scores": {
+        "random": 0.96,
+        "depth-1": 0.21,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 40,
+      "buf": 17497,
+      "value_mae": 0.41,
+      "decisive_sign_acc": 0.597,
+      "gelo": 375.0,
+      "ladder_scores": {
+        "random": 0.96,
+        "depth-1": 0.08,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 45,
+      "buf": 19845,
+      "value_mae": 0.399,
+      "decisive_sign_acc": 0.62,
+      "gelo": 406.0,
+      "ladder_scores": {
+        "random": 1.0,
+        "depth-1": 0.08,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 50,
+      "buf": 20000,
+      "value_mae": 0.387,
+      "decisive_sign_acc": 0.613,
+      "gelo": 343.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.04,
+        "depth-2": 0.02,
+        "depth-3": 0.02
+      }
+    },
+    {
+      "iter": 55,
+      "buf": 20000,
+      "value_mae": 0.403,
+      "decisive_sign_acc": 0.603,
+      "gelo": 421.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.12,
+        "depth-2": 0.02,
+        "depth-3": 0.04
+      }
+    },
+    {
+      "iter": 60,
+      "buf": 20000,
+      "value_mae": 0.398,
+      "decisive_sign_acc": 0.603,
+      "gelo": 435.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.21,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 65,
+      "buf": 20000,
+      "value_mae": 0.38,
+      "decisive_sign_acc": 0.637,
+      "gelo": 406.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.17,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 70,
+      "buf": 20000,
+      "value_mae": 0.369,
+      "decisive_sign_acc": 0.63,
+      "gelo": 343.0,
+      "ladder_scores": {
+        "random": 0.79,
+        "depth-1": 0.17,
+        "depth-2": 0.04,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 75,
+      "buf": 20000,
+      "value_mae": 0.367,
+      "decisive_sign_acc": 0.65,
+      "gelo": 435.0,
+      "ladder_scores": {
+        "random": 0.96,
+        "depth-1": 0.17,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 80,
+      "buf": 20000,
+      "value_mae": 0.345,
+      "decisive_sign_acc": 0.653,
+      "gelo": 421.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.17,
+        "depth-2": 0.0,
+        "depth-3": 0.02
+      }
+    },
+    {
+      "iter": 85,
+      "buf": 20000,
+      "value_mae": 0.353,
+      "decisive_sign_acc": 0.65,
+      "gelo": 535.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.17,
+        "depth-2": 0.19,
+        "depth-3": 0.02
+      }
+    },
+    {
+      "iter": 90,
+      "buf": 20000,
+      "value_mae": 0.358,
+      "decisive_sign_acc": 0.643,
+      "gelo": 421.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.12,
+        "depth-2": 0.04,
+        "depth-3": 0.02
+      }
+    },
+    {
+      "iter": 95,
+      "buf": 20000,
+      "value_mae": 0.359,
+      "decisive_sign_acc": 0.643,
+      "gelo": 435.0,
+      "ladder_scores": {
+        "random": 0.96,
+        "depth-1": 0.12,
+        "depth-2": 0.02,
+        "depth-3": 0.02
+      }
+    },
+    {
+      "iter": 100,
+      "buf": 20000,
+      "value_mae": 0.348,
+      "decisive_sign_acc": 0.66,
+      "gelo": 524.0,
+      "ladder_scores": {
+        "random": 0.88,
+        "depth-1": 0.21,
+        "depth-2": 0.12,
+        "depth-3": 0.06
+      }
+    }
+  ]
+}
