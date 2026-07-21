@@ -1,0 +1,10 @@
+{
+  "n": 40,
+  "mean_persona": {
+    "random": 7.47,
+    "checker": 7.47,
+    "canon": 7.62
+  },
+  "g2p_holds": true,
+  "scale": "prototype n=34"
+}
