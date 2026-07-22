@@ -119,6 +119,7 @@ def main():
     ap.add_argument("--clip", type=float, default=1.0)
     ap.add_argument("--init", default=None, help="warm-start model.npz (else random)")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--ckpt-every", type=int, default=0, help="save a distinct stage checkpoint model_it{N}.npz every N iters")
     args = ap.parse_args()
     os.makedirs(args.run_dir, exist_ok=True)
 
@@ -168,6 +169,8 @@ def main():
         loss = (train_steps(model, opt, buffer, args.steps, args.batch, args.clip, rng)
                 if len(buffer) >= args.batch else 0.0)
         model.save_weights(os.path.join(args.run_dir, "model.npz"))
+        if args.ckpt_every and (it + 1) % args.ckpt_every == 0:      # stage checkpoint for the label-bias-vs-Elo trajectory
+            model.save_weights(os.path.join(args.run_dir, f"model_it{it + 1}.npz"))
         dt = time.time() - t0
         rec = {"iter": it, "new": new, "buffer": len(buffer), "loss": round(loss, 3),
                "results": results, "sec": round(dt, 1)}
