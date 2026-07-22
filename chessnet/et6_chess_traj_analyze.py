@@ -17,6 +17,8 @@ from chessnet.player import ModelPlayer
 from chessnet.labeler import score_to_winprob, DEFAULT_STOCKFISH
 from chessnet.evaluate import load_openings
 from scripts.chess_evalfirst import eval_open_loop_elo
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
 from et6_chess_labelbias import rollout_winrate
 
 
