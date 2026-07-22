@@ -1,0 +1,42 @@
+{
+  "run": "runs/et6_chess_traj",
+  "corr_elo_bias": 0.195,
+  "trajectory": [
+    {
+      "iter": 10,
+      "elo": 367.0,
+      "elo_margin": 89.0,
+      "label_bias": 0.244
+    },
+    {
+      "iter": 20,
+      "elo": 228.0,
+      "elo_margin": 89.0,
+      "label_bias": 0.194
+    },
+    {
+      "iter": 30,
+      "elo": 246.0,
+      "elo_margin": 89.0,
+      "label_bias": 0.25
+    },
+    {
+      "iter": 40,
+      "elo": 228.0,
+      "elo_margin": 89.0,
+      "label_bias": 0.26
+    },
+    {
+      "iter": 50,
+      "elo": 332.0,
+      "elo_margin": 89.0,
+      "label_bias": 0.274
+    },
+    {
+      "iter": 60,
+      "elo": 367.0,
+      "elo_margin": 89.0,
+      "label_bias": 0.227
+    }
+  ]
+}
