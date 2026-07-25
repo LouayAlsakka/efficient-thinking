@@ -53,44 +53,68 @@ The crossover sits at the **3B→8B step on both benchmarks**: 1B+search cannot 
 (both p<1e-4), but 3B+search significantly beats 8B true-greedy (both p<0.05). Parity language is not
 needed — both live flips clear p<0.05.
 
-## Registered predictions — scored
+## Registered predictions — scored honestly
 
-- **X1 (threshold location) — HIT, with the location shifted one rung and X5 resolving it.**
-  Size dominates below 3B (1B+search cannot reach the next class at any N — the strongest possible
-  form, p<1e-4 on both benchmarks); search buys *better-than-next-size* starting at 3B. The crossover
-  is real and family-independent in **structure**. It sits one size-class **lower** in parameters than
-  Qwen's (Qwen: 7B+search ≥ 14B; Llama: 3B+search ≥ 8B) — not a miss but the motivation for X5: Llama
-  reaches a given competence at fewer parameters, and the crossover tracks competence, not the label on
-  the box.
-- **X2 (lift collapse) — HIT on GSM8K; MATH stays on the pre-peak (rising) arm, consistent with X5.**
-  GSM8K lift falls monotonically with competence (+15.8 → +8.8 → +8.4; sampled-pass1 basis +21.8 →
-  +12.2 → +10.7). MATH lift *rises* (+7.0 → +7.2 → +13.6) — because 4-bit Llama on MATH is
-  low-competence throughout (greedy 15.6 / 39.6 / 41.8) and occupies the **rising** half of the same
-  inverted-U Qwen shows (Qwen-MATH lift climbs 0.5B→3B, then collapses 7B→72B). The monotone-decrease
-  *form* fails on MATH only because the Llama-MATH ladder never enters the competent regime — itself an
-  X5-consistent observation, not an independent contradiction.
-- **X3 (benchmark saturation split) — HIT.** Same pattern as Qwen: the winning flip is tighter on
-  saturated GSM8K (Δ+3.8) and larger on MATH (Δ+5.0), and MATH carries more total search headroom
-  (8B lift +13.6 vs GSM8K 8B +8.4).
+The headline (crossover survives the family change) is confirmed. But **three of the five registered
+predictions are PARTIALS as literally worded**, and the deviations are the discoveries (R1, R2 below).
+The earlier commit `434ace9` marked X1/X3 "hit" and X2 "hit on GSM8K" in its headline; that rounded up.
+Corrected ledger:
+
+- **X1 (threshold location at ~7B) — PARTIAL.** The *structure* travels: size dominates below the flip
+  (1B+search cannot reach the next class at any N, p<1e-4 both benchmarks), search wins above it. But the
+  flip sits at **3B-vs-8B in Llama, a lower parameter location than Qwen's 7B** — X1 predicted "~8B range /
+  same order of magnitude," and the location genuinely moved. Superseded by **R1**, which is sharper and
+  explains the move. Scored PARTIAL, not hit.
+- **X2 (monotone lift collapse) — PARTIAL (miss as worded).** GSM8K lift falls monotonically (+15.8 →
+  +8.8 → +8.4). MATH lift *rises* (+7.0 → +7.2 → +13.6), **violating the registered monotone-collapse**.
+  The true shape is **R2**'s coverage-gated inverted-U, not a monotone decrease. Reporting it as "hit on
+  GSM8K" understated a real directional violation on MATH.
+- **X3 (benchmark saturation split, "same pattern as Qwen") — PARTIAL.** Direction is right (MATH margin
+  Δ+5.0 larger than GSM8K Δ+3.8), but **Llama's GSM8K flip is decisive (p=0.0295), not the tie Qwen showed
+  on saturated GSM8K** — because Llama-8B (greedy 82.4) does not saturate GSM8K the way Qwen-7B+ (89–94)
+  did. Consistent with the *saturation logic*, but not with "same pattern" as X3 phrased it.
 - **X4 (coverage bound) — HIT, clean.** oracle@N > sc@N in every cell, gap widening as models weaken.
   MATH gaps (oracle−sc): 1B 22.6, 3B 21.6, 8B 18.2. GSM8K gaps: 1B 34.2, 3B 12.0, 8B 8.0. Prop-2
-  structure holds in the second family on both benchmarks.
-- **X5 (headline overlay) — HOLDS.** Plotted as **lift vs base competence (pass@1)**, the Qwen and
-  Llama frontiers interleave on one declining curve rather than separating by family
-  (`llama_frontier_x5_overlay.svg`). Matched-competence pairs land on top of each other — e.g.
-  Qwen-MATH pass@1 10.9 → lift +10.1 vs Llama-MATH 12.2 → +10.4; Llama-MATH-8B 37.1 → +18.3 vs
-  Qwen-MATH-3B 32.9 → +18.8. Benchmark is a mild second-order axis (GSM8K sits slightly higher at
-  matched pass@1, from redundancy headroom). **The size-vs-search crossover is a function of base
-  competence, not parameter count — and it is family-independent.** This is the extraction paper's
-  Figure 1.
+  structure holds in the second family on both benchmarks. The only clean, unqualified hit.
+- **X5 (headline overlay) — HOLDS (pending scrutiny).** Plotted as **lift vs base competence (pass@1)**,
+  the Qwen and Llama frontiers interleave rather than separating by family (`llama_frontier_x5_overlay.svg`).
+  Matched-competence pairs coincide — Qwen-MATH pass@1 10.9→lift +10.1 vs Llama-MATH 12.2→+10.4;
+  Llama-MATH-8B 37.1→+18.3 vs Qwen-MATH-3B 32.9→+18.8. The crossover is a function of base competence,
+  not parameter count. Extraction paper's Figure 1 — if it survives R1/R2 (it is consistent with both).
+
+## Refinements — the two results better than the predictions (post-hoc, flagged)
+
+Both are computed in `llama_frontier_refinements.py` / `.json`. Comparators: the flip *significance* uses
+TRUE greedy (flip-decider rule); the *mechanism* below uses sampled pass@1, the only competence comparator
+present in every committed cell of both families.
+
+- **R1 — the lift-vs-gap flip law (sharper than X1).** Search flips the ordering against the next size
+  class exactly when **its lift clears the adjacent-class greedy gap it must jump**:
+  `flip(K) ⇔ lift(K) = sc@Nmax − pass1 ≥ gap(K) = pass1(K+1) − pass1(K)`. This predicts *both* families'
+  flip rungs from their own ladders:
+  - Llama flips at **3B** — GSM8K lift +12.2 ≥ gap +6.1; MATH lift +15.0 ≥ gap +5.3.
+  - Qwen does **not** flip at 3B (GSM8K lift +17.7 < gap +19.5; MATH +18.8 < +32.6) and flips at **7B**
+    (GSM8K +4.6 ≥ +3.7; MATH +8.5 ≥ +4.4).
+  The location moved because **Llama's adjacent-class greedy gap is small** (3B→8B +6.1) where **Qwen's was
+  large** (3B→7B +19.5) — the invariant is lift-vs-gap, not a parameter count or even raw competence.
+  *Caveat:* the law registers a spurious "flip" wherever an adjacent gap is ~0 (Qwen-MATH 1.5B→3B, gap
+  +2.3) — that is the benchmark-dependent mid-ladder tie the compendium already documents (§10), not a size
+  crossover; read the law at the lowest rung clearing a *meaningful* gap.
+- **R2 — the coverage-gated inverted-U (corrects X2).** Lift is not monotone in competence: it **ascends
+  out of the low-competence floor, peaks, then collapses under saturation**. The left limb is gated by
+  Prop-2 coverage — you cannot select an answer that is never sampled (Llama-1B MATH oracle@16 only 45.2).
+  Pooled lift-vs-pass@1 rises from +10.1 (pass@1 10.9) to a peak ≈ +18–22 (pass@1 ~22–37) and falls to
+  +0.9 (pass@1 94.1). **Qwen's ladder sampled the descending limb; Llama's samples the ascent** — which is
+  precisely why X2's monotone-collapse held for Qwen and failed for Llama on MATH.
 
 ## Bottom line
 
-The crossover is **not** a Qwen artifact. It reproduces in Llama-3.x on both GSM8K and MATH, with
-significant paired flips, and — reframed on the competence axis — the two families fall on a single
-lift-vs-competence curve. The apparent parameter-location difference (3B vs 7B) is exactly what X5
-predicts: Llama hits the crossover competence at fewer parameters. Upper bracket (Llama-70B) remains
-open; add it if an MLX conversion lands, but the location question is answered by the three-point ladder.
+The crossover is **not** a Qwen artifact: it reproduces in Llama-3.x on both benchmarks with paired McNemar
+flips significant at p<0.05, and X4 holds cleanly. But the honest score is X4 hit, X5 holds, **X1/X2/X3
+partial** — and the partials are the point. For the extraction paper this is *stronger* than a clean sweep:
+R1 (lift-vs-gap flip condition) and R2 (coverage-gated inverted-U) turn "we located a threshold" into "we
+characterized the mechanism that places it," with the X5 overlay as the lead exhibit. Upper bracket
+(Llama-70B) remains open; add it if an MLX conversion lands.
 
 *Paper integration:* feeds the ET-II **extraction** draft only. The shipped compendium (v1.0.1) stands —
 a one-line v2 note plus a §10 row is its only change, and only per the registered plan.

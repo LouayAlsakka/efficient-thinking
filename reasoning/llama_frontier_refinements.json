@@ -1,0 +1,293 @@
+{
+  "R1_lift_vs_gap": [
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "rung": 0.5,
+      "next": 1.5,
+      "lift": 18.7,
+      "gap": 30.7,
+      "flip": false
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "rung": 1.5,
+      "next": 3.0,
+      "lift": 13.8,
+      "gap": 16.7,
+      "flip": false
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "rung": 3.0,
+      "next": 7.0,
+      "lift": 17.7,
+      "gap": 19.5,
+      "flip": false
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "rung": 7.0,
+      "next": 14.0,
+      "lift": 4.6,
+      "gap": 3.7,
+      "flip": true
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "rung": 14.0,
+      "next": 32.0,
+      "lift": 1.7,
+      "gap": 1.4,
+      "flip": true
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "rung": 0.5,
+      "next": 1.5,
+      "lift": 10.1,
+      "gap": 19.7,
+      "flip": false
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "rung": 1.5,
+      "next": 3.0,
+      "lift": 17.1,
+      "gap": 2.3,
+      "flip": true
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "rung": 3.0,
+      "next": 7.0,
+      "lift": 18.8,
+      "gap": 32.6,
+      "flip": false
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "rung": 7.0,
+      "next": 14.0,
+      "lift": 8.5,
+      "gap": 4.4,
+      "flip": true
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "rung": 14.0,
+      "next": 32.0,
+      "lift": 6.3,
+      "gap": 5.1,
+      "flip": true
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "rung": 32.0,
+      "next": 72.0,
+      "lift": 6.0,
+      "gap": 0.4,
+      "flip": true
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "gsm8k",
+      "rung": 1.0,
+      "next": 3.0,
+      "lift": 21.8,
+      "gap": 45.2,
+      "flip": false
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "gsm8k",
+      "rung": 3.0,
+      "next": 8.0,
+      "lift": 12.2,
+      "gap": 6.1,
+      "flip": true
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "math",
+      "rung": 1.0,
+      "next": 3.0,
+      "lift": 10.4,
+      "gap": 19.6,
+      "flip": false
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "math",
+      "rung": 3.0,
+      "next": 8.0,
+      "lift": 15.0,
+      "gap": 5.3,
+      "flip": true
+    }
+  ],
+  "R2_inverted_U": [
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "size": 0.5,
+      "pass1": 10.9,
+      "lift": 10.1,
+      "oracle_gap": 24.7
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "math",
+      "size": 1.0,
+      "pass1": 12.2,
+      "lift": 10.4,
+      "oracle_gap": 22.6
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "size": 0.5,
+      "pass1": 22.1,
+      "lift": 18.7,
+      "oracle_gap": 38.8
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "gsm8k",
+      "size": 1.0,
+      "pass1": 28.8,
+      "lift": 21.8,
+      "oracle_gap": 34.2
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "size": 1.5,
+      "pass1": 30.6,
+      "lift": 17.1,
+      "oracle_gap": 21.6
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "math",
+      "size": 3.0,
+      "pass1": 31.8,
+      "lift": 15.0,
+      "oracle_gap": 21.6
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "size": 3.0,
+      "pass1": 32.9,
+      "lift": 18.8,
+      "oracle_gap": 23.3
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "math",
+      "size": 8.0,
+      "pass1": 37.1,
+      "lift": 18.3,
+      "oracle_gap": 18.2
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "size": 1.5,
+      "pass1": 52.8,
+      "lift": 13.8,
+      "oracle_gap": 27.2
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "size": 7.0,
+      "pass1": 65.5,
+      "lift": 8.5,
+      "oracle_gap": 11.6
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "size": 3.0,
+      "pass1": 69.5,
+      "lift": 17.7,
+      "oracle_gap": 9.6
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "size": 14.0,
+      "pass1": 69.9,
+      "lift": 6.3,
+      "oracle_gap": 9.8
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "gsm8k",
+      "size": 3.0,
+      "pass1": 74.0,
+      "lift": 12.2,
+      "oracle_gap": 12.0
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "size": 32.0,
+      "pass1": 75.0,
+      "lift": 6.0,
+      "oracle_gap": 8.3
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "size": 72.0,
+      "pass1": 75.4,
+      "lift": 5.9,
+      "oracle_gap": 7.7
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "gsm8k",
+      "size": 8.0,
+      "pass1": 80.1,
+      "lift": 10.7,
+      "oracle_gap": 8.0
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "size": 7.0,
+      "pass1": 89.0,
+      "lift": 4.6,
+      "oracle_gap": 3.8
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "size": 14.0,
+      "pass1": 92.7,
+      "lift": 1.7,
+      "oracle_gap": 3.0
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "size": 32.0,
+      "pass1": 94.1,
+      "lift": 0.9,
+      "oracle_gap": 3.2
+    }
+  ]
+}
