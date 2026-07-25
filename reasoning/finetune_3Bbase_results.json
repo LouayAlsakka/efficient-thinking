@@ -1,0 +1,31 @@
+{
+  "model": "mlx-community/Qwen2.5-3B-bf16",
+  "iters": 0,
+  "eval_n": 150,
+  "curve": [
+    {
+      "train_size": 0,
+      "accuracy": 2.7
+    },
+    {
+      "train_size": 64,
+      "accuracy": 63.3
+    },
+    {
+      "train_size": 256,
+      "accuracy": 54.7
+    },
+    {
+      "train_size": 1024,
+      "accuracy": 62.7
+    },
+    {
+      "train_size": 4096,
+      "accuracy": 52.7
+    },
+    {
+      "train_size": 7000,
+      "accuracy": 55.3
+    }
+  ]
+}
