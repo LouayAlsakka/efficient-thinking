@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="480" viewBox="0 0 720 480" font-family="Helvetica,Arial,sans-serif">
+<rect width="720" height="480" fill="white"/>
+<line x1="70.0" y1="44" x2="70.0" y2="424" stroke="#eee"/>
+<text x="70.0" y="442" font-size="12" fill="#444" text-anchor="middle">0</text>
+<line x1="195.2" y1="44" x2="195.2" y2="424" stroke="#eee"/>
+<text x="195.2" y="442" font-size="12" fill="#444" text-anchor="middle">20</text>
+<line x1="320.4" y1="44" x2="320.4" y2="424" stroke="#eee"/>
+<text x="320.4" y="442" font-size="12" fill="#444" text-anchor="middle">40</text>
+<line x1="445.6" y1="44" x2="445.6" y2="424" stroke="#eee"/>
+<text x="445.6" y="442" font-size="12" fill="#444" text-anchor="middle">60</text>
+<line x1="570.8" y1="44" x2="570.8" y2="424" stroke="#eee"/>
+<text x="570.8" y="442" font-size="12" fill="#444" text-anchor="middle">80</text>
+<line x1="696.0" y1="44" x2="696.0" y2="424" stroke="#eee"/>
+<text x="696.0" y="442" font-size="12" fill="#444" text-anchor="middle">100</text>
+<line x1="70" y1="424.0" x2="696" y2="424.0" stroke="#eee"/>
+<text x="62" y="428.0" font-size="12" fill="#444" text-anchor="end">0</text>
+<line x1="70" y1="360.7" x2="696" y2="360.7" stroke="#eee"/>
+<text x="62" y="364.7" font-size="12" fill="#444" text-anchor="end">4</text>
+<line x1="70" y1="297.3" x2="696" y2="297.3" stroke="#eee"/>
+<text x="62" y="301.3" font-size="12" fill="#444" text-anchor="end">8</text>
+<line x1="70" y1="234.0" x2="696" y2="234.0" stroke="#eee"/>
+<text x="62" y="238.0" font-size="12" fill="#444" text-anchor="end">12</text>
+<line x1="70" y1="170.7" x2="696" y2="170.7" stroke="#eee"/>
+<text x="62" y="174.7" font-size="12" fill="#444" text-anchor="end">16</text>
+<line x1="70" y1="107.3" x2="696" y2="107.3" stroke="#eee"/>
+<text x="62" y="111.3" font-size="12" fill="#444" text-anchor="end">20</text>
+<line x1="70" y1="44.0" x2="696" y2="44.0" stroke="#eee"/>
+<text x="62" y="48.0" font-size="12" fill="#444" text-anchor="end">24</text>
+<line x1="70" y1="44" x2="70" y2="424" stroke="#333"/>
+<line x1="70" y1="424" x2="696" y2="424" stroke="#333"/>
+<text x="383" y="466" font-size="14" fill="#111" text-anchor="middle">Base competence — pass@1 (%)</text>
+<text x="18" y="234" font-size="14" fill="#111" text-anchor="middle" transform="rotate(-90 18 234)">Search lift — sc@N − pass@1 (pts)</text>
+<text x="70" y="26" font-size="16" font-weight="bold" fill="#111">Search lift collapses with competence — Qwen &amp; Llama on one curve</text>
+<rect x="132.7" y="258.6" width="11" height="11" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="140.9" y="253.8" width="11" height="11" fill="#dc2626" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="208.3" cy="127.9" r="6" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="250.3" cy="78.8" r="6" fill="#dc2626" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="256.1" y="147.8" width="11" height="11" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="263.6" y="181.0" width="11" height="11" fill="#dc2626" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="270.5" y="120.8" width="11" height="11" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="296.7" y="128.7" width="11" height="11" fill="#dc2626" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="400.5" cy="205.5" r="6" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="474.5" y="283.9" width="11" height="11" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="505.1" cy="143.8" r="6" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="502.1" y="318.8" width="11" height="11" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="533.2" cy="230.8" r="6" fill="#dc2626" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="534.0" y="323.5" width="11" height="11" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="536.5" y="325.1" width="11" height="11" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="571.4" cy="254.6" r="6" fill="#dc2626" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="627.1" cy="351.2" r="6" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="650.3" cy="397.1" r="6" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<circle cx="659.1" cy="409.8" r="6" fill="#2563eb" fill-opacity="0.78" stroke="white" stroke-width="1"/>
+<rect x="512" y="46" width="176" height="86" fill="white" stroke="#ddd" rx="4"/>
+<circle cx="526" cy="60" r="6" fill="#2563eb" fill-opacity="0.78"/>
+<text x="540" y="64" font-size="12" fill="#111">Qwen2.5</text>
+<circle cx="526" cy="78" r="6" fill="#dc2626" fill-opacity="0.78"/>
+<text x="540" y="82" font-size="12" fill="#111">Llama-3.x</text>
+<circle cx="526" cy="104" r="6" fill="#666"/>
+<text x="540" y="108" font-size="12" fill="#111">circle = GSM8K</text>
+<rect x="521" y="117" width="11" height="11" fill="#666"/>
+<text x="540" y="126" font-size="12" fill="#111">square = MATH</text>
+</svg>

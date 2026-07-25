@@ -1,0 +1,275 @@
+{
+  "family": "Llama-3.x-Instruct-4bit (mlx-community)",
+  "models": {
+    "1B": "mlx-community/Llama-3.2-1B-Instruct-4bit",
+    "3B": "mlx-community/Llama-3.2-3B-Instruct-4bit",
+    "8B": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit"
+  },
+  "note_70B": "No Llama-70B 4-bit MLX conversion present locally; three-point {1B,3B,8B} ladder per spec fallback (8B bracketed from below, upper bracket absent).",
+  "math": [
+    {
+      "model": "1B",
+      "true_greedy": 15.6,
+      "pass1_sampled": 12.2,
+      "sc4": 16.8,
+      "sc16": 22.6,
+      "oracle16": 45.2,
+      "lift_vs_greedy": 7.0,
+      "lift_vs_pass1": 10.4,
+      "Nmax": 16
+    },
+    {
+      "model": "3B",
+      "true_greedy": 39.6,
+      "pass1_sampled": 31.8,
+      "sc4": 37.0,
+      "sc16": 46.8,
+      "oracle16": 68.4,
+      "lift_vs_greedy": 7.2,
+      "lift_vs_pass1": 15.0,
+      "Nmax": 16
+    },
+    {
+      "model": "8B",
+      "true_greedy": 41.8,
+      "pass1_sampled": 37.1,
+      "sc4": 42.6,
+      "sc16": 55.4,
+      "oracle16": 73.6,
+      "lift_vs_greedy": 13.6,
+      "lift_vs_pass1": 18.3,
+      "Nmax": 16
+    }
+  ],
+  "gsm8k": [
+    {
+      "model": "1B",
+      "true_greedy": 34.8,
+      "pass1_sampled": 28.8,
+      "sc4": 37.6,
+      "sc32": 50.6,
+      "oracle32": 84.8,
+      "lift_vs_greedy": 15.8,
+      "lift_vs_pass1": 21.8,
+      "Nmax": 32
+    },
+    {
+      "model": "3B",
+      "true_greedy": 77.4,
+      "pass1_sampled": 74.0,
+      "sc4": 81.0,
+      "sc32": 86.2,
+      "oracle32": 98.2,
+      "lift_vs_greedy": 8.8,
+      "lift_vs_pass1": 12.2,
+      "Nmax": 32
+    },
+    {
+      "model": "8B",
+      "true_greedy": 82.4,
+      "pass1_sampled": 80.1,
+      "sc4": 84.8,
+      "sc32": 90.8,
+      "oracle32": 98.8,
+      "lift_vs_greedy": 8.4,
+      "lift_vs_pass1": 10.7,
+      "Nmax": 32
+    }
+  ],
+  "mcnemar_flips": [
+    {
+      "flip": "MATH:  1B+sc@16 vs 3B greedy",
+      "search_acc": 22.6,
+      "bigger_greedy_acc": 39.6,
+      "delta": -17.0,
+      "b": 21,
+      "c": 106,
+      "p": 0.0,
+      "verdict": "BIGGER WINS (p<0.05)"
+    },
+    {
+      "flip": "MATH:  3B+sc@16 vs 8B greedy",
+      "search_acc": 46.800000000000004,
+      "bigger_greedy_acc": 41.8,
+      "delta": 5.0,
+      "b": 63,
+      "c": 38,
+      "p": 0.0165,
+      "verdict": "SEARCH WINS (p<0.05)"
+    },
+    {
+      "flip": "GSM8K: 1B+sc@32 vs 3B greedy",
+      "search_acc": 50.6,
+      "bigger_greedy_acc": 77.4,
+      "delta": -26.8,
+      "b": 21,
+      "c": 155,
+      "p": 0.0,
+      "verdict": "BIGGER WINS (p<0.05)"
+    },
+    {
+      "flip": "GSM8K: 3B+sc@32 vs 8B greedy",
+      "search_acc": 86.2,
+      "bigger_greedy_acc": 82.39999999999999,
+      "delta": 3.8,
+      "b": 44,
+      "c": 25,
+      "p": 0.0295,
+      "verdict": "SEARCH WINS (p<0.05)"
+    }
+  ],
+  "x5_overlay_lift_vs_pass1": [
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "model": "math_0.5B.jsonl",
+      "pass1": 10.9,
+      "lift": 10.1,
+      "Nmax": 16
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "math",
+      "model": "llama_math_1B.jsonl",
+      "pass1": 12.2,
+      "lift": 10.4,
+      "Nmax": 16
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "model": "gsm8k_0.5B.jsonl",
+      "pass1": 22.1,
+      "lift": 18.7,
+      "Nmax": 32
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "gsm8k",
+      "model": "llama_gsm8k_1B.jsonl",
+      "pass1": 28.8,
+      "lift": 21.8,
+      "Nmax": 32
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "model": "math_1.5B.jsonl",
+      "pass1": 30.6,
+      "lift": 17.1,
+      "Nmax": 16
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "math",
+      "model": "llama_math_3B.jsonl",
+      "pass1": 31.8,
+      "lift": 15.0,
+      "Nmax": 16
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "model": "math_3B.jsonl",
+      "pass1": 32.9,
+      "lift": 18.8,
+      "Nmax": 16
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "math",
+      "model": "llama_math_8B.jsonl",
+      "pass1": 37.1,
+      "lift": 18.3,
+      "Nmax": 16
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "model": "gsm8k_1.5B.jsonl",
+      "pass1": 52.8,
+      "lift": 13.8,
+      "Nmax": 32
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "model": "math_7B.jsonl",
+      "pass1": 65.5,
+      "lift": 8.5,
+      "Nmax": 16
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "model": "gsm8k_3B.jsonl",
+      "pass1": 69.5,
+      "lift": 17.7,
+      "Nmax": 32
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "model": "math_14B.jsonl",
+      "pass1": 69.9,
+      "lift": 6.3,
+      "Nmax": 16
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "gsm8k",
+      "model": "llama_gsm8k_3B.jsonl",
+      "pass1": 74.0,
+      "lift": 12.2,
+      "Nmax": 32
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "model": "math_32B.jsonl",
+      "pass1": 75.0,
+      "lift": 6.0,
+      "Nmax": 16
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "math",
+      "model": "math_72B.jsonl",
+      "pass1": 75.4,
+      "lift": 5.9,
+      "Nmax": 16
+    },
+    {
+      "family": "Llama3.x",
+      "bench": "gsm8k",
+      "model": "llama_gsm8k_8B.jsonl",
+      "pass1": 80.1,
+      "lift": 10.7,
+      "Nmax": 32
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "model": "gsm8k_7B.jsonl",
+      "pass1": 89.0,
+      "lift": 4.6,
+      "Nmax": 32
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "model": "gsm8k_14B.jsonl",
+      "pass1": 92.7,
+      "lift": 1.7,
+      "Nmax": 32
+    },
+    {
+      "family": "Qwen2.5",
+      "bench": "gsm8k",
+      "model": "gsm8k_32B.jsonl",
+      "pass1": 94.1,
+      "lift": 0.9,
+      "Nmax": 32
+    }
+  ]
+}
