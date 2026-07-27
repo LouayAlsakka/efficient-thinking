@@ -1,0 +1,40 @@
+{
+  "benchmark": "MATH",
+  "n": 1000,
+  "set": "math1000.jsonl (seed-0 full-MATH-test draw)",
+  "models": {
+    "7B": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+    "14B": "mlx-community/Qwen2.5-14B-Instruct-4bit"
+  },
+  "rows": {
+    "7B": {
+      "n": 1000,
+      "nmax": 16,
+      "pass1": 61.9,
+      "sc4": 65.2,
+      "oracle4": 74.5,
+      "sc16": 69.6,
+      "oracle16": 82.6,
+      "true_greedy": 64.1
+    },
+    "14B": {
+      "n": 1000,
+      "nmax": 16,
+      "pass1": 66.1,
+      "sc4": 69.6,
+      "oracle4": 77.5,
+      "sc16": 72.9,
+      "oracle16": 83.6,
+      "true_greedy": 67.1
+    }
+  },
+  "flip_7Bsc16_vs_14Bgreedy": {
+    "search_acc": 69.6,
+    "greedy_acc": 67.10000000000001,
+    "delta": 2.5,
+    "b": 71,
+    "c": 46,
+    "p": 0.02608,
+    "n": 1000
+  }
+}

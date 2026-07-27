@@ -40,6 +40,22 @@ baseline in language.
    wobble 63→55→63→53→55 is within the ±8-pt eval band; the load-bearing facts are the plateau height
    ~55–60% and that it never approaches 75.3.)
 
+## The elicitation reading (and an E-E bridge)
+
+Wrinkle 2 is sharper than "format alignment." Sixty-four examples buy ~85% of the entire fine-tune ceiling
+at 3B (2.7 → 63.3), then thousands more add nothing; the 0.5B base instead *accumulated* information
+smoothly (1.3 → 26 over the full sweep). So **the data lever at 3B is mostly elicitation, not information**:
+the base already holds the capability, a handful of examples unlock the output format, and further narrow
+data adds no new capability — yet it still lands 12–20 pts under the instruct floor, whose training added
+something this LoRA cannot reach. That is ET-VII's **elicitation gap Δ appearing uninvited in a Paper II
+experiment** — Δ made visible as the shape of a fine-tuning curve.
+
+**Cheap registered follow-up for the E-E batch (not run here; llm1-only for now):** probe the *un-tuned* 3B
+base's hidden states on GSM8K. If probe accuracy lands near 63% (the 64-example ceiling), the elicitation
+reading is confirmed — the capability is present pre-tuning and the LoRA only surfaced it — and B3's miss
+becomes a two-paper bridge (Paper II §7 ↔ ET-VII E-E). If probe accuracy is far below 63%, the fine-tune
+added real information and the elicitation reading is wrong. Registered before running.
+
 ## Paper integration
 
 Scored registered prediction → **Paper II v2**: one §7 note + one §10 ledger row (below). The result
