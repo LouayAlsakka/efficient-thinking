@@ -61,9 +61,9 @@ def hidden_at_layers(model, tok, messages: list[dict], layers: list[int]):
 def first_decision_states(steps: list[dict], tasks_dir: str):
     """From a run's step log, reconstruct the prompt at the FIRST HYPOTHESIS step of each episode and its label."""
     by_task = {}
-    for s in steps: by_task.setdefault(s["task_id"], []).append(s)
+    for s in steps: by_task.setdefault((s["run_id"], s["task_id"]), []).append(s)   # keyed by RUN too: runs share task ids
     out = []
-    for tid, st in by_task.items():
+    for (rid, tid), st in by_task.items():
         st.sort(key=lambda s: s["step"])
         task = json.load(open(os.path.join(tasks_dir, f"{tid}.json")))
         history, inspected = [], {}
