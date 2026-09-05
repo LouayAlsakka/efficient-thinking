@@ -1,0 +1,45 @@
+{
+ "run_id": "20260905T193631Z-430d93",
+ "harness": "v0.4 (e62f7cb)",
+ "model": "Qwen/Qwen2.5-3B-Instruct (bf16)",
+ "mechanism": "A text memory = experience/lessons/v0/lessons.txt (1,662 chars, distilled from the SAME 20 tasks x 2 models \u2014 train-on-test, so a PLUMBING test only)",
+ "tasks": 20,
+ "green": 5,
+ "success": 0.25,
+ "mean_actions": 10.2,
+ "mean_tokens": 12233,
+ "by_family": {
+  "A_boundary": {
+   "green": 3,
+   "n": 5
+  },
+  "B_state": {
+   "green": 0,
+   "n": 5
+  },
+  "C_types": {
+   "green": 1,
+   "n": 5
+  },
+  "D_mixed": {
+   "green": 1,
+   "n": 5
+  }
+ },
+ "actions": {
+  "hypothesize": 20,
+  "inspect": 20,
+  "repeat_inspect": 11,
+  "patch": 38,
+  "noop_patch": 107,
+  "invalid": 1,
+  "repeat_hypothesis": 3,
+  "repeat_patch": 4
+ },
+ "distinct_regions_in_failed_episodes": {
+  "1": 15
+ },
+ "comparison": "v0.3 3B no memory on the same 20 tasks: 8/20, 9.25 actions, failed-episode regions {1:11, 3:1}",
+ "finding": "The text-memory carrier works end to end (lessons reach the prompt; +~400 tokens/turn). The v0 lessons did not help: 5/20 vs 8/20, one seed, n=20 - not significant either way, and they were distilled from these very tasks. Fixation is unchanged (15/15 failed episodes on one region) and with v0.4 labels the dominant waste is noop_patch (107/204): the model re-emits the shown code. So two separable deficits: LOCALIZATION (which region first - what a prior can buy) and REPAIR (writing the fix once localized - a capability floor of the model on B_state/C_types classes). first_correct_hypothesis_step already measures localization; the paper should report both, and P1 should be scored on localization cost as well as actions-to-green.",
+ "date": "2026-09-05T19:4xZ"
+}
