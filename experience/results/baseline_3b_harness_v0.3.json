@@ -1,0 +1,98 @@
+{
+ "run_id": "20260905T191743Z-7528ab",
+ "harness": "v0.3 (d330b89)",
+ "model": "Qwen/Qwen2.5-3B-Instruct (bf16)",
+ "tasks": 20,
+ "green": 8,
+ "success": 0.4,
+ "mean_actions": 9.25,
+ "mean_tokens": 6023,
+ "by_family": {
+  "A_boundary": {
+   "green": 3,
+   "n": 5
+  },
+  "B_state": {
+   "green": 1,
+   "n": 5
+  },
+  "C_types": {
+   "green": 1,
+   "n": 5
+  },
+  "D_mixed": {
+   "green": 3,
+   "n": 5
+  }
+ },
+ "by_class": {
+  "early_return": {
+   "green": 3,
+   "n": 3
+  },
+  "swallowed_exception": {
+   "green": 0,
+   "n": 1
+  },
+  "int_division": {
+   "green": 0,
+   "n": 2
+  },
+  "width_mismatch": {
+   "green": 2,
+   "n": 3
+  },
+  "missing_key": {
+   "green": 0,
+   "n": 1
+  },
+  "mutable_default": {
+   "green": 2,
+   "n": 5
+  },
+  "off_by_one": {
+   "green": 0,
+   "n": 1
+  },
+  "naive_datetime": {
+   "green": 0,
+   "n": 1
+  },
+  "swapped_args": {
+   "green": 0,
+   "n": 1
+  },
+  "unsorted_assumption": {
+   "green": 1,
+   "n": 1
+  },
+  "wrong_comparator": {
+   "green": 0,
+   "n": 1
+  }
+ },
+ "actions": {
+  "hypothesize": 25,
+  "inspect": 22,
+  "patch": 53,
+  "repeat_patch": 46,
+  "repeat_hypothesis": 31,
+  "repeat_inspect": 8
+ },
+ "green_episode_actions": [
+  3,
+  3,
+  3,
+  4,
+  6,
+  6,
+  8,
+  8
+ ],
+ "distinct_regions_in_failed_episodes": {
+  "1": 11,
+  "3": 1
+ },
+ "date": "2026-09-05T19:2xZ",
+ "machine": "Louay's Mac (MLX), concurrent with the 7B run"
+}

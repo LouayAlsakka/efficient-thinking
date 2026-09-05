@@ -1,0 +1,92 @@
+{
+ "run_id": "20260905T191741Z-79f3d9",
+ "harness": "v0.3 (d330b89)",
+ "model": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+ "tasks": 20,
+ "green": 7,
+ "success": 0.35,
+ "mean_actions": 9.25,
+ "mean_tokens": 5962,
+ "by_family": {
+  "A_boundary": {
+   "green": 5,
+   "n": 5
+  },
+  "B_state": {
+   "green": 0,
+   "n": 5
+  },
+  "C_types": {
+   "green": 1,
+   "n": 5
+  },
+  "D_mixed": {
+   "green": 1,
+   "n": 5
+  }
+ },
+ "by_class": {
+  "early_return": {
+   "green": 3,
+   "n": 3
+  },
+  "swallowed_exception": {
+   "green": 0,
+   "n": 1
+  },
+  "int_division": {
+   "green": 0,
+   "n": 2
+  },
+  "width_mismatch": {
+   "green": 1,
+   "n": 3
+  },
+  "missing_key": {
+   "green": 0,
+   "n": 1
+  },
+  "mutable_default": {
+   "green": 0,
+   "n": 5
+  },
+  "off_by_one": {
+   "green": 1,
+   "n": 1
+  },
+  "naive_datetime": {
+   "green": 0,
+   "n": 1
+  },
+  "swapped_args": {
+   "green": 0,
+   "n": 1
+  },
+  "unsorted_assumption": {
+   "green": 1,
+   "n": 1
+  },
+  "wrong_comparator": {
+   "green": 1,
+   "n": 1
+  }
+ },
+ "actions": {
+  "inspect": 20,
+  "hypothesize": 20,
+  "patch": 25,
+  "repeat_patch": 120
+ },
+ "green_episode_actions": [
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  11
+ ],
+ "steps_at_explore_temp": 107,
+ "date": "2026-09-05T19:2xZ",
+ "machine": "Louay's Mac (MLX), concurrent with a 3B run"
+}

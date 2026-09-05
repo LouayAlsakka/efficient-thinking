@@ -63,7 +63,7 @@ def generate(model, tok, messages: list[dict], max_tokens: int = 400, temp: floa
 # temperature rises with consecutive wasted steps, capped. Greedy decoding alone cannot search: an identical prompt
 # yields an identical patch, so a failed patch was re-submitted for the rest of the budget (v0.2: 136/186 steps).
 EXPLORE_TEMP, EXPLORE_STEP, EXPLORE_CAP = 0.7, 0.15, 1.0
-WASTED = ("repeat_inspect", "repeat_hypothesis", "repeat_patch", "invalid")
+WASTED = ("repeat_inspect", "repeat_hypothesis", "repeat_patch", "noop_patch", "invalid")
 
 def parse_action(text: str) -> dict:
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.M)   # strip code fences
@@ -116,6 +116,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
     total_in = total_out = 0
     first_correct = None
     wasted_streak = 0
+    tried_patches: dict[str, set[str]] = {}
     for step in range(1, budget + 1):
         temp = 0.0 if wasted_streak == 0 else min(EXPLORE_CAP, EXPLORE_TEMP + EXPLORE_STEP * (wasted_streak - 1))
         state = f"SYMPTOM: {task['symptom']}\nRegions: {', '.join(task['regions'])}\n"
@@ -126,7 +127,10 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             state += "Your previous actions: " + " | ".join(history[-6:]) + "\n"
         if fails:
             state += "Last verifier result: " + "; ".join(f"{f['kind']} {f['test']} — {f.get('message','')}" for f in fails[:4]) + "\n"
-        if history and history[-1].startswith(("patch", "repeat patch")) and fails:
+        if history and history[-1].startswith("noop patch"):
+            state += ("Your last 'patch' was IDENTICAL to the current code — nothing changed. Either edit the code (the bug is a "
+                      "specific line), or the bug is in a DIFFERENT region: hypothesize and inspect another one.\n")
+        elif history and history[-1].startswith(("patch", "repeat patch")) and fails:
             state += ("Your last patch did NOT fix it (see verifier result). Submitting the same source again is wasted: "
                       "change the code, or hypothesize/inspect a different region.\n")
         last_hyp = next((h for h in reversed(history) if h.startswith("hypothesize ")), None)
@@ -152,9 +156,16 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             if first_correct is None and (region == task["bug_region"] or hyp == task["bug_class"]):
                 first_correct = step
         elif kind == "patch" and region in task["regions"] and isinstance(a.get("source"), str) \
-                and a["source"].strip() == (inspected.get(region) or "").strip():
-            kind = "repeat_patch"; history.append(f"repeat patch {region} (identical source — wasted)")
+                and a["source"].strip() == (region_source(program, region) or "").strip():
+            # the "patch" is byte-identical to the code currently in the program: nothing was changed.
+            # v0.3 lumped this with re-submitting a failed patch; they are different failures. This one is the
+            # model not knowing WHAT to change (it copies what it was shown) — the dominant waste in v0.1–v0.3.
+            kind = "noop_patch"; history.append(f"noop patch {region} (identical to current code — nothing changed)")
+        elif kind == "patch" and region in task["regions"] and isinstance(a.get("source"), str) \
+                and a["source"].strip() in tried_patches.get(region, set()):
+            kind = "repeat_patch"; history.append(f"repeat patch {region} (a patch you already tried — wasted)")
         elif kind == "patch" and region in task["regions"] and isinstance(a.get("source"), str):
+            tried_patches.setdefault(region, set()).add(a["source"].strip())
             program = replace_region(program, region, a["source"])
             inspected[region] = a["source"]
             green, fails = E.run_tests(program, task["tests"])          # a patch always runs the verifier
