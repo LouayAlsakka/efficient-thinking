@@ -60,16 +60,26 @@ def generate(model, tok, messages: list[dict], max_tokens: int = 400) -> tuple[s
     return text, n_in, len(tok.encode(text))
 
 def parse_action(text: str) -> dict:
+    text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.M)   # strip code fences
     m = re.search(r"\{.*\}", text, flags=re.S)
     if not m:
         return {"action": "invalid", "raw": text[:200]}
-    try:
-        a = json.loads(m.group(0))
-    except json.JSONDecodeError:
-        # tolerate a trailing comma or a stray fence
+    cand = m.group(0)
+    a = None
+    for attempt in (cand, re.sub(r",\s*}", "}", cand)):
         try:
-            a = json.loads(re.sub(r",\s*}", "}", m.group(0)).strip("`"))
-        except Exception:
+            a = json.loads(attempt, strict=False)      # strict=False: literal newlines inside "source" are accepted
+            break
+        except json.JSONDecodeError:
+            continue
+    if a is None:
+        # last resort: pull the fields by regex so a model that writes raw multi-line source is not scored invalid
+        act = re.search(r'"action"\s*:\s*"(\w+)"', cand); reg = re.search(r'"region"\s*:\s*"(\w+)"', cand)
+        src = re.search(r'"source"\s*:\s*"(.*)"\s*}?\s*$', cand, flags=re.S)
+        if act and reg and src:
+            a = {"action": act.group(1), "region": reg.group(1),
+                 "source": src.group(1).encode().decode("unicode_escape") if "\\n" in src.group(1) else src.group(1)}
+        else:
             return {"action": "invalid", "raw": text[:200]}
     if not isinstance(a, dict) or "action" not in a:
         return {"action": "invalid", "raw": text[:200]}
@@ -107,7 +117,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
         if history:
             state += "Your previous actions: " + " | ".join(history[-6:]) + "\n"
         if fails:
-            state += "Last verifier result: " + "; ".join(f"{f['kind']} {f['test']}" for f in fails[:4]) + "\n"
+            state += "Last verifier result: " + "; ".join(f"{f['kind']} {f['test']} — {f.get('message','')}" for f in fails[:4]) + "\n"
         last_hyp = next((h for h in reversed(history) if h.startswith("hypothesize ")), None)
         if last_hyp:
             r = last_hyp.split()[1].split("/")[0]
@@ -130,6 +140,9 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             history.append(f"hypothesize {region}/{hyp}")
             if first_correct is None and (region == task["bug_region"] or hyp == task["bug_class"]):
                 first_correct = step
+        elif kind == "patch" and region in task["regions"] and isinstance(a.get("source"), str) \
+                and a["source"].strip() == (inspected.get(region) or "").strip():
+            kind = "repeat_patch"; history.append(f"repeat patch {region} (identical source — wasted)")
         elif kind == "patch" and region in task["regions"] and isinstance(a.get("source"), str):
             program = replace_region(program, region, a["source"])
             inspected[region] = a["source"]
