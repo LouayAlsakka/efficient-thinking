@@ -1,0 +1,89 @@
+{
+ "run_id": "20260905T190036Z-ac547a",
+ "harness": "v0.1 (5c25b68)",
+ "model": "Qwen/Qwen2.5-3B-Instruct (bf16)",
+ "tasks": 20,
+ "green": 9,
+ "success": 0.45,
+ "mean_actions": 8.9,
+ "mean_tokens": 5682,
+ "by_family": {
+  "A_boundary": {
+   "green": 4,
+   "n": 5
+  },
+  "B_state": {
+   "green": 0,
+   "n": 5
+  },
+  "C_types": {
+   "green": 4,
+   "n": 5
+  },
+  "D_mixed": {
+   "green": 1,
+   "n": 5
+  }
+ },
+ "by_class": {
+  "early_return": {
+   "green": 3,
+   "n": 3
+  },
+  "swallowed_exception": {
+   "green": 0,
+   "n": 1
+  },
+  "int_division": {
+   "green": 2,
+   "n": 2
+  },
+  "width_mismatch": {
+   "green": 3,
+   "n": 3
+  },
+  "missing_key": {
+   "green": 0,
+   "n": 1
+  },
+  "mutable_default": {
+   "green": 0,
+   "n": 5
+  },
+  "off_by_one": {
+   "green": 1,
+   "n": 1
+  },
+  "naive_datetime": {
+   "green": 0,
+   "n": 1
+  },
+  "swapped_args": {
+   "green": 0,
+   "n": 1
+  },
+  "unsorted_assumption": {
+   "green": 0,
+   "n": 1
+  },
+  "wrong_comparator": {
+   "green": 0,
+   "n": 1
+  }
+ },
+ "actions": {
+  "hypothesize": 20,
+  "inspect": 22,
+  "patch": 75,
+  "repeat_patch": 61
+ },
+ "first_hypothesis_region": {
+  "producer": 11,
+  "transform": 2,
+  "aggregate": 5,
+  "consumer": 1
+ },
+ "finding": "Harness v0.1 artifact. 3B bf16 9/20 vs 7B-4bit 7/20 on identical tasks and harness \u2014 the model-size ordering Paper II predicts does not show at n=20 here; B_state family 0/5 for both (mutable_default/aliasing never fixed); 61 of 178 steps identical re-patches. First hypothesis producer 11/19: the concrete prompt example (producer/off_by_one) plausibly biased 3B more than 7B. Both fixed in v0.2; rerun before any comparison is claimed.",
+ "date": "2026-09-05T19:0xZ",
+ "machine": "Louay's Mac (MLX), concurrent with the 7B run"
+}

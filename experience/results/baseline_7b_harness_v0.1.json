@@ -1,0 +1,90 @@
+{
+ "run_id": "20260905T190032Z-91f2c8",
+ "harness": "v0.1 (5c25b68)",
+ "model": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+ "tasks": 20,
+ "green": 7,
+ "success": 0.35,
+ "mean_actions": 8.9,
+ "mean_tokens": 5974,
+ "by_family": {
+  "A_boundary": {
+   "green": 5,
+   "n": 5
+  },
+  "B_state": {
+   "green": 0,
+   "n": 5
+  },
+  "C_types": {
+   "green": 2,
+   "n": 5
+  },
+  "D_mixed": {
+   "green": 0,
+   "n": 5
+  }
+ },
+ "by_class": {
+  "early_return": {
+   "green": 3,
+   "n": 3
+  },
+  "swallowed_exception": {
+   "green": 0,
+   "n": 1
+  },
+  "int_division": {
+   "green": 2,
+   "n": 2
+  },
+  "width_mismatch": {
+   "green": 0,
+   "n": 3
+  },
+  "missing_key": {
+   "green": 0,
+   "n": 1
+  },
+  "mutable_default": {
+   "green": 0,
+   "n": 5
+  },
+  "off_by_one": {
+   "green": 1,
+   "n": 1
+  },
+  "naive_datetime": {
+   "green": 0,
+   "n": 1
+  },
+  "swapped_args": {
+   "green": 0,
+   "n": 1
+  },
+  "unsorted_assumption": {
+   "green": 0,
+   "n": 1
+  },
+  "wrong_comparator": {
+   "green": 1,
+   "n": 1
+  }
+ },
+ "actions": {
+  "hypothesize": 20,
+  "inspect": 30,
+  "patch": 25,
+  "repeat_patch": 102,
+  "invalid": 1
+ },
+ "first_hypothesis_follows_symptom_region": "2/15",
+ "first_hypothesis_region": {
+  "producer": 5,
+  "transform": 9,
+  "consumer": 1
+ },
+ "finding": "Harness v0.1 artifact, not the baseline. (1) 102/178 steps were identical re-submitted patches after a failing verifier result \u2014 a harness gap (no post-failure nudge), fixed in v0.2. (2) The system-prompt example named a concrete region/class (producer/off_by_one); the recorded first-hypothesis distribution is transform 9 / producer 5 / consumer 1, so the model did NOT simply copy it, but a concrete example is a possible bias and v0.2 uses placeholders. (3) First hypothesis followed the symptom region in only 2/15 cases \u2014 the untrained model already searches upstream of the symptom; this is the prior the experience module must beat, and it argues for measuring hypothesis ORDER against the true bug region rather than herring-following alone.",
+ "date": "2026-09-05T19:0xZ",
+ "machine": "Louay's Mac (MLX), concurrent with a 3B run"
+}

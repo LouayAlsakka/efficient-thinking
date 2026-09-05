@@ -40,12 +40,11 @@ A failing test in one region may be caused by a bug UPSTREAM of it. You have %d 
 region you have already seen is wasted (it is shown to you already); every patch runs the tests automatically and
 shows you the result; hypothesize before you patch.
 
-Example of a good episode (different program):
-  SYMPTOM: FAIL: test_report_all_items — AssertionError: 2 != 3
-  -> {"action":"hypothesize","region":"producer","bug_class":"off_by_one","why":"consumer count is short by one; producer builds the list"}
-  -> {"action":"inspect","region":"producer"}
-  -> {"action":"patch","region":"producer","source":"def produce(items):\\n    ...fixed source...\\n"}
-  (tests run: green)"""
+Shape of a good episode (placeholders, not advice about where the bug is):
+  -> {"action":"hypothesize","region":"<REGION>","bug_class":"<CLASS>","why":"<one sentence>"}
+  -> {"action":"inspect","region":"<REGION>"}
+  -> {"action":"patch","region":"<REGION>","source":"def <name>(...):\\n    <full corrected source>\\n"}
+  (tests run automatically; if not green, CHANGE the code or look elsewhere — the same source again is wasted)"""
 
 def load_model(model_id: str):
     from mlx_lm import load
@@ -118,6 +117,9 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             state += "Your previous actions: " + " | ".join(history[-6:]) + "\n"
         if fails:
             state += "Last verifier result: " + "; ".join(f"{f['kind']} {f['test']} — {f.get('message','')}" for f in fails[:4]) + "\n"
+        if history and history[-1].startswith(("patch", "repeat patch")) and fails:
+            state += ("Your last patch did NOT fix it (see verifier result). Submitting the same source again is wasted: "
+                      "change the code, or hypothesize/inspect a different region.\n")
         last_hyp = next((h for h in reversed(history) if h.startswith("hypothesize ")), None)
         if last_hyp:
             r = last_hyp.split()[1].split("/")[0]
