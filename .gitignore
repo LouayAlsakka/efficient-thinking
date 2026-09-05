@@ -56,3 +56,7 @@ reasoning/data/
 !reasoning/arena_gelo_anchored.json
 !reasoning/frontier_*.json
 !control/
+
+# ET-8 generated task sets (regenerable: et8_env.py gen); keep only _stats.json
+experience/tasks/*/task_*.json
+experience/traj/

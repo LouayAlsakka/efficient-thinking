@@ -1,0 +1,18 @@
+{
+ "n": 100,
+ "red_herring": 40,
+ "by_class": {
+  "early_return": 12,
+  "swallowed_exception": 9,
+  "int_division": 9,
+  "width_mismatch": 11,
+  "missing_key": 5,
+  "mutable_default": 12,
+  "off_by_one": 12,
+  "naive_datetime": 5,
+  "swapped_args": 5,
+  "unsorted_assumption": 6,
+  "wrong_comparator": 7,
+  "aliasing": 7
+ }
+}
