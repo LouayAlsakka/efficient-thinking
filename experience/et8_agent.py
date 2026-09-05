@@ -201,6 +201,10 @@ def main():
     ap.add_argument("--tasks", required=True); ap.add_argument("--out", required=True)
     ap.add_argument("--model", default="Qwen/Qwen2.5-3B-Instruct"); ap.add_argument("--budget", type=int, default=12)
     ap.add_argument("--limit", type=int, default=0); ap.add_argument("--memory", help="text-memory file (mechanism A)")
+    ap.add_argument("--steer-vectors", help="directory from et8_inject.py build (mechanism C): installs h_l += alpha*v_l")
+    ap.add_argument("--steer-layers", nargs="+", type=int, help="subset of the built layers to install (default: all in meta)")
+    ap.add_argument("--steer-alpha", type=float, default=4.0, help="steering strength in hidden units (hidden norms are ~40-90)")
+    ap.add_argument("--steer-all-tokens", action="store_true", help="apply at every position instead of the decision token only")
     a = ap.parse_args()
     files = sorted(glob.glob(os.path.join(a.tasks, "task_*.json")))
     if a.limit: files = files[: a.limit]
@@ -208,6 +212,15 @@ def main():
     memory = open(a.memory).read() if a.memory else None
     run_id = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()) + "-" + uuid.uuid4().hex[:6]
     t0 = time.time(); model, tok = load_model(a.model); print(f"model loaded in {time.time()-t0:.1f}s", file=sys.stderr)
+    steer = None
+    if a.steer_vectors:
+        import numpy as np, et8_inject
+        meta = json.load(open(os.path.join(a.steer_vectors, "meta.json")))
+        layers = a.steer_layers or [int(l) for l in meta["vectors"]]
+        vecs = {l: np.load(os.path.join(a.steer_vectors, f"v_layer{l}.npy")) for l in layers}
+        et8_inject.install_steering(model, vecs, a.steer_alpha, decision_only=not a.steer_all_tokens)
+        steer = {"vectors": a.steer_vectors, "layers": layers, "alpha": a.steer_alpha, "decision_only": not a.steer_all_tokens}
+        print(f"steering installed: layers={layers} alpha={a.steer_alpha} decision_only={not a.steer_all_tokens}", file=sys.stderr)
     summaries = []
     with open(a.out + ".steps.jsonl", "a") as log, open(a.out + ".episodes.jsonl", "a") as ep:
         for i, f in enumerate(files, 1):
@@ -221,7 +234,7 @@ def main():
     print(json.dumps({"run_id": run_id, "model": a.model, "tasks": n, "green": g, "success": round(g / n, 3) if n else None,
                       "mean_actions": round(sum(s["actions"] for s in summaries) / n, 2) if n else None,
                       "mean_tokens": round(sum(s["tokens_in"] + s["tokens_out"] for s in summaries) / n) if n else None,
-                      "memory": bool(memory)}, indent=1))
+                      "memory": bool(memory), "steer": steer}, indent=1))
 
 if __name__ == "__main__":
     main()

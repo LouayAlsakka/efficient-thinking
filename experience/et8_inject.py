@@ -139,19 +139,29 @@ def install_steering(model, vectors: dict[int, "np.ndarray"], alpha: float, deci
     """Wrap chosen decoder layers so their residual output gets + alpha * v at the last position (decision token) or everywhere.
     Returns a restore() function."""
     import mlx.core as mx
+
+    class _Steered:
+        """Callable stand-in for a decoder layer. Python resolves `layer(x)` on the TYPE, so an instance-level __call__
+        would never intercept; replacing the entry in model.model.layers (a plain list the model iterates) does."""
+        def __init__(self, inner, v, alpha, decision_only):
+            self.inner, self.v, self.alpha, self.decision_only = inner, mx.array(v, dtype=mx.float32), alpha, decision_only
+        def __call__(self, x, *args, **kw):
+            h = self.inner(x, *args, **kw)
+            add = (self.alpha * self.v).astype(h.dtype)
+            if self.decision_only:
+                # add only at the last position (the decision token) — during generation the last position IS the new token
+                last = h[:, -1:, :] + add
+                return mx.concatenate([h[:, :-1, :], last], axis=1) if h.shape[1] > 1 else last
+            return h + add
+        def __getattr__(self, name):            # anything else (e.g. .parameters()) passes through to the real layer
+            return getattr(self.inner, name)
+
     originals = {}
     for l, v in vectors.items():
-        layer = model.model.layers[l]; orig = layer.__call__
-        vv = mx.array(v)
-        def wrapped(x, *args, _orig=orig, _v=vv, **kw):
-            h = _orig(x, *args, **kw)
-            if decision_only:
-                add = mx.zeros_like(h); add = add.at[:, -1, :].add(alpha * _v)
-                return h + add
-            return h + alpha * _v
-        layer.__call__ = wrapped; originals[l] = orig
+        originals[l] = model.model.layers[l]
+        model.model.layers[l] = _Steered(originals[l], v, alpha, decision_only)
     def restore():
-        for l, orig in originals.items(): model.model.layers[l].__call__ = orig
+        for l, orig in originals.items(): model.model.layers[l] = orig
     return restore
 
 if __name__ == "__main__":
