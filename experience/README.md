@@ -27,8 +27,12 @@ Design: `../docs/efficient-thinking-8-proposal.md` (registered) · concept: `../
 
 ## Hand-off #1 to Sautee — the frozen baseline pass (proposal §3.1 / §8 week 2)
 
-Precondition on the target machine: Python 3.11+, `pip install mlx-lm` on Apple Silicon (if llm1 is NVIDIA, stop and say so:
-the harness needs a HF backend swap in `generate()` first). Then, from the repo root at the commit named in the request:
+Target measured 2026-09-05 19:27Z (read-only): **llm1 = Apple M3 Ultra, 256 GB, Darwin arm64, load ~1.6, user `lab`; python3
+3.9.6, no mlx-lm, no brew/uv/conda, no clone.** So mlx-lm runs as-is once installed; no HF backend swap needed.
+
+Step 0 (environment, Sautee): `git clone https://github.com/LouayAlsakka/efficient-thinking.git && cd efficient-thinking &&
+python3 -m pip install --user mlx-lm huggingface_hub`. If pip refuses on Python 3.9, report "blocked: python" — the interpreter
+install is tetsu's (IT), not a lane's; do not install system-wide. Then, from the repo root at the commit named in the request:
 
 ```
 python experience/et8_env.py selftest                       # expect: clean=PASS  caught=12/12
