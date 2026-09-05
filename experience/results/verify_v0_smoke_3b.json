@@ -1,0 +1,17 @@
+{
+ "run_id": "verify-20260905T193853Z-364603",
+ "harness": "v0.4 (e62f7cb) + et8_verify v0 (4cdef33)",
+ "model": "Qwen/Qwen2.5-3B-Instruct (bf16)",
+ "held_out_tasks": "experience/tasks/heldout_v0 (n=200, seed 7, red_herring 79/200)",
+ "lessons_tested": 1,
+ "lesson": {"condition": {"family": "A_boundary", "symptom_region": "consumer"}, "action_prior": ["producer"], "action_avoid": [],
+            "source": "experience/lessons/v0/lessons.json (distilled from v0.3 3B+7B traces, 8 episodes in this condition, confidence 0.731)"},
+ "in_scope": {"n": 8, "cost_base": 10.0, "cost_with": 12.25, "green_base": 4, "green_with": 3},
+ "control_shuffled_family": {"n": 8, "cost_base": 13.0, "cost_with": 13.0},
+ "gain": -2.25, "leak": 0.0, "rule": "admit iff gain >= 1.0 and leak <= 0.5 on n >= 8",
+ "decision": "rejected",
+ "rejection_rate_P0": 1.0,
+ "finding": "The gate refused a confident (0.731) lesson that train-on-test distillation produced from 8 episodes: on held-out tasks in scope it cost +2.25 actions and one fewer green, with zero effect on the control. This is the P0 mechanism doing what proposal section 3.3 says it is for. n=8 per arm, one seed: the direction is not significant and is not claimed; the point recorded is that the gate rejects rather than admits by default, and that a lesson at this evidence level does not survive contact with fresh tasks.",
+ "date": "2026-09-05T19:52Z",
+ "machine": "Louay's Mac (MLX), concurrent with two other runs"
+}

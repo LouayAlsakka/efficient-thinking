@@ -46,6 +46,20 @@ prior must move, and `distinct regions touched per failed episode` joins the pri
 did not separate 3B from 7B-4bit at n = 20 on this task shape; no model comparison is claimed until two seeds agree.
 Results files: `experience/results/baseline_{3b,7b}_harness_v0.{1,2,3}.json`.
 
+**Three more day-one numbers (19:3x–19:5xZ), each against the pipeline's own first output:**
+
+| stage | run | number | reading |
+|---|---|---|---|
+| distill → text memory (A) | 3B, lessons from the SAME 20 tasks × 2 models (train-on-test) | 5/20 green vs 8/20 without; fixation unchanged 15/15; 107/204 steps `noop_patch` | carrier works; 40-episode lessons are worth nothing; the dominant waste is the model re-emitting the shown code |
+| inject (C) | contrastive vectors, 40 first-hypothesis prompts (25/15), layers 9/18/27 | build-set d′ 0.53 / 0.53 / 0.48 | no separation at this n; a first build from 20 prompts (15/5, a keying bug) read 1.8–2.3 and was withdrawn — small-sample inflation |
+| verify gate | top lesson "A_boundary, symptom in consumer → start at producer", 8 held-out in-scope + 8 control | in-scope cost 10.0 → 12.25, green 4 → 3; control 13.0 → 13.0; gain −2.25, leak 0 → **rejected**; P0 = 1/1 | the external gate refused a confident wrong lesson that train-on-test distillation produced — the mechanism §3.3 exists for |
+
+**Two consequences for the design.** (1) **Localization and repair are separable deficits and must be scored apart.** Which
+region to try first is what a prior can buy (metric: `first_correct_hypothesis_step`, already logged); writing the fix once
+localized is a capability floor of the model on B_state/C_types (0/5 each, both models, every run) that no search prior
+addresses. P1 is scored on localization cost as well as actions-to-green. (2) **Nothing below ~2,000 episodes is
+evidence.** The lessons, the vectors and the gate all need the llm1 baseline pass (hand-off #1) before any P is scored.
+
 **Baseline decision:** Qwen2.5-3B-Instruct bf16 stays the primary (hidden states writable, already on disk, no worse than
 7B-4bit here); Qwen2.5-7B-Instruct **bf16** (not 4-bit) is the transfer model and must be fetched for the injection work.
 
