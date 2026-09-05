@@ -8,8 +8,9 @@ Design: `../docs/efficient-thinking-8-proposal.md` (registered) · concept: `../
 | file | what | status |
 |---|---|---|
 | `et8_env.py` | task generator (12 bug classes × 4 families), external verifier (unittest), symptom attribution with red herrings, dead paths per family, trajectory schema | v0, runs with no LLM |
-| `tasks/` | generated task sets (`gen --n N --seed S --out tasks/<name>`), gitignored except `_stats.json` | — |
-| `traj/` | trajectories from the agent harness, one JSONL per run | not yet |
+| `et8_agent.py` | frozen mlx-lm model drives hypothesize → inspect → patch(auto-runs tests) → run; step + episode JSONL with hindsight `region_hit` / `class_hit`; repeat inspect / hypothesis / identical patch counted as waste; `--memory` = mechanism A | v0.1; smoke 7B-4bit 2/3 green |
+| `tasks/` | generated task sets (`gen --n N --seed S --out tasks/<name>`), gitignored except `_stats.json` | v0: 100 tasks, 40% red herring |
+| `traj/` | trajectories from the agent harness, one `<run>.steps.jsonl` + `<run>.episodes.jsonl` per run (gitignored; summaries go in results JSON) | smoke runs only |
 
 ## Build order (proposal §8)
 
