@@ -28,6 +28,27 @@ two lists honestly and injecting them without building a prison.
 
 ---
 
+## 0b. Measured on day one (2026-09-05, harness v0.1–v0.3, 20 tasks each, this Mac) — what the baselines actually do
+
+| run | model | green/20 | mean actions/12 | dominant waste |
+|---|---|---|---|---|
+| v0.1 | 3B bf16 / 7B-4bit | 9 / 7 | 8.9 / 8.9 | identical re-patches (61 / 102 of 178 steps); concrete prompt example biased first hypothesis |
+| v0.2 | 3B / 7B | 3 / 6 | 10.7 / 9.3 | greedy decoding: identical prompt → identical action (100 / 136 re-patches) |
+| v0.3 | 3B / 7B | 8 / 7 | 9.25 / 9.25 | **region fixation**: failed episodes touched ONE region in 11/12 (3B) and 13/13 (7B); "patches" byte-identical to the shown code |
+
+Three lessons, each a harness defect made visible by the verifier and the trajectory labels — the detect → verify loop
+working on the harness before it works on the model: (1) a concrete example in the prompt is a prior, and the untrained
+baseline must not carry one; (2) greedy decoding cannot search — the first attempt stays greedy for reproducibility, and
+variation is supplied only after a wasted step; (3) the real baseline waste is not "following the red herring" (13/15
+first hypotheses already went upstream of the symptom) but **fixation on the first region inspected** and emitting the
+unchanged code as a "patch" when the fix is unknown. **Hypothesis ORDER across regions is therefore the quantity the
+prior must move, and `distinct regions touched per failed episode` joins the primary metrics.** Paper II's size ordering
+did not separate 3B from 7B-4bit at n = 20 on this task shape; no model comparison is claimed until two seeds agree.
+Results files: `experience/results/baseline_{3b,7b}_harness_v0.{1,2,3}.json`.
+
+**Baseline decision:** Qwen2.5-3B-Instruct bf16 stays the primary (hidden states writable, already on disk, no worse than
+7B-4bit here); Qwen2.5-7B-Instruct **bf16** (not 4-bit) is the transfer model and must be fetched for the injection work.
+
 ## 1. Base model
 
 `mlx-community/Qwen2.5-3B-Instruct` (bf16 for steering/adapter work — hidden states must be writable; the 4-bit caches
