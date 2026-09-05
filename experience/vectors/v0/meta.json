@@ -5,33 +5,33 @@
   18,
   27
  ],
- "n_pos": 15,
- "n_neg": 5,
+ "n_pos": 25,
+ "n_neg": 15,
  "runs": [
   "experience/traj/v03_3b",
   "experience/traj/v03_7b"
  ],
  "vectors": {
   "9": {
-   "norm_before_unit": 0.834,
-   "d_prime_buildset": 1.77,
-   "mean_proj_pos": -0.501,
-   "mean_proj_neg": -1.335,
-   "hidden_mean_norm": 39.27
+   "norm_before_unit": 1.599,
+   "d_prime_buildset": 0.526,
+   "mean_proj_pos": -8.214,
+   "mean_proj_neg": -9.813,
+   "hidden_mean_norm": 39.94
   },
   "18": {
-   "norm_before_unit": 1.124,
-   "d_prime_buildset": 1.786,
-   "mean_proj_pos": -4.905,
-   "mean_proj_neg": -6.029,
-   "hidden_mean_norm": 55.38
+   "norm_before_unit": 1.601,
+   "d_prime_buildset": 0.531,
+   "mean_proj_pos": -6.751,
+   "mean_proj_neg": -8.352,
+   "hidden_mean_norm": 55.67
   },
   "27": {
-   "norm_before_unit": 2.661,
-   "d_prime_buildset": 2.333,
-   "mean_proj_pos": 6.453,
-   "mean_proj_neg": 3.792,
-   "hidden_mean_norm": 93.0
+   "norm_before_unit": 4.801,
+   "d_prime_buildset": 0.481,
+   "mean_proj_pos": 7.591,
+   "mean_proj_neg": 2.789,
+   "hidden_mean_norm": 92.9
   }
  }
 }

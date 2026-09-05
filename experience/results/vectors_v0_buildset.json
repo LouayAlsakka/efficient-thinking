@@ -1,0 +1,18 @@
+{
+ "artifact": "experience/vectors/v0 (rebuild, keyed by run)",
+ "model": "Qwen/Qwen2.5-3B-Instruct",
+ "layers": [
+  9,
+  18,
+  27
+ ],
+ "n_pos": 25,
+ "n_neg": 15,
+ "d_prime_buildset": {
+  "9": 0.526,
+  "18": 0.531,
+  "27": 0.481
+ },
+ "finding": "Contrastive-mean steering vectors from 40 first-hypothesis prompts (25 productive / 15 wasted) separate the two classes at d' ~0.5 at layers 9, 18 and 27 on the BUILD set itself. The first build (20 prompts, 15/5, a keying bug) showed d' 1.8-2.3: small-sample inflation, withdrawn. Two readings, both to be tested rather than assumed: (a) n=40 is far too few and the label (region_hit at the first hypothesis) is coarse - the real build waits for the 2,000-task traces from llm1 with per-step productive labels; (b) the decision signal may not live at the last prompt position of the first hypothesis. Held-out check (et8_inject.py check) not yet run: needs decision prompts from a run not used in the build.",
+ "date": "2026-09-05T19:4xZ"
+}
