@@ -1,0 +1,30 @@
+[A_boundary, symptom in consumer] (n=8, conf=0.731)
+  worked: start at producer (7/8 green, ~4.12 actions)
+  did not: no dead path recorded yet
+[A_boundary, symptom in transform] (n=2, conf=0.5)
+  worked: start at transform (1/1 green, ~3 actions)
+  did not: do not stay on producer (1 failed fixations)
+[B_state, symptom in aggregate] (n=6, conf=0.318)
+  worked: start at aggregate (1/3 green, ~10.67 actions)
+  did not: do not stay on producer (3 failed fixations); do not stay on aggregate (2 failed fixations)
+[B_state, symptom in consumer] (n=2, conf=0.357)
+  worked: no winning start recorded yet
+  did not: do not stay on producer (2 failed fixations)
+[B_state, symptom in producer] (n=2, conf=0.357)
+  worked: no winning start recorded yet
+  did not: do not stay on producer (2 failed fixations)
+[C_types, symptom in consumer] (n=6, conf=0.227)
+  worked: no winning start recorded yet
+  did not: do not stay on producer (6 failed fixations)
+[C_types, symptom in producer] (n=4, conf=0.5)
+  worked: start at producer (2/4 green, ~10.25 actions)
+  did not: do not stay on producer (2 failed fixations)
+[D_mixed, symptom in aggregate] (n=6, conf=0.5)
+  worked: start at aggregate (3/4 green, ~7.25 actions)
+  did not: do not stay on producer (2 failed fixations); do not stay on aggregate (1 failed fixations)
+[D_mixed, symptom in consumer] (n=2, conf=0.357)
+  worked: no winning start recorded yet
+  did not: do not stay on consumer (1 failed fixations); do not stay on aggregate (1 failed fixations)
+[D_mixed, symptom in producer] (n=2, conf=0.5)
+  worked: start at producer (1/2 green, ~8 actions)
+  did not: do not stay on producer (1 failed fixations)

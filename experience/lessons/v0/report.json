@@ -1,0 +1,76 @@
+{
+ "episodes": 40,
+ "green": 15,
+ "median_green_actions": 3,
+ "labels": {
+  "tau+": 9,
+  "tau-": 30,
+  "ok": 1
+ },
+ "clusters": {
+  "A_boundary|consumer": {
+   "n": 8,
+   "green": 7,
+   "fixation_failures": 0,
+   "mean_wasted": 1
+  },
+  "A_boundary|transform": {
+   "n": 2,
+   "green": 1,
+   "fixation_failures": 1,
+   "mean_wasted": 3.5
+  },
+  "B_state|aggregate": {
+   "n": 6,
+   "green": 1,
+   "fixation_failures": 5,
+   "mean_wasted": 6.33
+  },
+  "B_state|consumer": {
+   "n": 2,
+   "green": 0,
+   "fixation_failures": 2,
+   "mean_wasted": 9.5
+  },
+  "B_state|producer": {
+   "n": 2,
+   "green": 0,
+   "fixation_failures": 2,
+   "mean_wasted": 6.5
+  },
+  "C_types|consumer": {
+   "n": 6,
+   "green": 0,
+   "fixation_failures": 6,
+   "mean_wasted": 7.83
+  },
+  "C_types|producer": {
+   "n": 4,
+   "green": 2,
+   "fixation_failures": 2,
+   "mean_wasted": 6
+  },
+  "D_mixed|aggregate": {
+   "n": 6,
+   "green": 3,
+   "fixation_failures": 3,
+   "mean_wasted": 4
+  },
+  "D_mixed|consumer": {
+   "n": 2,
+   "green": 0,
+   "fixation_failures": 2,
+   "mean_wasted": 7.5
+  },
+  "D_mixed|producer": {
+   "n": 2,
+   "green": 1,
+   "fixation_failures": 1,
+   "mean_wasted": 5
+  }
+ },
+ "runs": [
+  "experience/traj/v03_3b",
+  "experience/traj/v03_7b"
+ ]
+}
