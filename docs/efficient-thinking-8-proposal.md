@@ -54,6 +54,8 @@ Results files: `experience/results/baseline_{3b,7b}_harness_v0.{1,2,3}.json`.
 | inject (C) | contrastive vectors, 40 first-hypothesis prompts (25/15), layers 9/18/27 | build-set d′ 0.53 / 0.53 / 0.48 | no separation at this n; a first build from 20 prompts (15/5, a keying bug) read 1.8–2.3 and was withdrawn — small-sample inflation |
 | verify gate | top lesson "A_boundary, symptom in consumer → start at producer", 8 held-out in-scope + 8 control | in-scope cost 10.0 → 12.25, green 4 → 3; control 13.0 → 13.0; gain −2.25, leak 0 → **rejected**; P0 = 1/1 | the external gate refused a confident wrong lesson that train-on-test distillation produced — the mechanism §3.3 exists for |
 
+| inject (C), held-out | same vectors checked on 16 fresh decision prompts (verify-smoke traces, tasks never seen in the build) | d′ 0.79 (L9) / **1.13 (L18)** / **−0.78 (L27)**; midpoint acc 0.81 / 0.81 / 0.19 | direction only, n = 16: mid-depth best, late depth INVERTS out of sample — the ordering P3 predicts, to be tested at n ≥ 500 |
+
 **Two consequences for the design.** (1) **Localization and repair are separable deficits and must be scored apart.** Which
 region to try first is what a prior can buy (metric: `first_correct_hypothesis_step`, already logged); writing the fix once
 localized is a capability floor of the model on B_state/C_types (0/5 each, both models, every run) that no search prior

@@ -1,0 +1,14 @@
+{
+ "artifact": "experience/vectors/v0 (built from v03_3b + v03_7b first-hypothesis prompts, 25/15) checked on experience/lessons/v0/verified_smoke traces (heldout_v0 tasks, 3B, a run NOT used in the build)",
+ "model": "Qwen/Qwen2.5-3B-Instruct (bf16)",
+ "held_out_decision_prompts": {"n_pos": 8, "n_neg": 8},
+ "layers": {
+  "9":  {"d_prime_heldout": 0.792,  "threshold_acc": 0.812},
+  "18": {"d_prime_heldout": 1.127,  "threshold_acc": 0.812},
+  "27": {"d_prime_heldout": -0.779, "threshold_acc": 0.188}
+ },
+ "build_set_d_prime": {"9": 0.526, "18": 0.531, "27": 0.481},
+ "finding": "Direction, not evidence: at n=16 held-out prompts the mid-depth vector (layer 18, 50% depth) separates productive from wasted first hypotheses best (d' 1.13, 81% at the midpoint threshold), the early vector (layer 9) less (0.79), and the late vector (layer 27, 75% depth) INVERTS (-0.78, 19%) - the sign flips out of sample, so the build-set direction at layer 27 was noise. This is the ordering P3 predicts (mid > early > late) and it is recorded as a direction to test at n >= 500 prompts from the llm1 traces, where the vectors will also be rebuilt from per-step productive labels rather than the first hypothesis alone. Nothing here is scored.",
+ "date": "2026-09-05T20:06Z",
+ "machine": "Louay's Mac (MLX)"
+}
