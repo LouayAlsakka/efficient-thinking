@@ -50,13 +50,20 @@ def load_model(model_id: str):
     from mlx_lm import load
     return load(model_id)
 
-def generate(model, tok, messages: list[dict], max_tokens: int = 400) -> tuple[str, int, int]:
+def generate(model, tok, messages: list[dict], max_tokens: int = 400, temp: float = 0.0) -> tuple[str, int, int]:
     from mlx_lm import generate as mlx_generate
     from mlx_lm.sample_utils import make_sampler
     prompt = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     n_in = len(tok.encode(prompt))
-    text = mlx_generate(model, tok, prompt=prompt, max_tokens=max_tokens, sampler=make_sampler(temp=0.0), verbose=False)
+    text = mlx_generate(model, tok, prompt=prompt, max_tokens=max_tokens, sampler=make_sampler(temp=temp), verbose=False)
     return text, n_in, len(tok.encode(text))
+
+# Exploration rule (harness v0.3): the FIRST attempt at any step is greedy (temp 0, reproducible). After a WASTED step
+# (repeat inspect / repeat hypothesis / identical patch / invalid) the next generation samples at EXPLORE_TEMP, and the
+# temperature rises with consecutive wasted steps, capped. Greedy decoding alone cannot search: an identical prompt
+# yields an identical patch, so a failed patch was re-submitted for the rest of the budget (v0.2: 136/186 steps).
+EXPLORE_TEMP, EXPLORE_STEP, EXPLORE_CAP = 0.7, 0.15, 1.0
+WASTED = ("repeat_inspect", "repeat_hypothesis", "repeat_patch", "invalid")
 
 def parse_action(text: str) -> dict:
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.M)   # strip code fences
@@ -108,7 +115,9 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
     green, fails = False, []
     total_in = total_out = 0
     first_correct = None
+    wasted_streak = 0
     for step in range(1, budget + 1):
+        temp = 0.0 if wasted_streak == 0 else min(EXPLORE_CAP, EXPLORE_TEMP + EXPLORE_STEP * (wasted_streak - 1))
         state = f"SYMPTOM: {task['symptom']}\nRegions: {', '.join(task['regions'])}\n"
         if inspected:
             state += f"Already inspected (do not inspect again): {', '.join(inspected)}\n"
@@ -126,7 +135,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             state += (f"You already suspect {r}. Do not repeat the hypothesis: "
                       f"{'inspect it' if r not in inspected else 'PATCH it now (patch runs the tests)'}.\n")
         state += f"Actions left: {budget - step + 1}. Next action (one JSON object):"
-        text, n_in, n_out = generate(model, tok, messages + [{"role": "user", "content": state}])
+        text, n_in, n_out = generate(model, tok, messages + [{"role": "user", "content": state}], temp=temp)
         total_in += n_in; total_out += n_out
         a = parse_action(text)
         kind = a.get("action", "invalid"); region = a.get("region"); hyp = a.get("bug_class")
@@ -157,6 +166,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             history.append(f"run -> {'green' if green else str(len(fails)) + ' failing'}")
         else:
             kind = "invalid"; history.append("invalid")
+        wasted_streak = wasted_streak + 1 if kind in WASTED else 0
         acted = kind in ("hypothesize", "inspect", "patch")
         region_hit = (region == task["bug_region"]) if acted else None
         class_hit = (hyp == task["bug_class"]) if kind == "hypothesize" else None
@@ -166,7 +176,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
                "step": step, "action": kind, "region": region, "hypothesis_class": hyp,
                "productive": productive, "region_hit": region_hit, "class_hit": class_hit,
                "dead_path": (hyp in task["dead_paths"]) if hyp else False,
-               "raw": (text[:300] if kind == "invalid" else None),
+               "raw": (text[:300] if kind == "invalid" else None), "temp": temp,
                "tokens_in": n_in, "tokens_out": n_out, "verifier": verifier}
         log.write(json.dumps(rec) + "\n")
         if green:

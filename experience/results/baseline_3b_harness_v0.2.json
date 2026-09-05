@@ -1,0 +1,90 @@
+{
+ "run_id": "20260905T191002Z-521070",
+ "harness": "v0.2 (b812c1b)",
+ "model": "Qwen/Qwen2.5-3B-Instruct (bf16)",
+ "tasks": 20,
+ "green": 3,
+ "success": 0.15,
+ "mean_actions": 10.65,
+ "mean_tokens": 6966,
+ "by_family": {
+  "A_boundary": {
+   "green": 3,
+   "n": 5
+  },
+  "B_state": {
+   "green": 0,
+   "n": 5
+  },
+  "C_types": {
+   "green": 0,
+   "n": 5
+  },
+  "D_mixed": {
+   "green": 0,
+   "n": 5
+  }
+ },
+ "by_class": {
+  "early_return": {
+   "green": 3,
+   "n": 3
+  },
+  "swallowed_exception": {
+   "green": 0,
+   "n": 1
+  },
+  "int_division": {
+   "green": 0,
+   "n": 2
+  },
+  "width_mismatch": {
+   "green": 0,
+   "n": 3
+  },
+  "missing_key": {
+   "green": 0,
+   "n": 1
+  },
+  "mutable_default": {
+   "green": 0,
+   "n": 5
+  },
+  "off_by_one": {
+   "green": 0,
+   "n": 1
+  },
+  "naive_datetime": {
+   "green": 0,
+   "n": 1
+  },
+  "swapped_args": {
+   "green": 0,
+   "n": 1
+  },
+  "unsorted_assumption": {
+   "green": 0,
+   "n": 1
+  },
+  "wrong_comparator": {
+   "green": 0,
+   "n": 1
+  }
+ },
+ "actions": {
+  "hypothesize": 24,
+  "inspect": 21,
+  "patch": 29,
+  "repeat_patch": 100,
+  "repeat_inspect": 23,
+  "repeat_hypothesis": 16
+ },
+ "green_episode_actions": [
+  3,
+  3,
+  3
+ ],
+ "finding": "Harness v0.2 artifact; same greedy-decoding repeat-patch degeneracy as the 7B run (see baseline_7b_harness_v0.2.json). v0.3 adds exploration temperature after wasted steps.",
+ "date": "2026-09-05T19:1xZ",
+ "machine": "Louay's Mac (MLX), concurrent with the 7B run"
+}
