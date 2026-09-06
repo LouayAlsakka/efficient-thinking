@@ -42,7 +42,7 @@ python experience/et8_env.py selftest                       # expect: clean=PASS
 python experience/et8_env.py gen --n 2000 --seed 1 --out experience/tasks/v1
                                                             # expect: _stats.json with n=2000, red_herring ≈ 35–45%
 python experience/et8_agent.py --tasks experience/tasks/v1 --out experience/traj/base_v1_3b \
-    --model Qwen/Qwen2.5-3B-Instruct --budget 12           # ~5–7 s/task on a Studio; prints a summary JSON at the end
+    --model Qwen/Qwen2.5-3B-Instruct --budget 12           # 9.8 s/task measured on llm1 (M3 Ultra, 32-episode steady state) → 5.4 h per 2,000-task pass; prints a summary JSON at the end
 python experience/et8_agent.py --tasks experience/tasks/v1 --out experience/traj/base_v1_3b_s2 \
     --model Qwen/Qwen2.5-3B-Instruct --budget 12           # second seed of the SAME tasks (sampling differs after waste)
 ```
