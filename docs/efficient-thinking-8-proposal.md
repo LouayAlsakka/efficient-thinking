@@ -292,3 +292,12 @@ Small model, one synthetic environment, two machines plus llm1/llm2. Claims will
 chess anchor decides whether the mechanism exists at all; the Qwen grid decides whether it survives contact with
 language, retrieval and a prompt. If P2 fails, the honest conclusion is that retrieval is sufficient at this scale, and
 that is worth publishing.
+
+## Decision 2026-09-07 07:5xZ — baseline model: Qwen2.5-7B-Instruct (Ri, on Louay's ruling)
+
+Louay ruled the choice mine, leaning larger because the Studios (llm1/llm2) can test it. Choice: **7B is the
+Paper II baseline floor; 3B stays as the development loop.** Reason: pass 1 on 3B ended at 23.2% task success,
+which leaves too little headroom to tell a lesson's effect from noise on held-out tasks; the P0–P9 predictions are
+scored against a floor the reader accepts, and 7B bf16 fits llm1's memory with the same mlx-lm path. Env, verifier,
+record schema and injection points do not change. Every reported number from here carries the model it was
+measured on; 3B numbers already recorded stay labelled 3B and are not compared across models.
