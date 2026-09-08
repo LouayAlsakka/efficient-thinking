@@ -308,12 +308,17 @@ measured on; 3B numbers already recorded stay labelled 3B and are not compared a
 |---|---|---|---|---|---|---|---|
 | base_v1_3b (pass 1, 09-06) | Qwen2.5-3B-Instruct bf16 | 2,000 | 464 | **0.232** | 10.46 | 6,851 | 5.7 h |
 | base_v1_7b (seed 1) | Qwen2.5-7B-Instruct bf16 | 2,000 | 1,197 | **0.599** | 6.85 | 4,471 | 8.01 h |
+| base_v1_7b_s2 (seed 2) | Qwen2.5-7B-Instruct bf16 | 2,000 | 1,186 | **0.593** | 6.85 | 4,472 | 8.02 h |
+| **7B pooled** | | 4,000 | 2,383 | **0.596** | 6.85 | 4,472 | |
 
 Same 2,000 tasks (`experience/tasks/v1`, unregenerated), same harness, commit `b63af0b`, run id `20260907T192632Z-d06c20`,
 outputs under `experience/traj/base_v1_7b.*` on llm1. Green by family, of 500 each: A_boundary **500**, D_mixed 259,
 C_types 234, B_state 204. Action counter: hypothesize 2000, inspect 2001, patch 3265, noop_patch 6257 (45.7% of
-13,696 steps), invalid 26, repeat_patch 146, repeat_inspect 1. Seed 2 in flight (ETA ~11:30Z); no claim is made
-until both seeds agree (series rule).
+13,696 steps), invalid 26, repeat_patch 146, repeat_inspect 1. Seed 2 (run `20260908T032926Z-274ccf`, finished 2026-09-08 11:30:53Z) agrees with seed 1 to 0.6 points, so the
+**7B floor is 0.596 ± 0.003 on tasks/v1** and the series rule is satisfied. Family split, seed 1 / seed 2: A_boundary
+500 / 500 (saturated in both), D_mixed 259 / 260, C_types 234 / 224, B_state 204 / 202. Seed 2 counter: hypothesize
+2001, inspect 2005, patch 3279, noop_patch 6231, repeat_patch 163, invalid 25 — no `repeat_inspect` key yet four extra
+inspects, unlike seed 1's exact identity; recorded, not diagnosed.
 
 Two flags recorded before any reading: A_boundary is a saturated cell (500/500) on 7B where 3B scored 46% — family A
 is now too easy to discriminate a lesson's effect on this model, which is a task-generator v2 item, not a model
