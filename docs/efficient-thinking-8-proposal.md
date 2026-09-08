@@ -301,3 +301,21 @@ which leaves too little headroom to tell a lesson's effect from noise on held-ou
 scored against a floor the reader accepts, and 7B bf16 fits llm1's memory with the same mlx-lm path. Env, verifier,
 record schema and injection points do not change. Every reported number from here carries the model it was
 measured on; 3B numbers already recorded stay labelled 3B and are not compared across models.
+
+## 0c. Baseline v1 on the 7B floor — pass 1 (seed 1), measured 2026-09-08 (Sautee, llm1)
+
+| run | model | tasks | green | success | mean actions | mean tokens | wall |
+|---|---|---|---|---|---|---|---|
+| base_v1_3b (pass 1, 09-06) | Qwen2.5-3B-Instruct bf16 | 2,000 | 464 | **0.232** | 10.46 | 6,851 | 5.7 h |
+| base_v1_7b (seed 1) | Qwen2.5-7B-Instruct bf16 | 2,000 | 1,197 | **0.599** | 6.85 | 4,471 | 8.01 h |
+
+Same 2,000 tasks (`experience/tasks/v1`, unregenerated), same harness, commit `b63af0b`, run id `20260907T192632Z-d06c20`,
+outputs under `experience/traj/base_v1_7b.*` on llm1. Green by family, of 500 each: A_boundary **500**, D_mixed 259,
+C_types 234, B_state 204. Action counter: hypothesize 2000, inspect 2001, patch 3265, noop_patch 6257 (45.7% of
+13,696 steps), invalid 26, repeat_patch 146, repeat_inspect 1. Seed 2 in flight (ETA ~11:30Z); no claim is made
+until both seeds agree (series rule).
+
+Two flags recorded before any reading: A_boundary is a saturated cell (500/500) on 7B where 3B scored 46% — family A
+is now too easy to discriminate a lesson's effect on this model, which is a task-generator v2 item, not a model
+finding; `inspect 2001 = 2000 + repeat_inspect 1`, so it is not a harness artifact. The 3B numbers stay labelled 3B and
+are not compared across models beyond this floor-setting table (Decision 2026-09-07).
