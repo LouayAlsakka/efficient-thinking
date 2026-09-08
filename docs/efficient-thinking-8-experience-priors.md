@@ -623,6 +623,82 @@ If it can, the next experiment is continual consolidation: repeat several genera
 
 ---
 
+## 20b. Results So Far (measured; updated 2026-09-08)
+
+This section is appended as the proof of concept runs. It reports numbers that exist as committed results files,
+states what each one does and does not establish, and is rewritten as later results supersede earlier ones. Every
+number is reproducible from `experience/` at the commit named beside it; the registered predictions are scored in the
+proposal (`docs/efficient-thinking-8-proposal.md` §7) and only summarised here.
+
+### What exists
+
+- **Environment and verifier** (`experience/et8_env.py`): trap-debugging tasks in four families (A_boundary, B_state,
+  C_types, D_mixed), twelve bug classes, red herrings and dead paths, an external verifier that decides green with no
+  model in the loop. Task set v1: 2,000 tasks, 500 per family, seed 1.
+- **Agent harness** (`experience/et8_agent.py`): a fixed action loop (hypothesize, inspect, patch) with a 12-action
+  budget, every step logged as a trajectory. Runs on Apple Silicon through mlx-lm.
+- **Baselines on two frozen models**, same tasks, same harness, commit `b63af0b`.
+
+### Results at a glance
+
+| run | model | tasks | success | mean actions | mean tokens | wall |
+|---|---|---|---|---|---|---|
+| base_v1_3b | Qwen2.5-3B-Instruct bf16 | 2,000 | **0.232** | 10.46 | 6,851 | 5.7 h |
+| base_v1_7b, seed 1 | Qwen2.5-7B-Instruct bf16 | 2,000 | 0.599 | 6.85 | 4,471 | 8.0 h |
+| base_v1_7b, seed 2 | same | 2,000 | 0.593 | 6.85 | 4,472 | 8.0 h |
+| **7B pooled** | | 4,000 | **0.596 ± 0.003** | | | |
+
+The 7B floor holds to 0.6 points across two seeds, so it is a floor that a lesson's effect can be measured against
+(2026-09-07 decision: 7B is the paper's floor, 3B stays the development loop).
+
+Success by family on 7B, of 500 each: A_boundary **500 / 500 in both seeds**, D_mixed 259 / 260, C_types 234 / 224,
+B_state 204 / 202. Family A is saturated on 7B: a cell at 100% cannot show whether a lesson helps, so the generator
+needs harder family-A instances before that family carries any comparison. It discriminated fine on 3B (46%).
+
+### What the trajectories say about where search is wasted
+
+From the 3B pass (2,000 episodes, 20,930 steps): 94% of failed episodes touched exactly one code region, and
+episodes whose first hypothesis was correct went green 41% of the time against 0% when it never was. On 7B, 45.7% of
+all steps are no-op patches. The waste is localisation, not repair: the model can fix a region it has found, and
+what it lacks is a prior on which region to open first. That is the shape of thing §4.2 proposes to learn.
+
+### Lessons, and the verifier doing its job
+
+Twelve lessons were distilled from the 3B trajectories by clustering on (family, symptom region) and reading off which
+first region led to green (`experience/lessons/v1`). The verification gate's first held-out test (`et8_verify`, 200
+held-out tasks, seed 7) **rejected the top-confidence lesson**: in scope it raised actions-to-green (10.0 → 12.25 on
+n = 8) and lowered green (4 → 3), while the shuffled-family control was flat (13.0 → 13.0). One lesson, small n,
+but the direction is the one §4.3 exists for, and prediction P0 (the verifier rejects ≥ 20% of candidate lessons) is
+on track rather than refuted.
+
+### First mechanism signal, and its bound
+
+A gradient-free steering vector built from contrastive first-hypothesis prompts was checked on 16 held-out decision
+prompts on 3B (`experience/results/vectors_v0_heldout_check.json`): at mid-depth (layer 18 of 36) it separates
+productive from wasted first hypotheses with d′ = 1.13 and 81% accuracy at the midpoint threshold; the early layer
+gives 0.79 and the late layer is inverted (−0.78). This is **direction, not evidence**: n = 16, one model, one
+build set. It agrees with prediction P3 (mid-depth beats early and late) and has not tested it.
+
+### What is not yet measured
+
+The paper's central claim, P1 — that an injected prior cuts actions-to-green on held-out same-family tasks by ≥ 25%
+at equal success — has not been run. Nothing above is that experiment; everything above is what makes it measurable.
+Also unrun: P2 (prior versus text memory at a token budget), P4 (steering vectors versus a trained adapter), P5
+(out-of-domain regression), P6 (decay of an invalidated lesson), P7 (transfer to 7B), P8 (the chess anchor), P9
+(consolidation rounds).
+
+### Next, in order
+
+1. Harder family-A instances in the generator (v2), then re-verify the twelve lessons against 7B trajectories.
+2. Steering vectors at mid-depth on 7B with a held-out set of hundreds of prompts, not sixteen.
+3. The first P1 measurement: prior versus no prior on same-family held-out tasks, actions-to-green at equal success.
+
+*Results files: `experience/results/*.json`, `experience/lessons/v1/`, trajectories under `experience/traj/` on llm1.
+Runs by Sautee on llm1; environment, harness, distillation and this section by Ri; predictions registered by Louay
+and Ri in the proposal before any run.*
+
+---
+
 ## 21. Conclusion
 
 Modern LLM agents can remember their work without truly becoming experienced at it. External memory preserves episodes and facts, but the model repeatedly pays the cost of retrieving and interpreting that history.
