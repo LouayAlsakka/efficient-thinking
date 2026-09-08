@@ -1,3 +1,4 @@
+a
 # Efficient Thinking 8: Experience Priors
 ## Continual Search Optimization Through Consolidation
 
@@ -693,9 +694,8 @@ Also unrun: P2 (prior versus text memory at a token budget), P4 (steering vector
 2. Steering vectors at mid-depth on 7B with a held-out set of hundreds of prompts, not sixteen.
 3. The first P1 measurement: prior versus no prior on same-family held-out tasks, actions-to-green at equal success.
 
-*Results files: `experience/results/*.json`, `experience/lessons/v1/`, trajectories under `experience/traj/` on llm1.
-Runs by Sautee on llm1; environment, harness, distillation and this section by Ri; predictions registered by Louay
-and Ri in the proposal before any run.*
+*Results files: `experience/results/*.json`, `experience/lessons/v1/`, trajectories under `experience/traj/`.
+Predictions were registered in the proposal before any run.*
 
 ---
 
