@@ -295,4 +295,5 @@ def main():
         print(f"  -> {a.report}")
 
 
-main()
+if __name__ == "__main__":
+    main()

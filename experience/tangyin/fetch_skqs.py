@@ -151,4 +151,5 @@ def main():
     print(f"  emitted before any title was seen: {skipped_untitled}")
 
 
-main()
+if __name__ == "__main__":
+    main()

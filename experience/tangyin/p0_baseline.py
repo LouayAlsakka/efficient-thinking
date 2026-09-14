@@ -137,4 +137,5 @@ def main():
     print("->", a.out, a.report)
 
 
-main()
+if __name__ == "__main__":
+    main()

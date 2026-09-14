@@ -96,4 +96,5 @@ def main():
           f"{sum(1 for e in char_index.values() if all(not x['shi'] for x in e))}")
 
 
-main()
+if __name__ == "__main__":
+    main()
