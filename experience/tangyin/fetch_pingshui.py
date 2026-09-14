@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the 平水韻 table — the instrument `verify_form.py` measures rhyme and 平仄 with.
 
-    python3 fetch_pingshui.py --out data/pingshui.json
+    python3 fetch_pingshui.py --out rime/pingshui.json
 
 SOURCE: zh.wikisource `平水韻` — 劉淵 / 王文鬱's 106-rhyme table, the one Ming poets wrote to.
 中華新韻 is NOT acceptable for this study and is not what this fetches.
