@@ -46,6 +46,21 @@ rate the guess favoured -- and this number gates a training decision.
 
 A character absent from the table entirely (a variant glyph, or the □ that stands in for a
 {{SKchar}} the edition has and Unicode does not) is UNKNOWN and is reported the same way.
+
+SIMPLIFIED CHARACTERS, AND WHY THIS IS NOT A CONVENIENCE
+-------------------------------------------------------
+平水韻 is a traditional-character table and a model asked for a 七律 drifts into simplified
+characters — 风 声 处 间 梦 飞. Left unmapped they are UNKNOWN, UNKNOWN skips the rule, and a
+poem is then scored on less of itself. That is not a neutral loss: it INFLATES the pass rate,
+and it does so unevenly by length. In the P0 baseline it accounted for 5.1% of 七絕's enforced
+positions and 26.7% of 七律's, which is most of why 七律 appeared to pass nearly twice as often.
+
+The mapping is built from the table itself rather than taken from a converter's single answer:
+every traditional character in 平水韻 is converted to simplified, and a simplified character
+therefore maps to the SET of table characters that collapse onto it. If that set agrees on tone,
+the tone is used; if it disagrees — 发 is both 發 and 髮 — the position is UNDECIDED, which is
+the same rule the polyphones get. Requires `opencc`; without it the mapping is skipped and the
+build says so, because a silently-absent normaliser would restore exactly the inflation above.
 """
 import argparse, json, os, re, sys
 from collections import Counter
@@ -56,28 +71,58 @@ CJK = re.compile(r"[㐀-鿿]")
 
 
 class Rime:
-    def __init__(self, path):
+    def __init__(self, path, simplified=True):
         d = json.load(open(path))
         self.idx = d["char_index"]
         self.n_ambiguous = d["ambiguous_tone_chars"]
+        self.s2t = {}
+        self.normaliser = None
+        if simplified:
+            try:
+                from opencc import OpenCC
+                t2s = OpenCC("t2s")
+                for t in self.idx:
+                    s_ = t2s.convert(t)
+                    if len(s_) == 1 and s_ != t:
+                        self.s2t.setdefault(s_, set()).add(t)
+                self.normaliser = f"opencc t2s over the table: {len(self.s2t)} simplified forms"
+            except ImportError:
+                self.normaliser = None      # reported by the caller; never silently fine
+
+    def _entries(self, ch):
+        e = self.idx.get(ch)
+        if e:
+            return e, False
+        cands = self.s2t.get(ch)
+        if not cands:
+            return None, False
+        merged = []
+        for t in cands:
+            merged += self.idx[t]
+        return merged, True
 
     def tone(self, ch):
-        """'平', '仄', 'UNDECIDED' (both), or 'UNKNOWN' (not in the table)."""
-        e = self.idx.get(ch)
+        """'平', '仄', 'UNDECIDED' (both, or an ambiguous simplification), or 'UNKNOWN'."""
+        e, _ = self._entries(ch)
         if not e:
             return "UNKNOWN"
         t = {x["tone"] for x in e}
         return t.pop() if len(t) == 1 else "UNDECIDED"
 
     def rhyme_groups(self, ch, shi_only=True, ping_only=True):
+        e, _ = self._entries(ch)
         out = set()
-        for x in self.idx.get(ch, []):
+        for x in (e or []):
             if shi_only and not x["shi"]:
                 continue
             if ping_only and x["tone"] != "平":
                 continue
             out.add(x["rhyme"])
         return out
+
+    def normalised(self, ch):
+        _, was = self._entries(ch)
+        return was
 
 
 def opposite(a, b):
@@ -219,6 +264,9 @@ def verify(poem, rime):
                 und_pos += 1
     res["enforced_positions"] = enforced
     res["enforced_undecided"] = und_pos
+    res["enforced_simplified"] = sum(1 for t_ in lines
+                                     for p_ in list(even) + [len(t_) - 1]
+                                     if rime.normalised(t_[p_]))
     return res
 
 
@@ -230,8 +278,15 @@ def main():
     ap.add_argument("--form", help="only score poems of this form, e.g. 七絕")
     ap.add_argument("--rime", default=os.path.join(HERE, "rime", "pingshui.json"))
     ap.add_argument("--report")
+    ap.add_argument("--no-simplified", action="store_true",
+                    help="do NOT map simplified characters — shows the inflation this removes")
     a = ap.parse_args()
-    rime = Rime(a.rime)
+    rime = Rime(a.rime, simplified=not a.no_simplified)
+    if rime.normaliser is None:
+        print("  ⚠ opencc ABSENT — simplified characters will read as UNKNOWN and INFLATE "
+              "the pass rate. `pip install opencc-python-reimplemented`.")
+    else:
+        print(f"  simplified normalisation: {rime.normaliser}")
 
     if a.text:
         print(json.dumps(verify(a.text, rime), ensure_ascii=False, indent=1))
@@ -260,6 +315,10 @@ def main():
               f"{100.0*npass/len(scored):.1f}%")
         ep = sum(v["enforced_positions"] for v in scored)
         eu = sum(v["enforced_undecided"] for v in scored)
+        es = sum(v.get("enforced_simplified", 0) for v in scored)
+        if es:
+            print(f"  enforced positions reached only by simplified->traditional mapping: {es}"
+                  f" ({100.0*es/ep:.1f}%)")
         print(f"  POSITIONS THE TABLE COULD READ     : {ep-eu}/{ep} = {100.0*(ep-eu)/ep:.1f}%"
               f"   <- the bound on the rate above")
         print(f"  (whole-poem strict, one ambiguous character fails the poem: "
