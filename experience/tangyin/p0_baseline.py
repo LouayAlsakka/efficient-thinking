@@ -68,6 +68,7 @@ def extract(text, per, n):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="Qwen/Qwen2.5-7B-Instruct")
+    ap.add_argument("--adapter", help="LoRA adapter directory (mechanism E). Absent = the baseline.")
     ap.add_argument("--out", required=True)
     ap.add_argument("--report", required=True)
     ap.add_argument("--temp", type=float, default=0.7)
@@ -83,8 +84,9 @@ def main():
     mx.random.seed(a.seed)
     rime = Rime(os.path.join(HERE, "rime", "pingshui.json"))
     t0 = time.time()
-    model, tok = load(a.model)
-    print(f"loaded {a.model} in {time.time()-t0:.1f}s", flush=True)
+    kw = {"adapter_path": a.adapter} if a.adapter else {}
+    model, tok = load(a.model, **kw)
+    print(f"loaded {a.model} adapter={a.adapter or 'NONE'} in {time.time()-t0:.1f}s", flush=True)
     sampler = make_sampler(temp=a.temp)
 
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
@@ -100,7 +102,7 @@ def main():
                                sampler=sampler, verbose=False)
                 poem, bucket = extract(out, per, n)
                 v = verify(poem, rime) if bucket == "EXTRACTED" else None
-                r = {"topic": topic, "form": form, "prompt": p, "raw": out,
+                r = {"topic": topic, "form": form, "adapter": a.adapter, "prompt": p, "raw": out,
                      "poem": poem, "bucket": bucket,
                      "pass": bool(v and v["pass"]), "verify": v,
                      "secs": round(time.time() - t, 2)}
@@ -114,7 +116,8 @@ def main():
                   f"wrong_length {sum(1 for r in done if r['bucket']=='WRONG_LENGTH')} · "
                   f"no_poem {sum(1 for r in done if r['bucket']=='NO_POEM')}", flush=True)
 
-    rep = {"model": a.model, "temp": a.temp, "seed": a.seed, "n_prompts": len(rows),
+    rep = {"model": a.model, "adapter": a.adapter, "temp": a.temp, "seed": a.seed,
+           "n_prompts": len(rows),
            "by_form": {}}
     for form, per, n in FORMS:
         d = [r for r in rows if r["form"] == form]
