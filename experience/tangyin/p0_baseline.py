@@ -102,7 +102,11 @@ def main():
                                sampler=sampler, verbose=False)
                 poem, bucket = extract(out, per, n)
                 v = verify(poem, rime) if bucket == "EXTRACTED" else None
+                # The extractor strips to CJK, so a Latin token wedged inside a line is INVISIBLE
+                # to the verifier by construction — "不 SwiftUI 也在斜" is 28 CJK characters and
+                # scores as a 七絕. It is counted here instead of being left for someone to find.
                 r = {"topic": topic, "form": form, "adapter": a.adapter, "prompt": p, "raw": out,
+                     "latin_intrusion": bool(LATIN.search(out)),
                      "poem": poem, "bucket": bucket,
                      "pass": bool(v and v["pass"]), "verify": v,
                      "secs": round(time.time() - t, 2)}
@@ -128,6 +132,8 @@ def main():
             "no_poem": sum(1 for r in d if r["bucket"] == "NO_POEM"),
             "pass_over_all_attempts": sum(1 for r in d if r["pass"]) / len(d),
             "pass_over_extracted": (sum(1 for r in ex if r["pass"]) / len(ex)) if ex else None,
+            "latin_intrusion": sum(1 for r in d if r["latin_intrusion"]),
+            "latin_intrusion_that_still_PASSED": sum(1 for r in d if r["latin_intrusion"] and r["pass"]),
             "failed_by_rule": {},
         }
         for r in ex:
