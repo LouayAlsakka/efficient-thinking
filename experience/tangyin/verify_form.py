@@ -132,11 +132,21 @@ def opposite(a, b):
 def verify(poem, rime):
     """poem: a string of CJK characters only. Returns a dict of per-rule results."""
     text = "".join(CJK.findall(poem))
-    res = {"n_chars": len(text), "form": None, "rules": {}, "undecided": 0, "unknown": 0}
+    # U+25A1 □ stands in for a {{SKchar}} the edition has and Unicode does not. It is NOT in the
+    # CJK block, so stripping to CJK shortens the poem by one and it then matches no regulated
+    # form -- which SILENTLY drops it from every scored pool. In the 文徵明 四庫 corpus that is
+    # 79 poems, 10 of them 七絕: my published "159 七絕" was 169 minus these, with nothing saying
+    # so. Excluding them may well be right; excluding them invisibly is not.
+    n_box = poem.count("□")
+    res = {"n_chars": len(text), "form": None, "rules": {}, "undecided": 0, "unknown": 0,
+           "unencodable_glyphs": n_box}
     f = FORMS.get(len(text))
     if not f:
-        res["rules"]["structure"] = {"pass": False,
-                                     "why": f"{len(text)} characters matches no regulated form"}
+        res["rules"]["structure"] = {
+            "pass": False,
+            "why": (f"{n_box} unencodable glyph(s) — the edition has a character Unicode does "
+                    f"not, so this poem cannot be scored" if n_box else
+                    f"{len(text)} characters matches no regulated form")}
         res["pass"] = False
         return res
     name, per, n = f
@@ -293,9 +303,13 @@ def main():
         return
 
     rows = [json.loads(l) for l in open(a.corpus)]
-    out, skipped = [], 0
+    out, skipped, box_drop = [], 0, []
     for r in rows:
         v = verify(r.get(a.field) or r.get("text", ""), rime)
+        if v["form"] is None and v.get("unencodable_glyphs"):
+            # counted BEFORE the --form filter: these poems have no form precisely BECAUSE the
+            # glyph was stripped, so a filter on form would hide them in "skipped".
+            box_drop.append(r.get("title"))
         if a.form and v["form"] != a.form:
             skipped += 1
             continue
@@ -305,11 +319,16 @@ def main():
         out.append(v)
 
     scored = [v for v in out if v["form"]]
+    dropped_box = box_drop
     npass = sum(1 for v in scored if v["pass"])
     nstrict = sum(1 for v in scored if v["pass_strict"])
     print(f"{a.corpus}  field={a.field}  form={a.form or 'any regulated'}")
     print(f"  poems of a regulated length: {len(scored)}   (skipped {skipped}, "
           f"no regulated form: {len(out)-len(scored)})")
+    if dropped_box:
+        print(f"  ⚠ NOT SCORED because the edition has a glyph Unicode does not: "
+              f"{len(dropped_box)} poems in this corpus — an EXPLICIT exclusion, not a silent "
+              f"one. They are absent from the denominator above.")
     if scored:
         print(f"  PASS, undecided treated as latitude : {npass}/{len(scored)} = "
               f"{100.0*npass/len(scored):.1f}%")
@@ -348,6 +367,8 @@ def main():
                    "pass_rate_strict": (nstrict / len(scored)) if scored else None,
                    "failed_by_rule": dict(per_rule), "undecided_by_rule": dict(per_rule_und),
                    "chars_tone_undecided": tot_und, "chars_absent_from_table": tot_unk,
+                   "not_scored_unencodable_glyph": len(dropped_box),
+                   "not_scored_unencodable_titles": dropped_box[:50],
                    "enforced_positions": sum(v["enforced_positions"] for v in scored),
                    "enforced_undecided": sum(v["enforced_undecided"] for v in scored),
                    "poems": out}, open(a.report, "w"), ensure_ascii=False, indent=1)

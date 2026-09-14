@@ -4,9 +4,9 @@
  "form": "七絕",
  "n_scored": 159,
  "n_pass": 146,
- "n_pass_strict": 4,
+ "n_pass_strict": 5,
  "pass_rate_lenient": 0.9182389937106918,
- "pass_rate_strict": 0.025157232704402517,
+ "pass_rate_strict": 0.031446540880503145,
  "failed_by_rule": {
   "alternate": 3,
   "rhyme": 12,
@@ -16,17 +16,70 @@
  },
  "undecided_by_rule": {
   "structure": 0,
-  "alternate": 285,
-  "dui": 93,
-  "nian": 49,
-  "rhyme": 16,
-  "non_rhyme_ends_ze": 25,
+  "alternate": 267,
+  "dui": 85,
+  "nian": 44,
+  "rhyme": 11,
+  "non_rhyme_ends_ze": 21,
   "san_ping_diao": 0
  },
- "chars_tone_undecided": 568,
- "chars_absent_from_table": 334,
+ "chars_tone_undecided": 572,
+ "chars_absent_from_table": 263,
+ "not_scored_unencodable_glyph": 79,
+ "not_scored_unencodable_titles": [
+  "除夕",
+  "宿靜觀樓",
+  "何蓑衣故跡",
+  "書昌國憶母詩後",
+  "和答石田先生落花十首",
+  "江船對月效樂天何處難忘酒",
+  "金山寺待月",
+  "夏夜",
+  "桃源圖",
+  "謝永嘉趙君澤寄蘭",
+  "秋日過竹堂",
+  "對雨",
+  "十月",
+  "春曉曲",
+  "春夜曲",
+  "梨花",
+  "錢氏西齋粉紅桃花",
+  "春興",
+  "題畫",
+  "題黄應龍所藏巨然廬山圖",
+  "早起",
+  "九日汎石湖",
+  "寒食自横金歸汎石湖",
+  "次韻題王山農墨梅",
+  "寄魯南陳子",
+  "寄魯南陳子",
+  "賦得野亭秋興",
+  "太僕在三舍抗言拒刑臣",
+  "滄浪池上",
+  "渡江",
+  "宿江浦有懐定山先生",
+  "東禪寺",
+  "錢氏池上芙蓉",
+  "題畫",
+  "題畫",
+  "虎丘",
+  "履仁獨留治平寒夜有懐",
+  "煎茶詩贈履約",
+  "次韻答九逵見寄",
+  "雨中雜述",
+  "東禪寺與蔡九逵同賦",
+  "秋興",
+  "雪夜宿楞伽寺",
+  "南樓",
+  "聞砧",
+  "秋懐",
+  "題畫",
+  "題畫",
+  "題畫",
+  "留城道中有張良祠"
+ ],
  "enforced_positions": 2544,
- "enforced_undecided": 475,
+ "enforced_undecided": 439,
  "poems": [
   {
    "n_chars": 28,
@@ -77,11 +130,13 @@
    },
    "undecided": 3,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "荅唐子畏夢余見寄之作",
    "author": "文徵明",
    "skchar": 0
@@ -135,11 +190,13 @@
    },
    "undecided": 3,
    "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "甲寅除夜雜書",
    "author": "文徵明",
    "skchar": 0
@@ -193,11 +250,13 @@
    },
    "undecided": 4,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "甲寅除夜雜書",
    "author": "文徵明",
    "skchar": 0
@@ -253,11 +312,13 @@
    },
    "undecided": 4,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": true,
    "enforced_positions": 16,
    "enforced_undecided": 0,
+   "enforced_simplified": 0,
    "title": "甲寅除夜雜書",
    "author": "文徵明",
    "skchar": 0
@@ -310,12 +371,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "甲寅除夜雜書",
    "author": "文徵明",
    "skchar": 0
@@ -368,12 +431,14 @@
     }
    },
    "undecided": 3,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "甲寅除夜雜書",
    "author": "文徵明",
    "skchar": 0
@@ -427,11 +492,13 @@
    },
    "undecided": 1,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -447,7 +514,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 4,
+     "undecided": 3,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -458,7 +525,7 @@
     "nian": {
      "pass": true,
      "failed_joins": [],
-     "undecided": 1
+     "undecided": 0
     },
     "rhyme": {
      "shared_group": [
@@ -484,12 +551,14 @@
     }
    },
    "undecided": 6,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 6,
+   "enforced_undecided": 5,
+   "enforced_simplified": 1,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -516,7 +585,7 @@
     "nian": {
      "pass": true,
      "failed_joins": [],
-     "undecided": 1
+     "undecided": 0
     },
     "rhyme": {
      "shared_group": [
@@ -542,12 +611,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 1,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 3,
+   "enforced_undecided": 2,
+   "enforced_simplified": 1,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -563,7 +634,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 1,
+     "undecided": 0,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -600,12 +671,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 2,
+   "enforced_undecided": 1,
+   "enforced_simplified": 1,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -635,21 +708,17 @@
      "undecided": 0
     },
     "rhyme": {
-     "shared_group": [],
+     "shared_group": [
+      "下平三肴"
+     ],
      "rhyme_chars": [
       "抛",
       "敲"
      ],
-     "hemistichs_with_no_ping_shi_group": [
-      2
-     ],
-     "chars_absent_from_the_table": [
-      2
-     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
      "first_hemistich_rhymes": false,
-     "pass": true,
-     "undecided": 1,
-     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+     "pass": true
     },
     "non_rhyme_ends_ze": {
      "pass": true,
@@ -662,12 +731,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 4,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 6,
+   "enforced_undecided": 4,
+   "enforced_simplified": 2,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -720,12 +791,14 @@
     }
    },
    "undecided": 3,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -747,12 +820,12 @@
     "dui": {
      "pass": true,
      "failed_couplets": [],
-     "undecided": 1
+     "undecided": 0
     },
     "nian": {
      "pass": true,
      "failed_joins": [],
-     "undecided": 1
+     "undecided": 0
     },
     "rhyme": {
      "shared_group": [
@@ -778,12 +851,14 @@
     }
    },
    "undecided": 2,
-   "unknown": 2,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 3,
+   "enforced_undecided": 2,
+   "enforced_simplified": 1,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -837,11 +912,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -895,11 +972,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "崇義院雜題",
    "author": "文徵明",
    "skchar": 0
@@ -952,12 +1031,14 @@
     }
    },
    "undecided": 2,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "水部二詩",
    "author": "文徵明",
    "skchar": 0
@@ -1011,11 +1092,13 @@
    },
    "undecided": 1,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "水部二詩",
    "author": "文徵明",
    "skchar": 0
@@ -1069,11 +1152,13 @@
    },
    "undecided": 5,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "春閨",
    "author": "文徵明",
    "skchar": 0
@@ -1127,11 +1212,13 @@
    },
    "undecided": 5,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "兒子晬日口占二絶句",
    "author": "文徵明",
    "skchar": 0
@@ -1185,11 +1272,13 @@
    },
    "undecided": 2,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "兒子晬日口占二絶句",
    "author": "文徵明",
    "skchar": 0
@@ -1247,11 +1336,13 @@
    },
    "undecided": 0,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "前年",
    "author": "文徵明",
    "skchar": 0
@@ -1304,12 +1395,14 @@
     }
    },
    "undecided": 2,
-   "unknown": 6,
+   "unknown": 5,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "詠堯民案上盆蘭",
    "author": "文徵明",
    "skchar": 0
@@ -1362,12 +1455,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "詠堯民案上盆蘭",
    "author": "文徵明",
    "skchar": 0
@@ -1383,13 +1478,13 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 4,
+     "undecided": 3,
      "tewao_hemistichs": []
     },
     "dui": {
      "pass": true,
      "failed_couplets": [],
-     "undecided": 2
+     "undecided": 1
     },
     "nian": {
      "pass": true,
@@ -1420,12 +1515,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 5,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 6,
+   "enforced_undecided": 4,
+   "enforced_simplified": 2,
    "title": "枕上聞雨有懷宜興杭道卿",
    "author": "文徵明",
    "skchar": 0
@@ -1481,11 +1578,13 @@
    },
    "undecided": 3,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "歳暮齋居即事",
    "author": "文徵明",
    "skchar": 0
@@ -1537,13 +1636,15 @@
      "failed_hemistichs": []
     }
    },
-   "undecided": 3,
-   "unknown": 2,
+   "undecided": 4,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 0,
+   "enforced_simplified": 0,
    "title": "歳暮齋居即事",
    "author": "文徵明",
    "skchar": 0
@@ -1597,11 +1698,13 @@
    },
    "undecided": 8,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "協中詩",
    "author": "文徵明",
    "skchar": 0
@@ -1617,18 +1720,18 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 3,
+     "undecided": 2,
      "tewao_hemistichs": []
     },
     "dui": {
      "pass": true,
      "failed_couplets": [],
-     "undecided": 1
+     "undecided": 0
     },
     "nian": {
      "pass": true,
      "failed_joins": [],
-     "undecided": 1
+     "undecided": 0
     },
     "rhyme": {
      "shared_group": [],
@@ -1659,12 +1762,14 @@
     }
    },
    "undecided": 1,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 4,
+   "enforced_undecided": 3,
+   "enforced_simplified": 1,
    "title": "景德寺",
    "author": "文徵明",
    "skchar": 0
@@ -1718,11 +1823,13 @@
    },
    "undecided": 1,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "吳隱之畫像",
    "author": "文徵明",
    "skchar": 0
@@ -1780,11 +1887,13 @@
    },
    "undecided": 7,
    "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "吳隱之畫像",
    "author": "文徵明",
    "skchar": 0
@@ -1838,11 +1947,13 @@
    },
    "undecided": 1,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "畫鵲",
    "author": "文徵明",
    "skchar": 0
@@ -1898,11 +2009,13 @@
    },
    "undecided": 4,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "畫烏",
    "author": "文徵明",
    "skchar": 0
@@ -1956,11 +2069,13 @@
    },
    "undecided": 4,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "與逵甫燕坐小齋為寫竹石",
    "author": "文徵明",
    "skchar": 0
@@ -2014,11 +2129,13 @@
    },
    "undecided": 3,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "除夕",
    "author": "文徵明",
    "skchar": 0
@@ -2076,11 +2193,13 @@
    },
    "undecided": 7,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "題王侍御敬止所藏仲穆馬圗",
    "author": "文徵明",
    "skchar": 0
@@ -2134,11 +2253,13 @@
    },
    "undecided": 2,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "福壽院殘碑",
    "author": "文徵明",
    "skchar": 0
@@ -2195,12 +2316,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -2254,11 +2377,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -2312,11 +2437,13 @@
    },
    "undecided": 3,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "書昌國憶母詩後",
    "author": "文徵明",
    "skchar": 0
@@ -2370,11 +2497,13 @@
    },
    "undecided": 4,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "題養逸圖",
    "author": "文徵明",
    "skchar": 0
@@ -2427,12 +2556,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 1,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題養逸圖",
    "author": "文徵明",
    "skchar": 0
@@ -2486,11 +2617,13 @@
    },
    "undecided": 3,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": true,
    "enforced_positions": 16,
    "enforced_undecided": 0,
+   "enforced_simplified": 0,
    "title": "元日書事效劉後村",
    "author": "文徵明",
    "skchar": 0
@@ -2544,11 +2677,13 @@
    },
    "undecided": 2,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": true,
    "enforced_positions": 16,
    "enforced_undecided": 0,
+   "enforced_simplified": 0,
    "title": "元日書事效劉後村",
    "author": "文徵明",
    "skchar": 0
@@ -2602,11 +2737,13 @@
    },
    "undecided": 6,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "寫閒舟圖寄葛汝敬",
    "author": "文徵明",
    "skchar": 0
@@ -2660,11 +2797,13 @@
    },
    "undecided": 2,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題沈侗齋修竹士女",
    "author": "文徵明",
    "skchar": 0
@@ -2718,11 +2857,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "桃源圖",
    "author": "文徵明",
    "skchar": 0
@@ -2752,21 +2893,17 @@
      "undecided": 0
     },
     "rhyme": {
-     "shared_group": [],
+     "shared_group": [
+      "下平二蕭"
+     ],
      "rhyme_chars": [
       "遥",
       "橋"
      ],
-     "hemistichs_with_no_ping_shi_group": [
-      2
-     ],
-     "chars_absent_from_the_table": [
-      2
-     ],
-     "first_hemistich_rhymes": false,
-     "pass": true,
-     "undecided": 1,
-     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
     },
     "non_rhyme_ends_ze": {
      "pass": true,
@@ -2779,12 +2916,14 @@
     }
    },
    "undecided": 1,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 1,
+   "enforced_undecided": 0,
+   "enforced_simplified": 1,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -2838,11 +2977,13 @@
    },
    "undecided": 5,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": true,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -2895,12 +3036,14 @@
     }
    },
    "undecided": 2,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -2916,7 +3059,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 3,
+     "undecided": 2,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -2953,12 +3096,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 5,
+   "enforced_undecided": 4,
+   "enforced_simplified": 1,
    "title": "題畫送錢德夫南還",
    "author": "文徵明",
    "skchar": 0
@@ -3003,7 +3148,7 @@
     "non_rhyme_ends_ze": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 1
+     "undecided": 0
     },
     "san_ping_diao": {
      "pass": true,
@@ -3011,12 +3156,14 @@
     }
    },
    "undecided": 3,
-   "unknown": 1,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
-   "pass_strict": false,
+   "pass_strict": true,
    "enforced_positions": 16,
-   "enforced_undecided": 2,
+   "enforced_undecided": 1,
+   "enforced_simplified": 1,
    "title": "庭中海棠為風雨所敗",
    "author": "文徵明",
    "skchar": 0
@@ -3070,11 +3217,13 @@
    },
    "undecided": 4,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "庭中海棠為風雨所敗",
    "author": "文徵明",
    "skchar": 0
@@ -3131,12 +3280,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "春日",
    "author": "文徵明",
    "skchar": 0
@@ -3152,7 +3303,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 1,
+     "undecided": 0,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -3189,12 +3340,14 @@
     }
    },
    "undecided": 1,
-   "unknown": 5,
+   "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 2,
+   "enforced_undecided": 1,
+   "enforced_simplified": 1,
    "title": "書吾尹扇",
    "author": "文徵明",
    "skchar": 0
@@ -3247,12 +3400,14 @@
     }
    },
    "undecided": 6,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "書吾尹扇",
    "author": "文徵明",
    "skchar": 0
@@ -3306,11 +3461,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "暮春遊石湖",
    "author": "文徵明",
    "skchar": 0
@@ -3364,11 +3521,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "暮春遊石湖",
    "author": "文徵明",
    "skchar": 0
@@ -3407,7 +3566,7 @@
      ],
      "hemistichs_with_no_ping_shi_group": [],
      "chars_absent_from_the_table": [],
-     "first_hemistich_rhymes": false,
+     "first_hemistich_rhymes": true,
      "pass": true
     },
     "non_rhyme_ends_ze": {
@@ -3421,12 +3580,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 5,
+   "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 5,
+   "enforced_undecided": 4,
+   "enforced_simplified": 1,
    "title": "早起",
    "author": "文徵明",
    "skchar": 0
@@ -3479,12 +3640,14 @@
     }
    },
    "undecided": 0,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -3538,11 +3701,13 @@
    },
    "undecided": 2,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -3594,11 +3759,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "秋日西齋",
    "author": "文徵明",
    "skchar": 0
@@ -3652,11 +3819,13 @@
    },
    "undecided": 4,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "寄魯南陳子",
    "author": "文徵明",
    "skchar": 0
@@ -3710,11 +3879,13 @@
    },
    "undecided": 5,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "道復西齋偶成",
    "author": "文徵明",
    "skchar": 0
@@ -3768,11 +3939,13 @@
    },
    "undecided": 4,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -3839,11 +4012,13 @@
    },
    "undecided": 4,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -3897,11 +4072,13 @@
    },
    "undecided": 0,
    "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "晩晴",
    "author": "文徵明",
    "skchar": 0
@@ -3955,11 +4132,13 @@
    },
    "undecided": 2,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4013,11 +4192,13 @@
    },
    "undecided": 2,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4047,21 +4228,17 @@
      "undecided": 1
     },
     "rhyme": {
-     "shared_group": [],
+     "shared_group": [
+      "下平七陽"
+     ],
      "rhyme_chars": [
       "牆",
       "凉"
      ],
-     "hemistichs_with_no_ping_shi_group": [
-      4
-     ],
-     "chars_absent_from_the_table": [
-      4
-     ],
-     "first_hemistich_rhymes": false,
-     "pass": true,
-     "undecided": 1,
-     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
     },
     "non_rhyme_ends_ze": {
      "pass": true,
@@ -4074,12 +4251,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 6,
+   "unknown": 5,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 8,
+   "enforced_undecided": 7,
+   "enforced_simplified": 1,
    "title": "題竹寄履仁",
    "author": "文徵明",
    "skchar": 0
@@ -4133,11 +4312,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "題竹寄履仁",
    "author": "文徵明",
    "skchar": 0
@@ -4191,11 +4372,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4249,11 +4432,13 @@
    },
    "undecided": 2,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4307,11 +4492,13 @@
    },
    "undecided": 1,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4365,11 +4552,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4423,11 +4612,13 @@
    },
    "undecided": 4,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4481,11 +4672,13 @@
    },
    "undecided": 5,
    "unknown": 5,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4537,13 +4730,15 @@
      "failed_hemistichs": []
     }
    },
-   "undecided": 6,
-   "unknown": 2,
+   "undecided": 7,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 1,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4597,11 +4792,13 @@
    },
    "undecided": 1,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -4664,11 +4861,13 @@
    },
    "undecided": 7,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "次韻履仁春江即事",
    "author": "文徵明",
    "skchar": 0
@@ -4721,12 +4920,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "春日懐子重履約履仁",
    "author": "文徵明",
    "skchar": 0
@@ -4780,11 +4981,13 @@
    },
    "undecided": 4,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "春日懐子重履約履仁",
    "author": "文徵明",
    "skchar": 0
@@ -4838,11 +5041,13 @@
    },
    "undecided": 0,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "春日懐子重履約履仁",
    "author": "文徵明",
    "skchar": 0
@@ -4899,12 +5104,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 7,
+   "enforced_undecided": 6,
+   "enforced_simplified": 1,
    "title": "晩意",
    "author": "文徵明",
    "skchar": 0
@@ -4958,11 +5165,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "戲簡履約",
    "author": "文徵明",
    "skchar": 0
@@ -5015,12 +5224,14 @@
     }
    },
    "undecided": 2,
-   "unknown": 1,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "失解東歸口占",
    "author": "文徵明",
    "skchar": 0
@@ -5036,7 +5247,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 4,
+     "undecided": 3,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -5073,12 +5284,14 @@
     }
    },
    "undecided": 2,
-   "unknown": 5,
+   "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 4,
+   "enforced_undecided": 3,
+   "enforced_simplified": 1,
    "title": "雪景",
    "author": "文徵明",
    "skchar": 0
@@ -5132,11 +5345,13 @@
    },
    "undecided": 2,
    "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -5152,13 +5367,13 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 3,
+     "undecided": 2,
      "tewao_hemistichs": []
     },
     "dui": {
      "pass": true,
      "failed_couplets": [],
-     "undecided": 2
+     "undecided": 1
     },
     "nian": {
      "pass": true,
@@ -5181,7 +5396,7 @@
     "non_rhyme_ends_ze": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 1
+     "undecided": 0
     },
     "san_ping_diao": {
      "pass": true,
@@ -5189,12 +5404,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 3,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 5,
+   "enforced_undecided": 3,
+   "enforced_simplified": 2,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -5248,11 +5465,13 @@
    },
    "undecided": 4,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -5306,11 +5525,13 @@
    },
    "undecided": 1,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "(untitled)",
    "author": "文徵明",
    "skchar": 0
@@ -5364,11 +5585,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "八月六日書事",
    "author": "文徵明",
    "skchar": 0
@@ -5422,11 +5645,13 @@
    },
    "undecided": 1,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "八月六日書事",
    "author": "文徵明",
    "skchar": 0
@@ -5480,11 +5705,13 @@
    },
    "undecided": 4,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -5537,12 +5764,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -5596,11 +5825,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -5654,11 +5885,13 @@
    },
    "undecided": 1,
    "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -5712,11 +5945,13 @@
    },
    "undecided": 1,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 0,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -5770,11 +6005,13 @@
    },
    "undecided": 2,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -5828,11 +6065,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -5890,11 +6129,13 @@
    },
    "undecided": 3,
    "unknown": 5,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -5948,11 +6189,13 @@
    },
    "undecided": 1,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "揚州道中次九逵韻",
    "author": "文徵明",
    "skchar": 0
@@ -6006,11 +6249,13 @@
    },
    "undecided": 5,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "揚州道中次九逵韻",
    "author": "文徵明",
    "skchar": 0
@@ -6064,11 +6309,13 @@
    },
    "undecided": 5,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "濟上聞笛",
    "author": "文徵明",
    "skchar": 0
@@ -6122,11 +6369,13 @@
    },
    "undecided": 5,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6179,12 +6428,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6237,12 +6488,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6296,11 +6549,13 @@
    },
    "undecided": 7,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6354,11 +6609,13 @@
    },
    "undecided": 5,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6403,7 +6660,7 @@
     "non_rhyme_ends_ze": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 1
+     "undecided": 0
     },
     "san_ping_diao": {
      "pass": true,
@@ -6411,12 +6668,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 3,
+   "enforced_undecided": 2,
+   "enforced_simplified": 1,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6469,12 +6728,14 @@
     }
    },
    "undecided": 3,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6527,12 +6788,14 @@
     }
    },
    "undecided": 7,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6586,11 +6849,13 @@
    },
    "undecided": 5,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6648,11 +6913,13 @@
    },
    "undecided": 4,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "送錢元抑南歸口號十首",
    "author": "文徵明",
    "skchar": 0
@@ -6705,12 +6972,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "送趙麗卿",
    "author": "文徵明",
    "skchar": 0
@@ -6763,12 +7032,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 3,
+   "enforced_undecided": 2,
+   "enforced_simplified": 1,
    "title": "送趙麗卿",
    "author": "文徵明",
    "skchar": 0
@@ -6821,12 +7092,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "送趙麗卿",
    "author": "文徵明",
    "skchar": 0
@@ -6880,11 +7153,13 @@
    },
    "undecided": 1,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "送趙麗卿",
    "author": "文徵明",
    "skchar": 0
@@ -6938,11 +7213,13 @@
    },
    "undecided": 5,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -6987,7 +7264,7 @@
     "non_rhyme_ends_ze": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 1
+     "undecided": 0
     },
     "san_ping_diao": {
      "pass": true,
@@ -6995,12 +7272,14 @@
     }
    },
    "undecided": 9,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 6,
+   "enforced_undecided": 5,
+   "enforced_simplified": 1,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7054,11 +7333,13 @@
    },
    "undecided": 4,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7074,18 +7355,18 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 3,
+     "undecided": 2,
      "tewao_hemistichs": []
     },
     "dui": {
      "pass": true,
      "failed_couplets": [],
-     "undecided": 1
+     "undecided": 0
     },
     "nian": {
      "pass": true,
      "failed_joins": [],
-     "undecided": 1
+     "undecided": 0
     },
     "rhyme": {
      "shared_group": [
@@ -7111,12 +7392,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 3,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 5,
+   "enforced_undecided": 3,
+   "enforced_simplified": 2,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7132,13 +7415,13 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 1,
+     "undecided": 0,
      "tewao_hemistichs": []
     },
     "dui": {
      "pass": true,
      "failed_couplets": [],
-     "undecided": 1
+     "undecided": 0
     },
     "nian": {
      "pass": true,
@@ -7169,12 +7452,14 @@
     }
    },
    "undecided": 1,
-   "unknown": 2,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 2,
+   "enforced_undecided": 1,
+   "enforced_simplified": 1,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7238,11 +7523,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7295,12 +7582,14 @@
     }
    },
    "undecided": 1,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7354,11 +7643,13 @@
    },
    "undecided": 2,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7412,11 +7703,13 @@
    },
    "undecided": 4,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7470,11 +7763,13 @@
    },
    "undecided": 8,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "馬上口占謝諸送客十首",
    "author": "文徵明",
    "skchar": 0
@@ -7525,12 +7820,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 1,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 4,
+   "enforced_undecided": 3,
+   "enforced_simplified": 1,
    "title": "野行因過廢寺",
    "author": "文徵明",
    "skchar": 0
@@ -7584,11 +7881,13 @@
    },
    "undecided": 7,
    "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "野行因過廢寺",
    "author": "文徵明",
    "skchar": 0
@@ -7642,11 +7941,13 @@
    },
    "undecided": 7,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "野行因過廢寺",
    "author": "文徵明",
    "skchar": 0
@@ -7699,12 +8000,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 6,
+   "enforced_simplified": 0,
    "title": "野行因過廢寺",
    "author": "文徵明",
    "skchar": 0
@@ -7720,7 +8023,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 3,
+     "undecided": 1,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -7757,12 +8060,14 @@
     }
    },
    "undecided": 2,
-   "unknown": 6,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 4,
+   "enforced_undecided": 2,
+   "enforced_simplified": 2,
    "title": "野行因過廢寺",
    "author": "文徵明",
    "skchar": 0
@@ -7820,11 +8125,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "題蘭",
    "author": "文徵明",
    "skchar": 0
@@ -7878,11 +8185,13 @@
    },
    "undecided": 2,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "江天暮雪",
    "author": "文徵明",
    "skchar": 0
@@ -7936,11 +8245,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "竹雀",
    "author": "文徵明",
    "skchar": 0
@@ -7994,11 +8305,13 @@
    },
    "undecided": 5,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "無錫道中遇雪夜泊望亭",
    "author": "文徵明",
    "skchar": 0
@@ -8037,7 +8350,7 @@
      ],
      "hemistichs_with_no_ping_shi_group": [],
      "chars_absent_from_the_table": [],
-     "first_hemistich_rhymes": false,
+     "first_hemistich_rhymes": true,
      "pass": true
     },
     "non_rhyme_ends_ze": {
@@ -8051,12 +8364,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 1,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 2,
+   "enforced_undecided": 1,
+   "enforced_simplified": 1,
    "title": "無錫道中遇雪夜泊望亭",
    "author": "文徵明",
    "skchar": 0
@@ -8072,13 +8387,13 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 1,
+     "undecided": 0,
      "tewao_hemistichs": []
     },
     "dui": {
      "pass": true,
      "failed_couplets": [],
-     "undecided": 1
+     "undecided": 0
     },
     "nian": {
      "pass": true,
@@ -8109,12 +8424,14 @@
     }
    },
    "undecided": 4,
-   "unknown": 2,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 1,
+   "enforced_undecided": 0,
+   "enforced_simplified": 1,
    "title": "無錫道中遇雪夜泊望亭",
    "author": "文徵明",
    "skchar": 0
@@ -8168,11 +8485,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "無錫道中遇雪夜泊望亭",
    "author": "文徵明",
    "skchar": 0
@@ -8226,11 +8545,13 @@
    },
    "undecided": 6,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "無錫道中遇雪夜泊望亭",
    "author": "文徵明",
    "skchar": 0
@@ -8284,11 +8605,13 @@
    },
    "undecided": 2,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": false,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "無錫道中遇雪夜泊望亭",
    "author": "文徵明",
    "skchar": 0
@@ -8342,11 +8665,13 @@
    },
    "undecided": 6,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -8376,21 +8701,17 @@
      "undecided": 0
     },
     "rhyme": {
-     "shared_group": [],
+     "shared_group": [
+      "下平八庚"
+     ],
      "rhyme_chars": [
       "情",
       "横"
      ],
-     "hemistichs_with_no_ping_shi_group": [
-      4
-     ],
-     "chars_absent_from_the_table": [
-      4
-     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
      "first_hemistich_rhymes": false,
-     "pass": true,
-     "undecided": 1,
-     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+     "pass": true
     },
     "non_rhyme_ends_ze": {
      "pass": true,
@@ -8402,13 +8723,15 @@
      "failed_hemistichs": []
     }
    },
-   "undecided": 2,
-   "unknown": 2,
+   "undecided": 3,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 1,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -8438,21 +8761,17 @@
      "undecided": 0
     },
     "rhyme": {
-     "shared_group": [],
+     "shared_group": [
+      "上平十四寒"
+     ],
      "rhyme_chars": [
       "看",
       "单"
      ],
-     "hemistichs_with_no_ping_shi_group": [
-      4
-     ],
-     "chars_absent_from_the_table": [
-      4
-     ],
-     "first_hemistich_rhymes": false,
-     "pass": true,
-     "undecided": 1,
-     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
     },
     "non_rhyme_ends_ze": {
      "pass": true,
@@ -8464,13 +8783,15 @@
      "failed_hemistichs": []
     }
    },
-   "undecided": 4,
-   "unknown": 1,
+   "undecided": 5,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 1,
    "title": "題畫",
    "author": "文徵明",
    "skchar": 0
@@ -8486,7 +8807,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 3,
+     "undecided": 2,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -8523,12 +8844,14 @@
     }
    },
    "undecided": 6,
-   "unknown": 6,
+   "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 6,
+   "enforced_undecided": 4,
+   "enforced_simplified": 2,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -8544,13 +8867,13 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 2,
+     "undecided": 0,
      "tewao_hemistichs": []
     },
     "dui": {
      "pass": true,
      "failed_couplets": [],
-     "undecided": 1
+     "undecided": 0
     },
     "nian": {
      "pass": true,
@@ -8581,12 +8904,14 @@
     }
    },
    "undecided": 3,
-   "unknown": 4,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 3,
+   "enforced_undecided": 1,
+   "enforced_simplified": 2,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -8602,7 +8927,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 2,
+     "undecided": 1,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -8639,12 +8964,14 @@
     }
    },
    "undecided": 3,
-   "unknown": 2,
+   "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 3,
+   "enforced_undecided": 2,
+   "enforced_simplified": 1,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -8700,11 +9027,13 @@
    },
    "undecided": 5,
    "unknown": 0,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -8758,11 +9087,13 @@
    },
    "undecided": 3,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -8816,11 +9147,13 @@
    },
    "undecided": 4,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -8874,11 +9207,13 @@
    },
    "undecided": 4,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -8931,12 +9266,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -8989,12 +9326,14 @@
     }
    },
    "undecided": 1,
-   "unknown": 2,
+   "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -9048,11 +9387,13 @@
    },
    "undecided": 6,
    "unknown": 1,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "張夏山輓詞",
    "author": "文徵明",
    "skchar": 0
@@ -9106,11 +9447,13 @@
    },
    "undecided": 2,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "竹堂",
    "author": "文徵明",
    "skchar": 0
@@ -9163,12 +9506,14 @@
     }
    },
    "undecided": 5,
-   "unknown": 4,
+   "unknown": 3,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "閒興",
    "author": "文徵明",
    "skchar": 0
@@ -9184,7 +9529,7 @@
     "alternate": {
      "pass": true,
      "failed_hemistichs": [],
-     "undecided": 3,
+     "undecided": 2,
      "tewao_hemistichs": []
     },
     "dui": {
@@ -9221,12 +9566,14 @@
     }
    },
    "undecided": 2,
-   "unknown": 3,
+   "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
-   "enforced_undecided": 3,
+   "enforced_undecided": 2,
+   "enforced_simplified": 1,
    "title": "閒興",
    "author": "文徵明",
    "skchar": 0
@@ -9284,11 +9631,13 @@
    },
    "undecided": 5,
    "unknown": 2,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "閒興",
    "author": "文徵明",
    "skchar": 0
@@ -9342,11 +9691,13 @@
    },
    "undecided": 2,
    "unknown": 4,
+   "unencodable_glyphs": 0,
    "classification": "近體候補",
    "pass": true,
    "pass_strict": false,
    "enforced_positions": 16,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "閒興",
    "author": "文徵明",
    "skchar": 0

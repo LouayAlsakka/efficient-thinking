@@ -84,6 +84,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 6,
+   "enforced_simplified": 0,
    "title": "冬日睡起",
    "author": "唐寅",
    "skchar": 0
@@ -144,6 +145,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩",
    "author": "唐寅",
    "skchar": 0
@@ -204,6 +206,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#1",
    "author": "唐寅",
    "skchar": 0
@@ -266,6 +269,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#2",
    "author": "唐寅",
    "skchar": 0
@@ -328,6 +332,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#3",
    "author": "唐寅",
    "skchar": 0
@@ -388,6 +393,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#4",
    "author": "唐寅",
    "skchar": 0
@@ -448,6 +454,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#5",
    "author": "唐寅",
    "skchar": 0
@@ -508,6 +515,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 6,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#6",
    "author": "唐寅",
    "skchar": 0
@@ -568,6 +576,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#7",
    "author": "唐寅",
    "skchar": 0
@@ -628,6 +637,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 8,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#8",
    "author": "唐寅",
    "skchar": 0
@@ -690,6 +700,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 7,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#9",
    "author": "唐寅",
    "skchar": 0
@@ -752,6 +763,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#10",
    "author": "唐寅",
    "skchar": 0
@@ -814,6 +826,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#11",
    "author": "唐寅",
    "skchar": 0
@@ -874,6 +887,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#12",
    "author": "唐寅",
    "skchar": 0
@@ -934,6 +948,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#13",
    "author": "唐寅",
    "skchar": 0
@@ -994,6 +1009,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#14",
    "author": "唐寅",
    "skchar": 0
@@ -1056,6 +1072,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#15",
    "author": "唐寅",
    "skchar": 0
@@ -1116,6 +1133,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 1,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#16",
    "author": "唐寅",
    "skchar": 0
@@ -1176,6 +1194,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#17",
    "author": "唐寅",
    "skchar": 0
@@ -1236,6 +1255,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 7,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#18",
    "author": "唐寅",
    "skchar": 0
@@ -1298,6 +1318,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 8,
+   "enforced_simplified": 0,
    "title": "和石田先生落花詩#19",
    "author": "唐寅",
    "skchar": 0
@@ -1364,6 +1385,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 9,
+   "enforced_simplified": 0,
    "title": "散步 (唐寅)",
    "author": "唐寅",
    "skchar": 0
@@ -1424,6 +1446,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 7,
+   "enforced_simplified": 0,
    "title": "春日寫懷 (唐寅)",
    "author": "唐寅",
    "skchar": 0
@@ -1484,6 +1507,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "江南送春",
    "author": "唐寅",
    "skchar": 0
@@ -1544,6 +1568,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)",
    "author": "唐寅",
    "skchar": 0
@@ -1604,6 +1629,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 7,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#1",
    "author": "唐寅",
    "skchar": 0
@@ -1664,6 +1690,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#2",
    "author": "唐寅",
    "skchar": 0
@@ -1724,6 +1751,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 7,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#3",
    "author": "唐寅",
    "skchar": 0
@@ -1784,6 +1812,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 6,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#4",
    "author": "唐寅",
    "skchar": 0
@@ -1844,6 +1873,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#5",
    "author": "唐寅",
    "skchar": 0
@@ -1904,6 +1934,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#6",
    "author": "唐寅",
    "skchar": 0
@@ -1966,6 +1997,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#7",
    "author": "唐寅",
    "skchar": 0
@@ -2026,6 +2058,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#8",
    "author": "唐寅",
    "skchar": 0
@@ -2086,6 +2119,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "漫興 (唐寅)#9",
    "author": "唐寅",
    "skchar": 0
@@ -2146,6 +2180,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "無題 (唐寅)",
    "author": "唐寅",
    "skchar": 0
@@ -2220,6 +2255,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 3,
+   "enforced_simplified": 0,
    "title": "登吳王郊台作",
    "author": "唐寅",
    "skchar": 0
@@ -2280,6 +2316,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 7,
+   "enforced_simplified": 0,
    "title": "言懷 (唐寅)",
    "author": "唐寅",
    "skchar": 0
@@ -2340,6 +2377,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "言懷 (唐寅)#1",
    "author": "唐寅",
    "skchar": 0
@@ -2402,6 +2440,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "言懷 (唐寅)#2",
    "author": "唐寅",
    "skchar": 0
@@ -2462,6 +2501,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 2,
+   "enforced_simplified": 0,
    "title": "詠春江花月夜",
    "author": "唐寅",
    "skchar": 0
@@ -2522,6 +2562,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 5,
+   "enforced_simplified": 0,
    "title": "贈昌國",
    "author": "唐寅",
    "skchar": 0
@@ -2603,6 +2644,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "送文溫州",
    "author": "唐寅",
    "skchar": 0
@@ -2663,6 +2705,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 7,
+   "enforced_simplified": 0,
    "title": "閶門即事 (唐寅)",
    "author": "唐寅",
    "skchar": 0
@@ -2723,6 +2766,7 @@
    "pass_strict": false,
    "enforced_positions": 32,
    "enforced_undecided": 4,
+   "enforced_simplified": 0,
    "title": "題畫 (唐寅)#1",
    "author": "唐寅",
    "skchar": 0
