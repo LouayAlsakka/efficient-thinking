@@ -1,0 +1,60 @@
+{
+ "measurement": "ET-8 tangyin step 1b — can a training split for 唐寅 be obtained, and is it disjoint from the held-out set?",
+ "run_sha": "1fff46c0a461709862d5892afba977910b98260b",
+ "run_host": "llm1 (LLM1.local)",
+ "date": "2026-09-14",
+ "ctext": {
+  "api_reachable": true,
+  "getstatus": {
+   "loggedin": "false",
+   "subscriber": "false"
+  },
+  "gettext": "ERR_REQUIRES_AUTHENTICATION — 'access the API from a registered IP address or supply a valid API key'",
+  "public_html": "ctext.org serves a 2,781-byte stub with zero CJK to this client. Its text asks researchers NOT to scrape: 'if you're trying to do web scraping for a research project, please ask your institution to subscribe instead… Subscriptions are currently our only source of revenue.'",
+  "action_taken": "NONE. I did not scrape and will not. A subscription is spend and policy, which is Louay's, not mine.",
+  "六如居士集": "NOT on ctext under that title — searchtexts returns 0 books. The README's named source does not exist there.",
+  "what_ctext_does_hold": [
+   {
+    "title": "唐伯虎先生集",
+    "urn": "ctp:wb238629"
+   },
+   {
+    "title": "唐伯虎先生外編",
+    "urn": "ctp:wb403910"
+   },
+   {
+    "title": "唐伯虎先生外編續刻",
+    "urn": "ctp:wb474875"
+   },
+   {
+    "title": "袁中郎先生批評唐伯虎彙集",
+    "urn": "ctp:wb479459"
+   }
+  ],
+  "note": "All four are ctext 'wiki' (wb) texts. gettext refuses them without authentication exactly as it refuses the core corpus."
+ },
+ "wikisource_alternative": {
+  "六如居士集 (四庫全書本)": "0 pages — allpages prefix search. Not there.",
+  "唐伯虎先生集 / 六如居士外集 / 唐伯虎": "0 pages each.",
+  "列朝詩集/丙09": {
+   "poet_heading": "==[[Author:唐寅|唐解元寅]] 七十五首==",
+   "section_chars": 2041,
+   "poems_are_TRANSCLUDED": true,
+   "distinct_transcluded_pages": 25,
+   "ALSO_IN_HELD_OUT_CORPUS": 24,
+   "verdict": "NOT a disjoint training split. 24 of 25 are the SAME Wikisource pages the held-out corpus was built from — the anthology transcludes them rather than carrying its own text."
+  },
+  "列朝詩集/丙08": "NO 唐寅 poet section. The 唐寅 hit there is a POEM TITLE linking to him (用韻答[[Author:唐寅|伯虎]]) — another poet writing TO him. My first pass read that as a poet heading and counted 25 poems that are not his; corrected here."
+ },
+ "conclusion": "A training split for 唐寅 that is disjoint from the held-out set cannot be had from Wikisource, and ctext — which has four relevant editions — is closed to us without a subscription. The study's train/held-out separation is blocked on a spend decision or a re-cut of the design.",
+ "options_for_ri_and_louay": [
+  "(a) SUBSCRIBE to ctext (institutional; their page says libraries normally fund it). Gives an authenticated JSON API and, in their words, more accurate data than scraping. Louay's call — spend.",
+  "(b) RE-CUT: drop the 'held-out SOURCE' framing and take a random split of the one corpus we can get (103 blocks). Cheap, honest, but the contamination story changes: the split is no longer a different edition.",
+  "(c) The 集外詩 tail of 列朝詩集/丙09 (the LINKED, non-transcluded titles, 28 of them) is the only Wikisource material that may be disjoint. It is small and I have NOT verified its disjointness — that is a measurement, not a claim."
+ ],
+ "bounds": [
+  "Wikisource returned HTTP 429 once during this work. Everything since is backed off (8-15 s between requests). Nothing was hammered.",
+  "The 24-of-25 overlap is measured on PAGE TITLE identity, not on text. Two pages with different titles could still carry the same poem.",
+  "I corrected my own first reading of 列朝詩集/丙08 before publishing it; the wrong version never left this box."
+ ]
+}
