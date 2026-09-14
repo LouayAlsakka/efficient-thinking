@@ -1,0 +1,54 @@
+{
+ "ruling": "理 2026-09-14 — option (b): a seeded random split of the 103 Wikisource blocks.",
+ "what_it_stopped_meaning": "The held-out side is NO LONGER a different edition. It is the same source, split. P4's probes still apply: memorization is a property of Claude's weights, not of our source.",
+ "corpus": "tangyin_wikisource.jsonl",
+ "corpus_sha256": "ccebf6ebfa4cf73882fe09cfacad329d429c1d3c0f337214a55271f263d4eccc",
+ "seed": 7,
+ "n_total": 103,
+ "n_train": 70,
+ "n_heldout": 33,
+ "split_unit": "SOURCE PAGE, then merged across pages that share identical CJK text",
+ "pages": 49,
+ "clusters_after_merge": 48,
+ "exact_duplicate_groups": [],
+ "near_duplicate_threshold_bigram_jaccard": 0.5,
+ "near_duplicate_pairs_MERGED": [
+  {
+   "jaccard": 0.888,
+   "a": "桃花庵歌#2",
+   "b": "桃花庵歌#3"
+  },
+  {
+   "jaccard": 0.838,
+   "a": "桃花庵歌#1",
+   "b": "桃花庵歌#2"
+  },
+  {
+   "jaccard": 0.831,
+   "a": "桃花庵歌#1",
+   "b": "桃花庵歌#3"
+  },
+  {
+   "jaccard": 0.636,
+   "a": "開門七件事",
+   "b": "除夕口占"
+  },
+  {
+   "jaccard": 0.594,
+   "a": "桃花庵歌",
+   "b": "桃花庵歌#3"
+  },
+  {
+   "jaccard": 0.571,
+   "a": "桃花庵歌",
+   "b": "桃花庵歌#2"
+  },
+  {
+   "jaccard": 0.566,
+   "a": "桃花庵歌",
+   "b": "桃花庵歌#1"
+  }
+ ],
+ "near_misses_just_below_threshold": [],
+ "residual_leakage_risk": "Two poems by one author on one topic are not duplicates and are not detected here. This removes EXACT repeats and same-page siblings; it does not remove similarity."
+}
