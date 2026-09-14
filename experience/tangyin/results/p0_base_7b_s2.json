@@ -1,0 +1,72 @@
+{
+ "model": "Qwen/Qwen2.5-7B-Instruct",
+ "temp": 0.7,
+ "seed": 2,
+ "n_prompts": 200,
+ "by_form": {
+  "五絕": {
+   "n": 50,
+   "extracted": 44,
+   "wrong_length": 6,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.34,
+   "pass_over_extracted": 0.38636363636363635,
+   "failed_by_rule": {
+    "rhyme": 13,
+    "nian": 10,
+    "non_rhyme_ends_ze": 8,
+    "alternate": 11,
+    "dui": 6,
+    "san_ping_diao": 3
+   }
+  },
+  "七絕": {
+   "n": 50,
+   "extracted": 40,
+   "wrong_length": 10,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.32,
+   "pass_over_extracted": 0.4,
+   "failed_by_rule": {
+    "alternate": 15,
+    "non_rhyme_ends_ze": 2,
+    "san_ping_diao": 3,
+    "dui": 7,
+    "nian": 4,
+    "rhyme": 14
+   }
+  },
+  "五律": {
+   "n": 50,
+   "extracted": 46,
+   "wrong_length": 4,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.2,
+   "pass_over_extracted": 0.21739130434782608,
+   "failed_by_rule": {
+    "rhyme": 27,
+    "alternate": 11,
+    "dui": 7,
+    "nian": 8,
+    "non_rhyme_ends_ze": 7,
+    "san_ping_diao": 5
+   }
+  },
+  "七律": {
+   "n": 50,
+   "extracted": 42,
+   "wrong_length": 8,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.12,
+   "pass_over_extracted": 0.14285714285714285,
+   "failed_by_rule": {
+    "rhyme": 23,
+    "alternate": 19,
+    "dui": 10,
+    "nian": 13,
+    "non_rhyme_ends_ze": 4,
+    "san_ping_diao": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "measurement": "P0 seed sensitivity — is 32.0% a number or a coincidence?",
+ "date": "2026-09-14",
+ "rig": "llm1",
+ "model": "Qwen/Qwen2.5-7B-Instruct bf16",
+ "temp": 0.7,
+ "seeds": [
+  1,
+  2
+ ],
+ "n_per_form": 50,
+ "by_form": {
+  "五絕": {
+   "seed1": 34.0,
+   "seed2": 34.0,
+   "delta_pp": 0.0,
+   "identical_generations_across_seeds": 0,
+   "poems_that_FLIPPED_verdict": 16,
+   "flipped_to_pass": 8,
+   "flipped_to_fail": 8,
+   "binomial_SE_pp_at_n50": 6.7,
+   "delta_in_SE_units": 0.0
+  },
+  "七絕": {
+   "seed1": 32.0,
+   "seed2": 32.0,
+   "delta_pp": 0.0,
+   "identical_generations_across_seeds": 0,
+   "poems_that_FLIPPED_verdict": 24,
+   "flipped_to_pass": 12,
+   "flipped_to_fail": 12,
+   "binomial_SE_pp_at_n50": 6.6,
+   "delta_in_SE_units": 0.0
+  },
+  "五律": {
+   "seed1": 24.0,
+   "seed2": 20.0,
+   "delta_pp": -4.0,
+   "identical_generations_across_seeds": 0,
+   "poems_that_FLIPPED_verdict": 14,
+   "flipped_to_pass": 6,
+   "flipped_to_fail": 8,
+   "binomial_SE_pp_at_n50": 5.9,
+   "delta_in_SE_units": 0.5
+  },
+  "七律": {
+   "seed1": 40.0,
+   "seed2": 12.0,
+   "delta_pp": -28.0,
+   "identical_generations_across_seeds": 0,
+   "poems_that_FLIPPED_verdict": 22,
+   "flipped_to_pass": 4,
+   "flipped_to_fail": 18,
+   "binomial_SE_pp_at_n50": 6.2,
+   "delta_in_SE_units": 3.2
+  }
+ },
+ "findings": [
+  "THE SEED WORKS: ZERO of 200 generations is identical between the two seeds. Any agreement below is about rates, not about outputs.",
+  "七絕 gives 32.0% on BOTH seeds — but 24 of its 50 poems FLIPPED verdict (12 each way). The agreement is a balanced coincidence at the margin, NOT low variance. Two seeds landing on the same point does not tighten the estimate.",
+  "At n=50 and p≈0.32 the binomial SE is 6.6pp, so P0's '< 40%' threshold sits about 1.2 SE above the estimate. That is the honest precision of the headline, and it was not improved by a second seed.",
+  "七律 moved 40.0% -> 12.0%, 28pp, about 3.2 SE on the two-draw difference. That is beyond sampling noise on two draws and it is far larger than any plausible LoRA effect.",
+  "So P2/P3 must NOT be scored on 七律 from a single seed: the seed variance would swamp the training effect being measured. 七絕 and 五絕 are the steadier forms and even they carry ±6.6pp."
+ ],
+ "bounds": [
+  "TWO SEEDS. Two draws cannot characterise a distribution; 七律's excursion is flagged, not modelled.",
+  "The SE figures assume independent Bernoulli trials across topics, which is not obviously true — the topics are mine and some may be systematically easier.",
+  "Same prompt template, same temperature, same model, same verifier throughout."
+ ]
+}
