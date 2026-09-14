@@ -109,9 +109,13 @@ def main():
                 anchor = re.search(r"\{\{SK anchor\|([^}]*)\}\}", line)
                 txt, nsk = clean(line)
                 if anchor:
-                    # an anchor line is a heading; the 詩N首 counters are not poem titles
-                    cur_title = anchor.group(1)
-                    if not txt or txt == cur_title:
+                    # An anchor is a heading, but NOT every heading is a poem title: each juan
+                    # opens with its own name (甫田集巻一) and a section counter (詩七十一首).
+                    # Carrying those down onto the poems under them invents 27 titles that the
+                    # edition does not give, so they clear the title instead of setting it.
+                    head = anchor.group(1)
+                    cur_title = None if re.match(r"^甫田集巻|^詩[一二三四五六七八九十百]+首$", head) else head
+                    if not txt or txt == head:
                         continue
                 if not txt or not re.fullmatch(r"[㐀-鿿□]+", txt):
                     continue                     # 欽定四庫全書, 明　文徵明　撰, prose, etc.
