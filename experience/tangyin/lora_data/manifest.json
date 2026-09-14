@@ -1,0 +1,28 @@
+{
+ "source": "tangyin_train.jsonl",
+ "seed": 7,
+ "n": 70,
+ "n_train": 63,
+ "n_valid": 7,
+ "valid_titles": [
+  "一世歌",
+  "和石田先生落花詩#12",
+  "江南送春",
+  "漫興 (唐寅)#4",
+  "短歌行 (唐寅)",
+  "秋風紈扇圖",
+  "言懷 (唐寅)#1"
+ ],
+ "forms_in_the_split": {
+  "null": 11,
+  "七律": 41,
+  "七絕": 13,
+  "五絕": 4,
+  "五律": 1
+ },
+ "prompt_template": "請以「{topic}」為題，寫一首{form}。\n格律要求：共{n}句，每句{per}字，押平水韻，合平仄。\n只輸出詩句本身，每句一行，不要標題、不要解釋。",
+ "prompt_template_unregulated": "請以「{topic}」為題，寫一首詩。\n只輸出詩句本身，每句一行，不要標題、不要解釋。",
+ "answer_field": "text (re-segmented) — 理's ruling (iii); text_raw is never trained on",
+ "why_valid_comes_out_of_train": "mlx-lm requires valid.jsonl; the held-out 33 are reserved for the judge and the P4 probes, so the only place left is the train split. It costs 7 of 70.",
+ "thinness": "63 training examples. This is thin and it belongs in the row, not only in the prose: any P2/P3 effect has to be read against it."
+}
