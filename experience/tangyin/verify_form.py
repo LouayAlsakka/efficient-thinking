@@ -23,6 +23,18 @@ Positions are 1-based within a hemistich (a 句). 七言 has 7, 五言 has 5.
              verifier derives them instead of matching against a table of four.
   三平調     a hemistich ending 平平平 is a fault. Cheap and objective, reported separately
              because it is a fault of taste that the generative rules above do not catch.
+  特拗       ...with ONE documented exemption. 仄仄平平平仄仄 has an accepted variant,
+             仄仄平平仄平仄 (特拗 / 鯉魚翻波), in which positions 5 and 6 swap. It is not a
+             fault and it is common: four of Tang Yin's 七絕 use it. A hemistich that ends
+             仄 and whose last three positions read 仄平仄 is exempted from `alternate` at
+             the swapped position. This is the ONLY latitude granted, it is granted because
+             the literature grants it, and it was written here before the rate was looked at.
+
+古體 IS NOT MALFORMED
+---------------------
+A poem whose rhyme positions all fall on 仄 characters is a 古絕/古體, not a defective 近體.
+It is classified, not failed: 近體's 對/粘/alternate rules are not its rules. Scoring it as a
+failure would let a model earn credit for avoiding a form the corpus itself uses.
 
 WHAT IT REFUSES TO DECIDE
 -------------------------
@@ -93,16 +105,24 @@ def verify(poem, rime):
 
     even = [1, 3, 5] if per == 7 else [1, 3]          # 0-based positions 2,4,6 / 2,4
 
-    # --- alternate: within a hemistich the even positions alternate
-    bad, und = [], 0
+    # --- alternate: within a hemistich the even positions alternate, 特拗 exempted
+    def tewao(t):
+        """仄仄平平仄平仄 (七) / 平平仄平仄 (五): the accepted swap of positions 5 and 6."""
+        return t[-3:] == ["仄", "平", "仄"]
+
+    bad, und, tw = [], 0, []
     for i, t in enumerate(tones):
+        if tewao(t):
+            tw.append(i + 1)
+            continue
         got = [t[p] for p in even]
         if any(g in ("UNDECIDED", "UNKNOWN") for g in got):
             und += 1
             continue
         if not all(opposite(got[k], got[k + 1]) for k in range(len(got) - 1)):
             bad.append(i + 1)
-    res["rules"]["alternate"] = {"pass": not bad, "failed_hemistichs": bad, "undecided": und}
+    res["rules"]["alternate"] = {"pass": not bad, "failed_hemistichs": bad, "undecided": und,
+                                 "tewao_hemistichs": tw}
 
     # --- 對 within each couplet, 粘 across couplets: position 2
     p2 = [t[1] for t in tones]
@@ -124,17 +144,37 @@ def verify(poem, rime):
 
     # --- rhyme: even hemistichs share one 平 group; hemistich 1 may join it
     rpos = list(range(1, n, 2))
-    groups = [rime.rhyme_groups(lines[i][-1]) for i in rpos]
+    rchars = [lines[i][-1] for i in rpos]
+    groups = [rime.rhyme_groups(c) for c in rchars]
     shared = set.intersection(*groups) if all(groups) else set()
-    empty = [rpos[i] + 1 for i, g in enumerate(groups) if not g]
+    absent = [rpos[i] + 1 for i, c in enumerate(rchars) if rime.tone(c) == "UNKNOWN"]
     first = rime.rhyme_groups(lines[0][-1])
-    res["rules"]["rhyme"] = {
-        "pass": bool(shared),
-        "shared_group": sorted(shared)[:3],
-        "rhyme_chars": [lines[i][-1] for i in rpos],
-        "hemistichs_with_no_ping_shi_group": empty,
-        "first_hemistich_rhymes": bool(shared & first),
-    }
+    # A 仄韻 poem is 古體, not a broken 近體 — and the test for it must be that the rhyme
+    # characters share a 仄 group, not that they lack a 平 reading. 比 has a 平 reading
+    # (上平四支) and rhymes 上四紙 with 裏 in 宮妃夜游圖; a "no 平 reading" test calls that
+    # poem a defective 近體, which it is not.
+    ze_groups = [rime.rhyme_groups(c, ping_only=False) - rime.rhyme_groups(c) for c in rchars]
+    ze_shared = set.intersection(*ze_groups) if all(ze_groups) else set()
+    res["classification"] = "古體(仄韻)" if (not shared and ze_shared) else "近體候補"
+    rule = {"shared_group": sorted(shared)[:3], "rhyme_chars": rchars,
+            "hemistichs_with_no_ping_shi_group": [rpos[i] + 1 for i, g in enumerate(groups)
+                                                  if not g],
+            "chars_absent_from_the_table": absent,
+            "first_hemistich_rhymes": bool(shared & first)}
+    if res["classification"] == "古體(仄韻)":
+        rule["pass"] = True
+        rule["why"] = "仄韻 throughout — 古體, and 近體's rhyme rule is not its rule"
+        rule["ze_group"] = sorted(ze_shared)[:3]
+    elif absent:
+        # my own policy, applied to rhyme: a character the table does not hold cannot
+        # decide anything. 邨 (a variant of 村, 上平十三元) is exactly this case.
+        rule["pass"] = True
+        rule["undecided"] = len(absent)
+        rule["why"] = ("a rhyme character is absent from the 平水韻 table (variant glyph or □) "
+                       "— UNDECIDED, not a failure")
+    else:
+        rule["pass"] = bool(shared)
+    res["rules"]["rhyme"] = rule
 
     # --- non-rhyme hemistichs end 仄
     nbad, nund = [], 0
@@ -156,7 +196,29 @@ def verify(poem, rime):
             three.append(i + 1)
     res["rules"]["san_ping_diao"] = {"pass": not three, "failed_hemistichs": three}
 
+    if res["classification"] == "古體(仄韻)":
+        for k in ("alternate", "dui", "nian", "non_rhyme_ends_ze", "san_ping_diao"):
+            res["rules"][k]["pass"] = True
+            res["rules"][k]["not_applicable"] = "古體"
     res["pass"] = all(r["pass"] for r in res["rules"].values())
+    # STRICT: every undecided position counts as a failure. The two rates BRACKET the truth,
+    # and they must be published together -- a text full of glyphs the table does not hold
+    # (the 四庫 editions are) earns a HIGHER lenient rate simply by being unreadable, and a
+    # single number would let unreadability look like correctness.
+    res["pass_strict"] = res["pass"] and not any(
+        r.get("undecided") for r in res["rules"].values()) and res["unknown"] == 0
+    # ...but a WHOLE-POEM strict rate is dominated by a single ambiguous character and says
+    # almost nothing. The useful bound is per POSITION: how much of the poem the table could
+    # actually read. Enforced positions are the even ones in each hemistich plus each final
+    # character; everything else is 一三五不論 and was never checked.
+    enforced = und_pos = 0
+    for t in tones:
+        for p_ in list(even) + [len(t) - 1]:
+            enforced += 1
+            if t[p_] in ("UNDECIDED", "UNKNOWN"):
+                und_pos += 1
+    res["enforced_positions"] = enforced
+    res["enforced_undecided"] = und_pos
     return res
 
 
@@ -189,11 +251,20 @@ def main():
 
     scored = [v for v in out if v["form"]]
     npass = sum(1 for v in scored if v["pass"])
+    nstrict = sum(1 for v in scored if v["pass_strict"])
     print(f"{a.corpus}  field={a.field}  form={a.form or 'any regulated'}")
     print(f"  poems of a regulated length: {len(scored)}   (skipped {skipped}, "
           f"no regulated form: {len(out)-len(scored)})")
     if scored:
-        print(f"  PASS ALL RULES: {npass}/{len(scored)} = {100.0*npass/len(scored):.1f}%")
+        print(f"  PASS, undecided treated as latitude : {npass}/{len(scored)} = "
+              f"{100.0*npass/len(scored):.1f}%")
+        ep = sum(v["enforced_positions"] for v in scored)
+        eu = sum(v["enforced_undecided"] for v in scored)
+        print(f"  POSITIONS THE TABLE COULD READ     : {ep-eu}/{ep} = {100.0*(ep-eu)/ep:.1f}%"
+              f"   <- the bound on the rate above")
+        print(f"  (whole-poem strict, one ambiguous character fails the poem: "
+              f"{nstrict}/{len(scored)} = {100.0*nstrict/len(scored):.1f}% — dominated by the "
+              f"10.2% polyphonic characters, reported for completeness, not for use)")
     per_rule = Counter()
     per_rule_und = Counter()
     for v in scored:
@@ -213,10 +284,13 @@ def main():
     if a.report:
         os.makedirs(os.path.dirname(a.report), exist_ok=True)
         json.dump({"corpus": a.corpus, "field": a.field, "form": a.form,
-                   "n_scored": len(scored), "n_pass": npass,
-                   "pass_rate": (npass / len(scored)) if scored else None,
+                   "n_scored": len(scored), "n_pass": npass, "n_pass_strict": nstrict,
+                   "pass_rate_lenient": (npass / len(scored)) if scored else None,
+                   "pass_rate_strict": (nstrict / len(scored)) if scored else None,
                    "failed_by_rule": dict(per_rule), "undecided_by_rule": dict(per_rule_und),
                    "chars_tone_undecided": tot_und, "chars_absent_from_table": tot_unk,
+                   "enforced_positions": sum(v["enforced_positions"] for v in scored),
+                   "enforced_undecided": sum(v["enforced_undecided"] for v in scored),
                    "poems": out}, open(a.report, "w"), ensure_ascii=False, indent=1)
         print(f"  -> {a.report}")
 

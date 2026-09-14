@@ -1,0 +1,2731 @@
+{
+ "corpus": "experience/tangyin/corpus/tangyin_wikisource.jsonl",
+ "field": "text",
+ "form": "七律",
+ "n_scored": 44,
+ "n_pass": 38,
+ "n_pass_strict": 0,
+ "pass_rate_lenient": 0.8636363636363636,
+ "pass_rate_strict": 0.0,
+ "failed_by_rule": {
+  "rhyme": 3,
+  "alternate": 3,
+  "dui": 2,
+  "nian": 2,
+  "non_rhyme_ends_ze": 1
+ },
+ "undecided_by_rule": {
+  "structure": 0,
+  "alternate": 136,
+  "dui": 50,
+  "nian": 35,
+  "rhyme": 2,
+  "non_rhyme_ends_ze": 11,
+  "san_ping_diao": 0
+ },
+ "chars_tone_undecided": 335,
+ "chars_absent_from_table": 36,
+ "enforced_positions": 1408,
+ "enforced_undecided": 200,
+ "poems": [
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "肩",
+      "眠",
+      "天",
+      "禪"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 6,
+   "title": "冬日睡起",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 2
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "貧",
+      "仁",
+      "神",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 8,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 4,
+   "title": "和石田先生落花詩",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "頭",
+      "流",
+      "鉤",
+      "愁"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "和石田先生落花詩#1",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": [
+      5
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 2
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "頹",
+      "杯",
+      "催",
+      "開"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "和石田先生落花詩#2",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": false,
+     "failed_hemistichs": [
+      6
+     ],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "愁",
+      "休",
+      "憂",
+      "樓"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "和石田先生落花詩#3",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "兒",
+      "私",
+      "施",
+      "絲"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 4,
+   "title": "和石田先生落花詩#4",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "風",
+      "紅",
+      "空",
+      "東"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 9,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 5,
+   "title": "和石田先生落花詩#5",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 5,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "神",
+      "春",
+      "塵",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 8,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 6,
+   "title": "和石田先生落花詩#6",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 2
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "時",
+      "詩",
+      "絲",
+      "枝"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 9,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 5,
+   "title": "和石田先生落花詩#7",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 5,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "輕",
+      "名",
+      "城",
+      "盈"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 8,
+   "title": "和石田先生落花詩#8",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": false,
+     "failed_hemistichs": [
+      7
+     ],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "生",
+      "行",
+      "鶯",
+      "明"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 11,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 7,
+   "title": "和石田先生落花詩#9",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": [
+      7
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十三元"
+     ],
+     "rhyme_chars": [
+      "園",
+      "村",
+      "魂",
+      "幡"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 2,
+   "title": "和石田先生落花詩#10",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": [
+      7
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "空",
+      "風",
+      "紅",
+      "中"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 8,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 4,
+   "title": "和石田先生落花詩#11",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 5,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十三元"
+     ],
+     "rhyme_chars": [
+      "存",
+      "軒",
+      "恩",
+      "魂"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 5,
+   "title": "和石田先生落花詩#12",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "嗔",
+      "人",
+      "巾",
+      "茵"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 2,
+   "title": "和石田先生落花詩#13",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十灰"
+     ],
+     "rhyme_chars": [
+      "哉",
+      "推",
+      "來",
+      "苔"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "和石田先生落花詩#14",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": [
+      3
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "爭",
+      "傾",
+      "生",
+      "情"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "和石田先生落花詩#15",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十四鹽"
+     ],
+     "rhyme_chars": [
+      "添",
+      "簾",
+      "恬",
+      "拈"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 1,
+   "title": "和石田先生落花詩#16",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "時",
+      "遲",
+      "垂",
+      "誰"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 5,
+   "title": "和石田先生落花詩#17",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "同",
+      "風",
+      "紅",
+      "中"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 9,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 7,
+   "title": "和石田先生落花詩#18",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 5,
+     "tewao_hemistichs": [
+      3
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 3
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "前",
+      "憐",
+      "年",
+      "緣"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 14,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 8,
+   "title": "和石田先生落花詩#19",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "堤",
+      "西",
+      "啼",
+      "題"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2,
+      6
+     ],
+     "chars_absent_from_the_table": [
+      2,
+      6
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 2,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 11,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 9,
+   "title": "散步 (唐寅)",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "中",
+      "風",
+      "烘",
+      "同"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 7,
+   "title": "春日寫懷 (唐寅)",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 2
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "人",
+      "塵",
+      "神",
+      "巡"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "江南送春",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 2
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "浪",
+      "長",
+      "章",
+      "方"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 5,
+   "title": "漫興 (唐寅)",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 5,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 3
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 2
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "堂",
+      "場",
+      "香",
+      "陽"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 10,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 7,
+   "title": "漫興 (唐寅)#1",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十二侵"
+     ],
+     "rhyme_chars": [
+      "林",
+      "琴",
+      "吟",
+      "心"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "漫興 (唐寅)#2",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 5,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "憐",
+      "煙",
+      "禪",
+      "前"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 11,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 7,
+   "title": "漫興 (唐寅)#3",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 6,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "巾",
+      "貧",
+      "春",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 11,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 6,
+   "title": "漫興 (唐寅)#4",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "身",
+      "塵",
+      "顰",
+      "春"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 2,
+   "title": "漫興 (唐寅)#5",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "年",
+      "錢",
+      "天",
+      "圓"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 10,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 4,
+   "title": "漫興 (唐寅)#6",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": [
+      3
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "游",
+      "愁",
+      "裘",
+      "舟"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 10,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "漫興 (唐寅)#7",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十蒸"
+     ],
+     "rhyme_chars": [
+      "藤",
+      "僧",
+      "燈",
+      "憎"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 8,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 4,
+   "title": "漫興 (唐寅)#8",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十蒸"
+     ],
+     "rhyme_chars": [
+      "能",
+      "冰",
+      "僧",
+      "曾"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 2,
+   "title": "漫興 (唐寅)#9",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十灰"
+     ],
+     "rhyme_chars": [
+      "哉",
+      "推",
+      "來",
+      "苔"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "無題 (唐寅)",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": false,
+     "failed_couplets": [
+      [
+       5,
+       6
+      ],
+      [
+       7,
+       8
+      ]
+     ],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": false,
+     "failed_joins": [
+      [
+       4,
+       5
+      ]
+     ],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "行",
+      "生",
+      "平",
+      "情"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 3,
+   "title": "登吳王郊台作",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 2
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "眠",
+      "錢",
+      "仙",
+      "天"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 11,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 7,
+   "title": "言懷 (唐寅)",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "旬",
+      "貧",
+      "春",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 9,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 5,
+   "title": "言懷 (唐寅)#1",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": [
+      7
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "籬",
+      "時",
+      "棋",
+      "宜"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 4,
+   "title": "言懷 (唐寅)#2",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平五歌"
+     ],
+     "rhyme_chars": [
+      "娥",
+      "歌",
+      "波",
+      "何"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 2,
+   "title": "詠春江花月夜",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "章",
+      "荒",
+      "床",
+      "王"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 9,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 5,
+   "title": "贈昌國",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": false,
+     "failed_hemistichs": [
+      1,
+      2,
+      6,
+      7
+     ],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": false,
+     "failed_couplets": [
+      [
+       1,
+       2
+      ],
+      [
+       7,
+       8
+      ]
+     ],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": false,
+     "failed_joins": [
+      [
+       2,
+       3
+      ]
+     ],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "筵",
+      "橫",
+      "雀",
+      "何"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      6
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": false,
+     "failed_hemistichs": [
+      5
+     ],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 11,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 4,
+   "title": "送文溫州",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 5,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 3
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "雄",
+      "東",
+      "同",
+      "工"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 11,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 7,
+   "title": "閶門即事 (唐寅)",
+   "author": "唐寅",
+   "skchar": 0
+  },
+  {
+   "n_chars": 56,
+   "form": "七律",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "8×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "航",
+      "場",
+      "香",
+      "傍"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 9,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 32,
+   "enforced_undecided": 4,
+   "title": "題畫 (唐寅)#1",
+   "author": "唐寅",
+   "skchar": 0
+  }
+ ]
+}

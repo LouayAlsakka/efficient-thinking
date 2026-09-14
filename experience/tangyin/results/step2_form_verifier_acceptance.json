@@ -1,0 +1,158 @@
+{
+ "measurement": "ET-8 tangyin step 2 — the form verifier's acceptance test",
+ "run_sha_at_build": "da945143193e4cfa13cae6462e2850c42912fe36",
+ "run_host": "llm1",
+ "date": "2026-09-14",
+ "README_bar": "real Tang Yin 七絕 must pass >= 90%; list the ones that do not",
+ "result": "NOT MET on 唐寅 七絕: 79.5% (31/39). MET on the control poet's larger 七絕 sample: 91.8% (146/159).",
+ "rates": {
+  "tangyin_七律": {
+   "n": 44,
+   "pass_lenient": 0.864,
+   "positions_readable": 0.858,
+   "failed_by_rule": {
+    "rhyme": 3,
+    "alternate": 3,
+    "dui": 2,
+    "nian": 2,
+    "non_rhyme_ends_ze": 1
+   },
+   "failing_titles": [
+    "和石田先生落花詩#2",
+    "和石田先生落花詩#3",
+    "和石田先生落花詩#9",
+    "和石田先生落花詩#13",
+    "登吳王郊台作",
+    "送文溫州"
+   ]
+  },
+  "tangyin_七絕": {
+   "n": 39,
+   "pass_lenient": 0.795,
+   "positions_readable": 0.846,
+   "failed_by_rule": {
+    "rhyme": 1,
+    "alternate": 5,
+    "dui": 1,
+    "nian": 3,
+    "san_ping_diao": 1
+   },
+   "failing_titles": [
+    "子胥圖",
+    "孟蜀宮妓圖",
+    "開門七件事",
+    "除夕口占",
+    "題畫 (唐寅)#6",
+    "題畫 (唐寅)#9",
+    "題畫 (唐寅)#15",
+    "題畫 (唐寅)#16"
+   ]
+  },
+  "wenzhengming_七律": {
+   "n": 352,
+   "pass_lenient": 0.864,
+   "positions_readable": 0.813,
+   "failed_by_rule": {
+    "alternate": 22,
+    "dui": 9,
+    "non_rhyme_ends_ze": 7,
+    "san_ping_diao": 7,
+    "rhyme": 33,
+    "nian": 8
+   },
+   "failing_titles": [
+    "行色",
+    "因讀旌功錄有感徐武功事",
+    "詠文信國事四首",
+    "詠文信國事四首",
+    "厓山大忠祠",
+    "雪後",
+    "和答石田先生落花十首",
+    "春寒",
+    "次韻吳徳徵先生江南弄",
+    "十月",
+    "題畫",
+    "五月十三日種竹",
+    "先友詩",
+    "栢子潭",
+    "石湖作",
+    "同次明諸君采蓮涇閒泛",
+    "送春",
+    "九日子畏北莊小集",
+    "采蓮圖",
+    "采桑圖",
+    "楞伽寺湖山樓",
+    "夏日同次明履仁治平寺納凉",
+    "金陵客懐",
+    "登觀音閣",
+    "與林志道兵部宿碧峯寺",
+    "九日城西小集",
+    "揚州",
+    "徐州清明",
+    "泊舟泗上看月",
+    "留城道中有張良祠",
+    "奉天殿早朝二首",
+    "西苑詩十首",
+    "懐石湖",
+    "送戴時重僉憲之蜀",
+    "送唐御史應韶應天府丞",
+    "送喬冡宰致仕還太原二首",
+    "送洪玉方",
+    "致仕出京言懐",
+    "次韻荅張西峯少㕘",
+    "夜坐",
+    "庭前蜀葵",
+    "玉蘭花",
+    "新夏",
+    "夜泊南潯",
+    "送袁裕春僉憲之建寧",
+    "寄黄泰泉學士",
+    "送彭赴嘉興訓導",
+    "南樓"
+   ]
+  },
+  "wenzhengming_七絕": {
+   "n": 159,
+   "pass_lenient": 0.918,
+   "positions_readable": 0.813,
+   "failed_by_rule": {
+    "alternate": 3,
+    "rhyme": 12,
+    "dui": 3,
+    "non_rhyme_ends_ze": 2,
+    "nian": 1
+   },
+   "failing_titles": [
+    "甲寅除夜雜書",
+    "秋日西齋",
+    "(untitled)",
+    "題畫",
+    "次韻履仁春江即事",
+    "揚州道中次九逵韻",
+    "送錢元抑南歸口號十首",
+    "馬上口占謝諸送客十首",
+    "馬上口占謝諸送客十首",
+    "野行因過廢寺",
+    "野行因過廢寺",
+    "無錫道中遇雪夜泊望亭",
+    "無錫道中遇雪夜泊望亭"
+   ]
+  }
+ },
+ "why_the_shortfall_is_not_obviously_the_instrument": [
+  "Decidability is EVEN across the four runs (81.3-85.8% of enforced positions), so the control poet's higher rate is not bought with extra latitude — he is read LESS well than 唐寅 and still passes more.",
+  "The eight failing 唐寅 七絕 are identifiable, not diffuse: one 出韻 (子胥圖, 朝 下平二蕭 against 刀 下平四豪), one 三平調 (題畫#15), TWO COPIES OF THE SAME 打油詩 (開門七件事 and 除夕口占, 柴米油鹽醬醋茶…) both failing 粘, and four single 拗 hemistichs.",
+  "So the corpus contains 古體, folk verse and textual corruption beside 近體, and a 90% bar over an unfiltered Wikisource category is a bar on the corpus as much as on the verifier."
+ ],
+ "three_refinements_and_why_each_is_principled": [
+  "特拗 (仄仄平平仄平仄) exempted from the alternation rule — a documented accepted variant, not a tolerance. Four 唐寅 七絕 use it. Written before the rate was looked at.",
+  "A rhyme character ABSENT from the table yields UNDECIDED, not a failure — my own stated policy applied to rhyme. 邨 is a variant of 村 (上平十三元) and the table holds only 村; 題畫#3 rhymes correctly and was being failed for a glyph.",
+  "A poem whose rhyme positions share a 仄 group is classified 古體(仄韻), not failed — 近體's rules are not its rules. The test is a SHARED 仄 group, not 'no 平 reading': 比 has a 平 reading and still rhymes 上四紙 with 裏 in 宮妃夜游圖."
+ ],
+ "bounds": [
+  "The rate moved 69.2 -> 76.9 -> 79.5% across the three refinements. Each was justified by a poetic rule before its effect was measured, and none was adopted because it raised the number — but the sequence is in the commit history and can be audited.",
+  "n=39 for the headline. Eight failures; one poem either way moves it 2.6 points.",
+  "A whole-poem STRICT rate (any ambiguous character fails the poem) is 10.3%, and it is not a useful number — it measures the 10.2% polyphonic characters, not the poetry. Position-level readability is the bound that means something.",
+  "Both 唐寅 corpora readings are the PUNCTUATED Wikisource text; 文徵明's is the UNPUNCTUATED 四庫 text. Same verifier, different editions."
+ ]
+}

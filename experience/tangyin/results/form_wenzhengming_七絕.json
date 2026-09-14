@@ -1,0 +1,9355 @@
+{
+ "corpus": "experience/tangyin/corpus/wenzhengming_skqs.jsonl",
+ "field": "text_raw",
+ "form": "七絕",
+ "n_scored": 159,
+ "n_pass": 146,
+ "n_pass_strict": 4,
+ "pass_rate_lenient": 0.9182389937106918,
+ "pass_rate_strict": 0.025157232704402517,
+ "failed_by_rule": {
+  "alternate": 3,
+  "rhyme": 12,
+  "dui": 3,
+  "non_rhyme_ends_ze": 2,
+  "nian": 1
+ },
+ "undecided_by_rule": {
+  "structure": 0,
+  "alternate": 285,
+  "dui": 93,
+  "nian": 49,
+  "rhyme": 16,
+  "non_rhyme_ends_ze": 25,
+  "san_ping_diao": 0
+ },
+ "chars_tone_undecided": 568,
+ "chars_absent_from_table": 334,
+ "enforced_positions": 2544,
+ "enforced_undecided": 475,
+ "poems": [
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "譁",
+      "家"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "荅唐子畏夢余見寄之作",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平六魚"
+     ],
+     "rhyme_chars": [
+      "書",
+      "除"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "甲寅除夜雜書",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "年",
+      "前"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "甲寅除夜雜書",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": [
+      3
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "詩",
+      "詞"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": true,
+   "enforced_positions": 16,
+   "enforced_undecided": 0,
+   "title": "甲寅除夜雜書",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": false,
+     "failed_hemistichs": [
+      3
+     ],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "除",
+      "驅"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "甲寅除夜雜書",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "華",
+      "家"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "甲寅除夜雜書",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "斜",
+      "茶"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "稠",
+      "幽"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 6,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "知",
+      "時"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平五微"
+     ],
+     "rhyme_chars": [
+      "霏",
+      "揮"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "抛",
+      "敲"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [
+      2
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 6,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平六魚"
+     ],
+     "rhyme_chars": [
+      "廬",
+      "書"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十灰"
+     ],
+     "rhyme_chars": [
+      "開",
+      "來"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "幽",
+      "頭"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平二蕭"
+     ],
+     "rhyme_chars": [
+      "寮",
+      "蕉"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "崇義院雜題",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平二蕭"
+     ],
+     "rhyme_chars": [
+      "標",
+      "潮"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "水部二詩",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十三元"
+     ],
+     "rhyme_chars": [
+      "痕",
+      "孫"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "水部二詩",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平五微"
+     ],
+     "rhyme_chars": [
+      "微",
+      "薇"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "春閨",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "持",
+      "兒"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "兒子晬日口占二絶句",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "周",
+      "裘"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "兒子晬日口占二絶句",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "姨",
+      "睂"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 0,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "前年",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "花",
+      "茶"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 6,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "詠堯民案上盆蘭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "間",
+      "關"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "詠堯民案上盆蘭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "眠",
+      "前"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 5,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 6,
+   "title": "枕上聞雨有懷宜興杭道卿",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": [
+      3
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "還",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "歳暮齋居即事",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "還",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 0,
+   "title": "歳暮齋居即事",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "還",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 8,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "協中詩",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "棲",
+      "啼"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2,
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "景德寺",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "新",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "吳隱之畫像",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "刋",
+      "看"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [
+      2
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "吳隱之畫像",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "情",
+      "聲"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "畫鵲",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": [
+      3
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "時",
+      "枝"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "畫烏",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "旌",
+      "情"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "與逵甫燕坐小齋為寫竹石",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平五歌"
+     ],
+     "rhyme_chars": [
+      "何",
+      "多"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "除夕",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "湖",
+      "圗"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "題王侍御敬止所藏仲穆馬圗",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "基",
+      "碑"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "福壽院殘碑",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "廻",
+      "來"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [
+      2
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平七虞"
+     ],
+     "rhyme_chars": [
+      "無",
+      "壺"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "年",
+      "篇"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "書昌國憶母詩後",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "風",
+      "中"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "題養逸圖",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "年",
+      "眠"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題養逸圖",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十灰"
+     ],
+     "rhyme_chars": [
+      "媒",
+      "來"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": true,
+   "enforced_positions": 16,
+   "enforced_undecided": 0,
+   "title": "元日書事效劉後村",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平六魚"
+     ],
+     "rhyme_chars": [
+      "廬",
+      "虛"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": true,
+   "enforced_positions": 16,
+   "enforced_undecided": 0,
+   "title": "元日書事效劉後村",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平二蕭"
+     ],
+     "rhyme_chars": [
+      "囂",
+      "潮"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "寫閒舟圖寄葛汝敬",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平五歌"
+     ],
+     "rhyme_chars": [
+      "何",
+      "歌"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題沈侗齋修竹士女",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "津",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "桃源圖",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "遥",
+      "橋"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [
+      2
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十四寒"
+     ],
+     "rhyme_chars": [
+      "難",
+      "看"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": true,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平七虞"
+     ],
+     "rhyme_chars": [
+      "孤",
+      "圖"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "間",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "題畫送錢德夫南還",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十四寒"
+     ],
+     "rhyme_chars": [
+      "殘",
+      "看"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "庭中海棠為風雨所敗",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "吹",
+      "時"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "庭中海棠為風雨所敗",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "啼",
+      "西"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [
+      2
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "春日",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "塵",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 5,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "書吾尹扇",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "功",
+      "風"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "書吾尹扇",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十灰"
+     ],
+     "rhyme_chars": [
+      "臺",
+      "來"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "暮春遊石湖",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "明",
+      "晴"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "暮春遊石湖",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "塘",
+      "長"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 5,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "早起",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "房",
+      "香"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 0,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "茶",
+      "花"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "溶",
+      "桐"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "秋日西齋",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "間",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "寄魯南陳子",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "遲",
+      "移"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "道復西齋偶成",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "晴",
+      "明"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": false,
+     "failed_hemistichs": [
+      1,
+      4
+     ],
+     "undecided": 1,
+     "tewao_hemistichs": [
+      2
+     ]
+    },
+    "dui": {
+     "pass": false,
+     "failed_couplets": [
+      [
+       1,
+       2
+      ]
+     ],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "未",
+      "答"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2,
+      4
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": false,
+     "failed_hemistichs": [
+      3
+     ],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "時",
+      "枝"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 0,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "晩晴",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "還",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平二蕭"
+     ],
+     "rhyme_chars": [
+      "蕭",
+      "綃"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "牆",
+      "凉"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 6,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 8,
+   "title": "題竹寄履仁",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "秋",
+      "樓"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "題竹寄履仁",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "長",
+      "郎"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十三元"
+     ],
+     "rhyme_chars": [
+      "村",
+      "門"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "蹄",
+      "西"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "流",
+      "洲"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "沙",
+      "家"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平九青"
+     ],
+     "rhyme_chars": [
+      "泠",
+      "亭"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 5,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "尤",
+      "舟"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "塘",
+      "長"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": false,
+     "failed_hemistichs": [
+      4
+     ],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": false,
+     "failed_couplets": [
+      [
+       1,
+       2
+      ]
+     ],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "有",
+      "圖"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": false,
+     "failed_hemistichs": [
+      3
+     ],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "次韻履仁春江即事",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "風",
+      "中"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "春日懐子重履約履仁",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "家",
+      "花"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "春日懐子重履約履仁",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "煙",
+      "鵑"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 0,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "春日懐子重履約履仁",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "勝",
+      "氷"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 7,
+   "title": "晩意",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "愁",
+      "樓"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "戲簡履約",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "船",
+      "年"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "失解東歸口占",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 4,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "津",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 5,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "雪景",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "頭",
+      "愁"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "人",
+      "神"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "香",
+      "王"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "流",
+      "浮"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "(untitled)",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平七虞"
+     ],
+     "rhyme_chars": [
+      "都",
+      "圖"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "八月六日書事",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平七虞"
+     ],
+     "rhyme_chars": [
+      "俘",
+      "夫"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "八月六日書事",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十二文"
+     ],
+     "rhyme_chars": [
+      "曛",
+      "雲"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "航",
+      "裳"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "風",
+      "中"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "秋",
+      "頭"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "鬟",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 0,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 2
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十灰"
+     ],
+     "rhyme_chars": [
+      "萊",
+      "來"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平五歌"
+     ],
+     "rhyme_chars": [
+      "波",
+      "多"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "淙",
+      "牕"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 5,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "枝",
+      "祠"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "揚州道中次九逵韻",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平七虞"
+     ],
+     "rhyme_chars": [
+      "蒲",
+      "糊"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "揚州道中次九逵韻",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "春",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "濟上聞笛",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "遷",
+      "錢"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "堂",
+      "鄉"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "廷",
+      "青"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "艱",
+      "關"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "閒",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平六魚"
+     ],
+     "rhyme_chars": [
+      "餘",
+      "裾"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平四豪"
+     ],
+     "rhyme_chars": [
+      "高",
+      "搔"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "人",
+      "春"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平五微"
+     ],
+     "rhyme_chars": [
+      "肥",
+      "歸"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "迷",
+      "鷄"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "送錢元抑南歸口號十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "頭",
+      "樓"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "送趙麗卿",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "行",
+      "聲"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "送趙麗卿",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "津",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "送趙麗卿",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "成",
+      "生"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "送趙麗卿",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "行",
+      "情"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平五微"
+     ],
+     "rhyme_chars": [
+      "飛",
+      "衣"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 9,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 6,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "塵",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "情",
+      "生"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "舟",
+      "休"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": false,
+     "failed_couplets": [
+      [
+       3,
+       4
+      ]
+     ],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": false,
+     "failed_joins": [
+      [
+       2,
+       3
+      ]
+     ],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "風",
+      "中"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "西",
+      "蹄"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "休",
+      "頭"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "車",
+      "沙"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "東",
+      "中"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 8,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "馬上口占謝諸送客十首",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "珠",
+      "書"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "野行因過廢寺",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "靈",
+      "廷"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "野行因過廢寺",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平七虞"
+     ],
+     "rhyme_chars": [
+      "都",
+      "無"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 7,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "野行因過廢寺",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平五歌"
+     ],
+     "rhyme_chars": [
+      "過",
+      "鵝"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 6,
+   "title": "野行因過廢寺",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十五刪"
+     ],
+     "rhyme_chars": [
+      "閑",
+      "山"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 6,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "野行因過廢寺",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "牀",
+      "香"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      2
+     ],
+     "chars_absent_from_the_table": [
+      2
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題蘭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十一真"
+     ],
+     "rhyme_chars": [
+      "春",
+      "人"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "江天暮雪",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十二侵"
+     ],
+     "rhyme_chars": [
+      "禽",
+      "林"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "竹雀",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "花",
+      "茶"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "無錫道中遇雪夜泊望亭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "幽",
+      "丘"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "無錫道中遇雪夜泊望亭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "然",
+      "先"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "無錫道中遇雪夜泊望亭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平十一尤"
+     ],
+     "rhyme_chars": [
+      "樓",
+      "愁"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 2,
+   "title": "無錫道中遇雪夜泊望亭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平十灰"
+     ],
+     "rhyme_chars": [
+      "開",
+      "來"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "無錫道中遇雪夜泊望亭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "間",
+      "寰"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": false
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": false,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "無錫道中遇雪夜泊望亭",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "明",
+      "行"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "情",
+      "横"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "看",
+      "单"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "題畫",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "行",
+      "情"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 6,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 6,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "耕",
+      "生"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "行",
+      "名"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": [
+      3
+     ]
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "風",
+      "公"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 0,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "施",
+      "思"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": false,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 3,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "傳",
+      "川"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平八庚"
+     ],
+     "rhyme_chars": [
+      "兵",
+      "城"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 4,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平六魚"
+     ],
+     "rhyme_chars": [
+      "餘",
+      "書"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 1,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平一先"
+     ],
+     "rhyme_chars": [
+      "年",
+      "然"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 1,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平四支"
+     ],
+     "rhyme_chars": [
+      "思",
+      "碑"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 6,
+   "unknown": 1,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 5,
+   "title": "張夏山輓詞",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 0
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "華",
+      "花"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 1,
+   "title": "竹堂",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平七陽"
+     ],
+     "rhyme_chars": [
+      "長",
+      "香"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "閒興",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 3,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "下平六麻"
+     ],
+     "rhyme_chars": [
+      "嘉",
+      "茶"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 3,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 3,
+   "title": "閒興",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 0
+    },
+    "rhyme": {
+     "shared_group": [],
+     "rhyme_chars": [
+      "離",
+      "碁"
+     ],
+     "hemistichs_with_no_ping_shi_group": [
+      4
+     ],
+     "chars_absent_from_the_table": [
+      4
+     ],
+     "first_hemistich_rhymes": false,
+     "pass": true,
+     "undecided": 1,
+     "why": "a rhyme character is absent from the 平水韻 table (variant glyph or □) — UNDECIDED, not a failure"
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 5,
+   "unknown": 2,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "閒興",
+   "author": "文徵明",
+   "skchar": 0
+  },
+  {
+   "n_chars": 28,
+   "form": "七絕",
+   "rules": {
+    "structure": {
+     "pass": true,
+     "why": "4×7"
+    },
+    "alternate": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 2,
+     "tewao_hemistichs": []
+    },
+    "dui": {
+     "pass": true,
+     "failed_couplets": [],
+     "undecided": 1
+    },
+    "nian": {
+     "pass": true,
+     "failed_joins": [],
+     "undecided": 1
+    },
+    "rhyme": {
+     "shared_group": [
+      "上平一東"
+     ],
+     "rhyme_chars": [
+      "風",
+      "桐"
+     ],
+     "hemistichs_with_no_ping_shi_group": [],
+     "chars_absent_from_the_table": [],
+     "first_hemistich_rhymes": true,
+     "pass": true
+    },
+    "non_rhyme_ends_ze": {
+     "pass": true,
+     "failed_hemistichs": [],
+     "undecided": 0
+    },
+    "san_ping_diao": {
+     "pass": true,
+     "failed_hemistichs": []
+    }
+   },
+   "undecided": 2,
+   "unknown": 4,
+   "classification": "近體候補",
+   "pass": true,
+   "pass_strict": false,
+   "enforced_positions": 16,
+   "enforced_undecided": 4,
+   "title": "閒興",
+   "author": "文徵明",
+   "skchar": 0
+  }
+ ]
+}
