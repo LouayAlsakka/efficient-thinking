@@ -288,6 +288,8 @@ def main():
     ap.add_argument("--form", help="only score poems of this form, e.g. 七絕")
     ap.add_argument("--rime", default=os.path.join(HERE, "rime", "pingshui.json"))
     ap.add_argument("--report")
+    ap.add_argument("--exclusions", help="exclusions.json — poems that are NOT 近體 and leave the "
+                                         "pool entirely. The unfiltered rate is printed beside it.")
     ap.add_argument("--no-simplified", action="store_true",
                     help="do NOT map simplified characters — shows the inflation this removes")
     a = ap.parse_args()
@@ -302,6 +304,11 @@ def main():
         print(json.dumps(verify(a.text, rime), ensure_ascii=False, indent=1))
         return
 
+    excluded_titles, excl = set(), None
+    if a.exclusions:
+        excl = json.load(open(a.exclusions))
+        excluded_titles = {e["title"] for e in excl["exclusions"]}
+
     rows = [json.loads(l) for l in open(a.corpus)]
     out, skipped, box_drop = [], 0, []
     for r in rows:
@@ -314,11 +321,13 @@ def main():
             skipped += 1
             continue
         v["title"] = r.get("title")
+        v["excluded"] = v["title"] in excluded_titles
         v["author"] = r.get("author")
         v["skchar"] = r.get("skchar", 0)
         out.append(v)
 
-    scored = [v for v in out if v["form"]]
+    raw_scored = [v for v in out if v["form"]]
+    scored = [v for v in raw_scored if not v["excluded"]]
     dropped_box = box_drop
     npass = sum(1 for v in scored if v["pass"])
     nstrict = sum(1 for v in scored if v["pass_strict"])
@@ -330,6 +339,13 @@ def main():
               f"{len(dropped_box)} poems in this corpus — an EXPLICIT exclusion, not a silent "
               f"one. They are absent from the denominator above.")
     if scored:
+        if excl is not None:
+            rp = sum(1 for v in raw_scored if v["pass"])
+            print(f"  RAW POOL (no exclusions)           : {rp}/{len(raw_scored)} = "
+                  f"{100.0*rp/len(raw_scored):.1f}%   <- published, never replaced")
+            print(f"  EXCLUDED as not 近體               : "
+                  f"{len(raw_scored)-len(scored)}  "
+                  f"{[v['title'] for v in raw_scored if v['excluded']]}")
         print(f"  PASS, undecided treated as latitude : {npass}/{len(scored)} = "
               f"{100.0*npass/len(scored):.1f}%")
         ep = sum(v["enforced_positions"] for v in scored)
@@ -362,6 +378,10 @@ def main():
     if a.report:
         os.makedirs(os.path.dirname(a.report), exist_ok=True)
         json.dump({"corpus": a.corpus, "field": a.field, "form": a.form,
+                   "exclusions_file": a.exclusions,
+                   "n_raw_pool": len(raw_scored),
+                   "n_pass_raw_pool": sum(1 for v in raw_scored if v["pass"]),
+                   "excluded_titles": [v["title"] for v in raw_scored if v["excluded"]],
                    "n_scored": len(scored), "n_pass": npass, "n_pass_strict": nstrict,
                    "pass_rate_lenient": (npass / len(scored)) if scored else None,
                    "pass_rate_strict": (nstrict / len(scored)) if scored else None,

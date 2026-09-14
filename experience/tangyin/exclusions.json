@@ -1,0 +1,20 @@
+{
+ "ruling": "理 2026-09-14: the >=90% bar was written for a FILTERED pool and Category:唐寅 is unfiltered. Each excluded poem is named here with its reason; the bar applies to the filtered pool and the RAW-pool number is published beside it, never instead of it.",
+ "author": "沙汰, 2026-09-14",
+ "principle": "A poem is excluded only when it is NOT A 近體詩 — a different form, or one text appearing twice. A poem that IS 近體 and breaks a rule stays a FAIL. 出韻 is a fault, not a form, so 子胥圖 stays in and stays failing.",
+ "exclusions": [
+  {"title": "宮妃夜游圖", "source": "zh.wikisource:宮妃夜游圖", "reason": "古體(仄韻)",
+   "evidence": "Its rhyme positions 比 and 裏 share 上四紙, a 仄 group; 近體's rules are not its rules. The verifier classifies it automatically.",
+   "note": "This one currently PASSES, so excluding it LOWERS the rate. It is excluded anyway — a 古絕 counted as a passing 七絕 is a poem earning credit for a form it is not in."},
+  {"title": "開門七件事", "source": "zh.wikisource:開門七件事", "reason": "打油詩, and one text on two pages",
+   "evidence": "柴米油鹽醬醋茶… — folk verse, fails 粘. Its near-duplicate 除夕口占 is the same poem in variant text (bigram Jaccard 0.636, split_manifest.json)."},
+  {"title": "除夕口占", "source": "zh.wikisource:除夕口占", "reason": "打油詩, and one text on two pages",
+   "evidence": "The second page of the poem above. Counting it twice would let ONE folk poem cost the rate 5.1 points."}
+ ],
+ "explicitly_NOT_excluded": [
+  {"title": "子胥圖", "why": "出韻 — 朝 下平二蕭 against 刀 下平四豪. A genuine fault of a 近體 poem, and 理 ruled it stays a fail."},
+  {"title": "孟蜀宮妓圖", "why": "失對 and 失粘 in the text as Wikisource has it. A fault, not a form."},
+  {"title": "題畫 (唐寅)#6 / #9 / #16", "why": "one 拗 hemistich each. Faults."},
+  {"title": "題畫 (唐寅)#15", "why": "三平調 in hemistich 1. I SUSPECT the text is corrupt (司空幕府通農開 reads oddly) but I have no second edition to show it, and a suspicion is not a reason to drop a poem from a denominator."}
+ ]
+}
