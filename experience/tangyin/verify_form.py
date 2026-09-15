@@ -129,7 +129,7 @@ def opposite(a, b):
     return {a, b} == {"平", "仄"}
 
 
-def verify(poem, rime):
+def verify(poem, rime, rime_neighbour=False):
     """poem: a string of CJK characters only. Returns a dict of per-rule results."""
     text = "".join(CJK.findall(poem))
     # U+25A1 □ stands in for a {{SKchar}} the edition has and Unicode does not. It is NOT in the
@@ -210,7 +210,17 @@ def verify(poem, rime):
     # poem a defective 近體, which it is not.
     ze_groups = [rime.rhyme_groups(c, ping_only=False) - rime.rhyme_groups(c) for c in rchars]
     ze_shared = set.intersection(*ze_groups) if all(ze_groups) else set()
-    res["classification"] = "古體(仄韻)" if (not shared and ze_shared) else "近體候補"
+    # PROPOSED, OFF BY DEFAULT (--ze-neighbour), pending 理's ruling — 理 ruled "no further
+    # tuning of the verifier", so this changes nothing until it is turned on.
+    # 古體 permits 通韻 across NEIGHBOURING rhyme groups; 近體 does not. Requiring a SHARED 仄
+    # group therefore fails the very poems the 古體 branch exists to catch: four 文徵明 五絕
+    # rhyme on 入聲 in adjacent groups — 席(陌)/笛(錫), 白(陌)/滴(錫), 笠(緝)/碧(陌),
+    # 謁(月)/拙(屑) — and are scored as broken 近體 rather than classified as 古絕.
+    # The looser test is: no shared 平 group, and EVERY rhyme character has a 仄 reading.
+    # It does NOT reach 子胥圖: 朝 and 刀 are 平-ONLY, so that 出韻 stays a fail as 理 ruled.
+    ze_all = all(any(x["tone"] == "仄" for x in (rime._entries(c)[0] or [])) for c in rchars)
+    is_gu = (not shared) and (ze_shared or (ze_all and rime_neighbour))
+    res["classification"] = "古體(仄韻)" if is_gu else "近體候補"
     rule = {"shared_group": sorted(shared)[:3], "rhyme_chars": rchars,
             "hemistichs_with_no_ping_shi_group": [rpos[i] + 1 for i, g in enumerate(groups)
                                                   if not g],
@@ -288,6 +298,10 @@ def main():
     ap.add_argument("--form", help="only score poems of this form, e.g. 七絕")
     ap.add_argument("--rime", default=os.path.join(HERE, "rime", "pingshui.json"))
     ap.add_argument("--report")
+    ap.add_argument("--ze-neighbour", action="store_true",
+                    help="PROPOSED, pending 理's ruling: classify as 古體(仄韻) when there is no "
+                         "shared 平 group and every rhyme character has a 仄 reading, instead of "
+                         "requiring a SHARED 仄 group. 古體 permits 通韻 across neighbouring groups.")
     ap.add_argument("--exclusions", help="exclusions.json — poems that are NOT 近體 and leave the "
                                          "pool entirely. The unfiltered rate is printed beside it.")
     ap.add_argument("--no-simplified", action="store_true",
@@ -301,7 +315,7 @@ def main():
         print(f"  simplified normalisation: {rime.normaliser}")
 
     if a.text:
-        print(json.dumps(verify(a.text, rime), ensure_ascii=False, indent=1))
+        print(json.dumps(verify(a.text, rime, a.ze_neighbour), ensure_ascii=False, indent=1))
         return
 
     excluded_titles, excl = set(), None
@@ -312,7 +326,7 @@ def main():
     rows = [json.loads(l) for l in open(a.corpus)]
     out, skipped, box_drop = [], 0, []
     for r in rows:
-        v = verify(r.get(a.field) or r.get("text", ""), rime)
+        v = verify(r.get(a.field) or r.get("text", ""), rime, a.ze_neighbour)
         if v["form"] is None and v.get("unencodable_glyphs"):
             # counted BEFORE the --form filter: these poems have no form precisely BECAUSE the
             # glyph was stripped, so a filter on form would hide them in "skipped".
