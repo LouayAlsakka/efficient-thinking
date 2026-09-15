@@ -1,0 +1,26 @@
+{
+ "arm": "form-preserving: voice corpus + self-distilled form anchor",
+ "poems_train": 63,
+ "poems_valid": 7,
+ "anchor_total": 63,
+ "anchor_train": 56,
+ "anchor_valid": 7,
+ "anchor_by_form": {
+  "五絕": 18,
+  "七絕": 15,
+  "五律": 15,
+  "七律": 15
+ },
+ "anchor_source": "base-model generations that PASSED verify_form.py, across three seeds",
+ "anchor_pool_available": {
+  "五絕": 51,
+  "七絕": 49,
+  "五律": 36,
+  "七律": 39
+ },
+ "seed": 7,
+ "train_total": 119,
+ "valid_total": 14,
+ "why_even_across_forms": "matches the prompt distribution P0/P2 are scored on; weighting toward 七絕 would make it a 七絕 booster, and 七絕 is the scored form",
+ "what_it_does_not_do": "this is NOT KL-to-base. It anchors by DATA, not by a loss term — cheaper and available in mlx-lm, but it constrains the behaviour only where the anchor examples reach."
+}
