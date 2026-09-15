@@ -55,6 +55,12 @@ def main():
     ap.add_argument("--heldout", default=os.path.join(HERE, "corpus", "tangyin_heldout.jsonl"))
     ap.add_argument("--arm", action="append", default=[], help="name=generations.jsonl")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--matched", action="store_true",
+                    help="restrict BOTH pools to poems with ZERO off-table glyphs. Cleaning only "
+                         "the control INVERTS the confound — 唐寅's own Wikisource text carries "
+                         "off-table glyphs in 28.6% of poems, so a one-sided clean lets the judge "
+                         "use 'has an odd glyph -> 唐寅'. Matching removes the cue in BOTH "
+                         "directions, at the cost of pool size on both sides.")
     ap.add_argument("--out", default=os.path.join(HERE, "results", "control_pairs_wenzhengming.jsonl"))
     a = ap.parse_args()
 
@@ -66,10 +72,21 @@ def main():
     control = qijue(a.control, a.control_field, rime=rime)
     tangyin = qijue(a.heldout, "text", rime=rime)
 
-    # the orthography confound, measured on both sides
-    ty_chars = set("".join(p["chars"] for p in tangyin))
-    def archaic(p):  # characters this poem uses that the 唐寅 held-out set never uses
-        return sorted(set(p["chars"]) - ty_chars)
+    # THE ORTHOGRAPHY CONFOUND — and my first instrument for it was wrong.
+    # I first counted "characters this poem uses that the 唐寅 held-out set never uses". That is
+    # dominated by VOCABULARY, not orthography: the held-out set is 26 poems, so almost any other
+    # poem scores high. It read 14.0 of 28 characters per control poem and meant nothing.
+    # The right probe is the 平水韻 table: a character ABSENT from 8,550 rhyme entries is a variant
+    # glyph (隂 for 陰, 巻 for 卷, 逺 for 遠), which is exactly the 四庫 orthography at issue.
+    def archaic(p):
+        return sorted({c for c in p["chars"] if rime.tone(c) == "UNKNOWN"})
+
+    if a.matched:
+        bc, bt = len(control), len(tangyin)
+        control = [p for p in control if not archaic(p)]
+        tangyin = [p for p in tangyin if not archaic(p)]
+        print(f"  --matched: control {bc} -> {len(control)} · 唐寅 {bt} -> {len(tangyin)} "
+              f"(both sides, zero off-table glyphs)")
 
     rng = random.Random(a.seed)
     rows = []
@@ -103,7 +120,7 @@ def main():
     print(f"  pairs written: {len(rows)}   ({len(ty)} with 唐寅 real, {len(ctl)} with 文徵明 real)")
     print(f"  -> {a.out}")
     print()
-    print("  ORTHOGRAPHY CONFOUND — characters the real poem uses that the 唐寅 held-out set never does")
+    print("  ORTHOGRAPHY CONFOUND — characters ABSENT from the 8,550-entry 平水韻 table (variant glyphs)")
     for label, grp in (("唐寅 real", ty), ("文徵明 real", ctl)):
         if not grp: continue
         n = [r["n_archaic"] for r in grp]
