@@ -66,5 +66,13 @@
     "rhyme": 5
    }
   }
+ },
+ "_SUPERSEDED": {
+  "status": "THIS FILE HOLDS THE PRE-CORRECTION VERDICTS. Do not quote its rates.",
+  "it_says": "七絕 34.0% of attempts / 40.5% of extracted",
+  "the_current_numbers_are": "七絕 32.0% / 38.1%, in results/p0_base_7b_rescored.json",
+  "why": "This run scored simplified characters as UNKNOWN, which SKIPS a rule and therefore inflates the rate. verify_form.py now maps simplified->traditional from the 平水韻 table itself. The generations were NOT re-run; the saved text was re-scored.",
+  "note_for_the_judge": "The GENERATIONS in the sibling p0_base_7b.jsonl are unaffected and are correct to judge — rescoring changed verdicts, never text. A citation of the JSONL for P1 is right; a citation of THIS JSON for a rate is not.",
+  "README_line_55_points_here": "and quotes 32.0/38.1, which are the RESCORED numbers. The quoted figures are correct; the pointer is to the superseded file."
  }
 }
