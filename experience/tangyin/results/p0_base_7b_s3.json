@@ -1,0 +1,81 @@
+{
+ "model": "Qwen/Qwen2.5-7B-Instruct",
+ "adapter": null,
+ "temp": 0.7,
+ "seed": 3,
+ "n_prompts": 200,
+ "by_form": {
+  "五絕": {
+   "n": 50,
+   "extracted": 43,
+   "wrong_length": 7,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.34,
+   "pass_over_extracted": 0.3953488372093023,
+   "latin_intrusion": 7,
+   "latin_intrusion_that_still_PASSED": 0,
+   "failed_by_rule": {
+    "dui": 11,
+    "rhyme": 13,
+    "alternate": 13,
+    "nian": 7,
+    "non_rhyme_ends_ze": 6,
+    "san_ping_diao": 4
+   }
+  },
+  "七絕": {
+   "n": 50,
+   "extracted": 41,
+   "wrong_length": 9,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.34,
+   "pass_over_extracted": 0.4146341463414634,
+   "latin_intrusion": 8,
+   "latin_intrusion_that_still_PASSED": 0,
+   "failed_by_rule": {
+    "alternate": 12,
+    "dui": 9,
+    "rhyme": 12,
+    "san_ping_diao": 1,
+    "nian": 4,
+    "non_rhyme_ends_ze": 1
+   }
+  },
+  "五律": {
+   "n": 50,
+   "extracted": 44,
+   "wrong_length": 6,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.28,
+   "pass_over_extracted": 0.3181818181818182,
+   "latin_intrusion": 6,
+   "latin_intrusion_that_still_PASSED": 0,
+   "failed_by_rule": {
+    "alternate": 16,
+    "dui": 12,
+    "nian": 13,
+    "rhyme": 18,
+    "non_rhyme_ends_ze": 5,
+    "san_ping_diao": 3
+   }
+  },
+  "七律": {
+   "n": 50,
+   "extracted": 47,
+   "wrong_length": 3,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.26,
+   "pass_over_extracted": 0.2765957446808511,
+   "latin_intrusion": 3,
+   "latin_intrusion_that_still_PASSED": 0,
+   "failed_by_rule": {
+    "rhyme": 25,
+    "alternate": 21,
+    "dui": 7,
+    "nian": 13,
+    "san_ping_diao": 3,
+    "non_rhyme_ends_ze": 6
+   }
+  }
+ }
+}

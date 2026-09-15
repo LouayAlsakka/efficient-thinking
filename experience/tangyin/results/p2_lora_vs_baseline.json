@@ -32,10 +32,11 @@
  },
  "arms": {
   "baseline": {
-   "n_seeds": 2,
+   "n_seeds": 3,
    "by_form": {
     "五絕": {
      "pass_rate_per_seed": [
+      0.34,
       0.34,
       0.34
      ],
@@ -43,49 +44,70 @@
      "spread_pp": 0.0,
      "wrong_length_per_seed": [
       12,
-      6
+      6,
+      7
      ]
     },
     "七絕": {
      "pass_rate_per_seed": [
       0.32,
-      0.32
+      0.32,
+      0.34
      ],
-     "mean": 0.32,
-     "spread_pp": 0.0,
+     "mean": 0.327,
+     "spread_pp": 2.0,
      "wrong_length_per_seed": [
       8,
-      10
+      10,
+      9
      ]
     },
     "五律": {
      "pass_rate_per_seed": [
       0.24,
-      0.2
+      0.2,
+      0.28
      ],
-     "mean": 0.22,
-     "spread_pp": 4.0,
+     "mean": 0.24,
+     "spread_pp": 8.0,
      "wrong_length_per_seed": [
       5,
-      4
+      4,
+      6
      ]
     },
     "七律": {
      "pass_rate_per_seed": [
       0.4,
-      0.12
+      0.12,
+      0.26
      ],
      "mean": 0.26,
      "spread_pp": 28.0,
      "wrong_length_per_seed": [
       5,
-      8
+      8,
+      3
      ]
     }
    },
+   "verdict_flips_between_seed_pairs": {
+    "五絕": {
+     "seed1_vs_seed2": 16,
+     "seed1_vs_seed3": 20,
+     "seed2_vs_seed3": 28
+    },
+    "七絕": {
+     "seed1_vs_seed2": 24,
+     "seed1_vs_seed3": 17,
+     "seed2_vs_seed3": 19
+    }
+   },
+   "identical_generations_between_any_two_seeds": 0,
    "latin_intrusion_of_200_per_seed": [
     27,
-    26
+    26,
+    24
    ]
   },
   "lora_r8_3epochs_iter189": {
@@ -148,6 +170,19 @@
      ]
     }
    },
+   "verdict_flips_between_seed_pairs": {
+    "五絕": {
+     "seed1_vs_seed2": 10,
+     "seed1_vs_seed3": 10,
+     "seed2_vs_seed3": 10
+    },
+    "七絕": {
+     "seed1_vs_seed2": 13,
+     "seed1_vs_seed3": 12,
+     "seed2_vs_seed3": 9
+    }
+   },
+   "identical_generations_between_any_two_seeds": 0,
    "latin_intrusion_of_200_per_seed": [
     84,
     79,
@@ -214,6 +249,19 @@
      ]
     }
    },
+   "verdict_flips_between_seed_pairs": {
+    "五絕": {
+     "seed1_vs_seed2": 26,
+     "seed1_vs_seed3": 25,
+     "seed2_vs_seed3": 19
+    },
+    "七絕": {
+     "seed1_vs_seed2": 21,
+     "seed1_vs_seed3": 21,
+     "seed2_vs_seed3": 22
+    }
+   },
+   "identical_generations_between_any_two_seeds": 0,
    "latin_intrusion_of_200_per_seed": [
     16,
     10,
@@ -246,5 +294,13 @@
    "五絕 tells the same story as 七絕: baseline 34.0, 3 epochs 10.7, iter-60 34.0."
   ],
   "the_lesson_is_my_own": "I published a single-seed number in a headline the same day I told 理 that a single seed cannot carry a claim. The bound was stated correctly in that block's §7 and the headline was built on the number anyway. A bound under a headline does not protect the headline."
+ },
+ "n_seeds_per_arm": 3,
+ "FINAL_2026-09-15": {
+  "table": "七絕 — baseline 32.7% (spread 2.0pp) · iter-60 28.7% (10.0pp) · 3 epochs 17.3% (6.0pp). 五絕 — baseline 34.0% (0.0pp) · iter-60 34.0% (4.0pp) · 3 epochs 10.7% (4.0pp).",
+  "what_P2s_form_half_says": "Three epochs on 63 examples HARMS form, on both scored forms and by a margin far larger than the seed spread. One epoch does NOT harm it and does not help it: identical mean to the baseline on 五絕 (34.0 vs 34.0) and slightly below on 七絕 (28.7 vs 32.7, with the widest spread in the table). NEITHER adapter improves form.",
+  "the_one_robust_gain": "Latin-token intrusion, every seed in the same direction: baseline 27/26/24, 3 epochs 84/79/91, iter-60 16/10/14. One epoch of Chinese poetry reduces English-token leakage BELOW the base model.",
+  "the_flip_count_that_proves_理s_rule": "The baseline gives 五絕 34.0% on ALL THREE seeds — and between any two of those seeds 16, 20 and 28 of the 50 poems FLIP VERDICT, with ZERO identical generations. A rate reproduced three times over a sample that churns half its outcomes. 'Reproduced exactly' is never a claim about stability; count the flips.",
+  "note": "Mechanism E is a VOICE intervention and the form verifier is not where its benefit should appear. What this half establishes is the COST side: at 3 epochs the cost is large, at 1 epoch it is nil. Whether the voice moved is the judge's question."
  }
 }
