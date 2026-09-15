@@ -1,0 +1,53 @@
+{
+ "measurement": "理's item 1 — the form-preserving arm (voice corpus + self-distilled form anchor)",
+ "date": "2026-09-15",
+ "rig": "llm1",
+ "design": "The anchor is the base model's OWN generations that PASSED verify_form.py across three baseline seeds, drawn EVENLY across the four forms. 119 examples (63 poems + 56 anchor), ONE epoch, rank 8, lr 1e-5, 16 layers, seed 7 — every hyperparameter identical to the plain arm so the anchor data is the only variable.",
+ "training_signal": {
+  "plain 3-epoch": "val loss 1.388 at iter 60, RISING to 1.590 by 189",
+  "mixed 1-epoch": "val loss 1.197 -> 1.137 -> 1.109, still FALLING at the end",
+  "reading_at_the_time": "the mixed arm looked strictly better: lower best loss, no overfitting signature."
+ },
+ "result": {
+  "七絕": {
+   "baseline": 32.0,
+   "iter-60": 28.7,
+   "mixed": 21.3,
+   "per_seed_mixed": [
+    26.0,
+    16.0,
+    22.0
+   ],
+   "spread_pp": 10.0
+  },
+  "五絕": {
+   "baseline": 32.0,
+   "iter-60": 32.0,
+   "mixed": 14.7,
+   "per_seed_mixed": [
+    16.0,
+    20.0,
+    8.0
+   ],
+   "spread_pp": 12.0
+  },
+  "separation": {
+   "七絕 iter-60 − mixed": "+7.3pp ≈ 2.2 SE (suggestive)",
+   "五絕 iter-60 − mixed": "+17.3pp ≈ 5.2 SE (decisive)"
+  }
+ },
+ "finding": "THE FORM-PRESERVING ARM DID NOT PRESERVE FORM. It is worse than the plain one-epoch arm on both scored forms — decisively on 五絕. The anchor did not protect the behaviour it was built from.",
+ "the_dissociation_that_matters": "VALIDATION LOSS DID NOT PREDICT FORM COMPLIANCE. The mixed arm has the best validation loss in the study (1.109, still falling, no overfitting signature) and the second-worst form compliance of the four arms. Anyone selecting a checkpoint or an arm on val loss alone would have chosen this one.",
+ "what_still_worked": "Latin-token intrusion stays low: 9/16/17 per 200, against the baseline's 27/26/24 and the 3-epoch arm's 84/79/91. Whatever the anchor did, it kept English tokens out — which was iter-60's one monotone gain and it survives here.",
+ "flip_check": "baseline and iter-60 give IDENTICAL 五絕 per-seed rates [34,28,34]. Between them, 22-24 of 50 poems FLIP VERDICT per seed and ZERO generations are identical. The matching rates are a balanced coincidence, not evidence the adapter left 五絕 alone.",
+ "what_I_will_not_claim": [
+  "That the anchor mechanism is wrong in general. It is ONE anchor, at one ratio (56 of 119), for one epoch, with no loss term — 理's KL-to-base alternative is untested and this says nothing about it.",
+  "That the voice did not move. That is the judge's question and it is unanswered.",
+  "A cause. I can say the anchor did not preserve form; I cannot say why, and the obvious candidates — anchor too small a fraction, or self-distilling a behaviour the model only gets right 32% of the time — are hypotheses I have not tested."
+ ],
+ "bounds": [
+  "Three seeds of 50 prompts per form; SE ~6.6pp per seed rate.",
+  "The 七絕 gap is 2.2 SE and should not be quoted as decisive on its own; the 五絕 gap at 5.2 SE is what carries this.",
+  "One base, one rank, one lr, one anchor ratio, one epoch. No sweep."
+ ]
+}
