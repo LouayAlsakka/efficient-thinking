@@ -26,6 +26,7 @@ import argparse, json, os, re, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 CJK = re.compile(r"[㐀-鿿]")
+LATIN = re.compile(r"[A-Za-z]")
 
 TOPICS = [
     "桃花", "春雨", "醉酒", "落花", "明月", "秋風", "江南", "漁舟", "山寺", "古松",
