@@ -1,5 +1,5 @@
 {
-    "adapter_path": "/Users/lab/github/efficient-thinking/experience/tangyin/adapters/tangyin_lora_r8_e3",
+    "adapter_path": "/Users/lab/github/efficient-thinking/experience/tangyin/adapters/tangyin_lora_r8_ck60",
     "batch_size": 1,
     "clear_cache_threshold": 0,
     "config": null,
@@ -7,7 +7,7 @@
     "fine_tune_type": "lora",
     "grad_accumulation_steps": 1,
     "grad_checkpoint": false,
-    "iters": 189,
+    "iters": 60,
     "learning_rate": 1e-05,
     "lora_parameters": {
         "rank": 8,
@@ -37,5 +37,13 @@
     "test": false,
     "test_batches": 500,
     "train": true,
-    "val_batches": 7
+    "val_batches": 7,
+    "_provenance": {
+        "what_this_is": "the ITER-60 checkpoint of the 189-iteration run, not its final weight",
+        "copied_from": "experience/tangyin/adapters/tangyin_lora_r8_e3/0000060_adapters.safetensors",
+        "adapters_safetensors_sha256": "b5eaaed962b805f1ad1562a1bca30f62814510db7e65c667be0ab9e7aa0be363",
+        "final_weight_of_that_run_sha256": "61d7147a84a055461a10c0661b7425aa0f067b9ecee9ea61c935e9f4e118ec6e",
+        "why": "val loss bottoms at iter 60 (1.388) and climbs to 1.590 by 189",
+        "correction": "This file was COPIED from the full run and said iters:189 with adapter_path pointing at the e3 directory — it described the run, not the checkpoint the directory holds. Anyone reading it would have concluded these weights were the final ones. Corrected 2026-09-15; the generations already produced are unaffected, because mlx-lm reads lora_parameters and num_layers at load time (identical in both) and never reads iters."
+    }
 }
