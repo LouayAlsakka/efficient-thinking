@@ -1,0 +1,54 @@
+{
+ "source": "experience/tangyin/results/p0_base_7b_rescored.jsonl",
+ "normalisation": "opencc t2s over the table: 2462 simplified forms",
+ "by_form": {
+  "五絕": {
+   "n": 50,
+   "extracted": 38,
+   "pass_over_all_attempts_before": 0.34,
+   "pass_over_all_attempts": 0.34,
+   "pass_over_extracted": 0.4473684210526316,
+   "enforced_positions": 456,
+   "enforced_undecided": 67,
+   "enforced_reached_by_mapping": 23,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "七絕": {
+   "n": 50,
+   "extracted": 42,
+   "pass_over_all_attempts_before": 0.32,
+   "pass_over_all_attempts": 0.32,
+   "pass_over_extracted": 0.38095238095238093,
+   "enforced_positions": 672,
+   "enforced_undecided": 104,
+   "enforced_reached_by_mapping": 27,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "五律": {
+   "n": 50,
+   "extracted": 45,
+   "pass_over_all_attempts_before": 0.24,
+   "pass_over_all_attempts": 0.24,
+   "pass_over_extracted": 0.26666666666666666,
+   "enforced_positions": 1080,
+   "enforced_undecided": 129,
+   "enforced_reached_by_mapping": 249,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "七律": {
+   "n": 50,
+   "extracted": 45,
+   "pass_over_all_attempts_before": 0.4,
+   "pass_over_all_attempts": 0.4,
+   "pass_over_extracted": 0.4444444444444444,
+   "enforced_positions": 1440,
+   "enforced_undecided": 182,
+   "enforced_reached_by_mapping": 376,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  }
+ }
+}

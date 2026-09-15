@@ -1,0 +1,110 @@
+{
+ "measurement": "理's two rulings of 2026-09-15 applied, with before and after side by side",
+ "rulings": [
+  "--ze-neighbour ON: 古體 permits 通韻 across neighbouring rhyme groups, so a poem whose rhyme characters all have 仄 readings is 古體 even without a SHARED 仄 group.",
+  "古體 LEAVES the scored pool: a third bucket, never pass and never fail."
+ ],
+ "poet_pools": {
+  "唐寅 七絕 raw": {
+   "before": "31/39 = 79.5%",
+   "after": "30/38 = 78.9%",
+   "why": "宮妃夜游圖 was PASSING as a 古絕; it now leaves the pool."
+  },
+  "唐寅 七絕 filtered": {
+   "before": "30/36 = 83.3%",
+   "after": "30/36 = 83.3%",
+   "why": "UNCHANGED. It leaves by classification now instead of by title — same poem, better mechanism. The >=90% bar is still NOT MET."
+  },
+  "唐寅 五絕": {
+   "before": "3/5 = 60.0%",
+   "after": "3/5 = 60.0%",
+   "why": "no 古體 among the five."
+  },
+  "文徵明 七絕": {
+   "before": "146/159 = 91.8%",
+   "after": "146/157 = 93.0%",
+   "why": "two 古絕 leave."
+  },
+  "文徵明 五絕": {
+   "before": "7/13 = 53.8%",
+   "after": "3/5 = 60.0%",
+   "why": "EIGHT of the thirteen are 古絕 — 其四, 瀟湘八景 and six of the Eight Views, all 入聲-rhymed across neighbouring groups. The strict test scored them as broken 近體, which is what made 五絕 look like a form both poets were bad at."
+  }
+ },
+ "model_arms": {
+  "('baseline', '七絕')": {
+   "before_mean": 32.7,
+   "after_mean": 32.0,
+   "after_per_seed": [
+    32.0,
+    32.0,
+    32.0
+   ],
+   "after_spread_pp": 0.0,
+   "generations_classified_古絕_of_150": 6
+  },
+  "('baseline', '五絕')": {
+   "before_mean": 34.0,
+   "after_mean": 32.0,
+   "after_per_seed": [
+    34.0,
+    28.0,
+    34.0
+   ],
+   "after_spread_pp": 6.0,
+   "generations_classified_古絕_of_150": 7
+  },
+  "('iter-60 (E arm)', '七絕')": {
+   "before_mean": 28.7,
+   "after_mean": 28.7,
+   "after_per_seed": [
+    34.0,
+    24.0,
+    28.0
+   ],
+   "after_spread_pp": 10.0,
+   "generations_classified_古絕_of_150": 9
+  },
+  "('iter-60 (E arm)', '五絕')": {
+   "before_mean": 34.0,
+   "after_mean": 32.0,
+   "after_per_seed": [
+    34.0,
+    28.0,
+    34.0
+   ],
+   "after_spread_pp": 6.0,
+   "generations_classified_古絕_of_150": 12
+  },
+  "('3 epochs (reported)', '七絕')": {
+   "before_mean": 17.3,
+   "after_mean": 16.7,
+   "after_per_seed": [
+    16.0,
+    20.0,
+    14.0
+   ],
+   "after_spread_pp": 6.0,
+   "generations_classified_古絕_of_150": 11
+  },
+  "('3 epochs (reported)', '五絕')": {
+   "before_mean": 10.7,
+   "after_mean": 9.3,
+   "after_per_seed": [
+    10.0,
+    8.0,
+    10.0
+   ],
+   "after_spread_pp": 2.0,
+   "generations_classified_古絕_of_150": 11
+  }
+ },
+ "conclusion": "THE RULINGS DO NOT MOVE P2. Every model arm shifts by <= 2pp and the ordering is untouched: baseline 32.0 · iter-60 28.7 · 3 epochs 16.7 on 七絕. What they move is the POET pools, where 文徵明 五絕 goes 53.8% -> 60.0% on a denominator that falls from 13 to 5.",
+ "the_new_problem_this_creates": "五絕 references are now TINY. 唐寅 has 5 scored 五絕 and 文徵明 has 5. A P2/P3 comparison against a bar of five poems is not a comparison. My 10455 recommendation stands and is stronger: score on 七絕 and report 五絕 as observed.",
+ "note_on_model_古絕": "A generated poem classified 古體 when a 七絕 was ASKED for is a failure to follow the form, not a poem that should leave the pool — so in the model arms it counts as not-passing over all 50 attempts. The pool rule is about the POET corpora. 6-12 of each arm's 150 generations land there.",
+ "bounds": [
+  "Re-scored from SAVED generations. Nothing was regenerated; an instrument change is never confounded with a sampling change here.",
+  "The 文徵明 五絕 reclassification rests on my reading of 入聲 rhyme groups from the 平水韻 table, not on a scholar's judgement of the poems.",
+  "--no-ze-neighbour reproduces the pre-ruling behaviour exactly, so the before column is regenerable and not merely remembered."
+ ]
+}

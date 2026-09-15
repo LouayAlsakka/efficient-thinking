@@ -1,0 +1,57 @@
+{
+ "source": "experience/tangyin/results/p2_lora_ck60_s2.jsonl",
+ "normalisation": "opencc t2s over the table: 2462 simplified forms",
+ "by_form": {
+  "五絕": {
+   "n": 50,
+   "extracted": 34,
+   "pass_over_all_attempts_before": 0.32,
+   "pass_over_all_attempts": 0.28,
+   "pass_over_extracted": 0.4117647058823529,
+   "enforced_positions": 408,
+   "enforced_undecided": 47,
+   "enforced_reached_by_mapping": 1,
+   "flipped_to_fail": [
+    "山寺",
+    "殘雪"
+   ],
+   "flipped_to_pass": []
+  },
+  "七絕": {
+   "n": 50,
+   "extracted": 32,
+   "pass_over_all_attempts_before": 0.24,
+   "pass_over_all_attempts": 0.24,
+   "pass_over_extracted": 0.375,
+   "enforced_positions": 512,
+   "enforced_undecided": 75,
+   "enforced_reached_by_mapping": 7,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "五律": {
+   "n": 50,
+   "extracted": 30,
+   "pass_over_all_attempts_before": 0.1,
+   "pass_over_all_attempts": 0.1,
+   "pass_over_extracted": 0.16666666666666666,
+   "enforced_positions": 720,
+   "enforced_undecided": 99,
+   "enforced_reached_by_mapping": 7,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "七律": {
+   "n": 50,
+   "extracted": 30,
+   "pass_over_all_attempts_before": 0.16,
+   "pass_over_all_attempts": 0.16,
+   "pass_over_extracted": 0.26666666666666666,
+   "enforced_positions": 960,
+   "enforced_undecided": 132,
+   "enforced_reached_by_mapping": 11,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  }
+ }
+}

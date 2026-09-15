@@ -1,0 +1,56 @@
+{
+ "source": "experience/tangyin/results/p2_lora_ck60_s1.jsonl",
+ "normalisation": "opencc t2s over the table: 2462 simplified forms",
+ "by_form": {
+  "五絕": {
+   "n": 50,
+   "extracted": 36,
+   "pass_over_all_attempts_before": 0.36,
+   "pass_over_all_attempts": 0.34,
+   "pass_over_extracted": 0.4722222222222222,
+   "enforced_positions": 432,
+   "enforced_undecided": 54,
+   "enforced_reached_by_mapping": 4,
+   "flipped_to_fail": [
+    "故鄉"
+   ],
+   "flipped_to_pass": []
+  },
+  "七絕": {
+   "n": 50,
+   "extracted": 34,
+   "pass_over_all_attempts_before": 0.34,
+   "pass_over_all_attempts": 0.34,
+   "pass_over_extracted": 0.5,
+   "enforced_positions": 544,
+   "enforced_undecided": 67,
+   "enforced_reached_by_mapping": 15,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "五律": {
+   "n": 50,
+   "extracted": 30,
+   "pass_over_all_attempts_before": 0.14,
+   "pass_over_all_attempts": 0.14,
+   "pass_over_extracted": 0.23333333333333334,
+   "enforced_positions": 720,
+   "enforced_undecided": 102,
+   "enforced_reached_by_mapping": 2,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "七律": {
+   "n": 50,
+   "extracted": 31,
+   "pass_over_all_attempts_before": 0.06,
+   "pass_over_all_attempts": 0.06,
+   "pass_over_extracted": 0.0967741935483871,
+   "enforced_positions": 992,
+   "enforced_undecided": 162,
+   "enforced_reached_by_mapping": 9,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  }
+ }
+}

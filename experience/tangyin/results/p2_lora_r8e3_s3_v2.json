@@ -1,0 +1,56 @@
+{
+ "source": "experience/tangyin/results/p2_lora_r8e3_s3.jsonl",
+ "normalisation": "opencc t2s over the table: 2462 simplified forms",
+ "by_form": {
+  "五絕": {
+   "n": 50,
+   "extracted": 19,
+   "pass_over_all_attempts_before": 0.12,
+   "pass_over_all_attempts": 0.1,
+   "pass_over_extracted": 0.2631578947368421,
+   "enforced_positions": 228,
+   "enforced_undecided": 28,
+   "enforced_reached_by_mapping": 1,
+   "flipped_to_fail": [
+    "苔痕"
+   ],
+   "flipped_to_pass": []
+  },
+  "七絕": {
+   "n": 50,
+   "extracted": 23,
+   "pass_over_all_attempts_before": 0.14,
+   "pass_over_all_attempts": 0.14,
+   "pass_over_extracted": 0.30434782608695654,
+   "enforced_positions": 368,
+   "enforced_undecided": 44,
+   "enforced_reached_by_mapping": 2,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "五律": {
+   "n": 50,
+   "extracted": 15,
+   "pass_over_all_attempts_before": 0.04,
+   "pass_over_all_attempts": 0.04,
+   "pass_over_extracted": 0.13333333333333333,
+   "enforced_positions": 360,
+   "enforced_undecided": 55,
+   "enforced_reached_by_mapping": 2,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  },
+  "七律": {
+   "n": 50,
+   "extracted": 13,
+   "pass_over_all_attempts_before": 0.04,
+   "pass_over_all_attempts": 0.04,
+   "pass_over_extracted": 0.15384615384615385,
+   "enforced_positions": 416,
+   "enforced_undecided": 73,
+   "enforced_reached_by_mapping": 1,
+   "flipped_to_fail": [],
+   "flipped_to_pass": []
+  }
+ }
+}

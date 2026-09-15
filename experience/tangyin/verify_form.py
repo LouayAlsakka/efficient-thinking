@@ -129,7 +129,7 @@ def opposite(a, b):
     return {a, b} == {"平", "仄"}
 
 
-def verify(poem, rime, rime_neighbour=False):
+def verify(poem, rime, rime_neighbour=True):
     """poem: a string of CJK characters only. Returns a dict of per-rule results."""
     text = "".join(CJK.findall(poem))
     # U+25A1 □ stands in for a {{SKchar}} the edition has and Unicode does not. It is NOT in the
@@ -142,6 +142,7 @@ def verify(poem, rime, rime_neighbour=False):
            "unencodable_glyphs": n_box}
     f = FORMS.get(len(text))
     if not f:
+        res["scored"] = True
         res["rules"]["structure"] = {
             "pass": False,
             "why": (f"{n_box} unencodable glyph(s) — the edition has a character Unicode does "
@@ -261,11 +262,18 @@ def verify(poem, rime, rime_neighbour=False):
             three.append(i + 1)
     res["rules"]["san_ping_diao"] = {"pass": not three, "failed_hemistichs": three}
 
+    # 理's ruling, 2026-09-15: 古體 LEAVES the scored pool. A third bucket, never pass and never
+    # fail. Marking the 近體 rules "not applicable" and letting the poem PASS was the hole that
+    # let 宮妃夜游圖 earn credit for a form it is not in; this closes it for every such poem at
+    # once, by classification rather than by title.
     if res["classification"] == "古體(仄韻)":
         for k in ("alternate", "dui", "nian", "non_rhyme_ends_ze", "san_ping_diao"):
-            res["rules"][k]["pass"] = True
             res["rules"][k]["not_applicable"] = "古體"
-    res["pass"] = all(r["pass"] for r in res["rules"].values())
+        res["scored"] = False
+        res["pass"] = None
+    else:
+        res["scored"] = True
+        res["pass"] = all(r["pass"] for r in res["rules"].values())
     # STRICT: every undecided position counts as a failure. The two rates BRACKET the truth,
     # and they must be published together -- a text full of glyphs the table does not hold
     # (the 四庫 editions are) earns a HIGHER lenient rate simply by being unreadable, and a
@@ -298,10 +306,11 @@ def main():
     ap.add_argument("--form", help="only score poems of this form, e.g. 七絕")
     ap.add_argument("--rime", default=os.path.join(HERE, "rime", "pingshui.json"))
     ap.add_argument("--report")
-    ap.add_argument("--ze-neighbour", action="store_true",
-                    help="PROPOSED, pending 理's ruling: classify as 古體(仄韻) when there is no "
-                         "shared 平 group and every rhyme character has a 仄 reading, instead of "
-                         "requiring a SHARED 仄 group. 古體 permits 通韻 across neighbouring groups.")
+    ap.add_argument("--no-ze-neighbour", action="store_true",
+                    help="reproduce the pre-ruling behaviour: require a SHARED 仄 group to call a "
+                         "poem 古體. 理 ruled the looser test ON (2026-09-15) because 古體 permits "
+                         "通韻 across neighbouring groups and the strict test failed the very "
+                         "poems the branch exists to catch.")
     ap.add_argument("--exclusions", help="exclusions.json — poems that are NOT 近體 and leave the "
                                          "pool entirely. The unfiltered rate is printed beside it.")
     ap.add_argument("--no-simplified", action="store_true",
@@ -315,7 +324,8 @@ def main():
         print(f"  simplified normalisation: {rime.normaliser}")
 
     if a.text:
-        print(json.dumps(verify(a.text, rime, a.ze_neighbour), ensure_ascii=False, indent=1))
+        print(json.dumps(verify(a.text, rime, not a.no_ze_neighbour),
+                         ensure_ascii=False, indent=1))
         return
 
     excluded_titles, excl = set(), None
@@ -326,7 +336,7 @@ def main():
     rows = [json.loads(l) for l in open(a.corpus)]
     out, skipped, box_drop = [], 0, []
     for r in rows:
-        v = verify(r.get(a.field) or r.get("text", ""), rime, a.ze_neighbour)
+        v = verify(r.get(a.field) or r.get("text", ""), rime, not a.no_ze_neighbour)
         if v["form"] is None and v.get("unencodable_glyphs"):
             # counted BEFORE the --form filter: these poems have no form precisely BECAUSE the
             # glyph was stripped, so a filter on form would hide them in "skipped".
@@ -340,7 +350,9 @@ def main():
         v["skchar"] = r.get("skchar", 0)
         out.append(v)
 
-    raw_scored = [v for v in out if v["form"]]
+    raw_all = [v for v in out if v["form"]]
+    not_regulated = [v for v in raw_all if not v.get("scored", True)]
+    raw_scored = [v for v in raw_all if v.get("scored", True)]
     scored = [v for v in raw_scored if not v["excluded"]]
     dropped_box = box_drop
     npass = sum(1 for v in scored if v["pass"])
@@ -348,6 +360,9 @@ def main():
     print(f"{a.corpus}  field={a.field}  form={a.form or 'any regulated'}")
     print(f"  poems of a regulated length: {len(scored)}   (skipped {skipped}, "
           f"no regulated form: {len(out)-len(scored)})")
+    if not_regulated:
+        print(f"  NOT REGULATED (古體, 仄韻) — out of the pool, never pass or fail: "
+              f"{len(not_regulated)}  {[v['title'] for v in not_regulated][:8]}")
     if dropped_box:
         print(f"  ⚠ NOT SCORED because the edition has a glyph Unicode does not: "
               f"{len(dropped_box)} poems in this corpus — an EXPLICIT exclusion, not a silent "
@@ -401,6 +416,8 @@ def main():
                    "pass_rate_strict": (nstrict / len(scored)) if scored else None,
                    "failed_by_rule": dict(per_rule), "undecided_by_rule": dict(per_rule_und),
                    "chars_tone_undecided": tot_und, "chars_absent_from_table": tot_unk,
+                   "n_not_regulated_gutai": len(not_regulated),
+                   "not_regulated_titles": [v["title"] for v in not_regulated],
                    "not_scored_unencodable_glyph": len(dropped_box),
                    "not_scored_unencodable_titles": dropped_box[:50],
                    "enforced_positions": sum(v["enforced_positions"] for v in scored),
