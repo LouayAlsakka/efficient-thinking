@@ -40,6 +40,7 @@
       0.34
      ],
      "mean": 0.34,
+     "spread_pp": 0.0,
      "wrong_length_per_seed": [
       12,
       6
@@ -51,6 +52,7 @@
       0.32
      ],
      "mean": 0.32,
+     "spread_pp": 0.0,
      "wrong_length_per_seed": [
       8,
       10
@@ -62,6 +64,7 @@
       0.2
      ],
      "mean": 0.22,
+     "spread_pp": 4.0,
      "wrong_length_per_seed": [
       5,
       4
@@ -73,6 +76,7 @@
       0.12
      ],
      "mean": 0.26,
+     "spread_pp": 28.0,
      "wrong_length_per_seed": [
       5,
       8
@@ -82,10 +86,6 @@
    "latin_intrusion_of_200_per_seed": [
     27,
     26
-   ],
-   "latin_that_still_passed": [
-    1,
-    0
    ]
   },
   "lora_r8_3epochs_iter189": {
@@ -98,6 +98,7 @@
       0.12
      ],
      "mean": 0.107,
+     "spread_pp": 4.0,
      "wrong_length_per_seed": [
       23,
       29,
@@ -111,6 +112,7 @@
       0.14
      ],
      "mean": 0.173,
+     "spread_pp": 6.0,
      "wrong_length_per_seed": [
       16,
       20,
@@ -124,6 +126,7 @@
       0.04
      ],
      "mean": 0.02,
+     "spread_pp": 4.0,
      "wrong_length_per_seed": [
       39,
       33,
@@ -137,6 +140,7 @@
       0.04
      ],
      "mean": 0.047,
+     "spread_pp": 2.0,
      "wrong_length_per_seed": [
       35,
       35,
@@ -148,58 +152,72 @@
     84,
     79,
     91
-   ],
-   "latin_that_still_passed": [
-    1,
-    0,
-    1
    ]
   },
   "lora_r8_iter60_valmin": {
-   "n_seeds": 1,
+   "n_seeds": 3,
    "by_form": {
     "五絕": {
      "pass_rate_per_seed": [
-      0.36
+      0.36,
+      0.32,
+      0.34
      ],
-     "mean": 0.36,
+     "mean": 0.34,
+     "spread_pp": 4.0,
      "wrong_length_per_seed": [
-      14
+      14,
+      16,
+      11
      ]
     },
     "七絕": {
      "pass_rate_per_seed": [
-      0.34
+      0.34,
+      0.24,
+      0.28
      ],
-     "mean": 0.34,
+     "mean": 0.287,
+     "spread_pp": 10.0,
      "wrong_length_per_seed": [
-      16
+      16,
+      18,
+      15
      ]
     },
     "五律": {
      "pass_rate_per_seed": [
-      0.14
+      0.14,
+      0.1,
+      0.18
      ],
      "mean": 0.14,
+     "spread_pp": 8.0,
      "wrong_length_per_seed": [
-      20
+      20,
+      20,
+      17
      ]
     },
     "七律": {
      "pass_rate_per_seed": [
-      0.06
+      0.06,
+      0.16,
+      0.2
      ],
-     "mean": 0.06,
+     "mean": 0.14,
+     "spread_pp": 14.0,
      "wrong_length_per_seed": [
-      19
+      19,
+      19,
+      12
      ]
     }
    },
    "latin_intrusion_of_200_per_seed": [
-    16
-   ],
-   "latin_that_still_passed": [
-    0
+    16,
+    10,
+    14
    ]
   }
  },
@@ -216,5 +234,17 @@
   "The form verifier does not read Latin characters at all — the extractor strips to CJK — so intrusion is counted separately and is NOT part of any pass rate above.",
   "Nothing here is the JUDGE. P2's actual question is discrimination, which is 理's harness on the held-out 33; this is the form half only.",
   "One base, one rank, one learning rate, one LoRA run. No sweep."
- ]
+ ],
+ "CORRECTION_2026-09-15_00:3xZ": {
+  "what_I_said": "At 10453, on ONE seed: 'the iter-60 checkpoint is not destructive: 七絕 34.0% against the baseline's 32.0%.'",
+  "what_three_seeds_say": "七絕 34.0 / 24.0 / 28.0 -> mean 28.7%, spread 10.0pp. That first seed was the HIGHEST of the three.",
+  "so": "iter-60 is NOT above the baseline. It is indistinguishable from it at this n, and the point estimate is slightly below (28.7 vs 32.0).",
+  "what_survives": [
+   "3 epochs is destructive: 17.3% mean against 32.0%, with its own spread only 6.0pp — the gap is far larger than the noise.",
+   "iter-60 is much better than 3 epochs: 28.7% against 17.3%.",
+   "Latin intrusion is the one claim that is robust in iter-60's favour and it is consistent across ALL THREE seeds: baseline 27/26, 3 epochs 84/79/91, iter-60 16/10/14. One epoch of Chinese poetry REDUCES English-token leakage below the base model.",
+   "五絕 tells the same story as 七絕: baseline 34.0, 3 epochs 10.7, iter-60 34.0."
+  ],
+  "the_lesson_is_my_own": "I published a single-seed number in a headline the same day I told 理 that a single seed cannot carry a claim. The bound was stated correctly in that block's §7 and the headline was built on the number anyway. A bound under a headline does not protect the headline."
+ }
 }

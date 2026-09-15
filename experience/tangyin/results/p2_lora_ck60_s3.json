@@ -1,0 +1,80 @@
+{
+ "model": "Qwen/Qwen2.5-7B-Instruct",
+ "adapter": "experience/tangyin/adapters/tangyin_lora_r8_ck60",
+ "temp": 0.7,
+ "seed": 3,
+ "n_prompts": 200,
+ "by_form": {
+  "五絕": {
+   "n": 50,
+   "extracted": 39,
+   "wrong_length": 11,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.34,
+   "pass_over_extracted": 0.4358974358974359,
+   "latin_intrusion": 1,
+   "latin_intrusion_that_still_PASSED": 1,
+   "failed_by_rule": {
+    "rhyme": 19,
+    "alternate": 3,
+    "non_rhyme_ends_ze": 4,
+    "san_ping_diao": 4,
+    "nian": 1,
+    "dui": 1
+   }
+  },
+  "七絕": {
+   "n": 50,
+   "extracted": 35,
+   "wrong_length": 15,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.28,
+   "pass_over_extracted": 0.4,
+   "latin_intrusion": 7,
+   "latin_intrusion_that_still_PASSED": 1,
+   "failed_by_rule": {
+    "alternate": 1,
+    "rhyme": 18,
+    "dui": 1,
+    "nian": 2,
+    "san_ping_diao": 1
+   }
+  },
+  "五律": {
+   "n": 50,
+   "extracted": 33,
+   "wrong_length": 17,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.18,
+   "pass_over_extracted": 0.2727272727272727,
+   "latin_intrusion": 2,
+   "latin_intrusion_that_still_PASSED": 0,
+   "failed_by_rule": {
+    "rhyme": 22,
+    "alternate": 6,
+    "dui": 2,
+    "nian": 3,
+    "non_rhyme_ends_ze": 3,
+    "san_ping_diao": 3
+   }
+  },
+  "七律": {
+   "n": 50,
+   "extracted": 38,
+   "wrong_length": 12,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.2,
+   "pass_over_extracted": 0.2631578947368421,
+   "latin_intrusion": 4,
+   "latin_intrusion_that_still_PASSED": 0,
+   "failed_by_rule": {
+    "rhyme": 22,
+    "san_ping_diao": 1,
+    "nian": 7,
+    "alternate": 7,
+    "non_rhyme_ends_ze": 5,
+    "dui": 6
+   }
+  }
+ }
+}
