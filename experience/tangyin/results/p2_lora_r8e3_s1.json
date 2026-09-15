@@ -1,0 +1,71 @@
+{
+ "model": "Qwen/Qwen2.5-7B-Instruct",
+ "adapter": "experience/tangyin/adapters/tangyin_lora_r8_e3",
+ "temp": 0.7,
+ "seed": 1,
+ "n_prompts": 200,
+ "by_form": {
+  "五絕": {
+   "n": 50,
+   "extracted": 27,
+   "wrong_length": 23,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.12,
+   "pass_over_extracted": 0.2222222222222222,
+   "failed_by_rule": {
+    "rhyme": 16,
+    "alternate": 6,
+    "dui": 8,
+    "non_rhyme_ends_ze": 7,
+    "nian": 1,
+    "san_ping_diao": 1
+   }
+  },
+  "七絕": {
+   "n": 50,
+   "extracted": 34,
+   "wrong_length": 16,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.18,
+   "pass_over_extracted": 0.2647058823529412,
+   "failed_by_rule": {
+    "rhyme": 20,
+    "alternate": 4,
+    "dui": 8,
+    "nian": 5,
+    "non_rhyme_ends_ze": 4
+   }
+  },
+  "五律": {
+   "n": 50,
+   "extracted": 11,
+   "wrong_length": 39,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.0,
+   "pass_over_extracted": 0.0,
+   "failed_by_rule": {
+    "nian": 5,
+    "rhyme": 10,
+    "alternate": 4,
+    "dui": 6,
+    "non_rhyme_ends_ze": 4
+   }
+  },
+  "七律": {
+   "n": 50,
+   "extracted": 15,
+   "wrong_length": 35,
+   "no_poem": 0,
+   "pass_over_all_attempts": 0.04,
+   "pass_over_extracted": 0.13333333333333333,
+   "failed_by_rule": {
+    "rhyme": 10,
+    "alternate": 8,
+    "dui": 5,
+    "non_rhyme_ends_ze": 8,
+    "nian": 4,
+    "san_ping_diao": 1
+   }
+  }
+ }
+}
