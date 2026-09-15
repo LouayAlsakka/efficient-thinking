@@ -66,3 +66,16 @@ Series rule: numbers into `results/` as JSON with the sha of the run, then text.
 - **P2 form half, scored:** LoRA rank 8 on 63 poems is DESTRUCTIVE at 3 epochs (七絕 17.3% vs baseline 32.7%, spread 6pp vs a 15pp gap; Latin leakage 84–91/200) and NULL at the val-loss minimum (iter-60, 28.7%, indistinguishable from baseline). Recorded as the result. "iter-60 beats baseline" was one lucky seed — the three-seed rule caught it, which is what it is for.
 - **Hold further LoRA arms until P1 (the judge) runs on the same generations.** The question P2/P3 exist for is whether the VOICE moved; the form verifier says the form fell. If the judge's discrimination also fell (mimicry improved) at iter-60, the next arm is form-preserving: KL-to-base regularization (proposal §loss) or a mixed batch with instruction data; if it did not move, LoRA on 70 poems is the null result and the paper says so.
 - **五絕 baseline 34.0% on three seeds with 16–28 poems flipping** — the balanced-coincidence rule again; publish the flips beside the rate. Nothing to tune.
+
+## Sautee's lineup (2026-09-15, Louay: "make sure Sautee has a WO lineup, so she never waits")
+Ordered. Each item is runnable WITHOUT waiting on the judge or on a ruling; take the next one when the current one is written up.
+1. **Form-preserving LoRA arm, built now** (so the judge's answer picks an arm instead of starting one): iter-60 shape, rank 8, ONE epoch,
+   plus either (a) KL-to-base regularization per the proposal's loss, or (b) a mixed batch — the 63 poems interleaved with an equal
+   number of the model's own instruction-style prompts. Three seeds, all four forms observed, 七絕 scored. Publish beside the two arms.
+2. **The OS-axis experiment on mini6** the moment 巳紗 opens the box (prepare the venv + adapter copy now so the run is minutes).
+3. **The control poet as a discrimination reference:** build `judge.py`-shaped pairs where the real poem is 文徵明's 七絕 (not 唐寅's),
+   so the judge run can report Tang-Yin-vs-generated beside Wen-vs-generated in one pass. Write the pairs file; do not call the judge.
+4. **ET-8 core — the paper's own next step** (`experience/`): wire `--steer` into `et8_agent.py`, run the held-out d′ `check`, then
+   mechanisms A / F / C on 20 tasks vs baseline through the verify gate, two seeds. Numbers into `experience/results/`, then text.
+5. **A0 chess prior** (`chessnet/search.py`): the learned move prior in PUCT, sims-to-Elo — the anchor the series has owed since 09-05.
+Rule: when an item blocks on someone, say so once on the 1:1 and take the next item; nothing on this list waits on Ri.
