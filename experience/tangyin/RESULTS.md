@@ -43,6 +43,25 @@ whichever pass rate the guess favoured, and this number gates a training decisio
 is invisible: `不 SwiftUI 也在斜` is 28 CJK characters and scores as a 七絕. It is counted
 separately rather than left for whoever reads the poems.
 
+### A strict rule, correctly written, failed a famous series
+
+The 古體 branch exists to catch poems that are not 近體 at all. Its first test required the rhyme
+characters to share a 仄 rhyme group — which is exactly what 古體 does **not** have to do: 古體
+permits 通韻 across neighbouring groups, and 近體 is the form that forbids it. So the test failed
+the very poems it was written for.
+
+What it failed was not obscure. Eight of 文徵明's thirteen 五絕 are 古絕 — 其四, 瀟湘八景 and six
+of the Eight Views of Xiaoxiang (瀟湘夜雨, 洞庭秋月, 平沙落鴈, 山市晴嵐, 漁村夕照, 煙寺晩鍾) —
+all rhymed on 入聲 across adjacent groups. The verifier scored a famous series as defective
+regulated verse, and the resulting 53.8% made 五絕 look like a form both poets were bad at.
+
+**The cross-poet symptom is what caught it**: both the subject and the control collapsed on the
+same form under the same instrument, while their 七絕 rates were 79% and 92%. Two poets, two
+editions, one rule — that pattern accuses the instrument, not the poets. Corrected, 文徵明's 五絕
+reads 60.0%, on a pool that falls from thirteen to five. Both columns are published; the fix
+raised the rate and shrank the reference it could serve as, and that is the honest outcome rather
+than an awkward one.
+
 ### The acceptance test fails, and that is recorded rather than tuned away
 
 The study's own bar was "real Tang Yin 七絕 must pass ≥ 90%".
@@ -70,10 +89,16 @@ against 32.0%. And the control poet is read *worse* than the subject (82.7% of p
 
 Qwen2.5-7B-Instruct bf16, 50 topics × 4 forms, temp 0.7, three seeds.
 
-| form | pass, per seed | mean |
-|---|---|---|
-| 七絕 | 32.0 · 32.0 · 32.0 | **32.0%** |
-| 五絕 | 34.0 · 34.0 · 34.0 | **32.0%** (after the 古體 ruling) |
+| form | pass, per seed | mean | |
+|---|---|---|---|
+| 七絕 | 32.0 · 32.0 · 32.0 | **32.0%** | **scored** |
+| 五絕 | 34.0 · 34.0 · 34.0 | 32.0% | *observed only* |
+
+**五絕 is reported and never used as evidence.** After the 古體 ruling its poet reference is five
+scored poems for 唐寅 and five for 文徵明, and a comparison against a bar of five is not a
+comparison. It gets the same treatment as the 律 forms, arrived at from the other direction: the
+律 forms because their seed variance is larger than any training effect, 五絕 because its reference
+is too small to be one.
 
 **P0 predicted < 40% of 七絕 attempts. Confirmed — and narrowly.** At n=50 and p≈0.32 the binomial
 SE is 6.6pp, so the threshold sits about 1.2 SE above the estimate. On the *extracted* denominator
@@ -104,9 +129,9 @@ seeds gave 七律 40% and 12%, a 28-point swing — larger than any plausible tr
 Rank 8, 16 layers, lr 1e-5, on 63 training examples (70-poem split minus 7 held for validation),
 prompted in exactly the shape P0 asks in. Three seeds per arm.
 
-| arm | 七絕 (mean, spread) | 五絕 | Latin intrusion / 200 |
+| arm | 七絕 *(scored)* | 五絕 *(observed)* | Latin intrusion / 200 |
 |---|---|---|---|
-| baseline | **32.0%** (2.0pp) | 32.0% | 27 · 26 · 24 |
+| baseline | **32.0%** (spread 2.0pp) | 32.0% | 27 · 26 · 24 |
 | LoRA, iter-60 *(E arm)* | **28.7%** (10.0pp) | 32.0% | 16 · 10 · 14 |
 | LoRA, 3 epochs *(reported)* | **16.7%** (6.0pp) | 9.3% | 84 · 79 · 91 |
 
