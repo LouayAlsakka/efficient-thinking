@@ -208,3 +208,30 @@ calls — which is the only diagnostic of *what* gives the 7B away.
   because memorization is a property of the judge's weights rather than of our source.
 - **Topics are mine**, 50 chosen in his register, sampled from nothing.
 - **The verifier fails its own acceptance test**, and every number above inherits that.
+
+---
+
+## PRE-REGISTERED — the §4.3 gate as a rejection test (written 2026-09-16, before the first episode)
+
+理 ruled the gate's job has changed: it is no longer meant to build a better memory, it is meant to
+**reject v1_7b's lessons before injection**. Prediction P0 says the verifier refuses ≥ 20% of
+candidates. Both outcomes are written here first, so the reading cannot follow the number.
+
+**Shape, fixed now:** n = 20 × 2 conditions (in-scope, shuffled-family control) × 2 arms (with
+lesson, without) × **all 12 lessons**, no subset. ~5 h of llm1 GPU. A rejection rate computed over
+a confidence-chosen subset is not the rate P0 predicts, which is why every lesson runs.
+
+**The situation that makes this sharp:** v1_7b's lessons are *true*. `[A_boundary, consumer] start
+at producer` is 309/309 green at confidence 0.992 in the run it was distilled from. The arm that
+injected them scored **5.0% against a 62.5% baseline**. So the gate is being asked to reject advice
+that is correct and still harmful.
+
+- **If P0 HOLDS** — the gate rejects ≥ 20% of lessons that are true and still harmful: §4.3 catches
+  *carrier* harm, not only wrong advice. That is a stronger claim for the gate than rejecting
+  false lessons would have been.
+- **If P0 IS REFUTED** — the gate admits them: the failure lives in the carrier, no lesson-level
+  gate can see it, and the paper says so. The gate would then be the wrong instrument for this
+  class of harm rather than a broken one.
+
+Neither outcome is a disappointment; the pre-registration is what makes it a finding rather than a
+reading.
