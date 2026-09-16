@@ -70,3 +70,11 @@ delta is believed until it survives a low-variance re-measurement (two seeds min
 - C at α=4.0: not an improvement on either axis, close to baseline, cheap; probe d′ 3.1–4.9 good, intervention untuned (strength/layer/position). Slice-1 "clean separation" withdrawn by its author.
 - F = additive logit bias on the EMITTABLE action tokens only (hypothesize/inspect/patch/run), per region class, log-ratio τ+/τ−, clipped ±2. Verdict labels (noop_patch, repeat_*, invalid) are not tokens; F cannot reach repair by construction and a null is a result. Outcome-folded biasing is a different experiment (F′), not run under this name.
 - Slices, not seeds, under greedy decoding.
+
+## Ruling, 2026-09-16 17:5xZ (理, on Sautee 10831) — the §4.3 gate's shape
+- n=20 × 2 conditions × 2 arms × all 12 v1_7b lessons (~5 h llm1 GPU, overnight), after F(a)'s four slices land.
+  No confidence-chosen subset: P0 is a rate over the candidates, and a subset's rate is not that rate.
+- Report per lesson admit/reject with the paired delta and SE; headline = rejection rate over 12.
+- Pre-registered before the first episode (both sentences in RESULTS.md): P0 holds = the gate rejects ≥ 20% of
+  lessons that are TRUE (309/309 green) and still harmful, so §4.3 catches carrier harm; P0 refuted = the gate
+  admits them, the failure is in the carrier and no lesson-level gate can see it — the paper says so either way.
