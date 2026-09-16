@@ -1,0 +1,726 @@
+{
+ "seed": 0,
+ "provider": "bedrock",
+ "model": "us.anthropic.claude-opus-4-7",
+ "probes": {
+  "completion_excluded": [
+   {
+    "title": "海棠美人圖",
+    "overlap": 1.0
+   },
+   {
+    "title": "言志 (唐寅)",
+    "overlap": 0.9
+   },
+   {
+    "title": "題畫 (唐寅)#11",
+    "overlap": 0.81
+   }
+  ],
+  "attribution_flagged": [
+   "開門七件事",
+   "除夕口占"
+  ],
+  "naming_excluded": [
+   {
+    "title": "開門七件事",
+    "answer": "不認得。\n\n補充說明：這首詩一般認為是宋代（南宋）詩人**唐寅之前**的作品，較常見的說法是出自宋人**唐庚"
+   },
+   {
+    "title": "除夕口占",
+    "answer": "這首詩我認得。\n\n**作者**：唐寅（唐伯虎）\n**題目**：《除夕口占》（也有作《歲暮抒懷》或《除夜》"
+   }
+  ],
+  "canary_recognized": 0,
+  "canary_n": 10
+ },
+ "arms": {
+  "baseline": {
+   "arm": "baseline",
+   "n": 42,
+   "correct": 42,
+   "accuracy": 1.0,
+   "se": 0.0,
+   "trials": [
+    {
+     "heldout": "題畫 (唐寅)#12",
+     "topic": "桃花",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#13",
+     "topic": "春雨",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#16",
+     "topic": "醉酒",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#8",
+     "topic": "落花",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#10",
+     "topic": "明月",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#5",
+     "topic": "江南",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#8",
+     "topic": "漁舟",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#2",
+     "topic": "古松",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#7",
+     "topic": "梅花",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#17",
+     "topic": "白髮",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#19",
+     "topic": "琴聲",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#8",
+     "topic": "竹影",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題墨花",
+     "topic": "夜雨",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#9",
+     "topic": "孤舟",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#2",
+     "topic": "殘雪",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#9",
+     "topic": "美人",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#5",
+     "topic": "離別",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#15",
+     "topic": "登高",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#16",
+     "topic": "寒夜",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#17",
+     "topic": "客愁",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題墨花",
+     "topic": "故鄉",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#12",
+     "topic": "柳絮",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#20",
+     "topic": "荷花",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#15",
+     "topic": "螢火",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#9",
+     "topic": "清明",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#9",
+     "topic": "重陽",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題墨花",
+     "topic": "除夕",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#18",
+     "topic": "題畫",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#3",
+     "topic": "貧居",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#14",
+     "topic": "賣畫",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#9",
+     "topic": "夢醒",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#15",
+     "topic": "野渡",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#17",
+     "topic": "牧童",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#2",
+     "topic": "古城",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#17",
+     "topic": "茶煙",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#19",
+     "topic": "松風",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#8",
+     "topic": "石橋",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#19",
+     "topic": "漁火",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#9",
+     "topic": "晚鐘",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#8",
+     "topic": "春困",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#4",
+     "topic": "雁聲",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#7",
+     "topic": "閒居",
+     "truth": "A",
+     "pick": "A"
+    }
+   ]
+  },
+  "iter60": {
+   "arm": "iter60",
+   "n": 34,
+   "correct": 31,
+   "accuracy": 0.912,
+   "se": 0.049,
+   "trials": [
+    {
+     "heldout": "題墨花",
+     "topic": "桃花",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#3",
+     "topic": "春雨",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "子胥圖",
+     "topic": "醉酒",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#17",
+     "topic": "落花",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#16",
+     "topic": "明月",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#6",
+     "topic": "江南",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#18",
+     "topic": "漁舟",
+     "truth": "B",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#13",
+     "topic": "山寺",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#14",
+     "topic": "梅花",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#20",
+     "topic": "竹影",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#10",
+     "topic": "夜雨",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#19",
+     "topic": "孤舟",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#18",
+     "topic": "燕子",
+     "truth": "B",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#5",
+     "topic": "美人",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#7",
+     "topic": "登高",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#6",
+     "topic": "菊花",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#4",
+     "topic": "故鄉",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "子胥圖",
+     "topic": "荷花",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#3",
+     "topic": "螢火",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#6",
+     "topic": "清明",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#18",
+     "topic": "重陽",
+     "truth": "B",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#17",
+     "topic": "題畫",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題墨花",
+     "topic": "送友",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#20",
+     "topic": "貧居",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#18",
+     "topic": "賣畫",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題墨花",
+     "topic": "夢醒",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#2",
+     "topic": "野渡",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "佳人插花圖",
+     "topic": "牧童",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#4",
+     "topic": "古城",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#15",
+     "topic": "松風",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "子胥圖",
+     "topic": "漁火",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "佳人插花圖",
+     "topic": "晚鐘",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#19",
+     "topic": "藥爐",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#7",
+     "topic": "閒居",
+     "truth": "A",
+     "pick": "A"
+    }
+   ]
+  },
+  "e3": {
+   "arm": "e3",
+   "n": 34,
+   "correct": 28,
+   "accuracy": 0.824,
+   "se": 0.065,
+   "trials": [
+    {
+     "heldout": "題墨花",
+     "topic": "桃花",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#10",
+     "topic": "春雨",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "子胥圖",
+     "topic": "落花",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "子胥圖",
+     "topic": "明月",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#12",
+     "topic": "秋風",
+     "truth": "A",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#10",
+     "topic": "漁舟",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#15",
+     "topic": "山寺",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#18",
+     "topic": "古松",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#5",
+     "topic": "梅花",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "子胥圖",
+     "topic": "白髮",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#4",
+     "topic": "琴聲",
+     "truth": "B",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#9",
+     "topic": "夜雨",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#2",
+     "topic": "殘雪",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#14",
+     "topic": "美人",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "佳人插花圖",
+     "topic": "離別",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#13",
+     "topic": "書齋",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#16",
+     "topic": "菊花",
+     "truth": "B",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#20",
+     "topic": "寒夜",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#7",
+     "topic": "客愁",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "佳人插花圖",
+     "topic": "故鄉",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題墨花",
+     "topic": "螢火",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "子胥圖",
+     "topic": "重陽",
+     "truth": "B",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#3",
+     "topic": "除夕",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#15",
+     "topic": "送友",
+     "truth": "A",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#8",
+     "topic": "賣畫",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#18",
+     "topic": "牧童",
+     "truth": "B",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#20",
+     "topic": "古城",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#3",
+     "topic": "茶煙",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#12",
+     "topic": "松風",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#20",
+     "topic": "漁火",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#19",
+     "topic": "晚鐘",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#9",
+     "topic": "雁聲",
+     "truth": "A",
+     "pick": "A"
+    },
+    {
+     "heldout": "題畫 (唐寅)#6",
+     "topic": "苔痕",
+     "truth": "B",
+     "pick": "B"
+    },
+    {
+     "heldout": "題畫 (唐寅)#12",
+     "topic": "閒居",
+     "truth": "B",
+     "pick": "B"
+    }
+   ]
+  }
+ }
+}

@@ -265,7 +265,21 @@ split; no whole famous poem — canon list to build), form-scored, and its held-
 The borrowed-line check (Sautee's item b) has TWO references reported separately: the training split (= regurgitation)
 and other poets (= borrowing). Sautee's design note stands for the second, not the first.
 
-**Next (P1 continued):** the naming-probe re-run is in progress (analysis will apply the copy filter); then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
+**Naming-probe re-run (2026-09-16 19:5xZ, `--tag _naming`, seeds 0–2, 584 calls, $2.03, logs whole):** the naming probe
+(poem alone, era only: 「這是一首明代的七言絕句。你是否認得這首詩？」) excluded exactly the two poems the attribution flag had
+flagged (開門七件事, 除夕口占) on every seed and nothing else. 子胥圖 — which the judge named as 《伍子胥廟》 inside a pair — it
+does NOT name cold: that recognition needed the pair prompt's own prior ("one of these is Tang Yin's"). Canaries 0/10 ×3.
+
+| naming protocol, 3 seeds, copy filter applied | original pairs | copied pairs |
+|---|---:|---:|
+| baseline | 126/126 = 1.000 | — |
+| iter60 | 94/102 = 0.922 ± 0.027 | — |
+| e3 | 70/75 = 0.933 ± 0.029 | 19/27 = 0.704 ± 0.088 |
+
+Same reading as the first protocol (0.931 / 0.947 / 0.667). Six seeds, two protocols. The naming probe is a null; the
+copy check is the instrument that mattered. P1 CLOSED at this reading. Judge spend, all P1: ≈ $3.98.
+
+**Next:** P3 (Sautee, after the gate; with the copy filter and the canon reference from item b), then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
 reason probe — the same judge asked for one sentence on the four pairs that fooled it and four it caught, eight
 calls — which is the only diagnostic of *what* gives the 7B away.
 
