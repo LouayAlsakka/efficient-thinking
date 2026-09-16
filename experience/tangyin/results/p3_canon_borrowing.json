@@ -1,0 +1,56 @@
+{
+ "measurement": "理 10866 (b) — the CANON reference, reported separately from the training split",
+ "date": "2026-09-16",
+ "canon": {
+  "source": "github.com/chinese-poetry/chinese-poetry (MIT, git clone — no scrape)",
+  "files_read": 1299,
+  "distinct_7char_lines": 2382755,
+  "by_source": {
+   "song_shi": 1793630,
+   "tang": 393911,
+   "song_ci": 191132,
+   "other": 4082
+  }
+ },
+ "two_references": {
+  "TRAINING SPLIT": "regurgitation — reproducing text we fine-tuned on",
+  "CANON": "borrowing — reproducing famous verse it knew before we touched it"
+ },
+ "arms_all_seeds": {
+  "baseline": {
+   "poems": 123,
+   "regurgitation": 0,
+   "borrowing": 2,
+   "clean": 121
+  },
+  "iter60": {
+   "poems": 101,
+   "regurgitation": 0,
+   "borrowing": 12,
+   "clean": 89
+  },
+  "e3": {
+   "poems": 87,
+   "regurgitation": 23,
+   "borrowing": 7,
+   "clean": 57
+  },
+  "mixed": {
+   "poems": 77,
+   "regurgitation": 0,
+   "borrowing": 2,
+   "clean": 75
+  }
+ },
+ "findings": [
+  "THE TWO REFERENCES CATCH DISJOINT SETS. Not one poem in any arm trips both — regurgitation and borrowing are separate behaviours and a single 'copying' number would have merged them.",
+  "BORROWING IS NOT A FINE-TUNING ARTEFACT. The BASELINE borrows too. Every arm borrows at a similar low rate, including the untouched model, so borrowing is a property of the base model and not of anything we did to it.",
+  "REGURGITATION IS ENTIRELY e3's. Zero in baseline, iter60 and mixed; 8 of 34 poems at three epochs on one seed. That is the overfitting signature in a second instrument.",
+  "王安石〈元日〉 — the case that motivated the canon — IS CAUGHT, in 全宋詩, exactly as 理 predicted. So is 蘇軾's 浣溪沙 line and 王昌齡's 采蓮曲."
+ ],
+ "what_it_cannot_see": [
+  "MING POETS ARE ABSENT by construction: the repo is 唐/宋/元/五代/詩經/楚辭. 唐寅's own era is not in it, so a Ming borrowing scores CLEAN here. 理's per-poem judge pass is the only canon that holds Ming and it is theirs to run.",
+  "Paraphrase and reordered couplets — whole-line keys, the same floor as the training-split check.",
+  "So CLEAN is the optimistic column in both directions."
+ ]
+}
