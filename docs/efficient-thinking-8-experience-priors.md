@@ -818,7 +818,7 @@ Predictions were written before any run. Measured so far (`experience/tangyin/RE
   editions collapsed on one form, which accuses the instrument, not the poets.
 - Three seeds reproduced a 32.0% rate exactly while 24 of 50 poems flipped verdict between them, 12 each way: a
   reproduced rate is not stability, and the flips are published beside every rate.
-- The voice half, first run (P1, one seed): a pairwise blind judge — a frontier model with no tools, shown one
+- The voice half (P1, two seeds so far; the second reproduces the first): a pairwise blind judge — a frontier model with no tools, shown one
   real held-out Tang Yin quatrain and one generated one in random order and asked only which is real — separates
   every arm from the poet almost perfectly. Base 7B: 100% of 42 pairs; LoRA at the validation minimum: 97.1% of 34;
   LoRA at three epochs: 88.2% of 34 (SE 5.5 points; 50% would mean indistinguishable). The three-epoch arm, the one
@@ -830,7 +830,12 @@ Predictions were written before any run. Measured so far (`experience/tangyin/RE
   to please, and the 22 poems it scored are ones it cannot recite. The whole run cost about $0.72 of API spend
   and 172 logged requests. The gap it reports is wide enough that no arm is near the poet, and that is the
   study's present answer: the form can be verified, the LoRA does not buy it, and the voice is not moved by
-  63 poems either way.
+  63 poems either way. A second seed, with the pairs redrawn and the probes re-run, gave 100% / 94.1% / 88.2% on
+  42 / 34 / 34 pairs; pooled over both seeds the judge is right on 84 of 84 base pairs, 65 of 68 at the validation
+  minimum and 60 of 68 at three epochs (88.2%, SE 3.9), so the three-epoch arm's edge over the base is three
+  standard errors and its edge over the validation minimum is not yet one that separates (1.6 SE). The
+  memorisation probe is itself stochastic — the second seed excluded two poems where the first excluded four —
+  which is why the exclusion runs fresh under every seed rather than once.
 
 ### What this changes in the paper's claims
 
