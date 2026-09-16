@@ -740,6 +740,19 @@ d′ 3.1–4.9, so the probe is good and the intervention is what remains untune
 column no mechanism moved: about a quarter of episodes in every arm find the right region and still cannot write
 the fix. That is the repair floor, and nothing in this paper's toolbox is aimed at it.
 
+**The fair test of A refutes the content hypothesis.** A second text memory, distilled from the 7B's own 1,197
+successful episodes (2,000 episodes at 59.9% success, 2.1 KB) instead of the weak early run, was injected the same
+way on the same four slices: **5.0%** success, against v0's 20.0% and the baseline's 62.5%, down in four of four
+paired slices, with input tokens per episode rising to 16,212. Two memories of different provenance and quality both
+destroy performance and the better one destroys slightly more; the action mix shows the better advice producing
+more patches (124 → 180) and more wasted ones (repeat patches 5 → 20) with no more success. So at 7B and this budget
+the text prompt is not a weak carrier for experience but an actively harmful one, and the harm does not depend on
+the lessons being wrong. One qualification, stated by the run's author: this arm ran the raw distillation without the
+verification gate of §4.3, so its honest name is the raw-distilled memory, not the gated one. The gate is the next
+thing built, and its test is now sharper than planned: on held-out replay it should *reject* most of these lessons
+before they are ever injected — which is prediction P0 doing the work the paper assigned it. Prediction P2, prior
+versus text memory at a token budget, is answered in the negative for text memory as the carrier.
+
 **Mechanism F is now defined** (it had been a name only): an additive logit bias on the action-choice token at the
 decision position, built from the same contrastive statistics as C — per region class, the log-ratio of action
 frequencies in productive versus wasted episodes, clipped to ±2 logits, zero elsewhere. It is the cheapest carrier.
