@@ -89,6 +89,48 @@ def cmd_build(a):
     print(f"  -> {a.out}/bias.json")
 
 
+EMITTABLE = ("hypothesize", "inspect", "patch", "run")
+
+
+def install_logit_bias(model, tok, bias_row: dict, clip: float = CLIP):
+    """Mechanism F (a), 理 10824: bias ONLY the tokens the model can actually emit.
+
+    noop_patch / repeat_* / invalid are the harness's VERDICTS on an action, not words the model
+    writes, so they have no token to attach to and are dropped here rather than silently mapped
+    onto something else. That is what makes this arm F and not F-prime, and it is why F cannot
+    reach the repair floor BY CONSTRUCTION -- which is the paper's sentence, not a shortfall.
+
+    The action word appears inside a JSON object: {"action":"patch",...}. The decisive position is
+    the token right after `"action":"`, so the bias goes on the FIRST token of each action word.
+    VERIFIED on Qwen2.5-7B before this ran, because two things could have made it silently wrong:
+      - hypothesize tokenises to [71, 59300, 26887] -> its first token is bare 'h', NOT the word.
+        Biasing 'h' biases every word starting with h at that position. It is the only handle the
+        first-token approach has, and it is stated here rather than discovered later.
+      - in context ({"action":") the first tokens are unchanged (71 / 82054 / 3400 / 6108) and no
+        two actions share one, so the bias cannot hit two actions at once.
+    Returns (logits_processor, applied) where `applied` names what was reachable.
+    """
+    import mlx.core as mx
+    applied = {}
+    for act in EMITTABLE:
+        if act not in bias_row:
+            continue
+        ids = tok.encode(act, add_special_tokens=False)
+        if not ids:
+            continue
+        applied[act] = {"first_token_id": ids[0], "bias": bias_row[act]}
+    if not applied:
+        return None, {}
+    idx = mx.array([v["first_token_id"] for v in applied.values()])
+    val = mx.array([max(-clip, min(clip, v["bias"])) for v in applied.values()], dtype=mx.float32)
+
+    def processor(tokens, logits):
+        out = logits
+        out[..., idx] = out[..., idx] + val.astype(out.dtype)
+        return out
+    return processor, applied
+
+
 def cmd_show(a):
     d = json.load(open(os.path.join(a.bias, "bias.json")))
     print(json.dumps(d, indent=1, ensure_ascii=False)[:2000])

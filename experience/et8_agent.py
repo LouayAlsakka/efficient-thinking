@@ -50,12 +50,14 @@ def load_model(model_id: str):
     from mlx_lm import load
     return load(model_id)
 
-def generate(model, tok, messages: list[dict], max_tokens: int = 400, temp: float = 0.0) -> tuple[str, int, int]:
+def generate(model, tok, messages: list[dict], max_tokens: int = 400, temp: float = 0.0,
+             logits_processors=None) -> tuple[str, int, int]:
     from mlx_lm import generate as mlx_generate
     from mlx_lm.sample_utils import make_sampler
     prompt = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     n_in = len(tok.encode(prompt))
-    text = mlx_generate(model, tok, prompt=prompt, max_tokens=max_tokens, sampler=make_sampler(temp=temp), verbose=False)
+    kw = {"logits_processors": logits_processors} if logits_processors else {}
+    text = mlx_generate(model, tok, prompt=prompt, max_tokens=max_tokens, sampler=make_sampler(temp=temp), verbose=False, **kw)
     return text, n_in, len(tok.encode(text))
 
 # Exploration rule (harness v0.3): the FIRST attempt at any step is greedy (temp 0, reproducible). After a WASTED step
@@ -105,7 +107,8 @@ def replace_region(program: str, region: str, new_src: str) -> str:
         out += f"# region: {name}\n" + (new_src.rstrip("\n") + "\n\n" if name == region else src)
     return out
 
-def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id: str, log, model_id: str) -> dict:
+def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id: str, log, model_id: str,
+                logits_processors=None) -> dict:
     program = task["program"]
     inspected: dict[str, str] = {}
     history: list[str] = []
@@ -205,6 +208,8 @@ def main():
     ap.add_argument("--steer-layers", nargs="+", type=int, help="subset of the built layers to install (default: all in meta)")
     ap.add_argument("--steer-alpha", type=float, default=4.0, help="steering strength in hidden units (hidden norms are ~40-90)")
     ap.add_argument("--steer-all-tokens", action="store_true", help="apply at every position instead of the decision token only")
+    ap.add_argument("--logit-bias", help="directory from et8_logit_bias.py build (mechanism F): "
+                                         "additive bias on the EMITTABLE action tokens only")
     a = ap.parse_args()
     files = sorted(glob.glob(os.path.join(a.tasks, "task_*.json")))
     if a.limit: files = files[: a.limit]
@@ -212,6 +217,12 @@ def main():
     memory = open(a.memory).read() if a.memory else None
     run_id = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()) + "-" + uuid.uuid4().hex[:6]
     t0 = time.time(); model, tok = load_model(a.model); print(f"model loaded in {time.time()-t0:.1f}s", file=sys.stderr)
+    bias_tbl = None; _bias_logged = {}
+    if a.logit_bias:
+        import et8_logit_bias
+        bias_tbl = json.load(open(os.path.join(a.logit_bias, "bias.json")))["bias"]
+        print(f"logit bias loaded: families={sorted(bias_tbl)}", file=sys.stderr)
+
     steer = None
     if a.steer_vectors:
         import numpy as np, et8_inject
@@ -225,7 +236,20 @@ def main():
     with open(a.out + ".steps.jsonl", "a") as log, open(a.out + ".episodes.jsonl", "a") as ep:
         for i, f in enumerate(files, 1):
             task = json.load(open(f)); t1 = time.time()
-            s = run_episode(model, tok, task, a.budget, memory, run_id, log, a.model)
+            # Mechanism F: the bias table is PER FAMILY, so the processor is built per task.
+            lp = None
+            if bias_tbl:
+                fam = task.get("family")
+                row = bias_tbl.get(fam)
+                if row:
+                    proc, applied = et8_logit_bias.install_logit_bias(model, tok, row)
+                    lp = [proc] if proc else None
+                    if not _bias_logged.get(fam):
+                        print(f"  F bias {fam}: {applied}", file=sys.stderr); _bias_logged[fam] = True
+                elif not _bias_logged.get("_miss"):
+                    print(f"  F: no bias row for family {fam!r} — running UNBIASED", file=sys.stderr)
+                    _bias_logged["_miss"] = True
+            s = run_episode(model, tok, task, a.budget, memory, run_id, log, a.model, logits_processors=lp)
             s["seconds"] = round(time.time() - t1, 1); ep.write(json.dumps(s) + "\n"); summaries.append(s)
             print(f"[{i}/{len(files)}] {task['task_id']} {task['family']:10s} {task['bug_class']:20s} "
                   f"green={s['green']} actions={s['actions']} first_correct={s['first_correct_hypothesis_step']} "
