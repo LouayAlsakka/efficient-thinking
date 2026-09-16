@@ -99,3 +99,9 @@ Spec (paper §20b carries the pre-registration; this is the build order):
    wrong regions — the signal is not a decision signal".
 7. Order: gate run (tonight) → G steps 1–6 → then a C strength sweep only if G fails on choice rather than on signal.
 Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 starts.
+
+## Rule, 2026-09-16 23:1xZ (理, after two losses in one day)
+- NO working-tree moves under a running writer: not `stash -u` (理 lost 91 judge rows), not `pull --rebase` (沙汰's gtriv_s1
+  came back 0 bytes), not `checkout`. Commit specific files with `git add <path>`; if the tree is behind, `merge --no-edit`
+  (touches only files upstream changed) or wait for the writer to finish.
+- G order (23:1xZ): steps 2–3 → G-TRIVIAL′ (candidate machinery, head replaced by the symptom rule) → step 4 head → step 5.
