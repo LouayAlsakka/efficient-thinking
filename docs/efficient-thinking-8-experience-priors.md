@@ -840,6 +840,20 @@ hour of GPU and precedes any further step of G. One caveat is stated now rather 
 of one episode controls for the task but not for the history at each step, so it is the strongest check available
 from replay, and the run of G itself is the test of choice.
 
+Extracting every hypothesis step then produced a fact about the agent rather than a probe: **the agent hypothesises
+exactly once per episode.** Over 2,000 episodes and 13,696 steps there are 2,000 hypothesise steps, 2,001 inspects,
+and 9,668 patch attempts (6,257 of them no-ops); not one episode revisits its localisation. The loop picks a region
+at step one and spends the rest of its budget writing a fix for that region. Three consequences follow. The
+within-task check cannot be computed from any replay of this data, since each task carries one labelled decision,
+so the gate is recorded as *not computable on this harness* rather than passed or failed, and G is run as the test of
+choice with that label in every table. Every mechanism in this section — text memory, steering, the logit bias —
+acted on a single choice per episode, which bounds what any of them could have done. And the repair floor of about
+a quarter of episodes that localise correctly and still fail is now read partly as a loop that never revisits its
+localisation rather than as repair competence alone; a re-hypothesis rule in the action loop would change the thing
+being measured and belongs to a later section, not to this week's runs. Before G runs, its ceiling is stated from
+the same data: splitting the 2,000 episodes by the label of their one hypothesis gives the success rate and the
+action count G could reach if it chose perfectly, and the run is read against that bound as well as against ε.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
