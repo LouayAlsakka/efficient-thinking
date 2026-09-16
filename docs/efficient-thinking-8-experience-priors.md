@@ -798,6 +798,25 @@ therefore a result, not a failure: the arm that shows a decision-token prior doe
 the wasted verdicts onto the `patch` choice would be a different experiment — an outcome-shaped penalty that
 discourages a good patch with a bad one — and is not run under this name. F runs after C on the same slices.
 
+**Mechanism G, a read-only controller head (pre-registered, not yet run).** The steering result of §20b separates
+two things the paper had run together: the frozen model's hidden state at a decision point *carries* the signal
+that separates productive from wasted search (d′ 3.1–4.9 on held-out prompts), and *writing* along that direction
+into the residual stream lowers success. G uses the same signal without writing. At each decision point the
+controller enumerates k candidate actions — the emittable family of §20b crossed with the regions the agent can
+currently see, capped by the model's own top-k over the first action token so the model's greedy choice is always
+among them — runs each candidate's prefix through the frozen model under teacher forcing, reads the hidden state
+at the candidate's last token (layer 27 first, layer 18 as the check), scores it with a linear head trained on the
+1,761 productive and 239 wasted decisions of the 2,000-episode run, and takes the argmax. The transformer's
+parameters and residual stream are never touched; the model writes every action it takes; the only thing G can get
+wrong is the choice. Cost is k short prefix passes per decision with a shared cache, reported as tokens per episode
+beside the rate. Two conditions precede the run. The probe must survive conditioning on task: fitted within task,
+d′ must stay above 2, or the vector reads difficulty rather than decision quality and G is not run. And the
+constraint of §4.2a is declared now: on the same four 80-task slices, paired, success within ε = 2.5 points of the
+62.5% base on every slice, localisation within 2.5 points of 88.8%, and the objective is mean actions down by at
+least 15% (6.6 → 5.6 or fewer). If success holds and actions do not fall, the representation is decodable but not
+actionable through choice, and that is the result. G runs after the verification-gate test and before any second
+strength of C, because it asks C's question through a channel that cannot corrupt.
+
 **An application study: a poet's voice as an experience prior.** The same pipeline was pointed at a different
 domain — writing classical Chinese regulated verse in the voice of Tang Yin (1470–1524) — with the three parts
 kept in the same shape: an external verifier for FORM (line count, rhyme class against the 平水韻 table, tonal
