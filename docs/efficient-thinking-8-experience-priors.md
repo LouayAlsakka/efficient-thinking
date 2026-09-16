@@ -838,6 +838,25 @@ Predictions were written before any run. Measured so far (`experience/tangyin/RE
   arm that moved it most is the arm whose form collapsed. The memorisation probe is itself stochastic — one seed
   excluded two poems where the others excluded four — which is why the exclusion runs fresh under every seed
   rather than once. Total judge spend for the three seeds: about $1.90 and 516 logged requests.
+- Then the judge was asked *why*, and the answer changes what P1 measures. Eight three-epoch pairs — four the judge
+  had got wrong and four right — were shown again with the same question plus "one sentence of reason". It
+  repeated its pick on seven of eight, so the fooled pairs are systematic, not noise. And its reasons are mostly
+  **recognition**: the real poems it names by title and subject (the Wu Zixu temple poem, the Zhuo Wenjun
+  painting inscription), which the completion probe had not caught because the judge can *name* a poem it cannot
+  recite; and the generated poems that fooled it, it also names — as Tang Yin's "Chrysanthemum", as a poem "of
+  the 集賢賓 kind" — titles that fit nothing in the corpus. The remaining reasons are a **borrowed line** (a
+  generated poem splicing a known phrase of Huang Tingjian, Han Yu, or Wang Anshi, which the judge knows and
+  Tang Yin did not write) and a **tonal or rhyme fault** the judge hears in a poem our verifier passed. So "the
+  judge separates the arms" means three things at once: it recalls the real poem, it recognises a stolen line,
+  or it hears a fault our instrument missed; and "the three-epoch arm moved the voice" means, at least in part,
+  that its poems resemble memorised Tang Yin closely enough to trigger a false attribution. Three rules follow.
+  A held-out poem the judge can *name* is excluded, not only one it can recite — the attribution probe under-
+  detects and is being replaced by a naming probe. Every generated poem is checked for borrowed lines before it
+  is shown (one call per poem, or an n-gram check against the classical corpus). And the pairs where the judge
+  heard a fault are re-run through our verifier with its per-position report, because one of the two instruments
+  is wrong and the disagreement is the finding. P1's accuracy is therefore an upper bound on style
+  discrimination, with recall inside it; the voice number that survives these three rules is the one the paper
+  will keep.
 
 ### What this changes in the paper's claims
 
