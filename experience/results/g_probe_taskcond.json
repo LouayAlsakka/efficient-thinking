@@ -1,0 +1,35 @@
+{
+ "spec": "\u7406 README:84 \u2014 probe fitted WITHIN task; gate d' >= 2 else STOP",
+ "model": "Qwen/Qwen2.5-7B-Instruct",
+ "runs": [
+  "experience/traj/base_v1_7b"
+ ],
+ "n_decisions": 2000,
+ "n_tasks": 2000,
+ "n_tasks_with_both_labels": 0,
+ "layers": {
+  "18": {
+   "pooled_d_prime": 4.1996588706970215,
+   "demeaned_d_prime": 0.0,
+   "within_task_d_prime": null,
+   "n_pos": 1761,
+   "n_neg": 239,
+   "n_within_pos": 0,
+   "n_within_neg": 0
+  },
+  "27": {
+   "pooled_d_prime": 4.914073467254639,
+   "demeaned_d_prime": 0.0,
+   "within_task_d_prime": null,
+   "n_pos": 1761,
+   "n_neg": 239,
+   "n_within_pos": 0,
+   "n_within_neg": 0
+  }
+ },
+ "gate": {
+  "threshold": 2.0,
+  "best_within_task_d_prime": -9,
+  "verdict": "STOP \u2014 the vector reads difficulty, not the decision"
+ }
+}

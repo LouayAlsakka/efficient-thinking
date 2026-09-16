@@ -78,6 +78,44 @@ def first_decision_states(steps: list[dict], tasks_dir: str):
                 history.append(f"inspect {s['region']}")
     return out
 
+
+def all_decision_states(steps: list[dict], tasks_dir: str):
+    """EVERY hypothesis step of every episode, with the history that preceded it (理 10878, G step 1).
+
+    first_decision_states() returns ONE decision per episode, so no task ever carries both labels
+    and a within-task contrast is not computable from it — that is what made G's gate return
+    "not evaluable" rather than a number.
+
+    This walks the whole episode, rebuilding `history` and `inspected` exactly as the harness did,
+    so each later decision's prompt is the one the model actually saw at that step.
+
+    THE CAVEAT, 理's, stated here because the number will be quoted without it: a contrast across
+    steps WITHIN one episode controls for the TASK but NOT for the HISTORY — a later decision is
+    made with more of the program revealed. It is the strongest check replay can give; the run of
+    G is the test of choice.
+    """
+    by_ep = {}
+    for s in steps:
+        by_ep.setdefault((s["run_id"], s["task_id"]), []).append(s)
+    out = []
+    for (rid, tid), st in by_ep.items():
+        st.sort(key=lambda s: s["step"])
+        task = json.load(open(os.path.join(tasks_dir, f"{tid}.json")))
+        history, inspected = [], {}
+        for s in st:
+            if s["action"] == "hypothesize":
+                out.append({"task_id": tid, "run_id": rid, "step": s["step"],
+                            "label": "tau+" if s["region_hit"] else "tau-",
+                            "region": s["region"],
+                            "messages": decision_prompt(task, history, inspected, 12, s["step"])})
+                history.append(f"hypothesize {s['region']}")
+            elif s["action"] == "inspect" and s["region"]:
+                inspected[s["region"]] = A.region_source(task["program"], s["region"]) or ""
+                history.append(f"inspect {s['region']}")
+            elif s.get("region"):
+                history.append(f"{s['action']} {s['region']}")
+    return out
+
 def cmd_build(a):
     import mlx.core as mx, numpy as np
     model, tok = A.load_model(a.model)

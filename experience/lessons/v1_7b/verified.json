@@ -1,0 +1,885 @@
+{
+ "summary": {
+  "lessons": 12,
+  "admitted": 1,
+  "rejected": 11,
+  "unevaluable": 0,
+  "rejection_rate_P0": 0.917,
+  "rule": {
+   "MIN_GAIN": 1.0,
+   "CONTROL_TOL": 0.5,
+   "MIN_N": 8
+  },
+  "run_id": "verify-20260916T172710Z-ace750"
+ },
+ "lessons": [
+  {
+   "condition": {
+    "family": "A_boundary",
+    "symptom_region": "aggregate"
+   },
+   "action_prior": [
+    {
+     "first_region": "aggregate",
+     "n": 54,
+     "green": 54,
+     "mean_actions": 3
+    }
+   ],
+   "action_avoid": [],
+   "alternatives_tried": [
+    "aggregate"
+   ],
+   "evidence": {
+    "n_episodes": 54,
+    "n_green": 54,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "aggregate": 54
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 3.0,
+     "cost_with": 3.0,
+     "green_base": 20,
+     "green_with": 20
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 3.0,
+     "cost_with": 3.7
+    },
+    "gain": 0.0,
+    "leak": -0.7,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "A_boundary",
+    "symptom_region": "aggregate",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.958,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "A_boundary",
+    "symptom_region": "consumer"
+   },
+   "action_prior": [
+    {
+     "first_region": "producer",
+     "n": 309,
+     "green": 309,
+     "mean_actions": 3
+    }
+   ],
+   "action_avoid": [],
+   "alternatives_tried": [
+    "producer"
+   ],
+   "evidence": {
+    "n_episodes": 309,
+    "n_green": 309,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "producer": 309
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 3.0,
+     "cost_with": 3.0,
+     "green_base": 20,
+     "green_with": 20
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 9.0,
+     "cost_with": 12.0
+    },
+    "gain": 0.0,
+    "leak": -3.0,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "A_boundary",
+    "symptom_region": "consumer",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.992,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "A_boundary",
+    "symptom_region": "transform"
+   },
+   "action_prior": [
+    {
+     "first_region": "transform",
+     "n": 137,
+     "green": 137,
+     "mean_actions": 4
+    }
+   ],
+   "action_avoid": [],
+   "alternatives_tried": [
+    "transform"
+   ],
+   "evidence": {
+    "n_episodes": 137,
+    "n_green": 137,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "transform": 137
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 4.0,
+     "cost_with": 3.0,
+     "green_base": 20,
+     "green_with": 20
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 4.0,
+     "cost_with": 3.0
+    },
+    "gain": 1.0,
+    "leak": 1.0,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "A_boundary",
+    "symptom_region": "transform",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.982,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "B_state",
+    "symptom_region": "aggregate"
+   },
+   "action_prior": [
+    {
+     "first_region": "aggregate",
+     "n": 202,
+     "green": 202,
+     "mean_actions": 3
+    }
+   ],
+   "action_avoid": [],
+   "alternatives_tried": [
+    "aggregate"
+   ],
+   "evidence": {
+    "n_episodes": 202,
+    "n_green": 202,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "aggregate": 202
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 3.0,
+     "cost_with": 4.0,
+     "green_base": 20,
+     "green_with": 20
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 3.0,
+     "cost_with": 3.25
+    },
+    "gain": -1.0,
+    "leak": -0.25,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "B_state",
+    "symptom_region": "aggregate",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.988,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "B_state",
+    "symptom_region": "consumer"
+   },
+   "action_prior": [
+    {
+     "first_region": "transform",
+     "n": 144,
+     "green": 2,
+     "mean_actions": 11.97
+    }
+   ],
+   "action_avoid": [
+    {
+     "region": "transform",
+     "failed_fixations": 142,
+     "was_the_bug_region_in": 144
+    },
+    {
+     "region": "producer",
+     "failed_fixations": 54,
+     "was_the_bug_region_in": 0
+    }
+   ],
+   "alternatives_tried": [
+    "producer",
+    "transform"
+   ],
+   "evidence": {
+    "n_episodes": 198,
+    "n_green": 2,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "transform": 144,
+     "consumer": 54
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 13.0,
+     "cost_with": 4.5,
+     "green_base": 0,
+     "green_with": 17
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 7.0,
+     "cost_with": 9.0
+    },
+    "gain": 8.5,
+    "leak": -2.0,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "B_state",
+    "symptom_region": "consumer",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.022,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "admitted",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "B_state",
+    "symptom_region": "producer"
+   },
+   "action_prior": [],
+   "action_avoid": [
+    {
+     "region": "producer",
+     "failed_fixations": 100,
+     "was_the_bug_region_in": 100
+    }
+   ],
+   "alternatives_tried": [
+    "producer"
+   ],
+   "evidence": {
+    "n_episodes": 100,
+    "n_green": 0,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "producer": 100
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 13.0,
+     "cost_with": 13.0,
+     "green_base": 0,
+     "green_with": 0
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 12.35,
+     "cost_with": 12.55
+    },
+    "gain": 0.0,
+    "leak": -0.2,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "B_state",
+    "symptom_region": "producer",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.024,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "C_types",
+    "symptom_region": "consumer"
+   },
+   "action_prior": [
+    {
+     "first_region": "transform",
+     "n": 196,
+     "green": 196,
+     "mean_actions": 3
+    }
+   ],
+   "action_avoid": [
+    {
+     "region": "producer",
+     "failed_fixations": 104,
+     "was_the_bug_region_in": 0
+    },
+    {
+     "region": "consumer",
+     "failed_fixations": 42,
+     "was_the_bug_region_in": 147
+    }
+   ],
+   "alternatives_tried": [
+    "consumer",
+    "producer",
+    "transform"
+   ],
+   "evidence": {
+    "n_episodes": 343,
+    "n_green": 196,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "transform": 196,
+     "consumer": 147
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 6.5,
+     "cost_with": 6.5,
+     "green_base": 13,
+     "green_with": 13
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 6.5,
+     "cost_with": 10.5
+    },
+    "gain": 0.0,
+    "leak": -4.0,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "C_types",
+    "symptom_region": "consumer",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.57,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "C_types",
+    "symptom_region": "producer"
+   },
+   "action_prior": [
+    {
+     "first_region": "producer",
+     "n": 157,
+     "green": 38,
+     "mean_actions": 11.31
+    }
+   ],
+   "action_avoid": [
+    {
+     "region": "producer",
+     "failed_fixations": 118,
+     "was_the_bug_region_in": 157
+    }
+   ],
+   "alternatives_tried": [
+    "producer"
+   ],
+   "evidence": {
+    "n_episodes": 157,
+    "n_green": 38,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "producer": 157
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 10.95,
+     "cost_with": 12.45,
+     "green_base": 8,
+     "green_with": 2
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 13.0,
+     "cost_with": 13.0
+    },
+    "gain": -1.5,
+    "leak": 0.0,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "C_types",
+    "symptom_region": "producer",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.25,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "D_mixed",
+    "symptom_region": "aggregate"
+   },
+   "action_prior": [
+    {
+     "first_region": "aggregate",
+     "n": 75,
+     "green": 75,
+     "mean_actions": 3
+    }
+   ],
+   "action_avoid": [],
+   "alternatives_tried": [
+    "aggregate"
+   ],
+   "evidence": {
+    "n_episodes": 75,
+    "n_green": 75,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "aggregate": 75
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 3.0,
+     "cost_with": 3.5,
+     "green_base": 20,
+     "green_with": 20
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 3.0,
+     "cost_with": 3.95
+    },
+    "gain": -0.5,
+    "leak": -0.95,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "D_mixed",
+    "symptom_region": "aggregate",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.969,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "D_mixed",
+    "symptom_region": "consumer"
+   },
+   "action_prior": [
+    {
+     "first_region": "producer",
+     "n": 163,
+     "green": 83,
+     "mean_actions": 7.42
+    },
+    {
+     "first_region": "transform",
+     "n": 88,
+     "green": 44,
+     "mean_actions": 7.5
+    }
+   ],
+   "action_avoid": [
+    {
+     "region": "producer",
+     "failed_fixations": 79,
+     "was_the_bug_region_in": 83
+    },
+    {
+     "region": "consumer",
+     "failed_fixations": 46,
+     "was_the_bug_region_in": 126
+    },
+    {
+     "region": "transform",
+     "failed_fixations": 44,
+     "was_the_bug_region_in": 88
+    }
+   ],
+   "alternatives_tried": [
+    "consumer",
+    "producer",
+    "transform"
+   ],
+   "evidence": {
+    "n_episodes": 297,
+    "n_green": 127,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "consumer": 126,
+     "transform": 88,
+     "producer": 83
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 10.4,
+     "cost_with": 11.5,
+     "green_base": 6,
+     "green_with": 3
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 7.5,
+     "cost_with": 9.0
+    },
+    "gain": -1.1,
+    "leak": -1.5,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "D_mixed",
+    "symptom_region": "consumer",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.429,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "D_mixed",
+    "symptom_region": "producer"
+   },
+   "action_prior": [
+    {
+     "first_region": "producer",
+     "n": 77,
+     "green": 6,
+     "mean_actions": 11.73
+    }
+   ],
+   "action_avoid": [
+    {
+     "region": "producer",
+     "failed_fixations": 71,
+     "was_the_bug_region_in": 77
+    }
+   ],
+   "alternatives_tried": [
+    "producer"
+   ],
+   "evidence": {
+    "n_episodes": 77,
+    "n_green": 6,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "producer": 77
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 12.8,
+     "cost_with": 13.0,
+     "green_base": 1,
+     "green_with": 0
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 12.1,
+     "cost_with": 12.95
+    },
+    "gain": -0.2,
+    "leak": -0.85,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "D_mixed",
+    "symptom_region": "producer",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.104,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  },
+  {
+   "condition": {
+    "family": "D_mixed",
+    "symptom_region": "transform"
+   },
+   "action_prior": [
+    {
+     "first_region": "transform",
+     "n": 51,
+     "green": 51,
+     "mean_actions": 4
+    }
+   ],
+   "action_avoid": [],
+   "alternatives_tried": [
+    "transform"
+   ],
+   "evidence": {
+    "n_episodes": 51,
+    "n_green": 51,
+    "runs": [
+     "20260907T192632Z-d06c20"
+    ],
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ],
+    "true_bug_regions": {
+     "transform": 51
+    }
+   },
+   "confound_check": {
+    "in_scope": {
+     "n": 20,
+     "cost_base": 4.0,
+     "cost_with": 3.0,
+     "green_base": 20,
+     "green_with": 20
+    },
+    "control": {
+     "n": 20,
+     "cost_base": 4.0,
+     "cost_with": 3.0
+    },
+    "gain": 1.0,
+    "leak": 1.0,
+    "rule": "gain>=1.0 and leak<=0.5"
+   },
+   "scope": {
+    "family": "D_mixed",
+    "symptom_region": "transform",
+    "models": [
+     "Qwen/Qwen2.5-7B-Instruct"
+    ]
+   },
+   "confidence": 0.955,
+   "expiry": {
+    "decay_per_round": 0.9,
+    "rounds_without_evidence": 0
+   },
+   "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+   "status": "rejected",
+   "verified_by": {
+    "run_id": "verify-20260916T172710Z-ace750",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 7
+   }
+  }
+ ]
+}
