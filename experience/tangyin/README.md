@@ -79,3 +79,13 @@ Ordered. Each item is runnable WITHOUT waiting on the judge or on a ruling; take
    mechanisms A / F / C on 20 tasks vs baseline through the verify gate, two seeds. Numbers into `experience/results/`, then text.
 5. **A0 chess prior** (`chessnet/search.py`): the learned move prior in PUCT, sims-to-Elo — the anchor the series has owed since 09-05.
 Rule: when an item blocks on someone, say so once on the 1:1 and take the next item; nothing on this list waits on Ri.
+
+## Rulings, 2026-09-16 17:4xZ (理) — P1 has run
+
+- P1 seed 0 is in `RESULTS.md` and the white paper §20b: judge accuracy baseline 1.000 (42), iter60 0.971 (34),
+  e3 0.882 (34); four held-out poems excluded as memorised, 0/10 canaries claimed. Nothing near 50%.
+- Rule: every arm now carries two columns, FORM (verifier) and VOICE (judge accuracy), and neither predicts the
+  other — e3 is worst on form and best on voice.
+- Rule: no `git stash -u` while a writer is running (the judge log lost 91 of 172 rows to it). Summary JSON is whole.
+- Lineup addition for the judge (理 runs it, Bedrock, Louay's $20): seeds 1–2, then the reason probe (8 calls).
+- Sautee's lineup unchanged: F(a) → §4.3 gate as a rejection test on v1_7b's lessons → P3 when the judge has 3 seeds.

@@ -161,7 +161,37 @@ choice.**
 
 ---
 
-## What is not claimed
+## P1 — the judge (voice half), seed 0, 2026-09-16 (理)
+
+`judge.py --provider bedrock --model us.anthropic.claude-opus-4-7 --seed 0`, no tools, `only answer A or B`,
+every request in `results/judge_log.jsonl`, summary in `results/p1_judge_seed0.json`.
+
+| arm      | pairs | judge correct | accuracy | SE    |
+|----------|------:|--------------:|---------:|------:|
+| baseline (base 7B, form-passing 七絕) | 42 | 42 | 1.000 | 0.000 |
+| iter60 (LoRA, val-loss minimum)       | 34 | 33 | 0.971 | 0.029 |
+| e3 (LoRA, 3 epochs)                   | 34 | 30 | 0.882 | 0.055 |
+
+50% = indistinguishable from Tang Yin. Nothing is near it. e3 vs baseline is 2.1 SE, e3 vs iter60 is 1.4 SE, one seed.
+
+**Probes, run before the pairs:** held-out 七絕 26 → judge set 22. Completion overlap ≥ 0.6 excluded four
+(海棠美人圖 1.00, 題畫#7 0.95, 言志 0.90, 題畫#11 0.81) — the judge can recite those and they never reached a pair.
+Attribution flagged two (開門七件事, 除夕口占) — kept, flagged. Canaries: 0 of 10 fabricated poems claimed as
+known, so the judge's "I know this" is not a yes-bias and the exclusions are real memorisation.
+
+**Reading.** The arm the form verifier called destructive (e3, 17.3% form) is the arm that fools the voice judge
+most — on its form-passing survivors only. Form and voice are separate axes; a form score does not predict a
+voice score, and the study needs both columns on every arm from here.
+
+**Spend and one defect.** ~$0.72 for 172 calls (extrapolated from 81 logged calls at $0.339, 8,385 in / 2,841 out).
+The log holds only the first 81 rows: a `git stash -u` on the working tree during the run moved the untracked
+log file aside and the process kept writing to the unlinked inode; the last 91 rows are lost. Never stash
+with `-u` under a running writer; the summary file is complete.
+
+**Next (P1 continued):** seeds 1 and 2 (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
+reason probe — the same judge asked for one sentence on the four pairs that fooled it and four it caught, eight
+calls — which is the only diagnostic of *what* gives the 7B away.
+
 
 - **None of this is the judge.** Whether the *voice* moved is P1/P3, on the held-out 33, and it is
   not answerable from anything here. The form half can say the cost of the intervention and
