@@ -52,5 +52,6 @@
   "MING POETS ARE ABSENT by construction: the repo is 唐/宋/元/五代/詩經/楚辭. 唐寅's own era is not in it, so a Ming borrowing scores CLEAN here. 理's per-poem judge pass is the only canon that holds Ming and it is theirs to run.",
   "Paraphrase and reordered couplets — whole-line keys, the same floor as the training-split check.",
   "So CLEAN is the optimistic column in both directions."
- ]
+ ],
+ "NOTE_ON_THE_COMMIT_MESSAGE": "The first commit message for this file quoted a table I typed rather than the one the script printed (126/102/102/75 poems against the real 123/101/87/77, and borrowing 2/7/10/2 against 2/12/7/2). The ARTIFACT is authoritative and was always correct; the message was hand-copied and wrong. Recorded rather than silently amended."
 }
