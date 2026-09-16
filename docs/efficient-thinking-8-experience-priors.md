@@ -624,7 +624,7 @@ If it can, the next experiment is continual consolidation: repeat several genera
 
 ---
 
-## 20b. Results So Far (measured; updated 2026-09-08)
+## 20b. Results So Far (measured; updated 2026-09-16)
 
 This section is appended as the proof of concept runs. It reports numbers that exist as committed results files,
 states what each one does and does not establish, and is rewritten as later results supersede earlier ones. Every
@@ -696,6 +696,71 @@ Also unrun: P2 (prior versus text memory at a token budget), P4 (steering vector
 
 *Results files: `experience/results/*.json`, `experience/lessons/v1/`, trajectories under `experience/traj/`.
 Predictions were registered in the proposal before any run.*
+
+### Update 2026-09-16 — the first mechanism runs on the 7B floor, and an application study
+
+**Mechanism A (text prior) is destructive on 7B as first built.** The v0 lessons (1.6 KB, distilled from 40 early
+episodes whose own green rate was 37.5%) were injected as a text prior and run on 80 held-out tasks in four disjoint
+20-task slices at the 12-action budget (`experience/results/`, commit `b9c6b00`):
+
+| arm | tasks | success | per slice | mean actions |
+|---|---|---|---|---|
+| baseline 7B | 80 | **62.5%** | 60 · 65 · 70 · 55 | 6.6 |
+| + v0 text prior | 80 | **20.0%** | 10 · 40 · 10 · 20 | 10.2 |
+
+The gap exceeds both arms' between-slice spread. The action mix says why: `hypothesize` is identical in both arms
+(one per episode), so the prior did not change where the model looked; `noop_patch` more than doubled (231 → 532 of
+525 → 819 steps), so the model re-emitted the code it was shown instead of editing it. This separates two deficits
+the 09-05 plumbing note had only named: localisation, which a prior can buy, and repair, which is a capability floor.
+The v0 artifact teaches a 37.5% policy to a 60% model; the next arm distils lessons from the 7B's own 1,197 green
+episodes, which is the first fair test of mechanism A rather than a test of v0's lessons. Because decoding is greedy
+a re-run is byte-identical, so independence comes from disjoint task slices, not seeds — recorded as the series'
+rule for greedy arms. Token cost per episode is not yet populated by the harness and is the next thing fixed.
+
+**Mechanism C (steering vectors) on 7B now has a real held-out check.** Vectors built from 2,000 decision prompts
+(τ+ 1,761 / τ− 239) separate productive from wasted first hypotheses on held-out prompts with d′ 3.15 (layer 9),
+4.20 (layer 18) and 4.91 (layer 27), threshold accuracy 1.00 — against the earlier 3B artefact's 0.79. An earlier
+run of this arm had pointed the 3B vectors at the 7B model and produced an empty arm that a chained `rc=0` hid; the
+held-out check is what catches that, and it is now run for every (model, artefact) pair. The C arm on the four
+slices is running.
+
+**Mechanism F is now defined** (it had been a name only): an additive logit bias on the action-choice token at the
+decision position, built from the same contrastive statistics as C — per region class, the log-ratio of action
+frequencies in productive versus wasted episodes, clipped to ±2 logits, zero elsewhere. It is the cheapest carrier
+and the one whose effect on `noop_patch` is directly readable. It runs after C on the same slices.
+
+**An application study: a poet's voice as an experience prior.** The same pipeline was pointed at a different
+domain — writing classical Chinese regulated verse in the voice of Tang Yin (1470–1524) — with the three parts
+kept in the same shape: an external verifier for FORM (line count, rhyme class against the 平水韻 table, tonal
+pattern), a frozen 7B model as the trainee, and a blind judge for VOICE (which of two poems is the real one).
+Predictions were written before any run. Measured so far (`experience/tangyin/RESULTS.md`):
+
+- P0 confirmed, narrowly: the base 7B passes the form verifier on 32.0% of quatrain attempts (n = 50 per seed, three
+  seeds, binomial SE 6.6 points; the prediction was < 40%).
+- P2, form half: a rank-8 LoRA on 63 poems is *destructive* at three epochs (17.3% vs 32.7%, three seeds each, spread
+  6 points against a 15-point gap) and *null* at the validation-loss minimum (28.7%). A form-preserving variant that
+  mixed the poems with the model's own instruction data was worse still (21.3%) while its validation loss kept
+  falling — the training loss and the verifier measure different things, and a LoRA fitted on the loss does not
+  buy the form. Its one monotone effect: English-token leakage fell below baseline after one epoch.
+- Two instrument errors were caught before becoming results, and both have a general form. A traditional-character
+  tone table read the model's simplified characters as unknown and *skipped the rule*, inflating longer forms by
+  18 points — every rate now ships with the fraction of positions the instrument could read. And a strict rhyme
+  rule scored a famous ancient-style series as broken regulated verse; the tell was that two poets from two
+  editions collapsed on one form, which accuses the instrument, not the poets.
+- Three seeds reproduced a 32.0% rate exactly while 24 of 50 poems flipped verdict between them, 12 each way: a
+  reproduced rate is not stability, and the flips are published beside every rate.
+- The voice half (P1, P3) is built and unrun: a pairwise blind judge with three memorisation probes (completion,
+  attribution, canaries), run with no tools and every request logged. It waits on a credential, not on code.
+
+### What this changes in the paper's claims
+
+Nothing above confirms P1; the application study strengthens the *reason* for the verifier-in-the-loop design.
+In both domains the first effect of an injected prior was to damage the capability it sat on — repair in
+debugging, form in verse — while leaving the thing it was meant to move (localisation, voice) unmeasured or
+unchanged. A prior that is not gated by an external verifier would have shipped that damage as progress.
+
+*Results files: `experience/results/*.json`, `experience/lessons/`, `experience/tangyin/results/`,
+`experience/tangyin/RESULTS.md`. Predictions were registered before any run.*
 
 ---
 
