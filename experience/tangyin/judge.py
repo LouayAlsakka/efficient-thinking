@@ -53,10 +53,10 @@ class Judge:
     def ask(self, kind, prompt, max_tokens=200):
         self.calls += 1
         if self.dry: return ""
-        req = {"kind": kind, "model": self.model, "prompt": prompt, "max_tokens": max_tokens, "temperature": 0, "tools": None}
+        req = {"kind": kind, "model": self.model, "prompt": prompt, "max_tokens": max_tokens, "tools": None}
         if self.provider == "bedrock":
             r = self.client.converse(modelId=self.model, messages=[{"role": "user", "content": [{"text": prompt}]}],
-                                     inferenceConfig={"maxTokens": max_tokens, "temperature": 0})
+                                     inferenceConfig={"maxTokens": max_tokens})   # temperature is rejected by opus-4-7 on Bedrock; determinism is not claimed, the pairing seed is
             assert "toolUse" not in json.dumps(r["output"]), "tool use in a judge response"
             text = "".join(c.get("text", "") for c in r["output"]["message"]["content"]); usage = r.get("usage")
         else:
