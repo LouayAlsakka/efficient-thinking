@@ -722,7 +722,23 @@ rule for greedy arms. Token cost per episode is not yet populated by the harness
 4.20 (layer 18) and 4.91 (layer 27), threshold accuracy 1.00 — against the earlier 3B artefact's 0.79. An earlier
 run of this arm had pointed the 3B vectors at the 7B model and produced an empty arm that a chained `rc=0` hid; the
 held-out check is what catches that, and it is now run for every (model, artefact) pair. The C arm on the four
-slices is running.
+slices is running. **Completed the same day (all four slices, 80 tasks per arm, paired by slice):**
+
+| arm | success | localised | localised but failed to repair | mean actions | input tokens/ep |
+|---|---|---|---|---|---|
+| baseline 7B | 62.5% | 88.8% | 21 of 80 | 6.6 | 3,777 |
+| + v0 text prior (A) | 20.0% | 47.5% | 22 of 80 | 10.2 | 11,946 |
+| + steering, α = 4.0 (C) | 51.2% | 81.2% | 24 of 80 | 7.2 | 4,228 |
+
+Paired per slice, C − baseline is [−1, −5, 0, −3] episodes on success and [+2, −7, −1, 0] on localisation. A first
+slice had shown C raising localisation by two episodes and was published as "the clean separation of the two
+deficits"; it did not survive the other three and is withdrawn — the bound in its own third paragraph ("needs the
+other slices before it is a number") did not protect its headline. What stands: A is destructive on every slice and
+on every axis (worst localisation, 3.2× the input tokens, a third of the success). C at this strength is not an
+improvement on either axis but is close to baseline and cheap; its vectors separate held-out decision states at
+d′ 3.1–4.9, so the probe is good and the intervention is what remains untuned (strength, layer, position). And a
+column no mechanism moved: about a quarter of episodes in every arm find the right region and still cannot write
+the fix. That is the repair floor, and nothing in this paper's toolbox is aimed at it.
 
 **Mechanism F is now defined** (it had been a name only): an additive logit bias on the action-choice token at the
 decision position, built from the same contrastive statistics as C — per region class, the log-ratio of action
