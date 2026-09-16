@@ -884,6 +884,20 @@ is the measured cost of a naive prior in the same paired table. The per-slice ce
 8.0 points of success and 0.69 actions, so the declared pass is the constraint held on every slice and at least
 0.34 actions saved pooled.
 
+The negative control then ran on the four slices, prediction registered first. **The naive prior costs 36 points:**
+62.5% to 26.2% pooled, down on every slice (12→6, 13→3, 14→7, 11→5 of 20), and actions up from 6.6 to 9.7. The
+predicted half held — on the 35 episodes where symptom and bug differ, 77.1% became 0.0%, 27 episodes destroyed.
+The unpredicted half is the finding: on the 45 episodes where the symptom region *is* the bug region, forcing the
+agent there did not help either, 51.1% to 46.7%. Sending the agent to the correct region does not rescue those
+episodes. One reading is that the 239 misses were never a localisation deficit a better first guess could fix,
+and the ceiling computed from the region label overstates what choice can buy. A second reading is stated beside
+it because the control cannot separate them: the naive arm replaces the model's own hypothesis step with a canned
+one, so it changes not only *where* the agent looks but *how* the hypothesis is expressed, and the model's own
+reasoning at that step may be what the later patch depends on. G chooses among the model's own candidates, so it
+does not carry that confound; the control that separates the two readings is G's candidate machinery with the
+head replaced by the symptom rule, and it runs before the head does. Whichever reading survives, the naive prior
+is not suboptimal but catastrophic, and no rule that ignores the state reaches the ceiling.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
