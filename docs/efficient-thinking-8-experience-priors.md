@@ -865,6 +865,15 @@ Predictions were written before any run. Measured so far (`experience/tangyin/RE
   arm that moved it most is the arm whose form collapsed. The memorisation probe is itself stochastic — one seed
   excluded two poems where the others excluded four — which is why the exclusion runs fresh under every seed
   rather than once. Total judge spend for the three seeds: about $1.90 and 516 logged requests.
+- Under the search reading, the study's cost column now exists, and it says what the debugging field said. Attempts per
+  form-passing quatrain, from the pass rates already measured: base 3.12; LoRA at the validation minimum 3.49; the
+  mixed variant 4.69; three epochs 6.00. The base is the cheapest search and every carrier makes it dearer, up to
+  double. And on the capability column the two independent copy filters, one keyed on the 546 distinct
+  seven-character lines of the training split and one on the same lines built separately, order the two LoRA
+  checkpoints in opposite directions with both gaps under 1.5 points — so the defensible statement is that the
+  checkpoints are indistinguishable on original poems, and the one claim both filters carry is that the three-epoch
+  arm's apparent edge lived entirely in its copies (63% against about 92%). A copy filter keyed on whole lines is a
+  floor: a paraphrase or a reordered couplet passes it, so "original" is the optimistic column.
 - Then the judge was asked *why*, and the answer, once checked, reverses the reading above. Eight three-epoch
   pairs — four the judge had got wrong and four right — were shown again with the same question plus "one
   sentence of reason". It repeated its pick on seven of eight, so the fooled pairs are systematic. Its reasons
