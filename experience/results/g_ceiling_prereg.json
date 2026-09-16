@@ -1,0 +1,49 @@
+{
+ "measurement": "G's CEILING, pre-registered before the run (理 10882)",
+ "date": "2026-09-16",
+ "source": "experience/traj/base_v1_7b — 2,000 episodes, the run G's head is trained on",
+ "method": "split the 2,000 episodes by the label of their ONE hypothesis. A controller that chose PERFECTLY at that single decision point would turn every episode into a productive-labelled one, so the productive group's numbers are the arithmetic ceiling on G.",
+ "groups": {
+  "productive (hypothesis hit the bug region)": {
+   "n": 1761,
+   "success": 68.0,
+   "mean_actions": 6.15,
+   "mean_tokens_in": 3500,
+   "mean_tokens_out": 483,
+   "mean_seconds": 13.0
+  },
+  "wasted (hypothesis missed)": {
+   "n": 239,
+   "success": 0.0,
+   "mean_actions": 12.0,
+   "mean_tokens_in": 7141,
+   "mean_tokens_out": 929,
+   "mean_seconds": 25.1
+  },
+  "all": {
+   "n": 2000,
+   "success": 59.9,
+   "mean_actions": 6.85
+  }
+ },
+ "THE_CEILING": {
+  "success": "68.0% — up from 59.9% baseline. MAXIMUM HEADROOM +8.1 points.",
+  "mean_actions": "6.15 — down from 6.85. MAXIMUM SAVING 0.70 actions, i.e. -10.2%.",
+  "mean_tokens_in": "3,500 — down from ~3,935 pooled."
+ },
+ "AND_THE_TARGET_IS_ABOVE_THE_CEILING": {
+  "target": "理's pre-registered objective for G: mean actions <= 5.6, a -15% cut",
+  "ceiling": "6.15 actions, -10.2%",
+  "verdict": "THE -15% TARGET IS UNREACHABLE. A PERFECT controller on this harness lands at 6.15 actions; 5.6 is below what choosing correctly every single time can buy. The target was set before anyone had computed what the choice is worth, and this join is why 理 asked for the ceiling BEFORE the run rather than after.",
+  "what_should_replace_it": "either the objective moves to <= 6.15 (the ceiling) with G judged on the FRACTION of available headroom it captures, or the -15% stands and G is scored against an impossible bar. That is 理's to rule; I am not moving a pre-registered target on my own reading."
+ },
+ "what_this_does_to_the_success_criterion": {
+  "epsilon": "ε = 2.5 points on every slice (>= 60.0% vs 62.5%) is a CAPABILITY-HELD criterion and is unaffected — it asks G not to LOSE, and the ceiling says it could gain up to 8.1.",
+  "reading": "so the acceptance test is coherent on capability and incoherent on cost. Only the actions objective needs the ruling."
+ },
+ "the_asymmetry_worth_stating": "the wasted group's success rate is ZERO — 0 of 239. Not low: zero. An episode whose single hypothesis misses the bug region NEVER recovers, because the loop never re-hypothesises. That is the same fact as '9,668 of 13,696 steps are patch attempts', measured from the outcome side, and it is what makes the one decision worth a controller at all.",
+ "bounds": [
+  "The ceiling assumes a perfect chooser AND that choosing correctly makes an episode behave like one that chose correctly on its own. A hard task that the base model localises by luck is not made easy by a controller localising it deliberately.",
+  "One run, 2,000 episodes, the 7B. The ceiling is specific to this harness and budget."
+ ]
+}
