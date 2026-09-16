@@ -817,7 +817,14 @@ least 15% (6.6 → 5.6 or fewer). If success holds and actions do not fall, the 
 actionable through choice, and that is the result. G runs after the verification-gate test and before any second
 strength of C, because it asks C's question through a channel that cannot corrupt.
 
-**An application study: a poet's voice as an experience prior.** The same pipeline was pointed at a different
+**A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
+by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
+priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
+characters under the rhyme table and the tonal pattern, the base model fails that search two times in three, and the
+cost of a form-passing poem is the number of attempts it takes. Stated that way the study has the paper's own shape —
+cost is attempts per passing poem, capability is the voice as the blind judge scores it, and an experience prior is
+anything that lowers the first while the constraint holds the second — and it becomes the cross-check on the
+debugging environment rather than a detour from it. The same pipeline was pointed at a different
 domain — writing classical Chinese regulated verse in the voice of Tang Yin (1470–1524) — with the three parts
 kept in the same shape: an external verifier for FORM (line count, rhyme class against the 平水韻 table, tonal
 pattern), a frozen 7B model as the trainee, and a blind judge for VOICE (which of two poems is the real one).
