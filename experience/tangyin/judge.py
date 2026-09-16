@@ -69,7 +69,7 @@ class Judge:
 
 def probes(J, held, canaries):
     """Returns (kept_heldout, report). Completion excludes; attribution flags; canaries calibrate."""
-    kept, rep = [], {"completion_excluded": [], "attribution_flagged": [], "canary_recognized": 0, "canary_n": len(canaries)}
+    kept, rep = [], {"completion_excluded": [], "attribution_flagged": [], "naming_excluded": [], "canary_recognized": 0, "canary_n": len(canaries)}
     for h in held:
         first = h["lines"][0]
         cont = J.ask("completion", f"下面是唐寅（唐伯虎）的一首七言絕句《{h['title']}》的第一句。請直接續寫出其餘三句，只輸出詩句。\n\n{first}", 120)
@@ -78,6 +78,10 @@ def probes(J, held, canaries):
         attr = J.ask("attribution", "這首七言絕句是誰寫的？只回答詩人姓名。\n\n" + "\n".join(h["lines"]), 40)
         if overlap >= 0.6: rep["completion_excluded"].append({"title": h["title"], "overlap": round(overlap, 2)}); continue
         if re.search(r"唐寅|唐伯虎|伯虎", attr): rep["attribution_flagged"].append(h["title"])
+        # naming probe (round 5): the reason probe showed the judge NAMES poems it cannot recite once told the era.
+        # Same prior as the pair prompt minus the poet: a poem the judge can name is out, not flagged.
+        name = J.ask("naming", "這是一首明代的七言絕句。你是否認得這首詩？若認得，請說出作者與題目；若不認得，只回答「不認得」。\n\n" + "\n".join(h["lines"]), 60)
+        if re.search(r"唐寅|唐伯虎|伯虎", name): rep["naming_excluded"].append({"title": h["title"], "answer": name.strip()[:80]}); continue
         kept.append(h)
     for c in canaries:
         a = J.ask("canary", "這首七言絕句是誰寫的？只回答詩人姓名。\n\n" + "\n".join(c["lines"]), 40)
@@ -107,6 +111,7 @@ def main():
     ap.add_argument("--canaries", type=int, default=10, help="generated 七絕 (form-passing) used as attribution canaries")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--out", default=os.path.join(HERE, "results"))
+    ap.add_argument("--tag", default="", help="suffix for the results file, e.g. _naming")
     a = ap.parse_args()
     if not a.dry_run and not a.model: raise SystemExit("--model is required for a live run")
     rng = random.Random(a.seed)
@@ -115,7 +120,7 @@ def main():
     J = Judge(a.provider, a.model, os.path.join(a.out, "judge_log.jsonl"), a.dry_run)
     canaries = [g for g in next(iter(arms.values()), []) if g["pass"]][: a.canaries]
     kept, rep = probes(J, held, canaries)
-    print(f"held-out 七絕 {len(held)} -> judge set {len(kept)} (excluded {len(rep['completion_excluded'])}, flagged {len(rep['attribution_flagged'])}; canaries {rep['canary_n']}, recognized {rep['canary_recognized']})")
+    print(f"held-out 七絕 {len(held)} -> judge set {len(kept)} (recited {len(rep['completion_excluded'])}, named {len(rep['naming_excluded'])}, flagged {len(rep['attribution_flagged'])}; canaries {rep['canary_n']}, recognized {rep['canary_recognized']})")
     results = {"seed": a.seed, "provider": a.provider, "model": a.model, "probes": rep, "arms": {}}
     for name, gens in arms.items():
         r = discriminate(J, name, gens, kept or held, rng)
@@ -123,6 +128,6 @@ def main():
         print(f"{name:10s} n={r['n']:3d} accuracy={r['accuracy']:.3f} ±{r['se']:.3f}   (50% = indistinguishable)")
     print(f"calls {'planned' if a.dry_run else 'made'}: {J.calls}")
     if not a.dry_run:
-        with open(os.path.join(a.out, f"p1_judge_seed{a.seed}.json"), "w", encoding="utf-8") as f: json.dump(results, f, ensure_ascii=False, indent=1)
+        with open(os.path.join(a.out, f"p1_judge_seed{a.seed}{a.tag}.json"), "w", encoding="utf-8") as f: json.dump(results, f, ensure_ascii=False, indent=1)
 
 if __name__ == "__main__": main()
