@@ -78,3 +78,24 @@ delta is believed until it survives a low-variance re-measurement (two seeds min
 - Pre-registered before the first episode (both sentences in RESULTS.md): P0 holds = the gate rejects ≥ 20% of
   lessons that are TRUE (309/309 green) and still harmful, so §4.3 catches carrier harm; P0 refuted = the gate
   admits them, the failure is in the carrier and no lesson-level gate can see it — the paper says so either way.
+
+## Ruling, 2026-09-16 20:0xZ (理; Louay: "G go") — Mechanism G, read-only controller head, QUEUED after the gate
+Spec (paper §20b carries the pre-registration; this is the build order):
+1. **Task-conditioned probe first** (no new episodes; the 2,000-run activations): fit the productive/wasted probe WITHIN
+   task (task-demeaned states, or per-task fits pooled) at layers 18 and 27. Gate: d′ ≥ 2 within task, else STOP and
+   report — the vector reads difficulty, G is not run.
+2. **Candidate enumeration** at each decision point: emittable family × regions visible to the agent, capped at k ≤ 8 by
+   the model's own top-k over the first action token; the greedy choice is always a candidate. Report mean k.
+3. **State read**: teacher-force each candidate's action prefix through the frozen 7B (shared prefix cache), take the
+   hidden state at the candidate's last token, layer 27 (18 as check). No write into the residual stream, ever.
+4. **Head**: linear (logistic) on the state, trained on the 1,761 / 239 labelled decisions; held out by task slice.
+   MLP only if linear fails the probe gate. Choice = argmax over candidates (deterministic; greedy decoding kept).
+5. **Run**: the same four 80-task slices as A/C/F, paired vs baseline. Report success, localised, mean actions, input
+   tokens/episode, wall, mean k — per slice and pooled.
+6. **Pre-registered acceptance (§4.2a):** ε = 2.5 pts success on EVERY slice (≥ 60.0% vs 62.5%); localisation ≥ 86.3%;
+   objective: mean actions ≤ 5.6 (−15%). Outcomes written now: "G passes: a read-only head derived from the model's own
+   history cuts search cost without touching capability — the first prior that satisfies the constraint";
+   "G holds success, actions flat: decodable but not actionable through choice"; "G loses success: the head chooses
+   wrong regions — the signal is not a decision signal".
+7. Order: gate run (tonight) → G steps 1–6 → then a C strength sweep only if G fails on choice rather than on signal.
+Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 starts.
