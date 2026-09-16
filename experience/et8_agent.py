@@ -108,7 +108,7 @@ def replace_region(program: str, region: str, new_src: str) -> str:
     return out
 
 def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id: str, log, model_id: str,
-                logits_processors=None) -> dict:
+                logits_processors=None, trivial_symptom: bool = False) -> dict:
     program = task["program"]
     inspected: dict[str, str] = {}
     history: list[str] = []
@@ -142,7 +142,18 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             state += (f"You already suspect {r}. Do not repeat the hypothesis: "
                       f"{'inspect it' if r not in inspected else 'PATCH it now (patch runs the tests)'}.\n")
         state += f"Actions left: {budget - step + 1}. Next action (one JSON object):"
-        text, n_in, n_out = generate(model, tok, messages + [{"role": "user", "content": state}], temp=temp)
+        # G-TRIVIAL (理 10888): the control G must beat. On the FIRST hypothesis only, substitute the
+        # one-line rule the agent's own history implies — "start where the symptom points". No model
+        # call is made for that step, which is the point: it costs nothing and it reaches the ceiling.
+        # Every miss in the 2,000-run is an episode where the bug WAS in the symptom region and the
+        # agent looked elsewhere (239 of 239), so this rule cannot lose ground it had.
+        if trivial_symptom and not any(h.startswith("hypothesize ") for h in history):
+            text = json.dumps({"action": "hypothesize", "region": task["symptom_region"],
+                               "bug_class": task.get("bug_class", ""), "why": "symptom region (G-trivial)"})
+            n_in = n_out = 0
+        else:
+            text, n_in, n_out = generate(model, tok, messages + [{"role": "user", "content": state}], temp=temp,
+                                         logits_processors=logits_processors)
         total_in += n_in; total_out += n_out
         a = parse_action(text)
         kind = a.get("action", "invalid"); region = a.get("region"); hyp = a.get("bug_class")
@@ -210,6 +221,10 @@ def main():
     ap.add_argument("--steer-all-tokens", action="store_true", help="apply at every position instead of the decision token only")
     ap.add_argument("--logit-bias", help="directory from et8_logit_bias.py build (mechanism F): "
                                          "additive bias on the EMITTABLE action tokens only")
+    ap.add_argument("--trivial-symptom", action="store_true",
+                    help="G-TRIVIAL (理 10888): force the first hypothesis to the SYMPTOM region. "
+                         "A one-line rule learned from the agent's own history and the control G "
+                         "must beat — it needs no model, no head and no activations.")
     a = ap.parse_args()
     files = sorted(glob.glob(os.path.join(a.tasks, "task_*.json")))
     if a.limit: files = files[: a.limit]
@@ -249,7 +264,8 @@ def main():
                 elif not _bias_logged.get("_miss"):
                     print(f"  F: no bias row for family {fam!r} — running UNBIASED", file=sys.stderr)
                     _bias_logged["_miss"] = True
-            s = run_episode(model, tok, task, a.budget, memory, run_id, log, a.model, logits_processors=lp)
+            s = run_episode(model, tok, task, a.budget, memory, run_id, log, a.model,
+                            logits_processors=lp, trivial_symptom=a.trivial_symptom)
             s["seconds"] = round(time.time() - t1, 1); ep.write(json.dumps(s) + "\n"); summaries.append(s)
             print(f"[{i}/{len(files)}] {task['task_id']} {task['family']:10s} {task['bug_class']:20s} "
                   f"green={s['green']} actions={s['actions']} first_correct={s['first_correct_hypothesis_step']} "
