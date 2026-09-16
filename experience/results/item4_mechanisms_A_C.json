@@ -1,0 +1,114 @@
+{
+ "measurement": "ET-8 item 4 — mechanisms A and C against baseline, 7B, 80 tasks each",
+ "date": "2026-09-16",
+ "rig": "llm1",
+ "model": "Qwen/Qwen2.5-7B-Instruct bf16",
+ "budget": 12,
+ "sampling": "four DISJOINT 20-task slices of tasks/v1 (1-20, 21-40, 41-60, 61-80). Greedy decode, no seed argument — a re-run is byte-identical, so slices are how independence is obtained. They are slices, NOT sampling seeds.",
+ "steering": {
+  "vectors": "experience/vectors/v1_7b, built from base_v1_7b (2,000 decision prompts, tau+ 1761 / tau- 239)",
+  "held_out_check": {
+   "layer9": 3.149,
+   "layer18": 4.2,
+   "layer27": 4.914,
+   "threshold_acc": 1.0
+  },
+  "note": "the first C run used the 3B artifact (2048-dim) against a 7B model (3584) and produced ZERO episodes. The held-out check is per-MODEL and skipping it for the 7B is what let a shape error reach a run."
+ },
+ "arms": {
+  "baseline": {
+   "n": 80,
+   "green_per_slice": [
+    12,
+    13,
+    14,
+    11
+   ],
+   "green_rate": 62.5,
+   "localized_per_slice": [
+    16,
+    19,
+    19,
+    17
+   ],
+   "localized_rate": 88.8,
+   "localized_but_failed": 21,
+   "mean_actions": 6.6,
+   "mean_tokens_in": 3777,
+   "mean_seconds": 18.6
+  },
+  "memA": {
+   "n": 80,
+   "green_per_slice": [
+    2,
+    8,
+    2,
+    4
+   ],
+   "green_rate": 20.0,
+   "localized_per_slice": [
+    7,
+    13,
+    8,
+    10
+   ],
+   "localized_rate": 47.5,
+   "localized_but_failed": 22,
+   "mean_actions": 10.2,
+   "mean_tokens_in": 11946,
+   "mean_seconds": 30.2
+  },
+  "steerC": {
+   "n": 80,
+   "green_per_slice": [
+    11,
+    8,
+    14,
+    8
+   ],
+   "green_rate": 51.2,
+   "localized_per_slice": [
+    18,
+    12,
+    18,
+    17
+   ],
+   "localized_rate": 81.2,
+   "localized_but_failed": 24,
+   "mean_actions": 7.5,
+   "mean_tokens_in": 4418,
+   "mean_seconds": 16.2
+  }
+ },
+ "paired_by_slice_C_minus_baseline": {
+  "green": [
+   -1,
+   -5,
+   0,
+   -3
+  ],
+  "localized": [
+   2,
+   -7,
+   -1,
+   0
+  ],
+  "reading": "Slices are identical task sets across arms, so pairing is the right comparison. C is down on green in 3 of 4 slices (mean -2.25/20) and down on localization in 2 of 4 (mean -1.50/20). It does not improve either."
+ },
+ "CORRECTION_to_my_own_10817": "At 10817 I reported slice 1 alone and said steering IMPROVES localization (18/20 vs 16/20) while not improving green — presenting it as a clean separation of the two deficits. WITH ALL FOUR SLICES THAT IS GONE: localization 81.2% vs the baseline's 88.8%, down in 2 of 4 paired slices. The slice-1 gap was 2 episodes and it did not survive. I published a direction from n=20 after writing in the same block that it needed the other three slices — the caveat was right and I should not have led with the claim.",
+ "what_stands": [
+  "Mechanism A is destructive and large: 20.0% green against 62.5%, 3.2x the input tokens, and the WORST localization of the three arms (47.5%). Consistent across all four slices.",
+  "Mechanism C is not an improvement on either axis at alpha=4.0 on this task set. It is much closer to baseline than A is, and its cost is small (7.2 actions vs 6.6, 15.4s vs 18.6s).",
+  "The LOCALIZED-BUT-FAILED column is real and roughly constant across arms (21 · 22 · 19 of 80): about a quarter of episodes find the right region and still cannot write the fix. That is the repair floor, and no mechanism here moves it."
+ ],
+ "not_claimed": [
+  "That steering cannot work. ONE alpha (4.0), one layer set (9/18/27), decision-token only. The vectors separate held-out states at d' 3.1-4.9, so the PROBE is good and the INTERVENTION is what is untuned.",
+  "A mechanism for A's damage beyond the measured noop_patch rise (231 -> 532 steps).",
+  "Anything about mechanism F — still undefined in the proposal and the code."
+ ],
+ "bounds": [
+  "80 tasks per arm. Between-slice spread: baseline 15pp, memA 30pp, steerC 30pp.",
+  "Greedy, one budget, one model, one memory artifact, one steering configuration.",
+  "tokens_in/out ARE populated (the earlier 0 was my reading the wrong field name)."
+ ]
+}
