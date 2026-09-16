@@ -1,0 +1,64 @@
+{
+ "measurement": "理 10859 — the poet study reported as a CARRIER study: cost C and capability Q",
+ "date": "2026-09-16",
+ "note": "no new run. Both numbers are joins over artifacts already on disk.",
+ "cost_C_attempts_per_form_passing_poem": {
+  "definition": "理 10859: attempts per form-passing 七絕. The search reading — composing a line is a search over characters under the form rules, and C is how many draws it costs.",
+  "arms": {
+   "baseline": {
+    "attempts": 150,
+    "passing": 48,
+    "pass_rate": 32.0,
+    "attempts_per_pass": 3.12
+   },
+   "iter60": {
+    "attempts": 150,
+    "passing": 43,
+    "pass_rate": 28.7,
+    "attempts_per_pass": 3.49
+   },
+   "mixed": {
+    "attempts": 150,
+    "passing": 32,
+    "pass_rate": 21.3,
+    "attempts_per_pass": 4.69
+   },
+   "e3": {
+    "attempts": 150,
+    "passing": 25,
+    "pass_rate": 16.7,
+    "attempts_per_pass": 6.0
+   }
+  },
+  "reading": "NO CARRIER LOWERS C. The baseline is the cheapest at 3.12 draws per passing poem; every LoRA arm costs MORE, up to 6.00 at three epochs. 理's prediction that the base would sit near 3 is confirmed (3.12)."
+ },
+ "capability_Q_judge_accuracy_on_ORIGINAL_poems": {
+  "copy_filter": "a generated poem is COPIED if any of its four 7-character lines appears in the 70-poem training split. Reproduced here independently of 理's join; my reference holds 546 distinct 7-char lines.",
+  "arms": {
+   "baseline": {
+    "original_n": 110,
+    "accuracy": 100.0,
+    "copied_n": 0
+   },
+   "iter60": {
+    "original_n": 77,
+    "accuracy": 92.2,
+    "copied_n": 0
+   },
+   "e3": {
+    "original_n": 48,
+    "accuracy": 91.7,
+    "copied_n": 19,
+    "copied_accuracy": 63.2
+   }
+  },
+  "reading": "On ORIGINAL poems the two LoRA arms are indistinguishable — 92.2% and 91.7%, a 0.5pt gap. e3's apparent voice edge lives entirely in its 19 COPIED pairs at 63.2%. This reproduces 理's join from a separate implementation.",
+  "corroboration": "理 10851 reported e3 original 0.947 and iter60 0.931 pooled over three seeds; I get 91.7 and 92.2 with my own copy filter. The ORDER of the two arms differs between our two implementations and the gap is under 1.5pt either way — so the honest statement is that the arms are indistinguishable on originals, NOT that one leads. Neither of us should quote a winner from a difference smaller than the disagreement between our filters."
+ },
+ "the_carrier_verdict": "Cost UP in every arm, capability FLAT once copying is removed. No carrier tested in this field lowers C with Q held — which is the same verdict the debugging field reached for A, C and F, arrived at in a domain with no shared code.",
+ "bounds": [
+  "Three judge seeds, ~150 七絕 attempts per arm, one base model.",
+  "My copy filter keys on exact 7-character lines from the training split. A paraphrase or a 6-character overlap is invisible to it, so COPIED is a floor and ORIGINAL is optimistic.",
+  "The mixed arm has no judge run, so it has C but no Q."
+ ]
+}
