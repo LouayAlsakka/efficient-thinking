@@ -188,7 +188,12 @@ The log holds only the first 81 rows: a `git stash -u` on the working tree durin
 log file aside and the process kept writing to the unlinked inode; the last 91 rows are lost. Never stash
 with `-u` under a running writer; the summary file is complete.
 
-**Next (P1 continued):** seeds 1 and 2 (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
+**Seed 1 (2026-09-16 18:3xZ), log whole (172 rows, $0.59):** judge set 24 (excluded 海棠美人圖 1.00, 言志 0.86; flagged the
+same two; canaries 0/10). baseline 42/42 = 1.000; iter60 32/34 = 0.941 ± 0.040; e3 30/34 = 0.882 ± 0.055.
+Pooled seeds 0+1: baseline 84/84; iter60 65/68 = 0.956 ± 0.025; e3 60/68 = 0.882 ± 0.039. e3 vs baseline 3.0 SE;
+e3 vs iter60 1.6 SE. The completion probe is stochastic across seeds (4 excluded, then 2) — it runs fresh per seed.
+
+**Next (P1 continued):** seed 2 (running), then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
 reason probe — the same judge asked for one sentence on the four pairs that fooled it and four it caught, eight
 calls — which is the only diagnostic of *what* gives the 7B away.
 
