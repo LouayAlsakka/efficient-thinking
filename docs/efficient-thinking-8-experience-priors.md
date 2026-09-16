@@ -822,8 +822,9 @@ Predictions were written before any run. Measured so far (`experience/tangyin/RE
   real held-out Tang Yin quatrain and one generated one in random order and asked only which is real — separates
   every arm from the poet almost perfectly. Base 7B: 100% of 42 pairs; LoRA at the validation minimum: 97.1% of 34;
   LoRA at three epochs: 88.2% of 34 (SE 5.5 points; 50% would mean indistinguishable). The three-epoch arm, the one
-  the form verifier called destructive, is the one that fools the judge most, and only its form-passing survivors
-  were shown — form and voice are separate axes and the form score does not predict the voice score. The
+  the form verifier called destructive, is the one that fools the judge most. (Every generated quatrain of the
+  right length was shown, passing or failing the form verifier; an earlier draft of this paragraph said only
+  form-passing poems were shown, and that was wrong.) The
   memorisation probes did their work before the pairs were scored: four of 26 held-out poems the judge could
   complete from memory (overlap 0.81–1.00, among them the famous 言志) were excluded, two were flagged for
   attribution, and none of ten fabricated canaries was claimed as known — so the instrument does not say "known"
@@ -838,25 +839,27 @@ Predictions were written before any run. Measured so far (`experience/tangyin/RE
   arm that moved it most is the arm whose form collapsed. The memorisation probe is itself stochastic — one seed
   excluded two poems where the others excluded four — which is why the exclusion runs fresh under every seed
   rather than once. Total judge spend for the three seeds: about $1.90 and 516 logged requests.
-- Then the judge was asked *why*, and the answer changes what P1 measures. Eight three-epoch pairs — four the judge
-  had got wrong and four right — were shown again with the same question plus "one sentence of reason". It
-  repeated its pick on seven of eight, so the fooled pairs are systematic, not noise. And its reasons are mostly
-  **recognition**: the real poems it names by title and subject (the Wu Zixu temple poem, the Zhuo Wenjun
-  painting inscription), which the completion probe had not caught because the judge can *name* a poem it cannot
-  recite; and the generated poems that fooled it, it also names — as Tang Yin's "Chrysanthemum", as a poem "of
-  the 集賢賓 kind" — titles that fit nothing in the corpus. The remaining reasons are a **borrowed line** (a
-  generated poem splicing a known phrase of Huang Tingjian, Han Yu, or Wang Anshi, which the judge knows and
-  Tang Yin did not write) and a **tonal or rhyme fault** the judge hears in a poem our verifier passed. So "the
-  judge separates the arms" means three things at once: it recalls the real poem, it recognises a stolen line,
-  or it hears a fault our instrument missed; and "the three-epoch arm moved the voice" means, at least in part,
-  that its poems resemble memorised Tang Yin closely enough to trigger a false attribution. Three rules follow.
-  A held-out poem the judge can *name* is excluded, not only one it can recite — the attribution probe under-
-  detects and is being replaced by a naming probe. Every generated poem is checked for borrowed lines before it
-  is shown (one call per poem, or an n-gram check against the classical corpus). And the pairs where the judge
-  heard a fault are re-run through our verifier with its per-position report, because one of the two instruments
-  is wrong and the disagreement is the finding. P1's accuracy is therefore an upper bound on style
-  discrimination, with recall inside it; the voice number that survives these three rules is the one the paper
-  will keep.
+- Then the judge was asked *why*, and the answer, once checked, reverses the reading above. Eight three-epoch
+  pairs — four the judge had got wrong and four right — were shown again with the same question plus "one
+  sentence of reason". It repeated its pick on seven of eight, so the fooled pairs are systematic. Its reasons
+  were recognition ("this is Tang Yin's chrysanthemum poem"), a borrowed line from another poet, and a tonal or
+  rhyme fault. The first draft of this bullet called the recognitions of generated poems confabulated titles.
+  They were not. Crossing every generated poem with the 70-poem training split shows that the three-epoch LoRA
+  **regurgitates**: 9 of its 34 quatrains contain a whole line of a training poem or a whole famous poem by
+  someone else — three of them are the same Tang Yin chrysanthemum poem verbatim, one is Wang Anshi's New Year
+  poem entire — and the judge, told one poem was Tang Yin's, picked the copy. Split by that: on the three-epoch
+  arm's 25 original poems the judge is right on 71 of 75 pairs (94.7%, SE 2.6), the same as the validation-minimum
+  arm (93.1%), and on its 9 copies it is right on 18 of 27 (66.7%). The validation-minimum arm and the base copy
+  nothing (0 of 34, 0 of 42). So the three-epoch arm's apparent edge on voice was memorisation of its own training
+  set, its formal collapse and its copying are the same overfit, and the split by verifier verdict says the same
+  thing from the other side: the judge is at chance on the three-epoch arm's form-passing poems (13 of 24)
+  because those are the copies. The judge's metrical complaints, checked against our verifier independently,
+  agree with it in three of three cases; there was no disagreement to adjudicate. What survives: 63 poems moved the
+  judge by about six points at either checkpoint, reproducibly, and no further; and the study now carries a fourth
+  instrument, a copy check of every generated poem against the training split and a canon of famous poems, run
+  before the judge sees anything. The rule "form and voice are separate axes" is withdrawn; the rule that replaces
+  it is that a poem is admitted to the voice judge only if it is original, form-scored, and not nameable by the
+  judge.
 
 ### What this changes in the paper's claims
 
