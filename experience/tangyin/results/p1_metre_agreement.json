@@ -63,5 +63,12 @@
    "The 6 pairs are the reason probe's sample, chosen by 理 as fooled/caught exemplars — they are NOT a random sample of pairs, so the full join could come out differently.",
    "One arm (e3)."
   ]
+ },
+ "CORRECTED_2026-09-16_by_理_10851": {
+  "what_I_claimed": "the poems that fool the judge are the well-formed ones, so the e3 arm fools it because it clears the metre bar — 'form is a floor the judge uses when available'",
+  "what_the_full_join_shows": "e3 COPIES 9 of 34 poems from its own training split — 旅館題菊 verbatim three times, 王安石〈元日〉 whole. On ORIGINAL pairs e3 is 0.947 and iter60 is 0.931, indistinguishable. On COPIED pairs e3 is 0.667. The voice edge was regurgitation.",
+  "so_my_correlation_was_downstream": "a memorised 唐寅 poem passes the verifier BECAUSE IT IS a 唐寅 poem. The 3/3 vs 0/3 split is real and its cause is copying, not a metre floor.",
+  "the_bound_that_should_have_stopped_me": "this file already said the six pairs are 理's fooled/caught EXEMPLARS, not a random sample. I wrote that and led with the claim anyway — the same failure as my slice-1 localization claim eight hours earlier.",
+  "what_survives": "§1 stands: where the judge heard 格律不諧 / 失韻 / 平仄, the verifier fails the same poem, 3 of 3. The instruments agree on metre. That was the question 理 asked and it is still answered; only my explanation of the fooled/caught split is withdrawn."
  }
 }
