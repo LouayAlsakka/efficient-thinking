@@ -193,7 +193,20 @@ same two; canaries 0/10). baseline 42/42 = 1.000; iter60 32/34 = 0.941 ± 0.040;
 Pooled seeds 0+1: baseline 84/84; iter60 65/68 = 0.956 ± 0.025; e3 60/68 = 0.882 ± 0.039. e3 vs baseline 3.0 SE;
 e3 vs iter60 1.6 SE. The completion probe is stochastic across seeds (4 excluded, then 2) — it runs fresh per seed.
 
-**Next (P1 continued):** seed 2 (running), then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
+**Seed 2 (2026-09-16 18:5xZ), log whole ($0.58):** judge set 22 (same four excluded as seed 0; canaries 0/10).
+baseline 42/42; iter60 30/34 = 0.882 ± 0.055; e3 29/34 = 0.853 ± 0.061.
+
+| pooled, 3 seeds | pairs | right | accuracy | SE | vs baseline |
+|---|---:|---:|---:|---:|---:|
+| baseline | 126 | 126 | 1.000 | 0 | — |
+| iter60 | 102 | 95 | 0.931 | 0.025 | 2.8 SE |
+| e3 | 102 | 89 | 0.873 | 0.033 | 3.8 SE |
+
+iter60 vs e3: 1.4 SE, not separated. Reading revised from seed 0: the 63 poems DID move the voice by this
+instrument, small and reproducible, in both LoRA arms; the arm that moved it most is the arm whose form
+collapsed. Spend, three seeds: ≈ $1.90 (seed 0 extrapolated, seeds 1–2 exact).
+
+**Next (P1 continued):** the reason probe, then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
 reason probe — the same judge asked for one sentence on the four pairs that fooled it and four it caught, eight
 calls — which is the only diagnostic of *what* gives the 7B away.
 
