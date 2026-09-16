@@ -1,0 +1,59 @@
+{
+ "measurement": "ET-8: the FAIR test of mechanism A — memory distilled from the model's OWN run",
+ "date": "2026-09-16",
+ "rig": "llm1",
+ "model": "Qwen/Qwen2.5-7B-Instruct bf16",
+ "budget": 12,
+ "design": "理 10824: 'lessons/v1_7b from the 7B's OWN 1,197 green episodes — the first fair test of A'. v0 lessons were distilled from 40 episodes at 37.5% green and fed to a model scoring 59.9%; v1_7b is distilled from that model's own 2,000 episodes at 59.9%. Same carrier, same prompt slot, same four disjoint 20-task slices. The ONLY variable is the artifact's provenance.",
+ "result": {
+  "baseline": {
+   "green_per_slice": [
+    12,
+    13,
+    14,
+    11
+   ],
+   "rate": 62.5,
+   "localized": 88.8,
+   "tok_in": 3777
+  },
+  "memA_v0": {
+   "green_per_slice": [
+    2,
+    8,
+    2,
+    4
+   ],
+   "rate": 20.0,
+   "localized": 47.5,
+   "tok_in": 11946
+  },
+  "memA_v1_7b": {
+   "green_per_slice": [
+    1,
+    0,
+    1,
+    2
+   ],
+   "rate": 5.0,
+   "localized": 33.8,
+   "tok_in": 16212
+  }
+ },
+ "finding": "THE FAIR TEST IS WORSE, NOT BETTER. A memory distilled from the model's own successful episodes drops green from 62.5% to 5.0% — down in 4 of 4 paired slices, mean -11.5/20 — and localization from 88.8% to 33.8%. The 'weak artifact' hypothesis I published at 10815 is REFUTED: provenance was not the problem.",
+ "so_the_carrier_is_the_problem": {
+  "reasoning": "v0 was advice from a 37.5% run and cost 42 points. v1_7b is advice from the model's own 59.9% run, is only 429 bytes larger, and costs 57 points. If the CONTENT were the lever, the better artifact would have done better. It did worse.",
+  "action_mix": "steps 525 -> 924, and noop_patch stays dominant at 514. patch RISES 124 -> 180 and repeat_patch 5 -> 20: the model patches more, and more of it is wasted.",
+  "tokens": "3,777 -> 16,212 input tokens per episode. The memory is 2,091 bytes but it is re-sent every turn and the episodes run longer, so the cost compounds with the damage."
+ },
+ "what_this_licenses_the_paper_to_say": "Text memory in the prompt is not a weak carrier for this task — it is an actively harmful one at 7B, and the harm does not depend on the lessons being wrong. Two artifacts of different provenance and quality both destroy performance, the better one slightly more.",
+ "not_claimed": [
+  "That the distillation is correct. v1_7b says things like '[A_boundary, consumer] start at producer (309/309 green)' which reads sound, but I have not verified the lessons against the tasks — 理's 'verify gate, held-out replay, admit only what improves decisions on >=20' is NOT implemented and this arm ran the RAW distillation.",
+  "That prompt-carried experience cannot work in general. One task family, one model, one prompt position, one budget.",
+  "A mechanism. noop_patch dominates all three arms; the memory raises total steps and patch attempts without raising green. I can show that and not why."
+ ],
+ "bounds": [
+  "80 tasks per arm, four disjoint slices, greedy decode.",
+  "The verify gate Ri specified was not built — this is the raw-distillation arm and it should be labelled as such wherever it is quoted."
+ ]
+}

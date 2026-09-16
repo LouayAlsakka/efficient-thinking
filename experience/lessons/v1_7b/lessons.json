@@ -1,0 +1,618 @@
+[
+ {
+  "condition": {
+   "family": "A_boundary",
+   "symptom_region": "aggregate"
+  },
+  "action_prior": [
+   {
+    "first_region": "aggregate",
+    "n": 54,
+    "green": 54,
+    "mean_actions": 3
+   }
+  ],
+  "action_avoid": [],
+  "alternatives_tried": [
+   "aggregate"
+  ],
+  "evidence": {
+   "n_episodes": 54,
+   "n_green": 54,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "aggregate": 54
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "A_boundary",
+   "symptom_region": "aggregate",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.958,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "A_boundary",
+   "symptom_region": "consumer"
+  },
+  "action_prior": [
+   {
+    "first_region": "producer",
+    "n": 309,
+    "green": 309,
+    "mean_actions": 3
+   }
+  ],
+  "action_avoid": [],
+  "alternatives_tried": [
+   "producer"
+  ],
+  "evidence": {
+   "n_episodes": 309,
+   "n_green": 309,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "producer": 309
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "A_boundary",
+   "symptom_region": "consumer",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.992,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "A_boundary",
+   "symptom_region": "transform"
+  },
+  "action_prior": [
+   {
+    "first_region": "transform",
+    "n": 137,
+    "green": 137,
+    "mean_actions": 4
+   }
+  ],
+  "action_avoid": [],
+  "alternatives_tried": [
+   "transform"
+  ],
+  "evidence": {
+   "n_episodes": 137,
+   "n_green": 137,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "transform": 137
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "A_boundary",
+   "symptom_region": "transform",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.982,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "B_state",
+   "symptom_region": "aggregate"
+  },
+  "action_prior": [
+   {
+    "first_region": "aggregate",
+    "n": 202,
+    "green": 202,
+    "mean_actions": 3
+   }
+  ],
+  "action_avoid": [],
+  "alternatives_tried": [
+   "aggregate"
+  ],
+  "evidence": {
+   "n_episodes": 202,
+   "n_green": 202,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "aggregate": 202
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "B_state",
+   "symptom_region": "aggregate",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.988,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "B_state",
+   "symptom_region": "consumer"
+  },
+  "action_prior": [
+   {
+    "first_region": "transform",
+    "n": 144,
+    "green": 2,
+    "mean_actions": 11.97
+   }
+  ],
+  "action_avoid": [
+   {
+    "region": "transform",
+    "failed_fixations": 142,
+    "was_the_bug_region_in": 144
+   },
+   {
+    "region": "producer",
+    "failed_fixations": 54,
+    "was_the_bug_region_in": 0
+   }
+  ],
+  "alternatives_tried": [
+   "producer",
+   "transform"
+  ],
+  "evidence": {
+   "n_episodes": 198,
+   "n_green": 2,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "transform": 144,
+    "consumer": 54
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "B_state",
+   "symptom_region": "consumer",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.022,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "B_state",
+   "symptom_region": "producer"
+  },
+  "action_prior": [],
+  "action_avoid": [
+   {
+    "region": "producer",
+    "failed_fixations": 100,
+    "was_the_bug_region_in": 100
+   }
+  ],
+  "alternatives_tried": [
+   "producer"
+  ],
+  "evidence": {
+   "n_episodes": 100,
+   "n_green": 0,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "producer": 100
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "B_state",
+   "symptom_region": "producer",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.024,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "C_types",
+   "symptom_region": "consumer"
+  },
+  "action_prior": [
+   {
+    "first_region": "transform",
+    "n": 196,
+    "green": 196,
+    "mean_actions": 3
+   }
+  ],
+  "action_avoid": [
+   {
+    "region": "producer",
+    "failed_fixations": 104,
+    "was_the_bug_region_in": 0
+   },
+   {
+    "region": "consumer",
+    "failed_fixations": 42,
+    "was_the_bug_region_in": 147
+   }
+  ],
+  "alternatives_tried": [
+   "consumer",
+   "producer",
+   "transform"
+  ],
+  "evidence": {
+   "n_episodes": 343,
+   "n_green": 196,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "transform": 196,
+    "consumer": 147
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "C_types",
+   "symptom_region": "consumer",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.57,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "C_types",
+   "symptom_region": "producer"
+  },
+  "action_prior": [
+   {
+    "first_region": "producer",
+    "n": 157,
+    "green": 38,
+    "mean_actions": 11.31
+   }
+  ],
+  "action_avoid": [
+   {
+    "region": "producer",
+    "failed_fixations": 118,
+    "was_the_bug_region_in": 157
+   }
+  ],
+  "alternatives_tried": [
+   "producer"
+  ],
+  "evidence": {
+   "n_episodes": 157,
+   "n_green": 38,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "producer": 157
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "C_types",
+   "symptom_region": "producer",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.25,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "D_mixed",
+   "symptom_region": "aggregate"
+  },
+  "action_prior": [
+   {
+    "first_region": "aggregate",
+    "n": 75,
+    "green": 75,
+    "mean_actions": 3
+   }
+  ],
+  "action_avoid": [],
+  "alternatives_tried": [
+   "aggregate"
+  ],
+  "evidence": {
+   "n_episodes": 75,
+   "n_green": 75,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "aggregate": 75
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "D_mixed",
+   "symptom_region": "aggregate",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.969,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "D_mixed",
+   "symptom_region": "consumer"
+  },
+  "action_prior": [
+   {
+    "first_region": "producer",
+    "n": 163,
+    "green": 83,
+    "mean_actions": 7.42
+   },
+   {
+    "first_region": "transform",
+    "n": 88,
+    "green": 44,
+    "mean_actions": 7.5
+   }
+  ],
+  "action_avoid": [
+   {
+    "region": "producer",
+    "failed_fixations": 79,
+    "was_the_bug_region_in": 83
+   },
+   {
+    "region": "consumer",
+    "failed_fixations": 46,
+    "was_the_bug_region_in": 126
+   },
+   {
+    "region": "transform",
+    "failed_fixations": 44,
+    "was_the_bug_region_in": 88
+   }
+  ],
+  "alternatives_tried": [
+   "consumer",
+   "producer",
+   "transform"
+  ],
+  "evidence": {
+   "n_episodes": 297,
+   "n_green": 127,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "consumer": 126,
+    "transform": 88,
+    "producer": 83
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "D_mixed",
+   "symptom_region": "consumer",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.429,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "D_mixed",
+   "symptom_region": "producer"
+  },
+  "action_prior": [
+   {
+    "first_region": "producer",
+    "n": 77,
+    "green": 6,
+    "mean_actions": 11.73
+   }
+  ],
+  "action_avoid": [
+   {
+    "region": "producer",
+    "failed_fixations": 71,
+    "was_the_bug_region_in": 77
+   }
+  ],
+  "alternatives_tried": [
+   "producer"
+  ],
+  "evidence": {
+   "n_episodes": 77,
+   "n_green": 6,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "producer": 77
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "D_mixed",
+   "symptom_region": "producer",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.104,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ },
+ {
+  "condition": {
+   "family": "D_mixed",
+   "symptom_region": "transform"
+  },
+  "action_prior": [
+   {
+    "first_region": "transform",
+    "n": 51,
+    "green": 51,
+    "mean_actions": 4
+   }
+  ],
+  "action_avoid": [],
+  "alternatives_tried": [
+   "transform"
+  ],
+  "evidence": {
+   "n_episodes": 51,
+   "n_green": 51,
+   "runs": [
+    "20260907T192632Z-d06c20"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ],
+   "true_bug_regions": {
+    "transform": 51
+   }
+  },
+  "confound_check": "UNVERIFIED \u2014 et8_verify.py replays this lesson on held-out tasks in scope and on a shuffled-family control",
+  "scope": {
+   "family": "D_mixed",
+   "symptom_region": "transform",
+   "models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+   ]
+  },
+  "confidence": 0.955,
+  "expiry": {
+   "decay_per_round": 0.9,
+   "rounds_without_evidence": 0
+  },
+  "reopen_condition": "a dead-path region yields green in \u2265 2 held-out episodes of this condition",
+  "status": "candidate"
+ }
+]

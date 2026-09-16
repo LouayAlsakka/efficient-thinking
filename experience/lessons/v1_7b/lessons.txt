@@ -1,0 +1,36 @@
+[A_boundary, symptom in aggregate] (n=54, conf=0.958)
+  worked: start at aggregate (54/54 green, ~3 actions)
+  did not: no dead path recorded yet
+[A_boundary, symptom in consumer] (n=309, conf=0.992)
+  worked: start at producer (309/309 green, ~3 actions)
+  did not: no dead path recorded yet
+[A_boundary, symptom in transform] (n=137, conf=0.982)
+  worked: start at transform (137/137 green, ~4 actions)
+  did not: no dead path recorded yet
+[B_state, symptom in aggregate] (n=202, conf=0.988)
+  worked: start at aggregate (202/202 green, ~3 actions)
+  did not: no dead path recorded yet
+[B_state, symptom in consumer] (n=198, conf=0.022)
+  worked: start at transform (2/144 green, ~11.97 actions)
+  did not: do not stay on transform (142 failed fixations); do not stay on producer (54 failed fixations)
+[B_state, symptom in producer] (n=100, conf=0.024)
+  worked: no winning start recorded yet
+  did not: do not stay on producer (100 failed fixations)
+[C_types, symptom in consumer] (n=343, conf=0.57)
+  worked: start at transform (196/196 green, ~3 actions)
+  did not: do not stay on producer (104 failed fixations); do not stay on consumer (42 failed fixations)
+[C_types, symptom in producer] (n=157, conf=0.25)
+  worked: start at producer (38/157 green, ~11.31 actions)
+  did not: do not stay on producer (118 failed fixations)
+[D_mixed, symptom in aggregate] (n=75, conf=0.969)
+  worked: start at aggregate (75/75 green, ~3 actions)
+  did not: no dead path recorded yet
+[D_mixed, symptom in consumer] (n=297, conf=0.429)
+  worked: start at producer (83/163 green, ~7.42 actions); start at transform (44/88 green, ~7.5 actions)
+  did not: do not stay on producer (79 failed fixations); do not stay on consumer (46 failed fixations); do not stay on transform (44 failed fixations)
+[D_mixed, symptom in producer] (n=77, conf=0.104)
+  worked: start at producer (6/77 green, ~11.73 actions)
+  did not: do not stay on producer (71 failed fixations)
+[D_mixed, symptom in transform] (n=51, conf=0.955)
+  worked: start at transform (51/51 green, ~4 actions)
+  did not: no dead path recorded yet
