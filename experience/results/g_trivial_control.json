@@ -1,0 +1,52 @@
+{
+ "measurement": "G-TRIVIAL — the negative control (理 10891 (a))",
+ "date": "2026-09-16",
+ "rule": "always hypothesize(symptom_region) at the one decision point. No model call for that step, no head, no activations.",
+ "prediction_registered_before_the_run": "it LOSES ground — it destroys the symptom!=bug group (baseline 100% on the 2,000-run) to fix part of the 239 misses.",
+ "result": {
+  "per_slice_green": {
+   "baseline": [
+    12,
+    13,
+    14,
+    11
+   ],
+   "gtrivial": [
+    6,
+    3,
+    7,
+    5
+   ]
+  },
+  "pooled": {
+   "baseline": 62.5,
+   "gtrivial": 26.2,
+   "delta_pp": -36.2
+  },
+  "mean_actions": {
+   "baseline": [
+    6.65,
+    6.15,
+    5.75,
+    7.7
+   ],
+   "gtrivial": [
+    9.35,
+    10.65,
+    8.9,
+    9.85
+   ]
+  }
+ },
+ "the_decomposition_that_explains_it": {
+  "symptom == bug (n=45)": "baseline 51.1% -> G-trivial 46.7%. The rule does NOT EVEN HELP where it is right. It sends the agent to the correct region and the episode still fails, because the deficit there was never localisation.",
+  "symptom != bug (n=35)": "baseline 77.1% -> G-trivial 0.0%. TWENTY-SEVEN episodes destroyed. The rule sends the agent to a region the bug is not in and the loop never re-hypothesises."
+ },
+ "why_this_is_worth_a_run_rather_than_an_argument": "my decomposition predicted this rule would reach the ceiling; the three-episode smoke test refuted that; the four-slice control now quantifies it at -36.2 points. And it adds something neither the argument nor the smoke test had: the rule fails to help EVEN IN ITS OWN GROUP (-4.4 points where symptom==bug), which means the 239 misses are not a localisation deficit that a better first guess would fix.",
+ "what_it_licenses": "the naive prior is not merely suboptimal, it is catastrophic, and the ceiling is unreachable by any rule that ignores the state. G's head must learn the CONDITIONAL. That is now measured rather than argued.",
+ "bounds": [
+  "80 tasks, four slices, one model, greedy.",
+  "The symptom==bug group is n=45 and the -4.4 point drop there is inside noise; the claim that carries is the symptom!=bug collapse, which is 27 of 35 episodes.",
+  "G-trivial makes NO model call for its forced step, so its action counts are not comparable to the baseline's on cost — only on outcome."
+ ]
+}
