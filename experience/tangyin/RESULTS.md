@@ -206,7 +206,37 @@ iter60 vs e3: 1.4 SE, not separated. Reading revised from seed 0: the 63 poems D
 instrument, small and reproducible, in both LoRA arms; the arm that moved it most is the arm whose form
 collapsed. Spend, three seeds: ≈ $1.90 (seed 0 extrapolated, seeds 1–2 exact).
 
-**Next (P1 continued):** the reason probe, then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
+**Reason probe (2026-09-16 19:0xZ, `reason_probe.py`, 8 calls, `results/p1_reason_probe.json`):** four e3 pairs the judge
+got wrong and four it got right, shown again with the same question plus "one sentence of reason".
+
+| tag | seed/trial | held-out | topic | truth | first pick | re-ask pick |
+|---|---|---|---|---|---|---|
+| fooled | 1/11 | 題畫 (唐寅)#16 | 夜雨 | A | B | A |
+| fooled | 0/21 | 題畫 (唐寅)#8 | 重陽 | B | A | A |
+| fooled | 1/16 | 題畫 (唐寅)#18 | 菊花 | A | B | B |
+| fooled | 0/10 | 題畫 (唐寅)#2 | 琴聲 | B | A | A |
+| caught | 0/9 | 子胥圖 | 白髮 | B | B | B |
+| caught | 2/9 | 子胥圖 | 白髮 | A | A | A |
+| caught | 0/13 | 題畫 (唐寅)#13 | 美人 | B | B | B |
+| caught | 1/19 | 題畫 (唐寅)#13 | 故鄉 | A | A | A |
+
+Repeated pick 7 of 8 — the fooled pairs are systematic. The reasons, read across all eight:
+- **Recognition dominates.** Real poems named by title/subject (子胥圖 → 「唐寅《伍子胥廟》的傳世名作」; 題畫#13 → 「題文君圖」/「相如滌器圖」)
+  — the completion probe (overlap ≥ 0.6) did NOT catch these: the judge can NAME a poem it cannot recite.
+  Fooled pairs are ALSO named: the generated poem called 「唐寅《詠菊》之作」, 「唐寅〈菊花〉詩」, 「出自唐寅《集賢賓》一類」 —
+  confabulated attributions to titles that match nothing in the corpus. So e3 "moving the voice" is, at least in part,
+  e3's poems resembling memorised Tang Yin closely enough to trigger a false attribution.
+- **Borrowed lines.** Generated poems that splice known phrases of 黃庭堅〈清平樂〉, 韓愈, 王安石, or read as 厲鶚 — the judge knows
+  the source and Tang Yin did not write it. A pastiche tell, and a real one.
+- **Faults our verifier passed.** 「格律不諧、末句失韻」, 「格律失黏、韻腳不諧」 on poems that passed the form verifier. One of the two
+  instruments is wrong on those pairs; the disagreement is the finding, not the judge's word.
+
+**Rules from the probe (理):** (1) exclude any held-out poem the judge can NAME, not only recite — a naming probe replaces
+the attribution flag; (2) borrowed-line check on every generated poem before it is shown (one judge call per poem ≈ $0.35
+for 102, or an n-gram check against a classical corpus); (3) the verifier's per-position report on every pair where the
+judge heard a fault. P1's accuracy is an upper bound on style discrimination with recall inside it.
+
+**Next (P1 continued):** the three rules above, then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
 reason probe — the same judge asked for one sentence on the four pairs that fooled it and four it caught, eight
 calls — which is the only diagnostic of *what* gives the 7B away.
 

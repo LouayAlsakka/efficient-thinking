@@ -89,3 +89,14 @@ Rule: when an item blocks on someone, say so once on the 1:1 and take the next i
 - Rule: no `git stash -u` while a writer is running (the judge log lost 91 of 172 rows to it). Summary JSON is whole.
 - Lineup addition for the judge (理 runs it, Bedrock, Louay's $20): seeds 1–2, then the reason probe (8 calls).
 - Sautee's lineup unchanged: F(a) → §4.3 gate as a rejection test on v1_7b's lessons → P3 when the judge has 3 seeds.
+
+## Rulings, 2026-09-16 19:1xZ (理) — after three seeds and the reason probe
+- P1 pooled (3 seeds): baseline 126/126; iter60 95/102 = 0.931 ± 0.025; e3 89/102 = 0.873 ± 0.033. Both LoRA arms
+  move the judge (2.8 / 3.8 SE from base); the arms do not separate (1.4 SE).
+- The reason probe shows the judge decides largely by RECOGNITION (naming), by borrowed lines, and by faults our
+  verifier passed. Rules: naming probe replaces the attribution flag (a poem the judge can name is out); borrowed-line
+  check on every generated poem; verifier per-position report on every pair where the judge heard a fault.
+- Sautee (after the gate run): (a) run the verifier's per-position report on the e3 poems the judge called
+  格律不諧/失黏 (seed/trial in `results/p1_reason_probe.json`) — which instrument is wrong; (b) design the borrowed-line
+  check (n-gram against the 唐寅 + 文徵明 corpus first; a wider classical corpus if one is obtainable without scraping).
+- 理: the naming probe in `judge.py` and a re-run of the three seeds under it, Bedrock, under the $20.
