@@ -135,6 +135,37 @@ The experience prior need not contain complete memories. Its purpose is to encod
 
 > In states resembling this one, branches of type A have repeatedly failed; investigate B and C first.
 
+### 4.2a What the Prior Is For, Stated as a Constraint
+
+An experience prior is defined not by its implementation but by what it is permitted to do to the frozen model.
+Let \(\pi_0\) be the frozen model's search policy and \(\pi_\phi\) the same model with the prior applied. Let
+\(C(\pi)\) be the search cost — actions per episode, or tokens — and \(Q(\pi)\) the capability, measured by an
+**external** verifier: task success against tests, form against a rule table, a blind judge. Never the training
+loss. The prior is the solution to
+
+\[
+\min_\phi \; C(\pi_\phi) \quad \text{subject to} \quad Q(\pi_\phi) \ge Q(\pi_0) - \epsilon
+\]
+
+> **Minimise search cost subject to preserving the frozen model's capability.**
+
+Three rules make this measurable rather than rhetorical:
+
+- \(\epsilon\) is declared before the run, not chosen after it.
+- \(C\) and \(Q\) are measured on the same held-out tasks, **paired per slice**, and the constraint must hold on the
+  slices, not on a pooled mean — a mean can be held by one slice while three fail.
+- The verifier itself ships with its reach: the fraction of positions or cases it could actually read. A verifier
+  that silently skips what it cannot parse inflates \(Q\); verify the learner, and verify the verifier.
+
+The consequences are sharp. A mechanism that lowers cost by lowering capability is not a weaker prior; it is not a
+prior. Every failure measured in §20b is a failure of the constraint, not of the objective: the injected text
+memory (success 62.5% → 20.0%, and → 5.0% with better lessons), the poet's LoRA (form 32.7% → 17.3%), and steering
+at its first strength (62.5% → 51.2%). The verifier is therefore not a safety feature bolted onto the lifecycle of
+§5; it is the measurement of the constraint, and the gate of §4.3 is where the constraint is enforced before
+consolidation. The regulariser of §12 is the relaxed form of the same constraint. And the accumulation claim of
+§18 — work, consolidate, improve, again — is the statement that the constraint keeps holding across generations
+while \(C\) keeps falling; a generation that buys cost with capability has ended the sequence.
+
 ### 4.3 Verification Gate
 
 Continual learning creates a dangerous problem: **bad experiences can become bad instincts**.
@@ -439,6 +470,9 @@ A regularization term should constrain the prior's magnitude:
 This expresses an important design principle:
 
 > **Experience should intervene only as much as necessary.**
+
+Read against §4.2a, \(\lambda\) is the price of the capability constraint: the regulariser is the relaxed form of
+\(Q(\pi_\phi) \ge Q(\pi_0) - \epsilon\), and the constraint, not the loss, is what decides whether a trained prior is kept.
 
 ---
 
