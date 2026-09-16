@@ -742,8 +742,14 @@ the fix. That is the repair floor, and nothing in this paper's toolbox is aimed 
 
 **Mechanism F is now defined** (it had been a name only): an additive logit bias on the action-choice token at the
 decision position, built from the same contrastive statistics as C — per region class, the log-ratio of action
-frequencies in productive versus wasted episodes, clipped to ±2 logits, zero elsewhere. It is the cheapest carrier
-and the one whose effect on `noop_patch` is directly readable. It runs after C on the same slices.
+frequencies in productive versus wasted episodes, clipped to ±2 logits, zero elsewhere. It is the cheapest carrier.
+One consequence follows from the definition and is worth stating before the run: the labels that carry most of the
+contrastive signal — `noop_patch`, `repeat_patch`, `invalid` — are the harness's verdicts on an emitted `patch`, not
+tokens the model writes, so a bias on the action token cannot reach them. F biases only the four emittable actions
+(hypothesize, inspect, patch, run); by construction it can nudge localisation and cannot touch repair. A null on F is
+therefore a result, not a failure: the arm that shows a decision-token prior does not reach the repair floor. Folding
+the wasted verdicts onto the `patch` choice would be a different experiment — an outcome-shaped penalty that
+discourages a good patch with a bad one — and is not run under this name. F runs after C on the same slices.
 
 **An application study: a poet's voice as an experience prior.** The same pipeline was pointed at a different
 domain — writing classical Chinese regulated verse in the voice of Tang Yin (1470–1524) — with the three parts

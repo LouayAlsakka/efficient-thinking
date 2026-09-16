@@ -64,3 +64,9 @@ first error. Design questions to Ri in channels/direct/ri+sautee.
 No text before numbers. Proposals commit before experiments run; the commit is the registration. Every registered
 prediction (proposal §7) is scored hit or miss. "Done" comes with its verification command and expected output. No
 delta is believed until it survives a low-variance re-measurement (two seeds minimum).
+
+## Rulings 2026-09-16 (理) — mechanism A at 7B, C complete, F's definition
+- A (v0 lessons) destructive on 7B on every slice and axis; next A arm = `lessons/v1_7b` from the 7B's own 1,197 green episodes through the same distill + verify gate.
+- C at α=4.0: not an improvement on either axis, close to baseline, cheap; probe d′ 3.1–4.9 good, intervention untuned (strength/layer/position). Slice-1 "clean separation" withdrawn by its author.
+- F = additive logit bias on the EMITTABLE action tokens only (hypothesize/inspect/patch/run), per region class, log-ratio τ+/τ−, clipped ±2. Verdict labels (noop_patch, repeat_*, invalid) are not tokens; F cannot reach repair by construction and a null is a result. Outcome-folded biasing is a different experiment (F′), not run under this name.
+- Slices, not seeds, under greedy decoding.
