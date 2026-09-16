@@ -787,6 +787,19 @@ thing built, and its test is now sharper than planned: on held-out replay it sho
 before they are ever injected — which is prediction P0 doing the work the paper assigned it. Prediction P2, prior
 versus text memory at a token budget, is answered in the negative for text memory as the carrier.
 
+  The gate then ran, as pre-registered, on those twelve lessons: each replayed on twenty held-out episodes in its own
+  condition and in a control condition, with two arms each, about five hours of GPU. **Eleven of twelve were rejected
+  (91.7%, against a predicted floor of 20%), and the one admitted is the only lesson whose content is negative** —
+  "avoid the transform region", which had failed 142 of 144 fixations — while every rejected lesson is a positive
+  "start at region X" prior. The rejected lessons are not wrong: the lesson "start at the producer" is 309 of 309
+  green at confidence 0.992 and is rejected because, replayed, it does nothing (gain 0.0 in five cases). Two more
+  were rejected by the control alone: they helped in scope by one episode and helped the control by exactly one
+  episode, so a gate that measured only in-scope gain would have admitted both. So the first of the two
+  pre-registered sentences is the one the numbers pick: the verification gate of §4.3 catches carrier harm, not
+  only wrong advice, and what survives verification is what to *avoid*, not where to *begin*. Twelve lessons is a
+  small set and eleven of eleven in one direction is stated as a pattern, not a law. The section on mechanism A
+  closes here.
+
 **Mechanism F is now defined** (it had been a name only): an additive logit bias on the action-choice token at the
 decision position, built from the same contrastive statistics as C — per region class, the log-ratio of action
 frequencies in productive versus wasted episodes, clipped to ±2 logits, zero elsewhere. It is the cheapest carrier.
@@ -816,6 +829,16 @@ constraint of §4.2a is declared now: on the same four 80-task slices, paired, s
 least 15% (6.6 → 5.6 or fewer). If success holds and actions do not fall, the representation is decodable but not
 actionable through choice, and that is the result. G runs after the verification-gate test and before any second
 strength of C, because it asks C's question through a channel that cannot corrupt.
+
+The task-conditioned check was then attempted on the existing 2,000 decision states and could not be computed: the
+extractor behind the probe returns the *first* hypothesis of each episode, one decision per task, so no task carries
+both labels and a within-task contrast does not exist in that data by construction (demeaning each task's single
+state gives exactly zero, which is the tell). That is "not evaluable", not "the vector reads difficulty", and the
+pooled d′ of 4.2 and 4.9 stay uninterpretable for choice until the check exists. The data that can answer it is
+every hypothesis step of every episode, where later steps in one task carry both labels; extracting it is about an
+hour of GPU and precedes any further step of G. One caveat is stated now rather than after: a contrast across steps
+of one episode controls for the task but not for the history at each step, so it is the strongest check available
+from replay, and the run of G itself is the test of choice.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
