@@ -859,7 +859,13 @@ Predictions were written before any run. Measured so far (`experience/tangyin/RE
   instrument, a copy check of every generated poem against the training split and a canon of famous poems, run
   before the judge sees anything. The rule "form and voice are separate axes" is withdrawn; the rule that replaces
   it is that a poem is admitted to the voice judge only if it is original, form-scored, and not nameable by the
-  judge.
+  judge. The three seeds were then re-run under a naming probe (the held-out poem shown alone with only its era,
+  "do you know this poem, and by whom?"), about $2 more: it excluded the same two poems the attribution probe
+  had flagged and nothing else — the Wu Zixu poem the judge named inside a pair it did not name cold, so
+  recognition there needed the pair's own prior — and the numbers held: on original poems 92.2% and 93.3% for
+  the two LoRA checkpoints, 100% of 126 for the base, 70.4% on the copies. Six seeds under two protocols now say
+  the same thing, and the instrument that changed the reading was not a probe of the judge but the copy check
+  of the sample. Total judge spend: about $4.
 
 ### What this changes in the paper's claims
 
