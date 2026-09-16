@@ -865,19 +865,24 @@ the capability constraint is unchanged; and the declared pass is the constraint 
 half of the pooled actions headroom captured. The target moved because a join that costs minutes showed it was
 arithmetically unreachable, and it moved before the run rather than after the result.
 
-Characterising what the head would have to learn then found the dull explanation first. Splitting the 2,000
-episodes by whether the symptom region is the bug region: when they differ (820 episodes) the agent finds the bug
-region 820 of 820 times; when they coincide (1,180) it finds it 941 times, and **all 239 misses are episodes where
-the bug was where the symptom pointed and the agent went hunting elsewhere.** The agent's failure is not that it
-cannot localise. It declines the obvious answer, on the easy cases, and never comes back. A one-line rule —
-hypothesise the symptom region unless the state says otherwise — reaches the ceiling exactly, and a linear head on
-hidden states that passed could not be told apart from a head that had learned that rule. So G runs against a
-control arm, G-trivial, which applies the rule with no model, no head, and no activations, predicted to hit the
-ceiling. The readings are written before the run: if G matches the rule, the activations bought nothing; if G
-beats it, the head uses something the symptom does not say, which is the claim of §4.2a; if G falls short of it,
-the head is worse than a one-line rule. And the rule itself is worth naming for what it is: an experience prior
-learned from the agent's own history, read-only and text-free, and the first candidate this week that can satisfy
-the constraint. G's job is to beat it, not to exist.
+Characterising what the head would have to learn then found the dull explanation first, and a three-episode smoke
+test refuted it before it cost a run. Splitting the 2,000 episodes by whether the symptom region is the bug region:
+when they differ (820 episodes) the agent finds the bug region 820 of 820 times; when they coincide (1,180) it finds
+it 941 times, and **all 239 misses are episodes where the bug was where the symptom pointed and the agent went
+hunting elsewhere.** The agent's failure is not that it cannot localise; it declines the obvious answer on the easy
+cases and never comes back. The first reading of that — a one-line rule, always hypothesise the symptom region,
+would reach the ceiling — was pre-registered as the control's prediction and was wrong within the hour: applied
+to every episode, as a controller must be, the rule sends the agent to the wrong region on the 820 where symptom
+and bug differ, the group the baseline currently solves at 100%, and on three smoke-test tasks it failed all three
+where the baseline had passed two. The conclusion was drawn from the 239 alone, and a controller does not get to
+apply itself only where it helps. What stands is sharper than the rule. There is no one-line rule, because
+"symptom equals bug" is not knowable from the prompt — the bug region is the answer — so the ceiling needs the
+state, and what the head must learn is the *conditional*: start at the symptom only when the state says the bug is
+there, which is what hidden states might encode and what nothing text-shaped can. G therefore runs against
+G-trivial as a *negative* control, with the corrected prediction that the naive rule loses ground, and its number
+is the measured cost of a naive prior in the same paired table. The per-slice ceilings put the pooled headroom at
+8.0 points of success and 0.69 actions, so the declared pass is the constraint held on every slice and at least
+0.34 actions saved pooled.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
