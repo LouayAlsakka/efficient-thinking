@@ -1,0 +1,43 @@
+{
+ "definition": "additive logit bias on the action-choice token, per region class; log-ratio of action frequencies in productive vs wasted episodes, clipped to +/-2.0",
+ "source_runs": [
+  "experience/traj/base_v1_7b"
+ ],
+ "steps_counted": 13696,
+ "productive_episodes": 1197,
+ "wasted_episodes": 803,
+ "clip": 2.0,
+ "bias": {
+  "A_boundary": {
+   "hypothesize": -0.4915,
+   "inspect": -0.4915,
+   "patch": -0.2497
+  },
+  "B_state": {
+   "hypothesize": 1.3639,
+   "inspect": 1.3639,
+   "invalid": 0.3483,
+   "noop_patch": -2.0,
+   "patch": 0.2973,
+   "repeat_patch": -2.0
+  },
+  "C_types": {
+   "hypothesize": 1.0984,
+   "inspect": 1.0984,
+   "invalid": -1.1719,
+   "noop_patch": -1.1411,
+   "patch": 0.7804,
+   "repeat_inspect": 0.5329,
+   "repeat_patch": -0.5657
+  },
+  "D_mixed": {
+   "hypothesize": 1.2825,
+   "inspect": 1.2784,
+   "invalid": -1.4283,
+   "noop_patch": -2.0,
+   "patch": 0.6323,
+   "repeat_patch": -2.0
+  }
+ },
+ "smoothing": "Laplace +1 on both sides — an action seen only in wasted episodes must not give -inf, and an unseen action must contribute 0 rather than raise"
+}
