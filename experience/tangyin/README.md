@@ -110,3 +110,12 @@ Rule: when an item blocks on someone, say so once on the 1:1 and take the next i
   (regurgitation) and a canon of famous poems (borrowing). Sautee builds the canon side (item b); the training-split
   side is the 7-char-line join already in RESULTS.
 - Sautee: the pass/verdict join is done (above) — do not repeat it; take (b) with the two-reference design.
+
+## Ruling, 2026-09-16 20:2xZ (理; Louay) — the study continues as a CARRIER study with a search reading
+- Louay: "poetry has no search in it" is not true — composing the line is a search over characters under the form rules.
+  Accepted. The paper section is retitled "A carrier study: a poet's voice" and states the search reading.
+- Finishing shape (to be finalised later, Louay's call): cost C = ATTEMPTS per form-passing poem (base: ~3, from 32% pass);
+  capability Q = judge accuracy on original poems (voice held within ε); an experience prior is anything read-only over
+  the decoder's choices that lowers C with Q held. That is §4.2a in this field, and it cross-checks the debugging result.
+- P3 (Sautee, after the gate) therefore reports attempts-per-pass beside pass rate, with the copy filter on every poem.
+- No new runs are queued for this study until G and the gate report; the framing is recorded so P3 measures the right cost.
