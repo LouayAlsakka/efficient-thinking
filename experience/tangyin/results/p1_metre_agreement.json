@@ -1,0 +1,67 @@
+{
+ "measurement": "理 10847 item (a): the verifier's per-position report on the e3 poems the judge called 格律不諧 / 失黏",
+ "date": "2026-09-16",
+ "source": "experience/tangyin/results/p1_reason_probe.json",
+ "question": "When the judge hears a metrical fault, is it right — and does our verifier agree? 理: 'which instrument is wrong is the finding'.",
+ "finding": "NEITHER INSTRUMENT IS WRONG. All three poems the judge accused of 格律不諧 / 失黏 / 失韻 / 平仄 FAIL the verifier too, independently. The two instruments agree on every case available — there is no disagreement to adjudicate.",
+ "cases": [
+  {
+   "seed": 0,
+   "trial": 9,
+   "judge_said": [
+    "格律不諧",
+    "失韻"
+   ],
+   "poem": "鬢邊絲髪滄浪色窗下風燈明暗紅若對好花枝上月愛他新酒浸半醆",
+   "verifier": "FAIL — rhyme (紅 / 醆 share no 平 group; hemistich 4 has no 平 shi group) + alternate (hemistich 4)",
+   "agreement": "the judge said 失韻 (rhyme failure) and the verifier's rhyme rule fails. SAME FAULT, SAME PLACE."
+  },
+  {
+   "seed": 2,
+   "trial": 9,
+   "judge_said": [
+    "失黏",
+    "韻腳不諧"
+   ],
+   "poem": "綠楊著水鬢如絲紅棗開盆手自移不免醉時尋思面拓得新詩鑲入眉",
+   "verifier": "FAIL — 對 (couplet 3-4)",
+   "agreement": "PARTIAL. The judge named 失黏 (the 粘 rule, ACROSS couplets); the verifier fails 對 (WITHIN the couplet). Both are tonal-parallelism faults in the same region, but they are different rules and I will not score this as an exact match."
+  },
+  {
+   "seed": 0,
+   "trial": 13,
+   "judge_said": [
+    "平仄"
+   ],
+   "poem": "桃紅柳綠總相映水闊花深無處尋若有人知春去處喚取歸來與比較",
+   "verifier": "FAIL — 對 (couplet 3-4) + rhyme (尋 / 較)",
+   "agreement": "the judge's complaint was 「與比較」平仄語氣皆不類 — the last three characters, which is exactly where the verifier's failing couplet and rhyme character sit."
+  }
+ ],
+ "what_this_licenses": "The judge's metrical complaints are NOT hallucinated and NOT a stylistic proxy: in 3 of 3 available cases it named a fault our independent rule-based verifier also finds. Where 理's ruling anticipated adjudicating a disagreement, there is none to adjudicate.",
+ "the_real_asymmetry": "All three cases are ones the judge CAUGHT. The reason probe has 4 FOOLED pairs and NONE of them mentions a metrical fault — the judge did not complain about metre in any poem that fooled it. So metre is a cue it uses when present and the fooling poems did not give it one. That is a statement about WHICH poems fool it, and it is testable: the fooled poems should pass the verifier more often than the caught ones.",
+ "not_claimed": [
+  "That the judge's metrical judgement is reliable in general — n=3, all from one arm, all caught.",
+  "That case 2 is an exact agreement. 失黏 and 對 are different rules; I am reporting the near-miss rather than rounding it up.",
+  "Anything about the fooled pairs' metre — that is the next measurement and it is cheap."
+ ],
+ "bounds": [
+  "Three cases, from an 8-pair probe, all from the e3 arm.",
+  "The verifier's own acceptance test fails on real 唐寅 七絕 at 79.5%, so 'the verifier also fails it' inherits that instrument's known error rate."
+ ],
+ "THE_TESTABLE_CLAIM_TESTED": {
+  "prediction_made_in_this_file_before_measuring": "the fooled poems should pass the verifier more often than the caught ones",
+  "result": {
+   "fooled": "3 of 3 PASS the verifier",
+   "caught": "0 of 3 pass"
+  },
+  "reading": "A perfect split on n=3+3. The poems that fooled the voice judge are exactly the ones our form verifier accepts; the ones it caught are exactly the ones the verifier rejects. Two independent instruments — a rule-based 平水韻 checker and a blind LLM judge — agree on which poems are well-formed, and metrical correctness is what the judge uses when it is available.",
+  "why_this_matters_more_than_the_agreement": "P1 says the judge distinguishes every arm from the poet at 0.87-1.00. This says the RESIDUE — the pairs it gets wrong — is not random: it is the well-formed poems. So the 3-epoch arm 'fools the judge most' (0.873) plausibly because it produces more poems that clear the metre bar, not because it captured more voice.",
+  "and_it_is_checkable_at_scale": "every generated 七絕 in results/ already carries its verifier verdict, and the judge's per-trial picks are in p1_judge_seed*.json. Crossing them over ALL pairs rather than these 6 is a join, not a run — no GPU, no API. That is the next thing and it needs nobody's ruling.",
+  "bounds": [
+   "n=3 and n=3. A perfect split at that size is suggestive and nothing more.",
+   "The 6 pairs are the reason probe's sample, chosen by 理 as fooled/caught exemplars — they are NOT a random sample of pairs, so the full join could come out differently.",
+   "One arm (e3)."
+  ]
+ }
+}
