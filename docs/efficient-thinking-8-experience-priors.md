@@ -854,6 +854,31 @@ being measured and belongs to a later section, not to this week's runs. Before G
 the same data: splitting the 2,000 episodes by the label of their one hypothesis gives the success rate and the
 action count G could reach if it chose perfectly, and the run is read against that bound as well as against ε.
 
+That ceiling was then computed, and it moved the objective before the run. Episodes whose one hypothesis was
+productive (1,761) succeed at 68.0% in 6.15 actions; episodes whose one hypothesis was wasted (239) succeed at
+**0.0%** in 12.0 actions. A miss at step one is terminal, because the loop never re-hypothesises. So a controller
+that chose correctly on every episode would reach 68.0% and 6.15 actions — and the pre-registered cost objective
+for G, 5.6 actions or fewer, was below what any controller could reach on this harness. The objective is therefore
+restated, dated, and the original printed beside it: G is scored on the fraction of the available headroom it
+captures, on actions and on success, with the ceiling recomputed per slice on the slices' own baseline episodes;
+the capability constraint is unchanged; and the declared pass is the constraint held on every slice plus at least
+half of the pooled actions headroom captured. The target moved because a join that costs minutes showed it was
+arithmetically unreachable, and it moved before the run rather than after the result.
+
+Characterising what the head would have to learn then found the dull explanation first. Splitting the 2,000
+episodes by whether the symptom region is the bug region: when they differ (820 episodes) the agent finds the bug
+region 820 of 820 times; when they coincide (1,180) it finds it 941 times, and **all 239 misses are episodes where
+the bug was where the symptom pointed and the agent went hunting elsewhere.** The agent's failure is not that it
+cannot localise. It declines the obvious answer, on the easy cases, and never comes back. A one-line rule —
+hypothesise the symptom region unless the state says otherwise — reaches the ceiling exactly, and a linear head on
+hidden states that passed could not be told apart from a head that had learned that rule. So G runs against a
+control arm, G-trivial, which applies the rule with no model, no head, and no activations, predicted to hit the
+ceiling. The readings are written before the run: if G matches the rule, the activations bought nothing; if G
+beats it, the head uses something the symptom does not say, which is the claim of §4.2a; if G falls short of it,
+the head is worse than a one-line rule. And the rule itself is worth naming for what it is: an experience prior
+learned from the agent's own history, read-only and text-free, and the first candidate this week that can satisfy
+the constraint. G's job is to beat it, not to exist.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
