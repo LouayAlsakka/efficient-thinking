@@ -1,0 +1,72 @@
+{
+ "measurement": "ET-8 item 4 — mechanism A (text memory) vs baseline, 7B, 80 tasks",
+ "date": "2026-09-16",
+ "rig": "llm1",
+ "model": "Qwen/Qwen2.5-7B-Instruct bf16",
+ "budget": 12,
+ "sampling": "FOUR DISJOINT 20-TASK SLICES of tasks/v1 (1-20, 21-40, 41-60, 61-80). et8_agent generates at temp 0.0 with no seed argument, so a re-run is byte-identical — slices are how this gets independent samples, and they are slices, NOT sampling seeds.",
+ "arms": {
+  "baseline": {
+   "n": 80,
+   "green": 50,
+   "rate": 62.5,
+   "per_slice": [
+    60.0,
+    65.0,
+    70.0,
+    55.0
+   ],
+   "mean_actions": 6.6,
+   "action_mix": {
+    "noop_patch": 231,
+    "patch": 124,
+    "hypothesize": 80,
+    "inspect": 80,
+    "repeat_patch": 5,
+    "invalid": 5
+   },
+   "total_steps": 525
+  },
+  "memA": {
+   "n": 80,
+   "green": 16,
+   "rate": 20.0,
+   "per_slice": [
+    10.0,
+    40.0,
+    10.0,
+    20.0
+   ],
+   "mean_actions": 10.2,
+   "action_mix": {
+    "noop_patch": 532,
+    "inspect": 118,
+    "patch": 88,
+    "hypothesize": 80,
+    "repeat_patch": 1
+   },
+   "total_steps": 819
+  }
+ },
+ "result": "MECHANISM A IS DESTRUCTIVE AT 7B: 20.0% against the baseline's 62.5%, and the gap is larger than the between-slice spread of either arm (baseline 55-70, memA 10-40).",
+ "mechanism": {
+  "what_the_memory_does": "steps rise 525 -> 819 and the rise is almost ALL noop_patch: 231 -> 532. The model re-emits code it was shown instead of editing it. hypothesize is identical (80 = one per episode), so the memory is not changing WHERE it looks — it is changing what it does after.",
+  "and_this_was_already_on_the_record": "results/memA_v0_plumbing_3b.json (09-05, 3B, n=20) found the same thing and named it: 'the dominant waste is noop_patch (107/204): the model re-emits the shown code'. That run called itself a PLUMBING TEST because the lessons were distilled from the same 20 tasks. This run is 80 DIFFERENT tasks at 7B and reproduces the failure mode, which turns a plumbing caveat into a result."
+ },
+ "the_artifact_is_the_problem_not_the_carrier": {
+  "lessons.txt": "1,662 bytes, 30 lines, distilled from 40 episodes of v03_3b + v03_7b whose own green rate was 15/40 = 37.5%",
+  "the_7B_baseline_on_this_task_set": "1197/2000 = 59.9%",
+  "reading": "The memory teaches a 37.5% policy to a 60% model. Six of its ten clusters say 'no winning start recorded yet'. It is advice distilled from a WEAKER run than the one consuming it."
+ },
+ "not_claimed": [
+  "That text memory cannot work. This is ONE artifact — v0 lessons — and it is demonstrably weaker than the model reading it. A memory distilled from the 7B's own 1,197 green episodes is untested.",
+  "A mechanism for noop_patch. I can show it dominates and that it more than doubles under A; I cannot say why the lessons induce it.",
+  "Anything about mechanism C — its arm is re-running now with corrected 7B vectors.",
+  "Anything about mechanism F — it is not defined in the proposal or the code and I asked Ri to name it."
+ ],
+ "bounds": [
+  "80 tasks per arm, 4 slices of 20. Between-slice spread is 15pp (baseline) and 30pp (memA).",
+  "Greedy decode, one budget (12), one model, one memory artifact.",
+  "tokens/ep reads 0 in the episode records — the field is not populated by this harness version, so the token cost of the +294 steps is not quantified here."
+ ]
+}

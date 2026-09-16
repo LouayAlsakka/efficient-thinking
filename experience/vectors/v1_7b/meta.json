@@ -1,0 +1,36 @@
+{
+ "model": "Qwen/Qwen2.5-7B-Instruct",
+ "layers": [
+  9,
+  18,
+  27
+ ],
+ "n_pos": 1761,
+ "n_neg": 239,
+ "runs": [
+  "experience/traj/base_v1_7b"
+ ],
+ "vectors": {
+  "9": {
+   "norm_before_unit": 1.525,
+   "d_prime_buildset": 3.149,
+   "mean_proj_pos": 1.697,
+   "mean_proj_neg": 0.172,
+   "hidden_mean_norm": 41.31
+  },
+  "18": {
+   "norm_before_unit": 4.496,
+   "d_prime_buildset": 4.2,
+   "mean_proj_pos": 1.281,
+   "mean_proj_neg": -3.216,
+   "hidden_mean_norm": 68.84
+  },
+  "27": {
+   "norm_before_unit": 28.439,
+   "d_prime_buildset": 4.914,
+   "mean_proj_pos": -54.588,
+   "mean_proj_neg": -83.027,
+   "hidden_mean_norm": 290.79
+  }
+ }
+}
