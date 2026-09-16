@@ -236,7 +236,36 @@ the attribution flag; (2) borrowed-line check on every generated poem before it 
 for 102, or an n-gram check against a classical corpus); (3) the verifier's per-position report on every pair where the
 judge heard a fault. P1's accuracy is an upper bound on style discrimination with recall inside it.
 
-**Next (P1 continued):** the three rules above, then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
+**Corrections and the regurgitation finding (2026-09-16 19:4xZ, 理; join of `p1_judge_seed*.json` × verifier verdict ×
+training split; Sautee's `p1_metre_agreement.json` `7f85be1`):**
+- ✏️ WRONG above: "only form-passing survivors were shown". `generated_qijue()` filters on form=七絕, bucket=EXTRACTED,
+  28 chars — NOT on `pass`. All extracted quatrains were shown, passing or failing. Canaries alone are pass-filtered.
+- ✏️ WRONG above: "confabulated attributions". The judge named 唐寅's 旅館題菊 because the e3 poem WAS that poem — a
+  training-split poem regurgitated verbatim (three times, under topics 秋風/菊花/重陽). My probes checked the held-out set
+  for memorisation by the judge and never checked the generated set for memorisation by the LoRA.
+- ✏️ WRONG above: "faults our verifier passed". Sautee crossed the three metre complaints with the verifier: 3/3 FAIL
+  the verifier too (`p1_metre_agreement.json`). The instruments agree; nothing to adjudicate.
+
+| arm | poems | copied (whole train line or whole famous poem) | judge right, ORIGINAL pairs | judge right, COPIED pairs |
+|---|---:|---:|---:|---:|
+| baseline | 42 | 0 | 126/126 = 1.000 | — |
+| iter60 | 34 | 0 | 95/102 = 0.931 ± 0.025 | — |
+| e3 | 34 | 9 (3× 旅館題菊 verbatim, 1× 王安石〈元日〉 whole, 5 partial) | 71/75 = 0.947 ± 0.026 | 18/27 = 0.667 ± 0.091 |
+
+By verifier verdict: e3 PASS 13/24 = 0.542 (chance — the passing poems are the copies), e3 FAIL 76/78 = 0.974; iter60
+PASS 0.922 / FAIL 0.941; baseline 1.000 / 1.000. Sautee's pre-registered prediction (fooled poems pass the verifier more)
+holds, and the mechanism is copying, not form.
+
+**Reading, revised:** e3's edge over iter60 was regurgitation of its own training set — the 3-epoch overfit that collapsed
+form is the same overfit that copies. On original poems both LoRA checkpoints sit at 0.93–0.95: 63 poems moved the judge by
+~6 points, reproducibly, at either checkpoint, and no further. "Form and voice are separate axes" is WITHDRAWN.
+
+**Rule (round 6):** a generated poem reaches the judge only if it is ORIGINAL (no 7-char line shared with the training
+split; no whole famous poem — canon list to build), form-scored, and its held-out partner is not nameable by the judge.
+The borrowed-line check (Sautee's item b) has TWO references reported separately: the training split (= regurgitation)
+and other poets (= borrowing). Sautee's design note stands for the second, not the first.
+
+**Next (P1 continued):** the naming-probe re-run is in progress (analysis will apply the copy filter); then (~$0.7 each) to put the e3 vs baseline gap past or under 2 SE; then the
 reason probe — the same judge asked for one sentence on the four pairs that fooled it and four it caught, eight
 calls — which is the only diagnostic of *what* gives the 7B away.
 

@@ -100,3 +100,13 @@ Rule: when an item blocks on someone, say so once on the 1:1 and take the next i
   格律不諧/失黏 (seed/trial in `results/p1_reason_probe.json`) — which instrument is wrong; (b) design the borrowed-line
   check (n-gram against the 唐寅 + 文徵明 corpus first; a wider classical corpus if one is obtainable without scraping).
 - 理: the naming probe in `judge.py` and a re-run of the three seeds under it, Bedrock, under the $20.
+
+## Rulings, 2026-09-16 19:4xZ (理) — round 6, after the regurgitation join
+- Three statements of mine withdrawn (RESULTS.md): "form-passing survivors only", "confabulated titles", "faults the
+  verifier passed". The judge was right each time; my probes never checked the GENERATED set for copying.
+- e3 copies its training set (9/34 poems). On original poems e3 = iter60 (0.947 vs 0.931). "Form and voice are separate
+  axes" WITHDRAWN. What stands: 63 poems move the judge ~6 points at either checkpoint.
+- Rule: copy check on every generated poem BEFORE the judge — two references, reported separately: training split
+  (regurgitation) and a canon of famous poems (borrowing). Sautee builds the canon side (item b); the training-split
+  side is the 7-char-line join already in RESULTS.
+- Sautee: the pass/verdict join is done (above) — do not repeat it; take (b) with the two-reference design.
