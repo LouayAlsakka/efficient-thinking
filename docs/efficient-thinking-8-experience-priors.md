@@ -1362,6 +1362,24 @@ than explained away: the agent's own pick on the second seed's held-out quarter 
 on the first seed's, so the two quarters are not equally hard for the agent, which is why the head's own accuracy
 differs between them (42.7% against 56.0%) while the episode effect does not.
 
+Chasing that fix found a worse cause. The fit had a free parameter: at a fixed 400 iterations and a rate of 0.5 the
+first seed's head read 56.0%; iterating to a loss tolerance at the same rate, 58.7%, with every fit hitting a
+40,000-iteration cap without converging; at a rate of 2.0, 24.0%, below the agent's own 33.3% on the same states. A
+probe accuracy that moves 35 points with the optimizer's step size is not a measurement of the state, and the
+hundred-example control had not been the only thing measuring the optimizer — the head had. A second-order method
+with no step-size parameter removes it, and under it all three controls behave on both fits: on the first seed's
+pool the head reads 66.7% against the agent's 33.3% and chance of 20.4%, permuted 10.7 to 24.0%, eight dimensions
+26.7%, a hundred examples 37.9%; on the second seed's pool 42.7% against 20.0% and 20.1%, permuted 13.3 to 24.0%,
+eight dimensions 33.3%, a hundred examples 31.2%. A second defect rode with the first: the hundred-example control
+had been a single random subsample, and two draws from the same pool scored 33.3% and 46.7%, a thirteen-point
+spread from the draw alone, so part of what was reported as a convergence anomaly was subsample noise; the control
+is five draws now, all printed. Two rules follow. A probe accuracy that moves with the optimizer's step is not a
+measurement, and a subsample control is at least five draws, never one. The wired results are end-to-end
+measurements of saved heads and stand as such — the +13.0 was real for the head that produced it — but P9's first
+generation must descend from a head that can be defended, so G is re-run on the first seed's 300 with the
+converged head first, the old head's number stays printed beside the new one as the direct measure of what fit
+quality buys in episodes, and P9 starts after it, on the converged head, to the pre-registration unchanged.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
