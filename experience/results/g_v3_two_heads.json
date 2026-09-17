@@ -1,0 +1,36 @@
+{
+ "measurement": "THE SAME ARM, TWO HEADS — seed 21's full 300, head trained on seed 47. n = 300.",
+ "table": {
+  "base": {
+   "solved": "56/300 = 18.7%",
+   "SE": 2.2,
+   "actions": 10.63
+  },
+  "G, original (under-converged) head": {
+   "solved": "95/300 = 31.7%",
+   "SE": 2.7,
+   "actions": 9.85,
+   "vs_base": "+13.0 points, -0.78 actions"
+  },
+  "G, L-BFGS (converged) head": {
+   "solved": "90/300 = 30.0%",
+   "SE": 2.6,
+   "actions": 9.92,
+   "vs_base": "+11.3 points, -0.71 actions"
+  }
+ },
+ "WHAT_FIT_QUALITY_BUYS_IN_EPISODES": "-1.7 points and +0.07 actions. NOTHING, or slightly worse. The converged head is a better fit by every probe criterion and its episodes are five fewer out of three hundred -- well inside noise, and certainly not better.",
+ "and_the_probe_numbers_were_IDENTICAL": "both seed-47 heads scored 42.7% on their held-out quarter. Same probe accuracy, different weights, and the converged one disagrees with the agent MORE (210 of 300 picks changed against 179) while landing slightly lower. More intervention is not better, and probe accuracy did not predict the episode difference in either direction.",
+ "why_this_matters_beyond_the_two_numbers": "理 asked for both printed because the pair is the only direct measure of what FIT QUALITY buys in EPISODES -- no probe number can say it. The answer is: on this task set, essentially nothing. A head good enough to beat the agent's pick is good enough; making it a better fit did not convert.",
+ "the_agreement_check_on_the_converged_head": {
+  "agreement": "90 of 300 = 30.0%",
+  "on the 210 disagreements": "base 11 -> G 46 (+35)",
+  "on the 90 agreements": "base 45 -> G 44 (-1)",
+  "reading": "same shape as the original head: the effect is entirely in the disagreements and the agreement group is invariant to within one episode."
+ },
+ "bounds": [
+  "n = 300 paired. The -1.7 points is 5 episodes and is not a claim that the converged head is worse; it is a claim that fit quality did not buy episodes.",
+  "Both heads were trained on seed 47 and evaluated on seed 21; zero shared signatures.",
+  "The original head is the one the earlier +13.0 was measured with, and it stays printed."
+ ]
+}
