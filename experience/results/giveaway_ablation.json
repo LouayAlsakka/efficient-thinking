@@ -1,0 +1,41 @@
+{
+ "measurement": "THE GIVEAWAY ABLATION — how much of v1's baseline rests on the symptom's lookup key",
+ "method": "the same four paired slices, the TEST NAME removed from the symptom line, the failure kind and any assertion message kept. Nothing else changes: same loop, same budget, same verifier, greedy.",
+ "result": {
+  "per_slice_green": {
+   "baseline": [
+    12,
+    13,
+    14,
+    11
+   ],
+   "redacted": [
+    3,
+    8,
+    2,
+    4
+   ]
+  },
+  "pooled_pct": {
+   "baseline": 62.5,
+   "redacted": 21.2,
+   "delta_points": -41.2
+  },
+  "mean_actions": {
+   "baseline": 6.56,
+   "redacted": 10.29
+  }
+ },
+ "THE_CONFOUND_AND_IT_IS_LARGE": {
+  "what": "79% of v1 symptoms become BARE once the test name is removed -- 'FAIL: a test failed' and nothing else. Only 21% carry an assertion detail.",
+  "why": "et8_env.run_tests never recovered the assertion detail (it searched a 600-char window from the FIRST occurrence of the test name, which under `unittest -v` is the progress line printed before any traceback). So in v1 the test NAME carried essentially ALL of the symptom information.",
+  "therefore": "-41.2 points is an UPPER BOUND on the giveaway. It conflates 'removed the ten-row lookup key' with 'removed the symptom'. It CANNOT be read as 'the key was worth 41 points' -- only as 'the symptom line was worth 41 points, and the key was most of what the symptom line was'."
+ },
+ "what_it_does_establish": "the v1 baseline is not a measurement of debugging under an informative symptom. Remove one string and 62.5% becomes 21.2% while mean actions rise 6.56 -> 10.29: the agent spends MORE and succeeds a third as often. Every v1 cost comparison is a comparison between arms that all had the key.",
+ "and_what_it_says_about_v2": "v2 carries an assertion detail on 100% of tasks against v1's 21%, and names no test. The ablation is the evidence that v2 needed both changes: a symptom that is informative AND does not name the region. Removing the key from v1 would have left 79% of tasks with no symptom at all.",
+ "bounds": [
+  "80 episodes, four slices, one model, greedy.",
+  "Slice 2 is the outlier at 8/20 and slice 3 the extreme at 2/20; per-slice ordering is not stable at n=20 and the claim is the pooled 41.2.",
+  "The redaction keeps the FAIL/ERROR prefix, which is itself part of v1's key: 'FAIL: test_report_all_items' means producer and 'ERROR: test_report_all_items' means consumer. So a small part of the key survives the ablation and the 41.2 is, in that direction only, an underestimate."
+ ]
+}
