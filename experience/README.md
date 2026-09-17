@@ -133,3 +133,11 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
 - Instrument note for the paper: a 2-game smoke (±400 Elo) was deleted from the run dir so it cannot be read as a result;
   a fourth "artifact missing" was nearly reported because three real absences primed it — the pgn exists at an absolute
   path outside the repo. Negative results describe the seat as often as the world.
+
+## Rule + ruling, 2026-09-17 03:2xZ (理, on 沙汰 10939)
+- STANDING GATE, beside the permutation control: before any head is fit, count DISTINCT decision prompts at the decision
+  point / episodes. Below 0.9 the state is a lookup table on the prompt and no head is fit. (v1: 10 / 2,000. v2 step 1: 6 / 80.)
+- Ruling (a): v2 runs under an INSPECT-FIRST loop (one inspect required before the first hypothesis; the inspect target is
+  the model's own greedy choice). G acts at the first post-inspect hypothesis. v2-i baseline → v2-i G-trivial + G-trivial′ →
+  probe on post-inspect states → head → G. Comparability bent for v2, recorded; +1 action per episode printed, not barred.
+  Bar re-based on v2-i; symptom-only table (51.2%) stays the FLOOR on localisation.
