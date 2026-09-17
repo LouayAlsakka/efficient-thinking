@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0165",
+ "family": "v3",
+ "bug_class": "off_by_one_slice",
+ "bug_region": "emit",
+ "program": "# region: render\ndef render(raw):\n    return [len(tok.strip()) for tok in raw if tok.strip()]\n\n# region: emit\ndef emit(xs, offset=1):\n    return [v + offset for v in xs[1:]]\n\n# region: fold\ndef fold(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: gather\ndef gather(xs):\n    return {'n': len(xs), 'total': sum(xs)}\n\n# region: sift\ndef sift(summary):\n    out = dict(summary)\n    out['flags'] = sorted(k for k, v in summary.items() if isinstance(v, int) and v > 0)\n    return out\n\n# region: run\ndef run(raw):\n    return sift(gather(fold(emit(render(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'total': 12, 'flags': ['n', 'total']})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 4, 'total': 24, 'flags': ['n', 'total']})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'total': 14, 'flags': ['n', 'total']})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 3, 'total': 24, 'flags': ['n', 'total']})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'total': 17, 'flags': ['n', 'total']})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'total': 2, 'flags': ['n', 'total']})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 20, 'flags': ['n', 'total']})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 3, 'total': 21, 'flags': ['n', 'total']})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                ^           ^^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "render",
+  "emit",
+  "fold",
+  "gather",
+  "sift"
+ ],
+ "seed": 435623567,
+ "_signature": "bcd6239a3f2e",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "fold"
+ ],
+ "_shape": {
+  "parser": "parse_lengths",
+  "mappers": [
+   "shift",
+   "running"
+  ],
+  "agg": "total",
+  "fmt": "flags"
+ }
+}

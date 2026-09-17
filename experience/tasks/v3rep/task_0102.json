@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0102",
+ "family": "v3",
+ "bug_class": "drop_first",
+ "bug_region": "fold",
+ "program": "# region: fold\ndef fold(raw):\n    out = []\n    for tok in raw[1:]:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n    return out\n\n# region: intake\ndef intake(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: emit\ndef emit(xs):\n    return [v for v in xs if v % 2 == 0]\n\n# region: render\ndef render(xs, cut=8):\n    lo = [v for v in xs if v < cut]\n    hi = [v for v in xs if v >= cut]\n    return {'n': len(xs), 'lo': len(lo), 'hi': len(hi)}\n\n# region: gather\ndef gather(summary, bar=2):\n    out = dict(summary)\n    n = summary.get('n', 0)\n    out['ratio'] = round(n / bar, 3) if bar else 0.0\n    return out\n\n# region: run\ndef run(raw):\n    return gather(render(emit(intake(fold(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 2, 'lo': 2, 'hi': 0, 'ratio': 1.0})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'lo': 0, 'hi': 2, 'ratio': 1.0})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 0, 'lo': 0, 'hi': 0, 'ratio': 0.0})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'lo': 0, 'hi': 0, 'ratio': 0.0})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 2, 'lo': 0, 'hi': 2, 'ratio': 1.0})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'lo': 1, 'hi': 0, 'ratio': 0.5})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'lo': 1, 'hi': 3, 'ratio': 2.0})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'lo': 1, 'hi': 1, 'ratio': 1.0})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                 ^       ^           ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "fold",
+  "intake",
+  "emit",
+  "render",
+  "gather"
+ ],
+ "seed": 844795217,
+ "_signature": "609d0637ab43",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "intake"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "running",
+   "keep_even"
+  ],
+  "agg": "buckets",
+  "fmt": "ratio"
+ }
+}

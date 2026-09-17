@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0236",
+ "family": "v3",
+ "bug_class": "early_return",
+ "bug_region": "emit",
+ "program": "# region: emit\ndef emit(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n            return out\n    return out\n\n# region: intake\ndef intake(xs, offset=1):\n    return [v + offset for v in xs]\n\n# region: shape\ndef shape(xs, limit=12):\n    return [v if v <= limit else limit for v in xs]\n\n# region: render\ndef render(xs, offset=1):\n    return [v + offset for v in xs]\n\n# region: fold\ndef fold(xs):\n    return {'n': len(xs), 'total': sum(xs)}\n\n# region: digest\ndef digest(summary, name='gamma'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return digest(fold(render(shape(intake(emit(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'total': 12, 'label': 'GAMMA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'total': 23, 'label': 'GAMMA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'total': 17, 'label': 'GAMMA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'total': 29, 'label': 'GAMMA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'total': 2, 'label': 'GAMMA'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 32, 'label': 'GAMMA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'total': 17, 'label': 'GAMMA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                         ^           ^^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "emit",
+  "intake",
+  "shape",
+  "render",
+  "fold",
+  "digest"
+ ],
+ "seed": 84034800,
+ "_signature": "c343c321b2cb",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "intake"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "shift",
+   "clamp",
+   "shift"
+  ],
+  "agg": "total",
+  "fmt": "label"
+ }
+}

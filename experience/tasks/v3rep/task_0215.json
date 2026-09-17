@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0215",
+ "family": "v3",
+ "bug_class": "early_return",
+ "bug_region": "emit",
+ "program": "# region: emit\ndef emit(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n            return out\n    return out\n\n# region: digest\ndef digest(xs, limit=12):\n    return [v if v <= limit else limit for v in xs]\n\n# region: gather\ndef gather(xs, factor=2):\n    return [v * factor for v in xs]\n\n# region: shape\ndef shape(xs):\n    return {'n': len(xs), 'min': min(xs) if xs else 0, 'span': (max(xs) - min(xs)) if xs else 0}\n\n# region: fold\ndef fold(summary, name='beta'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return fold(shape(gather(digest(emit(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'min': 2, 'span': 4, 'label': 'BETA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'min': 0, 'span': 20, 'label': 'BETA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'min': -4, 'span': 20, 'label': 'BETA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'min': 0, 'span': 0, 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'min': 2, 'span': 22, 'label': 'BETA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'min': 0, 'span': 0, 'label': 'BETA'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 12, 'span': 0, 'label': 'BETA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'min': 4, 'span': 20, 'label': 'BETA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                          ^       ^          ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "emit",
+  "digest",
+  "gather",
+  "shape",
+  "fold"
+ ],
+ "seed": 178997079,
+ "_signature": "7d517c874bcf",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "digest"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "clamp",
+   "scale"
+  ],
+  "agg": "minspan",
+  "fmt": "label"
+ }
+}

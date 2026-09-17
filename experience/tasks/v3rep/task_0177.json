@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0177",
+ "family": "v3",
+ "bug_class": "drop_first",
+ "bug_region": "fold",
+ "program": "# region: fold\ndef fold(raw):\n    out = []\n    for tok in raw[1:]:\n        try:\n            out.append(float(tok))\n        except ValueError:\n            pass\n    return out\n\n# region: shape\ndef shape(xs):\n    return [v * v for v in xs]\n\n# region: intake\ndef intake(xs):\n    return [v for v in xs if v % 2 == 0]\n\n# region: sift\ndef sift(xs, factor=10):\n    return [v * factor for v in xs]\n\n# region: gather\ndef gather(xs):\n    return {'n': len(xs), 'total': sum(xs)}\n\n# region: digest\ndef digest(summary, bar=3):\n    out = dict(summary)\n    n = summary.get('n', 0)\n    out['ratio'] = round(n / bar, 3) if bar else 0.0\n    return out\n\n# region: run\ndef run(raw):\n    return digest(gather(sift(intake(shape(fold(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 1, 'total': 40.0, 'ratio': 0.333})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'total': 1000.0, 'ratio': 0.667})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 2, 'total': 680.0, 'ratio': 0.667})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'ratio': 0.0})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 2, 'total': 2880.0, 'ratio': 0.667})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'total': 0.0, 'ratio': 0.333})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 1440.0, 'ratio': 1.333})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'total': 16040.0, 'ratio': 0.667})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?       ^             ^^^           +++",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "fold",
+  "shape",
+  "intake",
+  "sift",
+  "gather",
+  "digest"
+ ],
+ "seed": 432329267,
+ "_signature": "738b09b0d64d",
+ "_test_identity": "test_case_01",
+ "_p1_sibling_regions": [
+  "shape"
+ ],
+ "_shape": {
+  "parser": "parse_floats",
+  "mappers": [
+   "squares",
+   "keep_even",
+   "scale"
+  ],
+  "agg": "total",
+  "fmt": "ratio"
+ }
+}

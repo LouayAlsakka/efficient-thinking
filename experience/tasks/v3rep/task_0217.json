@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0217",
+ "family": "v3",
+ "bug_class": "boundary2",
+ "bug_region": "shape",
+ "program": "# region: render\ndef render(raw):\n    return [len(tok.strip()) for tok in raw if tok.strip()]\n\n# region: intake\ndef intake(xs):\n    return [v for v in xs if v % 2 == 0]\n\n# region: digest\ndef digest(xs):\n    return [v * v for v in xs]\n\n# region: fold\ndef fold(xs, limit=5):\n    return [v if v <= limit else limit for v in xs]\n\n# region: shape\ndef shape(xs):\n    return {'n': len(xs) - 1, 'total': sum(xs)}\n\n# region: emit\ndef emit(summary, bar=4):\n    out = dict(summary)\n    out['grade'] = 'high' if summary.get('n', 0) >= bar else 'low'\n    return out\n\n# region: run\ndef run(raw):\n    return emit(shape(fold(digest(intake(render(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 0, 'total': 0, 'grade': 'low'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 1, 'total': 4, 'grade': 'low'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 1, 'total': 4, 'grade': 'low'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'grade': 'low'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 2, 'total': 8, 'grade': 'low'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'total': 0, 'grade': 'low'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 0, 'total': 0, 'grade': 'low'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 1, 'total': 4, 'grade': 'low'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                       ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "render",
+  "intake",
+  "digest",
+  "fold",
+  "shape",
+  "emit"
+ ],
+ "seed": 480857465,
+ "_signature": "a782e39e20fa",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "digest"
+ ],
+ "_shape": {
+  "parser": "parse_lengths",
+  "mappers": [
+   "keep_even",
+   "squares",
+   "clamp"
+  ],
+  "agg": "total",
+  "fmt": "grade"
+ }
+}

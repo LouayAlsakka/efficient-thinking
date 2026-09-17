@@ -1,0 +1,31 @@
+{
+ "task_id": "task_0018",
+ "family": "v3",
+ "bug_class": "boundary2",
+ "bug_region": "shape",
+ "program": "# region: sift\ndef sift(raw):\n    return [len(tok.strip()) for tok in raw if tok.strip()]\n\n# region: gather\ndef gather(xs, factor=2):\n    return [v * factor for v in xs]\n\n# region: shape\ndef shape(xs):\n    n = len(xs) - 1\n    return {'n': n, 'mean': (sum(xs) / n) if n else 0.0, 'max': max(xs) if xs else 0}\n\n# region: digest\ndef digest(summary, bar=4):\n    out = dict(summary)\n    out['grade'] = 'high' if summary.get('n', 0) >= bar else 'low'\n    return out\n\n# region: run\ndef run(raw):\n    return digest(shape(gather(sift(raw))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'mean': 2.0, 'max': 2, 'grade': 'low'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 4, 'mean': 2.5, 'max': 4, 'grade': 'high'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'mean': 2.6666666666666665, 'max': 4, 'grade': 'low'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 3, 'mean': 6.0, 'max': 6, 'grade': 'low'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'mean': 3.3333333333333335, 'max': 4, 'grade': 'low'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'mean': 2.0, 'max': 2, 'grade': 'low'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'mean': 2.0, 'max': 2, 'grade': 'high'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 3, 'mean': 5.333333333333333, 'max': 10, 'grade': 'low'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                    ^         ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "sift",
+  "gather",
+  "shape",
+  "digest"
+ ],
+ "seed": 92800141,
+ "_signature": "7688062fbeda",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "gather"
+ ],
+ "_shape": {
+  "parser": "parse_lengths",
+  "mappers": [
+   "scale"
+  ],
+  "agg": "meanmax",
+  "fmt": "grade"
+ }
+}

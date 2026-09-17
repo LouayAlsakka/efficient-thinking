@@ -1,0 +1,31 @@
+{
+ "task_id": "task_0245",
+ "family": "v3",
+ "bug_class": "int_division",
+ "bug_region": "sift",
+ "program": "# region: digest\ndef digest(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n    return out\n\n# region: shape\ndef shape(xs):\n    return [v * v for v in xs]\n\n# region: sift\ndef sift(xs):\n    n = len(xs)\n    return {'n': n, 'mean': (sum(xs) // n) if n else 0.0, 'max': max(xs) if xs else 0}\n\n# region: fold\ndef fold(summary, name='alpha'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return fold(sift(shape(digest(raw))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'mean': 4.666666666666667, 'max': 9, 'label': 'ALPHA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'mean': 49.666666666666664, 'max': 100, 'label': 'ALPHA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'mean': 31.0, 'max': 64, 'label': 'ALPHA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'mean': 0.0, 'max': 0, 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'mean': 96.33333333333333, 'max': 144, 'label': 'ALPHA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'mean': 0.0, 'max': 0, 'label': 'ALPHA'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'mean': 36.0, 'max': 36, 'label': 'ALPHA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'mean': 802.0, 'max': 1600, 'label': 'ALPHA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                       ++++++++++++++++",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "digest",
+  "shape",
+  "sift",
+  "fold"
+ ],
+ "seed": 384445974,
+ "_signature": "79ea0689fd3f",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "digest"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "squares"
+  ],
+  "agg": "meanmax",
+  "fmt": "label"
+ }
+}

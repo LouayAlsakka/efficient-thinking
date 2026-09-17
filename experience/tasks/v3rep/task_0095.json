@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0095",
+ "family": "v3",
+ "bug_class": "wrong_agg",
+ "bug_region": "render",
+ "program": "# region: gather\ndef gather(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n    return out\n\n# region: shape\ndef shape(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: intake\ndef intake(xs, limit=9):\n    return [v if v <= limit else limit for v in xs]\n\n# region: digest\ndef digest(xs, offset=-1):\n    return [v + offset for v in xs]\n\n# region: render\ndef render(xs):\n    return {'n': len(xs), 'total': max(xs)}\n\n# region: fold\ndef fold(summary, name='alpha'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return fold(render(digest(intake(shape(gather(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'total': 10, 'label': 'ALPHA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'total': 24, 'label': 'ALPHA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'total': 14, 'label': 'ALPHA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'total': 24, 'label': 'ALPHA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'total': -1, 'label': 'ALPHA'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 29, 'label': 'ALPHA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'total': 9, 'label': 'ALPHA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "ERROR: ValueError: max() arg is an empty sequence",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "gather",
+  "shape",
+  "intake",
+  "digest",
+  "render",
+  "fold"
+ ],
+ "seed": 123685876,
+ "_signature": "073669390eda",
+ "_test_identity": "test_case_03",
+ "_p1_sibling_regions": [
+  "gather"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "running",
+   "clamp",
+   "shift"
+  ],
+  "agg": "total",
+  "fmt": "label"
+ }
+}
