@@ -1,0 +1,42 @@
+{
+ "measurement": "THE COST LIMB — head fit on seed 47 (all 300), evaluated on seed 21's FULL 300. Zero shared signatures. n = 300 problems.",
+ "table": {
+  "base": {
+   "solved": "56/300 = 18.7%",
+   "SE": 2.2,
+   "actions": 10.63
+  },
+  "G": {
+   "solved": "95/300 = 31.7%",
+   "SE": 2.7,
+   "actions": 9.85
+  },
+  "delta": {
+   "points": 13.0,
+   "actions": -0.78
+  }
+ },
+ "BOTH_LIMBS_AGAIN": "more problems solved AND cheaper, on 300 problems with a 2.2-point SE. This is the objective's first limb met at a size where the interval means something.",
+ "THE_THREE_MEASUREMENTS_OF_ONE_EFFECT": {
+  "seed-21 head, seed-21 held-out slice": "17.3% -> 38.7% = +21.4 (adjacent tasks, SAME generator run)",
+  "seed-21 head, seed-47 independent": "17.3% -> 29.3% = +12.0",
+  "seed-47 head, seed-21 full 300": "18.7% -> 31.7% = +13.0",
+  "reading": "the two CROSS-RUN measurements agree closely (+12.0, +13.0) and the same-run one is inflated (+21.4). DIRECTION OF TRANSFER IS SYMMETRIC -- it does not matter which set trains and which evaluates. The carried number is +12 to +13 points; +21.4 is what training on adjacent tasks buys and it is printed only as that."
+ },
+ "the_agreement_invariance_check_is_much_cleaner_at_this_n": {
+  "agreement": "121 of 300 = 40.3%; G changed the pick on 179",
+  "on the 179 disagreements": "base 12 green -> G 52 (+40)",
+  "on the 121 agreements": "base 44 green -> G 43 (-1)",
+  "reading": "at n=75 the agreement group moved +2 and then -2 and I could only call that noise. At n=300 it moves -1 of 121. The effect is entirely in the disagreements, and the temperature confound is now bounded at about a third of one episode per hundred."
+ },
+ "a_control_that_behaved_differently_and_I_am_not_smoothing_it": {
+  "observed": "on the seed-47 head fit, the n=100 control scored 45.3% against the full head's 42.7% -- ABOVE it. On the seed-21 fit it was 41.3% against 56.0%, below.",
+  "what_it_probably_is": "my fit runs a fixed 400 iterations at a fixed learning rate, and the gradient is averaged over the pool, so a larger pool takes SMALLER effective steps. n=100 beating the full fit is consistent with under-convergence rather than with a signal that needs no examples.",
+  "consequence": "the n=100 control is not interpretable on this fit and I am not reading it as evidence either way. PCA-8 (29.3% vs 42.7%) still does its job, and the permutation control (16.0-22.7%) still collapses to chance."
+ },
+ "bounds": [
+  "n = 300, SE 2.2 and 2.7. One model, one layer, one grammar, two seeds.",
+  "The head's own pick accuracy on seed 47's held-out quarter was 42.7% against an agent at 20.0% -- and the agent's 20.0% there is AT CHANCE, lower than the 33.3% on seed 21's held-out quarter. The two quarters are not equally hard for the agent.",
+  "v3's failures are localisation-bound. On a repair-bound set this head would be expected to do nothing, which is what v2 measured."
+ ]
+}
