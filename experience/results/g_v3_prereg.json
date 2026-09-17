@@ -1,0 +1,34 @@
+{
+ "document": "G ON v3 — THE FOUR READINGS AND THE BAR, WRITTEN BEFORE THE HEAD IS FIT (理 11068/11104)",
+ "written_at": "2026-09-17, while the probe's state extraction was still running and no fit had been computed. Nothing in this file was chosen after seeing a head number.",
+ "the_base_it_is_re_based_on": {
+  "problems_solved": "56/300 = 18.7%",
+  "SE_points": 2.2,
+  "mean_actions": 10.63,
+  "post_inspect_localisation_pct": 29.0,
+  "prompt_gate": "300/300, ratio 1.000, FIT"
+ },
+ "THE_BAR": {
+  "constraint (capability held)": "problems solved >= 16.5% (base - 1 SE). Below that, G is making the agent worse and it is a constraint failure, the same call as A/C/F.",
+  "objective (an effect)": "problems solved >= 23.1% (base + 2 SE) at no higher mean action cost, OR the same problems solved at a mean action cost at least 1.0 action lower. Either limb is an effect; both are stated so a cost-only win is not retro-fitted as a success.",
+  "NOT the bar": "head pick accuracy, and localisation. The arm that localised better and solved half as many would have passed a localisation bar twice, on two different task sets.",
+  "confirmation": "any arm clearing the objective on seed 21 re-runs on seed 47 (300 independent problems, zero shared signatures) BEFORE it is a claim."
+ },
+ "THE_FOUR_READINGS": {
+  "PASS": "the head beats the agent's 29.0% on held-out decisions AND the wired run clears the objective. First prior in either field to hold capability and produce an effect.",
+  "FAIL-signal": "the head does not beat the agent, or its permutation control does not collapse, or PCA-8 / n=100 match the full head. Then the state does not carry a usable decision signal at this point and G is answered NEGATIVELY rather than left untestable -- which is itself new, because v1 and v2 could not answer it at all.",
+  "FAIL-transfer": "the head beats the agent on PICKING and the wired run does not clear the objective. Choosing the region better does not solve more problems. THIS IS THE WEEK'S RECURRING SHAPE and it is the reading I consider most likely: G-trivial and G-trivial' both raised localisation and moved episodes by <= 1 on two task sets.",
+  "FAIL-capability": "the wired run falls below the constraint. The head re-weights the agent into worse play, as the naive prior did once the chooser could see (4 of 11 -> same four, less reliably, at higher cost)."
+ },
+ "what_each_reading_would_mean_for_the_paper": {
+  "PASS": "the thesis survives in one field and the carrier is named.",
+  "FAIL-signal": "the thesis is refuted at the level of the STATE: the frozen activations do not carry the choice, and no carrier built on reading them can work.",
+  "FAIL-transfer": "the thesis is refuted at the level of the ACTION: the choice is not what limits the agent. Seven carriers, two fields, one cause.",
+  "FAIL-capability": "as FAIL-transfer, plus the override cost, which scales with how good the chooser is."
+ },
+ "bounds": [
+  "300 problems, SE 2.2 points. An effect smaller than ~4.4 points is not distinguishable from the base at this n and will be reported as not distinguishable.",
+  "One model, greedy except where EXPLORE_TEMP fires.",
+  "The head reads the post-inspect decision only. A different decision point is a different experiment."
+ ]
+}
