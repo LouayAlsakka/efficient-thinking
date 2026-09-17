@@ -1189,6 +1189,40 @@ every Elo in the table is relative to the 256-simulation base until a single lad
 Stockfish Elo, which is queued. So the week stands in two fields with no code in common: six carriers — text memory,
 steering, the logit bias, two forms of the naive rule, and the chess prior — and not one lowered cost with capability
 held. The one intervention that did both was a change to when the agent may act, and it was hand-written.
+The rung was then named: one ladder run of 60 games puts the un-priored 256-simulation base at 1983 ± 73 against
+Stockfish levels, with the raw policy at 1802, so adding 256 simulations of search to the policy is worth +182 Elo
+and the prior, across the whole sweep, +20 ± 55. Search is worth nine times the prior and the prior's interval
+includes zero — the second field's version of the first field's sentence, that the mechanism already in the
+system dominates the prior added to it. The rung anchors the table and does not sharpen it (±73 is comparable to
+the deltas), and a Stockfish level at a twentieth of a second per move is not a rating.
+
+**The third task set is built, and it is the first in the programme where an episode is an observation.** A task is
+a pipeline generated from a grammar — parser, one to three mappers, aggregator, formatter — varying data shape,
+operations, parameters, region count and region names; its tests are generated from the clean program's own
+behaviour on fixtures, so every suite is correct by construction and every message is behavioural; a mutation is
+kept only if the clean program passes and the mutant fails, so the verifier decides what a bug is; and the
+symptom carries no region field at all. At 300 tasks the task gate reads 1.000 — 300 signatures, 300 programs,
+largest group one — and it survives scale, which was the real risk. The held-out lookup on the symptom scores 4.7%
+against a bar of 60%: there is no key to read. Then the check no gate on the tasks can make: the inspect-first base
+on 80 provisional tasks produced 77 distinct trajectories, eight distinct first regions, and 18.8% success with a
+standard error of 4.4 points — the first interval in this section that is real. Three things were caught on the
+way and are rules now. The entropy gate written for the second set is n-dependent under the task gate (0.15 bits
+at 40 tasks, 0.86 at 300, rising as symptoms begin to repeat); a first reading called it structurally incompatible
+and asked to strike it, which was withdrawn within the hour when the scoped n refuted the probe — a gate quoted
+from a probe states its value at the scoped n before any structural claim. It is retired for this set and
+replaced, not lowered, by the two starvation guards it stood in for: assertion detail on every task, and symptom
+distinctness at or above one half; the entropy is printed beside every table and is never a bar. The reachability
+gate is kept and redefined per program, since test identities are per-program here. And outcome resolution is
+coarse — 65 of 80 fail identically at the budget — which is not the earlier degeneracy (failing costs the full
+budget; the tasks are distinct) and whose lever is n, not the budget: doubling the budget bought 3.7 points at
+nearly double the cost with 62 of 80 still at the wall, and three tasks that succeeded at the smaller budget failed
+at the larger, because the budget is in the prompt and changing it changes every prompt from step one. A budget
+curve is never read as one run truncated at different lengths; it is a different agent. Easier programs, the
+convenient fix, is named as the wrong one: it tunes the benchmark to the agent, which is how the first two sets got
+where they were. The set is 300 for the base and the first pass, with a second 300 generated, gated and held unrun
+as the replication set: any arm that shows an effect on the first confirms on the second before it is a claim. G
+reopens here, in the same order as before — base, prompt gate at the post-inspect hypothesis, probe with the
+permutation control, head, run — with the bar on problems solved and cost only.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
