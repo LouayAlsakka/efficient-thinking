@@ -127,17 +127,36 @@ def hidden_at(model, tok, messages, layers, prefix=""):
     return got
 
 
-def logistic_fit(X, y, iters=400, lr=0.5, l2=1e-3):
-    """Binary scorer: is THIS candidate the bug region? A linear head, on purpose -- anything
-    stronger stops being a read of the state and starts being a model."""
+def logistic_fit(X, y, l2=1e-3, **_):
+    """Binary scorer: is THIS candidate the bug region? Linear, on purpose.
+
+    FIT BY L-BFGS (scipy), NOT BY HAND-TUNED GRADIENT DESCENT (理 11152, and then a defect of mine
+    that ruling exposed). The first version ran a fixed 400 iterations with the gradient averaged
+    over the pool, so a larger pool took smaller effective steps. Told to fix it, I switched to a
+    loss-change criterion -- which hit a 40,000-iteration cap without converging -- and then raised
+    the learning rate to 2.0, at which point the SAME pool scored 58.7% at lr 0.5 and 24.0% at
+    lr 2.0.
+
+    A probe accuracy that moves 35 points with the optimizer's step size is not a measurement of the
+    state. L-BFGS removes the free parameter entirely: it converges to the regularised optimum or it
+    reports that it did not, and `last_iters` / `hit_cap` carry that into every table.
+    """
+    from scipy.optimize import minimize
     n, d = X.shape
-    w = np.zeros(d); b = 0.0
-    for _ in range(iters):
-        p = 1.0 / (1.0 + np.exp(-(X @ w + b)))
+    def f(th):
+        w, b = th[:d], th[d]
+        z = X @ w + b
+        # log(1+exp(z)) computed stably
+        ll = np.logaddexp(0.0, z) - y * z
+        loss = ll.mean() + 0.5 * l2 * float(w @ w)
+        p = 1.0 / (1.0 + np.exp(-z))
         g = (p - y) / n
-        w -= lr * (X.T @ g + l2 * w)
-        b -= lr * g.sum()
-    return w, b
+        return loss, np.concatenate([X.T @ g + l2 * w, [g.sum()]])
+    res = minimize(f, np.zeros(d + 1), jac=True, method="L-BFGS-B",
+                   options={"maxiter": 2000, "ftol": 1e-12, "gtol": 1e-8})
+    logistic_fit.last_iters = int(res.nit)
+    logistic_fit.hit_cap = not bool(res.success)
+    return res.x[:d], float(res.x[d])
 
 
 def pick_accuracy(scores, meta, idx):
@@ -194,11 +213,18 @@ def cmd_fit(a):
         P = Vt[:8].T
         w3, b3 = logistic_fit((Z @ P)[tr], y[tr])
         pca8 = pick_accuracy((Z @ P) @ w3 + b3, meta, np.where(te)[0])[0]
-        # CONTROL 3: 100 training candidate-states
+        # CONTROL 3: 100 training candidate-states, FIVE DRAWS.
+        # One draw was not a control. Two different 100-subsamples of the SAME pool scored 33.3% and
+        # 46.7% held out -- a 13-point spread from the subsample alone -- so a single draw could sit
+        # either side of the full head and I read one of those as an anomaly and reported it as
+        # possible under-convergence. Five draws, all printed, mean compared.
         idx = np.where(tr)[0]
-        sub = rng.choice(idx, size=min(100, len(idx)), replace=False)
-        w4, b4 = logistic_fit(Z[sub], y[sub])
-        n100 = pick_accuracy(Z @ w4 + b4, meta, np.where(te)[0])[0]
+        n100s = []
+        for _ in range(5):
+            sub = rng.choice(idx, size=min(100, len(idx)), replace=False)
+            w4, b4 = logistic_fit(Z[sub], y[sub])
+            n100s.append(pick_accuracy(Z @ w4 + b4, meta, np.where(te)[0])[0])
+        n100 = float(np.mean(n100s))
         np.savez(os.path.join(a.states, "head_layer%d.npz" % l), w=w, b=np.array([b]),
                  mu=mu, sd=sd, train_task_max=np.array([cut]))
         out["layers"][str(l)] = {
@@ -207,6 +233,9 @@ def cmd_fit(a):
             "CONTROL_permuted_labels_pct": [round(100 * p, 1) for p in perm],
             "CONTROL_pca8_pct": round(100 * pca8, 1),
             "CONTROL_n100_pct": round(100 * n100, 1),
+            "CONTROL_n100_draws_pct": [round(100 * x, 1) for x in n100s],
+            "fit_iterations": int(logistic_fit.last_iters),
+            "fit_hit_iteration_cap": bool(logistic_fit.hit_cap),
             "chance_pct": round(100 * float(np.mean([1.0 / m["n_regions"] for m in meta])), 1)}
         p = out["layers"][str(l)]
         print("layer %d: head %.1f%%  agent %s%%  chance %.1f%%  | permuted %s  pca8 %.1f%%  n100 %.1f%%"

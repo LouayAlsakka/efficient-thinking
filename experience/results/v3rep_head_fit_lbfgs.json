@@ -1,0 +1,35 @@
+{
+ "candidate_states": 1493,
+ "decisions": 300,
+ "train_tasks": 225,
+ "held_out_tasks": 75,
+ "agent_pick_accuracy_on_heldout": 20.0,
+ "layers": {
+  "18": {
+   "weights": "head_layer18.npz in the states dir (w, b, mu, sd, train_task_max)",
+   "head_pick_pct": 42.7,
+   "held_out_decisions": 75,
+   "CONTROL_permuted_labels_pct": [
+    24.0,
+    24.0,
+    22.7,
+    18.7,
+    13.3
+   ],
+   "CONTROL_pca8_pct": 33.3,
+   "CONTROL_n100_pct": 31.2,
+   "CONTROL_n100_draws_pct": [
+    37.3,
+    33.3,
+    25.3,
+    28.0,
+    32.0
+   ],
+   "fit_iterations": 234,
+   "fit_hit_iteration_cap": false,
+   "chance_pct": 20.1
+  }
+ },
+ "how_to_read_the_controls": "permuted must collapse to chance; if PCA-8 or n=100 match the full head, the signal needs neither dimensions nor examples and is a key being copied, not a readout. v1 scored 100% held out, PASSED its permutation control, and survived both of those -- which is how the label-in-the-prompt was found. All three are printed, always.",
+ "the_bar": "problems solved and cost on a paired run. Head accuracy is NOT the bar: the arm that localised better and solved half as many would have passed a localisation bar twice, on two different task sets (\u7406 11068)."
+}

@@ -1,0 +1,56 @@
+{
+ "document": "THE FIT, RE-DONE — and what the ruling to fix it exposed (理 11152)",
+ "what_理_ruled": "the n=100 control scoring ABOVE the full head on one fit is an optimizer defect, and P9 compares heads trained on pools of DIFFERENT SIZE, so leaving it would measure the optimizer and call it accumulation. Fix the fit, re-fit both heads, re-run all three controls, and only then start P9.",
+ "what_fixing_it_exposed": {
+  "fixed 400 iterations, lr 0.5": "seed-21 head 56.0%",
+  "loss-tolerance criterion, lr 0.5": "58.7% — and EVERY fit hit a 40,000-iteration cap without converging",
+  "loss-tolerance criterion, lr 2.0": "24.0% — BELOW the agent's 33.3%, on the same states",
+  "the finding": "a probe accuracy that moves 35 points with the optimizer's step size is not a measurement of the state. 理's concern was that the CONTROL measured the optimizer; it was worse -- the HEAD did."
+ },
+ "the_fix": "L-BFGS (scipy) with an analytic gradient and no free step size. It converges to the regularised optimum or reports that it did not; last_iters and hit_cap go into every table.",
+ "the_fits_now": {
+  "seed-21 pool, layer 18": {
+   "head": 66.7,
+   "agent": 33.3,
+   "chance": 20.4,
+   "permuted": [
+    18.7,
+    10.7,
+    24.0,
+    22.7,
+    18.7
+   ],
+   "pca8": 26.7,
+   "n100_mean_of_5": 37.9
+  },
+  "seed-47 pool, layer 18": {
+   "head": 42.7,
+   "agent": 20.0,
+   "chance": 20.1,
+   "permuted": [
+    24.0,
+    24.0,
+    22.7,
+    18.7,
+    13.3
+   ],
+   "pca8": 33.3,
+   "n100_mean_of_5": 31.2
+  },
+  "verdict": "n=100 reads BELOW the full head on both. 理's condition for P9 is met."
+ },
+ "A_SECOND_DEFECT_OF_MINE_THAT_MADE_THE_ANOMALY_LOOK_LIKE_ONE": {
+  "what": "my n=100 control was a SINGLE random subsample.",
+  "measured": "two draws from the same pool scored 33.3% and 46.7% held out — a 13-point spread from the draw alone.",
+  "consequence": "one draw was never a control. It is five draws now, all printed. What I reported as a possible convergence anomaly was in part me reading subsample noise, and I said it was 'probably under-convergence' when I had not measured the variance of my own control."
+ },
+ "what_this_does_and_does_not_touch": {
+  "does NOT touch": "the wired episode results. Those are end-to-end measurements of a SAVED head, not of a probe number: +13.0 on 300 was real for the head that produced it.",
+  "does touch": "which head the paper should carry. 理: if re-fitting moves the episode results, the re-fitted numbers are the ones reported. The arm is being re-run with the L-BFGS head."
+ },
+ "bounds": [
+  "L-BFGS converges on these pools; the cap flag is reported per fit.",
+  "The head accuracies are not comparable across pools (seed-47's held-out quarter has the agent at chance, 20.0%, against 33.3% on seed-21's).",
+  "Everything here is about the PROBE. The episode arms are separate measurements."
+ ]
+}
