@@ -994,6 +994,25 @@ comparison is valid either way, but the rungs are only P8's if the ladder's eval
 was installed in no environment on the box, so "ready to run" had been asserted without an import; it is now
 installed in the study's own environment.
 
+P8's design was then pre-registered and is stated here because the run is under way. The headline is head-to-head
+rather than the ladder — simulations to equal strength — with the ladder run once, without the prior, only to name
+the rung in Stockfish Elo. The baseline is the frozen net without the prior at 256 simulations; the prior is played
+at 64, 128 and 256 simulations against it, and the un-priored net at 64 and 128 against it as the control curve
+for what simulations alone buy; 80 games per pairing with colours balanced, so a win rate carries about 5.6 points
+of standard error. The constraint of §4.2a is that the prior at equal simulations wins at least 45% of games; the
+objective is that the prior at half the simulations wins at least 45% while the un-priored net at half does not,
+which would be a twofold saving in search that simulations alone do not buy. The prior's strength was chosen by a
+rule written before the table existed: the smallest scaling of the prior at which its mean absolute shift of the
+proposal distribution over 120 probed positions reaches a tenth of the mass. On the 300 regenerated games (189
+decisive, 16,906 moves, 31 state buckets, 409 table entries) the rule selected 0.5, not the 1.0 the design had
+named first, and the curve is printed with the choice (0.113, 0.219, 0.412, 0.707 at 0.5, 1, 2, 4). The rule also
+earned itself: on the two-game smoke prior the same curve read 0.012 to 0.099, so no scaling up to 4 would have
+cleared it, and a sweep on that prior would have completed cleanly and measured an inert intervention — four hours
+of search for a null that reads as a finding. A shift in the proposal distribution says the prior changes the
+search, not that it improves it; the five pairings decide that. One more instance of the persistence rule was
+found on the way: the directory holding every trajectory the mechanism comparisons read from was excluded from
+version control, and is now tracked with the reason for the change kept in place.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
