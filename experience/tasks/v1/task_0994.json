@@ -1,0 +1,21 @@
+{
+ "task_id": "task_0994",
+ "family": "B_state",
+ "bug_class": "missing_key",
+ "bug_region": "consumer",
+ "program": "# region: producer\ndef produce(items):\n    \"\"\"Return the list of positive integer scores parsed from items (strings), in input order.\"\"\"\n    out = []\n    for i in range(len(items)):\n        s = items[i].strip()\n        if s.isdigit() and int(s) > 0:\n            out.append(int(s))\n    return out\n\n# region: transform\ndef normalize(scores, cap=100):\n    \"\"\"Clamp scores to [0, cap] and return as floats scaled to [0, 1].\"\"\"\n    res = []\n    for v in scores:\n        if v > cap:\n            v = cap\n        res.append(v / cap)\n    return res\n\n# region: aggregate\ndef summarize(values, bucket=None):\n    \"\"\"Return dict with count, mean, max; optional bucket collects values >= 0.5.\"\"\"\n    if bucket is None:\n        bucket = []\n    for v in values:\n        if v >= 0.5:\n            bucket.append(v)\n    n = len(values)\n    mean = (sum(values) / n) if n else 0.0\n    mx = max(values) if values else 0.0\n    return {\"count\": n, \"mean\": mean, \"max\": mx, \"bucket\": bucket}\n\n# region: consumer\ndef report(items, cap=100):\n    \"\"\"End-to-end: parse, normalize, summarize; returns the summary dict with a 'grade' key.\"\"\"\n    scores = produce(items)\n    norm = normalize(scores, cap)\n    summ = summarize(norm)\n    summ[\"grade\"] = \"high\" if summ[\"avg\"] >= 0.5 else \"low\"\n    return summ\n",
+ "tests": "\nimport unittest, datetime\nfrom program import produce, normalize, summarize, report\n\nclass T(unittest.TestCase):\n    # --- producer ---\n    def test_produce_all(self):            self.assertEqual(produce([\"3\",\"1\",\"2\"]), [3,1,2])\n    def test_produce_filters(self):        self.assertEqual(produce([\"0\",\"-2\",\"x\",\"5\"]), [5])\n    def test_produce_nbsp(self):           self.assertEqual(produce([\"\\u00a07\"]), [7])\n    def test_produce_bad_token(self):      self.assertEqual(produce([\"7a\", \"8\"]), [8])\n    def test_produce_underscore(self):     self.assertEqual(produce([\"1_0\", \"2\"]), [2])   # isdigit rejects; a bare int() accepts\n    # --- transform ---\n    def test_normalize_scale(self):        self.assertEqual(normalize([50, 100], 100), [0.5, 1.0])\n    def test_normalize_clamp(self):        self.assertEqual(normalize([150], 100), [1.0])\n    def test_normalize_no_alias(self):\n        s = [10, 20]; normalize(s, 100); self.assertEqual(s, [10, 20])\n    def test_normalize_arg_order(self):    self.assertEqual(normalize([25], 50), [0.5])\n    # --- aggregate ---\n    def test_summarize_basic(self):\n        r = summarize([0.2, 0.6, 0.9]); self.assertEqual(r[\"count\"], 3); self.assertAlmostEqual(r[\"mean\"], 0.5666, 3); self.assertEqual(r[\"max\"], 0.9)\n    def test_summarize_unsorted_max(self): self.assertEqual(summarize([0.9, 0.1])[\"max\"], 0.9)\n    def test_summarize_bucket_fresh(self):\n        a = summarize([0.7]); b = summarize([0.8]); self.assertEqual(b[\"bucket\"], [0.8])\n    # --- consumer ---\n    def test_report_grade_high(self):      self.assertEqual(report([\"80\",\"90\"], 100)[\"grade\"], \"high\")\n    def test_report_grade_low(self):       self.assertEqual(report([\"10\",\"20\"], 100)[\"grade\"], \"low\")\n    def test_report_keys(self):\n        r = report([\"50\"], 100); self.assertEqual(set(r.keys()), {\"count\",\"mean\",\"max\",\"bucket\",\"grade\"})\n    def test_report_all_items(self):       self.assertEqual(report([\"10\",\"20\",\"30\"], 100)[\"count\"], 3)\n\nif __name__ == \"__main__\":\n    unittest.main(verbosity=0)\n",
+ "symptom": "ERROR: test_report_all_items \u2014 ",
+ "symptom_region": "consumer",
+ "dead_paths": [
+  "off_by_one",
+  "wrong_comparator"
+ ],
+ "regions": [
+  "producer",
+  "transform",
+  "aggregate",
+  "consumer"
+ ],
+ "seed": 359623383
+}

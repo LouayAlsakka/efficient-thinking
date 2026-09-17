@@ -57,6 +57,11 @@ reasoning/data/
 !reasoning/frontier_*.json
 !control/
 
-# ET-8 generated task sets (regenerable: et8_env.py gen); keep only _stats.json
-experience/tasks/*/task_*.json
+# ET-8 generated task sets. The old rule excluded task_*.json as "regenerable: et8_env.py gen" --
+# but NO SEED WAS EVER RECORDED, so v0 and v1 are not regenerable, and v0's files were never
+# committed at all: its localisation numbers are permanently unauditable. The whole set is 7.8 MB
+# and 0.2 MB gzipped, which was never the reason to exclude it. Ri's ruling after the v1 defect:
+# every run persists the artifacts a later question could need, or its downstream claims are
+# marked unauditable. So the task sets are TRACKED.
+# experience/tasks/*/task_*.json
 experience/traj/
