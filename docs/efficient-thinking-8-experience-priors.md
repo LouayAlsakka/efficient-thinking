@@ -1013,6 +1013,42 @@ search, not that it improves it; the five pairings decide that. One more instanc
 found on the way: the directory holding every trajectory the mechanism comparisons read from was excluded from
 version control, and is now tracked with the reason for the change kept in place.
 
+**How much of the first task set rested on the key, and what the second one looks like.** Redacting the test name
+from the first set's symptom line, everything else unchanged, took the base from 62.5% to 21.2% and raised actions
+from 6.6 to 10.3 — the agent spends more and succeeds a third as often. That number is an *upper bound* on the
+giveaway and is not reported as the key's value: with the name removed, 79% of the first set's symptoms become
+"a test failed" and nothing else, because the assertion detail had never been recovered, so the ablation removes
+the symptom along with the key; and in the other direction the FAIL/ERROR prefix survives redaction and was itself
+part of the key. The two confounds do not cancel and are not netted. What the ablation does establish is that the
+first set's base was never a measurement of debugging under an informative symptom, that every cost comparison on
+it was between arms that all held the key, and that the second set needed both of its changes — the multi-region
+injectors *and* a symptom that states behaviour — since removing the key alone would have left most tasks starved.
+
+The base on the second set: **20.0% success, 10.2 actions, first hypothesis in the bug region 31.2%** of the time,
+on the same four slices (the first set's 62.5% is context and not a comparison). Two facts inside it set what G
+can and must do. Split by the first hypothesis: **correct in 25 episodes, of which 16 succeed (64%); wrong in 55,
+of which none succeed (0%).** Localisation is necessary here and nearly sufficient, the inverse of the first set
+where forcing the correct region was worth nothing — and the zero is partly the harness, since one hypothesis per
+episode means a wrong first guess cannot be recovered inside the budget. And the agent is below every trivial
+baseline on these 80 tasks: a lookup table on the symptom string, fitted on the other 1,920 tasks, localises 51.2%;
+always answering the symptom region, 41.2%; the majority class, 41.2%; the agent, 31.2%. So a head that beats the
+agent proves nothing; **G must beat 51.2% on localisation**, since anything below it is recoverable from the
+symptom string with no access to the state, and that figure is printed beside every G number as the first set's
+88% was. The naive control then ran on the second set and did what the task set predicted: localisation 31.2% to
+41.2%, exactly the symptom-region rule's accuracy computed before the run, and success 20.0% to 21.2%, one episode
+in eighty. Its decomposition revises the ceiling downward by a factor of five: the agent's own correct
+localisations convert at 64%, the eight extra localisations the rule imposes convert at 12.5% — the episodes the
+agent localises unaided are the easy ones, and forcing correct localisation onto the hard ones converts about one
+in eight. The honest headroom for G is therefore about eight points (20% to roughly 28%), not forty-four, and the
+bar is set from the marginal rate before the head is fitted: localisation above 51.2% on the same 80 tasks,
+pooled success at least 25%, no slice below its base by more than 2.5 points, cost reported rather than barred
+since on this set failures burn the budget and actions fall with success. Four readings are written first. Both
+bars met: the first prior in either field to satisfy the constraint with an effect. Localisation met and success
+not: the head reads the state and localisation does not convert on the hard episodes. Localisation not met: the
+head is a table. A slice below its base: a capability failure. The marginal rate rests on eight episodes, and
+that thinness is printed with the bar. The chess sweep's first pairing (the prior at a quarter of the search
+against the un-priored base) scored 0.275 and is not interpretable until the un-priored quarter-search arm lands.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
