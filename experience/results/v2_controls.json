@@ -1,0 +1,53 @@
+{
+ "measurement": "v2 CONTROL SET COMPLETE — baseline, G-trivial, G-trivial′ under the original loop",
+ "table": {
+  "pooled_pct": {
+   "baseline": 20.0,
+   "gtrivial": 21.2,
+   "gtrivial_prime": 20.0
+  },
+  "mean_actions": {
+   "baseline": 10.2,
+   "gtrivial": 10.12,
+   "gtrivial_prime": 10.2
+  },
+  "first_hypothesis_localisation_pct": {
+   "baseline": 31.2,
+   "gtrivial": 41.2,
+   "gtrivial_prime": 41.2
+  },
+  "per_slice_green": {
+   "baseline": [
+    5,
+    5,
+    4,
+    2
+   ],
+   "gtrivial": [
+    5,
+    5,
+    4,
+    3
+   ],
+   "gtrivial_prime": [
+    5,
+    5,
+    4,
+    2
+   ]
+  }
+ },
+ "the_result": "+10 points of localisation, +1 episode at most. G-trivial′ — the model's OWN hypothesis text at the same forced region — lands exactly on the baseline. The v1 conclusion reproduces on a task set built to be different.",
+ "divergence_check_baseline_vs_gtrivial_prime": {
+  "identical (green, actions)": "80 of 80",
+  "first hypothesis (region, class) differs": "8 of 80",
+  "full step SEQUENCE differs": "58 of 80",
+  "reading": "the arms are two runs, not one: the 8 changed first hypotheses are exactly the +10 localisation points, and 58 trajectories diverge later because the selected candidate's `why` text differs even when region and class match, which changes the history string. Route changes, destination does not — the same signature as v1."
+ },
+ "what_it_leaves": "on the ORIGINAL loop, v2 behaves like v1 on this axis. That is consistent with the structural finding that the step-1 decision carries no observation: 80 episodes, six distinct prompts. Both controls are therefore measuring a choice made blind, which is why 改善 in localisation does not convert. The inspect-first loop (理 10941) is the test of whether a choice made WITH an observation behaves differently.",
+ "bounds": [
+  "80 episodes, four slices, greedy. The +1 is noise.",
+  "G-trivial is handed task['bug_class'], the TRUE class, so it is an oracle on the class as well as the region. G-trivial′ must invent the class and still matches the baseline.",
+  "These are ORIGINAL-loop numbers. 理 ruled everything on v2 re-runs under inspect-first and is compared only within that loop; this set is the before, kept for the contrast."
+ ]
+}
