@@ -1333,6 +1333,35 @@ number. One bound rides with it: the second generation's states are produced wit
 identically distributed to the base agent's, which is the experiment, and which is why head accuracies across
 generations are not compared, only episodes on the independent set.
 
+**The cost limb on 300 problems: both limbs again, at a size where the interval means something.** With the head
+fitted on the second seed's 300 and run on the first seed's 300, against the base measured there:
+
+| arm | problems solved | mean actions |
+|---|---:|---:|
+| base | 56 of 300 = 18.7% (SE 2.2) | 10.63 |
+| G | 95 of 300 = 31.7% (SE 2.7) | 9.85 |
+
+Three measurements of one effect now stand side by side: the first seed's head on its own held-out slice, +21.4;
+the first seed's head on the second seed, +12.0; the second seed's head on the first seed's 300, +13.0. The two
+cross-run measurements agree and the same-run one is inflated, so the direction of transfer is symmetric — it
+does not matter which set trains and which evaluates — and the carried number is +12 to +13 points, with +21.4
+printed only as what training on adjacent tasks buys. The agreement check is much cleaner at this size: the head
+agreed with the agent on 121 decisions and changed 179; on the 179 the base solved 12 and G solved 52, on the 121
+the base solved 44 and G 43. The effect is entirely in the disagreements, and the temperature confound is bounded
+at about a third of an episode per hundred. One control behaved differently and is reported rather than
+smoothed: on the second seed's fit the hundred-example control scored above the full head (45.3% against 42.7%),
+where on the first it had scored well below (41.3% against 56.0%). The fit runs a fixed number of iterations at a
+fixed rate with the gradient averaged over the pool, so a larger pool takes smaller effective steps, and a small
+pool winning is consistent with under-convergence, not with a signal that needs no examples; the control is
+therefore read neither way on this fit, while the eight-dimension and permutation controls still do their work.
+That is a defect in the fit rather than in the result, and it is fixed before P9 runs, because P9's whole
+comparison is between heads trained on pools of different size and left as is would measure the optimizer, not
+accumulation: the fit is iterated to a convergence criterion, both existing heads are re-fitted, all three
+controls re-run on both, and only then does the second generation's refit start. One asymmetry is printed rather
+than explained away: the agent's own pick on the second seed's held-out quarter is 20.0%, chance, against 33.3%
+on the first seed's, so the two quarters are not equally hard for the agent, which is why the head's own accuracy
+differs between them (42.7% against 56.0%) while the episode effect does not.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
