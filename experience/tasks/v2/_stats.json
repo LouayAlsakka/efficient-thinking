@@ -1,0 +1,40 @@
+{
+ "n": 2000,
+ "gate": {
+  "n": 2000,
+  "P1_tests_reachable_from_1_region": [],
+  "P1_test_region_counts": {
+   "test_report_all_items": [
+    "aggregate",
+    "consumer",
+    "producer",
+    "transform"
+   ],
+   "test_report_grade_high": [
+    "aggregate",
+    "consumer",
+    "transform"
+   ]
+  },
+  "P2_mean_conditional_entropy_bits": 1.107,
+  "P3_heldout_lookup_pct": 50.6,
+  "P3_symptoms_unseen_in_train": 0,
+  "distinct_symptoms": 6,
+  "bug_region_distribution": {
+   "transform": 557,
+   "consumer": 722,
+   "aggregate": 364,
+   "producer": 357
+  },
+  "bug_class_distribution": {
+   "early_return": 538,
+   "missing_key": 179,
+   "off_by_one": 745,
+   "swapped_args": 173,
+   "int_division": 365
+  },
+  "red_herring_pct": 63.9,
+  "green_programs_skipped": 0
+ },
+ "seed": 11
+}
