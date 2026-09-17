@@ -1090,6 +1090,33 @@ inspect-first loop is the first test of a choice made *with* an observation. If 
 claim stops being about priors and becomes about the repair floor. One addition to the sentence, which the gate
 earns: whether the search has observed something can be told by counting, before anything is built.
 
+**The root under every finding of the week: the environment has eleven distinct problems, not 2,000 tasks.** The
+gate refused the post-inspect state too (7 distinct prompts in 80 episodes, ratio 0.0875), so the head was never
+built, and chasing why an inspection created no diversity found the cause. A task is one clean program with one
+bug injected at one of a few sites; the 2,000 files differ in an identifier and a seed and in nothing the agent
+reads. Counted as the agent sees them — program, tests, symptom, regions — the second task set has 11 distinct
+tasks with a largest identical group of 192, and the first set 12 distinct (program, symptom) pairs. Under greedy
+decoding every episode of a signature returns the same outcome, and across the 80 evaluation episodes not one
+signature produced two different outcomes. So the four slices carry eleven independent observations between
+them, not eighty; the per-slice variation (5, 5, 4 and 2 of 20) is the same eleven outcomes weighted by which
+signatures landed where; and the two 2,000-episode seeds at 59.9% and 59.3% were the tell all along — twelve
+outcomes under near-identical weights. This subsumes the symptom table and every gate refusal rather than joining
+them, since an inspection cannot rescue a head when there is nothing new to observe. What survives is stated
+plainly. Directions stand where the effect holds across every signature: the text memory destroys; overriding
+the chooser destroys the group where symptom and bug differ; redacting the only informative string starves the
+agent. Every magnitude quoted over 80 or 2,000 episodes in this section — the 36 and 41 point losses, the 64 and
+0 percent split, the 62.5% and 20.0% bases, the standard errors beside them — is withdrawn as a size and kept as a
+direction, with the number of distinct problems it rests on printed beside it; and the claim that "no slice
+reverses" was stability of a weighting, not replication, and is withdrawn by name. G is closed on both task sets
+as *untestable*, not failed and not passed: no state-reading mechanism can be tested on an environment whose
+state cannot distinguish its episodes, wherever the state is read. The chess anchor is untouched, since its
+states are positions and its unit of observation is a game. And the gate list gains a first entry ahead of the
+prompt count: count the distinct problems before counting anything else. The next task set is scoped before it
+is generated — distinct task signatures as the agent sees them at no less than nine-tenths of the episodes, the
+three properties of the second set kept, and signature groups that either have size one or show more than one
+outcome under greedy — and it needs many different programs, not more injection sites, which is a different piece
+of work from any this week and is not built tonight.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
