@@ -111,7 +111,8 @@ def replace_region(program: str, region: str, new_src: str) -> str:
 
 def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id: str, log, model_id: str,
                 logits_processors=None, trivial_symptom: bool = False,
-                candidate_select: str = "", cand_k: int = 8) -> dict:
+                candidate_select: str = "", cand_k: int = 8,
+                redact_symptom: bool = False) -> dict:
     program = task["program"]
     inspected: dict[str, str] = {}
     history: list[str] = []
@@ -125,7 +126,19 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
     tried_patches: dict[str, set[str]] = {}
     for step in range(1, budget + 1):
         temp = 0.0 if wasted_streak == 0 else min(EXPLORE_CAP, EXPLORE_TEMP + EXPLORE_STEP * (wasted_streak - 1))
-        state = f"SYMPTOM: {task['symptom']}\nRegions: {', '.join(task['regions'])}\n"
+        # --redact-symptom: the v1 task set has TEN distinct symptom strings and each maps to
+        # exactly ONE bug region, so the test NAME in the symptom line is a lookup key that
+        # localises at 100% (experience/results/v1_symptom_determines_region.json). Redaction
+        # keeps the failure KIND and the assertion MESSAGE and drops the test name, which is the
+        # only part carrying the key. This does not make the task unsolvable -- the agent can
+        # still inspect regions and read the program -- it makes localisation something the agent
+        # has to DO rather than copy. The gap between the two arms is the size of the giveaway.
+        sym = task["symptom"]
+        if redact_symptom:
+            kind = sym.split(":", 1)[0]
+            msg = sym.split("\u2014", 1)[1].strip() if "\u2014" in sym else ""
+            sym = f"{kind}: a test failed" + (f" \u2014 {msg}" if msg else "")
+        state = f"SYMPTOM: {sym}\nRegions: {', '.join(task['regions'])}\n"
         if inspected:
             state += f"Already inspected (do not inspect again): {', '.join(inspected)}\n"
             state += "\n".join(f"--- region {r} ---\n{s}" for r, s in inspected.items()) + "\n"
@@ -270,6 +283,11 @@ def main():
                          "by (action, region, bug_class), so k_distinct is usually smaller and is "
                          "logged: a model that offers one region k times cannot be steered by "
                          "selection at all, and that is a result, not a failure of the harness.")
+    ap.add_argument("--redact-symptom", action="store_true",
+                    help="drop the TEST NAME from the symptom line, keeping the failure kind and "
+                         "the assertion message. v1's ten symptom strings each map to exactly one "
+                         "bug region, so the name is a lookup key worth 100%% localisation; this "
+                         "arm measures how much of the baseline rests on it.")
     a = ap.parse_args()
     files = sorted(glob.glob(os.path.join(a.tasks, "task_*.json")))
     if a.limit: files = files[: a.limit]
@@ -311,7 +329,8 @@ def main():
                     _bias_logged["_miss"] = True
             s = run_episode(model, tok, task, a.budget, memory, run_id, log, a.model,
                             logits_processors=lp, trivial_symptom=a.trivial_symptom,
-                            candidate_select=a.candidate_select, cand_k=a.cand_k)
+                            candidate_select=a.candidate_select, cand_k=a.cand_k,
+                            redact_symptom=a.redact_symptom)
             s["seconds"] = round(time.time() - t1, 1); ep.write(json.dumps(s) + "\n"); summaries.append(s)
             print(f"[{i}/{len(files)}] {task['task_id']} {task['family']:10s} {task['bug_class']:20s} "
                   f"green={s['green']} actions={s['actions']} first_correct={s['first_correct_hypothesis_step']} "
