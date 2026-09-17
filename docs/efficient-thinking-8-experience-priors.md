@@ -1163,6 +1163,33 @@ quarter of the search is tracking the priored one almost exactly at 16 games (0.
 the loss at reduced search is what losing the search costs anyone, and the reading assembles as no harm, no
 saving — the same shape as the language field. The control at half the search decides it.
 
+**P8 closed: the constraint passes and the objective fails, as pre-registered, and the control curve is the result.**
+Five pairings of 80 games against the un-priored net at 256 simulations, on the named evaluator, prior scaling 0.5
+chosen by rule before the sweep:
+
+| arm | simulations | win rate vs base-256 | relative Elo |
+|---|---:|---:|---:|
+| with prior | 64 | 0.275 | −168 |
+| with prior | 128 | 0.350 | −108 |
+| with prior | 256 | 0.544 | +30 |
+| without prior | 64 | 0.225 | −215 |
+| without prior | 128 | 0.350 | −108 |
+
+Constraint, the prior at equal search at least 0.45: 0.544, pass. Objective, the prior at half the search at least
+0.45 while the un-priored half-search is below it: 0.350 against 0.350, fail. The paired differences are the whole
+result: +0.050 at 64, +0.000 at 128, +0.044 at 256, each with a standard error of 0.079 — the prior's effect is
+indistinguishable from zero at every simulation count. The control curve says what the prior was competing with:
+doubling the search buys 0.125 to 0.150 of win rate, the prior buys about 0.03 ± 0.08. And the control arms changed
+the sign of the interpretation: without them, the −168 at a quarter of the search would have read as the prior
+damaging the search; with them, −215 is what losing four times the search costs anyone, and the prior gave a
+little of it back. The reading is no harm, no saving. Bounds carried: self-play against the same evaluator measures
+what the prior does to this net's search, not whether the moves are good; the prior was trained on 189 decisive
+games of the same frozen net's own play; a different scaling would be a different experiment, not a re-read; and
+every Elo in the table is relative to the 256-simulation base until a single ladder run names that base's rung in
+Stockfish Elo, which is queued. So the week stands in two fields with no code in common: six carriers — text memory,
+steering, the logit bias, two forms of the naive rule, and the chess prior — and not one lowered cost with capability
+held. The one intervention that did both was a change to when the agent may act, and it was hand-written.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
