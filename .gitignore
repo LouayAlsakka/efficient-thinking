@@ -64,4 +64,8 @@ reasoning/data/
 # every run persists the artifacts a later question could need, or its downstream claims are
 # marked unauditable. So the task sets are TRACKED.
 # experience/tasks/*/task_*.json
-experience/traj/
+# experience/traj/  -- TRACKED, same ruling as the task sets. These are the trajectories every
+# downstream claim reads: the A/C/F comparisons, the steering vectors, the probe, the G-trivial
+# decomposition. et6's chess self-play games were kept only in memory and are GONE, which is why
+# P8's adapter had nothing to confirm; v0's task files were never committed and its numbers are
+# permanently unauditable. 26 MB total. Persist what a later question needs, or mark the claim.

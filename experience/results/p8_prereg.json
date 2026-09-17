@@ -1,0 +1,30 @@
+{
+ "stage": "P8 PRE-REGISTRATION, written BEFORE the sweep (理 10925)",
+ "prior": {
+  "source": "300 self-play games by the FROZEN conv_value_llm1 (experience/traj/chess_v0.jsonl)",
+  "games_generated": 300,
+  "decisive": 189,
+  "drawn": 111,
+  "used_by_the_trainer": "189 -- et8_chess_prior.train SKIPS draws, which carry no outcome signal",
+  "moves": 16906,
+  "state_buckets": 31,
+  "table_entries": 409
+ },
+ "beta_rule_as_ruled": "compute the L1 curve at beta in {0.5,1,2,4}; run at the SMALLEST beta whose mean L1 shift >= 0.10 (a tenth of prior mass moved); record curve and chosen beta BEFORE the sweep; if no beta <= 4 reaches 0.10, stop and report the table as too flat to test.",
+ "beta_curve_measured": {
+  "0.5": 0.11257,
+  "1.0": 0.21875,
+  "2.0": 0.41209,
+  "4.0": 0.70734
+ },
+ "positions_probed": 120,
+ "positions_unchanged_at_any_beta": 0,
+ "CHOSEN_BETA": 0.5,
+ "why": "0.5 is the smallest of the four whose mean L1 clears 0.10, at 0.1126. The rule selects it, not me -- and it is NOT the beta = 1.0 the design named first. Recorded here before any pairing is played so the choice cannot be read back from the result.",
+ "what_the_curve_replaced": "on the two-game smoke prior the same curve read 0.012 / 0.024 / 0.048 / 0.099 -- NO beta <= 4 would have cleared 0.10, and by 理's rule that prior was untestable. The 300-game table moves nine times as much prior mass at the same beta. The check was worth running: a prior that is present but inert produces a null that reads as a finding.",
+ "bounds": [
+  "The L1 shift says the prior CHANGES the search's proposal distribution. It says nothing about whether the change is an improvement -- that is what the five pairings measure.",
+  "120 positions reached by random legal play from the opening, so the distribution is not the distribution MCTS actually visits. It is a probe of reach, not of importance.",
+  "Self-play against the same evaluator: the prior was trained on games this same frozen net played, so the arms are not independent of the training signal."
+ ]
+}
