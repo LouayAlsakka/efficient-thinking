@@ -105,3 +105,14 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   came back 0 bytes), not `checkout`. Commit specific files with `git add <path>`; if the tree is behind, `merge --no-edit`
   (touches only files upstream changed) or wait for the writer to finish.
 - G order (23:1xZ): steps 2–3 → G-TRIVIAL′ (candidate machinery, head replaced by the symptom rule) → step 4 head → step 5.
+
+## Rules, 2026-09-17 00:4xZ (理, from 沙汰 10910–10912)
+- Every results table in a block or a commit message carries the command that produced it. A table typed from memory
+  is not a measurement (沙汰's 55% → 40% correction, same minute).
+- Never edit a script a running loop re-invokes; one orchestrator, one lifetime. Check file mtime against process start
+  before trusting a slice.
+- Every run persists the trajectories a later question could need — state AND action (FEN + UCI for chess; the task
+  file for the env) — or its downstream claims are marked UNAUDITABLE. Third loss this week: tasks/v0, et6 games, a
+  number that lived only in a paragraph.
+- P8 is measured on `runs/conv_value_llm1` (supervised, 3.45M) by name; confirm `eval_search.py` loads the same run dir
+  before any Elo rung is quoted. G-trivial / G-trivial′ re-run on v2 as v2's own controls; the v1 pair is v1-internal.
