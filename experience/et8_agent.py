@@ -60,6 +60,8 @@ def generate(model, tok, messages: list[dict], max_tokens: int = 400, temp: floa
     text = mlx_generate(model, tok, prompt=prompt, max_tokens=max_tokens, sampler=make_sampler(temp=temp), verbose=False, **kw)
     return text, n_in, len(tok.encode(text))
 
+CAND_TEMP = 0.8   # candidates 1..k-1; candidate 0 is greedy. Greedy alone returns one action k times.
+
 # Exploration rule (harness v0.3): the FIRST attempt at any step is greedy (temp 0, reproducible). After a WASTED step
 # (repeat inspect / repeat hypothesis / identical patch / invalid) the next generation samples at EXPLORE_TEMP, and the
 # temperature rises with consecutive wasted steps, capped. Greedy decoding alone cannot search: an identical prompt
@@ -108,7 +110,8 @@ def replace_region(program: str, region: str, new_src: str) -> str:
     return out
 
 def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id: str, log, model_id: str,
-                logits_processors=None, trivial_symptom: bool = False) -> dict:
+                logits_processors=None, trivial_symptom: bool = False,
+                candidate_select: str = "", cand_k: int = 8) -> dict:
     program = task["program"]
     inspected: dict[str, str] = {}
     history: list[str] = []
@@ -147,10 +150,40 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
         # call is made for that step, which is the point: it costs nothing and it reaches the ceiling.
         # Every miss in the 2,000-run is an episode where the bug WAS in the symptom region and the
         # agent looked elsewhere (239 of 239), so this rule cannot lose ground it had.
+        cand_meta = None
         if trivial_symptom and not any(h.startswith("hypothesize ") for h in history):
             text = json.dumps({"action": "hypothesize", "region": task["symptom_region"],
                                "bug_class": task.get("bug_class", ""), "why": "symptom region (G-trivial)"})
             n_in = n_out = 0
+        # G-TRIVIAL-PRIME (理 10895): the control that separates WHERE from HOW. G-trivial replaced
+        # the model's hypothesis STEP with a canned string, so it changed how the hypothesis was
+        # expressed as well as where it pointed -- and the patch that follows may depend on the
+        # model's own reasoning at that step. This variant changes ONLY the where: it enumerates k
+        # candidates FROM THE MODEL (step 2), then picks the model's own candidate whose region is
+        # the symptom region. Same plumbing G's head will use; the symptom rule standing in for the
+        # head. If it lands near G-trivial, the 239 misses were never a localisation deficit. If it
+        # recovers the 45, G-trivial's loss was the canned TEXT, not the choice.
+        elif candidate_select and not any(h.startswith("hypothesize ") for h in history):
+            msgs = messages + [{"role": "user", "content": state}]
+            cands, seen = [], set()
+            for j in range(cand_k):
+                # candidate 0 is GREEDY -- it is exactly the action the baseline would have taken,
+                # so the fallback below is the baseline, not a third behaviour.
+                t, ni, no = generate(model, tok, msgs, temp=0.0 if j == 0 else CAND_TEMP,
+                                     logits_processors=logits_processors)
+                total_in += ni; total_out += no
+                pa = parse_action(t)
+                key = (pa.get("action"), pa.get("region"), pa.get("bug_class"))
+                if key in seen:
+                    continue
+                seen.add(key); cands.append((t, pa))
+            pick = next((c for c in cands if c[1].get("action") == "hypothesize"
+                         and c[1].get("region") == task["symptom_region"]), None)
+            cand_meta = {"k_asked": cand_k, "k_distinct": len(cands),
+                         "regions_offered": sorted({str(c[1].get("region")) for c in cands}),
+                         "fell_back_to_greedy": pick is None}
+            text = (pick or cands[0])[0]
+            n_in = n_out = 0          # already added inside the loop
         else:
             text, n_in, n_out = generate(model, tok, messages + [{"role": "user", "content": state}], temp=temp,
                                          logits_processors=logits_processors)
@@ -202,6 +235,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
                "productive": productive, "region_hit": region_hit, "class_hit": class_hit,
                "dead_path": (hyp in task["dead_paths"]) if hyp else False,
                "raw": (text[:300] if kind == "invalid" else None), "temp": temp,
+               "candidates": cand_meta,
                "tokens_in": n_in, "tokens_out": n_out, "verifier": verifier}
         log.write(json.dumps(rec) + "\n")
         if green:
@@ -225,6 +259,17 @@ def main():
                     help="G-TRIVIAL (理 10888): force the first hypothesis to the SYMPTOM region. "
                          "A one-line rule learned from the agent's own history and the control G "
                          "must beat — it needs no model, no head and no activations.")
+    ap.add_argument("--candidate-select", default="", choices=["", "symptom"],
+                    help="G-TRIVIAL-PRIME (理 10895): enumerate k candidates FROM THE MODEL at the "
+                         "first hypothesis, then pick by rule. 'symptom' picks the model's own "
+                         "candidate whose region is the symptom region, falling back to the greedy "
+                         "candidate — which is exactly the baseline action. Separates WHERE from "
+                         "HOW: unlike --trivial-symptom it does not replace the model's text.")
+    ap.add_argument("--cand-k", type=int, default=8,
+                    help="candidates to draw (candidate 0 greedy, the rest at CAND_TEMP). Deduped "
+                         "by (action, region, bug_class), so k_distinct is usually smaller and is "
+                         "logged: a model that offers one region k times cannot be steered by "
+                         "selection at all, and that is a result, not a failure of the harness.")
     a = ap.parse_args()
     files = sorted(glob.glob(os.path.join(a.tasks, "task_*.json")))
     if a.limit: files = files[: a.limit]
@@ -265,7 +310,8 @@ def main():
                     print(f"  F: no bias row for family {fam!r} — running UNBIASED", file=sys.stderr)
                     _bias_logged["_miss"] = True
             s = run_episode(model, tok, task, a.budget, memory, run_id, log, a.model,
-                            logits_processors=lp, trivial_symptom=a.trivial_symptom)
+                            logits_processors=lp, trivial_symptom=a.trivial_symptom,
+                            candidate_select=a.candidate_select, cand_k=a.cand_k)
             s["seconds"] = round(time.time() - t1, 1); ep.write(json.dumps(s) + "\n"); summaries.append(s)
             print(f"[{i}/{len(files)}] {task['task_id']} {task['family']:10s} {task['bug_class']:20s} "
                   f"green={s['green']} actions={s['actions']} first_correct={s['first_correct_hypothesis_step']} "
