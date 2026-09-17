@@ -1239,6 +1239,28 @@ sufficient, since 75 distinct programs guarantee 75 distinct prompts and say not
 encodes the bug region; the permutation control, with the eight-dimension and hundred-example controls that
 exposed the first set, is the check on the other side and runs beside the probe.
 
+The gate then read 1.000 on all 300 and the base was reported after it: **18.7% success, 56 of 300, standard error
+2.2 points**, 10.63 actions, post-inspect localisation 29.0% (reported, not a bar), 257 distinct trajectories with
+no signature splitting. It is the first rate in this programme with an honest interval; the 18.8% on the
+provisional 80 is agreement, not replication, since those tasks came from the same generator before the
+reachability filter existed, and the independent replication under the second seed stays unrun until an arm has
+something to confirm. Then the probe, with its three controls in one table: on 75 decisions held out by task, a
+linear head on the layer-18 post-inspect state picks the bug region 56.0% of the time against the agent's 33.3%
+and chance of 20.4% (layer 27: 54.7%); with the labels permuted it falls to 16.5%, chance; projected to eight
+dimensions, 28.0%; trained on 100 examples, 41.3%. **The control pattern is the result, not the 56%.** On the first
+task set the head scored 100%, passed its permutation control, and survived the other two, and that was a
+six-row key copied from the prompt; here the signal degrades when dimensions are removed and when examples are
+removed, which is what a learned readout of the state looks like and what a copied key does not. The level is
+soft — 17 decisions of 75, about four standard errors for the gap — and says so. And it establishes nothing about
+G: the pre-registration committed before the fit makes head accuracy explicitly not the bar, and the reading named
+as most likely is still the one where the head picks better and the wired run solves no more, since two task
+sets have said localisation does not convert. The bar it must clear, written before the head existed: success at
+least 16.5% on the four slices (the base less one standard error's worth of headroom), and either at least 23.1%
+at no higher cost or the same number solved at least one action cheaper; anything clearing it re-runs on the
+second seed before it is a claim. One number is printed beside G's table when it lands: the fraction of decisions
+on which the head's pick agreed with the agent's own, since where they agree G changes nothing and the effect can
+only come from the disagreements.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
