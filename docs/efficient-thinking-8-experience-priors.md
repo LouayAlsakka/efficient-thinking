@@ -1075,6 +1075,20 @@ second set's step one (six in 80) in seconds each. The general sentence is the o
 circling all week: an experience prior over search can act only where the search has observed something; at the
 first decision, before any observation, a prior over the state is a prior over the prompt, which is text memory in
 another form.
+The gate was built the same hour and refuses both task sets without loading a model: the first set at 10 distinct
+prompts in 2,000 episodes (ratio 0.005, largest identical group 392), the second set's step one at 6 in 80 (ratio
+0.075, largest group 38). It sits beside the permutation control rather than after it, and the distinction is
+written into the tool: a permutation control asks whether any label would fit, this asks whether the input can
+distinguish the episodes at all; a high ratio is necessary and not sufficient, since prompts can differ by a
+counter and carry no signal, which is what the permutation control is for. And the second set's control pair
+closed: the naive rule raises localisation ten points and wins at most one episode in eighty, and the same forced
+region with the model's own words lands exactly on the base — 80 of 80 episodes at the same outcome, 58 of 80 by a
+different route, the divergence check now a standing habit rather than an afterthought. So the sentence has a
+control set on both sides of it: on the first set localisation was free and improving it converted nothing; on
+the second it is hard, unobserved at the decision point, and improving it blind converts nothing either. The
+inspect-first loop is the first test of a choice made *with* an observation. If that also fails to convert, the
+claim stops being about priors and becomes about the repair floor. One addition to the sentence, which the gate
+earns: whether the search has observed something can be told by counting, before anything is built.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
