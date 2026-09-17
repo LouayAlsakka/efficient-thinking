@@ -1319,6 +1319,19 @@ generation of P9: a second head refitted on the first head's own post-inspect st
 that run, evaluated on the second seed against the first head and the base, with the three readings written
 before the refit — a second generation that does not degrade, one that improves by more than a standard error,
 or one that forgets or overfits its parent.
+The P9 pre-registration was committed while the cost limb was still running and before any second head existed,
+with two lines placed first. The labels come from the verifier — whether a candidate's region is the true bug
+region — and never from the first head's own picks, because a head trained on its own choices learns to agree
+with itself and produces a rising number across generations that means nothing; that is the failure P9 is most
+exposed to. And the expectation is written down so it cannot be adjusted afterwards: pass rather than strong. The
+first head's episodes contain fewer failures to learn from, since it solves more and burns fewer actions, so the
+second generation trains on a smaller and easier pool of decisions; compounding would need the better agent's
+decisions to be more informative, not merely better, and nothing measured so far says they are. The pool sizes
+and their composition — decisions available, the fraction from failed episodes, the fraction where the true
+region was among the candidates, the programs represented — are printed beside the result so that reading is a
+number. One bound rides with it: the second generation's states are produced with a head in the loop and are not
+identically distributed to the base agent's, which is the experiment, and which is why head accuracies across
+generations are not compared, only episodes on the independent set.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
