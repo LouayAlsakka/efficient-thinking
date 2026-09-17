@@ -1,0 +1,84 @@
+{
+ "design": "理 10916, pre-registered",
+ "run_dir": "runs/conv_value_llm1",
+ "prior": "experience/chess_prior/v0.json",
+ "beta": 0.5,
+ "rows": [
+  {
+   "arm": "with",
+   "sims": 64,
+   "baseline_sims": 256,
+   "games": 80,
+   "win_rate": 0.275,
+   "elo_delta": -168.4,
+   "se_win_rate": 0.0559
+  },
+  {
+   "arm": "with",
+   "sims": 128,
+   "baseline_sims": 256,
+   "games": 80,
+   "win_rate": 0.35,
+   "elo_delta": -107.5,
+   "se_win_rate": 0.0559
+  },
+  {
+   "arm": "with",
+   "sims": 256,
+   "baseline_sims": 256,
+   "games": 80,
+   "win_rate": 0.5437,
+   "elo_delta": 30.5,
+   "se_win_rate": 0.0559
+  },
+  {
+   "arm": "without",
+   "sims": 64,
+   "baseline_sims": 256,
+   "games": 80,
+   "win_rate": 0.225,
+   "elo_delta": -214.8,
+   "se_win_rate": 0.0559
+  },
+  {
+   "arm": "without",
+   "sims": 128,
+   "baseline_sims": 256,
+   "games": 80,
+   "win_rate": 0.35,
+   "elo_delta": -107.5,
+   "se_win_rate": 0.0559
+  }
+ ],
+ "constraint_with_256_ge_45pct": true,
+ "objective_with_128_ge_45_and_without_128_lt_45": false,
+ "four_x_with_64_ge_45pct": false,
+ "bounds": [
+  "80 games per pairing: SE ~= 5.6 points of win rate. A result within one SE of the 45% threshold is CLOSE, not a pass.",
+  "Self-play against the same evaluator: this measures what the prior does to THIS net's search, not whether the moves are good.",
+  "The prior was trained on games this same frozen net played, so the arms are not independent of the training signal."
+ ],
+ "READING": {
+  "verdict": "FAIL-cost, as pre-registered. The constraint PASSES (with-256 = 0.544 >= 0.45) and the objective FAILS (with-128 = 0.350, and without-128 is 0.350 too).",
+  "the_paired_comparison_is_the_whole_result": {
+   "64 sims": "with 0.275 - without 0.225 = +0.050",
+   "128 sims": "with 0.350 - without 0.350 = +0.000",
+   "256 sims": "with 0.544 - baseline 0.500 = +0.044 (the baseline IS no-prior-at-256)",
+   "SE of each difference": 0.079,
+   "reading": "the prior's effect is +0.05, 0.00, +0.04 at 64 / 128 / 256 simulations, each inside one SE of zero and of each other. INDISTINGUISHABLE FROM ZERO at every simulation count."
+  },
+  "and_the_control_curve_is_what_makes_that_readable": {
+   "64 -> 128 (no prior)": "+0.125",
+   "128 -> 256 (no prior)": "+0.150",
+   "reading": "doubling simulations is worth about 0.13-0.15 of win rate. The prior is worth about 0.03 +- 0.08. WITHOUT the control arms, with-64's -168 Elo would have read as the prior damaging the search; the control shows -215 Elo is what losing 4x search costs ANYONE, and the prior recovered a little of it. That is the arm 理 held the report for, and it changed the sign of the interpretation."
+  },
+  "what_this_adds_to_the_week": "a fifth carrier, in the second field, with a proper control curve: capability held (constraint passes, the point estimate is even slightly positive) and NO cost saving. A / C / F / G-trivial / G-trivial′ / the chess prior — six carriers, two fields, no code shared between them, and not one lowered cost with capability held.",
+  "bounds": [
+   "80 games per pairing, SE 0.056; every difference quoted has SE 0.079 and none clears it.",
+   "Self-play against the same evaluator: this measures what the prior does to THIS net's search, not whether the moves are good.",
+   "The prior was trained on 189 decisive games THIS frozen net played, so the arms are not independent of the training signal.",
+   "beta = 0.5 was chosen by 理's rule (smallest beta whose mean L1 shift >= 0.10) and recorded before the sweep. A different beta is a different experiment, not a re-read.",
+   "One ladder run to NAME the rung in Stockfish Elo has NOT been done; every Elo figure here is relative to the 256-sim baseline, not an absolute rating."
+  ]
+ }
+}
