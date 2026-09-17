@@ -33,5 +33,21 @@
    "G1's": "G0's episodes on seed 21 (300 tasks)"
   },
   "how_it_changes_the_reading": "if G1's pool is smaller and skewed toward SUCCESSES, then a PASS is 'accumulation survives a weaker training signal' and a FAIL is 'the signal got weaker', and those are different conclusions from the same number. Printing the pools is what separates them."
+ },
+ "POOLS_MEASURED_BEFORE_THE_G1_NUMBER_EXISTS": {
+  "G0's pool (base on seed 47)": {
+   "decisions": 300,
+   "from_FAILED_episodes_pct": 83.3,
+   "true_region_among_candidates_pct": 100.0,
+   "distinct_programs": 300
+  },
+  "G1's pool (G0's episodes on seed 21)": {
+   "decisions": 300,
+   "from_FAILED_episodes_pct": 68.3,
+   "true_region_among_candidates_pct": 100.0,
+   "distinct_programs": 300
+  },
+  "AND_HALF_MY_STATED_REASON_IS_ALREADY_WRONG": "I predicted PASS-not-STRONG because G1 would train on 'a smaller and easier pool'. It is NOT SMALLER -- both pools are 300 decisions over 300 distinct programs, because every episode contributes exactly one post-inspect decision whether it succeeds or fails. It IS easier: 68.3% of G1's decisions come from failed episodes against 83.3% of G0's. So the mechanism I named is half right, and the half that is wrong was a guess about size that one count refuted. This is why 理 11130 asked for the numbers rather than the reading.",
+  "what_it_does_to_the_reading": "a PASS now reads as 'accumulation survives a 15-point shift toward successes in the training pool', and a FAIL reads as 'that shift was enough to cost it'. Neither reads as 'the pool ran out of data'."
  }
 }
