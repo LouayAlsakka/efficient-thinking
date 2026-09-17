@@ -1,0 +1,44 @@
+{
+ "measurement": "Does the BUDGET bind v3's outcome resolution, or the DIFFICULTY? Same provisional 80, inspect-first, budget 12 vs 24.",
+ "why_it_was_run": "P4 passed but 65 of 80 episodes failed identically at the budget. If a larger budget converted a real share of them, the binding constraint would be the budget and the set resolves fine; if not, the lever is n. 理 needed that to rule on scale, and it needed no ruling to measure.",
+ "result": {
+  "per_slice": {
+   "budget_12": [
+    3,
+    6,
+    4,
+    2
+   ],
+   "budget_24": [
+    2,
+    6,
+    6,
+    4
+   ]
+  },
+  "pooled": {
+   "budget_12": "15/80 = 18.8%",
+   "budget_24": "18/80 = 22.5%"
+  },
+  "mean_actions": {
+   "budget_12": 10.9,
+   "budget_24": 20.24
+  },
+  "converted_by_the_extra_budget": 6,
+  "lost_despite_it": 3,
+  "net": "+3 episodes",
+  "outcome_spread_at_24": "10 distinct, largest group 62"
+ },
+ "the_answer": "THE DIFFICULTY BINDS, NOT THE BUDGET. Doubling the budget buys 3.7 points at nearly double the cost, and 62 of 80 still fail at the wall. The lever for resolution is n -- which is now cheap, a signature being a file -- and not a longer episode.",
+ "AND_A_METHODOLOGICAL_CATCH_THAT_MATTERS_BEYOND_THIS": {
+  "observed": "THREE tasks that SUCCEEDED at budget 12 FAILED at budget 24.",
+  "why_that_is_possible": "the budget is IN THE PROMPT -- the state line carries 'Actions left: N' at every step. So raising the budget changes every prompt from step 1 and the agent takes a different trajectory from the start.",
+  "what_it_means": "'the same tasks with a bigger budget' is NOT a controlled extension of the same run. It is a different agent. Any future budget comparison must say so, and a 'budget curve' cannot be read as one run truncated at different lengths.",
+  "how_it_was_caught": "by checking which episodes changed direction rather than only the totals. The pooled +3.7 points hides 6 conversions and 3 losses."
+ },
+ "bounds": [
+  "PROVISIONAL set (seed 21), 80 problems, one model.",
+  "Budget 24 was chosen as a doubling, not tuned. A larger budget might convert more; the point is that DOUBLING converts 6 of 65.",
+  "The rates here are a measurement OF THE SET and are not a baseline for any mechanism."
+ ]
+}
