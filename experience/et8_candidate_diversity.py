@@ -34,7 +34,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tasks", nargs="+", required=True, help="slice dirs")
+    ap.add_argument("--tasks", nargs="+", required=True, help="slice dirs (symlinks are fine)")
+    ap.add_argument("--task-source", required=True,
+                    help="the REAL task directory. The slice dirs hold symlinks, and "
+                         "first_decision_states() loads every task id it finds in the step log "
+                         "from ONE directory -- pointing it at a slice makes it miss the other 60.")
     ap.add_argument("--runs", nargs="+", required=True, help="baseline runs, for the decision prompt")
     ap.add_argument("--model", default="Qwen/Qwen2.5-7B-Instruct")
     ap.add_argument("--temps", nargs="+", type=float, default=[0.8, 1.2])
@@ -50,8 +54,7 @@ def main():
     for r in a.runs:
         steps += [json.loads(l) for l in open(r + ".steps.jsonl")]
     want = {os.path.basename(f)[:-5] for d in a.tasks for f in glob.glob(os.path.join(d, "task_*.json"))}
-    dec = [d for d in I.first_decision_states(steps, os.path.dirname(glob.glob(os.path.join(a.tasks[0], "task_*.json"))[0]))
-           if d["task_id"] in want]
+    dec = [d for d in I.first_decision_states(steps, a.task_source) if d["task_id"] in want]
     seen, uniq = set(), []
     for d in dec:                      # the two runs share task ids; one decision per TASK
         if d["task_id"] not in seen:
@@ -63,8 +66,7 @@ def main():
     for temp in a.temps:
         regs, acts, sym, bug, invalid, rows = [], [], 0, 0, 0, []
         for i, d in enumerate(uniq):
-            task = json.load(open(os.path.join(os.path.dirname(
-                glob.glob(os.path.join(a.tasks[0], "task_*.json"))[0]), d["task_id"] + ".json")))
+            task = json.load(open(os.path.join(a.task_source, d["task_id"] + ".json")))
             R, T = set(), set()
             for j in range(a.k):
                 text, _, _ = A.generate(model, tok, d["messages"], temp=0.0 if j == 0 else temp)
