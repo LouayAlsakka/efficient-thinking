@@ -38,5 +38,13 @@
   "80 episodes, four slices, one model, greedy, budget 12.",
   "v2 numbers are NOT comparable to v1's in one table (理 10914): different task set, different symptom. The contrast above is context, not a comparison.",
   "n=25 for the 64% cell. The claim is the CONTRAST between 64% and 0%, not the 64%."
- ]
+ ],
+ "THE_BAR_FOR_G_apples_to_apples_on_the_SAME_80_EVAL_TASKS": {
+  "lookup table on the symptom string, fit on tasks 81-2000": "41/80 = 51.2% (0 symptoms unseen)",
+  "always answer the SYMPTOM REGION": "33/80 = 41.2%",
+  "majority class (consumer)": "33/80 = 41.2%",
+  "THE AGENT, first hypothesis": "25/80 = 31.2%",
+  "reading": "the agent is below ALL THREE trivial baselines on v2. So a head that beats the AGENT proves nothing -- G's bar is the 51.2% lookup table, because anything below that is recoverable from the symptom string alone with no state access at all.",
+  "correction_to_my_own_earlier_figure": "I first compared the agent's 31.2% (80 eval tasks) against the gate's 50.6% (a split-half table over all 2,000) -- two different populations. Recomputed on the same 80 it is 51.2%. The conclusion strengthens, but the comparison as first stated was not like for like."
+ }
 }
