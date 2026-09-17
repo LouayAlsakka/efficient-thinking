@@ -1,0 +1,65 @@
+{
+ "measurement": "G-TRIVIAL-PRIME, structural candidate set (理 10895 + 10909)",
+ "question": "G-trivial replaced the model's hypothesis STEP with a canned string. Was its -36.2 the canned TEXT, or the CHOICE of region? G-trivial' forces the same region but the hypothesis is the MODEL'S OWN, selected from a structural candidate set (one teacher-forced candidate per visible region, greedy always included).",
+ "result": {
+  "per_slice_green": {
+   "baseline": [
+    12,
+    13,
+    14,
+    11
+   ],
+   "gtrivial": [
+    6,
+    3,
+    7,
+    5
+   ],
+   "gtrivial_prime": [
+    6,
+    3,
+    7,
+    7
+   ]
+  },
+  "pooled_pct": {
+   "baseline": 62.5,
+   "gtrivial": 26.2,
+   "gtrivial_prime": 28.8
+  },
+  "mean_actions": {
+   "baseline": [
+    6.65,
+    6.15,
+    5.75,
+    7.7
+   ],
+   "gtrivial": [
+    9.35,
+    10.65,
+    8.9,
+    9.85
+   ],
+   "gtrivial_prime": [
+    9.35,
+    10.65,
+    8.9,
+    9.5
+   ]
+  }
+ },
+ "the_answer": "THE CHOICE, not the text. G-trivial' lands 2.6 points above G-trivial -- two episodes out of eighty -- and identically on three slices of four.",
+ "and_the_instrument_checks_that_make_that_claim_safe": {
+  "episodes with IDENTICAL (green, actions)": "78 of 80",
+  "episodes whose step-1 bug_class DIFFERS": "66 of 80",
+  "episodes whose full step SEQUENCE differs": "72 of 80",
+  "why this matters": "identical outcomes from two arms is the shape of a harness bug -- one arm silently running the other. It is not that here: the arms diverge at step 1 in 66 episodes and take different paths in 72. They change the ROUTE and not the DESTINATION."
+ },
+ "the_detail_that_strengthens_it": "G-trivial's injected action carries task['bug_class'] -- the TRUE bug class. So G-trivial is a STRONGER oracle than 'the naive prior': it is handed both the symptom region and the right class. G-trivial', which must invent the class and mostly writes the wrong one, matches it. Being told the answer at step 1 is worth two episodes in eighty.",
+ "candidate_set": "structural: k=4 at every decision point, all four regions offered, ZERO fallbacks to greedy. The earlier sampled set offered one region at 40% of decision points and fell back 12 times in 40 -- its apparent 8/20 on slice 1 was the fallback, i.e. the baseline, not the model's text mattering.",
+ "bounds": [
+  "80 episodes, four slices, one model, greedy decoding.",
+  "This is a v1 result and v1's localisation axis is degenerate (v1_symptom_determines_region.json). It decomposes G-trivial's -36.2, which is also a v1 number; it is NOT evidence about G, which runs on v2.",
+  "The two differing episodes are slice 4 only. At n=20 per slice that is noise, and the claim is the pooled 2.6 points, not a per-slice ordering."
+ ]
+}
