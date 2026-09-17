@@ -199,7 +199,10 @@ def cmd_fit(a):
         sub = rng.choice(idx, size=min(100, len(idx)), replace=False)
         w4, b4 = logistic_fit(Z[sub], y[sub])
         n100 = pick_accuracy(Z @ w4 + b4, meta, np.where(te)[0])[0]
+        np.savez(os.path.join(a.states, "head_layer%d.npz" % l), w=w, b=np.array([b]),
+                 mu=mu, sd=sd, train_task_max=np.array([cut]))
         out["layers"][str(l)] = {
+            "weights": "head_layer%d.npz in the states dir (w, b, mu, sd, train_task_max)" % l,
             "head_pick_pct": round(100 * acc, 1), "held_out_decisions": nd,
             "CONTROL_permuted_labels_pct": [round(100 * p, 1) for p in perm],
             "CONTROL_pca8_pct": round(100 * pca8, 1),

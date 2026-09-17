@@ -131,7 +131,8 @@ def replace_region(program: str, region: str, new_src: str) -> str:
 def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id: str, log, model_id: str,
                 logits_processors=None, trivial_symptom: bool = False,
                 candidate_select: str = "", cand_k: int = 8,
-                redact_symptom: bool = False) -> dict:
+                redact_symptom: bool = False, inspect_first: bool = False,
+                head_state=None) -> dict:
     program = task["program"]
     inspected: dict[str, str] = {}
     history: list[str] = []
@@ -183,7 +184,60 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
         # Every miss in the 2,000-run is an episode where the bug WAS in the symptom region and the
         # agent looked elsewhere (239 of 239), so this rule cannot lose ground it had.
         cand_meta = None
-        if trivial_symptom and not any(h.startswith("hypothesize ") for h in history):
+        # INSPECT-FIRST (理 10941 (a)). A controller head at an observation-free decision point is a
+        # lookup table on the prompt: at step 1 the prompt carries only the symptom and the region
+        # names, so 80 v2 episodes produced SIX distinct prompts and any head on that state is a
+        # six-row dict. This requires ONE inspect before the first hypothesis so the decision the
+        # head reads is made with something observed in it.
+        #
+        # WHICH region is the AGENT'S OWN greedy choice, not the symptom region and not forced: the
+        # inspect step stays the model's, and the head does not act there (a head at THAT step would
+        # be the same six-row table). G acts at the first hypothesis AFTER the inspect.
+        # G: the READ-ONLY HEAD (理 11110). At the first hypothesis AFTER an inspect -- the only
+        # decision point in this programme whose prompts are distinct (gate 1.000 on v3, 0.005-0.088
+        # everywhere else) -- score one teacher-forced candidate per region and take the argmax. The
+        # head never writes: it chooses among actions the model itself would emit, and the
+        # hypothesis TEXT stays the model's own. Agreement with the agent's unaided pick is logged,
+        # because where they agree G changes nothing and any effect must come from disagreements.
+        if head_state is not None and inspected and not any(h.startswith("hypothesize ") for h in history):
+            import numpy as _np
+            msgs = messages + [{"role": "user", "content": state}]
+            scores, pres = {}, {}
+            for r in task["regions"]:
+                pre = '{"action": "hypothesize", "region": "%s", "bug_class": "' % r
+                hs = head_state["hidden"](model, tok, msgs, [head_state["layer"]], prefix=pre)
+                z = _np.array(hs[head_state["layer"]].astype(head_state["mx"].float32), copy=False)
+                z = (z.astype(_np.float64) - head_state["mu"]) / head_state["sd"]
+                scores[r] = float(z @ head_state["w"] + head_state["b"])
+                pres[r] = pre
+            pick = max(scores, key=scores.get)
+            text, ni, no = generate(model, tok, msgs, temp=0.0, logits_processors=logits_processors)
+            total_in += ni; total_out += no
+            gp = parse_action(text)
+            agree = (gp.get("action") == "hypothesize" and gp.get("region") == pick)
+            if not agree:
+                text, ni, no = generate(model, tok, msgs, temp=0.0, prefix=pres[pick],
+                                        logits_processors=logits_processors)
+                total_in += ni; total_out += no
+            cand_meta = {"head": True, "head_pick": pick, "agent_pick": gp.get("region"),
+                         "agreed": bool(agree),
+                         "scores": {k: round(v, 3) for k, v in scores.items()}}
+            n_in = n_out = 0
+        elif inspect_first and not inspected and not any(h.startswith("hypothesize ") for h in history):
+            text, n_in, n_out = generate(model, tok, messages + [{"role": "user", "content":
+                state + "\nInspect a region first: reply with an inspect action."}],
+                temp=temp, logits_processors=logits_processors)
+            pa = parse_action(text)
+            if pa.get("action") != "inspect" or pa.get("region") not in task["regions"]:
+                # the model declined to inspect; take its greedy region if it named one, else the
+                # first region. Recorded on the step so a forced fallback is never invisible.
+                r = pa.get("region") if pa.get("region") in task["regions"] else task["regions"][0]
+                text = json.dumps({"action": "inspect", "region": r,
+                                   "why": "inspect-first fallback (model did not emit an inspect)"})
+                cand_meta = {"inspect_first_fallback": True, "model_action": pa.get("action")}
+            else:
+                cand_meta = {"inspect_first_fallback": False}
+        elif trivial_symptom and not any(h.startswith("hypothesize ") for h in history):
             text = json.dumps({"action": "hypothesize", "region": task["symptom_region"],
                                "bug_class": task.get("bug_class", ""), "why": "symptom region (G-trivial)"})
             n_in = n_out = 0
@@ -322,12 +376,29 @@ def main():
                          "exceeds this, in which case regions are kept by the model's own "
                          "probability on the first token of the region name. v1 and v2 have four "
                          "regions, so the cap is untaken on both.")
+    ap.add_argument("--head", help="npz from et8_head_v3.py fit (w, b, mu, sd) -- mechanism G")
+    ap.add_argument("--head-layer", type=int, default=18)
+    ap.add_argument("--inspect-first", action="store_true",
+                    help="require ONE inspect before the first hypothesis (理 10941). The region is "
+                         "the model's own greedy choice, not the symptom region; the point is that "
+                         "the hypothesis the head reads is made with something OBSERVED in the "
+                         "prompt. Costs one action per episode by construction -- printed, not "
+                         "barred.")
     ap.add_argument("--redact-symptom", action="store_true",
                     help="drop the TEST NAME from the symptom line, keeping the failure kind and "
                          "the assertion message. v1's ten symptom strings each map to exactly one "
                          "bug region, so the name is a lookup key worth 100%% localisation; this "
                          "arm measures how much of the baseline rests on it.")
     a = ap.parse_args()
+    HEAD_STATE = None
+    if a.head:
+        import numpy as _np, mlx.core as _mx
+        import et8_head_v3 as _H
+        _z = _np.load(a.head)
+        HEAD_STATE = {"w": _z["w"], "b": float(_z["b"][0]), "mu": _z["mu"], "sd": _z["sd"],
+                      "layer": a.head_layer, "hidden": _H.hidden_at, "mx": _mx}
+        print("  G head loaded: layer %d, trained on tasks < %d"
+              % (a.head_layer, int(_z["train_task_max"][0])), file=sys.stderr)
     files = sorted(glob.glob(os.path.join(a.tasks, "task_*.json")))
     if a.limit: files = files[: a.limit]
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
@@ -369,7 +440,8 @@ def main():
             s = run_episode(model, tok, task, a.budget, memory, run_id, log, a.model,
                             logits_processors=lp, trivial_symptom=a.trivial_symptom,
                             candidate_select=a.candidate_select, cand_k=a.cand_k,
-                            redact_symptom=a.redact_symptom)
+                            redact_symptom=a.redact_symptom,
+                            inspect_first=a.inspect_first, head_state=HEAD_STATE)
             s["seconds"] = round(time.time() - t1, 1); ep.write(json.dumps(s) + "\n"); summaries.append(s)
             print(f"[{i}/{len(files)}] {task['task_id']} {task['family']:10s} {task['bug_class']:20s} "
                   f"green={s['green']} actions={s['actions']} first_correct={s['first_correct_hypothesis_step']} "
