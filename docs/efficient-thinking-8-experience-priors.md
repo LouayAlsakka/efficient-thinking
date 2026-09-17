@@ -1049,6 +1049,33 @@ head is a table. A slice below its base: a capability failure. The marginal rate
 that thinness is printed with the bar. The chess sweep's first pairing (the prior at a quarter of the search
 against the un-priored base) scored 0.275 and is not interpretable until the un-priored quarter-search arm lands.
 
+**A controller head at an observation-free decision point is a lookup table on the prompt.** Before the head was
+fitted, the states it would read were counted rather than modelled. At the first hypothesis the prompt is the
+system text, the symptom line, four region names and the budget; history is empty and nothing has been inspected
+(72 of 80 episodes hypothesise at step one with no inspect), so the only content that varies across tasks is the
+symptom string, and two tasks with the same symptom have byte-identical prompts, identical activations at every
+layer, and identical head output. The 80 evaluation tasks carry six distinct step-one prompts. A head on that
+state *is* a six-row table on the symptom — not approximately, exactly — and the best any function of the symptom
+can do on these tasks is 61.2% in sample, against the held-out table's 51.2%. The enumerated candidate set does not
+escape it, since a teacher-forced candidate prefix conditions on the same prompt. On the first task set the table
+was perfect and G was untestable because the ceiling was free; on the second the table is imperfect and G still
+cannot see anything the table cannot. The second task set is not the defect — its localisation axis passed its
+gate — the defect is where G reads. So the decision point moves: the loop now requires one inspect before the first
+hypothesis, the choice of what to inspect left to the model's own greedy step (a head there would be the same
+table), and G acts at the first hypothesis after the inspection, where the state carries the symptom, the inspected
+region's text, and the model's reading of it. The task, verifier and budget are unchanged; the agent already
+inspects first unprompted in eight of eighty episodes; and the comparability rule is bent for this set and recorded
+as bent — everything on the second set re-runs under the inspect-first loop and is compared only within it, with
+the one action the inspection costs printed, not barred. The bar keeps its form and is re-based on that loop's own
+base, with the symptom-only table's 51.2% kept as the floor, since a head that cannot beat a function of the symptom
+read nothing from the inspection. One check becomes a standing gate beside the permutation control: before any
+head is fitted, the number of distinct decision prompts is counted against the number of episodes, and below 0.9
+the state is a table and no head is fitted. It would have refused the first set (ten prompts in 2,000) and the
+second set's step one (six in 80) in seconds each. The general sentence is the one the mechanism section has been
+circling all week: an experience prior over search can act only where the search has observed something; at the
+first decision, before any observation, a prior over the state is a prior over the prompt, which is text memory in
+another form.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
