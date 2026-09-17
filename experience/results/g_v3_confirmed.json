@@ -1,0 +1,36 @@
+{
+ "measurement": "G ON v3 — CONFIRMED ON SEED 47. 75 independent problems, zero signatures shared with seed 21, head trained on seed-21 tasks < 226 and blind to all of these.",
+ "both_sets": {
+  "seed 21 (held-out slice 4)": {
+   "base": "13/75 = 17.3%, 10.71 actions, loc 33.3%",
+   "G": "29/75 = 38.7%, 9.17 actions, loc 56.0%",
+   "delta_points": 21.4,
+   "disagreement_effect": "+14 of 55",
+   "agreement_group": "+2, 16 of 20 identical"
+  },
+  "seed 47 (independent)": {
+   "base": "13/75 = 17.3%, 10.68 actions, loc 29.3%",
+   "G": "22/75 = 29.3%, 9.81 actions, loc 44.0%",
+   "delta_points": 12.0,
+   "disagreement_effect": "+11 of 55",
+   "agreement_group": "-2, 18 of 20 identical"
+  }
+ },
+ "the_bar_on_both": {
+  "CONSTRAINT >= 16.5%": "38.7% and 29.3% — PASSES on both",
+  "OBJECTIVE >= 23.1% at no higher cost": "38.7% at 9.17 vs 10.71; 29.3% at 9.81 vs 10.68 — PASSES BOTH LIMBS ON BOTH SETS. More problems solved AND cheaper, twice."
+ },
+ "THE_HONEST_NUANCE_THAT_MUST_TRAVEL": "THE EFFECT IS SMALLER ON THE INDEPENDENT SET: +21.4 points on seed 21's held-out slice, +12.0 on seed 47. Seed 21 slice 4 was held out BY TASK INDEX from the same generator run -- adjacent tasks, same session of the grammar -- while seed 47 is a separate run sharing no signature. The 12.0 is the number to carry; the 21.4 is the number measured closer to the training distribution, and reporting their average would hide exactly that.",
+ "the_bases_replicate_almost_exactly": "13/75 = 17.3% on both, 10.71 vs 10.68 actions. Two independent draws of 75 problems from the same grammar land on the same difficulty, which is the first evidence that v3's rates are a property of the generator and not of a seed.",
+ "the_effect_is_where_the_head_disagrees_on_both": {
+  "seed 21": "55 disagreements, +14; 20 agreements, +2",
+  "seed 47": "55 disagreements, +11; 20 agreements, -2",
+  "reading": "the agreement group moves +2 and then -2, which is what a temperature confound looks like when it is noise rather than bias. The disagreement group moves +14 and +11 -- same direction, similar size, on disjoint problems."
+ },
+ "bounds": [
+  "n = 75 per set, SE 4.4-5.6. Two sets, not a sweep.",
+  "One model, one layer (18), one head, one task generator. The grammar's operation families are shared between the two seeds even though no signature is.",
+  "The head reads the post-inspect decision only, in the inspect-first loop, which is itself a hand-written change that doubled problems solved on v2.",
+  "v3's failures are localisation-bound (the budget probe: doubling the budget converts 6 of 65). On a repair-bound set the same head would be expected to do nothing -- that is what v2 measured."
+ ]
+}
