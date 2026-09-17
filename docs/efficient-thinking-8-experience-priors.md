@@ -1116,6 +1116,39 @@ is generated — distinct task signatures as the agent sees them at no less than
 three properties of the second set kept, and signature groups that either have size one or show more than one
 outcome under greedy — and it needs many different programs, not more injection sites, which is a different piece
 of work from any this week and is not built tonight.
+One qualifier to the root paragraph: the identity of task and outcome is exact for arms that stay greedy, and a
+near-bound for arms that explore, since the harness raises decoding temperature after consecutive wasted steps and
+an arm that wastes more steps can split a signature (two of eleven did, in one arm). A task gate now runs ahead of
+the prompt gate and counts distinct problems as the agent sees them, excluding the identifier and the seed: the
+first set reads 12 signatures in 2,000 files, the second 11. The third set is scoped against it: about 300
+signatures, with the file count equal to the signature count so the gate reads 1.0 by construction rather than by
+luck; a program grammar — different bodies, data shapes, region counts and call graphs — rather than more injection
+sites; provisional until a base run has been made, because a grammar can produce programs that are superficially
+different and behaviourally identical, and only outcomes expose that. Compute was never the cost: a task assembles
+and runs its tests in a sixtieth of a second. The cost is design, about a working day.
+
+**The largest effect of the week in either field is not a prior. It is a change to when the agent may guess.** The
+inspect-first loop on the second set solves 4 of 11 problems where the blind loop solved 2 (38.8% against 20.0% by
+weighting), and mean actions fall from 10.2 to 8.8 while spending a mandatory extra inspection, because failures
+burn the whole budget and successes finish in three steps — solving more is what makes the average cheaper. All
+80 episodes complied with the instruction with no forced fallback, and in one slice 9 of 20 chose to inspect a
+second time, so the loop sets a minimum and the agent still chooses to look further. That is the shape §4.2a was
+written to detect, produced with no memory, no vector, no head and no training, by hand-writing the one rule a
+controller is meant to learn: look before you guess. Three things are stated beside it. It is two problems out of
+eleven. It is a harness change, so it is evidence about the harness the priors were measured in, not about priors
+— every cost number in the mechanism line was taken under a loop that guessed before looking, and whether the
+directions hold in the observing loop is untested, a note rather than a re-run at this n. And the prompt gate
+still refuses this loop, so G stays closed. The inspect-first loop is the third set's default loop, and a
+re-hypothesis rule is scoped with it as the next change of the same kind.
+
+The naive prior then ran inside the observing loop, and **the damage a naive prior does scales with how good the
+chooser underneath it is.** In the blind loop, forcing the symptom region cost about one episode: the agent was
+guessing, and overriding a guess costs little. In the observing loop the same rule, on the same set, costs two of
+the four problems solved — 4 of 11 to 2 of 11, actions up from 8.8 to 10.1 — while raising localisation from 38.8%
+to 41.2%. The arm that aims better solves half as many, and it is an oracle on region and bug class losing to an
+agent that merely looked first. Localisation is therefore struck as a bar from every pre-registration in this
+paper, past and future: any bar written on it would have passed that arm, including two written and re-based this
+week. Bars are problems solved and cost, nothing else.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
