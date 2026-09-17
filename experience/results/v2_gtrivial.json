@@ -1,0 +1,45 @@
+{
+ "measurement": "v2 G-TRIVIAL — and the test of whether the 64% localisation payoff is CAUSAL",
+ "table": {
+  "per_slice_green": {
+   "baseline": [
+    5,
+    5,
+    4,
+    2
+   ],
+   "gtrivial": [
+    5,
+    5,
+    4,
+    3
+   ]
+  },
+  "pooled_pct": {
+   "baseline": 20.0,
+   "gtrivial": 21.2
+  },
+  "mean_actions": {
+   "baseline": 10.2,
+   "gtrivial": 10.12
+  },
+  "first_hypothesis_region_accuracy_pct": {
+   "baseline": 31.2,
+   "gtrivial": 41.2
+  }
+ },
+ "the_rule_did_exactly_what_was_predicted_on_localisation": "41.2% is the symptom-region rule's accuracy on these 80 tasks, predicted before the run from the task set alone. Localisation rose 10 points, from 31.2% to 41.2%.",
+ "AND_IT_BOUGHT_ONE_EPISODE_IN_EIGHTY": {
+  "earned localisation (baseline)": "25 correct -> 16 green = 64.0%",
+  "imposed localisation (G-trivial)": "33 correct -> 17 green = 51.5%",
+  "marginal conversion of the 8 EXTRA correct localisations": "(17-16)/8 = 12.5%",
+  "reading": "THE 64% IS LARGELY SELECTION, NOT CAUSATION. The episodes the agent localises on its own are the EASY ones. Imposing correct localisation on the hard ones converts about one in eight. I flagged the 64% as an optimistic ceiling when I reported it; this measures how optimistic."
+ },
+ "what_it_does_to_G's_expected_value": "a head with PERFECT localisation would fix all 55 currently wrong first hypotheses. At the marginal 12.5% that is ~7 episodes: 20% -> ~28%, not the ~64% the naive ceiling implied. G is still worth running -- 8 points is a real effect and no prior this programme has tested has produced one -- but the target should be set from the marginal rate, not the conditional one.",
+ "and_the_0pct_is_unmoved": "first hypothesis WRONG is 0% green in BOTH arms (55 and 47 episodes). The agent hypothesises once, so a wrong region is unrecoverable inside the budget. That half of the split is a harness property and it is stable.",
+ "bounds": [
+  "80 episodes, four slices, greedy. The +1 episode is inside noise; the claim that carries is the MARGINAL CONVERSION (12.5% vs 64%), which rests on 8 episodes and is itself thin.",
+  "G-trivial on v2 is handed task['bug_class'] (the true class) as on v1, so it is an oracle on the class as well as the region. It still bought one episode.",
+  "'Imposed' localisation is imposed on a DIFFERENT SUBSET than the agent chooses, so the comparison is between groups, not within. That is exactly why it measures selection."
+ ]
+}
