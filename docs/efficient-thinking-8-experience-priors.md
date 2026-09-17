@@ -1261,6 +1261,34 @@ second seed before it is a claim. One number is printed beside G's table when it
 on which the head's pick agreed with the agent's own, since where they agree G changes nothing and the effect can
 only come from the disagreements.
 
+**G clears both limbs of the pre-registered bar on one task set. It is not yet a claim.** Wired as the argmax over the
+enumerated candidates at the post-inspect decision and run on the 75 held-out problems against the base on the same
+75:
+
+| arm | problems solved | mean actions | post-inspect localisation |
+|---|---:|---:|---:|
+| base | 13 of 75 = 17.3% (SE 4.4) | 10.71 | 33.3% |
+| G | 29 of 75 = 38.7% (SE 5.6) | 9.17 | 56.0% |
+
+Constraint, at least 16.5%: passes. Objective, at least 23.1% at no higher cost: passes, and the cost fell. More
+problems solved and cheaper — the shape no carrier in either field produced all week, against a bar fixed before
+the head was fitted. The agreement fraction says where it comes from: the head agreed with the agent's own pick on
+20 of 75 decisions and changed it on 55; on the 55 the base solved 5 and G solved 19, on the 20 the base solved 8
+and G solved 10. The effect is concentrated where the head changed the choice. One instrument check did not come
+out clean and is subtracted: where head and agent agree both arms emit the same text and the episode should be
+identical, and 16 of 20 are, but four diverge later because the harness raises decoding temperature after wasted
+steps, and that group gained two — so the effect is reported as +14 with +16 as the raw difference. Why this set
+converts when the second did not is the same finding, not a reversal: on the second set forcing correct
+localisation converted at 12.5% because the failures were repair-bound; on this set doubling the budget converts
+6 of 65, the failures are localisation-bound, and 22.7 points of localisation produced 21.4 points of problems
+solved, close to one for one. **A prior helps only where the thing it improves is what limits the agent**, and for
+the first time there is a field where it is. The replication is running as this is written: the second seed's 75
+problems, zero signatures shared with the first set, none ever seen by the head, its own base first and then G.
+Until it lands this is a result on one task set and is called nothing else. If it holds, the four readings pick
+the first, and two things follow in order: the cost limb at held success on the full 300, and the first
+generation of P9 — distil from G's own episodes, refit, re-run on the replication set — which is the claim this
+paper exists for.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
