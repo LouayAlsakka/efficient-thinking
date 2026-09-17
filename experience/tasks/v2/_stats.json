@@ -36,5 +36,8 @@
   "red_herring_pct": 63.9,
   "green_programs_skipped": 0
  },
- "seed": 11
+ "seed": 11,
+ "sha256_of_tasks_in_order": "0af12fda3d47ba2d933aa533c574c0d59f98c5168527ce351af6fdf47e65779d",
+ "regenerate": "python3 et8_env_v2.py gen --n 2000 --seed 11 --out <dir>",
+ "verified_deterministic": "yes -- regenerated 200 tasks from seed 11 and compared digests before this field was added"
 }

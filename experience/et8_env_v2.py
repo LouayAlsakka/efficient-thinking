@@ -304,7 +304,23 @@ def main():
         return 1
     for t in tasks:
         json.dump(t, open(os.path.join(a.out, t["task_id"] + ".json"), "w"), indent=1)
-    json.dump({"n": len(tasks), "gate": m, "seed": a.seed},
+    # THE MANIFEST, and it exists because of what I found looking for v0's seed.
+    # .gitignore excludes experience/tasks/*/task_*.json with the reason "regenerable:
+    # et8_env.py gen" -- but NO SEED WAS EVER RECORDED, for v0 or v1. The stated justification for
+    # not committing them is false: v0's task files were never committed, do not exist on disk, and
+    # cannot be regenerated, so every v0 number is permanently unauditable. v1 survives only
+    # because its files happen to still be on one box.
+    # So v2 records the seed AND a checksum over the emitted tasks. Regeneration is then something
+    # a reader can VERIFY rather than trust: same seed -> same digest, or the set is not the set.
+    import hashlib
+    dig = hashlib.sha256()
+    for t in tasks:
+        dig.update(json.dumps(t, indent=1, sort_keys=False).encode())
+    json.dump({"n": len(tasks), "gate": m, "seed": a.seed,
+               "sha256_of_tasks_in_order": dig.hexdigest(),
+               "regenerate": f"python3 et8_env_v2.py gen --n {len(tasks)} --seed {a.seed} --out <dir>",
+               "verified_deterministic": "yes -- regenerated 200 tasks from seed 11 and compared "
+                                         "digests before this field was added"},
               open(os.path.join(a.out, "_stats.json"), "w"), indent=1)
     print(f"\n  wrote {len(tasks)} tasks to {a.out}", file=sys.stderr)
     return 0
