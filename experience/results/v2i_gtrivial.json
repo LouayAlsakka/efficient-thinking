@@ -39,5 +39,12 @@
   "n = 11. 4 -> 2 is two problems.",
   "G-trivial is handed task['bug_class'], the TRUE class, so this is an ORACLE on region AND class losing to an agent that simply looked first.",
   "Not a controlled comparison of the rule alone: the forced hypothesis changes every subsequent prompt."
- ]
+ ],
+ "CORRECTION_2026-09-17": {
+  "what_I_got_wrong": "I reported v2-i G-trivial as solving '2 of 11' problems against the baseline's 4. That count was an artifact of my own indexing: I read one arbitrary element out of each signature's outcome SET, which is only valid when every signature has exactly one outcome. In this arm TWO signatures split (the exploration temperature makes repeats diverge), so the set had two members and I read whichever came first.",
+  "the_corrected_count": "4 of 11 signatures have at least one green episode — the SAME four the baseline solves. G-trivial does not lose problems; it solves them LESS RELIABLY.",
+  "what_survives_unchanged": "the pooled rate falls 38.8% -> 28.8% and mean actions rise 8.82 -> 10.14, both on the same 80 episodes. The direction — the naive prior hurts once the chooser can see — is unaffected. What is withdrawn is the sentence 'costs two problems'.",
+  "the_right_way_to_say_it": "under the observing loop the naive prior reaches the same four problems and converts fewer of their episodes, at higher cost, while localising MORE accurately (41.2% vs 38.8%).",
+  "and_the_lesson_is_the_one_I_had_just_written": "I added the split-signature qualifier to the determinism claim in this same commit and then used a counting function that assumed no splits. Writing the caveat is not the same as propagating it into the code that computes the number."
+ }
 }

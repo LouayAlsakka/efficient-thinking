@@ -1,0 +1,65 @@
+{
+ "measurement": "THE INSPECT-FIRST CONTROL SET (v2-i), complete — n = 11 distinct problems",
+ "table": {
+  "baseline": {
+   "per_slice": [
+    9,
+    9,
+    6,
+    7
+   ],
+   "pooled_pct": 38.8,
+   "actions": 8.82,
+   "loc_pct": 38.8,
+   "problems": "4 of 11",
+   "split_signatures": 0
+  },
+  "G-trivial": {
+   "per_slice": [
+    6,
+    7,
+    7,
+    3
+   ],
+   "pooled_pct": 28.8,
+   "actions": 10.14,
+   "loc_pct": 41.2,
+   "problems": "4 of 11",
+   "split_signatures": 2
+  },
+  "G-trivial'": {
+   "per_slice": [
+    5,
+    6,
+    5,
+    3
+   ],
+   "pooled_pct": 23.8,
+   "actions": 10.24,
+   "loc_pct": 41.2,
+   "problems": "3 of 11",
+   "split_signatures": 1
+  }
+ },
+ "blind_loop_for_contrast_a_note_not_a_table": {
+  "v2 baseline": {
+   "per_slice": [
+    5,
+    5,
+    4,
+    2
+   ],
+   "pooled_pct": 20.0,
+   "actions": 10.2,
+   "loc_pct": 31.2,
+   "problems": "2 of 11"
+  }
+ },
+ "the_reading": "both priors LOSE ground against a baseline that simply looks first, and both localise MORE accurately than it (41.2% vs 38.8%). G-trivial reaches the same four problems and converts fewer episodes; G-trivial′ drops to three. Aim improves, outcome worsens, cost rises.",
+ "the_week_in_one_line": "no experience-prior carrier tested in either field lowered cost with capability held. The only intervention that did both was a change to WHEN the agent may act — and it was hand-written, not learned.",
+ "bounds": [
+  "n = 11, exact for greedy arms and a near-bound where EXPLORE_TEMP fires (split signatures listed per arm).",
+  "'Problems' counts signatures with at least one green episode; the POOLED rate is the finer measure once signatures split, and the two can move in opposite directions.",
+  "G-trivial is handed the TRUE bug_class; it is an oracle on region and class and still loses to looking first."
+ ]
+}
