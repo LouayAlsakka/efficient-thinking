@@ -25,9 +25,23 @@ from chessnet.search import MCTSPlayer
 from chessnet.train import _clip_grads
 
 
-def play_game(player, max_moves, temp_moves, rng):
-    """One self-play game. Returns list of (codes, meta, idxs, probs, mover)."""
+def play_game(player, max_moves, temp_moves, rng, game_log: list | None = None):
+    """One self-play game. Returns list of (codes, meta, idxs, probs, mover).
+
+    `game_log`, when given, receives one record per game carrying the START FEN, the UCI move list
+    and the result. Training does not read it and the buffer path is untouched.
+
+    WHY IT EXISTS (ET-8 P8, 理 10906). et8_chess_prior.train needs {"moves": [uci], "result": ±1}
+    and calls state_bucket(board) / move_type(board, mv) on a live chess.Board. This function
+    returned ENCODED TENSORS -- (codes, meta, idxs, probs, value) -- and dropped the board when it
+    returned, and selfplay.py never persisted the buffer at all: only model.npz and the iteration
+    log. So `runs/et6_chess_traj` is a run directory, not a trajectory store, and the prior's
+    adapter had nothing to adapt. The games of 60 self-play iterations are gone and are not
+    recoverable from what was kept.
+    """
     board = chess.Board()
+    start_fen = board.fen()
+    ucis = []
     hist = []
     while not board.is_game_over(claim_draw=True) and len(hist) < max_moves:
         moves, idxs, probs = player.search_visits(board)
@@ -39,8 +53,12 @@ def play_game(player, max_moves, temp_moves, rng):
             mv = moves[rng.choice(len(moves), p=probs)]
         else:                                        # then greedy (most-visited)
             mv = moves[int(np.argmax(probs))]
+        ucis.append(mv.uci())
         board.push(mv)
     res = board.result(claim_draw=True)
+    if game_log is not None:
+        game_log.append({"start_fen": start_fen, "moves": ucis, "result_str": res,
+                         "result": 1 if res == "1-0" else -1 if res == "0-1" else 0})
     winner = chess.WHITE if res == "1-0" else chess.BLACK if res == "0-1" else None
     out = []
     for codes, meta, idxs, probs, mover in hist:
