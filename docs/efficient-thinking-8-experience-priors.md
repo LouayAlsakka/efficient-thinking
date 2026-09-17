@@ -1289,6 +1289,37 @@ the first, and two things follow in order: the cost limb at held success on the 
 generation of P9 — distil from G's own episodes, refit, re-run on the replication set — which is the claim this
 paper exists for.
 
+**The replication holds. Both limbs, both sets — and the effect is smaller on the independent set, which is the
+number to carry.**
+
+| set | base | G | delta |
+|---|---:|---:|---:|
+| first seed, held-out slice | 13 of 75, 17.3%, 10.71 actions | 29 of 75, 38.7%, 9.17 | +21.4 |
+| second seed, independent | 13 of 75, 17.3%, 10.68 actions | 22 of 75, 29.3%, 9.81 | +12.0 |
+
+The first seed's slice was held out by task index from the same generator run; the second seed is a separate run
+sharing no signature, on problems the head had never seen. **+12.0 is the number the paper carries**, +21.4 is the
+number measured closer to the training distribution, and they are not averaged, because averaging would hide
+exactly that. Two things came with it. The bases replicate almost exactly, 17.3% on both draws at 10.7 actions:
+the first evidence that this task set's rates are a property of the generator rather than of a seed, which the
+earlier sets could never have shown. And the effect sits on the disagreements on both sets — +14 and +11 on the 55
+decisions the head changed — while the agreement group moves +2 and then −2, which is what the temperature
+confound looks like when it is noise rather than bias. So the four readings written for this set pick the first: a
+read-only head, derived from the frozen model's own history and reading its own hidden state after one
+observation, solves more problems at lower cost, twice, against a bar fixed before it was fitted — the first
+experience prior in either field to satisfy the constraint of §4.2a with an effect. The bound rides in the same
+sentence and decides how far it generalises: this set's failures are localisation-bound, and on a repair-bound set
+the same head is expected to do nothing, which is what the second set measured. **The result is not that
+experience priors work. It is that this prior works where localisation is what limits the agent**, and the six
+negative results of the week are the other half of the same sentence. Two runs follow in order, pre-registered.
+The cost limb at held success on the full 300, which needs a head that has seen none of them: fitted on the second
+seed's 300 and run on the first seed's 300 against its measured base of 18.7% ± 2.2, so that head and evaluation
+share nothing and the direction of transfer is answered symmetrically rather than assumed. Then the first
+generation of P9: a second head refitted on the first head's own post-inspect states and verifier outcomes from
+that run, evaluated on the second seed against the first head and the base, with the three readings written
+before the refit — a second generation that does not degrade, one that improves by more than a standard error,
+or one that forgets or overfits its parent.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
