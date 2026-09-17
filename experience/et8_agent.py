@@ -51,16 +51,35 @@ def load_model(model_id: str):
     return load(model_id)
 
 def generate(model, tok, messages: list[dict], max_tokens: int = 400, temp: float = 0.0,
-             logits_processors=None) -> tuple[str, int, int]:
+             logits_processors=None, prefix: str = "") -> tuple[str, int, int]:
+    """`prefix` is TEACHER-FORCED: it is appended to the prompt and prepended to the returned text,
+    so the caller gets a complete action whose opening fields it chose and whose remainder the model
+    wrote. That is what makes a STRUCTURAL candidate set possible -- every region becomes a
+    candidate by construction instead of appearing only when the sampler happens to propose it."""
     from mlx_lm import generate as mlx_generate
     from mlx_lm.sample_utils import make_sampler
-    prompt = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    prompt = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True) + prefix
     n_in = len(tok.encode(prompt))
     kw = {"logits_processors": logits_processors} if logits_processors else {}
     text = mlx_generate(model, tok, prompt=prompt, max_tokens=max_tokens, sampler=make_sampler(temp=temp), verbose=False, **kw)
-    return text, n_in, len(tok.encode(text))
+    return prefix + text, n_in, len(tok.encode(text))
 
-CAND_TEMP = 0.8   # candidates 1..k-1; candidate 0 is greedy. Greedy alone returns one action k times.
+def _rank_regions_by_first_token(model, tok, messages, regions):
+    """Order regions by the model's own probability on the first token of each region name, so a
+    k cap keeps the model's preferred candidates rather than an arbitrary slice. Only reached when
+    a task has more regions than cand_k allows; v1 and v2 both have four, so it is untaken there
+    and is written for the next task set rather than exercised by this one."""
+    import mlx.core as mx
+    pre = '{"action": "hypothesize", "region": "'
+    prompt = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True) + pre
+    ids = mx.array([tok.encode(prompt)])
+    logits = model(ids)[0, -1, :]
+    lp = mx.log(mx.softmax(logits.astype(mx.float32)))
+    score = {}
+    for r in regions:
+        t = tok.encode(r, add_special_tokens=False)
+        score[r] = float(lp[t[0]]) if t else -1e9
+    return sorted(regions, key=lambda r: -score[r])
 
 # Exploration rule (harness v0.3): the FIRST attempt at any step is greedy (temp 0, reproducible). After a WASTED step
 # (repeat inspect / repeat hypothesis / identical patch / invalid) the next generation samples at EXPLORE_TEMP, and the
@@ -178,11 +197,28 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
         # recovers the 45, G-trivial's loss was the canned TEXT, not the choice.
         elif candidate_select and not any(h.startswith("hypothesize ") for h in history):
             msgs = messages + [{"role": "user", "content": state}]
+            # STRUCTURAL candidate set (理 10909), not a sampled one. One candidate per region
+            # VISIBLE AT THIS DECISION POINT, each built by teacher-forcing the opening fields and
+            # letting the model write the rest -- so every region is a candidate BY CONSTRUCTION.
+            #
+            # Sampling was the wrong instrument and the run said so before the ruling did: across
+            # k=8 draws at temp 0.8, HALF the decision points offered exactly one region. A head
+            # scoring a one-element set cannot move the agent, so G would have been a test of the
+            # sampler. The sampler's proposal entropy is still worth knowing and is measured
+            # separately (et8_candidate_diversity.py); it is not G's action space.
             cands, seen = [], set()
-            for j in range(cand_k):
-                # candidate 0 is GREEDY -- it is exactly the action the baseline would have taken,
-                # so the fallback below is the baseline, not a third behaviour.
-                t, ni, no = generate(model, tok, msgs, temp=0.0 if j == 0 else CAND_TEMP,
+            greedy_text, ni, no = generate(model, tok, msgs, temp=0.0,
+                                           logits_processors=logits_processors)
+            total_in += ni; total_out += no
+            gp = parse_action(greedy_text)
+            cands.append((greedy_text, gp))          # greedy is ALWAYS in the set
+            seen.add((gp.get("action"), gp.get("region"), gp.get("bug_class")))
+            regions = [r for r in task["regions"]]
+            if len(regions) + 1 > cand_k:            # cap k <= cand_k by the model's own preference
+                regions = _rank_regions_by_first_token(model, tok, msgs, regions)[: cand_k - 1]
+            for r in regions:
+                pre = '{"action": "hypothesize", "region": "%s", "bug_class": "' % r
+                t, ni, no = generate(model, tok, msgs, temp=0.0, prefix=pre,
                                      logits_processors=logits_processors)
                 total_in += ni; total_out += no
                 pa = parse_action(t)
@@ -192,8 +228,9 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
                 seen.add(key); cands.append((t, pa))
             pick = next((c for c in cands if c[1].get("action") == "hypothesize"
                          and c[1].get("region") == task["symptom_region"]), None)
-            cand_meta = {"k_asked": cand_k, "k_distinct": len(cands),
+            cand_meta = {"k": len(cands), "structural": True,
                          "regions_offered": sorted({str(c[1].get("region")) for c in cands}),
+                         "greedy_region": gp.get("region"),
                          "fell_back_to_greedy": pick is None}
             text = (pick or cands[0])[0]
             n_in = n_out = 0          # already added inside the loop
@@ -273,16 +310,18 @@ def main():
                          "A one-line rule learned from the agent's own history and the control G "
                          "must beat — it needs no model, no head and no activations.")
     ap.add_argument("--candidate-select", default="", choices=["", "symptom"],
-                    help="G-TRIVIAL-PRIME (理 10895): enumerate k candidates FROM THE MODEL at the "
-                         "first hypothesis, then pick by rule. 'symptom' picks the model's own "
-                         "candidate whose region is the symptom region, falling back to the greedy "
-                         "candidate — which is exactly the baseline action. Separates WHERE from "
-                         "HOW: unlike --trivial-symptom it does not replace the model's text.")
+                    help="G-TRIVIAL-PRIME (理 10895, candidate set structural per 10909): build one "
+                         "candidate per visible region by teacher-forcing the opening fields, then "
+                         "pick the candidate whose region is the symptom region. Separates WHERE "
+                         "from HOW: unlike --trivial-symptom the hypothesis TEXT is still the "
+                         "model's own. The fallback to greedy now fires only if a region produced "
+                         "no parseable hypothesis, not because the sampler never proposed it.")
     ap.add_argument("--cand-k", type=int, default=8,
-                    help="candidates to draw (candidate 0 greedy, the rest at CAND_TEMP). Deduped "
-                         "by (action, region, bug_class), so k_distinct is usually smaller and is "
-                         "logged: a model that offers one region k times cannot be steered by "
-                         "selection at all, and that is a result, not a failure of the harness.")
+                    help="cap on the STRUCTURAL candidate set: greedy plus one teacher-forced "
+                         "candidate per visible region, so k = len(regions) + 1 unless that "
+                         "exceeds this, in which case regions are kept by the model's own "
+                         "probability on the first token of the region name. v1 and v2 have four "
+                         "regions, so the cap is untaken on both.")
     ap.add_argument("--redact-symptom", action="store_true",
                     help="drop the TEST NAME from the symptom line, keeping the failure kind and "
                          "the assertion message. v1's ten symptom strings each map to exactly one "
