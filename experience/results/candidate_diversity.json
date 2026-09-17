@@ -1,0 +1,1630 @@
+{
+ "model": "Qwen/Qwen2.5-7B-Instruct",
+ "k": 8,
+ "n_tasks": 80,
+ "temps": {
+  "0.8": {
+   "mean_distinct_regions": 1.77,
+   "region_count_histogram": {
+    "1": 36,
+    "2": 27,
+    "3": 16,
+    "4": 1
+   },
+   "mean_distinct_actions": 2.65,
+   "symptom_region_offered_pct": 78.8,
+   "bug_region_offered_pct": 93.8,
+   "invalid_draws": 3,
+   "draws": 640,
+   "rows": [
+    {
+     "task_id": "task_0001",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0002",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0003",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0004",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0005",
+     "regions": [
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "transform",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0006",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0007",
+     "regions": [
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0008",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0009",
+     "regions": [
+      "producer",
+      "transform"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0010",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0011",
+     "regions": [
+      "producer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0012",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0013",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0014",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0015",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0016",
+     "regions": [
+      "aggregate",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0017",
+     "regions": [
+      "aggregate",
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0018",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0019",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0020",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0021",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0022",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0023",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0024",
+     "regions": [
+      "aggregate",
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0025",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0026",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0027",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0028",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0029",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0030",
+     "regions": [
+      "aggregate",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0031",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0032",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0033",
+     "regions": [
+      "producer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0034",
+     "regions": [
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0035",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0036",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0037",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0038",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0039",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0040",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0041",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0042",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0043",
+     "regions": [
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0044",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0045",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0046",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0047",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0048",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0049",
+     "regions": [
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "transform",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0050",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0051",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0052",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0053",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0054",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0055",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0056",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0057",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0058",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0059",
+     "regions": [
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0060",
+     "regions": [
+      "aggregate",
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0061",
+     "regions": [
+      "aggregate",
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0062",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0063",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0064",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0065",
+     "regions": [
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "transform",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0066",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0067",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0068",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0069",
+     "regions": [
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "transform",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0070",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0071",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0072",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0073",
+     "regions": [
+      "producer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0074",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0075",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0076",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0077",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0078",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0079",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0080",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    }
+   ]
+  },
+  "1.2": {
+   "mean_distinct_regions": 1.96,
+   "region_count_histogram": {
+    "1": 33,
+    "2": 23,
+    "3": 18,
+    "4": 6
+   },
+   "mean_distinct_actions": 3.67,
+   "symptom_region_offered_pct": 81.2,
+   "bug_region_offered_pct": 96.2,
+   "invalid_draws": 4,
+   "draws": 640,
+   "rows": [
+    {
+     "task_id": "task_0001",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0002",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 4,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0003",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0004",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0005",
+     "regions": [
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "transform",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0006",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0007",
+     "regions": [
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0008",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0009",
+     "regions": [
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0010",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0011",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0012",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0013",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0014",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 4,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0015",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0016",
+     "regions": [
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0017",
+     "regions": [
+      "aggregate",
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0018",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0019",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0020",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0021",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0022",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0023",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0024",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0025",
+     "regions": [
+      "aggregate",
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0026",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0027",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0028",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0029",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0030",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0031",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0032",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0033",
+     "regions": [
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0034",
+     "regions": [
+      "aggregate",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0035",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0036",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0037",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0038",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0039",
+     "regions": [
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0040",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0041",
+     "regions": [
+      "producer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0042",
+     "regions": [
+      "aggregate",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0043",
+     "regions": [
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0044",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0045",
+     "regions": [
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0046",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0047",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0048",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0049",
+     "regions": [
+      "aggregate",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "transform",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0050",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 3,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0051",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0052",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0053",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0054",
+     "regions": [
+      "aggregate",
+      "consumer"
+     ],
+     "n_actions": 4,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0055",
+     "regions": [
+      "aggregate",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0056",
+     "regions": [
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0057",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0058",
+     "regions": [
+      "aggregate",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0059",
+     "regions": [
+      "aggregate",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0060",
+     "regions": [
+      "aggregate",
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0061",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 1,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0062",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 3,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0063",
+     "regions": [
+      "aggregate",
+      "producer"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0064",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0065",
+     "regions": [
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "transform",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0066",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 5,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0067",
+     "regions": [
+      "consumer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0068",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0069",
+     "regions": [
+      "transform"
+     ],
+     "n_actions": 2,
+     "symptom_region": "transform",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0070",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0071",
+     "regions": [
+      "aggregate",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0072",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 1,
+     "symptom_region": "producer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0073",
+     "regions": [
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0074",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 4,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0075",
+     "regions": [
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 6,
+     "symptom_region": "consumer",
+     "bug_region": "transform"
+    },
+    {
+     "task_id": "task_0076",
+     "regions": [
+      "aggregate",
+      "consumer",
+      "producer",
+      "transform"
+     ],
+     "n_actions": 7,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0077",
+     "regions": [
+      "producer",
+      "transform"
+     ],
+     "n_actions": 4,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    },
+    {
+     "task_id": "task_0078",
+     "regions": [
+      "aggregate"
+     ],
+     "n_actions": 3,
+     "symptom_region": "aggregate",
+     "bug_region": "aggregate"
+    },
+    {
+     "task_id": "task_0079",
+     "regions": [
+      "consumer",
+      "transform"
+     ],
+     "n_actions": 3,
+     "symptom_region": "consumer",
+     "bug_region": "consumer"
+    },
+    {
+     "task_id": "task_0080",
+     "regions": [
+      "producer"
+     ],
+     "n_actions": 2,
+     "symptom_region": "consumer",
+     "bug_region": "producer"
+    }
+   ]
+  }
+ },
+ "reading": {
+  "what_it_measures": "the SAMPLER's own proposal entropy at the one decision point -- NOT G's candidate set, which is structural (理 10909). Reported beside G so the two are not confused.",
+  "the_result": "the sampler is CONCENTRATED and temperature does not fix it. 1.77 distinct regions per task at temp 0.8 and 1.96 at temp 1.2 -- 36 of 80 tasks offer ONE region across EIGHT draws at 0.8, still 33 of 80 at 1.2. Raising temperature by half bought 0.19 of a region.",
+  "and_it_is_not_a_validity_tradeoff": "3 invalid draws of 640 at temp 0.8, 4 of 640 at 1.2. The temperature is not being paid for in malformed actions; the model simply proposes the same region again.",
+  "the_ceiling_this_puts_on_a_SAMPLED_candidate_set": "the TRUE bug region appears among the draws 93.8% of the time at 0.8 and 96.2% at 1.2. So a PERFECT ranker over sampled candidates tops out near 94-96%, against an agent that already picks correctly 88.05% of the time unaided. Six to eight points of headroom, in a set where half the tasks offer nothing to choose between.",
+  "why_this_justifies_the_structural_set": "the structural set offers all four regions at every decision point by construction, so its ceiling is 100% and it is not a property of the sampler at all. Selection over a sampled set would have been a test of the sampler, which is what 理 ruled at 10909 -- here it is as a number rather than a judgement.",
+  "bounds": [
+   "80 tasks, one model, k=8. v1 only.",
+   "'Offered' means the region appeared in ANY of the k draws, which is the loosest possible reading and therefore an upper bound on what selection could reach.",
+   "Draw 0 is greedy in every set, so these counts include the baseline's own action."
+  ]
+ }
+}
