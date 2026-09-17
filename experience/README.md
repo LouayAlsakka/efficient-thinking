@@ -150,3 +150,5 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
 - v3: ~300 signatures, file count = signature count, a program grammar, one working day (Sautee), PROVISIONAL until a base
   run makes P4 bite. INSPECT-FIRST is v3's default loop; a re-hypothesis rule is scoped with v3, not built before it.
 - n = 11 is exact for greedy arms and a near-bound for exploring arms (EXPLORE_TEMP).
+- 2026-09-17 05:3xZ: a counting function must handle the case its own caveat names — aggregate the outcome SET per
+  signature or assert |set| == 1 and fail loudly. (沙汰 11025: "costs two problems" withdrawn; same four, less reliably.)
