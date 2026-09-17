@@ -19,5 +19,19 @@
   "n = 75 for the evaluation, SE ~5.3 points. STRONG needs > 1 SE and is therefore a high bar at this n; that is deliberate.",
   "G1 is trained on G0's states, which were produced with a head in the loop. The states are therefore not identically distributed to the base agent's -- that IS the experiment, and it is also the reason a naive comparison of head accuracies between generations would not be meaningful.",
   "One model, one layer, one grammar. Two seeds."
- ]
+ ],
+ "POOL_STATISTICS_TO_PRINT_BESIDE_THE_READING": {
+  "why": "理 11130: 'a smaller and easier pool' is my READING of why I expect PASS rather than STRONG. It has to be a NUMBER beside the result, or the reading explains whatever happens.",
+  "measured for BOTH training pools": [
+   "decisions available",
+   "fraction drawn from episodes that FAILED",
+   "fraction where the TRUE region was among the candidates (the ceiling on what the pool can teach)",
+   "distinct programs represented"
+  ],
+  "the two pools": {
+   "G0's": "base episodes on seed 47 (300 tasks)",
+   "G1's": "G0's episodes on seed 21 (300 tasks)"
+  },
+  "how_it_changes_the_reading": "if G1's pool is smaller and skewed toward SUCCESSES, then a PASS is 'accumulation survives a weaker training signal' and a FAIL is 'the signal got weaker', and those are different conclusions from the same number. Printing the pools is what separates them."
+ }
 }
