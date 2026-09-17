@@ -1,0 +1,41 @@
+{
+ "measurement": "G WIRED ON v3 — held-out slice 4 (tasks 226-300, never seen by the head). n = 75 PROBLEMS. NOT YET A CLAIM: confirmation on seed 47 is running.",
+ "table": {
+  "base": {
+   "solved": "13/75 = 17.3%",
+   "SE": 4.4,
+   "actions": 10.71,
+   "localisation_pct": 33.3
+  },
+  "G": {
+   "solved": "29/75 = 38.7%",
+   "SE": 5.6,
+   "actions": 9.17,
+   "localisation_pct": 56.0
+  }
+ },
+ "against_the_preregistered_bar": {
+  "CONSTRAINT >= 16.5%": "38.7% — PASSES",
+  "OBJECTIVE >= 23.1% at no higher cost": "38.7% AND cost FELL 10.71 -> 9.17 — PASSES BOTH LIMBS",
+  "source": "g_v3_prereg.json, committed at 48feeaa BEFORE the head was fit"
+ },
+ "where_the_effect_comes_from": {
+  "head/agent agreement": "20 of 75 decisions = 26.7%. G changed the pick on 55.",
+  "on the 55 DISAGREEMENTS": "base 5 green -> G 19 green  (+14)",
+  "on the 20 agreements": "base 8 green -> G 10 green  (+2)",
+  "reading": "the effect is concentrated exactly where the head changed the choice, which is what 理 11110 asked to be printed and is the strongest internal evidence that it is the head doing the work."
+ },
+ "AN_INSTRUMENT_CHECK_THAT_DID_NOT_COME_OUT_CLEAN": {
+  "expected": "where the head AGREED, both arms emit the same greedy text, so the episode should be identical.",
+  "observed": "16 of 20 identical; FOUR differ, and the agreement group gained 2 green.",
+  "cause": "the harness raises decoding temperature after consecutive wasted steps, so two arms that match at the decision can still diverge later.",
+  "consequence": "+2 of the +16 net is NOT attributable to the head's choices. The conservative attribution is the disagreement group alone: +14. I am reporting the +14 as the effect and the +16 as the raw difference."
+ },
+ "why_v3_converts_when_v2_did_not": "on v2, forcing correct localisation converted at 12.5% marginal and the failures were repair-bound. On v3 the budget probe showed doubling the budget converts 6 of 65 -- failures are NOT budget-bound -- and here +22.7 points of localisation produced +21.4 points of problems solved, close to 1:1. v3's failures are localisation-bound, and that is the condition under which a read-only chooser can help at all.",
+ "bounds": [
+  "n = 75, SE 4.4 and 5.6. The gap is ~3.4 SE of the difference.",
+  "ONE task set, ONE model, ONE layer (18), ONE head. Seed 47 is running.",
+  "The head was trained on tasks < 226 of the same generator; seed 47 shares zero signatures with it and is the real independence test.",
+  "NOT A CLAIM until seed 47 lands. 理 11068: anything clearing the objective confirms on the second set before it is a claim."
+ ]
+}
