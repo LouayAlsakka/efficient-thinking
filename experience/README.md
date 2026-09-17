@@ -116,3 +116,20 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   number that lived only in a paragraph.
 - P8 is measured on `runs/conv_value_llm1` (supervised, 3.45M) by name; confirm `eval_search.py` loads the same run dir
   before any Elo rung is quoted. G-trivial / G-trivial′ re-run on v2 as v2's own controls; the v1 pair is v1-internal.
+
+## P8 pre-registration, 2026-09-17 00:5xZ (理; 沙汰 10912/10915)
+- Evaluator: `runs/conv_value_llm1` (supervised 3.45M; the repo's own `sims_sweep.py` example names it). Ladder
+  (`eval_search.py`) loads any run dir via `load_run`; rungs are Stockfish `UCI_Elo` levels, net-independent.
+- Headline metric: head-to-head (`sims_sweep.py`) — "simulations to equal strength". The ladder runs once, no prior,
+  at baseline sims, 60 games, only to name the rung. Not a pass criterion.
+- Baseline: frozen net, no prior, 256 sims. Arms: WITH prior at {64, 128, 256} vs baseline-256; WITHOUT prior at
+  {64, 128} vs baseline-256 (control: what sims alone buy). 80 games per pairing, colours balanced, lichess 2013-01
+  openings (absolute path in the P8 runner; the shared script's relative default is left as is). SE ≈ 5.6 pts.
+- Prior: `et8_chess_prior.py` trained on the 300 regenerated games of the frozen net, beta = 1.0; buckets/entries reported.
+- §4.2a: constraint WITH-256 vs base-256 ≥ 45% win rate. Objective: WITH-128 vs base-256 ≥ 45% while WITHOUT-128 vs
+  base-256 < 45% (a 2× saving sims alone do not buy); WITH-64 ≥ 45% = 4×.
+- Readings, written before the run: PASS = same strength at half the search — the first prior this week to satisfy the
+  constraint in any field. FAIL-cost = WITH-128 < 45%. FAIL-capability = WITH-256 < 45% (a constraint failure, as A/C/F).
+- Instrument note for the paper: a 2-game smoke (±400 Elo) was deleted from the run dir so it cannot be read as a result;
+  a fourth "artifact missing" was nearly reported because three real absences primed it — the pgn exists at an absolute
+  path outside the repo. Negative results describe the seat as often as the world.
