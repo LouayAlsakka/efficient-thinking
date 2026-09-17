@@ -1,0 +1,25 @@
+{
+ "finding": "THE ET-8 ITEM-4 ENVIRONMENT HAS ELEVEN DISTINCT PROBLEMS, NOT 2,000 TASKS. Every number in this line has an effective n of 11.",
+ "measured": {
+  "v2: distinct tasks as the AGENT sees them (program+tests+symptom+regions)": 11,
+  "v2: largest group of identical tasks": 192,
+  "v1: distinct (program, symptom)": 12,
+  "v1: largest group": 240,
+  "v2 baseline, 80 episodes -> distinct task signatures": 11,
+  "signatures with MORE THAN ONE outcome": 0
+ },
+ "the_decisive_line": "identical task, identical outcome. Under greedy decoding every episode of a signature returns the same (green, actions), so the 80-episode slices carry ELEVEN independent observations between them, not eighty. Two of the eleven succeed, both at exactly 3 actions; the other nine burn the full budget of 12.",
+ "why_the_generator_does_this": "a task is ONE clean program with ONE bug injected at one of N sites. The 2,000 task files differ in task_id and seed and in nothing the agent reads. v2 has 11 injection sites, so it has 11 problems.",
+ "what_it_subsumes": "this is the root cause under both degeneracy findings rather than a third one. The symptom-to-region table (v1: 10 strings; v2: 6) and the prompt gate's refusals (v1 0.005, v2 step-1 0.075, v2 POST-INSPECT 0.0875) are all downstream of there being 11 problems. The inspect does not rescue the head because there is nothing new to observe: 11 programs, 3-5 distinct source texts per region.",
+ "what_it_does_to_the_published_numbers": {
+  "the per-slice variation": "NOT sampling noise. 5/20, 5/20, 4/20, 2/20 is the same eleven outcomes weighted differently by which signatures landed in each slice.",
+  "every pooled percentage": "-36.2 (G-trivial), -41.2 (giveaway ablation), +1 episode (v2 G-trivial), 64%/0% (the localisation split), 62.5% and 20.0% (the baselines): all computed over eleven distinct observations.",
+  "the DIRECTIONS most likely survive": "a rule that destroys the symptom!=bug group destroys it in all eleven; an ablation that removes the only informative string removes it in all eleven. What does NOT survive is any claim resting on the SIZE of a difference or on a per-slice ordering.",
+  "what I should have caught earlier": "the four slices were never four replicates. I reported 'no slice reverses' as evidence of stability when the slices are four weightings of one eleven-element vector."
+ },
+ "bounds": [
+  "This is about THIS environment under GREEDY decoding. A temperature above zero would make repeated signatures diverge and restore some independence -- at the cost of the reproducibility the whole line was built on.",
+  "11 counts distinct (program, tests, symptom, regions). Two tasks sharing a signature also share bug_region and bug_class, so nothing the agent or the scorer reads differs.",
+  "It does not say the environment is worthless -- it says n is 11, and that every interval and every close call in this line must be re-read with n = 11."
+ ]
+}
