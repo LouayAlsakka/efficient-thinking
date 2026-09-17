@@ -1380,6 +1380,24 @@ generation must descend from a head that can be defended, so G is re-run on the 
 converged head first, the old head's number stays printed beside the new one as the direct measure of what fit
 quality buys in episodes, and P9 starts after it, on the converged head, to the pre-registration unchanged.
 
+**Both heads printed, and the pair says fit quality buys nothing in episodes.** On the first seed's 300 against the
+same base, the original head solved 95 (31.7%, 9.85 actions) and the converged head 90 (30.0%, 9.92): −1.7
+points and +0.07 actions, five episodes in three hundred, inside noise and certainly not better, from a head that
+is a better fit by every probe criterion. The probe numbers were identical — both heads scored 42.7% on their
+held-out quarter — with different weights, and the converged head disagrees with the agent more (210 picks
+changed against 179) while landing slightly lower: more intervention is not better, and probe accuracy predicted
+the episode difference in neither direction. The pair is the only direct measure of what fit quality buys in
+episodes and no probe number could have said it; on this task set the answer is essentially nothing, and **a head
+good enough to beat the agent's own pick is good enough.** The bound is exact: five episodes is not a claim that
+the converged head is worse, it is a claim that fit quality did not buy episodes. The agreement check holds its
+shape on the converged head, +35 on the 210 disagreements and −1 on the 90 agreements. P9's first generation runs
+on the converged head, and its pools were measured and committed before any second-generation number existed:
+the first head's training pool, the base's episodes on the second seed, is 300 decisions over 300 programs with
+83.3% from failed episodes; the second generation's pool, the first head's episodes on the first seed, is 300
+over 300 with 68.3% from failed episodes. Half of the written expectation is refuted before the run: the pool is
+not smaller, since every episode contributes exactly one post-inspect decision; it is easier, and the expectation
+of pass rather than strong now rests on that half alone.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
