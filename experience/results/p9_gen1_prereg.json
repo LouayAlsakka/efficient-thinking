@@ -1,0 +1,23 @@
+{
+ "document": "P9 GENERATION 1 — PRE-REGISTERED BEFORE THE HEAD IS REFIT (理 11127)",
+ "written_at": "2026-09-17, while the cost limb was still running. G1 does not exist and no refit has been computed. Nothing here was chosen after seeing a G1 number.",
+ "what_P9_asks": "does the prior ACCUMULATE? A second generation learns from a better agent's episodes. If each generation must be trained from the base agent's play, the method is a one-shot improvement; if generations compound, it is the thing the paper exists for.",
+ "the_design": {
+  "G0": "the head fit on seed 47's 300 post-inspect states, run on seed 21's full 300. This IS the cost-limb run -- G0 is not a separate experiment.",
+  "G1": "a head refit on G0's OWN post-inspect states and outcomes from that run. The second generation learns from the episodes a better agent produced.",
+  "evaluation": "on seed 47's 75, against G0-on-47 (29.3%, 9.81 actions) and the base (17.3%, 10.68). Same 75 problems, paired.",
+  "THE_LABELS": "come from the VERIFIER -- whether the region a candidate names is the true bug_region -- and NEVER from the head's own picks. A head trained on its own choices learns to agree with itself, which would produce a rising number that means nothing. 理 11127, and it is the single most important line in this file."
+ },
+ "THE_THREE_READINGS": {
+  "PASS": "G1 >= G0 on seed 47 at no higher cost. Accumulation does not degrade -- a second generation can be trained on a better agent's play without losing what the first had.",
+  "STRONG": "G1 > G0 by more than 1 SE (SE at n=75 is ~5.3 points, so > ~5.3 points). The prior COMPOUNDS, and that is the claim the programme was built to test.",
+  "FAIL": "G1 < G0. The second generation forgets or overfits its parent -- the episodes of a better agent are a WORSE training signal than the base agent's, which would say the method is one-shot and name why."
+ },
+ "the_constraint": "G1 >= the base (17.3%) with nothing lost per §4.2a. A G1 below the base is a capability failure regardless of how it compares to G0.",
+ "what_I_expect_and_why_it_is_written_down": "I expect PASS rather than STRONG. G0's episodes contain FEWER failures to learn from -- it solves more and burns fewer actions -- so the second generation trains on a smaller and easier pool of post-inspect decisions. Accumulation by compounding would need the better agent's decisions to be more INFORMATIVE, not merely better, and nothing measured so far says they are.",
+ "bounds": [
+  "n = 75 for the evaluation, SE ~5.3 points. STRONG needs > 1 SE and is therefore a high bar at this n; that is deliberate.",
+  "G1 is trained on G0's states, which were produced with a head in the loop. The states are therefore not identically distributed to the base agent's -- that IS the experiment, and it is also the reason a naive comparison of head accuracies between generations would not be meaningful.",
+  "One model, one layer, one grammar. Two seeds."
+ ]
+}
