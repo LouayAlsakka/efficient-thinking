@@ -952,6 +952,26 @@ region is a candidate by construction. The model's own proposal entropy under sa
 reported beside G, as a fact about the sampler rather than as G's search space.
 Measured over two sampled slices, 40 decision points at eight draws each: 16 offered one region, 19 two, 5 three,
 and 12 of 40 fell back to the greedy candidate. Under enumeration every decision point offers all four regions.
+Measured properly afterwards on 80 tasks at eight draws: 1.77 distinct regions per decision point at temperature
+0.8 and 1.96 at 1.2, so raising the temperature by half bought a fifth of a region at no cost in malformed draws
+(3 to 4 of 640) — the model is not held back by decoding conservatism, it proposes the same region again. The
+true bug region appears somewhere among the eight draws in 93.8% and 96.2% of tasks, and that is the ceiling of
+any ranker over sampled candidates, an upper bound under the loosest reading of "appears", against an agent that
+already picks correctly 88% of the time unaided. Enumeration's ceiling is 100% and is not a property of the sampler.
+
+The separating control then ran on the four slices, structurally, and the two readings separate: **it is the
+choice, not the canned text.** G-trivial′ — the same forced region, the model's own words — scores 28.8% against
+G-trivial's 26.2% and the base's 62.5%, identical on three slices of four; giving the agent its own words for the
+same wrong region is worth two episodes in eighty. Two things make the finding stronger than it was framed. The
+arms were checked to be two runs and not one: they differ in first hypothesis on 66 of 80 episodes and in path
+on 72, and land in the same place on 78 — they change the route, not the destination, and three identical slices
+without that check would be indistinguishable from one arm silently running the other. And the canned control
+turns out to be an *oracle*: its injected action carries the task's true bug class as well as the symptom
+region, while the model's own version must invent the class and mostly invents the wrong one, and the two match
+to within two episodes. So the 36-point loss is restated as the cost of overriding the chooser *even when the
+override is correct*, and "being told the right answer at step one is worth two episodes in eighty" is the
+sharpest statement of the repair floor the paper has. Bound: a first-task-set result, decomposing a first-task-set
+number, and not evidence about G, which runs on the second.
 
 **The chess anchor (P8) starts from regenerated games on a named evaluator.** Confirming the trajectory adapter
 found that the self-play run had kept only its iteration log: the sample buffer lived in memory, and the game
