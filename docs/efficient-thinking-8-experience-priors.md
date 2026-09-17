@@ -1143,12 +1143,25 @@ re-hypothesis rule is scoped with it as the next change of the same kind.
 
 The naive prior then ran inside the observing loop, and **the damage a naive prior does scales with how good the
 chooser underneath it is.** In the blind loop, forcing the symptom region cost about one episode: the agent was
-guessing, and overriding a guess costs little. In the observing loop the same rule, on the same set, costs two of
-the four problems solved — 4 of 11 to 2 of 11, actions up from 8.8 to 10.1 — while raising localisation from 38.8%
-to 41.2%. The arm that aims better solves half as many, and it is an oracle on region and bug class losing to an
+guessing, and overriding a guess costs little. In the observing loop the same rule, on the same set, solves the
+same four problems *less reliably* — 38.8% to 28.8% by weighting, two signatures now splitting under the
+exploration temperature, actions up from 8.8 to 10.1 — while raising localisation from 38.8% to 41.2%. (A first
+reading said it lost two of the four problems; that came from indexing one element of a signature's outcome set
+in an arm where two signatures had split, and is withdrawn: a caveat written into a paragraph and not into the
+counting function is decoration.) The arm that aims better solves half as many, and it is an oracle on region and bug class losing to an
 agent that merely looked first. Localisation is therefore struck as a bar from every pre-registration in this
 paper, past and future: any bar written on it would have passed that arm, including two written and re-based this
 week. Bars are problems solved and cost, nothing else.
+The inspect-first set then closed at n = 11: the base 4 of 11 (38.8%, 8.8 actions); the naive rule the same 4 less
+reliably (28.8%, 10.1); the same rule with the model's own words 3 of 11 (23.8%, 10.2); both priors localising
+better than the base (41.2% against 38.8%). Three arms, one direction: aim improves, outcome worsens, cost rises.
+And the week, stated once: **no experience-prior carrier tested in either field lowered cost with capability held.
+The only intervention that did both was a change to when the agent may act — and it was hand-written, not
+learned.** In the chess field the constraint arm closed at 0.544 over 80 games (+30 Elo at equal search): the prior
+does not damage the search. The objective arms had already closed at 0.350 and 0.275. The un-priored control at a
+quarter of the search is tracking the priored one almost exactly at 16 games (0.281 against 0.275); if that holds,
+the loss at reduced search is what losing the search costs anyone, and the reading assembles as no harm, no
+saving — the same shape as the language field. The control at half the search decides it.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
