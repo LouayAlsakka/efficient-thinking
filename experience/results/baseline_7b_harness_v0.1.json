@@ -84,7 +84,13 @@
   "transform": 9,
   "consumer": 1
  },
- "finding": "Harness v0.1 artifact, not the baseline. (1) 102/178 steps were identical re-submitted patches after a failing verifier result \u2014 a harness gap (no post-failure nudge), fixed in v0.2. (2) The system-prompt example named a concrete region/class (producer/off_by_one); the recorded first-hypothesis distribution is transform 9 / producer 5 / consumer 1, so the model did NOT simply copy it, but a concrete example is a possible bias and v0.2 uses placeholders. (3) First hypothesis followed the symptom region in only 2/15 cases \u2014 the untrained model already searches upstream of the symptom; this is the prior the experience module must beat, and it argues for measuring hypothesis ORDER against the true bug region rather than herring-following alone.",
+ "finding": "Harness v0.1 artifact, not the baseline. (1) 102/178 steps were identical re-submitted patches after a failing verifier result — a harness gap (no post-failure nudge), fixed in v0.2. (2) The system-prompt example named a concrete region/class (producer/off_by_one); the recorded first-hypothesis distribution is transform 9 / producer 5 / consumer 1, so the model did NOT simply copy it, but a concrete example is a possible bias and v0.2 uses placeholders. (3) First hypothesis followed the symptom region in only 2/15 cases — the untrained model already searches upstream of the symptom; this is the prior the experience module must beat, and it argues for measuring hypothesis ORDER against the true bug region rather than herring-following alone.",
  "date": "2026-09-05T19:0xZ",
- "machine": "Louay's Mac (MLX), concurrent with a 3B run"
+ "machine": "Louay's Mac (MLX), concurrent with a 3B run",
+ "N_WARNING": {
+  "correction_to_my_own_stamp": "my first pass stamped this file with v1's and v2's signature counts (12 and 11). That asserts a fact about a population I CANNOT CHECK. These numbers come from tasks/v0, whose task FILES WERE NEVER COMMITTED and are not on disk, and whose generation seed was never recorded — so v0 is not regenerable and its signature count is unknown.",
+  "what_stands": "v0's rates are UNAUDITABLE. Not 'inherits the 11-problem defect' — an inherited defect is measurable. This one cannot be examined at all.",
+  "why_it_is_LIKELY_the_same_defect": "v0 came from the same generator family (one clean program, one injected bug), and v1 and v2 both collapse to ~11-12 distinct problems. That is a reason to distrust v0's n, NOT a measurement of it, and it is stated as such.",
+  "stamped": "2026-09-17 by sautee; corrected the same day after I applied a measured count to an unmeasured population — the error I have been catching in others' numbers all week."
+ }
 }

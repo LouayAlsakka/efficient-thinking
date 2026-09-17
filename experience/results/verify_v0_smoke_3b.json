@@ -4,14 +4,41 @@
  "model": "Qwen/Qwen2.5-3B-Instruct (bf16)",
  "held_out_tasks": "experience/tasks/heldout_v0 (n=200, seed 7, red_herring 79/200)",
  "lessons_tested": 1,
- "lesson": {"condition": {"family": "A_boundary", "symptom_region": "consumer"}, "action_prior": ["producer"], "action_avoid": [],
-            "source": "experience/lessons/v0/lessons.json (distilled from v0.3 3B+7B traces, 8 episodes in this condition, confidence 0.731)"},
- "in_scope": {"n": 8, "cost_base": 10.0, "cost_with": 12.25, "green_base": 4, "green_with": 3},
- "control_shuffled_family": {"n": 8, "cost_base": 13.0, "cost_with": 13.0},
- "gain": -2.25, "leak": 0.0, "rule": "admit iff gain >= 1.0 and leak <= 0.5 on n >= 8",
+ "lesson": {
+  "condition": {
+   "family": "A_boundary",
+   "symptom_region": "consumer"
+  },
+  "action_prior": [
+   "producer"
+  ],
+  "action_avoid": [],
+  "source": "experience/lessons/v0/lessons.json (distilled from v0.3 3B+7B traces, 8 episodes in this condition, confidence 0.731)"
+ },
+ "in_scope": {
+  "n": 8,
+  "cost_base": 10.0,
+  "cost_with": 12.25,
+  "green_base": 4,
+  "green_with": 3
+ },
+ "control_shuffled_family": {
+  "n": 8,
+  "cost_base": 13.0,
+  "cost_with": 13.0
+ },
+ "gain": -2.25,
+ "leak": 0.0,
+ "rule": "admit iff gain >= 1.0 and leak <= 0.5 on n >= 8",
  "decision": "rejected",
  "rejection_rate_P0": 1.0,
  "finding": "The gate refused a confident (0.731) lesson that train-on-test distillation produced from 8 episodes: on held-out tasks in scope it cost +2.25 actions and one fewer green, with zero effect on the control. This is the P0 mechanism doing what proposal section 3.3 says it is for. n=8 per arm, one seed: the direction is not significant and is not claimed; the point recorded is that the gate rejects rather than admits by default, and that a lesson at this evidence level does not survive contact with fresh tasks.",
  "date": "2026-09-05T19:52Z",
- "machine": "Louay's Mac (MLX), concurrent with two other runs"
+ "machine": "Louay's Mac (MLX), concurrent with two other runs",
+ "N_WARNING": {
+  "correction_to_my_own_stamp": "my first pass stamped this file with v1's and v2's signature counts (12 and 11). That asserts a fact about a population I CANNOT CHECK. These numbers come from tasks/v0, whose task FILES WERE NEVER COMMITTED and are not on disk, and whose generation seed was never recorded — so v0 is not regenerable and its signature count is unknown.",
+  "what_stands": "v0's rates are UNAUDITABLE. Not 'inherits the 11-problem defect' — an inherited defect is measurable. This one cannot be examined at all.",
+  "why_it_is_LIKELY_the_same_defect": "v0 came from the same generator family (one clean program, one injected bug), and v1 and v2 both collapse to ~11-12 distinct problems. That is a reason to distrust v0's n, NOT a measurement of it, and it is stated as such.",
+  "stamped": "2026-09-17 by sautee; corrected the same day after I applied a measured count to an unmeasured population — the error I have been catching in others' numbers all week."
+ }
 }

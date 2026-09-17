@@ -1,14 +1,36 @@
 {
  "artifact": "experience/vectors/v0 (built from v03_3b + v03_7b first-hypothesis prompts, 25/15) checked on experience/lessons/v0/verified_smoke traces (heldout_v0 tasks, 3B, a run NOT used in the build)",
  "model": "Qwen/Qwen2.5-3B-Instruct (bf16)",
- "held_out_decision_prompts": {"n_pos": 8, "n_neg": 8},
- "layers": {
-  "9":  {"d_prime_heldout": 0.792,  "threshold_acc": 0.812},
-  "18": {"d_prime_heldout": 1.127,  "threshold_acc": 0.812},
-  "27": {"d_prime_heldout": -0.779, "threshold_acc": 0.188}
+ "held_out_decision_prompts": {
+  "n_pos": 8,
+  "n_neg": 8
  },
- "build_set_d_prime": {"9": 0.526, "18": 0.531, "27": 0.481},
+ "layers": {
+  "9": {
+   "d_prime_heldout": 0.792,
+   "threshold_acc": 0.812
+  },
+  "18": {
+   "d_prime_heldout": 1.127,
+   "threshold_acc": 0.812
+  },
+  "27": {
+   "d_prime_heldout": -0.779,
+   "threshold_acc": 0.188
+  }
+ },
+ "build_set_d_prime": {
+  "9": 0.526,
+  "18": 0.531,
+  "27": 0.481
+ },
  "finding": "Direction, not evidence: at n=16 held-out prompts the mid-depth vector (layer 18, 50% depth) separates productive from wasted first hypotheses best (d' 1.13, 81% at the midpoint threshold), the early vector (layer 9) less (0.79), and the late vector (layer 27, 75% depth) INVERTS (-0.78, 19%) - the sign flips out of sample, so the build-set direction at layer 27 was noise. This is the ordering P3 predicts (mid > early > late) and it is recorded as a direction to test at n >= 500 prompts from the llm1 traces, where the vectors will also be rebuilt from per-step productive labels rather than the first hypothesis alone. Nothing here is scored.",
  "date": "2026-09-05T20:06Z",
- "machine": "Louay's Mac (MLX)"
+ "machine": "Louay's Mac (MLX)",
+ "N_WARNING": {
+  "correction_to_my_own_stamp": "my first pass stamped this file with v1's and v2's signature counts (12 and 11). That asserts a fact about a population I CANNOT CHECK. These numbers come from tasks/v0, whose task FILES WERE NEVER COMMITTED and are not on disk, and whose generation seed was never recorded — so v0 is not regenerable and its signature count is unknown.",
+  "what_stands": "v0's rates are UNAUDITABLE. Not 'inherits the 11-problem defect' — an inherited defect is measurable. This one cannot be examined at all.",
+  "why_it_is_LIKELY_the_same_defect": "v0 came from the same generator family (one clean program, one injected bug), and v1 and v2 both collapse to ~11-12 distinct problems. That is a reason to distrust v0's n, NOT a measurement of it, and it is stated as such.",
+  "stamped": "2026-09-17 by sautee; corrected the same day after I applied a measured count to an unmeasured population — the error I have been catching in others' numbers all week."
+ }
 }

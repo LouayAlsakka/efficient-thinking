@@ -83,7 +83,13 @@
   "aggregate": 5,
   "consumer": 1
  },
- "finding": "Harness v0.1 artifact. 3B bf16 9/20 vs 7B-4bit 7/20 on identical tasks and harness \u2014 the model-size ordering Paper II predicts does not show at n=20 here; B_state family 0/5 for both (mutable_default/aliasing never fixed); 61 of 178 steps identical re-patches. First hypothesis producer 11/19: the concrete prompt example (producer/off_by_one) plausibly biased 3B more than 7B. Both fixed in v0.2; rerun before any comparison is claimed.",
+ "finding": "Harness v0.1 artifact. 3B bf16 9/20 vs 7B-4bit 7/20 on identical tasks and harness — the model-size ordering Paper II predicts does not show at n=20 here; B_state family 0/5 for both (mutable_default/aliasing never fixed); 61 of 178 steps identical re-patches. First hypothesis producer 11/19: the concrete prompt example (producer/off_by_one) plausibly biased 3B more than 7B. Both fixed in v0.2; rerun before any comparison is claimed.",
  "date": "2026-09-05T19:0xZ",
- "machine": "Louay's Mac (MLX), concurrent with the 7B run"
+ "machine": "Louay's Mac (MLX), concurrent with the 7B run",
+ "N_WARNING": {
+  "correction_to_my_own_stamp": "my first pass stamped this file with v1's and v2's signature counts (12 and 11). That asserts a fact about a population I CANNOT CHECK. These numbers come from tasks/v0, whose task FILES WERE NEVER COMMITTED and are not on disk, and whose generation seed was never recorded — so v0 is not regenerable and its signature count is unknown.",
+  "what_stands": "v0's rates are UNAUDITABLE. Not 'inherits the 11-problem defect' — an inherited defect is measurable. This one cannot be examined at all.",
+  "why_it_is_LIKELY_the_same_defect": "v0 came from the same generator family (one clean program, one injected bug), and v1 and v2 both collapse to ~11-12 distinct problems. That is a reason to distrust v0's n, NOT a measurement of it, and it is stated as such.",
+  "stamped": "2026-09-17 by sautee; corrected the same day after I applied a measured count to an unmeasured population — the error I have been catching in others' numbers all week."
+ }
 }
