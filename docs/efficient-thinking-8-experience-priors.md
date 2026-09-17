@@ -898,6 +898,30 @@ does not carry that confound; the control that separates the two readings is G's
 head replaced by the symptom rule, and it runs before the head does. Whichever reading survives, the naive prior
 is not suboptimal but catastrophic, and no rule that ignores the state reaches the ceiling.
 
+**The task set gives localisation away, and G cannot be tested on it.** The head for G was fitted before the
+candidate machinery existed, as a check: on held-out first-decision states it scored 100.0% at both layers, and
+100% on the agent's own misses. The controls run before that number was reported are what made it worth chasing:
+a permutation control (train labels shuffled, refit) scored 24.0%, chance, so it is not a fitting artefact; but
+the same 100% survived a projection to eight dimensions and a training set of 100 examples, which is not the
+signature of a learned readout of a hard quantity but of a key being copied. The first decision prompt contains no
+program text — the symptom line, four region names, the budget — so the key had to be in the symptom. It is. The
+2,000 tasks carry ten distinct symptom strings and each maps to exactly one bug region; a ten-row lookup table
+localises at 100%, and the agent's 88% first-hypothesis accuracy is *below* that table on a string it is handed.
+What this invalidates: every localisation figure on this task set as a capability figure, the ceiling argument
+for G as computed from region labels (a perfect head on this set is a dictionary), and any test of G on it — a
+head that chooses well proves nothing about activations when the prompt contains the answer. What it leaves
+standing: mechanisms A, C and F, which compared cost at held capability and never needed localisation to be hard;
+the repair floor, which is strengthened, since localisation was cheaper than believed and a quarter of episodes
+still localise and fail; and the negative control's 36-point loss, which measured what overriding a chooser costs
+and is a fact about the loop, not about task difficulty. The remedy is a second task set, pre-registered before
+it is generated: each failing test reachable from at least two bug regions, at least one bit of entropy from
+symptom to region averaged over tasks, and a lookup table on the symptom scoring no better than 60% on held-out
+tasks — all three measured on the generated set before any episode runs, with the action loop and verifier
+unchanged so cost stays comparable. G, its probe with the permutation control mandatory, its ceiling and both
+of its controls move to that set. Whether the earlier task versions share the degeneracy is being checked; if
+they do, the 3B baselines and the transfer prediction P7 inherit it and this paragraph will say so. The chess
+anchor of P8, where the uncertainty is real by construction, proceeds beside it as the second field.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
