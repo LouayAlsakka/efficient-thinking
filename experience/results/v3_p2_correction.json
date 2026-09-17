@@ -1,0 +1,39 @@
+{
+ "correction": "I told 理 that P2 is INCOMPATIBLE with P0. That was wrong, and it was a small-sample artifact of my own probe size.",
+ "what_I_claimed": "under P0 = 1.0 symptoms are near-unique, so H(bug_region | symptom) goes to zero MECHANICALLY and a set can be maximally unpredictable while failing P2. I recommended striking the gate on that basis.",
+ "what_the_scoped_n_shows": {
+  "40": {
+   "P2_bits": 0.15,
+   "symptom_uniqueness": 0.9
+  },
+  "80": {
+   "P2_bits": 0.439,
+   "symptom_uniqueness": 0.775
+  },
+  "150": {
+   "P2_bits": 0.691,
+   "symptom_uniqueness": 0.7
+  },
+  "300": {
+   "P2_bits": 0.861,
+   "symptom_uniqueness": 0.617
+  }
+ },
+ "the_mechanism_I_missed": "P2 is an n-DEPENDENT statistic. Symptoms repeat as the set grows -- at n=40 they are 90% unique and H is forced toward 0; by n=300 uniqueness is 0.617 and H is 0.861. P0 does NOT force symptom uniqueness; it forces PROBLEM uniqueness, and two different problems can produce the same assertion failure. I conflated the two.",
+ "what_stands": "P2 is 0.861 at the scoped n = 300, still below the 1.0 bar and RISING. Whether it clears 1.0 at a larger n is not something I will extrapolate -- it may asymptote below.",
+ "what_is_withdrawn": "the word INCOMPATIBLE, and the recommendation to strike P2. The gate may simply need a larger set, which is the same lever the budget probe already pointed at.",
+ "the_gates_at_n_300_provisional": {
+  "P0_ratio": 1.0,
+  "P0_distinct_signatures": 300,
+  "distinct_programs": 300,
+  "P0_largest_group": 1,
+  "P1_singleton_test_identities": 1,
+  "P2_bits": 0.861,
+  "P3_heldout_lookup_pct": 4.7
+ },
+ "the_lesson": "I evaluated an n-dependent gate on a 40-task probe and reported a STRUCTURAL conclusion from it. The probe size was chosen for speed, not for the statistic being measured, and nothing in my report said which numbers could depend on it. Any gate quoted from a probe must say what it does at the scoped n before a structural claim is made about it.",
+ "bounds": [
+  "All figures from the PROVISIONAL seed-21 set, scratchpad only, nothing emitted.",
+  "The four n values are NESTED prefixes of one set, not independent draws, so the trend is a within-set growth curve rather than four samples."
+ ]
+}
