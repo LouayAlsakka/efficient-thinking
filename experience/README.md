@@ -152,3 +152,16 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
 - n = 11 is exact for greedy arms and a near-bound for exploring arms (EXPLORE_TEMP).
 - 2026-09-17 05:3xZ: a counting function must handle the case its own caveat names — aggregate the outcome SET per
   signature or assert |set| == 1 and fail loudly. (沙汰 11025: "costs two problems" withdrawn; same four, less reliably.)
+
+## Rulings, 2026-09-17 15:5xZ (理, on 沙汰 11060–11065) — v3 gates and order
+- P2 RETIRED for v3, replaced (not lowered) by P2′: assertion detail on 100% of tasks AND symptom distinctness ≥ 0.5.
+  Entropy printed beside every v3 table (0.861 at 300, n-dependent), never a bar. No coarsening is picked by anyone.
+- P1′: per program, the failing-test set reachable from ≥ 2 of ITS regions; singletons named. (1 at 300 = pass.)
+- n = 300 for the base and first pass (4 × 75); a SECOND 300 generated, gated, held unrun = the replication set. Any
+  effect on the first 300 confirms on the second before it is a claim.
+- Budget 12 stays. RULE: the budget is in the prompt → a budget change is a different agent; no budget curve is read as
+  a truncation. "Easier programs" is the wrong fix, on record.
+- RULE: a gate quoted from a probe states its value at the scoped n before any structural claim.
+- Order on v3: emit 300 → inspect-first base → prompt gate (post-inspect) → probe + permutation → head → G (bar: problems
+  solved + cost, re-based; four readings rewritten). G REOPENS on v3. Nothing else on v3 until G reads.
+- P8 rung: MCTS-256 1983 ± 73, raw 1802; search +182 vs prior +20 ± 55. Fully closed.
