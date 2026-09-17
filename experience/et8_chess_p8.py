@@ -147,7 +147,19 @@ def cmd_sweep(a):
     rows, t0 = [], time.time()
     for kind, sims in arms:
         pa = build(model, cfg, sims, a.seed, prior=prior if kind == "with" else None, beta=a.beta)
-        s = play_pair(pa, base, boards, a.games, rng, a.max_moves)
+        # Played in CHUNKS of the same play_pair, not a re-implementation of it: a five-hour run
+        # that prints nothing until a pairing ends cannot be told apart from a hung one for ninety
+        # minutes. Chunks are EVEN so play_pair's colour alternation (a_white = g % 2 == 0, which
+        # restarts per call) still balances seats within every chunk, and the same rng object is
+        # threaded through so the opening draws do not repeat.
+        got, played = 0.0, 0
+        while played < a.games:
+            n = min(a.chunk, a.games - played)
+            got += play_pair(pa, base, boards, n, rng, a.max_moves) * n
+            played += n
+            print(f"    {kind} {sims} sims: {played}/{a.games} games, running {got/played:.3f} "
+                  f"[{(time.time()-t0)/60:.0f}m]", flush=True)
+        s = got / a.games
         row = {"arm": kind, "sims": sims, "baseline_sims": a.baseline, "games": a.games,
                "win_rate": round(s, 4), "elo_delta": round(s2e(s, a.games), 1),
                "se_win_rate": round(0.5 / math.sqrt(a.games), 4)}
@@ -190,6 +202,8 @@ if __name__ == "__main__":
             p.add_argument("--with-sims", nargs="+", type=int, default=[64, 128, 256])
             p.add_argument("--without-sims", nargs="+", type=int, default=[64, 128])
             p.add_argument("--games", type=int, default=80)
+            p.add_argument("--chunk", type=int, default=8,
+                           help="games per progress print; must be EVEN to keep colours balanced")
             p.add_argument("--max-moves", type=int, default=160)
             p.add_argument("--seed", type=int, default=0)
             p.add_argument("--out", required=True)
