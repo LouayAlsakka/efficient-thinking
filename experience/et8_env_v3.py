@@ -228,6 +228,31 @@ def make_task(idx, rng, keep_signatures):
         if sig in keep_signatures:
             continue                                  # never emit the same problem twice
         keep_signatures.add(sig)
+        # P1' (理 11068): the failing-test set must be reachable from >= 2 of THIS PROGRAM'S regions.
+        # v2's P1 counted test identities ACROSS programs, which is meaningless once every program is
+        # its own problem. Here it is answered per program, by actually trying the other regions.
+        want = {f["test"] for f in f2}
+        siblings = []
+        for other in order:
+            if other == region or other == "run":
+                continue
+            for _, m2 in MUTATIONS:
+                r3 = mutate(regions, order, other, m2)
+                if r3 is None:
+                    continue
+                g3, f3 = run_suite(assemble(r3, order), tests)
+                if not g3 and f3 and want & {f["test"] for f in f3}:
+                    siblings.append(other)
+                    break
+            if siblings:
+                break
+        if not siblings:
+            # REJECT rather than emit-and-fail-the-gate. A task whose failing test NO other region of
+            # its own program can produce is exactly a task whose symptom pins the region -- the
+            # thing P1 exists to exclude. Filtering it at generation makes 理's "every program"
+            # literal, with zero tolerance, instead of my picking a tolerance for a statistic they
+            # set on a different (cross-program) count. The rejection RATE is reported.
+            continue
         return {"task_id": "task_%04d" % idx, "family": "v3", "bug_class": mut_name,
                 "bug_region": region, "program": buggy, "tests": tests,
                 "symptom": "%s: %s" % (first["kind"], first["message"] or "no detail"),
@@ -238,6 +263,7 @@ def make_task(idx, rng, keep_signatures):
                 "symptom_region": None, "dead_paths": [],
                 "regions": [r for r in order if r != "run"], "seed": rng.randint(0, 10**9),
                 "_signature": sig, "_test_identity": first["test"],
+                "_p1_sibling_regions": siblings,
                 "_shape": {"parser": kinds[0], "mappers": kinds[1], "agg": kinds[2], "fmt": kinds[3]}}
     return None
 
@@ -299,9 +325,15 @@ def measure(tasks):
             "P0_distinct_signatures": len(sigs),
             "P0_ratio": round(len(sigs) / n, 4) if n else 0.0,
             "P0_largest_group": sigs.most_common(1)[0][1] if sigs else 0,
-            "P1_tests_reachable_from_1_region": sorted(k for k, v in by_test.items() if len(v) < 2)[:10],
-            "P1_n_such_tests": sum(1 for v in by_test.values() if len(v) < 2),
-            "P2_mean_conditional_entropy_bits": round(H, 3),
+            "P1prime_tasks_with_no_sibling_region": sum(1 for t in tasks
+                                                        if not t.get("_p1_sibling_regions")),
+            "P1prime_singletons": [t["task_id"] for t in tasks
+                                   if not t.get("_p1_sibling_regions")][:10],
+            "P2prime_assertion_detail_pct": round(100 * sum(
+                1 for t in tasks if t["symptom"].split(":", 1)[-1].strip()
+                not in ("", "no detail")) / n, 1) if n else 0.0,
+            "P2prime_symptom_distinctness": round(len(by_sym) / n, 3) if n else 0.0,
+            "P2_entropy_bits_PRINTED_NEVER_A_BAR": round(H, 3),
             "P3_heldout_lookup_pct": round(100 * hit / (n - half), 1) if n - half else 0.0,
             "distinct_symptoms": len(by_sym),
             "distinct_programs": len({t["program"] for t in tasks}),
@@ -317,10 +349,17 @@ def verdict(m):
     if m["P0_ratio"] < 0.9:
         bad.append("P0 FAIL: %d distinct problems in %d tasks (ratio %.3f)" %
                    (m["P0_distinct_signatures"], m["n"], m["P0_ratio"]))
-    if m["P1_n_such_tests"]:
-        bad.append("P1 FAIL: %d test identities reachable from one region only" % m["P1_n_such_tests"])
-    if m["P2_mean_conditional_entropy_bits"] < 1.0:
-        bad.append("P2 FAIL: %.3f bits, need >= 1.0" % m["P2_mean_conditional_entropy_bits"])
+    if m["P1prime_tasks_with_no_sibling_region"]:
+        bad.append("P1' FAIL: %d tasks whose failing test no OTHER region of the same program can "
+                   "produce -- these should have been REJECTED at generation"
+                   % m["P1prime_tasks_with_no_sibling_region"])
+    if m["P2prime_assertion_detail_pct"] < 100.0:
+        bad.append("P2'(a) FAIL: assertion detail present on only %.1f%% of tasks -- a symptom with "
+                   "no detail is starvation, which is what P2 was standing in for"
+                   % m["P2prime_assertion_detail_pct"])
+    if m["P2prime_symptom_distinctness"] < 0.5:
+        bad.append("P2'(b) FAIL: symptom distinctness %.3f, need >= 0.5"
+                   % m["P2prime_symptom_distinctness"])
     if m["P3_heldout_lookup_pct"] > 60.0:
         bad.append("P3 FAIL: held-out lookup %.1f%%, need <= 60" % m["P3_heldout_lookup_pct"])
     return bad

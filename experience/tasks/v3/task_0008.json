@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0008",
+ "family": "v3",
+ "bug_class": "off_by_one_slice",
+ "bug_region": "fold",
+ "program": "# region: emit\ndef emit(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.isdigit() and int(s) > 0:\n            out.append(int(s))\n    return out\n\n# region: sift\ndef sift(xs, floor_=6):\n    return [v for v in xs if v >= floor_]\n\n# region: fold\ndef fold(xs, offset=-1):\n    return [v + offset for v in xs[1:]]\n\n# region: intake\ndef intake(xs):\n    n = len(xs)\n    return {'n': n, 'mean': (sum(xs) / n) if n else 0.0, 'max': max(xs) if xs else 0}\n\n# region: render\ndef render(summary, bar=3):\n    out = dict(summary)\n    out['grade'] = 'high' if summary.get('n', 0) >= bar else 'low'\n    return out\n\n# region: run\ndef run(raw):\n    return render(intake(fold(sift(emit(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 0, 'mean': 0.0, 'max': 0, 'grade': 'low'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'mean': 7.5, 'max': 9, 'grade': 'low'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 1, 'mean': 7.0, 'max': 7, 'grade': 'low'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'mean': 0.0, 'max': 0, 'grade': 'low'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 2, 'mean': 11.0, 'max': 11, 'grade': 'low'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'mean': 0.0, 'max': 0, 'grade': 'low'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'mean': 5.0, 'max': 5, 'grade': 'high'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 1, 'mean': 39.0, 'max': 39, 'grade': 'low'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                         ^          ^ ^       ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "emit",
+  "sift",
+  "fold",
+  "intake",
+  "render"
+ ],
+ "seed": 932516046,
+ "_signature": "687845452d6e",
+ "_test_identity": "test_case_01",
+ "_p1_sibling_regions": [
+  "emit"
+ ],
+ "_shape": {
+  "parser": "parse_positive",
+  "mappers": [
+   "drop_small",
+   "shift"
+  ],
+  "agg": "meanmax",
+  "fmt": "grade"
+ }
+}

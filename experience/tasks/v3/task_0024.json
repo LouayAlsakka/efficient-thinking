@@ -1,0 +1,31 @@
+{
+ "task_id": "task_0024",
+ "family": "v3",
+ "bug_class": "off_by_one_slice",
+ "bug_region": "render",
+ "program": "# region: gather\ndef gather(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.isdigit() and int(s) > 0:\n            out.append(int(s))\n    return out\n\n# region: render\ndef render(xs, limit=5):\n    return [v if v <= limit else limit for v in xs[1:]]\n\n# region: intake\ndef intake(xs):\n    return {'n': len(xs), 'total': sum(xs)}\n\n# region: sift\ndef sift(summary):\n    out = dict(summary)\n    out['flags'] = sorted(k for k, v in summary.items() if isinstance(v, int) and v > 0)\n    return out\n\n# region: run\ndef run(raw):\n    return sift(intake(render(gather(raw))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'total': 6, 'flags': ['n', 'total']})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'total': 10, 'flags': ['n', 'total']})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 2, 'total': 10, 'flags': ['n', 'total']})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'flags': []})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'total': 11, 'flags': ['n', 'total']})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'total': 0, 'flags': []})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 20, 'flags': ['n', 'total']})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'total': 7, 'flags': ['n', 'total']})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                ^           ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "gather",
+  "render",
+  "intake",
+  "sift"
+ ],
+ "seed": 780862398,
+ "_signature": "1899177bc65e",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "gather"
+ ],
+ "_shape": {
+  "parser": "parse_positive",
+  "mappers": [
+   "clamp"
+  ],
+  "agg": "total",
+  "fmt": "flags"
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0093",
+ "family": "v3",
+ "bug_class": "early_return",
+ "bug_region": "gather",
+ "program": "# region: gather\ndef gather(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n            return out\n    return out\n\n# region: fold\ndef fold(xs, limit=12):\n    return [v if v <= limit else limit for v in xs]\n\n# region: render\ndef render(xs, factor=2):\n    return [v * factor for v in xs]\n\n# region: emit\ndef emit(xs, cut=8):\n    lo = [v for v in xs if v < cut]\n    hi = [v for v in xs if v >= cut]\n    return {'n': len(xs), 'lo': len(lo), 'hi': len(hi)}\n\n# region: digest\ndef digest(summary):\n    out = dict(summary)\n    out['flags'] = sorted(k for k, v in summary.items() if isinstance(v, int) and v > 0)\n    return out\n\n# region: run\ndef run(raw):\n    return digest(emit(render(fold(gather(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'lo': 3, 'hi': 0, 'flags': ['lo', 'n']})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'lo': 1, 'hi': 2, 'flags': ['hi', 'lo', 'n']})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'lo': 1, 'hi': 2, 'flags': ['hi', 'lo', 'n']})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'lo': 0, 'hi': 0, 'flags': []})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'lo': 1, 'hi': 2, 'flags': ['hi', 'lo', 'n']})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'lo': 1, 'hi': 0, 'flags': ['lo', 'n']})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'lo': 0, 'hi': 4, 'flags': ['hi', 'n']})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'lo': 1, 'hi': 1, 'flags': ['hi', 'lo', 'n']})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                       ^       ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "gather",
+  "fold",
+  "render",
+  "emit",
+  "digest"
+ ],
+ "seed": 330915745,
+ "_signature": "7536cf39a8fa",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "fold"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "clamp",
+   "scale"
+  ],
+  "agg": "buckets",
+  "fmt": "flags"
+ }
+}
