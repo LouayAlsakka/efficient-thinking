@@ -1,0 +1,38 @@
+{
+ "measurement": "P4 — the inspect-first baseline on a PROVISIONAL v3 80 (理 11002's post-hoc check)",
+ "status": "PROVISIONAL. Nothing was emitted to experience/tasks; the 80 live in the scratchpad, each stamped _PROVISIONAL, and `gen` still refuses while P1/P2 are unruled.",
+ "the_P4_question": "are the programs behaviourally DISTINCT, or superficially different and behaviourally identical? A set of the second kind passes P0 and P3 and is v2 again with more strings. No gate on the tasks can see it.",
+ "the_answer": {
+  "distinct (action, region) TRAJECTORIES": "77 of 80, largest group 2",
+  "distinct first-hypothesis regions chosen": 8,
+  "verdict": "P4 PASSES. The programs are behaviourally distinct -- 77 different trajectories from 80 different programs, against v2-i where 80 episodes were 11 problems and trajectories repeated by construction."
+ },
+ "and_the_number_that_is_new_this_week": "n = 80 PROBLEMS. P0 ratio 1.000. This is the first task set in the programme where 80 episodes means 80 observations, so 18.8% carries an SE of ~4.4 points instead of resting on eleven deterministic outcomes.",
+ "the_rates_context_not_results": {
+  "per_slice_green": [
+   3,
+   6,
+   4,
+   2
+  ],
+  "pooled_pct": 18.8,
+  "mean_actions": 10.9,
+  "first_hypothesis_localisation_pct": 30.0
+ },
+ "THE_CONCERN_I_AM_RAISING_RATHER_THAN_BURYING": {
+  "observed": "8 distinct (green, actions) outcomes, largest group 65. Sixty-five of eighty episodes fail identically at the budget of 12.",
+  "why_it_matters": "trajectory diversity is high but OUTCOME resolution is coarse. An intervention has to convert episodes out of that block of 65 to be visible at all; anything that changes the route without changing the destination measures zero, which is the shape the whole week has been finding.",
+  "what_it_is_NOT": "it is not the v2 defect. v2's episodes were identical because the TASKS were identical; v3's failures are identical because failing costs the full budget. Different cause, and only the first one makes the set degenerate.",
+  "the_fixes_available_and_their_costs": [
+   "more n -- now cheap, since a signature is a file and 300 costs ~20 seconds of generation. This is the honest fix and it does not change the task.",
+   "a larger budget -- would let more episodes finish, but changes the loop and breaks comparability with everything measured at 12.",
+   "easier programs -- would raise the rate and is the WRONG fix: it tunes the benchmark to the agent, which is how v1 and v2 got where they are."
+  ]
+ },
+ "localisation_at_30_percent": "against a chance rate of ~20% for 4-6 regions, the agent is barely above chance. v3 does not hand the region to anything -- P3 measured a held-out symptom table at 0.0-3.3%, so there is no key to read.",
+ "bounds": [
+  "PROVISIONAL set, generated with seed 21 for measurement only.",
+  "80 episodes, one model, greedy except where EXPLORE_TEMP fires.",
+  "The rates are CONTEXT. A provisional set's numbers are not results and I am not reporting them as a baseline for anything."
+ ]
+}
