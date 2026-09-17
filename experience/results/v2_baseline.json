@@ -1,0 +1,42 @@
+{
+ "measurement": "v2 BASELINE, four paired slices — and the localisation/repair split that decides G",
+ "v2_baseline": {
+  "per_slice_green": [
+   5,
+   5,
+   4,
+   2
+  ],
+  "pooled_pct": 20.0,
+  "mean_actions": 10.2,
+  "first_hypothesis_region_accuracy_pct": 31.2
+ },
+ "v1_for_contrast": {
+  "pooled_pct": 62.5,
+  "mean_actions": 6.56,
+  "first_hypothesis_region_accuracy_pct": 88.05,
+  "note": "v1's 88.05% was read off a ten-row lookup table in the symptom line."
+ },
+ "THE_SPLIT_THAT_DECIDES_G": {
+  "first hypothesis CORRECT": {
+   "n": 25,
+   "green": 16,
+   "pct": 64.0
+  },
+  "first hypothesis WRONG": {
+   "n": 55,
+   "green": 0,
+   "pct": 0.0
+  },
+  "ever localised == first hypothesis correct": "the agent hypothesises ONCE per episode, so there is no second chance and the two partitions coincide exactly."
+ },
+ "what_this_means_for_G": "on v2, localisation is NECESSARY and nearly SUFFICIENT: get the region right and the episode succeeds 64% of the time; get it wrong and it succeeds 0% of the time. That is the exact opposite of v1, where FORCING the correct region was worth -4.4 points (gtrivial_control.json) because the deficit there was never localisation. G has real headroom on v2 for the first time: 55 episodes currently at zero.",
+ "the_ceiling_and_why_it_is_optimistic": "a head that localised perfectly would make all 80 episodes 'first hypothesis correct'. If the 64% rate held, that is ~51/80 = 64% pooled, against 20% today. But 64% is conditioned on the episodes THE AGENT ITSELF localised, which are plausibly the easier ones, so 64% is an optimistic ceiling and not a prediction.",
+ "the_harness_caveat_that_must_travel_with_the_0pct": "'localisation is necessary' is partly a property of this harness: the agent emits ONE hypothesis per episode, so a wrong first guess cannot be recovered from within the budget. A loop that re-hypothesised would not show 0%.",
+ "and_an_uncomfortable_comparison": "v2 baseline (20.0%, 10.20 actions) is almost exactly REDACTED v1 (21.2%, 10.29 actions) -- but for a different reason. Redacted v1 left 79% of tasks with no symptom at all; v2 carries an assertion detail on 100%. Same outcome, opposite cause. It raises a question the gate did not ask: whether the model can USE a behavioural symptom at all. The agent's 31.2% first-hypothesis accuracy on v2 is BELOW the 50.6% a held-out lookup table on the symptom string scores, so it is not extracting even the signal the set concedes.",
+ "bounds": [
+  "80 episodes, four slices, one model, greedy, budget 12.",
+  "v2 numbers are NOT comparable to v1's in one table (理 10914): different task set, different symptom. The contrast above is context, not a comparison.",
+  "n=25 for the 64% cell. The claim is the CONTRAST between 64% and 0%, not the 64%."
+ ]
+}
