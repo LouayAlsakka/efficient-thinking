@@ -922,6 +922,35 @@ of its controls move to that set. Whether the earlier task versions share the de
 they do, the 3B baselines and the transfer prediction P7 inherit it and this paragraph will say so. The chess
 anchor of P8, where the uncertainty is real by construction, proceeds beside it as the second field.
 
+Three things followed within the hour. First, the earlier task versions cannot be checked: only their summary
+statistics survive, the task files do not, so the 3B baselines and prediction P7 are marked *unauditable* rather
+than clean or degenerate, pending whether the generator's seed can be recovered. Second, the second task set was
+built and passed its own gate before any episode ran: every failing-test identity reachable from at least two bug
+regions; 1.107 bits of entropy from symptom to region; a lookup table fitted on one half of the symptoms and scored
+on the other at 50.6% (an in-sample table scores 100% on any set and would have passed the first version, which is
+the whole difference between a test and a restatement). Two design facts are printed rather than absorbed. A first
+attempt reached 0.886 bits only because the assertion detail was coming back empty — uncertainty by information
+starvation, not ambiguity — and was discarded; the set that passed keeps the symptom fully informative about the
+behaviour (an off-by-one anywhere in the four-stage pipeline surfaces as the same end-to-end assertion) while not
+naming the region, and keeps three bug classes whose symptom does pin the region, because a real key error naming
+a real key localises in real life too. And the gate is sensitive to one sampling choice: uniform over injection
+sites passes, uniform over bug classes fails (0.74 bits, 73%), and site-uniform is the pre-registered choice with
+the other printed beside it so the knob is visible. Three classes with a single observable site were dropped and
+named rather than given an invented second site, which would have been building the benchmark around the gate.
+Third, building the set exposed why the first version had only ten symptom strings: the environment's
+assertion-detail extractor searched a window from the first occurrence of the test name, which under verbose test
+output is the progress line printed before any traceback, so nearly every symptom read "no assertion detail". The
+degenerate axis and the broken extractor are one defect seen twice. The first version's results stand as measured
+on its impoverished symptoms and are not re-scored; the two task sets are never placed in one table.
+
+One structural limit of G was also found before it could mislead: when candidates are *sampled* from the model,
+half of the decision points offer a single region across eight draws, so a head scoring those candidates cannot
+move the agent — the candidate set is the action space. G's candidates are therefore enumerated as specified, the
+emittable family crossed with every region visible at the decision point, each teacher-forced as a prefix and
+capped by the model's own top-k over the first action token with the greedy choice always included, so every
+region is a candidate by construction. The model's own proposal entropy under sampling is still measured and
+reported beside G, as a fact about the sampler rather than as G's search space.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
