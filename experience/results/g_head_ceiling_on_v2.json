@@ -1,0 +1,26 @@
+{
+ "finding": "G's HEAD CANNOT BEAT A LOOKUP TABLE ON v2 EITHER — because the state it reads is a function of a prompt that contains only the symptom.",
+ "the_proof_is_counting_not_modelling": {
+  "distinct step-1 decision prompts over the 80 eval tasks": 6,
+  "distinct symptoms among them": 6,
+  "why": "at the first hypothesis the prompt is SYSTEM + 'SYMPTOM: <s>' + the four region names + the budget. History is empty and nothing is inspected, so the ONLY content that varies across tasks is the symptom string. Two tasks with the same symptom have byte-identical prompts, hence identical activations at every layer, hence identical head output. A head on that state IS a six-row lookup table on the symptom -- not approximately, exactly.",
+  "and the agent really does decide there": "72 of 80 episodes hypothesise at STEP 1 with ZERO inspects; the other 8 inspect twice first. So the decision point G was specified for is, in 90% of episodes, a point at which no program text has been revealed."
+ },
+ "the_ceiling_this_imposes": {
+  "best achievable by ANY function of the symptom, in-sample": "49/80 = 61.2%",
+  "held-out lookup table": "41/80 = 51.2%",
+  "the agent": "25/80 = 31.2%",
+  "reading": "G's head can reach 61.2% at absolute best, and a dict reaches it for free. On v1 the table was PERFECT (100%) so G was untestable because the ceiling was free. On v2 the table is imperfect, but G cannot see anything the table cannot -- same conclusion, different arithmetic."
+ },
+ "what_would_make_G_testable": [
+  "(a) require an inspect before the first hypothesis, so the decision prompt carries revealed program text. A HARNESS change, not a task-set change -- 理's comparability constraint is about the loop, so this needs an explicit ruling.",
+  "(b) put the program in the decision prompt from the start, which changes what the AGENT sees as well as what the head reads, and would need a new baseline.",
+  "(c) accept the ceiling and test only whether the head reaches 61.2% -- which measures nothing worth a GPU-hour, because a dict already does."
+ ],
+ "what_this_does_NOT_invalidate": "the v2 task set is fine: its localisation axis is genuinely non-degenerate (P1/P2/P3 all pass, held-out table 51.2% not 100%). The defect is in WHERE G reads, not in what v2 asks. v2 stays; the decision point has to move.",
+ "bounds": [
+  "80 eval tasks. The 6-prompt count is exact for them; over all 2,000 v2 tasks there are 6 distinct symptoms, so it is 6 there too.",
+  "This assumes the head reads the state at the decision position of the step-1 prompt, which is what et8_head_region.py does and what the G plan specifies. A head reading teacher-forced CANDIDATE prefixes still conditions on the same prompt and inherits the same ceiling.",
+  "It says nothing about whether activations encode useful structure in general -- only that at THIS decision point there is nothing for them to encode beyond the symptom."
+ ]
+}
