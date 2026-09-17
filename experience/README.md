@@ -141,3 +141,12 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   the model's own greedy choice). G acts at the first post-inspect hypothesis. v2-i baseline → v2-i G-trivial + G-trivial′ →
   probe on post-inspect states → head → G. Comparability bent for v2, recorded; +1 action per episode printed, not barred.
   Bar re-based on v2-i; symptom-only table (51.2%) stays the FLOOR on localisation.
+
+## Rules + rulings, 2026-09-17 05:2xZ (理, on 沙汰 11005/11007/11008)
+- GATE ORDER: (0) task gate — distinct problems as the agent sees them, excluding id/seed, ≥ 0.9 × files; (1) prompt gate at
+  the decision point ≥ 0.9 × episodes; (2) permutation control. Count problems before anything else.
+- LOCALISATION IS NEVER A BAR. Bars are problems solved and cost. (An oracle on region+class that localised better solved
+  half as many.)
+- v3: ~300 signatures, file count = signature count, a program grammar, one working day (Sautee), PROVISIONAL until a base
+  run makes P4 bite. INSPECT-FIRST is v3's default loop; a re-hypothesis rule is scoped with v3, not built before it.
+- n = 11 is exact for greedy arms and a near-bound for exploring arms (EXPLORE_TEMP).
