@@ -1,0 +1,73 @@
+{
+ "finding": "THE v1 TASK SET HAS NO LOCALISATION PROBLEM: 10 symptom strings, each mapping to exactly one bug region, over 2,000 tasks. A ten-row lookup table localises at 100%.",
+ "how_it_surfaced": "G's read-only head scored 100.0% on held-out slices at BOTH layers 18 and 27. The permutation control passed (shuffled training labels -> 24%, chance), so it was not a fitting artefact -- which is exactly what made it worth chasing rather than celebrating. It survived PCA to 8 dimensions and a training set of 100 examples, both at 100%. A signal that needs 8 dimensions and 100 examples is not a learned readout of a hard quantity; it is a key being copied. The FIRST decision prompt contains NO PROGRAM TEXT AT ALL -- only the symptom line, the four region names and the budget -- so the state had nothing else to read.",
+ "table": [
+  {
+   "symptom": "FAIL: test_report_all_items — ",
+   "n": 392,
+   "bug_region": "producer"
+  },
+  {
+   "symptom": "FAIL: test_report_grade_high — ",
+   "n": 240,
+   "bug_region": "transform"
+  },
+  {
+   "symptom": "ERROR: test_report_all_items — ",
+   "n": 239,
+   "bug_region": "consumer"
+  },
+  {
+   "symptom": "FAIL: test_summarize_bucket_fresh — AssertionError: Lists differ: [0.8, 0.9, 0.5,",
+   "n": 238,
+   "bug_region": "aggregate"
+  },
+  {
+   "symptom": "FAIL: test_report_grade_low — ",
+   "n": 188,
+   "bug_region": "transform"
+  },
+  {
+   "symptom": "FAIL: test_produce_nbsp — ",
+   "n": 188,
+   "bug_region": "producer"
+  },
+  {
+   "symptom": "FAIL: test_normalize_clamp — ",
+   "n": 188,
+   "bug_region": "transform"
+  },
+  {
+   "symptom": "FAIL: test_produce_underscore — ",
+   "n": 146,
+   "bug_region": "producer"
+  },
+  {
+   "symptom": "FAIL: test_summarize_unsorted_max — AssertionError: 0.1 != 0.9",
+   "n": 93,
+   "bug_region": "aggregate"
+  },
+  {
+   "symptom": "FAIL: test_report_keys — r = report([\"50\"], 100); self.assertEqual(set(r.keys()), {\"cou",
+   "n": 88,
+   "bug_region": "consumer"
+  }
+ ],
+ "distinct_symptoms": 10,
+ "symptoms_mapping_to_more_than_one_region": 0,
+ "what_it_invalidates": {
+  "G (read-only controller head)": "untestable on v1. There is no localisation decision to make, so a head that chooses well proves nothing about activations.",
+  "the agent's 88.05% first-hypothesis accuracy": "is BELOW a ten-row lookup table on a string the prompt hands it. The 478 misses are not a capability gap in localisation; they are the model declining to use a deterministic key.",
+  "the localisation headroom in every G plan": "was never headroom. 理's ceiling argument and my own repair-floor decomposition were both computed over a quantity the task set gives away."
+ },
+ "what_it_does_NOT_invalidate": {
+  "A / C / F cost results": "those compared COST at held capability and never depended on localisation being hard.",
+  "the repair floor": "~25% of episodes localise and still fail -- if anything this strengthens it, because localisation was even cheaper than we thought and the episodes still failed.",
+  "G-trivial's -36.2": "it measured what OVERRIDING a chooser costs, which is a fact about the agent loop, not about the task set's difficulty. Its symptom!=bug collapse stands."
+ },
+ "bounds": [
+  "v1 only. tasks/v0 and tasks/heldout_v0 NOT checked by this script.",
+  "The key is the FULL symptom string including the FAIL/ERROR prefix: 'FAIL: test_report_all_items' -> producer but 'ERROR: test_report_all_items' -> consumer. A reader who keys on the test name alone gets 2 of 10 rows wrong.",
+  "This says the MAPPING is deterministic. It does not say the model USES it -- the agent sits at 88.05%, so it plainly does not."
+ ]
+}
