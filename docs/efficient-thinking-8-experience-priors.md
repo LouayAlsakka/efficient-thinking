@@ -1223,6 +1223,14 @@ where they were. The set is 300 for the base and the first pass, with a second 3
 as the replication set: any arm that shows an effect on the first confirms on the second before it is a claim. G
 reopens here, in the same order as before — base, prompt gate at the post-inspect hypothesis, probe with the
 permutation control, head, run — with the bar on problems solved and cost only.
+The set was emitted at 300 with every gate reported at that n: 300 signatures in 300 files, 300 programs, largest
+group one; assertion detail on 100% of tasks; symptom distinctness 0.670 against a bar of one half; the entropy,
+printed and never a bar, 0.642 bits; the held-out lookup on the symptom 6.7%. The per-program reachability gate is
+applied as a generation filter at zero tolerance rather than a threshold — a candidate whose failing test no other
+region of its own program can produce is a candidate whose symptom pins the region, which is the thing the gate
+exists to exclude, so it is rejected rather than tolerated — and the price is printed: 888 attempts for 300 keepers,
+against 810 before the filter existed. The replication set is generated under a different seed, gated the same
+way, and held unrun.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
