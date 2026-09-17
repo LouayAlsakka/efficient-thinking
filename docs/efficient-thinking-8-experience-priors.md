@@ -1231,6 +1231,13 @@ region of its own program can produce is a candidate whose symptom pins the regi
 exists to exclude, so it is rejected rather than tolerated — and the price is printed: 888 attempts for 300 keepers,
 against 810 before the filter existed. The replication set is generated under a different seed, gated the same
 way, and held unrun.
+On the first slice of the inspect-first base the prompt gate at the post-inspect hypothesis reads 75 distinct
+prompts in 75 episodes, ratio 1.000, largest identical group one — against 0.005 on the first set, 0.075 on the
+second set's first step and 0.088 after its inspection. It is the first decision point in the programme at which a
+head could be fitted at all, and the bound rides in the same sentence: a high ratio is necessary and not
+sufficient, since 75 distinct programs guarantee 75 distinct prompts and say nothing about whether the state
+encodes the bug region; the permutation control, with the eight-dimension and hundred-example controls that
+exposed the first set, is the check on the other side and runs beside the probe.
 
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
