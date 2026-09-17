@@ -1,0 +1,27 @@
+{
+ "document": "v3 SCOPE AND COST, written BEFORE a line of generator (理 11002)",
+ "the_gates_v3_must_pass_before_it_emits_anything": {
+  "P0 (new, runs first)": "distinct task signatures as the AGENT sees them >= 0.9 x tasks. v1 = 0.0060, v2 = 0.0055. This is the gate the other two are downstream of.",
+  "P1": "every failing-test identity reachable from >= 2 bug regions (v2 passes).",
+  "P2": "mean H(bug_region | symptom) >= 1.0 bit (v2: 1.107).",
+  "P3": "held-out lookup table on the symptom <= 60% (v2: 50.6%).",
+  "P4 (new)": "under greedy, signature groups carry >= 2 outcomes across the set, or the group size is 1. P0 makes group size 1 the normal case, so P4 is the check that P0 was honest."
+ },
+ "THE_SCOPE_DECISION_I_WANT_RULED_FIRST": {
+  "question": "how many distinct problems does v3 need?",
+  "the_trap": "answering '2,000, like v1 and v2' because that is the file count we are used to. 2,000 DISTINCT programs is a different order of work from 2,000 files.",
+  "what_the_experiments_actually_consume": "the four paired slices are 80 episodes. A head, if one is ever fit again, wants a training pool held out by slice. Nothing this programme has run needs more than a few hundred distinct problems.",
+  "my_recommendation": "~300 distinct signatures: 80 for the eval slices, the rest as a held-out pool. Generate exactly that many and let the file count EQUAL the signature count -- the 2,000-file habit is what hid the defect, and a set whose file count is its problem count cannot hide it again."
+ },
+ "cost": {
+  "compute, measured": "0.06 s per task to assemble and run the full unittest suite. 300 tasks = ~20 seconds. 2,000 = ~2 minutes. COMPUTE IS NOT THE COST and never was.",
+  "the actual cost is DESIGN": "v2's programs are one 4-region template with one line replaced. To get 300 distinct signatures the PROGRAMS must differ -- different function bodies, different data shapes, different region counts, different call graphs -- which means writing a program GRAMMAR, not more injectors. That is the piece of work, and it is the piece neither v1 nor v2 attempted.",
+  "my estimate": "a grammar producing ~30-60 structurally distinct base programs, each with 5-10 observable injection sites, reaching ~300 signatures. I put that at a working day with the verifier and the gates, not an hour -- and I am stating it as a JUDGEMENT, not a measurement, because I have not written one.",
+  "the risk I would flag before starting": "a grammar can produce 300 programs that are superficially different and behaviourally identical -- same bug classes, same repair, different variable names. P0 would PASS on that set and it would be v2 again with more strings. P4 is the guard, and it needs a real outcome spread to be meaningful, which means running the baseline BEFORE declaring the set good."
+ },
+ "what_v3_does_not_fix": "the repair floor. Across v1 and v2, forcing correct localisation converted at 12.5% marginal; the episodes that fail mostly fail at the patch, not the guess. A v3 with 300 honest problems will measure that floor properly for the first time -- it will not move it.",
+ "bounds": [
+  "Estimates of design time are judgement. The 0.06 s/task figure is measured on this box with the v2 generator and the full unittest suite.",
+  "300 is a recommendation, not a derivation. The defensible statement is: >= the number of episodes any experiment will run, and the file count should equal the signature count so the ratio is 1.0 by construction."
+ ]
+}
