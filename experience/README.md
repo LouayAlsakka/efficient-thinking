@@ -165,3 +165,7 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
 - Order on v3: emit 300 → inspect-first base → prompt gate (post-inspect) → probe + permutation → head → G (bar: problems
   solved + cost, re-based; four readings rewritten). G REOPENS on v3. Nothing else on v3 until G reads.
 - P8 rung: MCTS-256 1983 ± 73, raw 1802; search +182 vs prior +20 ± 55. Fully closed.
+- 2026-09-17 22:1xZ (理, on 沙汰 11161): a probe accuracy that moves with the optimizer's step size is not a measurement of
+  the state (56 → 59 → 24% across step sizes); heads are fit by L-BFGS, no free parameter. A subsample control is ≥ 5 draws,
+  all printed, never one (two draws: 33.3 vs 46.7). G re-runs with the converged head before P9; both heads' wired numbers
+  are printed side by side.
