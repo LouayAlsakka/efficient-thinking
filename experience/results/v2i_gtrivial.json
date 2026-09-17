@@ -1,0 +1,43 @@
+{
+ "measurement": "v2-i G-TRIVIAL — the naive prior, tested against a chooser that can now SEE",
+ "HOW_TO_READ_THIS": "n = 11 distinct problems. The headline is problems solved.",
+ "table": {
+  "v2-i baseline": {
+   "per_slice": [
+    9,
+    9,
+    6,
+    7
+   ],
+   "pooled_pct": 38.8,
+   "actions": 8.82,
+   "localisation_pct": 38.8,
+   "problems_solved": "4 of 11"
+  },
+  "v2-i G-trivial": {
+   "per_slice": [
+    6,
+    7,
+    7,
+    3
+   ],
+   "pooled_pct": 28.8,
+   "actions": 10.14,
+   "localisation_pct": 41.2,
+   "problems_solved": "2 of 11"
+  }
+ },
+ "the_result": "under the inspect-first loop the naive prior LOSES two problems — 4 of 11 down to 2 — while RAISING localisation from 38.8% to 41.2% and raising cost from 8.82 to 10.14 actions. Better aim, worse outcome, more spend.",
+ "why_this_is_the_sharpest_version_of_the_week's_result": "on the BLIND loop, forcing the symptom region was worth about +1 episode: the agent was guessing, so overriding its guess cost little. On the OBSERVING loop the same rule costs two problems, because it now overrides a choice made WITH evidence. THE DAMAGE A NAIVE PRIOR DOES SCALES WITH HOW GOOD THE CHOOSER UNDERNEATH IT IS — and that is measured here rather than argued, by running the identical rule against the same task set under two loops.",
+ "and_localisation_is_now_DEFINITIVELY_the_wrong_proxy": "41.2% localisation with 2 problems solved, against 38.8% localisation with 4. The arm that aims better solves less. Any bar written on localisation accuracy would have passed this arm.",
+ "A_CORRECTION_TO_MY_OWN_DETERMINISM_CLAIM": {
+  "observed": "2 of 11 signatures produced MORE THAN ONE outcome in this arm (v2-i baseline had 0).",
+  "cause": "the harness raises decoding temperature after consecutive wasted steps (EXPLORE_TEMP). An arm that wastes more steps therefore breaks the identical-task-identical-outcome property that makes n exactly 11.",
+  "what_it_changes": "n = 11 is exact for arms that stay greedy and is a near-bound for arms that explore. It does not rescue the episode counts — 2 signatures splitting does not turn 80 episodes into 80 observations — but 'identical outcome, always' was too strong as I first wrote it, and the qualifier belongs in the paper."
+ },
+ "bounds": [
+  "n = 11. 4 -> 2 is two problems.",
+  "G-trivial is handed task['bug_class'], the TRUE class, so this is an ORACLE on region AND class losing to an agent that simply looked first.",
+  "Not a controlled comparison of the rule alone: the forced hypothesis changes every subsequent prompt."
+ ]
+}
