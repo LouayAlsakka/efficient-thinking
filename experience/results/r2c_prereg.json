@@ -1,0 +1,23 @@
+{
+ "document": "R2c PRE-REGISTRATION — the head over the AGENT'S OWN KV cache, written before the build (理 11300)",
+ "who_set_it": "理, in ri+sautee 11300. R2b's §4 was offered as an observation, not a rescue; 理 ruled it is not a rescue but the accounting the measured system got wrong, and pre-registered R2c on the spot. This file is that pre-registration, recorded before a line of the implementation exists.",
+ "the_claim_being_tested": "the 492-token decision prompt is one the AGENT PREFILLS ANYWAY in order to act. The measured system paid for it k+1 times: once for the agent's own generation, and k more for the controller's candidate passes. A controller that reads its state from the pass the agent already makes pays only the continuations.",
+ "the_bar": "UNCHANGED at 502 tokens/episode. Same number, same derivation (r2b_prereg.json: 0.71 actions x 707 tokens/action from an OLS fit over the base's 300 episodes). It is not re-derived for this measurement and it is not adjusted to fit.",
+ "what_counts_as_a_token": "ONLY tokens the agent would not otherwise have paid. The shared decision prompt is NOT charged, because it is prefilled by the agent's own forward pass whether or not a controller exists. The candidate continuations ARE charged. This accounting rule is the whole substance of R2c and it is written here before the number.",
+ "expectation_written_before_the_build": "36-180 tokens/episode. The low end is R2b's measured continuation cost (36.1); the high end allows for a longer per-candidate suffix. Under the bar, so the pre-written reading is that it PASSES.",
+ "THE_READINGS_WRITTEN_FIRST": {
+  "<= 502 AND the cache is genuinely shared": "the cost limb passes on tokens, and G is an experience prior under 8a §3 with C in tokens. 8a's cost sentence changes.",
+  "> 502": "it fails and 8a carries the premium, unchanged from R2 and R2b.",
+  "the implementation CANNOT share the cache": "if reading the state requires a pass the agent does not otherwise make -- a different prompt, a different position, a cache the generation loop has already consumed or mutated past the point of interest -- then R2c FAILS by construction and 8a carries the premium. A shared cache that has to be rebuilt is not a shared cache. This branch is written now precisely so that discovering it later is a result and not a disappointment."
+ },
+ "the_identity_check_is_mandatory_and_voids_the_verdict": "as in R2b: the state the shared-cache path returns must reproduce hidden_at at the same layer and the same read position, at r ~ 1.0 with max|diff| at the bf16 floor. Anything else and the token number is VOID and reported as void. R2b is the reason this is non-negotiable -- there, a cost number that cleared the bar was produced by a path reading the WRONG STATE, and the bug was only visible because the check existed.",
+ "scale": "one build, one run of 300. Not a sweep, not a tuning exercise.",
+ "what_this_does_NOT_touch": "the benefit limb. The action saving and the +11.3/+13.0/+14.0/+13.3 accuracy results are not re-run and not re-opened by R2c.",
+ "position_in_the_package": "the LAST item of 8a. 理: 'This is the LAST item of 8a's package; nothing after it.' Order: R4 -> R2c -> 8a stops -> loop gates from 理 -> the loop.",
+ "bounds_known_in_advance": [
+  "The agent generates with temperature 0 and its own sampling loop; the controller reads a state from the PREFILL. If the harness's generate() does not expose the prefill's hidden states without a second pass, that is the 'cannot share the cache' branch above and must be reported as such rather than worked around with a second pass quietly counted as free.",
+  "Tokens are counted as prompt tokens, matching r2b_prereg.json's rule.",
+  "The bar is per episode."
+ ],
+ "signed": "Sautee (sha-ta), recorded 2026-09-18 before the build"
+}
