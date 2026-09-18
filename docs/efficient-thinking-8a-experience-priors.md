@@ -264,11 +264,12 @@ the whole package used and switching on the answer would make every earlier numb
 held-out quarter the fit never saw, paired per problem, n = 75: success 16.0% to 36.0%, +20.0 with interval
 [+8.0, +33.3]; actions 11.12 to 9.48, −1.64 with interval [−2.53, −0.77]; McNemar p = 0.0059. **It is consistent
 with the 7B, not bigger than it**: the interval contains all four of the 7B's measurements, and no difference
-between families is claimed or can be claimed at this n. The saving is spread across every downstream action —
-inspections fall most, the repeat actions least — which is the shape the claim predicts, since a head that merely
-stopped a flail would show up in the repeats alone; and the share of hypotheses that name the bug's region doubles,
-18.2% to 38.1%, a different quantity from the head's 56% at the one decision it touches, since every later
-hypothesis is the model's own. A disjoint-set leg on a second seed's 300, base first and then G, runs after this
+between families is claimed or can be claimed at this n. On both frozen models the head adds about twenty points to the
+share of hypotheses that name the bug's region — 18.2% to 38.1% on the 8B, 33.3% to 55.3% on the 7B — a different
+quantity from the head's accuracy at the one decision it touches, since every later hypothesis is the model's
+own. What each model then does with a better hypothesis differs: the 7B stops submitting patches identical to the
+code in front of it (84% of its saving) and inspects slightly more; the 8B stops re-inspecting. The totals are
+close; the routes are not. Descriptive, no test, n = 75 per arm. A disjoint-set leg on a second seed's 300, base first and then G, runs after this
 and is reported with the same paired statistics. The reviewer's condition is met at the level it was asked: the
 phenomenon is not peculiar to one checkpoint of one family. On the 300, the head
 agreed with the agent's own pick on 121 decisions and changed 179: on the 179 the base solved 12 and G solved 52;
