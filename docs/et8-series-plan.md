@@ -75,5 +75,10 @@ enters 8a.
 | R3 · larger independent evaluation | G (first seed's head) on the second seed's full 300 (only 75 used so far), and a third seed of 300 generated, gated (P0–P4), held, and run — 600 independent problems, none seen by any head | ~3.5 h GPU per 300 | effect on 600: +11 to +15 with an interval that excludes zero; or the interval that says otherwise |
 | R4 · a second frozen model | the same environment, harness, gates and head procedure on a second checkpoint (the 3B instruct model already on the box; a larger one if it fits): base on 300, probe with three controls, G, on the same task set | ~half a day GPU | the bound predicts: if the 3B's failures are repair-bound, G does nothing there and that is the bound holding; if localisation-bound, G helps. Either reading is written before the run; "peculiar to one checkpoint" is refuted only by the second reading |
 
-Order on the study box: R1, R2 (joins, first) → R3 → R4 → then the 8b loop → then S2, S1 (ET-9). 8a is closed on R1–R4
-regardless of what 8b finds.
+| R2b · the controller's overhead engineered | score all k candidates in one batched pass over a shared cached prefix; measure the token overhead of the system that exists after the change | a build + one run of 300 | overhead ≤ the tokens of the 0.71 actions saved (≈ 400 tokens/episode) → the cost limb passes on tokens with the measured system; above → it fails, and 8a says G buys success at a compute premium |
+
+R1 and R2 landed 2026-09-18: intervals exclude zero on every cross-run pair; the cost limb passes in actions and fails in
+tokens (+34% per episode with the controller's inference counted; −21% per problem solved, post hoc and labelled so).
+
+Order on the study box: R1, R2 (done) → R3 → R4 → R2b → then the 8b loop → then S2, S1 (ET-9). 8a is closed on R1–R4
+and R2b regardless of what 8b finds.

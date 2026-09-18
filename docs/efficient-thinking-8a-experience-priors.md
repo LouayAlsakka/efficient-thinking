@@ -14,8 +14,12 @@ injected into the prompt, a steering vector, an additive logit bias, two forms o
 rule, and a learned move prior over a chess search — and none lowered cost with capability held. One mechanism
 did: a read-only linear head that reads the frozen model's own hidden state after one observation and chooses
 among the model's own candidate actions. On a task set where each episode is a distinct problem it solves 11 to
-15 more problems in a hundred at lower cost, on independent problems, twice, against a bar fixed before the head
-was fitted. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
+15 more problems in a hundred, on independent problems, twice, against a bar fixed before the head was fitted,
+with 95% intervals that exclude zero. Its cost is stated three ways and the pre-registered one named: per
+episode in actions, the pre-registered measure, it is cheaper; per episode in tokens with the controller's own
+inference counted, it is 34% dearer; per problem solved it is 21% cheaper, a metric chosen after the fact and
+labelled so. As measured, it buys problems solved at a compute premium; whether that premium can be engineered
+below the actions it saves is a question the paper leaves open and names. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
 thing it improves — here, localisation — is what limits the agent; on a repair-bound set the same head does
 nothing. Two further findings shape what follows. The largest effect of the study was not a prior but a change to
 *when* the agent may act: requiring one observation before the first guess doubled problems solved and cut cost,
@@ -209,8 +213,21 @@ examples are removed, which is what a learned readout looks like.
 | second seed's converged head → first seed's 300 | 18.7%, 10.63 | 30.0%, 9.92 | +11.3 |
 | first seed's converged head → second seed (75) | 17.3%, 10.68 | 32.0%, 9.76 | +14.7 |
 
-Four cross-run measurements span +11.3 to +14.7 points at lower cost; the direction of transfer is symmetric. The
-one same-run measurement is what training on adjacent tasks buys and is never averaged in. On the 300, the head
+With paired per-problem bootstrap intervals (95%) and McNemar on success:
+
+| pair | n | success | actions | McNemar |
+|---|---:|---:|---:|---:|
+| first seed's head → first seed's held-out slice (same run) | 75 | +21.3 [+9.3, +33.3] | −1.53 [−2.43, −0.63] | 0.0025 |
+| first seed's head → second seed | 75 | +12.0 [+1.3, +22.7] | −0.87 [−1.63, −0.15] | 0.064 |
+| second seed's head → first seed's 300 | 300 | +13.0 [+7.7, +18.3] | −0.78 [−1.15, −0.43] | 7×10⁻⁶ |
+| second seed's converged head → first seed's 300 | 300 | +11.3 [+6.3, +16.3] | −0.71 [−1.06, −0.37] | 3×10⁻⁵ |
+| first seed's converged head → second seed | 75 | +14.7 [+4.0, +25.3] | −0.92 [−1.63, −0.24] | 0.013 |
+
+Four cross-run measurements span +11.3 to +14.7 points; the direction of transfer is symmetric. The one same-run
+measurement is what training on adjacent tasks buys and is never averaged in. One 75-problem pair has a bootstrap
+interval excluding zero and a McNemar p of 0.064 on nineteen discordant pairs; it reads as consistent with the
+others and not independently significant, and the 300-problem pairs carry the result. Six pairs, no multiplicity
+adjustment; the 300s would survive one and the 75s would not all. On the 300, the head
 agreed with the agent's own pick on 121 decisions and changed 179: on the 179 the base solved 12 and G solved 52;
 on the 121, 44 against 43. The effect is entirely in the decisions the head changed, and the residual confound
 from the harness's exploration temperature is bounded at about a third of an episode per hundred.
@@ -220,6 +237,20 @@ hundred, inside noise, in one direction on one set and the other on the other. T
 accuracy differed in weights and in how many picks they changed, and the one that intervened more landed lower.
 A head good enough to beat the agent's own pick is good enough; probe accuracy predicted the episode difference
 in neither direction, four times.
+
+**What it costs.** The mean-actions column does not count the controller's own inference: at each decision the
+head scores 4.9 candidate prefixes on average, each a 480-token prompt, 2,353 tokens per episode. Per episode the
+base spends 6,854 tokens and G 9,170, +34%, and the wall clock had said so — G's episodes take 0.61 s longer
+despite fewer actions. Three cost measures are therefore printed and the pre-registered one is named. Per episode
+in actions, the pre-registered measure: G is cheaper, −0.71 [−1.06, −0.37]. Per episode in tokens with the
+controller counted: G is 34% dearer. Per problem solved, in tokens: the base spends about 36,650 per solution and
+G about 28,930, 21% less — a metric chosen after the fact, and labelled so. The honest sentence is that G buys
+problems solved at a 34% compute premium per episode and does not, as measured, buy them cheaply; under the
+definition of §3 with cost in tokens it is not yet an experience prior but a better allocation of more compute.
+The candidate prompts differ only in their final region token, so a batched pass over a shared cached prefix would
+remove most of the 2,353 tokens; that is an engineering change to a system that has not been measured, it is
+pre-registered as the last item of the closing package with the bar that the overhead fall below the actions it
+saves, and the paper carries whichever system was measured.
 
 ### 7.5 The bound
 
