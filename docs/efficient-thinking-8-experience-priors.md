@@ -1435,6 +1435,31 @@ accumulation can actually live is a loop in which the prior's earlier choices sh
 more than one hypothesis per episode, the re-hypothesis loop already scoped with this task set — and that is the
 next harness, with its own gates and its own base, not this one.
 
+**P9 on this harness is closed, and the written expectation held: the target moves the probe and not the decisions.**
+The outcome-weighted fit raised the held-out pick from 66.7% to 70.7% while changing the argmax on 10 of 300
+training tasks, 3.3%, because the weighting cannot reorder a correct region above a wrong one within a task and can
+only move weight across tasks. Run on the second seed's 75 against the strongest cross-fit head, chosen
+deliberately so that a weaker comparison could not flatter it:
+
+| arm | problems solved | mean actions |
+|---|---:|---:|
+| base | 13 of 75 = 17.3% (SE 4.4) | 10.68 |
+| first generation, plain target | 24 of 75 = 32.0% (SE 5.4) | 9.76 |
+| second generation, outcome-weighted target | 21 of 75 = 28.0% (SE 5.2) | 9.87 |
+
+By the letter of the pre-registration this is a fail, the second generation below the first; by size it is a null,
+three episodes of 75 differing in outcome at all against a standard error of five points, and it is reported as
+the second, not as "the second generation forgets". The fit's number and the episodes' number are the same number
+arriving twice — 3.3% of choices changed, 4.0% of outcomes changed — and it is the cleanest instance of the week's
+shape: same states, same architecture, only the target changed, and a four-point probe gain produced a four-point
+episode loss, the fourth time a better probe number did not convert. The third task set's line closes here. The
+base is 18.7% with a real interval; a read-only head reading the frozen model's own state after one observation
+solves 11 to 15 more problems in a hundred at lower cost, twice, on independent problems; fit quality beyond
+beating the agent's own pick buys nothing; and accumulation cannot be tested where the prior's inputs are fixed
+before it acts. Where it can be tested is a loop in which the head's earlier choices shape the states it later
+reads, and that loop is pre-registered next, with the prompt gate applied at every decision the head touches and a
+new base of its own.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
