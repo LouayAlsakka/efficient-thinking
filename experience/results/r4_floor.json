@@ -1,0 +1,33 @@
+{
+ "measurement": "R4 FLOOR CHECK — Llama-3.2-3B-Instruct-4bit on v3 seed 21's 300. The pre-registered check fired and NO PROBE WAS FIT.",
+ "result": {
+  "base": "4/262 = 1.5%, 11.95 mean actions",
+  "the_7B_on_the_same_300": "18.7%, 10.63 actions",
+  "pre-registered floor": "5%",
+  "verdict": "BELOW THE FLOOR — v3 is out of this model's range, so a null from a probe would mean 'no room', not 'no signal'. No head is fit."
+ },
+ "AND_IT_IS_NOT_A_FORMAT_FAILURE": {
+  "action distribution": {
+   "noop_patch": "30.9%",
+   "patch": "25.4%",
+   "hypothesize": "12.4%",
+   "inspect": "11.6%",
+   "repeat_hypothesis": "10.5%",
+   "invalid": "5.9%",
+   "repeat_patch": "2.9%"
+  },
+  "reading": "the model emits well-formed actions 94% of the time. Its dominant behaviour is noop_patch at 30.9% -- submitting a patch byte-identical to the code already there. It understands the protocol and cannot repair. That is a capability floor, not a harness artefact, and checking it was the difference between reporting a floor and reporting a bug."
+ },
+ "THE_RUN_IS_INCOMPLETE_AND_I_AM_NOT_REPORTING_262_AS_300": {
+  "slices": "75 · 75 · 66 · 46 = 262 of 300",
+  "cause": "parse_action crashed with UnicodeDecodeError on a TRUNCATED \\uXXXX escape inside a patch source. The crash killed the run, not the step.",
+  "why it never happened before": "the 7B produced no truncated unicode escape in 3,000+ episodes. A second model surfaced a latent harness bug in its third slice -- which is a return on R4 independent of anything R4 was asked to measure.",
+  "fixed": "a malformed action is now an INVALID action, which the loop already scores. Verified both paths: truncated escape -> invalid, valid patch -> patch.",
+  "and my own omission": "r4.sh had no episode-count guard. Every other chain I wrote this week refuses to continue on a short slice; this one did not, and it would have reported 262 as a completed run. The floor verdict is unaffected -- 1.5% on 262 is not 5% on 300 by any reading -- but the guard was missing and that is mine."
+ },
+ "what_R4_can_and_cannot_now_say": {
+  "cannot": "whether the carrier is model-specific. The question needs a second model that can do the task at all.",
+  "can": "that v3 is calibrated to the 7B and is out of range for a 4-bit 3B -- which is a fact about the TASK SET that 8a should carry, since a reader may reach for a smaller model."
+ },
+ "the_open_choice_which_is_理's": "try Qwen2.5-3B-Instruct-4bit (same family, weaker test of generality, may also floor) or a larger model if one fits. I am not chaining models until one clears the floor; that is fishing, and the floor was pre-registered precisely so it could not become one."
+}

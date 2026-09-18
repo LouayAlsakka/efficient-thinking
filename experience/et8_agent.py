@@ -106,8 +106,18 @@ def parse_action(text: str) -> dict:
         act = re.search(r'"action"\s*:\s*"(\w+)"', cand); reg = re.search(r'"region"\s*:\s*"(\w+)"', cand)
         src = re.search(r'"source"\s*:\s*"(.*)"\s*}?\s*$', cand, flags=re.S)
         if act and reg and src:
-            a = {"action": act.group(1), "region": reg.group(1),
-                 "source": src.group(1).encode().decode("unicode_escape") if "\\n" in src.group(1) else src.group(1)}
+            # A TRUNCATED \uXXXX ESCAPE CRASHES unicode_escape, and a crash here kills the whole
+            # run, not the step. The 7B never produced one in 3,000+ episodes; a Llama-3B produced
+            # one in its third slice and took the process down with it -- so this was a latent
+            # harness bug that only a second model could surface. A malformed action is an INVALID
+            # action, which the loop already knows how to score; it is not a reason to stop.
+            raw_src = src.group(1)
+            if "\\n" in raw_src:
+                try:
+                    raw_src = raw_src.encode().decode("unicode_escape")
+                except (UnicodeDecodeError, UnicodeEncodeError):
+                    return {"action": "invalid", "raw": text[:200]}
+            a = {"action": act.group(1), "region": reg.group(1), "source": raw_src}
         else:
             return {"action": "invalid", "raw": text[:200]}
     if not isinstance(a, dict) or "action" not in a:
