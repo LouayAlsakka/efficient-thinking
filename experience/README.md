@@ -169,3 +169,12 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   the state (56 → 59 → 24% across step sizes); heads are fit by L-BFGS, no free parameter. A subsample control is ≥ 5 draws,
   all printed, never one (two draws: 33.3 vs 46.7). G re-runs with the converged head before P9; both heads' wired numbers
   are printed side by side.
+
+## Ruling, 2026-09-18 00:0xZ (理, on 沙汰 11181/11187) — P9 on this harness
+- STRUCTURAL: at a decision point whose inputs are fixed before the prior acts, generations differ only in TARGET (G1's
+  states == G0's, byte for byte). "Learns from a better agent's episodes" is vacuous there.
+- (a)-inspect gated out (step-1 symptom distinctness 0.62–0.67 < 0.9). (a)-loop = the re-hypothesis loop = the accumulation
+  harness, NEXT (own gates, own base). (b) RUNS as P9-on-this-harness: same states, labels = region correctness × G0's
+  outcome (1.0 solved / 0.5 correct-but-failed / 0 wrong); eval on 47's 75 vs the seed-21 L-BFGS head (32.0%, 9.76) and
+  base; PASS ≥ G0 at no higher cost / STRONG > 1 SE / FAIL < G0; expectation NULL; print fraction of argmax changes.
+- Transfer: four cross-run +11.3…+14.7 carried; same-run +21.4 never averaged. Fit quality buys nothing, both directions.
