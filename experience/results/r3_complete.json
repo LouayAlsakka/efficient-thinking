@@ -1,0 +1,33 @@
+{
+ "measurement": "R3 COMPLETE (理 11217) — 600 independent problems no head had seen, one head (seed-21 L-BFGS), two disjoint 300-problem sets.",
+ "results": {
+  "seed 47 (300)": {
+   "base": "16.7% / 10.86 actions",
+   "G": "30.7% / 9.91",
+   "success": "+14.0 [+8.3, +19.7]",
+   "actions": "-0.95 [-1.32, -0.58]",
+   "mcnemar_p": "2.0e-06"
+  },
+  "seed 73 (300)": {
+   "base": "18.0% / 10.65 actions",
+   "G": "31.3% / 9.91",
+   "success": "+13.3 [+8.0, +18.7]",
+   "actions": "-0.74 [-1.08, -0.41]",
+   "mcnemar_p": "2.4e-06"
+  }
+ },
+ "the_reading": "the same head, never trained on either set, produces +14.0 and +13.3 points with almost identical intervals and p < 3e-06 on both. 600 problems, zero shared signatures with the head's training set or with each other.",
+ "THREE_INDEPENDENT_BASES": {
+  "seed 21": "18.7% / 10.63",
+  "seed 47": "16.7% / 10.86",
+  "seed 73": "18.0% / 10.65",
+  "reading": "three 300-problem draws from one grammar landing within 2.0 points and 0.23 actions. The base rate is a property of the generator. This is what v1 and v2 could never have shown, because they had eleven and twelve distinct problems."
+ },
+ "what_R3_settles": "the capability result is not a seed artefact, not a same-run artefact, and not a transfer-direction artefact. Four n=300 measurements now: +11.3, +14.0, +13.3 across disjoint sets and both directions, all p < 1e-4.",
+ "what_R3_does_NOT_settle": "the cost. Every action figure here is the PRE-REGISTERED metric, which does not count the controller's own inference. In tokens G costs 34% more (R2). R2b tests whether a batched scorer clears the 502-token bar fixed at r2b_prereg.json.",
+ "bounds": [
+  "One model (7B), one layer (18), one head, one grammar. R4 is the second model.",
+  "The seed-21 set itself is excluded from this reading: the head was fit on it.",
+  "Paired bootstrap, 10,000 resamples, exact McNemar; six pairs across the whole package with no multiplicity adjustment, and the four n=300 pairs survive any reasonable one."
+ ]
+}
