@@ -118,3 +118,14 @@ series is organised around; the backward rewrite of ET-1..7 is done in that ligh
 **R5-C extended (2026-09-19):** the reviewer's range is 5k–15k tokens; the base curve gains budgets 8 and 24 (≈5k and ≈15k)
 beside 12/14/16/18, the head keeps 6/8/10/12. Two more base runs of 300 (~7 h). The "save 26 controller tokens" line of
 work (R2b–R2d) is closed and not resumed; the frontier is the experiment.
+
+## 8a — the last three gaps (from the external review, 2026-09-19; ruled)
+
+| gap | experiment | status / reading |
+|---|---|---|
+| 1 · matched-compute frontier | R5-E (done: base at the head's compute 22.3% vs 31.7%) and R5-C (curve 5k–15k, queued) | the frontier is moved at one point; the curve says over what range |
+| 3 · strongest simple baselines at the same compute | **R6, pre-registered:** at G's exact decision point, over the SAME enumerated candidates, (a) rerank by the frozen model's own log-probability of each candidate (the model's own preference, charged the same k passes); (b) majority vote over 5 sampled hypotheses (charged 5 short passes); plus base + 35% ordinary search = R5-E's budget-16 arm, already measured (22.3%). All on the 300, paired vs base and vs G | if (a) or (b) matches G, the learned readout adds nothing over the model's own preference and the claim narrows to "a controller at the decision point"; if both fall short of G by more than the CI, experience — the head trained on verified history — is responsible, not the extra inference |
+| 2 · one genuinely different problem distribution | **R7, pre-registered:** a second environment with a different search structure under the same harness, verifier and gates — SQL query repair against a fixed schema (regions = clauses: select / where / join / group / order; verifier = expected result set; bugs admitted only if the verifier distinguishes them; task gate ≥ 0.9, prompt gate at the post-inspect decision, probe with the three controls). The head is RE-FITTED there from that environment's own base episodes: the claim under test is that the mechanism transfers, not the weights | base, probe, G on 300; same bar form (problems solved + cost; matched-compute point). If G clears it on a second search structure the claim is "experience-directed search", not "this grammar"; if it does not, 8a says the mechanism is grammar-bound and 8c takes the question |
+
+Order after R5-Q: R5-C → R6 → R7 → 8a stops. Cost: R5-C ~7 h GPU; R6 ~7 h; R7 one day to build and gate + ~1 day of runs.
+No further seeds, no third checkpoint (the reviewer: "that's enough seeds and models for me").
