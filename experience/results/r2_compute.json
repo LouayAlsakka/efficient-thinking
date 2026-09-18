@@ -1,0 +1,40 @@
+{
+ "measurement": "R2 (理 11217) — COMPUTE ACCOUNTING with the controller's own inference counted. seed 21's 300, base vs G (L-BFGS head).",
+ "THE_HEADLINE": "THE COST LIMB FAILS ON TOKENS. G is cheaper in ACTIONS and 34% MORE EXPENSIVE in total model compute, because the head's candidate passes are inference that the action count does not see.",
+ "table": {
+  "base": {
+   "tokens_in": 6363,
+   "tokens_out": 491,
+   "total": 6854,
+   "seconds": 15.45
+  },
+  "G (model calls only)": {
+   "tokens_in": 6348,
+   "tokens_out": 469,
+   "total": 6817,
+   "seconds": 16.06
+  },
+  "G's head": {
+   "candidate_passes_per_episode": 4.9,
+   "post_inspect_prompt_tokens": "mean 480 (min 458, max 493), measured over 60 decisions",
+   "head_prompt_tokens_per_episode": 2353
+  },
+  "G, TOTAL": {
+   "tokens": 9170,
+   "delta_vs_base": "+2316 = +34%"
+  }
+ },
+ "what_this_does_to_the_claim": {
+  "unchanged": "the CAPABILITY result. +11 to +15 points with 95% CIs excluding zero on every pair (R1). G solves more problems, and that is not affected by how its compute is counted.",
+  "QUALIFIED": "the 'AND cheaper' half of 'both limbs'. Cheaper in ACTIONS (-0.71, CI [-1.06, -0.37]); 34% MORE EXPENSIVE in TOKENS. The action metric does not count the controller's own inference, and the controller runs one forward pass per candidate per decision.",
+  "the honest sentence": "G buys problems solved at a 34% compute premium. It does not buy them cheaply."
+ },
+ "and_the_wall_clock_already_said_so": "+0.61 seconds per episode despite FEWER actions. The wall clock was carrying the head's cost the whole time and I reported the action saving beside it without reconciling them.",
+ "what_would_change_it": "the head scores k candidates with k separate forward passes over a ~480-token prompt. A single pass with a batched scoring head, or caching the shared prefix across candidates, would cut most of the 2,353 tokens -- the prompt is identical across candidates except for the final region name. That is an ENGINEERING fix and it is not what was measured; the measured system costs 34% more.",
+ "bounds": [
+  "Prompt length measured on 60 decisions of seed 21's 300; min 458, max 493, so the mean is tight.",
+  "Candidate passes counted from the logged head decisions (4.90 per episode = one per region on tasks with 4-6 regions, at one head decision per episode).",
+  "Tokens counted as PROMPT tokens for the head passes, which is the right unit: a forward pass over a 480-token prompt costs about what generating into that context costs to prefill, and nothing is generated.",
+  "Wall clock includes GPU contention from other jobs during some slices; the token count does not and is the sounder figure."
+ ]
+}
