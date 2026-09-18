@@ -1,0 +1,25 @@
+{
+ "pair": "R4 Llama-3.1-8B: head fitted on v3 -> DISJOINT set v3rep (seed 47), all 300",
+ "n": 300,
+ "base_success_pct": 18.3,
+ "G_success_pct": 32.7,
+ "success_delta_points": 14.3,
+ "success_95CI": [
+  7.7,
+  21.0
+ ],
+ "base_actions": 10.98,
+ "G_actions": 9.62,
+ "actions_delta": -1.36,
+ "actions_95CI": [
+  -1.85,
+  -0.88
+ ],
+ "McNemar": {
+  "base_only_solved": 33,
+  "G_only_solved": 76,
+  "discordant": 109,
+  "exact_two_sided_p": 4.656e-05
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}
