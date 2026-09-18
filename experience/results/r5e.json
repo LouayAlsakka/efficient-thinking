@@ -1,0 +1,101 @@
+{
+ "document": "R5-E RESULT — the compute-matched baseline (理 11364). THE FRONTIER MOVED.",
+ "the_question_R2_could_not_answer": "R2 reported G at +34% compute and called it a premium. That compared TWO POINTS AT DIFFERENT COMPUTE and so said nothing about the frontier. R5-E gives the BASE G's whole budget, by raising its action budget, and asks what it buys.",
+ "COMPUTE_MATCH": {
+  "base budget 16": "9,234.2 tokens/episode",
+  "G budget 12 ALL-IN": "9,194.1 tokens/episode",
+  "difference": "the base got +40.1 tokens/episode MORE (+0.44%)",
+  "G all-in = ": "6,706.2 model + 2,487.9 controller (R2b's measured candidate passes)",
+  "note": "the base is handed slightly MORE compute than G spends, so the comparison is if anything generous to the base."
+ },
+ "THE_RESULT": {
+  "base@16": "22.3%",
+  "G@12": "31.7%",
+  "delta": "+9.3 points for G",
+  "95% CI": "[+3.7, +15.0]",
+  "McNemar": "base-only 25 · G-only 53 · exact two-sided p = 0.002031",
+  "actions": "13.75 -> 9.85, -3.90 [-4.36, -3.43]"
+ },
+ "THE_PRE_WRITTEN_READING_APPLIES": "理 11364: 'Q_base(≈9,170) below Q_G by more than the paired CI → the frontier moved.' Q_base is 9.3 points below Q_G and the CI [+3.7, +15.0] excludes zero. THE FRONTIER MOVED. G is not buying success with compute; at equal compute it wins.",
+ "AND_理S_EXPECTATION_WRITTEN_FIRST_HELD": {
+  "predicted": "from the 80-problem probe: more budget buys the base ~+3.7 points; the head buys +11-14 for ~+34% compute.",
+  "observed at 300": "budget 12->16 bought the base +3.6 points (18.7 -> 22.3) for +35% compute; the head bought +13.0 points (18.7 -> 31.7) for +34%.",
+  "reading": "the prediction was written before the run and the shape held almost exactly."
+ },
+ "THE_BUDGET_WAS_CHOSEN_BY_A_RULE_FIXED_BEFORE_THE_LADDER": {
+  "rule": "nearest to the target by measured tokens/episode on slice 1, absolute distance",
+  "ladder": [
+   {
+    "budget": 14,
+    "n": 75,
+    "tokens_per_episode": 8324.8,
+    "distance_to_target": 845.2,
+    "success_pct_slice1": 20.0,
+    "actions": 12.51
+   },
+   {
+    "budget": 16,
+    "n": 75,
+    "tokens_per_episode": 9417.3,
+    "distance_to_target": 247.3,
+    "success_pct_slice1": 20.0,
+    "actions": 13.92
+   },
+   {
+    "budget": 18,
+    "n": 75,
+    "tokens_per_episode": 10506.3,
+    "distance_to_target": 1336.3,
+    "success_pct_slice1": 24.0,
+    "actions": 15.39
+   }
+  ],
+  "selected": 16,
+  "why_it_mattered": "budget 18 had the BEST slice-1 success of the three (24.0%). A rule chosen after seeing the numbers would have been tempted toward it. Fixing the rule first is what makes this compute-matched rather than a search for the base's best showing.",
+  "robustness": "the 0.26% target difference does not change the selected budget (16) -- the choice is robust to it"
+ },
+ "MECHANISM_descriptive_no_test": {
+  "hypotheses naming the bug's region": "base@16 87/300 = 29.0%  ->  G@12 143/302 = 47.4%",
+  "reading": "even with 35% more compute the base localises worse than G does. The extra budget buys more attempts, not better aim.",
+  "source": "results/r5e_action_mix.json"
+ },
+ "commands": {
+  "ladder": "experience/et8_agent.py --tasks <v3s/s1> --model Qwen/Qwen2.5-7B-Instruct --budget {14,16,18} --inspect-first",
+  "the 300": "experience/et8_agent.py --tasks <v3s/s{1..4}> --model Qwen/Qwen2.5-7B-Instruct --budget 16 --inspect-first",
+  "the table": "experience/paired_stats.py --base <r5e300/r5e_s*.episodes.jsonl> --g <v3g300/v3g300_s*.episodes.jsonl> --expect 300",
+  "the mechanism": "experience/action_mix.py --base <r5e300/*.steps.jsonl> --g <v3g300/*.steps.jsonl> --episodes 300"
+ },
+ "paired_stats_raw": {
+  "pair": "R5-E: base at budget 16 (compute-matched) vs G at budget 12",
+  "n": 300,
+  "base_success_pct": 22.3,
+  "G_success_pct": 31.7,
+  "success_delta_points": 9.3,
+  "success_95CI": [
+   3.7,
+   15.0
+  ],
+  "base_actions": 13.75,
+  "G_actions": 9.85,
+  "actions_delta": -3.9,
+  "actions_95CI": [
+   -4.36,
+   -3.43
+  ],
+  "McNemar": {
+   "base_only_solved": 25,
+   "G_only_solved": 53,
+   "discordant": 78,
+   "exact_two_sided_p": 0.002031
+  },
+  "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+ },
+ "bounds": [
+  "One seed (v3 seed 21), one model (Qwen2.5-7B-Instruct), 4-bit-free bf16. 300 problems per arm, paired per problem.",
+  "EACH BUDGET IS A DIFFERENT AGENT: the budget is in the prompt, so budget-16 is an agent told it has 16 actions -- NOT a budget-12 agent truncated or extended.",
+  "Slice 1 of the budget-16 arm is REUSED from the ladder: identical agent, identical tasks, temp 0. R2d's calibration measured uncached re-runs as 40/40 identical on this hardware.",
+  "The controller cost added to G is R2b's MEASURED 2,487.9 tokens/episode for the measured system (k separate full-prompt passes). A cheaper controller would only widen G's lead.",
+  "This is ONE point of a frontier, not a curve. It says the base at ~9,200 tokens does not reach G at ~9,200 tokens; it does not chart either arm's full quality-cost curve."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
