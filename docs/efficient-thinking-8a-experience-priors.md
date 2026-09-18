@@ -165,6 +165,16 @@ already misled us without it (Appendix A).
 
 ## 7. Results in the Debugging Field
 
+The claims in this section form a ladder, each rung harder than the last, and the paper says which rungs it has
+climbed: the head works on one task set (§7.4); it replicates across independent problem sets (§7.4, four
+measurements at n = 300); it replicates across model families (the second model, below); it beats ordinary
+search at matched compute (§7.6, the frontier control); and it survives a different search structure (the last
+pre-registered run, §7.7). A dozen further seeds or checkpoints would add less than any one of the last two, so
+none are run. The failure reading of each rung was written before its run, and the fourth's is worth restating
+because it is the one that would have unmade the paper: had ordinary search at the head's compute done as well
+as the head, the head would have been another way of buying capability with compute, and not evidence that
+history moves the frontier.
+
 ### 7.1 The environment and its three versions
 
 The agent is a frozen 7B model with a budget of twelve actions from a family of four — hypothesise a region,
@@ -412,6 +422,23 @@ lead — the failures of R2b through R2d bound this result conservatively rather
 criterion of §3, then, the head is an experience prior on the effectiveness limb: the same frozen intelligence,
 having learned from its own history, solves more at the same computation. The efficiency limb — the head's
 minimum compute at the base's success — is the last run.
+
+### 7.7 Pre-registered: the strongest simple baselines, and a second search structure
+
+Two runs remain before this paper stops, both written before they are made. The first answers the reviewer a
+matched-compute result invites — why an experience controller rather than the model's own preference at the same
+cost: at the same decision point, over the same enumerated candidates, the candidate the frozen model itself
+assigns the highest log-probability, charged the same passes the head pays; and a majority vote over five sampled
+hypotheses, charged its five. If either matches the head, the learned readout adds nothing over the model's own
+preference and the claim narrows to "a controller at the decision point"; if both fall short by more than the
+paired interval, experience — a head trained on verified history — is responsible, not the extra inference. The
+expectation is that the model's own preference lands between the base and the head, since it is what the head
+learned to overrule on 179 of 300 decisions. The second changes the search structure rather than the bugs: a
+second environment under the same harness, verifier and gates, in which the regions are the clauses of a query
+against a fixed schema and the verifier is the expected result set, with the head re-fitted from that
+environment's own base episodes so that what transfers is the mechanism and not the weights. If the head clears
+the same bar there, the claim is experience-directed search; if not, the paper says the mechanism is bound to the
+first environment's grammar and hands the question forward.
 
 ## 8. Two Carrier Studies, in Brief
 
