@@ -1,0 +1,59 @@
+{
+ "candidate_states": 1470,
+ "decisions": 300,
+ "train_tasks": 225,
+ "held_out_tasks": 75,
+ "agent_pick_accuracy_on_heldout": 16.0,
+ "layers": {
+  "18": {
+   "weights": "head_layer18.npz in the states dir (w, b, mu, sd, train_task_max)",
+   "head_pick_pct": 56.0,
+   "held_out_decisions": 75,
+   "CONTROL_permuted_labels_pct": [
+    9.3,
+    22.7,
+    26.7,
+    20.0,
+    18.7
+   ],
+   "CONTROL_pca8_pct": 33.3,
+   "CONTROL_n100_pct": 34.4,
+   "CONTROL_n100_draws_pct": [
+    36.0,
+    41.3,
+    33.3,
+    30.7,
+    30.7
+   ],
+   "fit_iterations": 261,
+   "fit_hit_iteration_cap": false,
+   "chance_pct": 20.4
+  },
+  "27": {
+   "weights": "head_layer27.npz in the states dir (w, b, mu, sd, train_task_max)",
+   "head_pick_pct": 57.3,
+   "held_out_decisions": 75,
+   "CONTROL_permuted_labels_pct": [
+    20.0,
+    21.3,
+    22.7,
+    17.3,
+    12.0
+   ],
+   "CONTROL_pca8_pct": 37.3,
+   "CONTROL_n100_pct": 32.3,
+   "CONTROL_n100_draws_pct": [
+    33.3,
+    33.3,
+    26.7,
+    32.0,
+    36.0
+   ],
+   "fit_iterations": 296,
+   "fit_hit_iteration_cap": false,
+   "chance_pct": 20.4
+  }
+ },
+ "how_to_read_the_controls": "permuted must collapse to chance; if PCA-8 or n=100 match the full head, the signal needs neither dimensions nor examples and is a key being copied, not a readout. v1 scored 100% held out, PASSED its permutation control, and survived both of those -- which is how the label-in-the-prompt was found. All three are printed, always.",
+ "the_bar": "problems solved and cost on a paired run. Head accuracy is NOT the bar: the arm that localised better and solved half as many would have passed a localisation bar twice, on two different task sets (\u7406 11068)."
+}
