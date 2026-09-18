@@ -321,8 +321,15 @@ number. A new gate is pre-registered instead, with a control that says whether t
 passed: uncached against uncached on the same hardware, repeated, for raw-text identity, which if it also reads
 near 80% shows text identity is a property of the decoding and not of the cache; parsed-action identity at 300;
 and paired outcomes, cached against uncached on the same held-out 75, identical on success and actions, the level
-every number in this paper is scored at. All three pass and the cost is reported under the new gate with the old
-failure and its calibration printed beside it; any fails and the paper says the cache changes the agent.
+every number in this paper is scored at. The calibration went against the reading it might have licensed: uncached against uncached, same inputs, reads
+100% text identity on 40, so identity is achievable and the 77% agreement under the shared cache is the cache, not
+the decoding. At 300 the parsed action agrees on 295 — the five mismatches differ only in the bug class named, the
+region is identical on 300 of 300 — and the gate, set as parsed-action identity including the class, fails. The
+third leg is moot. So the cost limb closes where it started, four attempts and one sentence: **as measured, G buys
+success at a compute premium.** Per episode in actions, the pre-registered measure, it is cheaper; per episode in
+tokens with its own inference counted, 34% dearer; per problem solved, 21% cheaper, post hoc and labelled. The
+benefit limb is untouched throughout. A controller whose state is read from a pass the agent makes anyway would
+change the accounting, and this paper does not have one that leaves the agent's decisions unchanged.
 
 ### 7.5 The bound
 
