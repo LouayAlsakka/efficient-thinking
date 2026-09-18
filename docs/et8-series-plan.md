@@ -59,3 +59,21 @@ paper tells us what the earlier one was actually about. This is a separate work 
 3. Withdrawals are kept and dated; the appendix says who withdrew what and why.
 4. The paper carries no estate name.
 5. The paper is written under Louay's identity. The chronology appendix credits an experimenter (E) and a reviewer (R), pseudonymous, in a publishing universe separate from any operating context; no operating name, seat, lane or company appears in any paper of the series.
+
+## 8a — the closing package (ruled 2026-09-18, from the external review)
+
+8a's contribution is narrow and stated once: *a frozen model can acquire a useful search prior without altering its
+intelligence — a read-only controller learned from prior trajectories uses information already present in the model's
+internal state to choose better search actions, reducing search cost while preserving, and here increasing, task
+success.* Four things close it; then it stops. Nothing about accumulation, inheritance or consolidation timescales
+enters 8a.
+
+| item | what | cost | pre-registered reading |
+|---|---|---:|---|
+| R1 · intervals | paired per-problem bootstrap (95% CI) on success and on actions for every G-vs-base pair, both arms on the same problems; McNemar on success; reported in place of point deltas | a join, minutes | the four cross-run deltas' intervals exclude zero or the table says which do not |
+| R2 · compute accounting | tokens in/out per episode, wall per episode, AND the head's own cost — the k teacher-forced candidate prefixes per decision counted as inference — so the cost limb is stated in total tokens including the controller's overhead | a join over logs + one count | if the candidate passes cost more than the actions they save, the cost limb fails on tokens and the paper says so |
+| R3 · larger independent evaluation | G (first seed's head) on the second seed's full 300 (only 75 used so far), and a third seed of 300 generated, gated (P0–P4), held, and run — 600 independent problems, none seen by any head | ~3.5 h GPU per 300 | effect on 600: +11 to +15 with an interval that excludes zero; or the interval that says otherwise |
+| R4 · a second frozen model | the same environment, harness, gates and head procedure on a second checkpoint (the 3B instruct model already on the box; a larger one if it fits): base on 300, probe with three controls, G, on the same task set | ~half a day GPU | the bound predicts: if the 3B's failures are repair-bound, G does nothing there and that is the bound holding; if localisation-bound, G helps. Either reading is written before the run; "peculiar to one checkpoint" is refuted only by the second reading |
+
+Order on the study box: R1, R2 (joins, first) → R3 → R4 → then the 8b loop → then S2, S1 (ET-9). 8a is closed on R1–R4
+regardless of what 8b finds.
