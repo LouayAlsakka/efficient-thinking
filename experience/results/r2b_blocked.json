@@ -1,0 +1,24 @@
+{
+ "measurement": "R2b — BLOCKED. The batched scorer's token arithmetic clears the bar and its IMPLEMENTATION DOES NOT REPRODUCE THE MEASURED PATH, so no cost claim is made.",
+ "the_token_arithmetic": {
+  "OLD (measured system)": "2,500 tokens/episode at 5.0 candidates",
+  "NEW (cached prefix)": "498.7 = prefix 492.3 once + region continuations 6.4",
+  "bar (pre-registered)": 502,
+  "wall": "0.451 s/decision old, 0.006 s/decision new",
+  "STATUS": "NOT A PASS. These are the costs of a computation that returns the WRONG STATES."
+ },
+ "THE_EQUIVALENCE_CHECK_IS_WHY_THIS_FILE_EXISTS": {
+  "test": "run the cached path with a suffix IDENTICAL to the measured path's, so the two must return the same vector.",
+  "result": "pearson r = 0.16-0.20, max|diff| ~ 100-137. They are unrelated states.",
+  "reading": "a 5x token saving computed over wrong states is not a saving. The check was built into the same command as the measurement precisely so the cost could not be quoted without it."
+ },
+ "what_is_established_about_the_APPROACH": "a cached split of ONE token sequence reproduces a single pass to r = 0.99986, max|diff| = 2.0 in bf16 -- verified directly. So prefix-caching is sound and the defect is in my function, not in the idea.",
+ "three_hypotheses_tested_and_REJECTED": [
+  "cache aliasing -- KVCache mutating its arrays in place, so saving references does not rewind. Deep-copied them: numbers UNCHANGED to four decimals.",
+  "the continuation's attention mask -- passing None instead of building one against the cache. Built it: numbers UNCHANGED.",
+  "the tokenisation boundary -- tok.encode(prefix)+tok.encode(r) != tok.encode(prefix+r). Fixed by encoding the full string and taking the tail, with an assertion that the prefix IS a token prefix. The assertion did NOT fire and the numbers were UNCHANGED."
+ ],
+ "what_that_narrows_it_to": "three plausible causes are eliminated and the numbers did not move for any of them, which is itself informative: the discrepancy is insensitive to the parts I suspected. The remaining difference between my working direct test and this function is the rewind loop across MULTIPLE candidates and the reuse of one cache object -- the direct test used a fresh cache and a single split.",
+ "the_disciplined_stopping_point": "I am not going to keep guessing inside a reporting loop. R2b is BLOCKED with the state recorded: the approach is verified, the bar is fixed, the arithmetic is under it, and the implementation is wrong in a way I have narrowed but not located.",
+ "what_it_does_NOT_change": "nothing measured. The cost claim in 8a stays as R2 left it: G is cheaper in actions and 34% more expensive in tokens with the controller counted. R2b was the chance to change that and has not taken it."
+}
