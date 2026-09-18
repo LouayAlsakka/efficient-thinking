@@ -1,0 +1,27 @@
+{
+ "document": "R4 PRE-REGISTRATION — a second frozen model, written before it runs (理 11217)",
+ "design": "Llama-3.2-3B-Instruct-4bit (see the correction below), the same environment (v3 seed 21's 300), the same inspect-first harness, the same budget 12, the same gates. Base on 300 → probe on its OWN post-inspect states with all three controls → G on the held-out quarter and then on a disjoint set.",
+ "why_a_second_model": "everything measured so far is one frozen 7B. If the head is reading something general about a debugging state, a different frozen model should support one too. If it is reading something particular to this model's representations, it will not.",
+ "THE_TWO_READINGS_WRITTEN_FIRST": {
+  "G HELPS on the 3B": "the carrier is not specific to one model. A read-only head works where the state carries the choice and the task is localisation-bound, and 8a can say so for two models rather than one.",
+  "G DOES NOT HELP on the 3B": "the 7B's activations carry a choice the 3B's do not. The result becomes model-dependent and 8a must say the carrier needs a model whose state already encodes the decision — which would make G a way of READING OUT capability the model has, not of adding any."
+ },
+ "THE_RISK_THAT_WOULD_MAKE_IT_UNINFORMATIVE_AND_HOW_IT_IS_HANDLED": {
+  "risk": "the 3B is weaker. If its base success on v3 is near the floor -- say under 5% -- there is too little headroom for a 13-point effect to be visible, and a null would mean 'no room' rather than 'no signal'.",
+  "the check, run FIRST": "the base on 300 is measured before any head is fit. If the base is under 5%, I report that v3 is out of the 3B's range and R4 CANNOT test the question on this task set — and say so instead of running a probe into a floor.",
+  "the other direction": "if the 3B's base is far ABOVE the 7B's, the task is easier for it and the comparison is also not like-for-like; that would be reported too."
+ },
+ "what_stays_fixed": "the gates (prompt-gate ratio at the post-inspect decision must clear 0.9 for the 3B too), the three probe controls (permutation, PCA-8, five-draw n=100), the paired bootstrap and exact McNemar, and the pre-registered action metric with the token accounting beside it.",
+ "bounds": [
+  "One additional model is not a model sweep. Two points do not establish generality.",
+  "The 3B is a smaller member of the SAME family as the 7B; a different family would be a stronger test and is not what is on the box.",
+  "The head is fit on the 3B's own states; no 7B head is transferred to it. Cross-model transfer is a separate question and is not part of R4."
+ ],
+ "CORRECTION_BEFORE_THE_RUN": {
+  "what_I_wrote": "'a different family would be a stronger test and is not what is on the box.'",
+  "what_is_actually_on_the_box": "mlx-community/Llama-3.2-3B-Instruct-4bit AND mlx-community/Qwen2.5-3B-Instruct-4bit. A different family IS available; my bound was written from memory and was wrong.",
+  "the_choice_and_why": "running the LLAMA. 理 asked for a second model to test whether the carrier is model-specific; a same-family 3B shares tokenizer, pretraining corpus and architecture with the 7B, so a positive result there is much weaker evidence of generality than a positive result across families.",
+  "the_confound_I_cannot_remove": "both 3B checkpoints on this box are 4-BIT QUANTISED; the 7B is bf16. So R4 varies model size, family AND precision at once. That is unavoidable with what is here, and it means a NULL on the Llama cannot be attributed to family rather than precision. A POSITIVE is the informative direction: it would hold despite three differences at once.",
+  "stated_now": "because a confound named after a null result reads as an excuse."
+ }
+}
