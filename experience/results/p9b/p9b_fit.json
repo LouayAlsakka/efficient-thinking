@@ -1,0 +1,10 @@
+{
+ "candidate_states": 1470,
+ "heldout_decisions": 75,
+ "plain_pick_pct": 66.7,
+ "weighted_pick_pct": 70.7,
+ "argmax_changed_tasks": 10,
+ "argmax_changed_pct": 3.3,
+ "correct_candidates": 300,
+ "of_those_G0_solved": 90
+}

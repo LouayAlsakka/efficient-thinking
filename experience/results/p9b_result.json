@@ -1,0 +1,26 @@
+{
+ "measurement": "P9 (b) — SAME states, OUTCOME-WEIGHTED target (理 11191). Evaluated on seed 47's 75.",
+ "table": {
+  "base": "13/75 = 17.3% (SE 4.4), 10.68 actions",
+  "G0 (plain target)": "24/75 = 32.0% (SE 5.4), 9.76 actions",
+  "G1 (outcome-weighted)": "21/75 = 28.0% (SE 5.2), 9.87 actions",
+  "G1 - G0": "-3 episodes = -4.0 points, +0.11 actions"
+ },
+ "THE_READING": {
+  "by the letter of the pre-registration": "FAIL — G1 < G0.",
+  "by size": "NULL. THREE episodes of 75 differ in outcome at all, and the SE on a 75-episode proportion is 5.2-5.4 points. A three-episode difference is 4.0 points and is not distinguishable from zero. I am not reporting 'the second generation forgets'.",
+  "what I am reporting": "理's written expectation is confirmed: at a single fixed decision point nothing accumulates but the TARGET, and moving the target moves the probe and not the decisions."
+ },
+ "the_mechanism_is_visible_in_the_fit_and_it_predicted_this": {
+  "argmax changed on training tasks": "10 of 300 = 3.3%",
+  "why": "the weighting cannot reorder correct above wrong WITHIN a task -- correct is 0.5 or 1.0, wrong is 0 -- so it only moves weight ACROSS tasks.",
+  "and the eval agrees": "3 of 75 = 4.0% of episodes changed outcome. The fit's 3.3% and the episodes' 4.0% are the same number arriving twice."
+ },
+ "AND_THE_PROBE_ROSE_WHILE_THE_EPISODES_DID_NOT": "held-out pick 66.7% -> 70.7%. Same states, same architecture, only the target changed -- and a 4-point probe gain produced a 4-point episode LOSS. That is the fourth time this week a better probe number did not convert, and the cleanest instance: nothing else differed.",
+ "what_this_closes": "P9 on THIS harness. Accumulation cannot be tested where the prior's inputs are fixed before it acts; the generations can differ only in target, and the target barely moves the argmax. 理 has scoped the re-hypothesis loop as the harness where accumulation could live -- more than one hypothesis per episode, so the head's earlier choices shape the states it later reads.",
+ "bounds": [
+  "n = 75, SE ~5.3. The -4.0 points is three episodes.",
+  "One weighting scheme (1.0 / 0.5 / 0). A different scheme is a different experiment; this one was 理's and was fixed before the fit.",
+  "G0 here is the seed-21 L-BFGS head on seed 47 (32.0%), the strongest of the cross-fits. Comparing G1 against a weaker G0 would have flattered it."
+ ]
+}
