@@ -105,3 +105,16 @@ point"):** base at budgets 12/14/16/18 and the head at 6/8/10/12, all on the 300
 with paired CIs, plotted as two curves. Readings pre-written: head curve above base across the range → the frontier is
 moved over a range; curves cross at low budget → the head helps only where it has room to act; curves merge at high budget
 → compute substitutes for experience there. Cost ~7 h (two base budgets; R5-Q supplies the head points). 8a stops after R5-C.
+
+## The series, as one argument (from the external review, 2026-09-19; adopted)
+
+ET-I, search: thinking substitutes for size. ET-II to VII, limits: search is bounded by evaluators, verification,
+supervision and the information already in the system. ET-8a, experience: historical computation teaches a frozen
+intelligence where to direct future computation — the frontier moves once. ET-8b, accumulation: does it move again,
+\(Q_2(C) > Q_1(C) > Q_0(C)\), intelligence frozen? The loop the series opened: intelligence → search → outcome →
+verification → experience → better search. If 8b demonstrates repeated shifts, ET-8 rather than ET-1 is the result the
+series is organised around; the backward rewrite of ET-1..7 is done in that light.
+
+**R5-C extended (2026-09-19):** the reviewer's range is 5k–15k tokens; the base curve gains budgets 8 and 24 (≈5k and ≈15k)
+beside 12/14/16/18, the head keeps 6/8/10/12. Two more base runs of 300 (~7 h). The "save 26 controller tokens" line of
+work (R2b–R2d) is closed and not resumed; the frontier is the experiment.

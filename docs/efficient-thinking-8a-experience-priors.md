@@ -458,6 +458,15 @@ the model's own candidates. Its effect is real, bounded to the kind of failure i
 better fit. The largest effect in the study was a hand-written rule about when to act, which is the rule a
 controller is supposed to learn, and the question this paper leaves is whether one can be learned that compounds.
 
+The series reads as one argument from here. Efficient Thinking I asked what happens when a fixed intelligence is
+given more thinking, and found that search substitutes for size: \(I + C\!\uparrow \Rightarrow Q\!\uparrow\). Papers II
+to VII found the limits of that substitution — the evaluator, the verifier, the supervision, and the information
+already in the system. This paper asks what happens after the intelligence has experience of how to think, and
+finds that historical computation can teach a frozen intelligence where to direct future computation:
+\(Q_E(C) > Q_0(C)\) at one point. Search moves a system along its frontier; experience moves the frontier. Paper 8b
+asks whether it moves again — \(Q_2(C) > Q_1(C) > Q_0(C)\) with the intelligence frozen throughout — which would
+close the loop this series opened: intelligence, search, outcome, verification, experience, better search.
+
 ---
 
 ## Appendix A. How This Was Found
