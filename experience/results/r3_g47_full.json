@@ -1,0 +1,22 @@
+{
+ "measurement": "R3 part 1 (理 11217) — G on seed 47's FULL 300, seed-21 L-BFGS head. The head has never seen any of these problems; zero shared signatures.",
+ "table": {
+  "base": "50/300 = 16.7%, 10.86 actions",
+  "G": "92/300 = 30.7%, 9.91 actions",
+  "success": "+14.0 points, 95% CI [+8.3, +19.7]",
+  "actions": "-0.95, 95% CI [-1.32, -0.58]",
+  "mcnemar": "base-only 18 · G-only 60 · exact two-sided p = 2.0e-06"
+ },
+ "BOTH_DIRECTIONS_NOW_HAVE_n_300": {
+  "seed-47 head -> seed-21's 300": "+11.3 [+6.3, +16.3], p = 3.3e-05",
+  "seed-21 head -> seed-47's 300": "+14.0 [+8.3, +19.7], p = 2.0e-06",
+  "reading": "the intervals overlap heavily and both exclude zero by a wide margin. Transfer is symmetric at the size where it can be measured properly: it does not matter which set trains and which evaluates. The earlier n=75 pairings pointed at this; these settle it."
+ },
+ "and_the_bases_agree_across_three_draws": "18.7% (seed 21), 16.7% (seed 47) on 300 each, and 17.3% on the 75-problem prefix of seed 47. Three independent draws from one grammar landing within two points is the generator behaving as a generator.",
+ "what_it_does_not_change": "the cost reading. -0.95 actions is a saving in the pre-registered metric; in TOKENS with the controller's own inference counted G costs 34% more (R2). R2b tests whether a batched scorer brings the overhead under 502 tokens/episode.",
+ "bounds": [
+  "n = 300 paired, 10,000 bootstrap resamples, exact McNemar on 78 discordant pairs.",
+  "One model, one layer, one grammar. The third set (seed 73) is running.",
+  "The head is the L-BFGS fit on seed 21; the ORIGINAL under-converged head was not re-run on this set, so this row is not directly comparable to the +12.0 from the 75-problem prefix, which used the original head."
+ ]
+}
