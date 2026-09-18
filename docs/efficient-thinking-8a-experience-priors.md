@@ -227,7 +227,23 @@ Four cross-run measurements span +11.3 to +14.7 points; the direction of transfe
 measurement is what training on adjacent tasks buys and is never averaged in. One 75-problem pair has a bootstrap
 interval excluding zero and a McNemar p of 0.064 on nineteen discordant pairs; it reads as consistent with the
 others and not independently significant, and the 300-problem pairs carry the result. Six pairs, no multiplicity
-adjustment; the 300s would survive one and the 75s would not all. On the 300, the head
+adjustment; the 300s would survive one and the 75s would not all.
+
+The larger independent evaluation then ran: the same head, never trained on either set, on two further sets of 300
+sharing no signature with its training set or with each other.
+
+| set (300 each) | base | G | success | actions | McNemar |
+|---|---:|---:|---:|---:|---:|
+| second seed | 16.7%, 10.86 | 30.7%, 9.91 | +14.0 [+8.3, +19.7] | −0.95 [−1.32, −0.58] | 2×10⁻⁶ |
+| third seed | 18.0%, 10.65 | 31.3%, 9.91 | +13.3 [+8.0, +18.7] | −0.74 [−1.08, −0.41] | 2×10⁻⁶ |
+
+Four measurements at n = 300 — +11.3, +13.0, +14.0, +13.3 — across disjoint sets and both transfer directions, all
+with p below 10⁻⁴: not a seed artefact, not a same-run artefact, not a direction artefact. The three bases are their
+own result: three 300-problem draws from one grammar land within 2.0 points and 0.23 actions of each other (18.7%,
+16.7%, 18.0%), so the base rate is a property of the generator, which the first two task sets could never have
+shown. None of this touches the cost sentence above: the action figures are the pre-registered metric, which does
+not count the controller's own inference, and in tokens G costs 34% more until the batched scoring of the closing
+package is measured. On the 300, the head
 agreed with the agent's own pick on 121 decisions and changed 179: on the 179 the base solved 12 and G solved 52;
 on the 121, 44 against 43. The effect is entirely in the decisions the head changed, and the residual confound
 from the harness's exploration temperature is bounded at about a third of an episode per hundred.
