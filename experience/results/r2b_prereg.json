@@ -1,0 +1,23 @@
+{
+ "document": "R2b BAR — pre-registered before the batched scorer is built (理 11244)",
+ "the_bar": "the controller's token overhead must be <= 502 tokens/episode.",
+ "how_it_was_derived": "a saving of 0.71 actions is worth 0.71 x what ONE MORE action costs. That is the MARGINAL cost, and only one of the three available bases measures it: an OLS fit of tokens on actions over the base's 300 episodes gives 707 tokens/action, intercept -660.",
+ "the_three_bases_all_printed": {
+  "OLS slope (marginal, CHOSEN)": "707 tokens/action -> bar 502",
+  "mean tokens / mean actions": "645 -> 458",
+  "mean tokens / budget 12": "571 -> 406"
+ },
+ "why_the_averages_understate": "the intercept is -660: the fixed prompt overhead is paid before any action is taken, so dividing total tokens by actions charges that fixed cost to the actions and makes each look cheaper than the next one actually is.",
+ "the_readings_written_now": {
+  "<= 502": "the cost limb passes on tokens with the measured system, and G is an experience prior under §3 with C in tokens.",
+  "> 502": "it fails, and 8a says G buys success at a compute premium.",
+  "between 406 and 502": "the paper prints that it passes the MARGINAL bar and fails the budget-based one, and says which was chosen first. No fuzz on the bar."
+ },
+ "expectation_written_before_the_build": "the k candidate prompts differ only in the final region token, so a batched pass with a cached shared prefix costs about ONE prompt (~480 tokens) plus k short continuations. That lands near the bar from below or just above it. Today's overhead is 2,353 tokens/episode and must come down 4.7x.",
+ "why_this_is_pre_registered_rather_than_measured_first": "the three bases span 406 to 502 and the expected overhead (~480) sits inside that span. A bar chosen after the overhead lands would be chosen BY the overhead.",
+ "bounds": [
+  "The OLS fit is on the base arm of seed 21's 300; a different arm or set would move the slope somewhat.",
+  "Tokens for the head's passes are counted as PROMPT tokens, which is what a forward pass over a prompt costs to prefill; nothing is generated in them.",
+  "The bar is per EPISODE, matching the unit the action saving is quoted in."
+ ]
+}
