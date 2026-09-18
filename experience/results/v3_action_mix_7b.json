@@ -1,0 +1,73 @@
+{
+ "pair": "Qwen2.5-7B, held-out slice 4 (the package's base model)",
+ "episodes": 75,
+ "descriptive_only": true,
+ "action_mix": [
+  {
+   "action": "noop_patch",
+   "base": 377,
+   "G": 281,
+   "base_pct": 46.9,
+   "G_pct": 40.8,
+   "per_episode_delta": -1.28
+  },
+  {
+   "action": "patch",
+   "base": 182,
+   "G": 151,
+   "base_pct": 22.7,
+   "G_pct": 21.9,
+   "per_episode_delta": -0.41
+  },
+  {
+   "action": "inspect",
+   "base": 116,
+   "G": 141,
+   "base_pct": 14.4,
+   "G_pct": 20.5,
+   "per_episode_delta": 0.33
+  },
+  {
+   "action": "hypothesize",
+   "base": 75,
+   "G": 76,
+   "base_pct": 9.3,
+   "G_pct": 11.0,
+   "per_episode_delta": 0.01
+  },
+  {
+   "action": "repeat_patch",
+   "base": 43,
+   "G": 25,
+   "base_pct": 5.4,
+   "G_pct": 3.6,
+   "per_episode_delta": -0.24
+  },
+  {
+   "action": "repeat_hypothesis",
+   "base": 9,
+   "G": 14,
+   "base_pct": 1.1,
+   "G_pct": 2.0,
+   "per_episode_delta": 0.07
+  },
+  {
+   "action": "invalid",
+   "base": 1,
+   "G": 0,
+   "base_pct": 0.1,
+   "G_pct": 0.0,
+   "per_episode_delta": -0.01
+  }
+ ],
+ "total_actions": {
+  "base": 803,
+  "G": 688,
+  "per_episode_delta": -1.53
+ },
+ "hypotheses_that_named_the_bugs_region": {
+  "base": "25/75 = 33.3%",
+  "G": "42/76 = 55.3%",
+  "denominator_warning": "over EVERY hypothesize action in the episode. The head acts at ONE decision (the first post-inspect one); later hypotheses are the agent's own. This is NOT the probe's head_pick, which is measured at that single decision."
+ }
+}
