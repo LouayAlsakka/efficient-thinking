@@ -1398,6 +1398,43 @@ over 300 with 68.3% from failed episodes. Half of the written expectation is ref
 not smaller, since every episode contributes exactly one post-inspect decision; it is easier, and the expectation
 of pass rather than strong now rests on that half alone.
 
+**P9 as designed cannot run on this harness, and the reason is a structural result about where accumulation can
+live.** The second generation's fit reported exactly the first seed's numbers, and a check instead of an assumption
+found why: the second generation's training states are byte-identical to the first's, the same 1,470 by 3,584
+array. The head acts at the post-inspect hypothesis and not before it; the inspect is the model's own greedy
+choice on the same prompt in both arms, so everything that determines the state — the symptom, the inspected
+region, its source — is fixed before the head fires. A better agent's episodes differ from the second step
+onward; its post-inspect states cannot differ at all. **At a decision point whose inputs are fixed before the prior
+acts, generations cannot differ in input, only in target**, and "the second generation learns from a better
+agent's episodes" is vacuous there by construction. The pool statistics were measuring one pool: identical
+states, differing only in the outcomes attached to them — 83.3% of the base's decisions from failed episodes
+against 68.3% of the first head's. The run that had been started under P9's name is reported as what it is, a
+cross-fit, with no generation reading:
+
+| head → evaluation set | delta |
+|---|---:|
+| first seed's head → first seed's held-out slice (same generator run) | +21.4 |
+| first seed's original head → second seed | +12.0 |
+| second seed's original head → first seed's 300 | +13.0 |
+| second seed's converged head → first seed's 300 | +11.3 |
+| first seed's converged head → second seed | +14.7 |
+
+Four cross-run measurements span +11.3 to +14.7; the one same-run measurement is what training on adjacent tasks
+buys and is never averaged in. And fit quality buys nothing in both directions — the converged head is +2 episodes
+on the second seed and −5 on the first seed's 300 against the original, inside noise, opposite signs, two task
+sets. Three ways to make P9 real were put on the table. A head that also chooses the inspection is gated out: the
+first-step state is symptom-only, and this set's symptom distinctness of 0.62 to 0.67 is below the gate, so that
+head would be the table already killed twice. Accumulation across task sets is a transfer result, measured five
+times above, not an accumulation one. What remains on this harness is a second generation that trains on the
+*outcomes* rather than the states — the same states, with the verifier's region labels weighted by what the first
+head achieved on that task — and it is run under P9's name with its expectation written first: a null, since
+within a task the weighting does not reorder a correct region above a wrong one and the argmax barely moves, so
+the informative result is that at a single fixed decision point nothing accumulates but the target; a strong
+result would be the surprise and would say the head learned which correct localisations convert. The place
+accumulation can actually live is a loop in which the prior's earlier choices shape the states it later reads —
+more than one hypothesis per episode, the re-hypothesis loop already scoped with this task set — and that is the
+next harness, with its own gates and its own base, not this one.
+
 **A carrier study: a poet's voice.** This study asks what happens to a capability when experience is pushed into it
 by a weight update; it is read under §4.2a beside the text-memory and steering results, not as evidence about search
 priors. It does contain a search, and that is how it will be finished: writing a regulated quatrain is a search over
