@@ -98,3 +98,10 @@ stay reported under the first limb, exactly as run. One addendum (§7.6, R5) dec
 Rule kept: the budget is in the prompt, so each budget is a different agent and is labelled as one. Existing data point,
 stated as expectation not result: base 12 → 24 budget on 80 problems bought +3.7 points for ~2× compute (17ff143-era
 probe); the head bought +11–14 for +34%. Cost: ~4 runs of 300 at ~3.5 h each. 8a re-stops after R5.
+
+R5-E landed 2026-09-18 23:29Z: compute-matched to 0.44%, base 22.3% vs G 31.7% (+9.3 [3.7, 15.0], p 0.002) — the frontier
+moved; the head is an experience prior on the effectiveness limb. **R5-C (added 2026-09-19, the reviewer's "a curve, not a
+point"):** base at budgets 12/14/16/18 and the head at 6/8/10/12, all on the 300, one table of tokens-all-in vs success
+with paired CIs, plotted as two curves. Readings pre-written: head curve above base across the range → the frontier is
+moved over a range; curves cross at low budget → the head helps only where it has room to act; curves merge at high budget
+→ compute substitutes for experience there. Cost ~7 h (two base budgets; R5-Q supplies the head points). 8a stops after R5-C.
