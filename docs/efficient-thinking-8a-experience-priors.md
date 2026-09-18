@@ -384,6 +384,30 @@ by two runs written before either is made, on the same 300 problems with the sam
   own history, thinks more effectively per unit of computation. If it does not hold, the head is a better
   allocation of more compute, as §7.4 says today.
 
+**Result, effectiveness at equal compute: the frontier moved.** The ladder read 8,325, 9,417 and 10,506 tokens per
+episode at budgets 14, 16 and 18, and the rule chose 16 as nearest the target — which matters, because budget 18
+had the best first-slice success of the three, and a rule chosen after the ladder would have been pulled toward
+it and turned a compute match into a search for the base's best showing. On the full 300, compute-matched to
+within 0.44% with the base handed slightly more:
+
+| arm | tokens/episode, all in | success | actions |
+|---|---:|---:|---:|
+| base, budget 16 | 9,234 | 22.3% | 13.75 |
+| G, budget 12 | 9,194 (6,706 model + 2,488 controller) | 31.7% | 9.85 |
+
+G leads by +9.3 points, interval [+3.7, +15.0], McNemar p = 0.002; actions −3.90 [−4.36, −3.43]. The reading written
+before the run applies as written: the base at the head's compute does not reach the head, so **the head is not
+buying success with compute; at equal compute it wins.** The expectation written from the 80-problem probe held
+almost exactly — more budget bought the base +3.6 points for 35% more compute, the head bought +13.0 for 34% —
+and the mechanism holds a third time: even with 35% more compute the base localises worse than G (hypotheses
+naming the bug's region 29.0% against 47.4%); the extra budget buys more attempts, not better aim. Bounds: one
+point of a frontier, not a curve; each budget is a different agent, as the rule requires; the controller's cost
+charged to G is the measured 2,488 tokens of the unbatched system, so a cheaper controller would only widen the
+lead — the failures of R2b through R2d bound this result conservatively rather than weaken it. Under the general
+criterion of §3, then, the head is an experience prior on the effectiveness limb: the same frozen intelligence,
+having learned from its own history, solves more at the same computation. The efficiency limb — the head's
+minimum compute at the base's success — is the last run.
+
 ## 8. Two Carrier Studies, in Brief
 
 Full treatment in 8c. Both are studies of what happens to a capability when experience is pushed into it by a
