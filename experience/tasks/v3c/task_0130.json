@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0130",
+ "family": "v3",
+ "bug_class": "early_return",
+ "bug_region": "sift",
+ "program": "# region: emit\ndef emit(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n    return out\n\n# region: fold\ndef fold(xs):\n    return [v * v for v in xs]\n\n# region: sift\ndef sift(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n        return out\n    return out\n\n# region: gather\ndef gather(xs):\n    return {'n': len(xs), 'min': min(xs) if xs else 0, 'span': (max(xs) - min(xs)) if xs else 0}\n\n# region: digest\ndef digest(summary):\n    out = dict(summary)\n    out['flags'] = sorted(k for k, v in summary.items() if isinstance(v, int) and v > 0)\n    return out\n\n# region: run\ndef run(raw):\n    return digest(gather(sift(fold(emit(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'min': 9, 'span': 5, 'flags': ['min', 'n', 'span']})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'min': 100, 'span': 49, 'flags': ['min', 'n', 'span']})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'min': 25, 'span': 68, 'flags': ['min', 'n', 'span']})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'min': 0, 'span': 0, 'flags': []})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'min': 144, 'span': 145, 'flags': ['min', 'n', 'span']})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'min': 0, 'span': 0, 'flags': ['n']})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 36, 'span': 108, 'flags': ['min', 'n', 'span']})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'min': 4, 'span': 1600, 'flags': ['min', 'n', 'span']})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                    ++++++++                    ^          ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "emit",
+  "fold",
+  "sift",
+  "gather",
+  "digest"
+ ],
+ "seed": 74283429,
+ "_signature": "dbeb92f897ef",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "emit"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "squares",
+   "running"
+  ],
+  "agg": "minspan",
+  "fmt": "flags"
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "n": 300,
+ "P0_distinct_signatures": 300,
+ "P0_ratio": 1.0,
+ "P0_largest_group": 1,
+ "P1prime_tasks_with_no_sibling_region": 0,
+ "P1prime_singletons": [],
+ "P2prime_assertion_detail_pct": 100.0,
+ "P2prime_symptom_distinctness": 0.623,
+ "P2_entropy_bits_PRINTED_NEVER_A_BAR": 0.833,
+ "P3_heldout_lookup_pct": 4.7,
+ "distinct_symptoms": 187,
+ "distinct_programs": 300,
+ "bug_region_distribution": {
+  "fold": 37,
+  "render": 36,
+  "intake": 36,
+  "emit": 38,
+  "gather": 52,
+  "sift": 32,
+  "shape": 40,
+  "digest": 29
+ },
+ "bug_class_distribution": {
+  "boundary": 26,
+  "boundary2": 53,
+  "early_return": 50,
+  "off_by_one_slice": 56,
+  "swap_sign": 15,
+  "drop_first": 32,
+  "comparator2": 12,
+  "int_division": 14,
+  "wrong_agg": 25,
+  "comparator": 17
+ },
+ "region_count_distribution": {
+  "4": 96,
+  "5": 119,
+  "6": 85
+ },
+ "red_herring_pct": null,
+ "symptom_uniqueness": 0.623,
+ "attempts": 865,
+ "seed": 73
+}

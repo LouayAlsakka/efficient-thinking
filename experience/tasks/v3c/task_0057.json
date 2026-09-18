@@ -1,0 +1,31 @@
+{
+ "task_id": "task_0057",
+ "family": "v3",
+ "bug_class": "off_by_one_slice",
+ "bug_region": "sift",
+ "program": "# region: digest\ndef digest(raw):\n    return [len(tok.strip()) for tok in raw if tok.strip()]\n\n# region: sift\ndef sift(xs):\n    return [v * v for v in xs[1:]]\n\n# region: shape\ndef shape(xs):\n    d = {}\n    for v in xs:\n        d[v % 3] = d.get(v % 3, 0) + 1\n    return {'n': len(xs), 'tally': sorted(d.items())}\n\n# region: render\ndef render(summary, bar=3):\n    out = dict(summary)\n    out['grade'] = 'high' if summary.get('n', 0) >= bar else 'low'\n    return out\n\n# region: run\ndef run(raw):\n    return render(shape(sift(digest(raw))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'tally': [(1, 3)], 'grade': 'high'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 4, 'tally': [(1, 4)], 'grade': 'high'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'tally': [(1, 3)], 'grade': 'high'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 3, 'tally': [(0, 3)], 'grade': 'high'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'tally': [(1, 3)], 'grade': 'high'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'tally': [(1, 1)], 'grade': 'low'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'tally': [(1, 4)], 'grade': 'high'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 3, 'tally': [(1, 3)], 'grade': 'high'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?            ^^^^        ^                ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "digest",
+  "sift",
+  "shape",
+  "render"
+ ],
+ "seed": 714304951,
+ "_signature": "e936b288e694",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "shape"
+ ],
+ "_shape": {
+  "parser": "parse_lengths",
+  "mappers": [
+   "squares"
+  ],
+  "agg": "tally",
+  "fmt": "grade"
+ }
+}

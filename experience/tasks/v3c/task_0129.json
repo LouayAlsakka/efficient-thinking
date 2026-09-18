@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0129",
+ "family": "v3",
+ "bug_class": "boundary2",
+ "bug_region": "gather",
+ "program": "# region: render\ndef render(raw):\n    out = []\n    for tok in raw:\n        try:\n            out.append(float(tok))\n        except ValueError:\n            pass\n    return out\n\n# region: sift\ndef sift(xs, factor=2):\n    return [v * factor for v in xs]\n\n# region: emit\ndef emit(xs):\n    return [v * v for v in xs]\n\n# region: fold\ndef fold(xs):\n    return [v * v for v in xs]\n\n# region: gather\ndef gather(xs):\n    n = len(xs) - 1\n    return {'n': n, 'mean': (sum(xs) / n) if n else 0.0, 'max': max(xs) if xs else 0}\n\n# region: shape\ndef shape(summary, bar=2):\n    out = dict(summary)\n    out['grade'] = 'high' if summary.get('n', 0) >= bar else 'low'\n    return out\n\n# region: run\ndef run(raw):\n    return shape(gather(fold(emit(sift(render(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'mean': 522.6666666666666, 'max': 1296.0, 'grade': 'high'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'mean': 66138.66666666667, 'max': 160000.0, 'grade': 'high'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'mean': 25264.0, 'max': 65536.0, 'grade': 'high'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'mean': 0.0, 'max': 0, 'grade': 'low'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'mean': 221189.33333333334, 'max': 331776.0, 'grade': 'high'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'mean': 0.0, 'max': 0.0, 'grade': 'low'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'mean': 20736.0, 'max': 20736.0, 'grade': 'high'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'mean': 20480128.0, 'max': 40960000.0, 'grade': 'high'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                          ^^^ ^^^^^^^^^^^^^       ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "render",
+  "sift",
+  "emit",
+  "fold",
+  "gather",
+  "shape"
+ ],
+ "seed": 342811380,
+ "_signature": "9ce00c783058",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "render"
+ ],
+ "_shape": {
+  "parser": "parse_floats",
+  "mappers": [
+   "scale",
+   "squares",
+   "squares"
+  ],
+  "agg": "meanmax",
+  "fmt": "grade"
+ }
+}
