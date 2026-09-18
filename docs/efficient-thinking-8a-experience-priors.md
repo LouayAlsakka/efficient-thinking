@@ -269,9 +269,13 @@ share of hypotheses that name the bug's region — 18.2% to 38.1% on the 8B, 33.
 quantity from the head's accuracy at the one decision it touches, since every later hypothesis is the model's
 own. What each model then does with a better hypothesis differs: the 7B stops submitting patches identical to the
 code in front of it (84% of its saving) and inspects slightly more; the 8B stops re-inspecting. The totals are
-close; the routes are not. Descriptive, no test, n = 75 per arm. A disjoint-set leg on a second seed's 300, base first and then G, runs after this
-and is reported with the same paired statistics. The reviewer's condition is met at the level it was asked: the
-phenomenon is not peculiar to one checkpoint of one family. On the 300, the head
+close; the routes are not. Descriptive, no test, n = 75 per arm. The disjoint-set leg then ran on a second seed's 300 problems the head had seen nothing of, base first and then
+G, both arms complete: success 18.3% to 32.7%, +14.3 with interval [+7.7, +21.0]; actions 10.98 to 9.62, −1.36
+with interval [−1.85, −0.88]; McNemar p = 4.7×10⁻⁵. Two frozen models from different families, transferring to a
+disjoint problem set, agree to within a point (the 7B's four: +11.3, +13.0, +14.0, +13.3), and the mechanism
+replicates (region-hit 21.2% to 38.2%). The held-out +20.0 and this +14.3 are the same result, not two — the
+smaller interval contains the larger's estimate — and the 300-problem figure is the one quoted. The reviewer's
+condition is met at the level it was asked: the phenomenon is not peculiar to one checkpoint of one family. On the 300, the head
 agreed with the agent's own pick on 121 decisions and changed 179: on the 179 the base solved 12 and G solved 52;
 on the 121, 44 against 43. The effect is entirely in the decisions the head changed, and the residual confound
 from the harness's exploration temperature is bounded at about a third of an episode per hundred.
@@ -307,7 +311,18 @@ its state from the agent's own pass pays only the continuations. That is the acc
 wrong rather than a rescue, and it is the last pre-registered item of the package: the head over the agent's own
 cache, counting only tokens the agent would not otherwise pay, bar unchanged, with the expectation written first
 that it costs 36 to 180 tokens and passes — or, if the state cannot be shared with the agent's pass, fails, and the
-premium stands.
+premium stands. Built, its self-test was written before the run as two identities — the candidate states against
+the measured path, and the agent's generated text against an uncached generation — and the second failed: the
+states agree to the bf16 floor, but the text differs on 7 of 40 decisions. Measured rather than assumed, the
+divergence is a rewording of the free-text rationale after the action; the parsed action, region and bug class
+are identical on 40 of 40, because greedy decoding is chaotic under bf16 noise and one near-tie flips the prose.
+The gate as written is not relaxed after the fact: that run is void and the premium is the measured system's
+number. A new gate is pre-registered instead, with a control that says whether the old one could ever have
+passed: uncached against uncached on the same hardware, repeated, for raw-text identity, which if it also reads
+near 80% shows text identity is a property of the decoding and not of the cache; parsed-action identity at 300;
+and paired outcomes, cached against uncached on the same held-out 75, identical on success and actions, the level
+every number in this paper is scored at. All three pass and the cost is reported under the new gate with the old
+failure and its calibration printed beside it; any fails and the paper says the cache changes the agent.
 
 ### 7.5 The bound
 
