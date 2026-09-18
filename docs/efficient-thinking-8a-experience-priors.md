@@ -242,8 +242,20 @@ with p below 10⁻⁴: not a seed artefact, not a same-run artefact, not a direc
 own result: three 300-problem draws from one grammar land within 2.0 points and 0.23 actions of each other (18.7%,
 16.7%, 18.0%), so the base rate is a property of the generator, which the first two task sets could never have
 shown. None of this touches the cost sentence above: the action figures are the pre-registered metric, which does
-not count the controller's own inference, and in tokens G costs 34% more until the batched scoring of the closing
-package is measured. On the 300, the head
+not count the controller's own inference, and in tokens G costs 34% more, with the batched scoring above failing
+its bar by 26 tokens and the shared-cache accounting still to run.
+
+**A second frozen model.** The same environment, harness and gates were run on a 4-bit 3B instruct model of a
+different family, with a floor pre-registered before the run: no probe is fitted unless the base solves at least 5%
+of problems, because a null from a probe with no room would read as "no signal" when it means "no room". The base
+solved 4 of 262, 1.5%, at 11.95 actions. It is not a format failure: the model emits well-formed actions 94% of the
+time, and its dominant behaviour is submitting a patch byte-identical to the code already there, 31% of steps — it
+understands the protocol and cannot repair. The third task set is calibrated to the 7B and out of range for a
+4-bit 3B, and a reader reaching for a smaller model should know it. The run also returned something it was not
+asked for: the smaller model produced a truncated escape inside a patch that the 7B never had in three thousand
+episodes, and the harness crashed the run rather than the step; a malformed action is now scored as invalid, which
+the loop already knew how to do. One further model runs under the same floor, a different family at comparable
+size, pre-registered as the last, and if it floors the paper says so and hands the generality question forward. On the 300, the head
 agreed with the agent's own pick on 121 decisions and changed 179: on the 179 the base solved 12 and G solved 52;
 on the 121, 44 against 43. The effect is entirely in the decisions the head changed, and the residual confound
 from the harness's exploration temperature is bounded at about a third of an episode per hundred.
@@ -265,10 +277,21 @@ problems solved at a 34% compute premium per episode and does not, as measured, 
 definition of §3 with cost in tokens it is not yet an experience prior but a better allocation of more compute.
 The candidate prompts differ only in their final region token, so a batched pass over a shared cached prefix would
 remove most of the 2,353 tokens; that is an engineering change to a system that has not been measured, it is
-pre-registered as the last item of the closing package with the bar that the overhead fall below 502 tokens per
-episode — the 0.71 actions saved at the measured marginal cost of an action, 707 tokens by the slope of tokens on
-actions — with the budget-based and mean-based readings (406 and 458) printed beside it, and the paper carries
-whichever system was measured.
+pre-registered with the bar that the overhead fall below 502 tokens per episode — the 0.71 actions saved at the
+measured marginal cost of an action, 707 tokens by the slope of tokens on actions — with the budget-based and
+mean-based readings (406 and 458) printed beside it. Built and measured, the batched system costs 528.4 tokens per
+episode: the shared prefix once, 492.3, plus 36.1 of continuations, against 2,487.9 for the separate passes and
+against the bar of 502. It fails, by 26 tokens, on all three bases, and the reading pre-written for that case
+applies: as measured, G buys success at a compute premium. A first implementation had cleared the bar at 498.7 and
+was wrong twice — it ignored its layer argument and read one position early — and was found by isolation rather
+than by a fourth guess: a correct cached split agreed with it to zero, so the fault was in what was read, not how.
+The structural fact under the number is that the decision prompt alone is 492 tokens, 98% of the bar, so no
+batching scheme clears it. That prompt is one the agent prefills anyway in order to act; a controller that reads
+its state from the agent's own pass pays only the continuations. That is the accounting the measured system got
+wrong rather than a rescue, and it is the last pre-registered item of the package: the head over the agent's own
+cache, counting only tokens the agent would not otherwise pay, bar unchanged, with the expectation written first
+that it costs 36 to 180 tokens and passes — or, if the state cannot be shared with the agent's pass, fails, and the
+premium stands.
 
 ### 7.5 The bound
 
