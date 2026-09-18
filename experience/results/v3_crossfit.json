@@ -1,0 +1,23 @@
+{
+ "measurement": "NOT a second generation — a CROSS-FIT. The seed-21 L-BFGS head on seed 47's 75.",
+ "why_it_is_not_P9": "G1's training states are BYTE-IDENTICAL to the base run's on the same tasks (np.array_equal on a 1470x3584 matrix). The head acts AT the post-inspect decision, so everything determining that state -- symptom, inspected region, its source -- is fixed before it fires. A better agent's EPISODES differ from step 2 onward; its post-inspect STATES cannot differ at all. So the refit reproduced the seed-21 head exactly, and the run is a cross-fit.",
+ "how_it_was_caught": "the G1 fit printed the seed-21 fit's numbers to the decimal -- head 66.7%, permuted [18.7, 10.7, 24.0, 22.7, 18.7], PCA-8 26.7%, n=100 37.9%. Identical permutation draws on supposedly different data is not a coincidence, and array_equal settled it in one line.",
+ "the_run_itself": {
+  "base on seed 47": "13/75 = 17.3%, 10.68 actions",
+  "seed-21 ORIGINAL head on 47": "22/75 = 29.3%, 9.81 actions  (+12.0)",
+  "seed-21 L-BFGS head on 47": "24/75 = 32.0%, 9.76 actions  (+14.7)"
+ },
+ "EVERY_TRANSFER_MEASUREMENT_NOW": {
+  "seed-21 head -> seed-21 held-out slice": "+21.4  (adjacent tasks, SAME generator run)",
+  "seed-21 original head -> seed-47": "+12.0",
+  "seed-47 original head -> seed-21 (300)": "+13.0",
+  "seed-47 L-BFGS head -> seed-21 (300)": "+11.3",
+  "seed-21 L-BFGS head -> seed-47": "+14.7",
+  "reading": "four CROSS-RUN measurements spanning +11.3 to +14.7, and one SAME-RUN measurement at +21.4. The effect on independent problems is +11 to +15 points; the same-run figure is what training on adjacent tasks buys and is never averaged in."
+ },
+ "and_fit_quality_again_buys_nothing": "the L-BFGS head is +2 episodes here and -5 on seed 21's 300 against the original head. Both inside noise, in opposite directions, on two task sets. A head good enough to beat the agent's pick is good enough.",
+ "bounds": [
+  "n = 75 here, SE ~5.4 points.",
+  "This artifact deliberately does NOT carry a P9 reading. The pre-registration stands unchanged and unused; P9 needs a design where the head's action changes the state a later head is trained on, and that is 理's to rule."
+ ]
+}
