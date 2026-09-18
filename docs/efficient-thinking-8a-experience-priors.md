@@ -249,8 +249,10 @@ problems solved at a 34% compute premium per episode and does not, as measured, 
 definition of §3 with cost in tokens it is not yet an experience prior but a better allocation of more compute.
 The candidate prompts differ only in their final region token, so a batched pass over a shared cached prefix would
 remove most of the 2,353 tokens; that is an engineering change to a system that has not been measured, it is
-pre-registered as the last item of the closing package with the bar that the overhead fall below the actions it
-saves, and the paper carries whichever system was measured.
+pre-registered as the last item of the closing package with the bar that the overhead fall below 502 tokens per
+episode — the 0.71 actions saved at the measured marginal cost of an action, 707 tokens by the slope of tokens on
+actions — with the budget-based and mean-based readings (406 and 458) printed beside it, and the paper carries
+whichever system was measured.
 
 ### 7.5 The bound
 
