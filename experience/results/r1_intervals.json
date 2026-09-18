@@ -1,0 +1,56 @@
+{
+ "measurement": "R1 (理 11217) — paired per-problem bootstrap, 95% CI on the DIFFERENCE, plus exact McNemar on success. Replaces every point delta in the transfer table.",
+ "why_paired": "each pair is the SAME problems run twice; the arms differ only in whether the head acts at the post-inspect decision. An unpaired interval ignores that and is wider than the data warrants. McNemar uses only the DISCORDANT pairs, which is where the whole effect lives -- the agreement group moves -1 of 121.",
+ "pairs": [
+  {
+   "pair": "seed21 head -> seed21 slice 4 (SAME generator run)",
+   "n": 75,
+   "success": "+21.3 points  95% CI [+9.3, +33.3]",
+   "actions": "-1.53  95% CI [-2.43, -0.63]",
+   "mcnemar": "base-only 5 · G-only 21 · p = 0.0025"
+  },
+  {
+   "pair": "seed21 ORIGINAL head -> seed47 75",
+   "n": 75,
+   "success": "+12.0 points  95% CI [+1.3, +22.7]",
+   "actions": "-0.87  95% CI [-1.63, -0.15]",
+   "mcnemar": "base-only 5 · G-only 14 · p = 0.064  <- NOT significant at .05"
+  },
+  {
+   "pair": "seed47 ORIGINAL head -> seed21 300",
+   "n": 300,
+   "success": "+13.0 points  95% CI [+7.7, +18.3]",
+   "actions": "-0.78  95% CI [-1.15, -0.43]",
+   "mcnemar": "base-only 18 · G-only 57 · p = 7.2e-06"
+  },
+  {
+   "pair": "seed47 L-BFGS head -> seed21 300",
+   "n": 300,
+   "success": "+11.3 points  95% CI [+6.3, +16.3]",
+   "actions": "-0.71  95% CI [-1.06, -0.37]",
+   "mcnemar": "base-only 16 · G-only 50 · p = 3.3e-05"
+  },
+  {
+   "pair": "seed21 L-BFGS head -> seed47 75",
+   "n": 75,
+   "success": "+14.7 points  95% CI [+4.0, +25.3]",
+   "actions": "-0.92  95% CI [-1.63, -0.24]",
+   "mcnemar": "base-only 3 · G-only 14 · p = 0.013"
+  },
+  {
+   "pair": "P9(b): G1(weighted) vs G0, seed47 75",
+   "n": 75,
+   "success": "-4.0 points  95% CI [-9.3, +0.0]",
+   "actions": "+0.11  95% CI [-0.04, +0.27]",
+   "mcnemar": "G0-only 3 · G1-only 0 · p = 0.25"
+  }
+ ],
+ "what_survives_the_intervals": "all five G-vs-base pairs exclude zero on BOTH limbs. The two 300-problem pairs are unambiguous (p < 1e-4, success CI [+7.7,+18.3] and [+6.3,+16.3]). The effect is not a point estimate artefact.",
+ "TWO_TESTS_DISAGREE_ON_ONE_PAIR_AND_I_AM_NOT_HIDING_IT": "seed21-ORIGINAL-head -> seed47: the bootstrap CI is [+1.3, +22.7], which excludes zero, while McNemar gives p = 0.064, which does not clear .05. Nineteen discordant pairs is thin. The two tests are answering slightly different questions -- the bootstrap resamples problems, McNemar conditions on the discordant set -- and at n=75 that gap is visible. The honest reading of THAT pair alone is 'consistent with the others, not independently significant'; the 300-problem pairs are what carries.",
+ "P9_b_now_has_an_interval_rather_than_a_judgement": "success -4.0 [-9.3, +0.0] and actions +0.11 [-0.04, +0.27] -- both include zero, McNemar p = 0.25. My 'FAIL by the letter, NULL by size' reading is now backed by an interval instead of by my own eye.",
+ "bounds": [
+  "10,000 bootstrap resamples, seed 11, resampling PROBLEMS (the unit of independence).",
+  "McNemar exact two-sided on the discordant pairs; no continuity correction, no asymptotic approximation, because several cells are small.",
+  "Six pairs tested with no multiplicity adjustment. The two 300-problem pairs survive any reasonable correction; the n=75 pairs would not all survive one."
+ ]
+}
