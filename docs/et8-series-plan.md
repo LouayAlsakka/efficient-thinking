@@ -58,4 +58,4 @@ paper tells us what the earlier one was actually about. This is a separate work 
 2. No mechanism section before the constraint; no result before the gate that admitted it.
 3. Withdrawals are kept and dated; the appendix says who withdrew what and why.
 4. The paper carries no estate name.
-5. The paper is written under Louay's identity; the chronology appendix credits the study seat's lane by role.
+5. The paper is written under Louay's identity. The chronology appendix credits an experimenter (E) and a reviewer (R), pseudonymous, in a publishing universe separate from any operating context; no operating name, seat, lane or company appears in any paper of the series.
