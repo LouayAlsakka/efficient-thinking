@@ -1,0 +1,25 @@
+{
+ "pair": "R4 Llama-3.1-8B: head fitted on v3 tasks<226 -> HELD-OUT slice 4",
+ "n": 75,
+ "base_success_pct": 16.0,
+ "G_success_pct": 36.0,
+ "success_delta_points": 20.0,
+ "success_95CI": [
+  8.0,
+  33.3
+ ],
+ "base_actions": 11.12,
+ "G_actions": 9.48,
+ "actions_delta": -1.64,
+ "actions_95CI": [
+  -2.53,
+  -0.77
+ ],
+ "McNemar": {
+  "base_only_solved": 6,
+  "G_only_solved": 21,
+  "discordant": 27,
+  "exact_two_sided_p": 0.005925
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}
