@@ -82,3 +82,19 @@ tokens (+34% per episode with the controller's inference counted; −21% per pro
 
 Order on the study box: R1, R2 (done) → R3 → R4 → R2b → then the 8b loop → then S2, S1 (ET-9). 8a is closed on R1–R4
 and R2b regardless of what 8b finds.
+
+## 8a — the frontier control (ruled 2026-09-18, from the review and Louay: "improve efficiency or improve total outcome
+are the same benefit — an expert gets better results in the same time, or good results faster")
+
+§3 gains the general criterion: an experience prior improves the quality–cost frontier, \(Q_E(C) > Q_0(C)\); efficiency
+(same quality, less cost) and effectiveness (same cost, more quality) are its two limbs. The pre-registered experiments
+stay reported under the first limb, exactly as run. One addendum (§7.6, R5) decides the second:
+
+| run | design | selection rule | reading |
+|---|---|---:|---|
+| R5-E · base at the head's compute | base, no head, budget ∈ {14, 16, 18}; pick the budget whose mean tokens/episode is nearest 9,170 (measured on slice 1 first); run on 300 | nearest-tokens, fixed before the 300 | Q_base(≈9,170) < Q_G by more than the paired CI → frontier moved; ≈ equal → success bought with compute |
+| R5-Q · head at the base's quality | G at budgets {10, 8, 6}; smallest budget with success ≥ 18.7%; its tokens vs 6,854 | smallest passing budget | fewer tokens → efficiency limb met; not fewer → the other half of the same answer |
+
+Rule kept: the budget is in the prompt, so each budget is a different agent and is labelled as one. Existing data point,
+stated as expectation not result: base 12 → 24 budget on 80 problems bought +3.7 points for ~2× compute (17ff143-era
+probe); the head bought +11–14 for +34%. Cost: ~4 runs of 300 at ~3.5 h each. 8a re-stops after R5.

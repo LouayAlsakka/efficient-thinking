@@ -74,6 +74,27 @@ prior. Every failure in §7 is a failure of the constraint, not of the objective
 lifecycle (§5) is where the constraint is enforced before anything consolidates, and the regulariser of the
 training objective is its relaxed form.
 
+**The general criterion, of which the above is one limb.** The constraint as written asks for the same capability
+at lower cost. An experienced engineer shows experience in two equivalent ways: given the same hour, she solves
+a problem the novice cannot, or given the same problem, she solves it sooner. Both are one fact about the
+frontier of capability against cost. The general definition is therefore that an experience prior improves the
+frozen model's quality–cost frontier, \(Q_E(C) > Q_0(C)\) over a meaningful range of \(C\), with two
+manifestations:
+
+\[
+\text{efficiency:}\; C_E(Q^*) < C_0(Q^*) \qquad\qquad \text{effectiveness:}\; Q_E(C^*) > Q_0(C^*)
+\]
+
+Every experiment in this paper was pre-registered under the first limb and is reported exactly as it was run; the
+frontier definition is a revision of the theory made after those results, stated here so that §7's cost finding
+is read correctly. Under the first limb the read-only head of §7.4 fails on tokens: it solves more problems and
+spends 34% more compute per episode doing so. Under the frontier it is undecided, because the two points compared
+sit at different compute, and the control that decides it — the frozen model alone given the head's compute
+budget, and the head's minimum compute at the model's own success rate — is the pre-registered addendum in §7.6.
+This is also the series' common objective stated once: efficient thinking is more useful capability per unit of
+computation, and search (Efficient Thinking I) and experience (this paper) are two ways of moving along or moving
+the same curve.
+
 ## 4. Where a Prior Can Act
 
 Before asking which carrier of experience satisfies §3, one has to ask where in an episode a prior can act at
@@ -340,6 +361,28 @@ localisations were the easy ones and the imposed ones were not. The same head is
 repair-bound set, and that is what was measured. **A prior helps only where the thing it improves is what limits
 the agent.** The result is not that experience priors work. It is that this prior works where localisation is
 what limits the agent, and the six negatives of §7.3 are the other half of the same sentence.
+
+### 7.6 Addendum, pre-registered: the frontier control
+
+The cost finding compares two points at different compute: the base at (6,854 tokens, 18.7%) and the head at
+(9,170 tokens, about 31%). Whether the head improves the frontier or merely buys success with compute is decided
+by two runs written before either is made, on the same 300 problems with the same verifier.
+
+- **Effectiveness at equal compute.** The frozen model alone, with no head, given the head's compute: its action
+  budget raised until its mean tokens per episode is nearest 9,170, the budget chosen by that rule and not by the
+  result, from a small ladder (14, 16, 18) measured on one slice first. Because the budget is in the prompt, this
+  is a different agent and is reported as one. Reading: if the equally funded base solves fewer problems than the
+  head by more than the paired interval, the head has moved the frontier — same intelligence, same compute, more
+  solved; if it solves as many, the head bought its success with compute and the frontier is unmoved.
+- **Efficiency at equal quality.** The head at reduced budgets (10, 8, 6): the smallest budget at which it still
+  solves at least the base's 18.7%, and its tokens per episode there against the base's 6,854. Reading: fewer
+  tokens at the base's success is the efficiency limb met; not fewer is the second half of the same answer.
+- **Pre-written expectation, from one data point already held.** On 80 problems of this set, doubling the base's
+  budget from 12 to 24 raised its success from 18.8% to 22.5% — 3.7 points for about twice the compute — while the
+  head's 34% more compute raised it 11 to 14 points. If that holds at 300 the frontier is moved, and the sentence
+  the paper may then use is the one it has so far refused: the same frozen intelligence, having learned from its
+  own history, thinks more effectively per unit of computation. If it does not hold, the head is a better
+  allocation of more compute, as §7.4 says today.
 
 ## 8. Two Carrier Studies, in Brief
 
