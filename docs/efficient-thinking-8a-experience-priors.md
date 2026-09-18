@@ -18,8 +18,13 @@ among the model's own candidate actions. On a task set where each episode is a d
 with 95% intervals that exclude zero. Its cost is stated three ways and the pre-registered one named: per
 episode in actions, the pre-registered measure, it is cheaper; per episode in tokens with the controller's own
 inference counted, it is 34% dearer; per problem solved it is 21% cheaper, a metric chosen after the fact and
-labelled so. As measured, it buys problems solved at a compute premium; whether that premium can be engineered
-below the actions it saves is a question the paper leaves open and names. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
+labelled so. Whether the gain is the experience or the extra compute is decided by a matched control: the frozen
+model alone, given the head's compute to within half a percent, reaches 22.3% where the head reaches 31.7%
+(+9.3, interval [+3.7, +15.0]). At equal compute the head still wins, so under the general criterion of an
+experience prior — improving the model's quality–cost frontier — it is one: the same frozen intelligence, having
+learned from its own history, thinks more effectively per unit of computation. That is one point of the
+frontier, not a curve, and its efficiency limb, the head's minimum compute at the model's own success rate, is
+the paper's last run. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
 thing it improves — here, localisation — is what limits the agent; on a repair-bound set the same head does
 nothing. Two further findings shape what follows. The largest effect of the study was not a prior but a change to
 *when* the agent may act: requiring one observation before the first guess doubled problems solved and cut cost,
