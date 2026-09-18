@@ -1,0 +1,76 @@
+{
+ "document": "R2b RESULT \u2014 the batched scorer, measured against the bar pre-registered in r2b_prereg.json (\u7406 11244)",
+ "supersedes": "results/r2b_blocked.json, which reported 498.7 tokens/episode and an unexplained state mismatch. BOTH were the same defect and the record there is WRONG on its diagnosis. See 'what_was_actually_broken'.",
+ "VERDICT": "FAILS the bar. 528.4 tokens/episode against 502.",
+ "and_it_fails_all_three_bases": "528.4 > 502 (OLS marginal, the chosen one) > 458 (mean/mean) > 406 (budget 12). The reading does not depend on which base was picked, so the pre-registration's 'between 406 and 502' branch never opens.",
+ "the_reading_was_pre_written": "r2b_prereg.json, '> 502': 'it fails, and 8a says G buys success at a compute premium.'",
+ "measurement": {
+  "decisions": 40,
+  "mean_candidates": 4.97,
+  "OLD tokens/episode": 2487.9,
+  "NEW tokens/episode": 528.4,
+  "NEW breakdown": {
+   "prefix_once": 492.3,
+   "region_name_continuations": 36.1
+  },
+  "BAR (pre-registered)": 502,
+  "VERDICT": "FAILS the bar",
+  "seconds_per_decision": {
+   "old": 0.146,
+   "new": 0.007
+  },
+  "agreement_with_the_measured_path": {
+   "note": "SAME token sequence, SAME layer, SAME read position. This is an IDENTITY check, not a similarity check: anything but r ~ 1.0 with a max|diff| at the bf16 noise floor (~2 on states of magnitude ~100) is a defect, and the verdict below is VOID.",
+   "n_checked": 20,
+   "pearson_r_min": 0.999898,
+   "max_abs_diff_max": 0.5,
+   "pearson_r": [
+    0.999941,
+    0.999921,
+    0.99994,
+    0.999931,
+    0.999933,
+    0.999924,
+    0.999924,
+    0.999914,
+    0.999928,
+    0.999931
+   ],
+   "max_abs_diff": [
+    0.375,
+    0.5,
+    0.125,
+    0.375,
+    0.25,
+    0.5,
+    0.5,
+    0.5,
+    0.25,
+    0.375
+   ]
+  }
+ },
+ "what_was_actually_broken": {
+  "reported_before": "'the token arithmetic clears the bar (498.7 vs 502) and the implementation returns states uncorrelated with the measured path (r = 0.16-0.20, max|diff| ~ 100-137)'. Three cache-side hypotheses were tested and rejected WITHOUT THE NUMBERS MOVING AT ALL, and I stopped there and called it blocked.",
+  "the_actual_defect": "TWO bugs, neither in the cache. (1) hidden_batched IGNORED its own `layer` argument: it ran all 28 blocks and returned the FINAL hidden state, while being compared against hidden_at at LAYER 18. r = 0.16-0.20 was a layer mismatch. (2) it read the state one position EARLY -- after the region name, where the measured path reads after region name + '\", \"bug_class\": \"'.",
+  "how_it_was_found": "a four-way isolation instead of a fourth guess: (1) one uncached pass over the whole string, (2) an inline cached split with a fresh cache, (3) the function, (4) hidden_at. (2) vs (3) came back r = 1.000000, max|diff| = 0.000 -- the function was byte-identical to a CORRECT cached split. That is what said the cache was never the suspect, and that the disagreement had to be in WHAT was being read, not HOW.",
+  "the_caveat_was_already_written_down": "the old result JSON's own note said the two paths read at different positions and identity was not expected. I wrote that caveat and then still treated the low correlation as a defect to hunt. Writing a caveat is not propagating it into the code -- the same failure as the outcome-set `list(v)[0]`.",
+  "why_the_fix_COSTS_tokens": "the tail '\", \"bug_class\": \"' is byte-identical across candidates but sits AFTER the differing region name, so it cannot go in the shared prefix and every candidate pays it. 36.1 continuation tokens/episode instead of the ~6.4 the wrong-position version paid. The old 498.7 was under the bar BECAUSE of the bug."
+ },
+ "the_structural_point": {
+  "claim": "on this harness the bar is close to unreachable by ANY batching scheme, and that is a fact about the bar's size, not about this implementation.",
+  "arithmetic": "the shared decision prompt is 492.3 tokens and must be prefilled at least once for the controller to read the state at all. The bar is 502. That leaves 9.7 tokens of headroom for ALL k candidates (mean k = 4.97), i.e. under 2 tokens per candidate. A region name alone does not fit in that.",
+  "bound": "this says nothing about a controller with a SHORTER decision prompt, or one whose state is taken from a pass the agent was going to make anyway. Neither was measured."
+ },
+ "what_this_does_and_does_not_change": {
+  "does_not_change": "the benefit limb. G's +11.3 / +13.0 / +14.0 / +13.3 at n=300 and the action saving of 0.71-0.95 stand untouched; nothing here touches a run.",
+  "does_change": "nothing that was reported. R2 already reported the cost limb as FAILED at +34% total compute. R2b was the attempt to rescue it by batching, and it does not.",
+  "net": "the cost sentence in 8a is unchanged by the whole of R2b: G buys success at a compute premium."
+ },
+ "bounds": [
+  "40 decisions from one run (v3g300L seed 21), not 300. The token counts are prompt lengths and vary little across decisions; the identity check is over the first 20 candidate states.",
+  "seconds_per_decision (old 0.146, new 0.007) is wall clock on llm1's GPU with both paths in one process and is NOT the pre-registered quantity -- the bar is in tokens. It is printed because a 20x wall-clock gap is worth knowing even when the token bar fails.",
+  "the identity check compares the cached path to hidden_at, the function that produced every number in the package. It does not independently verify hidden_at."
+ ],
+ "signed": "Sautee (sha-ta)"
+}

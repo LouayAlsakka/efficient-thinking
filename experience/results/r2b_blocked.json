@@ -1,5 +1,6 @@
 {
- "measurement": "R2b — BLOCKED. The batched scorer's token arithmetic clears the bar and its IMPLEMENTATION DOES NOT REPRODUCE THE MEASURED PATH, so no cost claim is made.",
+ "SUPERSEDED": "by results/r2b.json. THE DIAGNOSIS BELOW IS WRONG. The state mismatch was not a cache bug: hidden_batched ignored its own `layer` argument and returned the final layer while being compared at layer 18, and it read one position early. Fixed, the cost is 528.4 tokens/episode and FAILS the 502 bar -- the 498.7 below was under the bar BECAUSE of the same bug. Kept unedited for the record.",
+ "measurement": "R2b \u2014 BLOCKED. The batched scorer's token arithmetic clears the bar and its IMPLEMENTATION DOES NOT REPRODUCE THE MEASURED PATH, so no cost claim is made.",
  "the_token_arithmetic": {
   "OLD (measured system)": "2,500 tokens/episode at 5.0 candidates",
   "NEW (cached prefix)": "498.7 = prefix 492.3 once + region continuations 6.4",
