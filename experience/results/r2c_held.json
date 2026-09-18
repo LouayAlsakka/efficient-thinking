@@ -1,0 +1,42 @@
+{
+ "document": "R2c — HELD at the selftest, and the selftest is doing its job (理 11300 / r2c_prereg.json)",
+ "STATUS": "VOID by the pre-registered gate. NO COST IS REPORTED. The decision below is 理's, not mine.",
+ "what_passed": {
+  "n": 29,
+  "pearson_r_min": 0.999885,
+  "max_abs_diff_max": 0.625,
+  "PASS": true
+ },
+ "what_failed": {
+  "n": 6,
+  "identical": 4,
+  "PASS": false,
+  "detail": "the agent's generated TEXT differs from an uncached generate on 2 of 6 selftest decisions."
+ },
+ "WHAT_THE_DIVERGENCE_ACTUALLY_IS": {
+  "measured_at_n40": {
+   "raw_text_identical": "33/40 = 82.5%",
+   "PARSED_ACTION_identical": "40/40 = 100.0%  (action, region, bug_class)"
+  },
+  "reading": "the shared cache NEVER changed what the agent DID. It changed the wording of the free-text `why` field in 17.5% of decisions. Both failing selftest cases emitted the SAME bug_class ('naive_datetime') and differed only in the prose after it.",
+  "example": {
+   "uncached": "...'why': 'The code attempts to convert all tokens to float, which might fail for datetime strings.'",
+   "cached": "...'why': 'The code attempts to convert all tokens to float, which might fail if tokens are dates or other non-numeric strings.'"
+  },
+  "cause": "NOT a broken cache. The states pass their identity check at r_min 0.999885, max|diff| 0.625 -- the bf16 noise floor. Greedy decoding is chaotic with respect to that noise: one argmax near-tie flips and the trajectories separate. Over 100+ tokens that is expected, not anomalous.",
+  "what_it_is_NOT": "it is not the pre-registered 'cannot share the cache' branch. The cache IS shared, the prefix IS paid once, and the states ARE correct."
+ },
+ "THE_DECISION_AND_WHY_IT_IS_NOT_MINE": {
+  "the_problem": "I wrote the gate as RAW TEXT identity before the run. It fails. Loosening it now, having seen it fail, is choosing an instrument by its answer -- which is the one move this package has spent a week refusing.",
+  "reading_A_strict_text": "R2c FAILS. 8a carries the compute premium, unchanged from R2 and R2b.",
+  "reading_B_parsed_action": "the gate becomes 'the shared cache does not change what the agent DOES', which is the quantity the harness scores and the quantity every result in the package is computed from. It passes at 40/40 and the cost may be reported.",
+  "my_recommendation_only": "B, because the harness scores (action, region, bug_class) and never reads `why`; a rationale reworded by bf16 noise is not a different agent in any sense the measurements can see. But I have not applied it and will not.",
+  "what_I_did_NOT_do": "I did not edit the gate, did not re-run under a looser test, and did not compute a cost number. The result file says VOID."
+ },
+ "bounds": [
+  "40 decisions, Qwen2.5-7B, temp 0. A different model or a longer max_tokens could diverge more; not measured.",
+  "100% parsed-action agreement at n=40 is not a proof of 0% divergence -- it bounds it loosely, and a rate that low needs a bigger n to pin.",
+  "The 17.5% text divergence is a property of greedy decoding under bf16, not of this implementation; an uncached run re-run twice on different hardware could show the same."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
