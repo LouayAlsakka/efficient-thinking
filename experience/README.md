@@ -188,3 +188,7 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   count only tokens the agent would not otherwise pay; bar 502; expectation 36–180 tokens → pass.
 - R4: floor 5% on 300 fired for Llama-3.2-3B-4bit (1.5%). ONE further model, different family, comparable size
   (Llama-3.1-8B-Instruct-4bit if it fits); if it floors, R4 = "out of range", generality handed to 8c/8d. No third model.
+- 2026-09-18 08:5xZ (理): R2c VOID as written (raw-text identity 33/40) — a pre-registered gate is not relaxed after it fails.
+  R2d pre-registered: (i) calibration — uncached vs uncached raw-text identity n=40 (does the strict gate measure the cache
+  or bf16 decoding?); (ii) parsed-action identity n=300; (iii) paired outcomes cached vs uncached identical on the 75. All
+  three → cost under R2d with R2c's failure + calibration printed. GPU order: WO-297 gate → R2d → 8a stops.
