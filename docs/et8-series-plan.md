@@ -44,6 +44,12 @@ working-tree moves; the ceiling that moved a target before the run. Each with th
 
 **Move to 8c:** the poet study and the chess anchor in full (8a keeps one paragraph each as carrier evidence).
 
+**Candidate for 8c/8d (from R2's second review, 2026-09-19): a single-pass head.** The +34% token premium at budget 12 is the
+k prefix passes that enumerate candidates. A head that reads the post-inspect state ONCE and emits a distribution over
+candidate families (no prefix passes) would remove the premium entirely; R6(a) (self-rerank by the model's own logprob) is
+the nearest baseline. Not for 8a: R5-Q already shows compute neutrality by budget, and a new head is a new mechanism with
+its own ladder.
+
 **Drop from 8a (hand to 8b/8d):** §5 lifecycle detail, §9 individual vs shared, §15 sleep, §17–19 as written.
 
 ## ET-1 … ET-7 — the same lens
