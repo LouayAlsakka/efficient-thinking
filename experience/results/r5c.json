@@ -1,0 +1,224 @@
+{
+ "document": "R5-C — the quality-cost frontier as a CURVE (理 11395/11397)",
+ "controller_cost_added_to_every_head_point": 2487.9,
+ "base_curve": {
+  "8": {
+   "n": 300,
+   "success_pct": 15.7,
+   "model_tokens": 4424.0,
+   "all_in_tokens": 4424.0,
+   "actions": 7.34
+  },
+  "12": {
+   "n": 300,
+   "success_pct": 18.7,
+   "model_tokens": 6854.4,
+   "all_in_tokens": 6854.4,
+   "actions": 10.63
+  },
+  "14": {
+   "n": 300,
+   "success_pct": 20.3,
+   "model_tokens": 8121.1,
+   "all_in_tokens": 8121.1,
+   "actions": 12.31
+  },
+  "16": {
+   "n": 300,
+   "success_pct": 22.3,
+   "model_tokens": 9234.2,
+   "all_in_tokens": 9234.2,
+   "actions": 13.75
+  },
+  "18": {
+   "n": 300,
+   "success_pct": 22.0,
+   "model_tokens": 10339.2,
+   "all_in_tokens": 10339.2,
+   "actions": 15.22
+  },
+  "24": {
+   "n": 300,
+   "success_pct": 24.0,
+   "model_tokens": 13858.2,
+   "all_in_tokens": 13858.2,
+   "actions": 19.81
+  }
+ },
+ "head_curve": {
+  "6": {
+   "n": 300,
+   "success_pct": 24.0,
+   "model_tokens": 3491.4,
+   "all_in_tokens": 5979.3,
+   "actions": 5.53
+  },
+  "8": {
+   "n": 300,
+   "success_pct": 27.0,
+   "model_tokens": 4546.6,
+   "all_in_tokens": 7034.5,
+   "actions": 6.98
+  },
+  "10": {
+   "n": 300,
+   "success_pct": 35.0,
+   "model_tokens": 5566.4,
+   "all_in_tokens": 8054.3,
+   "actions": 8.29
+  },
+  "12": {
+   "n": 300,
+   "success_pct": 31.7,
+   "model_tokens": 6706.2,
+   "all_in_tokens": 9194.1,
+   "actions": 9.85
+  }
+ },
+ "EXCLUDED_as_incomplete": {},
+ "why_excluded": "a budget with fewer than 300 finished problems is NOT plotted and NOT quoted. A partial arm on a curve is invisible -- it looks like every other point.",
+ "head_points_vs_nearest_compute_base_point": [
+  {
+   "head_budget": 6,
+   "head_tokens_all_in": 5979.3,
+   "head_success": 24.0,
+   "nearest_base_budget": 12,
+   "base_tokens": 6854.4,
+   "base_success": 18.7,
+   "compute_gap_pct": 14.64,
+   "paired_head_minus_base": {
+    "n": 300,
+    "delta_points": 5.3,
+    "ci95": [
+     0.3,
+     10.3
+    ]
+   }
+  },
+  {
+   "head_budget": 8,
+   "head_tokens_all_in": 7034.5,
+   "head_success": 27.0,
+   "nearest_base_budget": 12,
+   "base_tokens": 6854.4,
+   "base_success": 18.7,
+   "compute_gap_pct": -2.56,
+   "paired_head_minus_base": {
+    "n": 300,
+    "delta_points": 8.3,
+    "ci95": [
+     3.0,
+     14.0
+    ]
+   }
+  },
+  {
+   "head_budget": 10,
+   "head_tokens_all_in": 8054.3,
+   "head_success": 35.0,
+   "nearest_base_budget": 14,
+   "base_tokens": 8121.1,
+   "base_success": 20.3,
+   "compute_gap_pct": 0.83,
+   "paired_head_minus_base": {
+    "n": 300,
+    "delta_points": 14.7,
+    "ci95": [
+     9.3,
+     20.0
+    ]
+   }
+  },
+  {
+   "head_budget": 12,
+   "head_tokens_all_in": 9194.1,
+   "head_success": 31.7,
+   "nearest_base_budget": 16,
+   "base_tokens": 9234.2,
+   "base_success": 22.3,
+   "compute_gap_pct": 0.44,
+   "paired_head_minus_base": {
+    "n": 300,
+    "delta_points": 9.3,
+    "ci95": [
+     3.7,
+     15.0
+    ]
+   }
+  }
+ ],
+ "SCOPE_SENTENCE_that_every_conclusion_must_carry": "This curve covers base budgets [8, 12, 14, 16, 18, 24] and head budgets [6, 8, 10, 12], on v3 seed 21's 300 problems, Qwen2.5-7B-Instruct.  No conclusion drawn from it may be stated more broadly than that -- 理's rule (nirai 11399): a stated exclusion in a measurement becomes a silent omission in the conclusion built on it, so the exclusion is restated INSIDE the conclusion or the conclusion is scoped to the measurement.",
+ "readings_written_before_the_runs": {
+  "above across the range": "the frontier is moved over THE RANGE MEASURED (named in SCOPE_SENTENCE), not a point and not 'in general'",
+  "cross at low budget": "the head helps only where it has room to act (§7.5's bound in cost terms)",
+  "merge at high budget": "compute substitutes for experience there; print the range"
+ },
+ "bounds": [
+  "Each budget is a DIFFERENT AGENT (the budget is in the prompt); no point is a truncation of another.",
+  "Head tokens are ALL-IN (model + R2b's measured controller). Model-tokens-only would flatter the head by ~2.5k/episode.",
+  "One seed (v3 seed 21), one model, 300 problems per point, paired per problem.",
+  "A paired CI is computed only where the two arms cover the same 300 problems; None means they did not and no interval is quoted."
+ ],
+ "THE_RESULT": {
+  "equal quality, 2.3x the compute": "base@24 reaches 24.0% at 13858.2 tokens/episode. head@6 reaches the SAME 24.0% at 5979.3. Paired on the same 300 the difference is +0.0 points, CI [-5.3, +5.3], McNemar p = 1.0 with 33 discordant pairs EACH WAY -- as close to identical quality as this instrument can show. The head spent 2.32x LESS compute, 5.53 actions against 19.81.",
+  "and the base never reaches the head's best": "the head's best measured point is 35.0%% at 8,054 tokens. The base's best across 4,424-13,858 tokens is 24.0%%. At 1.7x the head's spend the base does not reach what the head reaches at 8k.",
+  "the plateau extends to the top": "base@18 -> base@24 (+34%% compute) is +2.0 points, CI [-1.7, +5.7], p = 0.377 -- not established. The base is flat from 9.2k to 13.9k tokens."
+ },
+ "WHICH_PRE_WRITTEN_READING_APPLIES": {
+  "above across the range": "YES. Every head point is above the base curve at comparable compute; the four nearest-compute pairings are +5.3 / +8.3 / +14.7 / +9.3, all CIs excluding zero.",
+  "cross at low budget": "NOT OBSERVED in the measured range. head@6, the cheapest head point, still beats base@12 by +5.3 [+0.3, +10.3]. The curves may still cross BELOW 5,979 tokens -- outside what was measured, and 8a must not claim otherwise.",
+  "merge at high budget": "NOT OBSERVED. The base at its top (13,858 tokens) equals the head's CHEAPEST point, not its best. Compute does not substitute for the prior anywhere in this range."
+ },
+ "tests_behind_the_two_sentences": {
+  "base@18_vs_base@24": {
+   "pair": "base@24 vs base@18 (+34% compute)",
+   "n": 300,
+   "base_success_pct": 22.0,
+   "G_success_pct": 24.0,
+   "success_delta_points": 2.0,
+   "success_95CI": [
+    -1.7,
+    5.7
+   ],
+   "base_actions": 15.22,
+   "G_actions": 19.81,
+   "actions_delta": 4.6,
+   "actions_95CI": [
+    4.06,
+    5.14
+   ],
+   "McNemar": {
+    "base_only_solved": 13,
+    "G_only_solved": 19,
+    "discordant": 32,
+    "exact_two_sided_p": 0.3771
+   },
+   "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+  },
+  "head@6_vs_base@24": {
+   "pair": "head@6 vs base@24 — same success, what did each spend?",
+   "n": 300,
+   "base_success_pct": 24.0,
+   "G_success_pct": 24.0,
+   "success_delta_points": 0.0,
+   "success_95CI": [
+    -5.3,
+    5.3
+   ],
+   "base_actions": 19.81,
+   "G_actions": 5.53,
+   "actions_delta": -14.28,
+   "actions_95CI": [
+    -15.09,
+    -13.47
+   ],
+   "McNemar": {
+    "base_only_solved": 33,
+    "G_only_solved": 33,
+    "discordant": 66,
+    "exact_two_sided_p": 1.0
+   },
+   "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+  }
+ }
+}
