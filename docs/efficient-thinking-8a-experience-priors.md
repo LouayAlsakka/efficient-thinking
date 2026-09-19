@@ -22,9 +22,10 @@ labelled so. Whether the gain is the experience or the extra compute is decided 
 model alone, given the head's compute to within half a percent, reaches 22.3% where the head reaches 31.7%
 (+9.3, interval [+3.7, +15.0]). At equal compute the head still wins, so under the general criterion of an
 experience prior — improving the model's quality–cost frontier — it is one: the same frozen intelligence, having
-learned from its own history, thinks more effectively per unit of computation. That is one point of the
-frontier, not a curve, and its efficiency limb, the head's minimum compute at the model's own success rate, is
-the paper's last run. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
+learned from its own history, thinks more effectively per unit of computation. On the efficiency limb the
+head is compute-neutral at budget 8 and solves 8.3 more problems in a hundred (interval [+3.0, +14.0]); both limbs
+hold on this task set. What remains is the frontier as a curve rather than two points, the strongest simple
+baselines at equal compute, and a second search structure. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
 thing it improves — here, localisation — is what limits the agent; on a repair-bound set the same head does
 nothing. Two further findings shape what follows. The largest effect of the study was not a prior but a change to
 *when* the agent may act: requiring one observation before the first guess doubled problems solved and cut cost,
@@ -422,6 +423,29 @@ lead — the failures of R2b through R2d bound this result conservatively rather
 criterion of §3, then, the head is an experience prior on the effectiveness limb: the same frozen intelligence,
 having learned from its own history, solves more at the same computation. The efficiency limb — the head's
 minimum compute at the base's success — is the last run.
+
+**Result, efficiency at equal quality: the limb passes, at the row the statistics support.** The head at reduced
+budgets, every row charged the measured controller cost, paired against the same base on the same 300:
+
+| arm | tokens/episode, all in | success | vs base |
+|---|---:|---:|---:|
+| base, budget 12 | 6,854 | 18.7% | — |
+| G, budget 6 | 5,979 (−12.8%) | 24.0% | +5.3 [+0.3, +10.3], p 0.052 |
+| G, budget 8 | 7,034 (+2.6%) | 27.0% | +8.3 [+3.0, +14.0], p 0.005 |
+| G, budget 10 | 8,054 (+17.5%) | 35.0% | +16.3 [+11.0, +22.0], p 4×10⁻⁸ |
+| G, budget 12 | 9,194 (+34%) | 31.7% | +13.0 |
+
+The pre-registered rule — the smallest budget at which the head still solves at least the base's 18.7% — selects
+budget 6, at 12.8% less compute than the base, and that is a real sentence; but its interval barely excludes zero
+and McNemar reads 0.052, so clearing the bar and demonstrating a difference come apart at exactly that row, and
+the claim is made at the next one: at budget 8 the head is compute-neutral to within 2.6% and solves 8.3 more
+problems in a hundred, p = 0.005. Both are printed, the cheaper point with its borderline flagged. One ordering is
+not printed as an ordering: budget 10 scores above the measured system's budget 12, and the paired test says the
+two are not separated (+3.3, interval [−1.7, +8.3]); success is flat across budgets 10 to 12, and there is no
+optimum to report. Both limbs of the general criterion now read on this task set: compute-matched with the base
+handed more, +9.3; compute-neutral, +8.3; and the same conservative bound applies to every head row, since the
+controller is charged at its measured, unbatched cost. The frontier as a curve, base and head at six and four
+budgets across five to fifteen thousand tokens, is the run in progress.
 
 ### 7.7 Pre-registered: the strongest simple baselines, and a second search structure
 
