@@ -1,0 +1,78 @@
+{
+ "document": "R5-Q RESULT — the EFFICIENCY limb: how cheaply G reaches the base's success (理 11364)",
+ "bar_pre_registered": "the smallest budget whose success >= 18.7% (the base's own 300 at budget 12)",
+ "base_reference": {
+  "success": "18.7%",
+  "tokens": 6854.4,
+  "actions": 10.63
+ },
+ "ALL_IN_ACCOUNTING": "every head row charges R2b's MEASURED controller cost of 2487.9 tokens/episode ON TOP of its model tokens. The ladder's raw JSON is model-tokens-only and says so; these are the numbers any frontier claim must use.",
+ "ladder": [
+  {
+   "head_budget": 10,
+   "success_pct": 35.0,
+   "model_tokens": 5566.4,
+   "ALL_IN_tokens": 8054.3,
+   "compute_vs_base_pct": 17.5,
+   "actions": 8.29,
+   "paired_vs_base": {
+    "delta_points": 16.3,
+    "ci95": [
+     11.0,
+     22.0
+    ],
+    "mcnemar_p": 3.641e-08
+   }
+  },
+  {
+   "head_budget": 8,
+   "success_pct": 27.0,
+   "model_tokens": 4546.6,
+   "ALL_IN_tokens": 7034.5,
+   "compute_vs_base_pct": 2.6,
+   "actions": 6.98,
+   "paired_vs_base": {
+    "delta_points": 8.3,
+    "ci95": [
+     3.0,
+     14.0
+    ],
+    "mcnemar_p": 0.004626
+   }
+  },
+  {
+   "head_budget": 6,
+   "success_pct": 24.0,
+   "model_tokens": 3491.4,
+   "ALL_IN_tokens": 5979.3,
+   "compute_vs_base_pct": -12.8,
+   "actions": 5.53,
+   "paired_vs_base": {
+    "delta_points": 5.3,
+    "ci95": [
+     0.3,
+     10.3
+    ],
+    "mcnemar_p": 0.05189
+   }
+  }
+ ],
+ "SMALLEST_BUDGET_CLEARING_THE_BAR": 6,
+ "THE_EFFICIENCY_RESULT": {
+  "G@6": "24.0% at 5,979 ALL-IN tokens — 12.8% CHEAPER than the base AND 5.3 points better. ⚠️ BORDERLINE: CI [+0.3, +10.3] barely excludes zero and McNemar p = 0.052 does NOT clear 0.05. The pre-registered bar (success >= 18.7%) is cleared; the CLAIM that G@6 beats the base is not established at conventional significance.",
+  "G@8": "27.0% at 7,034 ALL-IN — +2.6% compute, essentially compute-NEUTRAL — +8.3 points [+3.0, +14.0], McNemar p = 0.0046. THIS is the clean statement of the efficiency limb.",
+  "the sentence I would print": "at essentially equal total compute (+2.6%) the head is 8.3 points better than the base [3.0, 14.0], p = 0.005; and it still exceeds the base's success while spending 12.8% LESS, though that cheaper point is borderline."
+ },
+ "NON_MONOTONICITY_CHECKED_NOT_ASSUMED": {
+  "observation": "G@10 = 35.0% scores HIGHER than G@12 = 31.7% — the measured system's own budget was not its best point.",
+  "the test": "paired, same 300: +3.3 points, 95%% CI [-1.7, +8.3], McNemar p = 0.237",
+  "reading": "NOT ESTABLISHED. The interval contains zero. G@10 looking better than G@12 is not distinguishable from noise here, and I am not claiming a peak. It is worth printing only as 'success is flat across budgets 10-12', not as an optimum."
+ },
+ "bounds": [
+  "One seed (v3 seed 21), one model, 300 problems per point, paired per problem against the SAME base.",
+  "EACH BUDGET IS A DIFFERENT AGENT — the budget is in the prompt; no row is a truncation of another.",
+  "The controller cost is R2b's measured figure for the MEASURED system (k separate full-prompt passes). A cheaper controller would move every head row left and only strengthen this.",
+  "The bar was 'success >= the base's 18.7%'. Clearing a bar is not the same as a significant difference, and G@6 is exactly the case where those two readings diverge."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
