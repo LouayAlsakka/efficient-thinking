@@ -1,0 +1,78 @@
+{
+ "document": "R7 PROBE — the head re-fitted from the SQL environment's own base episodes (理 11552/11568)",
+ "layers": {
+  "18": {
+   "weights": "head_layer18.npz in the states dir (w, b, mu, sd, train_task_max)",
+   "head_pick_pct": 89.3,
+   "held_out_decisions": 75,
+   "CONTROL_permuted_labels_pct": [
+    20.0,
+    28.0,
+    28.0,
+    16.0,
+    16.0
+   ],
+   "CONTROL_pca8_pct": 29.3,
+   "CONTROL_n100_pct": 54.1,
+   "CONTROL_n100_draws_pct": [
+    45.3,
+    54.7,
+    54.7,
+    57.3,
+    58.7
+   ],
+   "fit_iterations": 373,
+   "fit_hit_iteration_cap": false,
+   "chance_pct": 20.9
+  },
+  "27": {
+   "weights": "head_layer27.npz in the states dir (w, b, mu, sd, train_task_max)",
+   "head_pick_pct": 93.3,
+   "held_out_decisions": 75,
+   "CONTROL_permuted_labels_pct": [
+    25.3,
+    22.7,
+    29.3,
+    18.7,
+    18.7
+   ],
+   "CONTROL_pca8_pct": 48.0,
+   "CONTROL_n100_pct": 60.8,
+   "CONTROL_n100_draws_pct": [
+    60.0,
+    62.7,
+    54.7,
+    68.0,
+    58.7
+   ],
+   "fit_iterations": 386,
+   "fit_hit_iteration_cap": false,
+   "chance_pct": 20.9
+  }
+ },
+ "decisions": 300,
+ "candidate_states": 1437,
+ "agent_pick_accuracy_on_heldout": 30.7,
+ "WHICH_OF_理S_THREE_OUTCOMES": "(i) — the probe is far above chance and every control behaves. The mechanism reads out of this environment's states. Whether the SEARCH can use it is G's question, not the probe's, and (iii) stays open until G runs.",
+ "THE_FOURTH_CONTROL_I_ADDED_BECAUSE_93_PERCENT_DEMANDS_IT": {
+  "why": "89-93% is far above v3's 56%. A permutation control does not rule out leakage — my own v1 failure was a probe at 100% that PASSED permutation with the label sitting in the prompt. So I asked what a SIMPLE RULE on the prompt text alone can get.",
+  "trivial region rules": {
+   "always the commonest clause (join)": "28.7%",
+   "always the inspected clause": "18.0%",
+   "uniform over the non-inspected": "21.7%"
+  },
+  "SYMPTOM-ONLY LOOKUP TABLE": {
+   "feature": "(observed rows, expected rows, delta, sign) — readable off the symptom line with no model at all",
+   "held_out": "43/75 = 57.3%",
+   "sign only": "58.7%"
+  },
+  "reading": "the symptom line alone is worth ~57%, FAR above chance (20.9%) and FAR below the head (93.3%). SQL repair is partly legible from the row-count signature — a real property of this environment that v3 did not have — and the head is well above it. 📌 AND THE AGENT ITSELF SCORES 30.7%, BELOW the symptom-only table: the model does not use information already in its own prompt, and the head recovers it."
+ },
+ "LAYER_CHOICE": "layer 18 is carried into G although layer 27 scores 4 points higher (93.3 vs 89.3). 18 is the layer every 8a arm used; switching because the other scored better would be choosing an instrument by its answer. Both printed.",
+ "bounds": [
+  "One seed (21), 300 decisions, 1,437 candidate states, held out by task (225/75).",
+  "Chance is PER TASK here (k = 4 or 5); the reported 20.9% is the mean over held-out decisions.",
+  "A probe is not the bar. 理 11068: problems solved and cost on a paired run."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
