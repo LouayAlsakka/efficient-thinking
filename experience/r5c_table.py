@@ -104,8 +104,18 @@ out = {"document": "R5-C — the quality-cost frontier as a CURVE (理 11395/113
                        "quoted. A partial arm on a curve is invisible -- it looks like every other "
                        "point." % EXPECT,
        "head_points_vs_nearest_compute_base_point": rows,
+       "SCOPE_SENTENCE_that_every_conclusion_must_carry": (
+           "This curve covers base budgets %s and head budgets %s, on v3 seed 21's 300 problems, "
+           "Qwen2.5-7B-Instruct. %s No conclusion drawn from it may be stated more broadly than "
+           "that -- 理's rule (nirai 11399): a stated exclusion in a measurement becomes a silent "
+           "omission in the conclusion built on it, so the exclusion is restated INSIDE the "
+           "conclusion or the conclusion is scoped to the measurement."
+           % (sorted(base) or "none", sorted(head) or "none",
+              ("EXCLUDED as incomplete: %s. " % {k: v for k, v in incomplete.items() if v})
+              if any(incomplete.values()) else "")),
        "readings_written_before_the_runs": {
-           "above across the range": "the frontier is moved over a RANGE, not a point",
+           "above across the range": "the frontier is moved over THE RANGE MEASURED (named in "
+                                     "SCOPE_SENTENCE), not a point and not 'in general'",
            "cross at low budget": "the head helps only where it has room to act (§7.5's bound in cost terms)",
            "merge at high budget": "compute substitutes for experience there; print the range"},
        "bounds": ["Each budget is a DIFFERENT AGENT (the budget is in the prompt); no point is a "
@@ -128,6 +138,7 @@ for i in range(max(len(bs), len(hs))):
     r = ("       %-6d %8.1f %7.1f%% %7.2f" % (hs[i][0], hs[i][1]["all_in_tokens"],
          hs[i][1]["success_pct"], hs[i][1]["actions"])) if i < len(hs) else ""
     print(l + r)
+print("\n  SCOPE: " + out["SCOPE_SENTENCE_that_every_conclusion_must_carry"][:200])
 print("\n  HEAD vs NEAREST-COMPUTE BASE")
 for r in rows:
     st = r["paired_head_minus_base"]
