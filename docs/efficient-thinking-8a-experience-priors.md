@@ -558,6 +558,11 @@ design and pre-registration; both are pseudonymous here and belong to no institu
     set and the other on the other.
 12. **09-18.** P9's second generation reported the first's numbers exactly; the states were byte-identical (§4,
     §9). The outcome-weighted target moved the probe and not the decisions.
+12a. **09-19.** With the matched-compute point read on both limbs (§7.6), R set the stop rule this paper adopts:
+    the two §7.7 controls — the model's own preference at the same decision and cost, and a second search
+    structure with the head re-fitted — close the empirical story, and further work belongs to the next papers
+    rather than to a larger 8a. R's one-line reading of the core result is the one §10 keeps: the same frozen
+    model, informed by verified history, obtains more task success from the same inference computation.
 13. **Throughout.** Two runs were lost to moving the working tree under a process that was writing to it; three
     artefacts a later question needed had not been the artefacts a run was written to save; one results table was
     typed from memory and corrected the same minute; one counting function assumed the single-outcome property its
