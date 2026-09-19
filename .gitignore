@@ -69,3 +69,5 @@ reasoning/data/
 # decomposition. et6's chess self-play games were kept only in memory and are GONE, which is why
 # P8's adapter had nothing to confirm; v0's task files were never committed and its numbers are
 # permanently unauditable. 26 MB total. Persist what a later question needs, or mark the claim.
+!docs/series-completion-plan.md
+!docs/et8b-loop-gates.md
