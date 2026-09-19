@@ -1,0 +1,62 @@
+{
+ "task_id": "task_0269",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "where",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.name, d.dname FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE e.salary >= 90 ORDER BY e.name",
+ "clean": "SELECT e.name, d.dname FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE e.salary > 90 ORDER BY e.name",
+ "parts": {
+  "select": "e.name, d.dname",
+  "where": "e.salary >= 90",
+  "join": "JOIN dept d ON e.dept_id = d.id AND d.region = 'east'",
+  "group": "",
+  "order": "ORDER BY e.name"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   "eng"
+  ],
+  [
+   "el",
+   "sales"
+  ],
+  [
+   "gu",
+   "eng"
+  ]
+ ],
+ "got_rows": [
+  [
+   "ada",
+   "eng"
+  ],
+  [
+   "bo",
+   "eng"
+  ],
+  [
+   "el",
+   "sales"
+  ],
+  [
+   "gu",
+   "eng"
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "order",
+  "select"
+ ],
+ "_signature": "46cf84480eeb",
+ "tests": "expected result set (3 rows) on the fixed fixtures"
+}

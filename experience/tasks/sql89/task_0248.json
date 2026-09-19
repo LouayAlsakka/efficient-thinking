@@ -1,0 +1,59 @@
+{
+ "task_id": "task_0248",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.dept_id, MIN(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.salary >= 95 GROUP BY e.dept_id ORDER BY 1, 2",
+ "clean": "SELECT e.dept_id, MAX(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.salary >= 95 GROUP BY e.dept_id ORDER BY 1, 2",
+ "parts": {
+  "select": "e.dept_id, MIN(e.salary)",
+  "where": "e.salary >= 95",
+  "join": "JOIN dept d ON e.dept_id = d.id",
+  "group": "GROUP BY e.dept_id",
+  "order": "ORDER BY 1, 2"
+ },
+ "expected_rows": [
+  [
+   10,
+   160
+  ],
+  [
+   20,
+   140
+  ],
+  [
+   30,
+   110
+  ]
+ ],
+ "got_rows": [
+  [
+   10,
+   120
+  ],
+  [
+   20,
+   95
+  ],
+  [
+   30,
+   110
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "group",
+  "join",
+  "order"
+ ],
+ "_signature": "435fdc105a88",
+ "tests": "expected result set (3 rows) on the fixed fixtures"
+}

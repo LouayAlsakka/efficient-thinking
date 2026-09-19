@@ -1,0 +1,66 @@
+{
+ "task_id": "task_0279",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "where",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.name, d.dname FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE d.dname = 'sales' ORDER BY 1, 2",
+ "clean": "SELECT e.name, d.dname FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE d.dname <> 'sales' ORDER BY 1, 2",
+ "parts": {
+  "select": "e.name, d.dname",
+  "where": "d.dname = 'sales'",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY 1, 2"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   "eng"
+  ],
+  [
+   "bo",
+   "eng"
+  ],
+  [
+   "cy",
+   "ops"
+  ],
+  [
+   "di",
+   "ops"
+  ],
+  [
+   "gu",
+   "eng"
+  ],
+  [
+   "ha",
+   "ops"
+  ]
+ ],
+ "got_rows": [
+  [
+   "el",
+   "sales"
+  ],
+  [
+   "fi",
+   "sales"
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "order",
+  "select"
+ ],
+ "_signature": "9df8ae92183d",
+ "tests": "expected result set (6 rows) on the fixed fixtures"
+}

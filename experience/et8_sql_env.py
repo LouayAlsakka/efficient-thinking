@@ -165,9 +165,19 @@ def main():
     ap.add_argument("--n", type=int, default=300)
     ap.add_argument("--seed", type=int, default=21)
     ap.add_argument("--out", default="tasks/sql")
+    ap.add_argument("--exclude", default=None,
+                    help="a task dir whose signatures must NOT be reused. The grammar is finite, so "
+                         "two seeds collide: seed 21 and seed 47 shared 23 signatures. A 'disjoint' "
+                         "set that shares problems with the training set is not disjoint, and the "
+                         "overlap is silent unless excluded here.")
     a = ap.parse_args()
     rng = random.Random(a.seed)
     seen, tasks, tries = set(), [], 0
+    if a.exclude:
+        import glob as _g
+        for f in _g.glob(os.path.join(a.exclude, "task_*.json")):
+            seen.add(json.load(open(f))["_signature"])
+        print("  excluding %d signatures from %s" % (len(seen), a.exclude))
     while len(tasks) < a.n and tries < a.n * 400:
         tries += 1
         t = make_task(len(tasks) + 1, rng, seen)
@@ -186,6 +196,22 @@ def main():
     print("  k varies: region counts %s -> chance is PER TASK, not constant" % ks)
     import collections
     print("  bug region spread: %s" % dict(collections.Counter(t["bug_region"] for t in tasks)))
+    # P3, ENFORCED AT GENERATION rather than discovered afterwards. A held-out lookup table keyed on
+    # the row-count signature must not exceed 60%. This environment sits ON the boundary: across
+    # eight seeds it ranged 56.0-69.3%, so a set MUST be checked, never assumed. seed 47 failed at
+    # 61.3% and a G run was stopped on it.
+    rows = [((len(x["got_rows"]), len(x["expected_rows"]),
+              len(x["got_rows"]) - len(x["expected_rows"])), x["bug_region"]) for x in tasks]
+    cut = int(0.75 * len(rows))
+    tr, te = rows[:cut], rows[cut:]
+    tab = collections.defaultdict(collections.Counter)
+    for f, b in tr:
+        tab[f][b] += 1
+    maj = collections.Counter(b for _, b in tr).most_common(1)[0][0] if tr else None
+    hit = sum(1 for f, b in te if (tab[f].most_common(1)[0][0] if f in tab else maj) == b)
+    p3 = 100.0 * hit / max(1, len(te))
+    print("  P3  held-out symptom lookup table %.1f%%   (gate <= 60%%) -> %s"
+          % (p3, "PASSES" if p3 <= 60 else "*** FAILS — do not run on this set ***"))
 
 
 if __name__ == "__main__":

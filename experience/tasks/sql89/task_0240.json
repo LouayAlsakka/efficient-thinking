@@ -1,0 +1,73 @@
+{
+ "task_id": "task_0240",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.id, d.dname FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.hired > '2019-01-01' ORDER BY 1, 2",
+ "clean": "SELECT e.name, d.dname FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.hired > '2019-01-01' ORDER BY 1, 2",
+ "parts": {
+  "select": "e.id, d.dname",
+  "where": "e.hired > '2019-01-01'",
+  "join": "JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY 1, 2"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   "eng"
+  ],
+  [
+   "bo",
+   "eng"
+  ],
+  [
+   "di",
+   "ops"
+  ],
+  [
+   "fi",
+   "sales"
+  ],
+  [
+   "ha",
+   "ops"
+  ]
+ ],
+ "got_rows": [
+  [
+   1,
+   "eng"
+  ],
+  [
+   2,
+   "eng"
+  ],
+  [
+   4,
+   "ops"
+  ],
+  [
+   6,
+   "sales"
+  ],
+  [
+   8,
+   "ops"
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "order"
+ ],
+ "_signature": "7e9d770304f8",
+ "tests": "expected result set (5 rows) on the fixed fixtures"
+}
