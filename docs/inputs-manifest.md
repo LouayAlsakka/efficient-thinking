@@ -49,12 +49,18 @@ inputs exactly; if III's rows above are good, VII E-E is unblocked.
 
 ## Replication
 
-| file set | llm1 | llm2 | note |
+| file set | llm1 | llm2 | verified |
 |---|---|---|---|
-| III data (2 files, 1.2 MB) | ✅ `~/chess-scaling/reasoning/data/` | pending | |
-| III caches (8 files, 104 MB) | ✅ `~/chess-scaling/reasoning/cache/` | pending | the 4 policies × 2 task sets the judge opens |
+| III data (2 files, 1.2 MB) | ✅ `~/chess-scaling/reasoning/data/` | ✅ `~/et_inputs/reasoning/data/` | md5 both ends, 2026-09-19 |
+| III caches (8 files, 104 MB) | ✅ `~/chess-scaling/reasoning/cache/` | ✅ `~/et_inputs/reasoning/cache/` | md5 both ends, 2026-09-19 |
 
-⛔ **"Exists only on llm1" is true until that column says otherwise.**
+✅ **"Exists only on llm1" is no longer true for III.** All ten files were copied to llm2 and
+**every one verified by md5 on BOTH ends** — a copy that completes is not a copy that is correct,
+and `scp` exiting 0 is not evidence. The originals were read only.
+
+⚠️ **IV's three files are still single-box (llm1, in the repo's own untracked `poetry/data/`).**
+Not replicated: IV is parked pending a rater, so nothing is scheduled against them — but the row
+stays here so it is not forgotten when it unparks.
 
 ## How to verify a row rather than trust it
 
