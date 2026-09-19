@@ -178,3 +178,17 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   outcome (1.0 solved / 0.5 correct-but-failed / 0 wrong); eval on 47's 75 vs the seed-21 L-BFGS head (32.0%, 9.76) and
   base; PASS ≥ G0 at no higher cost / STRONG > 1 SE / FAIL < G0; expectation NULL; print fraction of argmax changes.
 - Transfer: four cross-run +11.3…+14.7 carried; same-run +21.4 never averaged. Fit quality buys nothing, both directions.
+
+## Rules + rulings, 2026-09-18 06:2xZ (理, on 沙汰 11278/11297)
+- A malformed action is an INVALID action, scored by the loop — never a crash of the run. Every chain refuses to continue on
+  a short slice (episode-count guard). A second model surfacing a latent harness bug is a result and is reported.
+- A caveat written in prose and not in code is decoration — third instance (r2b note said "different positions"; the low
+  correlation was then hunted as a defect). Encode caveats as assertions.
+- R2b: 528.4 vs 502 → FAILS; cost sentence stands. R2c (LAST item of 8a): head reads its state from the agent's own KV cache;
+  count only tokens the agent would not otherwise pay; bar 502; expectation 36–180 tokens → pass.
+- R4: floor 5% on 300 fired for Llama-3.2-3B-4bit (1.5%). ONE further model, different family, comparable size
+  (Llama-3.1-8B-Instruct-4bit if it fits); if it floors, R4 = "out of range", generality handed to 8c/8d. No third model.
+- 2026-09-18 08:5xZ (理): R2c VOID as written (raw-text identity 33/40) — a pre-registered gate is not relaxed after it fails.
+  R2d pre-registered: (i) calibration — uncached vs uncached raw-text identity n=40 (does the strict gate measure the cache
+  or bf16 decoding?); (ii) parsed-action identity n=300; (iii) paired outcomes cached vs uncached identical on the 75. All
+  three → cost under R2d with R2c's failure + calibration printed. GPU order: WO-297 gate → R2d → 8a stops.

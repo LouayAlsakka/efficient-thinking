@@ -18,8 +18,14 @@ among the model's own candidate actions. On a task set where each episode is a d
 with 95% intervals that exclude zero. Its cost is stated three ways and the pre-registered one named: per
 episode in actions, the pre-registered measure, it is cheaper; per episode in tokens with the controller's own
 inference counted, it is 34% dearer; per problem solved it is 21% cheaper, a metric chosen after the fact and
-labelled so. As measured, it buys problems solved at a compute premium; whether that premium can be engineered
-below the actions it saves is a question the paper leaves open and names. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
+labelled so. Whether the gain is the experience or the extra compute is decided by a matched control: the frozen
+model alone, given the head's compute to within half a percent, reaches 22.3% where the head reaches 31.7%
+(+9.3, interval [+3.7, +15.0]). At equal compute the head still wins, so under the general criterion of an
+experience prior — improving the model's quality–cost frontier — it is one: the same frozen intelligence, having
+learned from its own history, thinks more effectively per unit of computation. On the efficiency limb the
+head is compute-neutral at budget 8 and solves 8.3 more problems in a hundred (interval [+3.0, +14.0]); both limbs
+hold on this task set. What remains is the frontier as a curve rather than two points, the strongest simple
+baselines at equal compute, and a second search structure. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
 thing it improves — here, localisation — is what limits the agent; on a repair-bound set the same head does
 nothing. Two further findings shape what follows. The largest effect of the study was not a prior but a change to
 *when* the agent may act: requiring one observation before the first guess doubled problems solved and cut cost,
@@ -73,6 +79,27 @@ The consequence is sharp. A mechanism that lowers cost by lowering capability is
 prior. Every failure in §7 is a failure of the constraint, not of the objective. The verification gate of the
 lifecycle (§5) is where the constraint is enforced before anything consolidates, and the regulariser of the
 training objective is its relaxed form.
+
+**The general criterion, of which the above is one limb.** The constraint as written asks for the same capability
+at lower cost. An experienced engineer shows experience in two equivalent ways: given the same hour, she solves
+a problem the novice cannot, or given the same problem, she solves it sooner. Both are one fact about the
+frontier of capability against cost. The general definition is therefore that an experience prior improves the
+frozen model's quality–cost frontier, \(Q_E(C) > Q_0(C)\) over a meaningful range of \(C\), with two
+manifestations:
+
+\[
+\text{efficiency:}\; C_E(Q^*) < C_0(Q^*) \qquad\qquad \text{effectiveness:}\; Q_E(C^*) > Q_0(C^*)
+\]
+
+Every experiment in this paper was pre-registered under the first limb and is reported exactly as it was run; the
+frontier definition is a revision of the theory made after those results, stated here so that §7's cost finding
+is read correctly. Under the first limb the read-only head of §7.4 fails on tokens: it solves more problems and
+spends 34% more compute per episode doing so. Under the frontier it is undecided, because the two points compared
+sit at different compute, and the control that decides it — the frozen model alone given the head's compute
+budget, and the head's minimum compute at the model's own success rate — is the pre-registered addendum in §7.6.
+This is also the series' common objective stated once: efficient thinking is more useful capability per unit of
+computation, and search (Efficient Thinking I) and experience (this paper) are two ways of moving along or moving
+the same curve.
 
 ## 4. Where a Prior Can Act
 
@@ -138,6 +165,16 @@ already misled us without it (Appendix A).
   the artefacts the runs had been written to save.
 
 ## 7. Results in the Debugging Field
+
+The claims in this section form a ladder, each rung harder than the last, and the paper says which rungs it has
+climbed: the head works on one task set (§7.4); it replicates across independent problem sets (§7.4, four
+measurements at n = 300); it replicates across model families (the second model, below); it beats ordinary
+search at matched compute (§7.6, the frontier control); and it survives a different search structure (the last
+pre-registered run, §7.7). A dozen further seeds or checkpoints would add less than any one of the last two, so
+none are run. The failure reading of each rung was written before its run, and the fourth's is worth restating
+because it is the one that would have unmade the paper: had ordinary search at the head's compute done as well
+as the head, the head would have been another way of buying capability with compute, and not evidence that
+history moves the frontier.
 
 ### 7.1 The environment and its three versions
 
@@ -242,8 +279,40 @@ with p below 10⁻⁴: not a seed artefact, not a same-run artefact, not a direc
 own result: three 300-problem draws from one grammar land within 2.0 points and 0.23 actions of each other (18.7%,
 16.7%, 18.0%), so the base rate is a property of the generator, which the first two task sets could never have
 shown. None of this touches the cost sentence above: the action figures are the pre-registered metric, which does
-not count the controller's own inference, and in tokens G costs 34% more until the batched scoring of the closing
-package is measured. On the 300, the head
+not count the controller's own inference, and in tokens G costs 34% more, with the batched scoring above failing
+its bar by 26 tokens and the shared-cache accounting still to run.
+
+**A second frozen model.** The same environment, harness and gates were run on a 4-bit 3B instruct model of a
+different family, with a floor pre-registered before the run: no probe is fitted unless the base solves at least 5%
+of problems, because a null from a probe with no room would read as "no signal" when it means "no room". The base
+solved 4 of 262, 1.5%, at 11.95 actions. It is not a format failure: the model emits well-formed actions 94% of the
+time, and its dominant behaviour is submitting a patch byte-identical to the code already there, 31% of steps — it
+understands the protocol and cannot repair. The third task set is calibrated to the 7B and out of range for a
+4-bit 3B, and a reader reaching for a smaller model should know it. The run also returned something it was not
+asked for: the smaller model produced a truncated escape inside a patch that the 7B never had in three thousand
+episodes, and the harness crashed the run rather than the step; a malformed action is now scored as invalid, which
+the loop already knew how to do. One further model then ran under the same floor, a different family at comparable size, pre-registered as the
+last: a 4-bit 8B instruct model cleared it at 41 of 300, 13.7%, in 11.24 actions, and is a capable model rather
+than a lucky one — its dominant action is inspection, invalid actions are 0.1% of steps, and the byte-identical
+resubmission that dominated the 3B is 16%. The probe on its own post-inspect states, held out by task with every
+draw printed: head 56.0%, the model's own pick 16.0%, chance 20.4%; permuted labels 9.3 to 26.7%; eight dimensions
+33.3%; a hundred examples 34.4%. Layer 27 scored 1.3 points higher and layer 18 was wired, because that is the layer
+the whole package used and switching on the answer would make every earlier number non-comparable. G, on the
+held-out quarter the fit never saw, paired per problem, n = 75: success 16.0% to 36.0%, +20.0 with interval
+[+8.0, +33.3]; actions 11.12 to 9.48, −1.64 with interval [−2.53, −0.77]; McNemar p = 0.0059. **It is consistent
+with the 7B, not bigger than it**: the interval contains all four of the 7B's measurements, and no difference
+between families is claimed or can be claimed at this n. On both frozen models the head adds about twenty points to the
+share of hypotheses that name the bug's region — 18.2% to 38.1% on the 8B, 33.3% to 55.3% on the 7B — a different
+quantity from the head's accuracy at the one decision it touches, since every later hypothesis is the model's
+own. What each model then does with a better hypothesis differs: the 7B stops submitting patches identical to the
+code in front of it (84% of its saving) and inspects slightly more; the 8B stops re-inspecting. The totals are
+close; the routes are not. Descriptive, no test, n = 75 per arm. The disjoint-set leg then ran on a second seed's 300 problems the head had seen nothing of, base first and then
+G, both arms complete: success 18.3% to 32.7%, +14.3 with interval [+7.7, +21.0]; actions 10.98 to 9.62, −1.36
+with interval [−1.85, −0.88]; McNemar p = 4.7×10⁻⁵. Two frozen models from different families, transferring to a
+disjoint problem set, agree to within a point (the 7B's four: +11.3, +13.0, +14.0, +13.3), and the mechanism
+replicates (region-hit 21.2% to 38.2%). The held-out +20.0 and this +14.3 are the same result, not two — the
+smaller interval contains the larger's estimate — and the 300-problem figure is the one quoted. The reviewer's
+condition is met at the level it was asked: the phenomenon is not peculiar to one checkpoint of one family. On the 300, the head
 agreed with the agent's own pick on 121 decisions and changed 179: on the 179 the base solved 12 and G solved 52;
 on the 121, 44 against 43. The effect is entirely in the decisions the head changed, and the residual confound
 from the harness's exploration temperature is bounded at about a third of an episode per hundred.
@@ -265,10 +334,39 @@ problems solved at a 34% compute premium per episode and does not, as measured, 
 definition of §3 with cost in tokens it is not yet an experience prior but a better allocation of more compute.
 The candidate prompts differ only in their final region token, so a batched pass over a shared cached prefix would
 remove most of the 2,353 tokens; that is an engineering change to a system that has not been measured, it is
-pre-registered as the last item of the closing package with the bar that the overhead fall below 502 tokens per
-episode — the 0.71 actions saved at the measured marginal cost of an action, 707 tokens by the slope of tokens on
-actions — with the budget-based and mean-based readings (406 and 458) printed beside it, and the paper carries
-whichever system was measured.
+pre-registered with the bar that the overhead fall below 502 tokens per episode — the 0.71 actions saved at the
+measured marginal cost of an action, 707 tokens by the slope of tokens on actions — with the budget-based and
+mean-based readings (406 and 458) printed beside it. Built and measured, the batched system costs 528.4 tokens per
+episode: the shared prefix once, 492.3, plus 36.1 of continuations, against 2,487.9 for the separate passes and
+against the bar of 502. It fails, by 26 tokens, on all three bases, and the reading pre-written for that case
+applies: as measured, G buys success at a compute premium. A first implementation had cleared the bar at 498.7 and
+was wrong twice — it ignored its layer argument and read one position early — and was found by isolation rather
+than by a fourth guess: a correct cached split agreed with it to zero, so the fault was in what was read, not how.
+The structural fact under the number is that the decision prompt alone is 492 tokens, 98% of the bar, so no
+batching scheme clears it. That prompt is one the agent prefills anyway in order to act; a controller that reads
+its state from the agent's own pass pays only the continuations. That is the accounting the measured system got
+wrong rather than a rescue, and it is the last pre-registered item of the package: the head over the agent's own
+cache, counting only tokens the agent would not otherwise pay, bar unchanged, with the expectation written first
+that it costs 36 to 180 tokens and passes — or, if the state cannot be shared with the agent's pass, fails, and the
+premium stands. Built, its self-test was written before the run as two identities — the candidate states against
+the measured path, and the agent's generated text against an uncached generation — and the second failed: the
+states agree to the bf16 floor, but the text differs on 7 of 40 decisions. Measured rather than assumed, the
+divergence is a rewording of the free-text rationale after the action; the parsed action, region and bug class
+are identical on 40 of 40, because greedy decoding is chaotic under bf16 noise and one near-tie flips the prose.
+The gate as written is not relaxed after the fact: that run is void and the premium is the measured system's
+number. A new gate is pre-registered instead, with a control that says whether the old one could ever have
+passed: uncached against uncached on the same hardware, repeated, for raw-text identity, which if it also reads
+near 80% shows text identity is a property of the decoding and not of the cache; parsed-action identity at 300;
+and paired outcomes, cached against uncached on the same held-out 75, identical on success and actions, the level
+every number in this paper is scored at. The calibration went against the reading it might have licensed: uncached against uncached, same inputs, reads
+100% text identity on 40, so identity is achievable and the 77% agreement under the shared cache is the cache, not
+the decoding. At 300 the parsed action agrees on 295 — the five mismatches differ only in the bug class named, the
+region is identical on 300 of 300 — and the gate, set as parsed-action identity including the class, fails. The
+third leg is moot. So the cost limb closes where it started, four attempts and one sentence: **as measured, G buys
+success at a compute premium.** Per episode in actions, the pre-registered measure, it is cheaper; per episode in
+tokens with its own inference counted, 34% dearer; per problem solved, 21% cheaper, post hoc and labelled. The
+benefit limb is untouched throughout. A controller whose state is read from a pass the agent makes anyway would
+change the accounting, and this paper does not have one that leaves the agent's decisions unchanged.
 
 ### 7.5 The bound
 
@@ -279,6 +377,92 @@ localisations were the easy ones and the imposed ones were not. The same head is
 repair-bound set, and that is what was measured. **A prior helps only where the thing it improves is what limits
 the agent.** The result is not that experience priors work. It is that this prior works where localisation is
 what limits the agent, and the six negatives of §7.3 are the other half of the same sentence.
+
+### 7.6 Addendum, pre-registered: the frontier control
+
+The cost finding compares two points at different compute: the base at (6,854 tokens, 18.7%) and the head at
+(9,170 tokens, about 31%). Whether the head improves the frontier or merely buys success with compute is decided
+by two runs written before either is made, on the same 300 problems with the same verifier.
+
+- **Effectiveness at equal compute.** The frozen model alone, with no head, given the head's compute: its action
+  budget raised until its mean tokens per episode is nearest 9,170, the budget chosen by that rule and not by the
+  result, from a small ladder (14, 16, 18) measured on one slice first. Because the budget is in the prompt, this
+  is a different agent and is reported as one. Reading: if the equally funded base solves fewer problems than the
+  head by more than the paired interval, the head has moved the frontier — same intelligence, same compute, more
+  solved; if it solves as many, the head bought its success with compute and the frontier is unmoved.
+- **Efficiency at equal quality.** The head at reduced budgets (10, 8, 6): the smallest budget at which it still
+  solves at least the base's 18.7%, and its tokens per episode there against the base's 6,854. Reading: fewer
+  tokens at the base's success is the efficiency limb met; not fewer is the second half of the same answer.
+- **Pre-written expectation, from one data point already held.** On 80 problems of this set, doubling the base's
+  budget from 12 to 24 raised its success from 18.8% to 22.5% — 3.7 points for about twice the compute — while the
+  head's 34% more compute raised it 11 to 14 points. If that holds at 300 the frontier is moved, and the sentence
+  the paper may then use is the one it has so far refused: the same frozen intelligence, having learned from its
+  own history, thinks more effectively per unit of computation. If it does not hold, the head is a better
+  allocation of more compute, as §7.4 says today.
+
+**Result, effectiveness at equal compute: the frontier moved.** The ladder read 8,325, 9,417 and 10,506 tokens per
+episode at budgets 14, 16 and 18, and the rule chose 16 as nearest the target — which matters, because budget 18
+had the best first-slice success of the three, and a rule chosen after the ladder would have been pulled toward
+it and turned a compute match into a search for the base's best showing. On the full 300, compute-matched to
+within 0.44% with the base handed slightly more:
+
+| arm | tokens/episode, all in | success | actions |
+|---|---:|---:|---:|
+| base, budget 16 | 9,234 | 22.3% | 13.75 |
+| G, budget 12 | 9,194 (6,706 model + 2,488 controller) | 31.7% | 9.85 |
+
+G leads by +9.3 points, interval [+3.7, +15.0], McNemar p = 0.002; actions −3.90 [−4.36, −3.43]. The reading written
+before the run applies as written: the base at the head's compute does not reach the head, so **the head is not
+buying success with compute; at equal compute it wins.** The expectation written from the 80-problem probe held
+almost exactly — more budget bought the base +3.6 points for 35% more compute, the head bought +13.0 for 34% —
+and the mechanism holds a third time: even with 35% more compute the base localises worse than G (hypotheses
+naming the bug's region 29.0% against 47.4%); the extra budget buys more attempts, not better aim. Bounds: one
+point of a frontier, not a curve; each budget is a different agent, as the rule requires; the controller's cost
+charged to G is the measured 2,488 tokens of the unbatched system, so a cheaper controller would only widen the
+lead — the failures of R2b through R2d bound this result conservatively rather than weaken it. Under the general
+criterion of §3, then, the head is an experience prior on the effectiveness limb: the same frozen intelligence,
+having learned from its own history, solves more at the same computation. The efficiency limb — the head's
+minimum compute at the base's success — is the last run.
+
+**Result, efficiency at equal quality: the limb passes, at the row the statistics support.** The head at reduced
+budgets, every row charged the measured controller cost, paired against the same base on the same 300:
+
+| arm | tokens/episode, all in | success | vs base |
+|---|---:|---:|---:|
+| base, budget 12 | 6,854 | 18.7% | — |
+| G, budget 6 | 5,979 (−12.8%) | 24.0% | +5.3 [+0.3, +10.3], p 0.052 |
+| G, budget 8 | 7,034 (+2.6%) | 27.0% | +8.3 [+3.0, +14.0], p 0.005 |
+| G, budget 10 | 8,054 (+17.5%) | 35.0% | +16.3 [+11.0, +22.0], p 4×10⁻⁸ |
+| G, budget 12 | 9,194 (+34%) | 31.7% | +13.0 |
+
+The pre-registered rule — the smallest budget at which the head still solves at least the base's 18.7% — selects
+budget 6, at 12.8% less compute than the base, and that is a real sentence; but its interval barely excludes zero
+and McNemar reads 0.052, so clearing the bar and demonstrating a difference come apart at exactly that row, and
+the claim is made at the next one: at budget 8 the head is compute-neutral to within 2.6% and solves 8.3 more
+problems in a hundred, p = 0.005. Both are printed, the cheaper point with its borderline flagged. One ordering is
+not printed as an ordering: budget 10 scores above the measured system's budget 12, and the paired test says the
+two are not separated (+3.3, interval [−1.7, +8.3]); success is flat across budgets 10 to 12, and there is no
+optimum to report. Both limbs of the general criterion now read on this task set: compute-matched with the base
+handed more, +9.3; compute-neutral, +8.3; and the same conservative bound applies to every head row, since the
+controller is charged at its measured, unbatched cost. The frontier as a curve, base and head at six and four
+budgets across five to fifteen thousand tokens, is the run in progress.
+
+### 7.7 Pre-registered: the strongest simple baselines, and a second search structure
+
+Two runs remain before this paper stops, both written before they are made. The first answers the reviewer a
+matched-compute result invites — why an experience controller rather than the model's own preference at the same
+cost: at the same decision point, over the same enumerated candidates, the candidate the frozen model itself
+assigns the highest log-probability, charged the same passes the head pays; and a majority vote over five sampled
+hypotheses, charged its five. If either matches the head, the learned readout adds nothing over the model's own
+preference and the claim narrows to "a controller at the decision point"; if both fall short by more than the
+paired interval, experience — a head trained on verified history — is responsible, not the extra inference. The
+expectation is that the model's own preference lands between the base and the head, since it is what the head
+learned to overrule on 179 of 300 decisions. The second changes the search structure rather than the bugs: a
+second environment under the same harness, verifier and gates, in which the regions are the clauses of a query
+against a fixed schema and the verifier is the expected result set, with the head re-fitted from that
+environment's own base episodes so that what transfers is the mechanism and not the weights. If the head clears
+the same bar there, the claim is experience-directed search; if not, the paper says the mechanism is bound to the
+first environment's grammar and hands the question forward.
 
 ## 8. Two Carrier Studies, in Brief
 
@@ -325,6 +509,15 @@ the model's own candidates. Its effect is real, bounded to the kind of failure i
 better fit. The largest effect in the study was a hand-written rule about when to act, which is the rule a
 controller is supposed to learn, and the question this paper leaves is whether one can be learned that compounds.
 
+The series reads as one argument from here. Efficient Thinking I asked what happens when a fixed intelligence is
+given more thinking, and found that search substitutes for size: \(I + C\!\uparrow \Rightarrow Q\!\uparrow\). Papers II
+to VII found the limits of that substitution — the evaluator, the verifier, the supervision, and the information
+already in the system. This paper asks what happens after the intelligence has experience of how to think, and
+finds that historical computation can teach a frozen intelligence where to direct future computation:
+\(Q_E(C) > Q_0(C)\) at one point. Search moves a system along its frontier; experience moves the frontier. Paper 8b
+asks whether it moves again — \(Q_2(C) > Q_1(C) > Q_0(C)\) with the intelligence frozen throughout — which would
+close the loop this series opened: intelligence, search, outcome, verification, experience, better search.
+
 ---
 
 ## Appendix A. How This Was Found
@@ -365,6 +558,11 @@ design and pre-registration; both are pseudonymous here and belong to no institu
     set and the other on the other.
 12. **09-18.** P9's second generation reported the first's numbers exactly; the states were byte-identical (§4,
     §9). The outcome-weighted target moved the probe and not the decisions.
+12a. **09-19.** With the matched-compute point read on both limbs (§7.6), R set the stop rule this paper adopts:
+    the two §7.7 controls — the model's own preference at the same decision and cost, and a second search
+    structure with the head re-fitted — close the empirical story, and further work belongs to the next papers
+    rather than to a larger 8a. R's one-line reading of the core result is the one §10 keeps: the same frozen
+    model, informed by verified history, obtains more task success from the same inference computation.
 13. **Throughout.** Two runs were lost to moving the working tree under a process that was writing to it; three
     artefacts a later question needed had not been the artefacts a run was written to save; one results table was
     typed from memory and corrected the same minute; one counting function assumed the single-outcome property its
