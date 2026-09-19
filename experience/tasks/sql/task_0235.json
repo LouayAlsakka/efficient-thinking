@@ -1,0 +1,45 @@
+{
+ "task_id": "task_0235",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "join",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.dname, AVG(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.region WHERE e.salary >= 95 GROUP BY e.dept_id ORDER BY 1",
+ "clean": "SELECT d.dname, AVG(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.salary >= 95 GROUP BY e.dept_id ORDER BY 1",
+ "parts": {
+  "select": "d.dname, AVG(e.salary)",
+  "where": "e.salary >= 95",
+  "join": "JOIN dept d ON e.dept_id = d.region",
+  "group": "GROUP BY e.dept_id",
+  "order": "ORDER BY 1"
+ },
+ "expected_rows": [
+  [
+   "eng",
+   140.0
+  ],
+  [
+   "ops",
+   117.5
+  ],
+  [
+   "sales",
+   110.0
+  ]
+ ],
+ "got_rows": [],
+ "_p1_sibling_regions": [
+  "group",
+  "where"
+ ],
+ "_signature": "f996720c8e67",
+ "tests": "expected result set (3 rows) on the fixed fixtures"
+}

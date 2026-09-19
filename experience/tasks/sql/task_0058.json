@@ -1,0 +1,51 @@
+{
+ "task_id": "task_0058",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "where",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.dept_id, MAX(e.salary) FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary BETWEEN 85 AND 120 GROUP BY d.region ORDER BY e.name",
+ "clean": "SELECT e.dept_id, MAX(e.salary) FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary BETWEEN 85 AND 140 GROUP BY d.region ORDER BY e.name",
+ "parts": {
+  "select": "e.dept_id, MAX(e.salary)",
+  "where": "e.salary BETWEEN 85 AND 120",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "GROUP BY d.region",
+  "order": "ORDER BY e.name"
+ },
+ "expected_rows": [
+  [
+   10,
+   120
+  ],
+  [
+   20,
+   140
+  ]
+ ],
+ "got_rows": [
+  [
+   10,
+   120
+  ],
+  [
+   20,
+   95
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "group",
+  "join",
+  "select"
+ ],
+ "_signature": "00a2fe101425",
+ "tests": "expected result set (2 rows) on the fixed fixtures"
+}

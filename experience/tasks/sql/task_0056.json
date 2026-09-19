@@ -1,0 +1,42 @@
+{
+ "task_id": "task_0056",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.dept_id, MIN(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.dname <> 'sales' GROUP BY d.dname ORDER BY e.salary DESC",
+ "clean": "SELECT e.dept_id, MAX(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.dname <> 'sales' GROUP BY d.dname ORDER BY e.salary DESC",
+ "parts": {
+  "select": "e.dept_id, MIN(e.salary)",
+  "where": "d.dname <> 'sales'",
+  "join": "JOIN dept d ON e.dept_id = d.id AND d.region = 'east'",
+  "group": "GROUP BY d.dname",
+  "order": "ORDER BY e.salary DESC"
+ },
+ "expected_rows": [
+  [
+   10,
+   160
+  ]
+ ],
+ "got_rows": [
+  [
+   10,
+   90
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "where"
+ ],
+ "_signature": "9795c63bd7a2",
+ "tests": "expected result set (1 rows) on the fixed fixtures"
+}

@@ -1,0 +1,53 @@
+{
+ "task_id": "task_0124",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "group",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.dname, COUNT(*) FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.hired > '2019-01-01' GROUP BY d.dname ORDER BY 1",
+ "clean": "SELECT d.dname, COUNT(*) FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.hired > '2019-01-01' GROUP BY d.region ORDER BY 1",
+ "parts": {
+  "select": "d.dname, COUNT(*)",
+  "where": "e.hired > '2019-01-01'",
+  "join": "JOIN dept d ON e.dept_id = d.id",
+  "group": "GROUP BY d.dname",
+  "order": "ORDER BY 1"
+ },
+ "expected_rows": [
+  [
+   "eng",
+   3
+  ],
+  [
+   "ops",
+   2
+  ]
+ ],
+ "got_rows": [
+  [
+   "eng",
+   2
+  ],
+  [
+   "ops",
+   2
+  ],
+  [
+   "sales",
+   1
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join"
+ ],
+ "_signature": "b81c19d13739",
+ "tests": "expected result set (2 rows) on the fixed fixtures"
+}
