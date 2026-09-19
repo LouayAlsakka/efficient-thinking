@@ -564,7 +564,10 @@ given more thinking, and found that search substitutes for size: \(I + C\!\uparr
 to VII found the limits of that substitution — the evaluator, the verifier, the supervision, and the information
 already in the system. This paper asks what happens after the intelligence has experience of how to think, and
 finds that historical computation can teach a frozen intelligence where to direct future computation:
-\(Q_E(C) > Q_0(C)\) at one point. Search moves a system along its frontier; experience moves the frontier. Paper 8b
+\(Q_E(C) > Q_0(C)\) over the measured compute range, on one task family, and not by the inference spent — the
+model's own preference at the same decision does not reach it. Search moves a system along its frontier;
+experience moves the frontier. Whether that is a fact about debugging or about experience-directed search is what
+the second search structure decides, and this paper stops there. Paper 8b
 asks whether it moves again — \(Q_2(C) > Q_1(C) > Q_0(C)\) with the intelligence frozen throughout — which would
 close the loop this series opened: intelligence, search, outcome, verification, experience, better search.
 
