@@ -1,0 +1,156 @@
+{
+ "document": "R6 RESULT — the strongest simple baselines at G's own compute (理 11398)",
+ "prereg": "experience/et8_r6_baselines.py, readings written before the run",
+ "arms": {
+  "base@12": {
+   "success_pct": 18.7,
+   "model_tokens": 6854.4,
+   "actions": 10.63
+  },
+  "(a) self-rerank": {
+   "n": 300,
+   "success_pct": 20.3,
+   "model_tokens": 6988.5,
+   "actions": 10.7
+  },
+  "(b) majority vote (5 samples)": {
+   "n": 300,
+   "success_pct": 12.3,
+   "model_tokens": 7539.7,
+   "actions": 11.11
+  },
+  "(c) base + 35% search = R5-E budget 16": {
+   "success_pct": 22.3,
+   "model_tokens": 9234.2,
+   "actions": 13.75
+  },
+  "G@12": {
+   "success_pct": 31.7,
+   "model_tokens": 6706.2,
+   "actions": 9.85
+  }
+ },
+ "PAIRED_TESTS": {
+  "(a) vs base": {
+   "pair": "R6 rerank vs base@12",
+   "n": 300,
+   "base_success_pct": 18.7,
+   "G_success_pct": 20.3,
+   "success_delta_points": 1.7,
+   "success_95CI": [
+    -1.7,
+    5.3
+   ],
+   "base_actions": 10.63,
+   "G_actions": 10.7,
+   "actions_delta": 0.07,
+   "actions_95CI": [
+    -0.12,
+    0.26
+   ],
+   "McNemar": {
+    "base_only_solved": 12,
+    "G_only_solved": 17,
+    "discordant": 29,
+    "exact_two_sided_p": 0.4583
+   },
+   "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+  },
+  "G vs (a)": {
+   "pair": "R6 G@12 vs rerank (positive = G better)",
+   "n": 300,
+   "base_success_pct": 20.3,
+   "G_success_pct": 31.7,
+   "success_delta_points": 11.3,
+   "success_95CI": [
+    6.0,
+    16.7
+   ],
+   "base_actions": 10.7,
+   "G_actions": 9.85,
+   "actions_delta": -0.85,
+   "actions_95CI": [
+    -1.21,
+    -0.51
+   ],
+   "McNemar": {
+    "base_only_solved": 19,
+    "G_only_solved": 53,
+    "discordant": 72,
+    "exact_two_sided_p": 7.556e-05
+   },
+   "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+  },
+  "(b) vs base": {
+   "pair": "R6 vote vs base@12",
+   "n": 300,
+   "base_success_pct": 18.7,
+   "G_success_pct": 12.3,
+   "success_delta_points": -6.3,
+   "success_95CI": [
+    -10.7,
+    -2.0
+   ],
+   "base_actions": 10.63,
+   "G_actions": 11.11,
+   "actions_delta": 0.48,
+   "actions_95CI": [
+    0.19,
+    0.78
+   ],
+   "McNemar": {
+    "base_only_solved": 33,
+    "G_only_solved": 14,
+    "discordant": 47,
+    "exact_two_sided_p": 0.007943
+   },
+   "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+  },
+  "G vs (b)": {
+   "pair": "R6 G@12 vs vote (positive = G better)",
+   "n": 300,
+   "base_success_pct": 12.3,
+   "G_success_pct": 31.7,
+   "success_delta_points": 19.3,
+   "success_95CI": [
+    13.7,
+    25.0
+   ],
+   "base_actions": 11.11,
+   "G_actions": 9.85,
+   "actions_delta": -1.26,
+   "actions_95CI": [
+    -1.65,
+    -0.89
+   ],
+   "McNemar": {
+    "base_only_solved": 14,
+    "G_only_solved": 72,
+    "discordant": 86,
+    "exact_two_sided_p": 1.445e-10
+   },
+   "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+  }
+ },
+ "WHICH_PRE_WRITTEN_READING_FIRES": {
+  "(a) or (b) ≈ G -> the learned readout adds nothing": "DOES NOT FIRE. G beats self-rerank by +11.3 [+6.0,+16.7] p=7.6e-05 and majority vote by +19.3 [+13.7,+25.0] p=1.4e-10.",
+  "both below G by more than the CI -> EXPERIENCE is responsible, not extra inference": "FIRES. Both baselines spend inference AT the same decision, over the SAME candidates, and neither reaches G. What G has that they lack is a head fitted on VERIFIED history.",
+  "理's expectation: (a) lands between base and G": "HELD. 20.3% sits between 18.7% and 31.7% — and is NOT significantly different from base (+1.7 [-1.7,+5.3], p=0.458). The model's own preference is close to what it already does, which is what G was said to overrule."
+ },
+ "THE_SURPRISE_WORTH_PRINTING": {
+  "majority vote is SIGNIFICANTLY WORSE than the base it was meant to improve": "12.3% vs 18.7%, -6.3 points [-10.7,-2.0], McNemar p=0.0079, 33 base-only vs 14 vote-only.",
+  "reading": "five sampled hypotheses voting does WORSE than one greedy pick. Sampling at the decision introduces candidates the greedy path would not have taken, and the vote can carry one. This is a NEGATIVE result about a plausible baseline and it is printed as prominently as the positive one."
+ },
+ "compute_charges_pre_registered": {
+  "(a) self-rerank": "k full-prompt passes per decision — the SAME charge G pays",
+  "(b) majority vote": "5 short generations per decision",
+  "(c) base+search": "no controller; the extra compute is in the agent's own budget",
+  "note": "charges are analytic, as for G; they are not in the episodes' own token counts."
+ },
+ "bounds": [
+  "One seed (v3 seed 21), one model, 300 problems per arm, paired per problem against the SAME base and the SAME G.",
+  "Both baselines run through et8_agent's OWN head_state plumbing with an identity linear layer, so they take exactly the decision G takes. The measured agent was not edited.",
+  "(b)'s sampling temp 0.8 and n=5 were pre-registered, not tuned. A different temp or n could move it; that would be a different baseline, not a better measurement of this one."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
