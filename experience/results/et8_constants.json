@@ -1,0 +1,55 @@
+{
+ "document": "ET-8 measured constants — THE ONLY PLACE THEY ARE ALLOCATED (理's rule, nirai 11409)",
+ "the_rule": "a bit, a port, a route, a table — anything two documents could both allocate — has ONE machine-readable registry and a checker that fails; a document CITES, it never re-draws. 理 applied it to the address tail; this applies it to the numbers this package re-uses across artifacts.",
+ "why_here": "the controller cost appears in 4 files and the R2b bar in 2. Each was typed independently. If one is ever re-measured and the others are not, the package disagrees with itself silently — and a cost number is exactly the kind of thing a reviewer recomputes.",
+ "constants": {
+  "controller_tokens_per_episode": {
+   "value": 2487.9,
+   "what": "the MEASURED cost of the controller's candidate passes for the MEASURED system (k separate full-prompt passes, mean k = 4.97)",
+   "measured_in": "R2b (results/r2b.json), 40 post-inspect decisions of v3g300L",
+   "used_by": [
+    "et8_head_shared.py",
+    "r5c_table.py",
+    "results/r5q.json",
+    "results/r2b.json"
+   ],
+   "note": "a CHEAPER controller would move every head point left and strengthen every frontier claim; R2c and R2d failing to find one bounds the package conservatively rather than weakening it"
+  },
+  "r2b_bar_tokens_per_episode": {
+   "value": 502,
+   "what": "the pre-registered cost bar: 0.71 actions saved x 707 tokens per marginal action (OLS fit of tokens on actions over the base's 300)",
+   "measured_in": "results/r2b_prereg.json",
+   "used_by": [
+    "et8_head_batched.py",
+    "et8_head_shared.py"
+   ],
+   "note": "the other two bases (458 mean/mean, 406 budget-12) are printed in the prereg beside it; 528.4 failed all three so the reading never depended on the choice"
+  },
+  "base_success_pct_budget12": {
+   "value": 18.7,
+   "what": "the base arm's success on v3 seed 21's 300 at budget 12, Qwen2.5-7B-Instruct",
+   "measured_in": "results/g_v3_cost_limb.json",
+   "used_by": [
+    "results/r5q.json"
+   ],
+   "note": "R5-Q's bar is stated against this number"
+  },
+  "base_tokens_per_episode_budget12": {
+   "value": 6854.4,
+   "what": "the base arm's mean tokens/episode on the same 300",
+   "measured_in": "results/r2_compute.json",
+   "used_by": [
+    "results/r5q.json"
+   ],
+   "note": "R5-E's compute target is derived from this and the controller cost",
+   "NOT_used_by": {
+    "results/r5e.json": "R5-E compares base@16 (9,234.2) against G@12 ALL-IN (9,194.1) and never cites the budget-12 base. The registry claimed it did; the checker caught that on its first real run, which is the point of having one."
+   }
+  }
+ },
+ "bounds": [
+  "These are MEASURED values on one seed, one model, one task set. The registry fixes where they are written down; it does not make them general.",
+  "The checker verifies that code files AGREE with the registry. It cannot verify the measurement itself."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
