@@ -1,4 +1,5 @@
 # Efficient Thinking IX: Symmetry — Invariance as Thought Compression (concept)
+> **STATE 2026-09-19: CONCEPT.** S2 (head invariance) scheduled week of 2026-09-29, S1 (chess augmentation) week of 2026-10-06. Nothing below is a finding.
 
 *Status: concept, 2026-09-18. One sentence: a symmetry is a transformation of a problem that does not change its
 answer; identify the transformations that do not matter, solve one representative, and the solution covers the

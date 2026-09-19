@@ -1,4 +1,5 @@
 # Efficient Thinking VII: The Elicitation Gap — What a Judge Knows but Doesn't Say (concept)
+> **STATE 2026-09-19: CONCEPT.** The bound is stated; nothing is measured. E-E (probe Δ on the III judge cells) is scheduled week of 2026-09-22, E-C the week after, E-D the week after that, with the cross-registration E-D gain ≤ E-E's Δ. The Internal-Improvement Bound is to be verified against textbook forms before any publication. Nothing below is a finding.
 
 *Status: concept, parked behind ET-IV for its aesthetic arm; the math-domain arms (E-E, E-D, E-C)
 need only the ET-III harness and ground-truth caches. One sentence: internal self-improvement of

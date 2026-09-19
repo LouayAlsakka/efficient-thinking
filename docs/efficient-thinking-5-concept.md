@@ -1,4 +1,5 @@
 # Efficient Thinking V: The Exchange Rate of Feedback — concept note
+> **STATE 2026-09-19: CONCEPT.** No run. V-E1 (simulated oracle) and V-E2 (forgetting ledger) are scheduled as machine arms, week of 2026-10-06; V-E3/E4 wait for IV's rater. Nothing below is a finding.
 
 *Status: concept, parked pending ET-IV E5 (persistence) results, which seed this paper. Working
 slot: Paper V. One sentence: the series ends by pricing its own ceiling-raiser — external

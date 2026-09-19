@@ -1,4 +1,5 @@
 # Efficient Thinking IV: Search Where Taste Is the Evaluator — proposal
+> **STATE 2026-09-19: MEASURED on the machine arms only.** Checkers built and unit-tested; E1/E4 scored (P1 hit); E6; the Goodhart pilot (dev oracle, not a claim); canon judge and policy (7a–7d, G2p holds at prototype scale). The human arms E2/E3/E5 and predictions P2–P4, P7–P12 are UNMEASURED and wait for a rater — ruled 2026-09-19: no deadline, no machine-only fallback. The status line below is the July registration and is kept as written.
 
 *Status: proposal, pre-registration. Slots as Paper IV: Efficient Thinking III ("Efficient
 Judging") keeps its original number and registration trail, and its results — judge competence,

@@ -1,4 +1,5 @@
 # Efficient Thinking VI: The Label Ceiling — Why Self-Play Plateaus (concept)
+> **STATE 2026-09-19: MEASURED (E-A, Connect-4; F1–F5 scored in `et6-ledger.md`); E-B (chess) RUN BUT UNLEDGERED** — label bias confirmed cross-domain, F3 does not transfer, F4 capacity-bound, stage trajectory flat; results in `games/results/`. The E-B ledger is scheduled (week of 2026-09-29); then the backward rewrite.
 
 *Status: concept; games-only, no dependency on IV/V, so UNPARKED for idle machine time behind the
 ET-III validation runs and the ET-IV machine queue. One sentence: a value net's ceiling is the
