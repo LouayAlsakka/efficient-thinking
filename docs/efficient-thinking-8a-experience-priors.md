@@ -24,8 +24,9 @@ model alone, given the head's compute to within half a percent, reaches 22.3% wh
 experience prior — improving the model's quality–cost frontier — it is one: the same frozen intelligence, having
 learned from its own history, thinks more effectively per unit of computation. On the efficiency limb the
 head is compute-neutral at budget 8 and solves 8.3 more problems in a hundred (interval [+3.0, +14.0]); both limbs
-hold on this task set. What remains is the frontier as a curve rather than two points, the strongest simple
-baselines at equal compute, and a second search structure. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
+hold on this task set. As a curve, base at six budgets and head at four across 4.4 to 13.9 thousand tokens, the head
+sits above the base throughout, and at equal quality — 24.0% both, paired, 33 discordant each way — the head spends
+2.32× less. What remains is the strongest simple baselines at equal compute, and a second search structure. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
 thing it improves — here, localisation — is what limits the agent; on a repair-bound set the same head does
 nothing. Two further findings shape what follows. The largest effect of the study was not a prior but a change to
 *when* the agent may act: requiring one observation before the first guess doubled problems solved and cut cost,
@@ -444,8 +445,33 @@ not printed as an ordering: budget 10 scores above the measured system's budget 
 two are not separated (+3.3, interval [−1.7, +8.3]); success is flat across budgets 10 to 12, and there is no
 optimum to report. Both limbs of the general criterion now read on this task set: compute-matched with the base
 handed more, +9.3; compute-neutral, +8.3; and the same conservative bound applies to every head row, since the
-controller is charged at its measured, unbatched cost. The frontier as a curve, base and head at six and four
-budgets across five to fifteen thousand tokens, is the run in progress.
+controller is charged at its measured, unbatched cost.
+
+**Result, the frontier as a curve.** Base at six budgets and head at four, the same 300, every head row charged the
+measured controller cost (`experience/results/r5c.json`; three readings written before the run, all three scored):
+
+| base budget | tokens/episode | success | | head budget | tokens/episode, all in | success |
+|---:|---:|---:|---|---:|---:|---:|
+| 8 | 4,424 | 15.7% | | 6 | 5,979 | 24.0% |
+| 12 | 6,854 | 18.7% | | 8 | 7,034 | 27.0% |
+| 14 | 8,121 | 20.3% | | 10 | 8,054 | 35.0% |
+| 16 | 9,234 | 22.3% | | 12 | 9,194 | 31.7% |
+| 18 | 10,339 | 22.0% | | | | |
+| 24 | 13,858 | 24.0% | | | | |
+
+The reading that applies is the first: the head sits above the base across the measured range — the four
+nearest-compute pairings read +5.3 [+0.3, +10.3], +8.3 [+3.0, +14.0], +14.7 [+9.3, +20.0] and +9.3 [+3.7, +15.0].
+The two that did not fire are printed with it. The curves did not cross at low budget: the head's cheapest point
+still beats the base at budget 12 by 5.3; whether they cross below 5,979 tokens is unmeasured, and this paper does
+not say. The curves did not merge at high budget: the base's top, 24.0% at 13,858 tokens, equals the head's
+cheapest point, not its best, and the base's own last step (18 to 24, 34% more compute) reads +2.0 [−1.7, +5.7],
+p 0.38 — a plateau from 9.2 to 13.9 thousand tokens. The cleanest sentence the curve allows is an equal-quality
+one: base at budget 24 and head at budget 6 both solve 24.0% — paired on the same 300, +0.0 [−5.3, +5.3], 33
+discordant pairs each way — and the head does so for 2.32× less compute (5,979 against 13,858 tokens) and 3.6×
+fewer actions (5.53 against 19.81). That is a ratio of two measured points, not a fitted curve; nothing here is
+interpolated. Scope: one seed, one model, one task set; base budgets 8 to 24 and head budgets 6 to 12; below 5,979
+tokens unmeasured. Within it, the frontier is moved over the range rather than at a point, and the base does not
+reach the head's best at 1.7× the head's spend.
 
 ### 7.7 Pre-registered: the strongest simple baselines, and a second search structure
 
