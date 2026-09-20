@@ -1,0 +1,198 @@
+{
+  "config": {
+    "iters": 50,
+    "games": 24,
+    "sims": 80,
+    "epochs": 4,
+    "batch": 256,
+    "lr": 0.001,
+    "buffer": 20000,
+    "channels": 64,
+    "blocks": 4,
+    "eval_every": 4,
+    "eval_games": 30,
+    "holdout": 160,
+    "init": "games/c4_net.safetensors",
+    "oracle_value": true,
+    "oracle_depth": 6,
+    "seed": 0,
+    "out": "games/results/c4_selfplay_oracle_warm.json"
+  },
+  "ladder": {
+    "random": 0.0,
+    "depth-1": 804.0,
+    "depth-2": 954.0,
+    "depth-3": 963.0
+  },
+  "history": [
+    {
+      "iter": 1,
+      "buf": 694,
+      "value_mae": 0.468,
+      "decisive_sign_acc": 0.525,
+      "gelo": 214.0,
+      "ladder_scores": {
+        "random": 0.73,
+        "depth-1": 0.1,
+        "depth-2": 0.0,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 4,
+      "buf": 2222,
+      "value_mae": 0.379,
+      "decisive_sign_acc": 0.7,
+      "gelo": 418.0,
+      "ladder_scores": {
+        "random": 0.73,
+        "depth-1": 0.17,
+        "depth-2": 0.1,
+        "depth-3": 0.1
+      }
+    },
+    {
+      "iter": 8,
+      "buf": 4360,
+      "value_mae": 0.357,
+      "decisive_sign_acc": 0.675,
+      "gelo": 522.0,
+      "ladder_scores": {
+        "random": 0.9,
+        "depth-1": 0.17,
+        "depth-2": 0.13,
+        "depth-3": 0.07
+      }
+    },
+    {
+      "iter": 12,
+      "buf": 6690,
+      "value_mae": 0.341,
+      "decisive_sign_acc": 0.675,
+      "gelo": 463.0,
+      "ladder_scores": {
+        "random": 0.93,
+        "depth-1": 0.17,
+        "depth-2": 0.07,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 16,
+      "buf": 8890,
+      "value_mae": 0.335,
+      "decisive_sign_acc": 0.669,
+      "gelo": 503.0,
+      "ladder_scores": {
+        "random": 0.97,
+        "depth-1": 0.13,
+        "depth-2": 0.08,
+        "depth-3": 0.05
+      }
+    },
+    {
+      "iter": 20,
+      "buf": 11378,
+      "value_mae": 0.309,
+      "decisive_sign_acc": 0.7,
+      "gelo": 483.0,
+      "ladder_scores": {
+        "random": 0.9,
+        "depth-1": 0.18,
+        "depth-2": 0.12,
+        "depth-3": 0.0
+      }
+    },
+    {
+      "iter": 24,
+      "buf": 13831,
+      "value_mae": 0.3,
+      "decisive_sign_acc": 0.738,
+      "gelo": 564.0,
+      "ladder_scores": {
+        "random": 0.92,
+        "depth-1": 0.27,
+        "depth-2": 0.07,
+        "depth-3": 0.1
+      }
+    },
+    {
+      "iter": 28,
+      "buf": 16181,
+      "value_mae": 0.288,
+      "decisive_sign_acc": 0.725,
+      "gelo": 564.0,
+      "ladder_scores": {
+        "random": 0.97,
+        "depth-1": 0.3,
+        "depth-2": 0.02,
+        "depth-3": 0.07
+      }
+    },
+    {
+      "iter": 32,
+      "buf": 18656,
+      "value_mae": 0.294,
+      "decisive_sign_acc": 0.738,
+      "gelo": 572.0,
+      "ladder_scores": {
+        "random": 0.97,
+        "depth-1": 0.3,
+        "depth-2": 0.03,
+        "depth-3": 0.07
+      }
+    },
+    {
+      "iter": 36,
+      "buf": 20000,
+      "value_mae": 0.294,
+      "decisive_sign_acc": 0.738,
+      "gelo": 579.0,
+      "ladder_scores": {
+        "random": 1.0,
+        "depth-1": 0.2,
+        "depth-2": 0.1,
+        "depth-3": 0.08
+      }
+    },
+    {
+      "iter": 40,
+      "buf": 20000,
+      "value_mae": 0.288,
+      "decisive_sign_acc": 0.75,
+      "gelo": 641.0,
+      "ladder_scores": {
+        "random": 1.0,
+        "depth-1": 0.33,
+        "depth-2": 0.1,
+        "depth-3": 0.1
+      }
+    },
+    {
+      "iter": 44,
+      "buf": 20000,
+      "value_mae": 0.288,
+      "decisive_sign_acc": 0.75,
+      "gelo": 628.0,
+      "ladder_scores": {
+        "random": 0.97,
+        "depth-1": 0.42,
+        "depth-2": 0.07,
+        "depth-3": 0.05
+      }
+    },
+    {
+      "iter": 48,
+      "buf": 20000,
+      "value_mae": 0.289,
+      "decisive_sign_acc": 0.731,
+      "gelo": 676.0,
+      "ladder_scores": {
+        "random": 1.0,
+        "depth-1": 0.32,
+        "depth-2": 0.2,
+        "depth-3": 0.12
+      }
+    }
+  ]
+}
