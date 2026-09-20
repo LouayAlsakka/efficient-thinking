@@ -1,0 +1,57 @@
+{
+ "document": "ET-8b gen1 as first run — NOT A MEASUREMENT OF ACCUMULATION. Kept because the run happened and its numbers are what the defect predicts.",
+ "⚠️_read_this_first": "gen1's heads were fitted on gen0's CONTAMINATED episodes (see et8b_gen1_contamination.json). Their d2/d3 accuracy is at chance. This arm therefore measures a head that is good at decision 1 (its d1 head is BYTE-IDENTICAL in behaviour to gen0's, correctly so) and random at decisions 2 and 3. It does not answer whether a second generation accumulates.",
+ "gen1_vs_base_HELD_OUT": {
+  "pair": "ET-8b: gen1 loop vs base loop, HELD OUT (tasks 226-300)",
+  "n": 75,
+  "base_success_pct": 24.0,
+  "G_success_pct": 29.3,
+  "success_delta_points": 5.3,
+  "success_95CI": [
+   -5.3,
+   16.0
+  ],
+  "base_actions": 8.04,
+  "G_actions": 7.52,
+  "actions_delta": -0.52,
+  "actions_95CI": [
+   -1.0,
+   -0.08
+  ],
+  "McNemar": {
+   "base_only_solved": 6,
+   "G_only_solved": 10,
+   "discordant": 16,
+   "exact_two_sided_p": 0.4545
+  },
+  "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+ },
+ "gen1_vs_gen0_HELD_OUT": {
+  "pair": "ET-8b: gen1 vs gen0, HELD OUT (tasks 226-300) — does a second generation add anything",
+  "n": 75,
+  "base_success_pct": 41.3,
+  "G_success_pct": 29.3,
+  "success_delta_points": -12.0,
+  "success_95CI": [
+   -20.0,
+   -4.0
+  ],
+  "base_actions": 7.47,
+  "G_actions": 7.52,
+  "actions_delta": 0.05,
+  "actions_95CI": [
+   -0.08,
+   0.2
+  ],
+  "McNemar": {
+   "base_only_solved": 10,
+   "G_only_solved": 1,
+   "discordant": 11,
+   "exact_two_sided_p": 0.01172
+  },
+  "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+ },
+ "what_the_numbers_confirm": "gen1 is statistically indistinguishable from base (+5.3 [-5.3,+16.0], p=0.45) and significantly WORSE than gen0 (-12.0 [-20.0,-4.0], McNemar p=0.0117, 10 gen0-only solves against 1 gen1-only). That is the predicted consequence of keeping gen0's decision-1 head and randomising decisions 2-3: the arm retains part of gen0's first-decision benefit and throws away the rest. It is evidence about the defect, not about accumulation.",
+ "superseded_by": "the cross-fitted gen0 -> gen1 chain (3-fold over tasks 1-225, no episode steered by a head that saw its task)",
+ "signed": "Sautee (sha-ta)"
+}
