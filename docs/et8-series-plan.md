@@ -1,4 +1,4 @@
-> **2026-09-20:** 8a is published as **Efficient Thinking VIII: Experience Priors** — `docs/whitepaper8.md` (html/pdf beside it). The working label "8a" is retired; 8b/8c/8d are Papers VIII-b/c/d.
+> **2026-09-20:** 8a is published as **Efficient Thinking VIII: Experience Priors** — `docs/efficient-thinking-8.md` (html/pdf beside it). The working label "8a" is retired; 8b/8c/8d are Papers VIII-b/c/d.
 
 # Efficient Thinking 8 — a series, written backward
 

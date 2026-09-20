@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Render docs/whitepaper.md -> whitepaper.html (native inline SVG) + whitepaper.pdf.
+"""Render docs/efficient-thinking-1.md -> efficient-thinking-1.html (native inline SVG) + efficient-thinking-1.pdf.
 
 The HTML keeps native inline SVG (browsers render it perfectly). For the PDF, each SVG is
 RASTERIZED to a PNG and embedded as <img> — weasyprint's SVG engine renders these charts
@@ -10,9 +10,9 @@ import os, re, base64
 import markdown
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MD = os.path.join(ROOT, "docs", "whitepaper.md")
-HTML = os.path.join(ROOT, "docs", "whitepaper.html")
-PDF = os.path.join(ROOT, "docs", "whitepaper.pdf")
+MD = os.path.join(ROOT, "docs", "efficient-thinking-1.md")
+HTML = os.path.join(ROOT, "docs", "efficient-thinking-1.html")
+PDF = os.path.join(ROOT, "docs", "efficient-thinking-1.pdf")
 
 CSS = """
 @page { size: A4; margin: 20mm 18mm; }
