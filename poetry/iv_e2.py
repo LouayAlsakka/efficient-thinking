@@ -16,7 +16,7 @@ if it starts reimplementing either end, that is the bug.
 BUILD-ONLY WITHOUT --live. Without a key nothing is sent; --dry runs the whole arm on the fake
 transport so the pipeline is exercised at $0.00.
 """
-import argparse, json, os, random, sys
+import argparse, collections, json, os, random, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -58,6 +58,27 @@ def load_candidates(cache_path, prompts_path, limit=0):
 DIMS = ["valid", "meter", "score", "clean"]
 
 
+def selectors_for(pair, pareto, rng):
+    """Every selector's pick on THIS pair, computed locally — no extra API calls.
+
+    The registered E2 (proposal §E2) compares selection rules: random, a convention/checker
+    baseline, and a judge, with q = selector-vs-rater agreement and "the lift of judge selection
+    over no-selection". Under amendment 2 the frontier model IS the rater, so a frontier-judge
+    SELECTOR would agree with itself trivially and is not among these. Random is the no-selection
+    floor that the checker's q has to beat to mean anything.
+    """
+    cands = {c["cand_id"]: c for c in pareto}
+    two = [pair["A"]["cand_id"], pair["B"]["cand_id"]]
+    def best(key):
+        return max(two, key=lambda cid: key(cands[cid]["scores"]))
+    return {
+        "random": rng.choice(two),
+        "checker_full": best(lambda s: (s["valid"], s["meter"], s["score"], s["clean"])),
+        "checker_score_only": best(lambda s: s["score"]),
+        "meter_only": best(lambda s: (s["meter"], s["score"])),
+    }
+
+
 def build_pair(item, rng):
     """One blind A/B pair per brief: the VERIFIER's pick against another Pareto-surviving candidate.
 
@@ -67,20 +88,20 @@ def build_pair(item, rng):
     """
     pareto = HS.pareto_prune(item["candidates"], DIMS)
     if len(pareto) < 2:
-        return None, None
+        return None, None, None
     by = {c["cand_id"]: c for c in pareto}
     sel = max(pareto, key=lambda c: (c["scores"]["valid"], c["scores"]["meter"],
                                      c["scores"]["score"], c["scores"]["clean"]))
     others = [c for c in pareto if c["cand_id"] != sel["cand_id"]]
     pair = HS.make_ab_pairs([sel, rng.choice(others)], rng)[0]
-    return pair, sel["cand_id"]
+    return pair, sel["cand_id"], pareto
 
 
 def run(items, rater, rng, brief_of):
-    log, selector = [], {}
+    log, selector = [], collections.defaultdict(dict)
     collapsed = 0
     for it in items:
-        pair, sel = build_pair(it, rng)
+        pair, sel, pareto = build_pair(it, rng)
         if pair is None:
             collapsed += 1     # Pareto set of size 1: nothing for the judge to compare
             continue
@@ -88,7 +109,8 @@ def run(items, rater, rng, brief_of):
         w = rater(pair, brief=it["brief"])
         if w is None:
             continue                      # dropped, counted in rater.unparsed, never guessed
-        selector[pair["pair_id"]] = sel
+        for name, pick in selectors_for(pair, pareto, rng).items():
+            selector[name][pair["pair_id"]] = pick
         log.append(HS.log_choice(pair, w, ts=len(log)))
         log[-1]["_pair"] = pair
     return log, selector, collapsed
@@ -129,8 +151,12 @@ def main():
 
     brief_of = {}
     log, selector, collapsed = run(items, rater, rng, brief_of)
-    q = HS.compute_q(selector, log)
+    qs = {name: HS.compute_q(sel, log) for name, sel in sorted(selector.items())}
+    q = qs.get("checker_full")
     print("  rated %d pairs, %d unparsed and dropped   %s" % (len(log), rater.unparsed, meter.line()))
+    for name, v in qs.items():
+        print("    q(%-20s vs the judge) = %s%s" % (name, v,
+              "   <- the no-selection floor" if name == "random" else ""))
     # A zero-match count printed AFTER the result is a zero-match count nobody reads. The first
     # dry run of this file rated 0 pairs and still wrote a result file with q = null.
     print("  briefs whose Pareto set collapsed to ONE candidate: %d of %d (%.1f%%)"
@@ -163,6 +189,11 @@ def main():
         "judge": a.model, "briefs": len(items), "pairs_rated": len(log),
         "unparsed_dropped": rater.unparsed + rater2.unparsed,
         "q_verifier_vs_judge": q,
+        "q_by_selector": qs,
+        "how_to_read_q_by_selector": "random is the no-selection floor (proposal §E2's 'lift of "
+                                     "judge selection over no-selection'). A checker q that does "
+                                     "not beat random is a checker the judge does not agree with "
+                                     "more than chance.",
         "briefs_with_no_pair_pareto_collapsed": collapsed,
         "rated_fraction": round(len(log) / max(1, len(items)), 3),
         "self_consistency": sc, "rerate_n": len(rr),
