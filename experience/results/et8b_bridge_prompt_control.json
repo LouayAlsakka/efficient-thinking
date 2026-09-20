@@ -1,0 +1,73 @@
+{
+ "document": "ET-8b bridge arm \u2014 is the constant 'false' the model or the prompt?",
+ "design": "same patch points, BALANCED 30 green + 30 red, four wordings x two temperatures",
+ "why": "the main pass returned false on 568 of 569 points including all 83 greens; before that is a finding it has to survive not being one wording at temp 0",
+ "results": {
+  "A_original@t0.0": {
+   "n": 60,
+   "said_pass": 0,
+   "said_pass_pct": 0.0,
+   "unparsed": 0,
+   "correct_on_green": 0,
+   "false_alarms": 0
+  },
+  "A_original@t0.7": {
+   "n": 60,
+   "said_pass": 1,
+   "said_pass_pct": 1.7,
+   "unparsed": 0,
+   "correct_on_green": 0,
+   "false_alarms": 1
+  },
+  "B_plain_yes_no@t0.0": {
+   "n": 60,
+   "said_pass": 0,
+   "said_pass_pct": 0.0,
+   "unparsed": 0,
+   "correct_on_green": 0,
+   "false_alarms": 0
+  },
+  "B_plain_yes_no@t0.7": {
+   "n": 60,
+   "said_pass": 0,
+   "said_pass_pct": 0.0,
+   "unparsed": 0,
+   "correct_on_green": 0,
+   "false_alarms": 0
+  },
+  "C_did_you_fix_it@t0.0": {
+   "n": 34,
+   "said_pass": 1,
+   "said_pass_pct": 2.9,
+   "unparsed": 26,
+   "correct_on_green": 0,
+   "false_alarms": 1
+  },
+  "C_did_you_fix_it@t0.7": {
+   "n": 32,
+   "said_pass": 1,
+   "said_pass_pct": 3.1,
+   "unparsed": 28,
+   "correct_on_green": 1,
+   "false_alarms": 0
+  },
+  "D_confidence_forced@t0.0": {
+   "n": 60,
+   "said_pass": 0,
+   "said_pass_pct": 0.0,
+   "unparsed": 0,
+   "correct_on_green": 0,
+   "false_alarms": 0
+  },
+  "D_confidence_forced@t0.7": {
+   "n": 60,
+   "said_pass": 2,
+   "said_pass_pct": 3.3,
+   "unparsed": 0,
+   "correct_on_green": 1,
+   "false_alarms": 1
+  }
+ },
+ "reading": "if every cell is ~0% said-PASS the constant is the MODEL and the bridge arm has no label to fit. If any wording moves it, the finding was mine.",
+ "signed": "Sautee (sha-ta)"
+}

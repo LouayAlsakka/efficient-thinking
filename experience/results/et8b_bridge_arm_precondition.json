@@ -1,0 +1,98 @@
+{
+ "document": "ET-8b bridge arm (VII) — THE ARM CANNOT BE RUN, AND THE REASON IS THE ANSWER: the agent's own judgment of success is a CONSTANT.",
+ "what_was_asked": "理 11700 §3 ruled option (A): an offline self-assessment over the CROSS-FITTED gen0 trajectories, verdict withheld, same states. That is what was run.",
+ "the_precondition_that_decides_the_arm": {
+  "patch_points": 569,
+  "parsed": 568,
+  "unparsed_dropped_not_guessed": 1,
+  "agent_said_tests_pass": 0,
+  "agent_said_tests_fail": 568,
+  "agreement_with_verifier_pct": 85.4,
+  "🔴_the_agreement_number_is_the_BASE_RATE": 85.4,
+  "reading": "the agent emitted {\"tests_pass\": false} on 568 of 568 parsed points -- including ALL 83 points where the patch actually worked. Its 85.4% agreement with the verifier is exactly the fraction of patches that fail. A constant predictor scores the base rate; the signal carries ZERO information.",
+  "the_one_unparsed": "the model ignored the question and emitted {\"action\":\"inspect\",\"region\":\"emit\"}. Dropped, not coerced."
+ },
+ "CONTROL_is_it_the_model_or_my_prompt": {
+  "design": "the same patch points, BALANCED 30 green + 30 red, under four wordings x two temperatures",
+  "results": {
+   "A_original@t0.0": {
+    "n": 60,
+    "said_pass": 0,
+    "said_pass_pct": 0.0,
+    "unparsed": 0,
+    "correct_on_green": 0,
+    "false_alarms": 0
+   },
+   "A_original@t0.7": {
+    "n": 60,
+    "said_pass": 1,
+    "said_pass_pct": 1.7,
+    "unparsed": 0,
+    "correct_on_green": 0,
+    "false_alarms": 1
+   },
+   "B_plain_yes_no@t0.0": {
+    "n": 60,
+    "said_pass": 0,
+    "said_pass_pct": 0.0,
+    "unparsed": 0,
+    "correct_on_green": 0,
+    "false_alarms": 0
+   },
+   "B_plain_yes_no@t0.7": {
+    "n": 60,
+    "said_pass": 0,
+    "said_pass_pct": 0.0,
+    "unparsed": 0,
+    "correct_on_green": 0,
+    "false_alarms": 0
+   },
+   "C_did_you_fix_it@t0.0": {
+    "n": 34,
+    "said_pass": 1,
+    "said_pass_pct": 2.9,
+    "unparsed": 26,
+    "correct_on_green": 0,
+    "false_alarms": 1
+   },
+   "C_did_you_fix_it@t0.7": {
+    "n": 32,
+    "said_pass": 1,
+    "said_pass_pct": 3.1,
+    "unparsed": 28,
+    "correct_on_green": 1,
+    "false_alarms": 0
+   },
+   "D_confidence_forced@t0.0": {
+    "n": 60,
+    "said_pass": 0,
+    "said_pass_pct": 0.0,
+    "unparsed": 0,
+    "correct_on_green": 0,
+    "false_alarms": 0
+   },
+   "D_confidence_forced@t0.7": {
+    "n": 60,
+    "said_pass": 2,
+    "said_pass_pct": 3.3,
+    "unparsed": 0,
+    "correct_on_green": 1,
+    "false_alarms": 1
+   }
+  },
+  "verdict": "the constant survives every cell: said-PASS ranges 0.0%-3.3%, and on the 30 points where the patch DID work it is right at most once. It is the model, not one wording at temperature 0.",
+  "⚠️_variant_C": "'Did the patch you just applied fix the bug?' drew 26-28 unparsed of 60 -- that wording confused the model and its effective n is small. A, B and D carry the conclusion."
+ },
+ "CONSEQUENCE_FOR_BOTH_ARMS": {
+  "A_offline_self_assessment_RULED_BY_RI": "CANNOT BE FITTED. Every label would be negative; there is no positive class and no head. Not a failure to find an effect -- there is no arm to run.",
+  "B_self_stopped_rollout_REGISTERED_OPTIONAL": "DETERMINED IN ADVANCE by the same measurement, and should NOT be spent. An agent that never believes it has fixed the bug never self-stops; it would exhaust the budget on every episode. The ~5h that arm was costed at would buy a result this measurement already implies."
+ },
+ "WHAT_THIS_IS_EVIDENCE_OF": "VII's Internal-Improvement Bound, observed directly rather than through the arm designed to test it: this agent cannot tell when it has succeeded, so it has no internal bits to improve on. The arm was built to ask whether the verifier's bits were what carried the gain; the answer arrived one level earlier, in the agent's inability to supply any bits of its own.",
+ "BOUNDS": [
+  "ONE MODEL: Qwen2.5-7B-Instruct. Says nothing about larger or differently-tuned agents, and a frontier model would plausibly differ.",
+  "ONE SETTING: asked to PREDICT the outcome before the tests run. The agent is not being asked to judge a completed run -- with the test output in hand it would simply read it.",
+  "ONE ENVIRONMENT and one budget (v3, 12 actions), the bound 8a already carries.",
+  "The 85.4% agreement figure must never be quoted without the base rate beside it: it is the same number."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
