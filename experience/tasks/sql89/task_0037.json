@@ -1,0 +1,59 @@
+{
+ "task_id": "task_0037",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "order",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.dname, COUNT(*) FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary >= 95 GROUP BY d.dname ORDER BY e.salary",
+ "clean": "SELECT d.dname, COUNT(*) FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary >= 95 GROUP BY d.dname ORDER BY e.name",
+ "parts": {
+  "select": "d.dname, COUNT(*)",
+  "where": "e.salary >= 95",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "GROUP BY d.dname",
+  "order": "ORDER BY e.salary"
+ },
+ "expected_rows": [
+  [
+   "eng",
+   2
+  ],
+  [
+   "ops",
+   2
+  ],
+  [
+   "sales",
+   1
+  ]
+ ],
+ "got_rows": [
+  [
+   "sales",
+   1
+  ],
+  [
+   "eng",
+   2
+  ],
+  [
+   "ops",
+   2
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "group",
+  "join",
+  "where"
+ ],
+ "_signature": "be2aaa4ad787",
+ "tests": "expected result set (3 rows) on the fixed fixtures"
+}

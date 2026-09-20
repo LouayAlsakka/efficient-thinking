@@ -1,0 +1,81 @@
+{
+ "task_id": "task_0263",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.id, e.salary FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.dept_id IN (10,20) ORDER BY e.salary DESC",
+ "clean": "SELECT e.name, e.salary FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.dept_id IN (10,20) ORDER BY e.salary DESC",
+ "parts": {
+  "select": "e.id, e.salary",
+  "where": "e.dept_id IN (10,20)",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY e.salary DESC"
+ },
+ "expected_rows": [
+  [
+   "gu",
+   160
+  ],
+  [
+   "cy",
+   140
+  ],
+  [
+   "ada",
+   120
+  ],
+  [
+   "di",
+   95
+  ],
+  [
+   "bo",
+   90
+  ],
+  [
+   "ha",
+   85
+  ]
+ ],
+ "got_rows": [
+  [
+   7,
+   160
+  ],
+  [
+   3,
+   140
+  ],
+  [
+   1,
+   120
+  ],
+  [
+   4,
+   95
+  ],
+  [
+   2,
+   90
+  ],
+  [
+   8,
+   85
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "order",
+  "where"
+ ],
+ "_signature": "443e72ab885d",
+ "tests": "expected result set (6 rows) on the fixed fixtures"
+}

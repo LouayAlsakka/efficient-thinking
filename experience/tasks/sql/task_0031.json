@@ -1,0 +1,81 @@
+{
+ "task_id": "task_0031",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.id, d.dname FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.dept_id IN (10,20) ORDER BY 1",
+ "clean": "SELECT e.name, d.dname FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.dept_id IN (10,20) ORDER BY 1",
+ "parts": {
+  "select": "e.id, d.dname",
+  "where": "e.dept_id IN (10,20)",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY 1"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   "eng"
+  ],
+  [
+   "bo",
+   "eng"
+  ],
+  [
+   "cy",
+   "ops"
+  ],
+  [
+   "di",
+   "ops"
+  ],
+  [
+   "gu",
+   "eng"
+  ],
+  [
+   "ha",
+   "ops"
+  ]
+ ],
+ "got_rows": [
+  [
+   1,
+   "eng"
+  ],
+  [
+   2,
+   "eng"
+  ],
+  [
+   3,
+   "ops"
+  ],
+  [
+   4,
+   "ops"
+  ],
+  [
+   7,
+   "eng"
+  ],
+  [
+   8,
+   "ops"
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "where"
+ ],
+ "_signature": "55c0f46526c8",
+ "tests": "expected result set (6 rows) on the fixed fixtures"
+}

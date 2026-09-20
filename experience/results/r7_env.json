@@ -1,0 +1,31 @@
+{
+ "document": "R7 environment gates + ceiling check (理 11552)",
+ "scope": "docs/r7-sql-repair-scope.md (7d8456b), committed before a line of the generator",
+ "P0_distinct_signatures": "300/300 = 1.000 (gate >= 0.9)",
+ "P1_prime": "every task has >= 1 SIBLING region — the symptom never pins its own region; tasks failing this are REJECTED at generation",
+ "k_varies": "region counts 4 or 5 -> CHANCE IS PER TASK (20.0% or 25.0%), not v3 constant 20.4% — hazard 2 from the scope",
+ "bug_region_spread": {
+  "join": 86,
+  "group": 61,
+  "where": 55,
+  "select": 54,
+  "order": 44
+ },
+ "CEILING_CHECK": {
+  "n": 60,
+  "one_shot_repair_pct": 36.7,
+  "why_generous": "the model is handed the buggy query, the schema, and BOTH row counts; no inspection, no budget, no localisation. This BOUNDS the ceiling from above.",
+  "reading": "36.7% is far below the ~80% no-headroom line and far above zero. There IS room for a localisation prior. Hazard 3 from the scope does not fire."
+ },
+ "THE_BUG_THIS_CHECK_CAUGHT_IN_ITSELF": {
+  "first run": "0/60 — reported as a floor",
+  "cause": "sqlite returns TUPLES; the task JSON round-trips rows to LISTS. The comparison could NEVER be true — the CLEAN query scored 0 too.",
+  "fix": "normalise both sides, AND a POSITIVE CONTROL now runs first: the clean query must score as repaired on every task or no rate is printed at all.",
+  "lesson": "the positive control is the cheapest check and I ran it second."
+ },
+ "bounds": [
+  "One seed (21), 300 tasks, sqlite in-memory with fixed fixture rows.",
+  "The ceiling is one-shot on 60 of the 300; the agent loop is not yet built.",
+  "A result-set verifier accepts ANY query returning the right rows — that is deliberate: two different queries can be equivalent and scoring on text would mark correct repairs wrong."
+ ]
+}

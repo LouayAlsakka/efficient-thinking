@@ -1,0 +1,65 @@
+{
+ "task_id": "task_0238",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "where",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.name, d.dname FROM emp e JOIN dept d ON e.dept_id = d.id WHERE d.region = 'west' ORDER BY 1",
+ "clean": "SELECT e.name, d.dname FROM emp e JOIN dept d ON e.dept_id = d.id WHERE d.region = 'east' ORDER BY 1",
+ "parts": {
+  "select": "e.name, d.dname",
+  "where": "d.region = 'west'",
+  "join": "JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY 1"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   "eng"
+  ],
+  [
+   "bo",
+   "eng"
+  ],
+  [
+   "el",
+   "sales"
+  ],
+  [
+   "fi",
+   "sales"
+  ],
+  [
+   "gu",
+   "eng"
+  ]
+ ],
+ "got_rows": [
+  [
+   "cy",
+   "ops"
+  ],
+  [
+   "di",
+   "ops"
+  ],
+  [
+   "ha",
+   "ops"
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "select"
+ ],
+ "_signature": "56581a99f2e9",
+ "tests": "expected result set (5 rows) on the fixed fixtures"
+}

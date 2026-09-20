@@ -1,0 +1,74 @@
+{
+ "task_id": "task_0281",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.id, d.dname FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary > 90 ORDER BY e.salary DESC",
+ "clean": "SELECT e.name, d.dname FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary > 90 ORDER BY e.salary DESC",
+ "parts": {
+  "select": "e.id, d.dname",
+  "where": "e.salary > 90",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY e.salary DESC"
+ },
+ "expected_rows": [
+  [
+   "gu",
+   "eng"
+  ],
+  [
+   "cy",
+   "ops"
+  ],
+  [
+   "ada",
+   "eng"
+  ],
+  [
+   "el",
+   "sales"
+  ],
+  [
+   "di",
+   "ops"
+  ]
+ ],
+ "got_rows": [
+  [
+   7,
+   "eng"
+  ],
+  [
+   3,
+   "ops"
+  ],
+  [
+   1,
+   "eng"
+  ],
+  [
+   5,
+   "sales"
+  ],
+  [
+   4,
+   "ops"
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "order",
+  "where"
+ ],
+ "_signature": "e7024d835987",
+ "tests": "expected result set (5 rows) on the fixed fixtures"
+}

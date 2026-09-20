@@ -1,0 +1,44 @@
+{
+ "task_id": "task_0040",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "join",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.name, d.dname FROM emp e JOIN dept d ON e.dept_id = d.region AND d.region = 'east' WHERE d.dname <> 'sales' ORDER BY 1",
+ "clean": "SELECT e.name, d.dname FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.dname <> 'sales' ORDER BY 1",
+ "parts": {
+  "select": "e.name, d.dname",
+  "where": "d.dname <> 'sales'",
+  "join": "JOIN dept d ON e.dept_id = d.region AND d.region = 'east'",
+  "group": "",
+  "order": "ORDER BY 1"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   "eng"
+  ],
+  [
+   "bo",
+   "eng"
+  ],
+  [
+   "gu",
+   "eng"
+  ]
+ ],
+ "got_rows": [],
+ "_p1_sibling_regions": [
+  "select",
+  "where"
+ ],
+ "_signature": "d3a2c11c0227",
+ "tests": "expected result set (3 rows) on the fixed fixtures"
+}
