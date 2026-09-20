@@ -11,7 +11,7 @@ prevents that.*
 
 | Paper | State today | On disk | What "finished" means |
 |---|---|---|---|
-| III Efficient Judging | MEASURED, draft v0.2 | `whitepaper3.md`; judge grid + MATH grid (M1–M4 hit); P1–P6 scored except P3 | P3 scored (judge search vs judge size, machine-only); backward rewrite; author's voice pass |
+| III Efficient Judging | MEASURED, draft v0.2 | `efficient-thinking-3.md`; judge grid + MATH grid (M1–M4 hit); P1–P6 scored except P3 | P3 scored (judge search vs judge size, machine-only); backward rewrite; author's voice pass |
 | IV Search Where Taste Is the Evaluator | MEASURED (machine arms), human arms WAITING | checkers (green); E1/E4 scored (P1 hit); E6; Goodhart pilot (dev); canon judge/policy 7a–7d | **Ruled 2026-09-19: IV waits until a good judge (human rater) is found.** No deadline, no machine-only fallback; the machine-arm ledger is written and the paper holds |
 | V The Exchange Rate of Feedback | CONCEPT | none | V-E1 simulated-oracle loop and V-E2 forgetting ledger are machine-only and run first; V-E3/E4 need the rater (G2) |
 | VI The Label Ceiling | MEASURED (E-A ledger F1–F5), E-B chess run but unledgered | `et6-ledger.md` (Connect-4); `games/results/et6_eb.json`, `et6_f3*.json`; chess label bias 0.275, F3 does not transfer, F4 capacity-bound, stage trajectory flat | E-B ledger written and scored; the "checkpoint regen" question closed or declared out of scope; backward rewrite |

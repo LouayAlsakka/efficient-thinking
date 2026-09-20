@@ -1,8 +1,8 @@
-# Efficient Thinking 8a: Experience Priors — the Constraint and the Carrier
+# Efficient Thinking VIII: Experience Priors
+## The constraint and the carrier — how verified history moves a frozen model's quality–compute frontier
+> **STATE 2026-09-20: MEASURED, closed.** Every result below is on disk under `experience/results/` with its command; the pre-registered readings are scored in §10; the closing runs landed 2026-09-19 to 09-20 and nothing further enters this paper. First paper of the VIII line (working label 8a); VIII-b accumulation, VIII-c carrier studies and VIII-d instruments follow (`et8-series-plan.md`).
 
-*Series: Efficient Thinking 8 (a of four). Status: paper written backward from the measurements of 2026-09-05 to
-2026-09-18; the chronology of how each result was found is Appendix A. Papers 8b (accumulation), 8c (carrier studies
-in two other fields) and 8d (instruments) follow. See `et8-series-plan.md`.*
+**Louay Alsakka** · September 20, 2026 · *v1.0*
 
 ## Abstract
 
@@ -33,7 +33,36 @@ nothing. Two further findings shape what follows. The largest effect of the stud
 with no memory, vector, head or training. And accumulation — the claim that experience compounds across
 generations — cannot be tested at a decision point whose inputs are fixed before the prior acts, because there
 the generations can differ only in their target; it needs a loop in which the prior's earlier choices shape the
-states it later reads, and that is the subject of 8b.
+states it later reads, and that is the subject of Paper VIII-b.
+
+## Results at a glance
+
+| finding | measurement | where |
+|---|---|---|
+| an experience prior is a constraint, and the constraint is one limb of a frontier | cost down with capability held within a pre-registered ε, paired per slice; generally, \(Q_E(C) > Q_0(C)\) | §3 |
+| six carriers of experience fail the constraint | text memory, steering vector, logit bias, two localisation rules, a chess move prior — each fails on capability or on cost | §7.3 |
+| a read-only head over the frozen model's hidden state passes | +11.3, +13.0, +14.0, +13.3 problems in 100 across four n = 300 measurements, all p < 10⁻⁴ | §7.4 |
+| it replicates in a second model family | Llama-3.1-8B: +20.0 held-out, +14.3 [+7.7, +21.0] on a disjoint 300 | §7.4 |
+| the gain is not bought with compute | the base given the head's compute: 22.3% against 31.7% (+9.3 [+3.7, +15.0], p 0.002) | §7.6 |
+| both limbs of the frontier hold | compute-neutral at budget 8: +8.3 [+3.0, +14.0]; equal quality (24.0% both, 33 discordant each way) at 2.32× less compute | §7.6 |
+| the head sits above the base across the measured range | six base and four head budgets over 4.4k–13.9k tokens; the base plateaus from 9.2k | §7.6 |
+| the strongest simple baselines at the same decision do not reach it | the model's own preference 20.3%; five-sample majority vote 12.3%, worse than the base; head 31.7% | §7.7 |
+| the mechanism transfers to a second search structure | SQL repair, head re-fitted: probe 89.3% vs 20.9% chance; +12.3 [+6.7, +18.0] on a disjoint 300, p 6×10⁻⁵ | §7.7 |
+| the bound | the prior helps only where what it improves — localisation — limits the agent; on a repair-bound set the same head does nothing | §7.5 |
+| accumulation cannot be tested at one decision | a second generation's training states were byte-identical to the first's; P9 fails by the letter | §9 |
+| two carrier studies | chess prior +20 ± 55 Elo against +182 for search; a poet's LoRA carries the style and not the person | §8 |
+
+![Figure 1](figs/fig1_frontier.png)
+
+*Figure 1. **A.** The quality–compute frontier on the debugging family: the frozen model under ordinary search at six
+action budgets, and the same model with the read-only head at four, every head point charged the controller's
+measured cost; bars are 95% Wilson intervals per point, the paired tests are in §7.6. At equal quality (24.0% both)
+the head spends 2.32× less. **B.** The paired difference, head minus base, with its 95% interval wherever it was
+measured: four cross-run debugging measurements, a second model family, the two matched-compute limbs, and the
+second search structure with the head re-fitted. **C.** At the same decision over the same enumerated candidates:
+the model's own highest-probability candidate and a five-sample majority vote do not reach the head; the vote is
+worse than the base (§7.7). Source: `experience/results/r5c.json`, `r1_intervals.json`, `r4b_disjoint.json`,
+`r7_disjoint_stats.json`, `r6.json`; script `scripts/fig1_frontier.py`.*
 
 ## 1. Motivation
 
@@ -121,7 +150,7 @@ requires one inspection before the first hypothesis, and the prior acts on the h
 **Where the prior's inputs are fixed before it acts, generations cannot differ in input.** If the observation
 that precedes the prior's decision is made by the frozen model on a prompt the prior does not touch, then a
 second generation trained on a better agent's episodes trains on the same states as the first; it can differ
-only in its target. This closes the accumulation question on the present harness (§9) and opens 8b.
+only in its target. This closes the accumulation question on the present harness (§9) and opens Paper VIII-b.
 
 ## 5. The Lifecycle, Compressed
 
@@ -550,7 +579,7 @@ claim of §7 is experience-directed search on two search structures, and the pap
 
 ## 8. Two Carrier Studies, in Brief
 
-Full treatment in 8c. Both are studies of what happens to a capability when experience is pushed into it by a
+Full treatment in Paper VIII-c. Both are studies of what happens to a capability when experience is pushed into it by a
 weight update, and both are read under §3.
 
 **Chess.** A frozen 3.45M evaluator under MCTS, an external oracle, and a learned prior over move types by
@@ -581,9 +610,68 @@ on 3.3% of training tasks; on the independent set it changed 4.0% of outcomes, t
 size and, by the letter of the pre-registration, a fail. At a single fixed decision point nothing accumulates but
 the target. Accumulation lives in a loop where the prior's earlier choices shape the states it later reads —
 more than one hypothesis per episode, the head touching each — and that loop, with the prompt gate applied at
-every decision the head touches and a base of its own, is 8b.
+every decision the head touches and a base of its own, is Paper VIII-b.
 
-## 10. Conclusion
+## Related work
+
+Inference-time compute is now studied as a budget to allocate rather than a fixed cost [Snell et al. 2024; Brown et
+al. 2024], and Efficient Thinking I–III measured what that allocation buys: search extracts what the evaluator
+already contains, and only external information raises the ceiling. This paper adds the experience axis to that
+picture and keeps its rules — a pre-registered reading, a paired test, a stated bound. Self-consistency [Wang et al.
+2022] and process reward models [Lightman et al. 2023] select among candidates the model has already produced; the
+head here acts earlier, choosing where the search looks next, and §7.7 measures both selection baselines at the same
+decision. Agent memories that store lessons as text [Shinn et al. 2023; Wang et al. 2023] are the carrier this paper
+calls A, and it is the one that fell furthest under the constraint. Activation steering [Turner et al. 2023; Li et
+al. 2023] is carrier C; the result that the hidden state carries the decision while an additive vector cannot act on
+it is the observation the read-only head was built from. Linear probes on hidden states [Alain & Bengio 2016;
+Kadavath et al. 2022; Burns et al. 2022] are the instrument; what is new is their use as a controller under a cost
+constraint, with the three probe controls and the task and prompt gates that separate a readout from a lookup
+table. Low-rank adaptation [Hu et al. 2021; Dettmers et al. 2023] is the weight-update carrier studied in §8's poet
+study, not as a baseline but as a case of what a weight update carries. The chess anchor stands on AlphaZero-style
+self-play [Silver et al. 2017] with a frozen evaluator, and the debugging environment is deliberately synthetic where
+SWE-bench [Jimenez et al. 2023] is real, so that the verifier decides every bug and the gates can be enforced at
+generation.
+
+## 10. Registered predictions, scored
+
+The proposal (`efficient-thinking-8-proposal.md`, registered before any run) carried ten predictions. Each is
+scored against the record; a miss is printed at the same size as a hit.
+
+| prediction (registered before the run) | outcome |
+|---|---|
+| P0 — the external verifier rejects ≥ 20% of candidate lessons | **Hit.** Eleven of twelve rejected, all of them positive "start here" lessons that were true (§6) |
+| P1 — the best injected prior reduces actions-to-green on held-out same-family tasks by ≥ 25% at equal success | **Hit, by a mechanism the proposal did not list.** No injected prior did; the read-only head at equal success (24.0% both) takes 5.53 actions against the base's 19.81 (§7.6) |
+| P2 — that prior beats distilled text memory at ≤ 0.5× total tokens | **Hit, vacuously.** Text memory fell below the base on every problem at 3–4× input tokens; the head beats it at +34% (§7.3, §7.4) |
+| P3 — mid-depth injection beats early and late | **Not scored as registered.** No early/mid/late comparison of an injected prior was run: the steering vector was measured at layer 27 and failed the constraint; the head was wired at layer 18, where its probe and the layer-27 probe were within 1.3 points (§7.3, §7.4) |
+| P4 — gradient-free steering vectors recover ≥ 50% of the trained adapter's gain | **Not scored.** The adapter arm was not run in the debugging field; there was no gain to recover |
+| P5 — out-of-domain regression ≤ 2 points for C, D, F | **Not scored for C and F**, which failed the constraint before the check applied; **holds by construction for the head**, which changes no weight |
+| P6 — an invalidated lesson decays within three rounds | **Not run.** The lifecycle's decay arm belongs to Paper VIII-b (§5) |
+| P7 — lesson text transfers to 7B, vectors do not | **Miss on the first half.** Text memory on 7B was destructive, not transferable; what transferred was the head, to a second family (§7.4) |
+| P8 — a learned move prior cuts simulations to 2600 by ≥ 30% | **Miss.** +20 ± 55 Elo at equal search, no saving at any simulation count (§7.3, §8) |
+| P9 — efficiency improves monotonically over three rounds, then plateaus | **Fail by the letter.** The second generation's training states were byte-identical to the first's; the only available second generation changed 4.0% of outcomes, a null (§9) |
+
+Pre-registered readings written during the study — the frontier control's two limbs (§7.6), the curve's three
+readings (§7.6), the two baseline readings (§7.7) and the second structure's three (§7.7) — are scored in place,
+with the readings that did not fire printed beside the ones that did.
+
+## 11. Limitations and future work
+
+One task family per search structure, both synthetic, both sharing a harness and a verifier-decides-the-bug
+discipline whose blind spots would be invisible to both. Two frozen models of 7–8B parameters; a 3B model floored
+and is not a counterexample. One seed for the frontier curve and for the second structure. The controller is
+charged at its measured, unbatched cost, and the simple baselines are charged analytically, not from their
+episodes' token counts. The head reads one decision; nothing here accumulates, and §9 says why it could not on this
+harness. The SQL grammar sits on the lookup-table gate's boundary, so a set there is admitted by measurement rather
+than by seed. Nothing in this paper uses production traffic or any data about a person.
+
+What follows is set by these bounds. Paper VIII-b builds the loop in which the head's earlier choices shape the
+states it later reads and asks whether a second generation beats its parent — and, with a head fitted on the
+agent's own unverified success claims, whether the verifier's bits are the gain. Paper VIII-c takes the two carrier
+studies of §8 to full length. Paper VIII-d is the instruments: the gates, the controls and the persistence rule as
+a checklist for any experience-learning claim. A single-pass head that scores candidate families without
+enumerating them would remove the enumeration premium entirely and is a new mechanism with its own ladder.
+
+## 12. Conclusion
 
 An experience prior is a constraint, not a component. Under it, six ways of carrying experience into a frozen
 model's search failed, in two fields, and the pattern of their failures says why: each touched the competence
@@ -602,11 +690,44 @@ finds that historical computation can teach a frozen intelligence where to direc
 model's own preference at the same decision does not reach it, and on a second search structure with the head
 re-fitted from that structure's own history the same mechanism moves the frontier again (§7.7). Search moves a
 system along its frontier; experience moves the frontier, and it is a fact about experience-directed search rather
-than about one grammar. This paper stops there. Paper 8b
+than about one grammar. This paper stops there. Paper VIII-b
 asks whether it moves again — \(Q_2(C) > Q_1(C) > Q_0(C)\) with the intelligence frozen throughout — which would
 close the loop this series opened: intelligence, search, outcome, verification, experience, better search.
 
 ---
+
+## Reproducibility
+
+Every number in this paper is in the repository under `experience/`: environments (`et8_env_v3.py`, `et8_sql_env.py`),
+the agent (`et8_agent.py`, unchanged from the first measured run; the SQL agent is a separate file), the head and its
+controls (`et8_head_v3.py`, `et8_sql_head.py`), the gates (`et8_task_gate.py`, `et8_prompt_gate.py`), the paired
+statistics (`paired_stats.py`), and the results as JSON under `experience/results/` with the command that produced
+each table recorded beside it. Trajectories and decision states are persisted per run. The package's measured
+constants live in one registry (`experience/results/et8_constants.json`) with a checker that fails on drift
+(`check_constants.py`); the inputs the repository does not track are listed with counts and checksums in
+`docs/inputs-manifest.md`. The chronology, including every withdrawn claim, is Appendix A.
+
+## References
+
+- Alain, G. & Bengio, Y. (2016). *Understanding intermediate layers using linear classifier probes.* arXiv:1610.01644.
+- Alsakka, L. (2026). *Efficient Thinking I: Measuring What Capability Costs.* This series.
+- Alsakka, L. (2026). *Efficient Thinking II: Where Search Pays and Where It Can't.* This series.
+- Alsakka, L. (2026). *Efficient Thinking III: Efficient Judging.* This series.
+- Brown, B. et al. (2024). *Large Language Monkeys: Scaling Inference Compute with Repeated Sampling.* arXiv:2407.21787.
+- Burns, C. et al. (2022). *Discovering Latent Knowledge in Language Models Without Supervision.* arXiv:2212.03827.
+- Dettmers, T. et al. (2023). *QLoRA: Efficient Finetuning of Quantized LLMs.* arXiv:2305.14314.
+- Hu, E. J. et al. (2021). *LoRA: Low-Rank Adaptation of Large Language Models.* arXiv:2106.09685.
+- Jimenez, C. E. et al. (2023). *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?* arXiv:2310.06770.
+- Kadavath, S. et al. (2022). *Language Models (Mostly) Know What They Know.* arXiv:2207.05221.
+- Li, K. et al. (2023). *Inference-Time Intervention: Eliciting Truthful Answers from a Language Model.* NeurIPS.
+- Lightman, H. et al. (2023). *Let's Verify Step by Step.* arXiv:2305.20050.
+- McNemar, Q. (1947). *Note on the sampling error of the difference between correlated proportions or percentages.* Psychometrika 12.
+- Shinn, N. et al. (2023). *Reflexion: Language Agents with Verbal Reinforcement Learning.* NeurIPS.
+- Silver, D. et al. (2017). *Mastering the game of Go without human knowledge.* Nature 550.
+- Snell, C. et al. (2024). *Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters.* arXiv:2408.03314.
+- Turner, A. M. et al. (2023). *Activation Addition: Steering Language Models Without Optimization.* arXiv:2308.10248.
+- Wang, G. et al. (2023). *Voyager: An Open-Ended Embodied Agent with Large Language Models.* arXiv:2305.16291.
+- Wang, X. et al. (2022). *Self-Consistency Improves Chain of Thought Reasoning in Language Models.* arXiv:2203.11171.
 
 ## Appendix A. How This Was Found
 
@@ -649,7 +770,7 @@ design and pre-registration; both are pseudonymous here and belong to no institu
 12a. **09-19.** With the matched-compute point read on both limbs (§7.6), R set the stop rule this paper adopts:
     the two §7.7 controls — the model's own preference at the same decision and cost, and a second search
     structure with the head re-fitted — close the empirical story, and further work belongs to the next papers
-    rather than to a larger 8a. R's one-line reading of the core result is the one §10 keeps: the same frozen
+    rather than to a larger paper. R's one-line reading of the core result is the one §12 keeps: the same frozen
     model, informed by verified history, obtains more task success from the same inference computation.
 12b. **09-19 to 09-20.** The three closing runs. The frontier curve read above the base across the measured range and
     equal quality at 2.32× less compute (§7.6). Neither simple baseline at the same decision reached the head, and a
@@ -658,7 +779,7 @@ design and pre-registration; both are pseudonymous here and belong to no institu
     could never say yes (tuples against lists) and a positive control became structural; the mechanism transferred
     on the admitted seed (§7.7). Three results E had committed on E's box were found never pushed and were pushed
     the same day. *Rules: a gate is printed by the generator on the set it writes; a positive control runs before
-    any rate; a sha is quoted only once it resolves on the shared remote.* 8a closed on R7, as pre-registered,
+    any rate; a sha is quoted only once it resolves on the shared remote.* The paper closed on R7, as pre-registered,
     whichever way it fell.
 13. **Throughout.** Two runs were lost to moving the working tree under a process that was writing to it; three
     artefacts a later question needed had not been the artefacts a run was written to save; one results table was

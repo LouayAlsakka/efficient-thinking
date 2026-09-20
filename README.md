@@ -8,8 +8,8 @@ self-learning — using a deliberately tiny model on modest hardware (two Apple-
 single forward pass, and adding **MCTS search** lifts the *same weights* to **~2800-class strength
 with zero extra parameters** — strength bought with *thinking*, not *growing*.
 
-📄 **Full white paper (with graphs): [`docs/whitepaper.pdf`](docs/whitepaper.pdf)** ·
-[`docs/whitepaper.html`](docs/whitepaper.html) · [`docs/whitepaper.md`](docs/whitepaper.md)
+📄 **Full white paper (with graphs): [`docs/efficient-thinking-1.pdf`](docs/efficient-thinking-1.pdf)** ·
+[`docs/efficient-thinking-1.html`](docs/efficient-thinking-1.html) · [`docs/efficient-thinking-1.md`](docs/efficient-thinking-1.md)
 
 > **On the numbers:** absolute Elo is measured against a Stockfish ladder and carries systematic
 > uncertainty (±~100) near the top rung. The **relative** results below — MCTS-vs-fixed-depth, the
@@ -68,7 +68,7 @@ scripts/
   build_balanced.py  curate balanced opening/midgame/endgame start positions
   train.py           train one config;  make_paper.py renders the white paper
 tests/               pytest pipeline test
-docs/whitepaper.*    the white paper (md / html / pdf)
+docs/efficient-thinking-<n>.*   the papers (md / html / pdf)
 ```
 
 ## Reproducing from scratch (data)
@@ -85,7 +85,17 @@ and to **LLM reasoning**, and introduces **GELO** — a calibrated, cross-domain
 (one logistic latent-ability model unifying Elo, Bradley–Terry, and IRT). Early results reproduce the
 core pattern out of chess: search scales reasoning accuracy but saturates at a *consensus* ceiling that a
 **perfect verifier breaks (+14.2 pts)** — the "evaluator is the bottleneck" finding, in language.
-In progress — see [`docs/whitepaper2.md`](docs/whitepaper2.md) and [`docs/gelo.md`](docs/gelo.md).
+In progress — see [`docs/efficient-thinking-2.md`](docs/efficient-thinking-2.md) and [`docs/gelo.md`](docs/gelo.md).
+
+*Efficient Thinking III* ([`docs/efficient-thinking-3.md`](docs/efficient-thinking-3.md)) prices the LLM judge against its free baselines.
+
+*Efficient Thinking VIII: Experience Priors* ([`docs/efficient-thinking-8.md`](docs/efficient-thinking-8.md) · [`html`](docs/efficient-thinking-8.html) · [`pdf`](docs/efficient-thinking-8.pdf))
+asks what happens after the intelligence has experience of how to think: an experience prior is defined as a
+constraint (cost down, capability held) and, generally, as an improvement of the frozen model's quality–compute
+frontier. Six carriers fail it; a read-only linear head over the frozen model's hidden state passes — replicated
+across task sets and model families, at matched compute, across a budget curve, against the strongest simple
+baselines, and on a second search structure with the head re-fitted. Papers VIII-b (accumulation), VIII-c and
+VIII-d follow; the plan is [`docs/et8-series-plan.md`](docs/et8-series-plan.md).
 
 ## Citation
 

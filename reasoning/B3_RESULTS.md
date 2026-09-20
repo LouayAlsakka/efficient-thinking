@@ -1,6 +1,6 @@
 # B3 — Larger-base, larger-data fine-tune: does the data lever beat a pretrained baseline? (Paper II §7 tail)
 
-**Registered** in whitepaper2.md §7 (the shipped compendium): the two-floor 0.5B sweep showed "data sets
+**Registered** in efficient-thinking-2.md §7 (the shipped compendium): the two-floor 0.5B sweep showed "data sets
 the destination" (both floors converge at ~26%) but explicitly disclaimed what it did *not* show —
 *"neither curve ends above the instruct model's own zero-shot floor, and the larger-base, larger-data run
 that would test baseline-beating is registered future work."* **B3 is that run.**
