@@ -1,0 +1,51 @@
+{
+ "document": "ET-8b — why gen1's decision-2/3 heads came back at chance, and it is not the accumulation limb failing",
+ "finding": "gen1's heads were fitted on gen0's OWN trajectories on tasks < 226 — the tasks gen0's head had memorised. On those tasks gen0 finds the true bug region at decision 1 in 100% of episodes. gen1 was therefore trained on a situation that occurs 100% of the time in its training data and 22.4% of the time in its held-out evaluation.",
+ "the_error_in_one_line": "Withdrawing +35.0 fixed how gen0 was REPORTED. It did not fix gen0's episodes as DATA, and they were used as gen1's training input.",
+
+ "gen1_heads_as_fitted": {
+  "decision_1": {"held_out_pick_pct": 40.0, "chance_pct": 21.0, "verdict": "unchanged from gen0"},
+  "note": "see et8b_gen1_heads.json for the full table and controls; d1 40.0% is IDENTICAL to gen0's d1 and correctly so — at decision 1 nothing has happened yet, so the state cannot differ between arms. A generation can only differ from decision 2 onward.",
+  "decision_2": {"held_out_pick_pct": 22.4, "chance_pct": 20.9, "verdict": "AT CHANCE"},
+  "decision_3": {"held_out_pick_pct": 20.4, "chance_pct": 20.8, "verdict": "AT CHANCE"},
+  "mean_abs_weight": {"gen0_d2": 0.1121, "gen1_d2": 0.0140, "gen0_d3": 0.0933, "gen1_d3": 0.0139, "reading": "an order of magnitude smaller — the optimiser found nothing to fit"}
+ },
+
+ "CONTROL_is_it_the_row_count": {
+  "question": "gen1 has fewer training rows than gen0 (638 vs 1014 at d2). Is that the explanation?",
+  "method": "refit gen0's states at gen1's exact row count, 3 random draws",
+  "decision_2": {"gen0_all_rows_pct": 60.6, "gen0_at_gen1_row_count_pct": [56.1, 54.5, 57.6], "mean": 56.1},
+  "decision_3": {"gen0_all_rows_pct": 68.3, "gen0_at_gen1_row_count_pct": [53.3, 61.7, 48.3], "mean": 54.4},
+  "verdict": "NO — gen0's states at gen1's row count are still 54-56%, nowhere near chance."
+ },
+
+ "CONTROL_is_it_the_task_residue": {
+  "question": "gen0 solves more episodes early, so the tasks still alive at decision 2 are a harder residue. Is THAT the explanation?",
+  "method": "restrict gen0's states to the SAME task ids that reach that decision in gen1, and refit",
+  "decision_2": {"gen0_states_same_tasks_pct": 50.0, "gen1_states_same_tasks_pct": 22.4, "n_held_out_decisions": 58, "train_rows_both": 638},
+  "decision_3": {"gen0_states_same_tasks_pct": 61.2, "gen1_states_same_tasks_pct": 20.4, "n_held_out_decisions": [49, 54], "train_rows_both": 541},
+  "verdict": "NO — same tasks, same row counts, same extractor, same layer. The difference is what the states ARE."
+ },
+
+ "THE_CAUSE_measured": {
+  "statistic": "fraction of episodes in which the TRUE bug region had already been hypothesized before decision k",
+  "held_out_226_300": {"base": {"d2": 10.6, "d3": 23.3}, "gen0_steered": {"d2": 22.4, "d3": 31.5}},
+  "training_1_225":   {"base": {"d2": 21.0, "d3": 32.1}, "gen0_steered": {"d2": 100.0, "d3": 100.0}},
+  "raw_counts_training": {"gen0_d2": "128/128", "gen0_d3": "109/109"},
+  "reading": "On the 225 tasks its head memorised, gen0 finds the true region at decision 1 in EVERY episode. Those are exactly the trajectories gen1's d2/d3 heads were fitted on. Chance-level held-out accuracy is the expected consequence of a training distribution that is not a sample of the test distribution — it is not evidence that there is nothing to accumulate on."
+ },
+
+ "THE_FIX": {
+  "design": "3-fold cross-fitting over tasks 1-225: fold f is run by a head fitted on the other two folds only, so no episode is steered by a head that saw its task. 225 gen0-steered trajectories, none memorised. Tasks 226-300 are touched by nothing in it.",
+  "gate": "the chain re-reads train_ranges out of each npz and refuses to launch a fold whose head overlaps it — the first version of this rule was a sentence in a commit message, and a sentence is what failed",
+  "script": "scratchpad r8b_gen0cf.sh; fitter is experience/fit_gen_heads.py",
+  "verification": "the chain re-prints the statistic above for the cross-fitted runs; the cross-fitted row must look like the BASE row, not like the contaminated one"
+ },
+
+ "scope": [
+  "8a is unaffected: it evaluated on slice 4 with a head fitted on 1-225 and never ran a second generation. This defect is confined to the loop chain, which is 8b.",
+  "gen0's HELD-OUT result (+17.3 [5.3, 29.3], McNemar p=0.0146) stands — it is measured on tasks 226-300, which no head in the chain has seen.",
+  "The gen1 arm run against these heads is reported as what it is: a head trained on a distribution it is not tested on. It is not a measurement of accumulation."
+ ],
+ "signed": "Sautee (sha-ta)"
+}

@@ -1,0 +1,61 @@
+{
+ "document": "ET-8b gen1 heads — per-decision, the architecture FIXED at gen0",
+ "architecture_not_rechosen": "gen0 applied docs/et8b-loop-gates.md §3 (shared vs per-decision, on held-out probe accuracy, before any loop run) and selected per-decision. This generation inherits that choice. Nothing here is selected on the held-out set.",
+ "fit_on": "task_id < 226",
+ "held_out": "task_id >= 226 — THE LOOP'S EVALUATION SET, and the loop must run only this",
+ "⚠️_why_the_split_is_stated_twice": "gen0's chain fitted on task_id < 226 and ran the loop on all 300, so 225 of 300 evaluation tasks sat in the head's own training set. It printed +35.0 and the result is +17.3. The boundary is in the npz (train_task_max) so it travels.",
+ "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_gen1states",
+ "layer": 18,
+ "heads": {
+  "decision_1": {
+   "held_out_pick_pct": 40.0,
+   "n": 75,
+   "chance_pct": 21.0,
+   "train_decisions": 225,
+   "CONTROL_permuted": [
+    20.0,
+    20.0,
+    13.3,
+    20.0,
+    22.7
+   ],
+   "CONTROL_pca8": 20.0,
+   "CONTROL_n500rows": 45.3,
+   "weights": "head_d1_layer18.npz"
+  },
+  "decision_2": {
+   "held_out_pick_pct": 22.4,
+   "n": 58,
+   "chance_pct": 20.9,
+   "train_decisions": 128,
+   "CONTROL_permuted": [
+    24.1,
+    15.5,
+    25.9,
+    31.0,
+    15.5
+   ],
+   "CONTROL_pca8": 22.4,
+   "CONTROL_n500rows": 22.4,
+   "weights": "head_d2_layer18.npz"
+  },
+  "decision_3": {
+   "held_out_pick_pct": 20.4,
+   "n": 54,
+   "chance_pct": 20.8,
+   "train_decisions": 109,
+   "CONTROL_permuted": [
+    9.3,
+    25.9,
+    18.5,
+    11.1,
+    11.1
+   ],
+   "CONTROL_pca8": 20.4,
+   "CONTROL_n500rows": 20.4,
+   "weights": "head_d3_layer18.npz"
+  }
+ },
+ "how_to_read_the_controls": "permuted must collapse to chance. If PCA-8 or the row subsample matches the full head, the signal needs neither dimensions nor examples and is a key being copied.",
+ "signed": "Sautee (sha-ta)"
+}
