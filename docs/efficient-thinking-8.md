@@ -705,7 +705,7 @@ statistics (`paired_stats.py`), and the results as JSON under `experience/result
 each table recorded beside it. Trajectories and decision states are persisted per run. The package's measured
 constants live in one registry (`experience/results/et8_constants.json`) with a checker that fails on drift
 (`check_constants.py`); the inputs the repository does not track are listed with counts and checksums in
-`docs/inputs-manifest.md`. The chronology, including every withdrawn claim, is Appendix A.
+`docs/inputs-manifest.md`. One command, `experience/reproduce_matched_compute.sh`, re-runs the matched-compute comparison of §7.6 from the shipped head file and refuses to print a table if any gate fails; on 2026-09-20 it was run on a second machine by a person who had not touched the work, and read base 22.3% against head 30.3%, +8.0 [+3.0, +13.3], p 0.005, against the published +9.3 [+3.7, +15.0] — each estimate inside the other's interval (`experience/results/reproduce_20260920T173041Z/`). The chronology, including every withdrawn claim, is Appendix A.
 
 ## References
 
