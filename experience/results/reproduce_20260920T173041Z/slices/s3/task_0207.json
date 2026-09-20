@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0207",
+ "family": "v3",
+ "bug_class": "boundary",
+ "bug_region": "render",
+ "program": "# region: digest\ndef digest(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.isdigit() and int(s) > 0:\n            out.append(int(s))\n    return out\n\n# region: render\ndef render(xs):\n    acc = 0\n    out = []\n    for v in xs[:-1]:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: emit\ndef emit(xs, limit=12):\n    return [v if v <= limit else limit for v in xs]\n\n# region: intake\ndef intake(xs):\n    d = {}\n    for v in xs:\n        d[v % 3] = d.get(v % 3, 0) + 1\n    return {'n': len(xs), 'tally': sorted(d.items())}\n\n# region: gather\ndef gather(summary, name='alpha'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return gather(intake(emit(render(digest(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'tally': [(0, 2), (1, 1)], 'label': 'ALPHA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'tally': [(0, 1), (1, 1)], 'label': 'ALPHA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 2, 'tally': [(0, 1), (2, 1)], 'label': 'ALPHA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'tally': [], 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'tally': [(0, 3)], 'label': 'ALPHA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'tally': [], 'label': 'EMPTY'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'tally': [(0, 4)], 'label': 'ALPHA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'tally': [(0, 1), (2, 1)], 'label': 'ALPHA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                         ^                ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "digest",
+  "render",
+  "emit",
+  "intake",
+  "gather"
+ ],
+ "seed": 445239653,
+ "_signature": "14b3e654b392",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "digest"
+ ],
+ "_shape": {
+  "parser": "parse_positive",
+  "mappers": [
+   "running",
+   "clamp"
+  ],
+  "agg": "tally",
+  "fmt": "label"
+ }
+}

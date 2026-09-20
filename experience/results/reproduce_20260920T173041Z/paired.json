@@ -1,0 +1,25 @@
+{
+ "pair": "REPRODUCTION: base@16 (compute-matched) vs G@12",
+ "n": 300,
+ "base_success_pct": 22.3,
+ "G_success_pct": 30.3,
+ "success_delta_points": 8.0,
+ "success_95CI": [
+  3.0,
+  13.3
+ ],
+ "base_actions": 13.82,
+ "G_actions": 9.95,
+ "actions_delta": -3.88,
+ "actions_95CI": [
+  -4.32,
+  -3.43
+ ],
+ "McNemar": {
+  "base_only_solved": 22,
+  "G_only_solved": 46,
+  "discordant": 68,
+  "exact_two_sided_p": 0.004903
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}

@@ -1,0 +1,12 @@
+{
+ "tasks": "/Users/lab/github/efficient-thinking/experience/tasks/v3",
+ "task_files": 300,
+ "distinct_signatures": 300,
+ "ratio": 1.0,
+ "threshold": 0.9,
+ "largest_identical_group": 1,
+ "distinct_(bug_region, bug_class) pairs": 74,
+ "VERDICT": "PASS",
+ "signature_excludes": "task_id and seed \u2014 the two fields that made 2,000 files look like 2,000 problems",
+ "note": "run this BEFORE the prompt gate and before any generator work. A set that fails here fails the prompt gate by construction."
+}

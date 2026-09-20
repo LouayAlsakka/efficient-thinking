@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0087",
+ "family": "v3",
+ "bug_class": "drop_first",
+ "bug_region": "sift",
+ "program": "# region: sift\ndef sift(raw):\n    out = []\n    for tok in raw[1:]:\n        s = tok.strip()\n        if s.isdigit() and int(s) > 0:\n            out.append(int(s))\n    return out\n\n# region: digest\ndef digest(xs, factor=2):\n    return [v * factor for v in xs]\n\n# region: render\ndef render(xs, factor=2):\n    return [v * factor for v in xs]\n\n# region: fold\ndef fold(xs):\n    return {'n': len(xs), 'total': sum(xs)}\n\n# region: intake\ndef intake(summary, bar=2):\n    out = dict(summary)\n    out['grade'] = 'high' if summary.get('n', 0) >= bar else 'low'\n    return out\n\n# region: run\ndef run(raw):\n    return intake(fold(render(digest(sift(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'total': 24, 'grade': 'high'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'total': 68, 'grade': 'high'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 2, 'total': 52, 'grade': 'high'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'grade': 'low'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'total': 100, 'grade': 'high'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'total': 0, 'grade': 'low'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 96, 'grade': 'high'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'total': 168, 'grade': 'high'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                        ^            +",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "sift",
+  "digest",
+  "render",
+  "fold",
+  "intake"
+ ],
+ "seed": 6216304,
+ "_signature": "a50b4cedc0c6",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "digest"
+ ],
+ "_shape": {
+  "parser": "parse_positive",
+  "mappers": [
+   "scale",
+   "scale"
+  ],
+  "agg": "total",
+  "fmt": "grade"
+ }
+}
