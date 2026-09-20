@@ -93,15 +93,25 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
         cur = msgs + [{"role": "user", "content": st_text}]
         meta = {"decision": d, "trajectory_key": dkey, "prompt_key": pkey}
 
-        if head_state is not None:
+        # a dict keyed by decision number is the PER-DECISION form; anything else is the shared head.
+        hs_d = head_state.get(d) if isinstance(head_state, dict) and d in head_state else head_state
+        if hs_d is not None and isinstance(hs_d, dict) and "w" in hs_d:
+            head_state_local = hs_d
+        elif isinstance(head_state, dict) and "w" in head_state:
+            head_state_local = head_state
+        else:
+            head_state_local = None
+        if head_state_local is not None:
+            head_state = head_state if isinstance(head_state, dict) and "w" not in head_state else head_state
+            hstate = head_state_local
             import numpy as _np
             scores, pres = {}, {}
             for r in regions:
                 pre = '{"action": "hypothesize", "region": "%s", "bug_class": "' % r
-                hs = head_state["hidden"](model, tok, cur, [head_state["layer"]], prefix=pre)
-                z = _np.array(hs[head_state["layer"]].astype(head_state["mx"].float32), copy=False)
-                z = (z.astype(_np.float64) - head_state["mu"]) / head_state["sd"]
-                scores[r] = float(z @ head_state["w"] + head_state["b"]); pres[r] = pre
+                hs = hstate["hidden"](model, tok, cur, [hstate["layer"]], prefix=pre)
+                z = _np.array(hs[hstate["layer"]].astype(hstate["mx"].float32), copy=False)
+                z = (z.astype(_np.float64) - hstate["mu"]) / hstate["sd"]
+                scores[r] = float(z @ hstate["w"] + hstate["b"]); pres[r] = pre
             pick = max(scores, key=scores.get)
             text, ni, no = A.generate(model, tok, cur, temp=0.0)
             total_in += ni; total_out += no; actions += 1
@@ -169,17 +179,29 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tasks", required=True); ap.add_argument("--out", required=True)
     ap.add_argument("--model", default="Qwen/Qwen2.5-7B-Instruct")
-    ap.add_argument("--head"); ap.add_argument("--head-layer", type=int, default=18)
+    ap.add_argument("--head", help="ONE shared head for all decisions")
+    ap.add_argument("--heads", nargs=3, metavar=("D1","D2","D3"),
+                    help="THREE per-decision heads, in decision order. gen0's rule (spec §3) chose "
+                         "per-decision on held-out accuracy, so this is the path the loop uses; "
+                         "--head remains for the shared alternative the rule did not select.")
+    ap.add_argument("--head-layer", type=int, default=18)
     ap.add_argument("--budget", type=int, default=BUDGET)
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
     head = None
-    if a.head:
+    if a.head or a.heads:
         import numpy as _np, mlx.core as _mx, et8_head_v3 as _H
-        z = _np.load(a.head)
-        head = {"w": z["w"], "b": float(z["b"][0]), "mu": z["mu"], "sd": z["sd"],
-                "layer": a.head_layer, "hidden": _H.hidden_at, "mx": _mx}
-        print("  head: layer %d" % a.head_layer, file=sys.stderr)
+        def _load(p):
+            z = _np.load(p)
+            return {"w": z["w"], "b": float(z["b"][0]), "mu": z["mu"], "sd": z["sd"],
+                    "layer": a.head_layer, "hidden": _H.hidden_at, "mx": _mx}
+        if a.heads:
+            head = {d + 1: _load(p) for d, p in enumerate(a.heads)}
+            print("  heads: per-decision, layer %d, %d files" % (a.head_layer, len(a.heads)),
+                  file=sys.stderr)
+        else:
+            head = _load(a.head)
+            print("  head: shared, layer %d" % a.head_layer, file=sys.stderr)
     files = sorted(glob.glob(os.path.join(a.tasks, "task_*.json")))
     if a.limit: files = files[:a.limit]
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
