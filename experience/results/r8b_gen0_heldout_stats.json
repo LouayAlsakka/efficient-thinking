@@ -1,0 +1,25 @@
+{
+ "pair": "ET-8b gen0 vs base \u2014 HELD OUT (tasks 226-300, the head never saw them)",
+ "n": 75,
+ "base_success_pct": 24.0,
+ "G_success_pct": 41.3,
+ "success_delta_points": 17.3,
+ "success_95CI": [
+  5.3,
+  29.3
+ ],
+ "base_actions": 8.04,
+ "G_actions": 7.47,
+ "actions_delta": -0.57,
+ "actions_95CI": [
+  -1.08,
+  -0.12
+ ],
+ "McNemar": {
+  "base_only_solved": 6,
+  "G_only_solved": 19,
+  "discordant": 25,
+  "exact_two_sided_p": 0.01463
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}

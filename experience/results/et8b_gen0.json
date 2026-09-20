@@ -1,0 +1,35 @@
+{
+ "document": "ET-8b gen0 + G3 — the HELD-OUT result, and the contaminated one it replaces",
+ "G3_STATE_DEPENDENCE": {
+  "gate": "fraction of episodes whose decision-2 state differs between arms >= 0.30",
+  "all_300": "136/186 = 0.731",
+  "held_out_75": "51/58 = 0.879",
+  "verdict": "PASSES on both",
+  "why_it_matters": "8a §9 could not test accumulation because generation 1's training states were BYTE-IDENTICAL to generation 0's — a single fixed decision meant the prior never changed what it later saw. 0.879 is the measurement that the loop fixed that. There IS something to accumulate on."
+ },
+ "GEN0_vs_BASE_heldout": {
+  "n": 75,
+  "base": "24.0%",
+  "gen0": "41.3%",
+  "delta": "+17.3 points",
+  "ci95": [
+   5.3,
+   29.3
+  ],
+  "mcnemar": "base-only 6 · gen0-only 19, exact two-sided p = 0.01463",
+  "actions": "8.04 -> 7.47, -0.57 [-1.08, -0.12]"
+ },
+ "⚠️_THE_NUMBER_THE_CHAIN_PRINTED_WAS_CONTAMINATED_AND_IS_WITHDRAWN": {
+  "printed": "+35.0 points [+29.0, +41.0], p = 7.3e-25, on all 300",
+  "why_wrong": "the gen0 head was fitted on tasks < 226 and the loop ran ALL 300, so 225 of the 300 evaluation tasks were in the head's own training set.",
+  "the_split": {
+   "training tasks 1-225": "+40.9",
+   "held out 226-300": "+17.3",
+   "all 300": "+35.0"
+  },
+  "reading": "the all-300 figure is dominated by memorisation — the head is 24 points better on tasks it was fitted on than on tasks it was not. +17.3 is the result; +35.0 is an artifact of my own run design.",
+  "how_it_was_caught": "+35 was far larger than 8a's +13 on the same environment. A result that beats its own predecessor by 3x is a reason to check the split, not to report it. I had avoided exactly this in 8a by evaluating on slice 4 only, and then did not carry the rule into the loop chain."
+ },
+ "next": "gen1 — a head fitted on the states gen0 PRODUCED, which now exist and differ from the base's on 87.9% of held-out decision-2 states. And the gen1 run must evaluate HELD OUT.",
+ "signed": "Sautee (sha-ta)"
+}
