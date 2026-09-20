@@ -1,32 +1,25 @@
 {
- "document": "Measured episode throughput on llm1 — for 8b budgeting (理 11433, demoted to an idle slice)",
- "method": "read off the chains' OWN slice timestamps from today's runs. NOT a synthetic probe: these are the real arms at real budgets, which is the quantity 8b needs.",
+ "document": "Measured episode throughput on llm1 — for 8b budgeting (理 11433, idle slice)",
+ "method": "read off the chains' OWN slice-completion timestamps from today's real arms. A line counts ONLY if it ends in 'episodes=<n>' — a '300/300' completion banner is not a slice, and counting it inflated the first version of this artifact by 30-50%.",
  "rates": {
-  "R5-C base, budgets 14/18/8/24": {
-   "episodes_per_hour": 44,
-   "hours_per_300": 6.77,
-   "slices_timed": 3
-  },
-  "R5-Q G, budgets 10/8/6": {
-   "episodes_per_hour": 94,
-   "hours_per_300": 3.21,
-   "slices_timed": 2
-  },
   "R6 self-rerank + vote, budget 12": {
-   "episodes_per_hour": 260,
-   "hours_per_300": 1.15,
-   "slices_timed": 9
+   "slice_marks": 8,
+   "episodes_spanned": 525,
+   "episodes_per_hour": 203,
+   "hours_per_300": 1.48
   },
   "R7 SQL base+G, budget 12": {
-   "episodes_per_hour": 478,
-   "hours_per_300": 0.63,
-   "slices_timed": 9
+   "slice_marks": 8,
+   "episodes_spanned": 525,
+   "episodes_per_hour": 372,
+   "hours_per_300": 0.81
   }
  },
- "for_8b": "a 300-episode arm costs 0.8-1.5 h on llm1 at budget 12. An 8b generation with a base + a fit + a wired arm is therefore ~2-4 h of GPU, not a day — the loop's cost is dominated by the NUMBER of generations, not by any single arm.",
+ "for_8b": "a v3-shaped 300-episode arm costs ~1.5 h on llm1 at budget 12, so an 8b generation (base + fit + wired arm) is a few hours of GPU rather than a day. The loop's cost is dominated by the NUMBER of generations, not by any single arm.",
  "bounds": [
-  "Wall-clock on llm1 with nothing else on the GPU. A contended box is slower and today's llm2 work did not touch llm1.",
-  "Budget drives it: R5-C's 14-24 budgets are slower per episode than budget 12.",
-  "SQL episodes are cheaper than v3's (4.3k vs 6.9k tokens/episode), so R7's 372/h is not the rate to budget a v3-shaped 8b arm with — use R6's 203/h."
+  "Wall clock on llm1 with nothing else on its GPU; today's llm2 work did not touch it.",
+  "BUDGET drives it — R5-C's 14-24 budgets are far slower per episode than budget 12.",
+  "SQL episodes are CHEAPER than v3's (4.3k vs 6.9k tokens/episode), so R7's rate is NOT the one to budget a v3-shaped 8b arm with. Use the R6 row.",
+  "No GPU was spent producing this: it is read off timestamps the chains already wrote."
  ]
 }
