@@ -1,0 +1,67 @@
+{
+ "document": "ET-8b gen0 heads — PER-DECISION, chosen by the spec's rule before any loop run",
+ "rule": "docs/et8b-loop-gates.md §3: one shared head vs one per decision point, chosen by held-out probe accuracy on base-loop states BEFORE any loop run, and fixed.",
+ "the_choice": {
+  "shared_weighted": 54.2,
+  "per_decision_weighted": 55.2,
+  "selected": "PER-DECISION",
+  "margin": "1.0 points"
+ },
+ "⚠️_THE_MARGIN_IS_NOT_A_DIFFERENCE": {
+  "head_to_head": {
+   "decision_1": "shared 37.3 vs per-decision 40.0",
+   "decision_2": "shared 65.2 vs per-decision 60.6",
+   "decision_3": "shared 63.3 vs per-decision 68.3"
+  },
+  "reading": "each wins at different decisions, by 2.7-5.0 points on n = 60-75. The weighted 1.0 point is well inside noise. The RULE selects per-decision and the rule is applied as written — but 理 should overrule now if the simpler single artifact is preferred, because after the loop runs any change is a choice made by its answer."
+ },
+ "heads": {
+  "decision_1": {
+   "held_out_pick_pct": 40.0,
+   "n": 75,
+   "chance_pct": 21.0,
+   "CONTROL_permuted": [
+    20.0,
+    20.0,
+    13.3,
+    20.0,
+    22.7
+   ],
+   "CONTROL_pca8": 20.0,
+   "CONTROL_n100_subsample": 45.3,
+   "weights": "head_d1_layer18.npz"
+  },
+  "decision_2": {
+   "held_out_pick_pct": 60.6,
+   "n": 66,
+   "chance_pct": 20.7,
+   "CONTROL_permuted": [
+    21.2,
+    15.2,
+    16.7,
+    28.8,
+    24.2
+   ],
+   "CONTROL_pca8": 31.8,
+   "CONTROL_n100_subsample": 59.1,
+   "weights": "head_d2_layer18.npz"
+  },
+  "decision_3": {
+   "held_out_pick_pct": 68.3,
+   "n": 60,
+   "chance_pct": 20.7,
+   "CONTROL_permuted": [
+    10.0,
+    26.7,
+    21.7,
+    18.3,
+    15.0
+   ],
+   "CONTROL_pca8": 33.3,
+   "CONTROL_n100_subsample": 51.7,
+   "weights": "head_d3_layer18.npz"
+  }
+ },
+ "agent_own_pick_heldout": 19.4,
+ "signed": "Sautee (sha-ta)"
+}
