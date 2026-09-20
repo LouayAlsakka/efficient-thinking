@@ -88,3 +88,13 @@ reasoning/data/
 !docs/efficient-thinking-8.html
 !docs/efficient-thinking-8.pdf
 !docs/et4-amendment-2-model-judge.md
+
+# ET-8 spec and reading notes. docs/* ignores by default and every spec doc so far has been
+# force-added one at a time, which means the NEXT one is silently untracked until someone notices.
+# et8b-reading-note.md was: `git add` refused it and only the error revealed the rule.
+!docs/et8*.md
+!docs/et4-*.md
+!docs/et2-*.md
+!docs/et3-*.md
+!docs/et6-*.md
+!docs/series-execution-plan.md
