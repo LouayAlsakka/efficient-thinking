@@ -28,15 +28,27 @@ BUDGET = 12
 
 
 def decision_state_key(inspected, history, patched):
-    """What distinguishes one decision from another, for G2 (distinctness) and G3 (dependence).
+    """TRAJECTORY key — what the agent has done, independent of which task it is doing.
 
-    It is the AGENT'S OWN SITUATION: what it has seen, what it has tried, and what the verifier said
-    — not the task id. Two episodes of the SAME task that diverged at decision 1 have different
-    decision-2 keys, and that difference is exactly what G3 measures.
+    ⚠️ THIS IS NOT G2's INSTRUMENT AND THE FIRST VERSION OF THIS FILE USED IT AS ONE. G2 asks for
+    distinct decision PROMPTS per episode; this hashes region NAMES and history STRINGS and carries
+    no task content, so it read 8 distinct values over 300 episodes at decision 1 and "failed" a
+    gate that was never being measured. Kept because it is the right instrument for a different
+    question — how much the agent's own trajectory varies — and logged beside the prompt hash.
     """
     return hashlib.sha1(json.dumps({
         "inspected": sorted(inspected), "history": history, "patched": patched
     }, sort_keys=True).encode()).hexdigest()
+
+
+def prompt_key(state_text):
+    """G2's and G3's instrument: a hash of the ACTUAL decision prompt the agent is about to read.
+
+    It carries the task's symptom, the inspected sources, and the history — everything that makes
+    one decision different from another. G3 compares this across arms on the SAME task, where the
+    task content is held constant and only the trajectory can move it.
+    """
+    return hashlib.sha1(state_text.encode()).hexdigest()
 
 
 def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget=BUDGET):
@@ -75,9 +87,11 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
         if actions >= budget:
             break
 
+        st_text = state_text()
         dkey = decision_state_key(inspected, history, patched)
-        cur = msgs + [{"role": "user", "content": state_text()}]
-        meta = {"decision": d, "state_key": dkey}
+        pkey = prompt_key(st_text)
+        cur = msgs + [{"role": "user", "content": st_text}]
+        meta = {"decision": d, "trajectory_key": dkey, "prompt_key": pkey}
 
         if head_state is not None:
             import numpy as _np
@@ -110,7 +124,7 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
         log.write(json.dumps({"run_id": run_id, "task_id": task["task_id"], "model": model_id,
                               "decision": d, "action": "hypothesize", "region": region,
                               "region_hit": bool(hit), "step": actions,
-                              "decision_state": dkey, "candidates": meta,
+                              "decision_state": pkey, "trajectory_key": dkey, "candidates": meta,
                               "tokens_in": total_in, "tokens_out": total_out}) + "\n")
         if actions >= budget:
             break

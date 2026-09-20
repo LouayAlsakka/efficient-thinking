@@ -1,0 +1,46 @@
+{
+ "document": "ET-8b G1 + G2 on the base loop (docs/et8b-loop-gates.md)",
+ "base_loop": {
+  "n": 300,
+  "success_pct": 19.7,
+  "decisions_per_episode": 2.75,
+  "actions": 8.24,
+  "tokens_per_episode": 2958.4
+ },
+ "G1_task_gate": {
+  "distinct_tasks": 300,
+  "episodes": 300,
+  "ratio": 1.0,
+  "verdict": "PASSES (>= 0.9)"
+ },
+ "G2_prompt_gate_per_decision": {
+  "decision_1": {
+   "episodes_reaching": 300,
+   "distinct_prompts": 291,
+   "ratio": 0.97,
+   "distinct_TRAJECTORIES": 8
+  },
+  "decision_2": {
+   "episodes_reaching": 271,
+   "distinct_prompts": 271,
+   "ratio": 1.0,
+   "distinct_TRAJECTORIES": 94
+  },
+  "decision_3": {
+   "episodes_reaching": 253,
+   "distinct_prompts": 253,
+   "ratio": 1.0,
+   "distinct_TRAJECTORIES": 228
+  }
+ },
+ "G2_verdict": "PASSES at all three decisions",
+ "⚠️_THE_FIRST_PASS_FAILED_ON_A_BROKEN_INSTRUMENT": {
+  "reported": "decision 1 = 0.027, decision 2 = 0.347, decision 3 = 0.867 — all FAILING",
+  "cause": "`decision_state` hashed inspected REGION NAMES + history STRINGS + patched, and carried NO TASK CONTENT. It could only take ~8 values at decision 1. The gate asks for distinct decision PROMPTS, and the prompt carries each task's symptom and inspected source.",
+  "why_it_was_not_believed": "0.027 over 300 episodes is implausible when every prompt contains a different task's symptom. The number was checked instead of reported.",
+  "fix": "`decision_state` is now sha1 of the ACTUAL prompt text; `trajectory_key` is kept beside it because trajectory variation is a real question, just not this gate's.",
+  "had_it_been_believed": "8b would have been reported as failing its prompt gate at every decision and stopped, on an instrument that was never measuring the gate."
+ },
+ "next": "gen0 — a head fitted on the base loop's VERIFIED history at all three decision points; one shared head vs one head per decision chosen by held-out probe accuracy BEFORE any loop run, then fixed. Then G3, the state-dependence gate that 8a §9 failed.",
+ "signed": "Sautee (sha-ta)"
+}
