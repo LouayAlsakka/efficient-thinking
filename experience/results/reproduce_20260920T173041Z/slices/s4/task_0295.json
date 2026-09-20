@@ -1,0 +1,31 @@
+{
+ "task_id": "task_0295",
+ "family": "v3",
+ "bug_class": "early_return",
+ "bug_region": "sift",
+ "program": "# region: sift\ndef sift(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n            return out\n    return out\n\n# region: gather\ndef gather(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: shape\ndef shape(xs):\n    n = len(xs)\n    return {'n': n, 'mean': (sum(xs) / n) if n else 0.0, 'max': max(xs) if xs else 0}\n\n# region: render\ndef render(summary, bar=3):\n    out = dict(summary)\n    n = summary.get('n', 0)\n    out['ratio'] = round(n / bar, 3) if bar else 0.0\n    return out\n\n# region: run\ndef run(raw):\n    return render(shape(gather(sift(raw))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'mean': 4.333333333333333, 'max': 6, 'ratio': 1.0})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'mean': 12.333333333333334, 'max': 17, 'ratio': 1.0})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'mean': 6.333333333333333, 'max': 11, 'ratio': 1.0})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'mean': 0.0, 'max': 0, 'ratio': 0.0})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'mean': 20.333333333333332, 'max': 25, 'ratio': 1.0})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'mean': 0.0, 'max': 0, 'ratio': 0.333})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'mean': 15.0, 'max': 24, 'ratio': 1.333})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'mean': 22.0, 'max': 42, 'ratio': 0.667})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: + {'max': 6, 'mean': 4.333333333333333, 'n': 3, 'ratio': 1.0}",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "sift",
+  "gather",
+  "shape",
+  "render"
+ ],
+ "seed": 436955125,
+ "_signature": "406f34f08ed7",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "gather"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "running"
+  ],
+  "agg": "meanmax",
+  "fmt": "ratio"
+ }
+}

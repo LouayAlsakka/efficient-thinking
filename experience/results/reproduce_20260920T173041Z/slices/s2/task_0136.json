@@ -1,0 +1,31 @@
+{
+ "task_id": "task_0136",
+ "family": "v3",
+ "bug_class": "boundary2",
+ "bug_region": "intake",
+ "program": "# region: fold\ndef fold(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.isdigit() and int(s) > 0:\n            out.append(int(s))\n    return out\n\n# region: digest\ndef digest(xs, factor=3):\n    return [v * factor for v in xs]\n\n# region: intake\ndef intake(xs):\n    return {'n': len(xs) - 1, 'total': sum(xs)}\n\n# region: gather\ndef gather(summary, name='alpha'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return gather(intake(digest(fold(raw))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'total': 18, 'label': 'ALPHA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'total': 51, 'label': 'ALPHA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 2, 'total': 39, 'label': 'ALPHA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'total': 75, 'label': 'ALPHA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'total': 0, 'label': 'EMPTY'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 72, 'label': 'ALPHA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'total': 126, 'label': 'ALPHA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                         ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "fold",
+  "digest",
+  "intake",
+  "gather"
+ ],
+ "seed": 519496329,
+ "_signature": "3668e8de4afb",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "fold"
+ ],
+ "_shape": {
+  "parser": "parse_positive",
+  "mappers": [
+   "scale"
+  ],
+  "agg": "total",
+  "fmt": "label"
+ }
+}
