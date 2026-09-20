@@ -26,14 +26,14 @@
    "cost_usd": 1.54
   },
   {
-   "arm": "E3  Goodhart ladder \u2014 SCORED by Fable",
+   "arm": "E3  Goodhart ladder — SCORED by Fable",
    "design": "5 checkpoints x 60 briefs",
    "calls": 300,
    "model": "fable",
    "cost_usd": 1.54
   },
   {
-   "arm": "E3  Goodhart ladder \u2014 OPTIMISED vs Opus",
+   "arm": "E3  Goodhart ladder — OPTIMISED vs Opus",
    "design": "5 checkpoints x 60 briefs",
    "calls": 300,
    "model": "opus",
@@ -59,15 +59,32 @@
    "calls": 285,
    "model": "fable",
    "cost_usd": 1.46
+  },
+  {
+   "arm": "G6p  Tang Yin voice (existing pairs)",
+   "design": "202 EXISTING pairs (baseline 84 / iter60 68 / mixed 50), 1 naming call each",
+   "calls": 202,
+   "model": "fable",
+   "cost_usd": 1.01,
+   "call_size": "150 input tokens median (measured on all 202 real pairs), ~70 output — NOT the quatrain's 213: Chinese verse is denser and shorter, so scaling the English number would have overstated this arm by 40%"
+  },
+  {
+   "arm": "G6p  re-rate",
+   "design": "25% of G6p, seed + order swapped",
+   "calls": 51,
+   "model": "fable",
+   "cost_usd": 0.25
   }
  ],
  "total": {
-  "calls": 1725,
-  "cost_usd": 8.08
+  "calls": 1978,
+  "cost_usd": 9.34
  },
  "gate": {
   "go_if_at_or_below": 20,
   "cap_enforced_in_code": 40,
   "verdict": "GO"
- }
+ },
+ "G5p": "rides on 7d's data — NO extra calls (理 11669)",
+ "per_form_rule": "213 tokens is a QUATRAIN pairwise call and 150 is a 七絕 naming call. Any 14-line or 七律 form is re-estimated BEFORE it runs — 理's rule, and the 40% gap between these two measured forms is why it is a rule and not a courtesy."
 }
