@@ -26,7 +26,7 @@ learned from its own history, thinks more effectively per unit of computation. O
 head is compute-neutral at budget 8 and solves 8.3 more problems in a hundred (interval [+3.0, +14.0]); both limbs
 hold on this task set. As a curve, base at six budgets and head at four across 4.4 to 13.9 thousand tokens, the head
 sits above the base throughout, and at equal quality — 24.0% both, paired, 33 discordant each way — the head spends
-2.32× less. At the same decision over the same candidates, the model's own preference reaches 20.3% and a five-sample majority vote 12.3%, below the base itself; the head's 31.7% is the readout fitted on verified history, not the inference spent. What remains is a second search structure. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
+2.32× less. At the same decision over the same candidates, the model's own preference reaches 20.3% and a five-sample majority vote 12.3%, below the base itself; the head's 31.7% is the readout fitted on verified history, not the inference spent. On a second search structure — SQL query repair, clauses as regions, a result-set verifier, the head re-fitted from that environment's own history — the same mechanism gives +12.3 points on a disjoint 300 (interval [+6.7, +18.0]), so the claim is experience-directed search on two structures, not one grammar. The result is bounded by a fact about the task, not the mechanism: the prior helps only where the
 thing it improves — here, localisation — is what limits the agent; on a repair-bound set the same head does
 nothing. Two further findings shape what follows. The largest effect of the study was not a prior but a change to
 *when* the agent may act: requiring one observation before the first guess doubled problems solved and cut cost,
@@ -512,7 +512,41 @@ worse than the greedy base it was meant to improve, 33 problems solved by the ba
 alone. Sampling at the decision admits candidates the greedy path would never take, and five votes can carry one; a
 cheap and common baseline actively hurts at this decision. Bounds: charges are analytic as for the head, (a) paying
 the same passes and (b) five short generations, not read from the episodes' token counts; one seed, one model, 300
-per arm. The second search structure is the last run.
+per arm.
+
+**Result, the second search structure: the mechanism transfers.** The environment is SQL query repair against a
+fixed schema — regions are the clauses select, where, join, group and order; the verifier is the expected result
+set, so any query returning the right rows is a repair; every task carries a sibling clause so the symptom cannot
+pin its own region — under the same harness, gates and budget accounting (`docs/r7-sql-repair-scope.md`, committed
+before the generator; `experience/results/r7_env.json`, `r7_probe.json`, `r7.json`). Gates on the training set:
+distinct problems 300 of 300, distinct decision prompts 300 of 300, the symptom-only lookup table at 57.3% under the
+60% cap. Three readings were written before the head was fitted: the probe at chance means the state does not
+carry the clause and there is nothing to transfer; the probe above chance with the head no better than the base is
+the localisation-versus-repair bound of §7.5 in a second grammar; the probe above chance and the head above the
+base by more than the paired interval is transfer. The head was re-fitted from this environment's own base
+episodes, so what is tested is the mechanism and not the weights.
+
+The probe reads the faulty clause from the post-inspect state at 89.3% on held-out decisions against a per-task
+chance of 20.9% and the agent's own pick of 30.7%; permuted labels 16 to 28%, eight principal components 29.3%,
+one hundred examples 54.1%, and a fourth control this environment demanded, since 89% invites the suspicion of
+leakage: a table that reads only the symptom string reaches 57.3%, the gate's own statistic, so the head's 32-point
+margin over it is the number that says it reads structure. The head on a second seed's 300 problems, generated
+with zero signature overlap with the training seed:
+
+| arm, second seed, n = 300 | success | actions | paired vs base |
+|---|---:|---:|---|
+| base | 11.3% | 11.74 | — |
+| head, re-fitted | 23.7% | 11.09 | +12.3 [+6.7, +18.0], p 6×10⁻⁵; actions −0.65 [−0.89, −0.43] |
+
+The third reading fires. Two things the record keeps beside it. The held-out quarter of the training seed, 75
+problems, read +10.7 with an interval [−2.7, +24.0], the same direction and size and not a result at that n; it was
+reported as such at the time and the disjoint 300 is what decides. And the first disjoint seed failed the
+lookup-table gate at 61.3% and its run was stopped with nothing kept: across eight seeds the table reads 56 to 69%,
+so this grammar sits on the gate's boundary and a set is admitted by measurement, not by seed; the generator now
+prints the gate on the set it writes. Bounds: one model; two synthetic environments that share a harness and a
+verifier-decides-the-bug discipline whose blind spots would be invisible to both, a sentence written before the
+generator existed and not retired by the result; the mechanism transfers, the weights never did. With this the
+claim of §7 is experience-directed search on two search structures, and the paper stops.
 
 ## 8. Two Carrier Studies, in Brief
 
@@ -565,9 +599,10 @@ to VII found the limits of that substitution — the evaluator, the verifier, th
 already in the system. This paper asks what happens after the intelligence has experience of how to think, and
 finds that historical computation can teach a frozen intelligence where to direct future computation:
 \(Q_E(C) > Q_0(C)\) over the measured compute range, on one task family, and not by the inference spent — the
-model's own preference at the same decision does not reach it. Search moves a system along its frontier;
-experience moves the frontier. Whether that is a fact about debugging or about experience-directed search is what
-the second search structure decides, and this paper stops there. Paper 8b
+model's own preference at the same decision does not reach it, and on a second search structure with the head
+re-fitted from that structure's own history the same mechanism moves the frontier again (§7.7). Search moves a
+system along its frontier; experience moves the frontier, and it is a fact about experience-directed search rather
+than about one grammar. This paper stops there. Paper 8b
 asks whether it moves again — \(Q_2(C) > Q_1(C) > Q_0(C)\) with the intelligence frozen throughout — which would
 close the loop this series opened: intelligence, search, outcome, verification, experience, better search.
 
@@ -616,6 +651,15 @@ design and pre-registration; both are pseudonymous here and belong to no institu
     structure with the head re-fitted — close the empirical story, and further work belongs to the next papers
     rather than to a larger 8a. R's one-line reading of the core result is the one §10 keeps: the same frozen
     model, informed by verified history, obtains more task success from the same inference computation.
+12b. **09-19 to 09-20.** The three closing runs. The frontier curve read above the base across the measured range and
+    equal quality at 2.32× less compute (§7.6). Neither simple baseline at the same decision reached the head, and a
+    five-sample majority vote was worse than the greedy base (§7.7). The second search structure's first disjoint
+    seed failed the lookup-table gate and its run was stopped unfinished; the ceiling check found a verifier that
+    could never say yes (tuples against lists) and a positive control became structural; the mechanism transferred
+    on the admitted seed (§7.7). Three results E had committed on E's box were found never pushed and were pushed
+    the same day. *Rules: a gate is printed by the generator on the set it writes; a positive control runs before
+    any rate; a sha is quoted only once it resolves on the shared remote.* 8a closed on R7, as pre-registered,
+    whichever way it fell.
 13. **Throughout.** Two runs were lost to moving the working tree under a process that was writing to it; three
     artefacts a later question needed had not been the artefacts a run was written to save; one results table was
     typed from memory and corrected the same minute; one counting function assumed the single-outcome property its
