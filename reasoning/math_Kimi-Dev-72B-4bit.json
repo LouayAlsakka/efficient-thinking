@@ -1,0 +1,408 @@
+{
+  "model": "mlx-community/Kimi-Dev-72B-4bit",
+  "per_level": {
+    "1": {
+      "n": 15,
+      "greedy": 93.3,
+      "sc": 86.7
+    },
+    "2": {
+      "n": 15,
+      "greedy": 80.0,
+      "sc": 73.3
+    },
+    "3": {
+      "n": 15,
+      "greedy": 80.0,
+      "sc": 86.7
+    },
+    "4": {
+      "n": 15,
+      "greedy": 66.7,
+      "sc": 66.7
+    },
+    "5": {
+      "n": 15,
+      "greedy": 53.3,
+      "sc": 66.7
+    }
+  },
+  "per_problem": [
+    {
+      "level": 1,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": false
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 1,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": false
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 2,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 2,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": false,
+      "sc": true
+    },
+    {
+      "level": 3,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 4,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 4,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 5,
+      "greedy": false,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": true,
+      "sc": false
+    },
+    {
+      "level": 5,
+      "greedy": false,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": false,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 5,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 5,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 5,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": false,
+      "sc": false
+    },
+    {
+      "level": 5,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": true,
+      "sc": true
+    },
+    {
+      "level": 5,
+      "greedy": true,
+      "sc": true
+    }
+  ],
+  "nmax": 1
+}

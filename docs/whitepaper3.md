@@ -1,5 +1,6 @@
 # Efficient Thinking III: Efficient Judging
 ## When an LLM judge is worth its compute — and the two conditions it must clear
+> **STATE 2026-09-19: MEASURED, draft v0.2.** Registered predictions scored in §7 (P3 unscored, scheduled on the revived harness). Not yet written backward; not yet through the author's voice pass.
 
 **Louay Alsakka** · July 17, 2026 · *draft v0.1*
 

@@ -1,5 +1,6 @@
 # Efficient Thinking III: Efficient Judging
 ## Compute-optimal allocation between policy and evaluator — a project proposal
+> **STATE 2026-09-19: MEASURED — superseded by `whitepaper3.md` (draft v0.2).** This is the registered proposal; the judge grid, the MATH cross-benchmark grid (M1–M4 hit) and P1–P6 are scored in the paper. Open: P3 (judge search vs judge size), scheduled; then the author's voice pass and the backward rewrite.
 
 **Louay Alsakka** · draft proposal v1 · July 2026
 

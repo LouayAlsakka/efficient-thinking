@@ -1,0 +1,11 @@
+{
+  "names": [
+    "Qwen2.5-1.5B-Instruct-4bit",
+    "Kimi-Dev-72B-4bit"
+  ],
+  "judge_gelo": {
+    "Qwen2.5-1.5B-Instruct-4bit": 2000,
+    "Kimi-Dev-72B-4bit": 2191
+  },
+  "judge_vs_truth_agreement": 0.6
+}
