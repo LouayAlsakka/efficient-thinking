@@ -34,7 +34,7 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 <p>Every AI system buys capability with the same finite resources — parameters, training data, inference-time compute, latency — and to a large degree they substitute for one another. This paper measures those tradeoffs directly, using chess as a fully observable testbed: one small convolutional evaluator (3.45M parameters, 14 MB), one fixed evaluation protocol, and one lever varied at a time.</p>
 <p>The central result is the size of the search lever on a frozen evaluator. On the same Stockfish ladder, adding MCTS lifts the raw policy by <strong>+286 Elo at 800 simulations</strong> (2448 → 2734), then a steady <strong>~+55 Elo per doubling</strong>, unsaturated through 12,800 simulations (2967, <strong>+519 total</strong>) — with zero additional parameters. Over the same period, growing the evaluator 1.4–2× at full data moved strength by an amount indistinguishable from noise, while 8× more training data moved it ~+90. In this regime the lever ranking is unambiguous: <strong>search ≫ data ≫ capacity</strong>. Adaptive MCTS also beats fixed-depth alpha-beta at equal compute and keeps scaling where fixed depth plateaus (~2550).</p>
 <p>A third study removes external supervision entirely. Self-play, a self-referential ladder, evolutionary selection, plurality voting, and weight merging all fail to lift the evaluator past its plateau at our two-machine scale; the one robust positive is that <strong>inter-model agreement predicts correctness</strong> (unanimous committees match Stockfish's best move 94% of the time vs 37% when all disagree) — a teacher-free confidence signal, though not an accuracy booster. These negatives are scoped: they characterize the small-compute regime, not self-play in general.</p>
-<p>The unifying reading is a decomposition — <strong>strength = evaluator × search</strong>. Search converts what the evaluator already encodes into better decisions; the evaluator's ceiling is set by the quality of the information it was trained on; and nothing inside a closed system raises that ceiling without an external oracle. The transferable contribution is the method: at each stage exactly one resource binds, which one is not knowable a priori, and spending anywhere else returns almost nothing — so measure first, then spend. We also report, as a case study in that method, how a coarse ±89 rating ladder manufactured an apparent 4.8× search-efficiency win that a rigorous paired head-to-head then eliminated (§4.2).</p>
+<p>The unifying reading is a decomposition — <strong>strength = evaluator × search</strong>. Search converts what the evaluator already encodes into better decisions; the evaluator's ceiling is set by the quality of the information it was trained on; and in every closed loop we ran, nothing inside the system raised that ceiling — only an external oracle did. Whether that is a law or a limitation of our loops is an open question: a system might in principle improve its evaluator by better extracting information it already holds (coherence, calibration), and our experiments bound what we observed, not what is possible. The transferable contribution is the method: at each stage exactly one resource binds, which one is not knowable a priori, and spending anywhere else returns almost nothing — so measure first, then spend. We also report, as a case study in that method, how a coarse ±89 rating ladder manufactured an apparent 4.8× search-efficiency win that a rigorous paired head-to-head then eliminated (§4.2).</p>
 <p>On calibration: absolute Elo here is internal ladder Elo — Stockfish rungs at fast movetime, with ±~100 systematic uncertainty near the top rung — and is not calibrated to over-the-board ratings. The searched system's ~2800-class ladder rating is consistent with the top-human band, but every claim in this paper is a relative, same-ladder comparison, which does not depend on that calibration.</p>
 <hr />
 <h2>Key Takeaways</h2>
@@ -43,7 +43,7 @@ img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
 <p><strong>Search dominates parameters in this regime.</strong> On a frozen 3.45M evaluator, MCTS adds +286 Elo at 800 sims and ~+55 per doubling thereafter, unsaturated at 16× the base budget (+519 total, same ladder). Doubling parameters at full data added nothing distinguishable from noise. Strength came from thinking, not growing.</p>
 </li>
 <li>
-<p><strong>Adaptive search out-scales fixed-depth search.</strong> At equal compute MCTS beats alpha-beta, and it keeps climbing where fixed depth plateaus — uniform depth amplifies the value net's noise; adaptive allocation averages over it.</p>
+<p><strong>Adaptive search out-scales fixed-depth search.</strong> At equal compute MCTS beats alpha-beta, and it keeps climbing where fixed depth plateaus — uniform depth amplifies the value net's noise; adaptive allocation averages over it — minimax propagates the single most optimistic evaluation error to the root, while MCTS's visit-weighted averaging cancels errors across simulations (Appendix A).</p>
 </li>
 <li>
 <p><strong>Data beats capacity when the evaluator binds.</strong> 8× more training data moved strength ~+90; 1.4–2× more parameters moved it ~0. Capacity is the weakest lever in this data regime — a scoped claim, not "parameters never matter."</p>
@@ -1267,7 +1267,10 @@ to query?</strong></p>
 </ul>
 <p>None of this makes redistribution <em>useless</em>: variance reduction, sharpening, and filtering are how you
 <strong>reach</strong> a ceiling cheaply — indispensable engineering. The narrow claim is about the <em>absolute</em>
-ceiling: <strong>only information from outside the closed system can raise it.</strong></p>
+ceiling, and we state it at the strength our evidence licenses: <strong>in every loop we tested, only
+information from outside the closed system raised it.</strong> We did not observe — and cannot rule out —
+an internal route that improves the evaluator by better extracting information the system already
+holds; our loops bound what happened, not what is possible.</p>
 <ul>
 <li><strong>Architecture &gt; parameters.</strong> The right prior (spatial locality + weight sharing) beats raw width —
   a 14 MB conv reaches strength a 3× larger MLP cannot.</li>
@@ -1517,7 +1520,9 @@ model with no such oracle should, by our framework, <strong>plateau</strong>.</p
 <em>synthetic-data breakthrough</em> or <em>recursively self-improving architecture</em> with one question — <strong>does
 it inject information from outside its closed system</strong> (new empirical data, supervision, or an external
 oracle: a verifier, a simulator, the physical world)? If yes, it can raise the ceiling; if it only
-re-processes what its own models contain, our results predict it will <strong>plateau</strong>. Recursive
+re-processes what its own models contain, our results predict it will <strong>plateau at the information
+already held</strong> — internal re-processing may still improve how well that information is <em>extracted</em>
+(a real and unmeasured margin), but our results predict it cannot push past it. Recursive
 self-improvement compounds where an external oracle exists (a game's rules, a theorem checker, a
 compiler, a market) and stalls where none does — a claim about the <em>source</em> of information, not the
 method's ingenuity.
@@ -1528,7 +1533,45 @@ method's ingenuity.
 - <strong>Best model:</strong> <code>runs/conv_value_llm1</code> (conv-96×8 + value, 3.45M params).
 - <strong>Key hyperparameters:</strong> conv width 96, depth 8; lr 5e-4 (train) / 1e-4 (self-play); gradient
   clip 1.0; MCTS c_puct 1.5; Dirichlet α 0.3; replay buffer 120K–300K.</p>
+<h2>Appendix A — Why uniform depth loses to adaptive allocation with a noisy evaluator</h2>
+<p>Fixed-depth minimax with a learned evaluator is a max-of-errors machine. Every leaf of a depth-d
+tree receives a score carrying the net's error, and minimax propagates the maximum (alternating
+with the minimum) upward. A maximum over many noisy estimates systematically selects the most
+optimistically wrong one — the optimizer's curse — so the deeper the uniform search, the more
+leaves are evaluated, and the more chances noise has to produce one spectacular overestimate that
+reaches the root and picks the move. One hallucinated winning evaluation outvotes fifty honest
+ones. A small illustration: with independent leaf noise of σ = 0.3 in value units, the expected
+maximum error over a thousand leaves is roughly 3σ ≈ 0.9 — larger than most true positional
+advantages at our level.</p>
+<p>MCTS differs in both statistics and allocation. A node's value is the visit-weighted mean of the
+evaluations beneath it, so independent errors partially cancel exactly where visit counts are
+highest; and the allocation rule concentrates those visits on the lines that matter, so the
+averaging is strongest precisely where the decision lives. The same noisy net feeds a max
+operator in one algorithm (an amplifier) and a weighted mean in the other (a filter).</p>
+<p>This is not a new phenomenon: it is game-tree pathology, discovered by Nau (1979 thesis; Nau
+1982, 1983) and independently by Beal (1980), and analyzed by Pearl (1983) — the classical result
+that in broad families of game-tree models, deeper minimax yields <em>worse</em> decisions under noisy
+leaf evaluation. The literature's own resolution of why real chess engines mostly escape it is
+instructive for our setting: pathology arises when leaf errors are effectively independent, and
+real games escape largely because nearby positions have <em>dependent</em> values, so sibling errors
+correlate and the max operator has less noise to exploit. A learned evaluator changes the error
+structure in the dangerous direction: its mistakes are heavy-tailed and systematic on position
+<em>types</em> — when a motif fools the net, it fools it wherever the motif appears — and a deep uniform
+search does not merely sample that error surface, it <em>maximizes over it</em>, actively steering the
+principal variation toward the positions the net misjudges most optimistically. Later work
+extends the phenomenon to real-valued evaluations (Luštrek, Gams &amp; Bratko 2006), the regime we
+are in. Classical engines tolerate deep minimax because handcrafted evaluations are cheap,
+consistent, and tamer in their tails. The observation also foreshadows this series: averaging as
+noise-cancellation is why majority vote is so hard for a judge to beat, and the noise-versus-depth
+trade reappears as the gridworld's σ-versus-horizon curve in Paper II.</p>
 <h2>References</h2>
+<p><strong>Search pathology (Appendix A).</strong> Nau, D. S. (1982), <em>An Investigation of the Causes of Pathology
+in Games</em>, Artificial Intelligence 19(3), 257–278. · Nau, D. S. (1983), <em>Decision Quality as a
+Function of Search Depth on Game Trees</em>, JACM 30(4), 687–708. · Beal, D. F. (1980), <em>An Analysis of
+Minimax</em>, Advances in Computer Chess 2, Edinburgh University Press, 103–109. · Pearl, J. (1983),
+<em>On the Nature of Pathology in Game Searching</em>, Artificial Intelligence 20(4), 427–453. · Luštrek,
+M., Gams, M. &amp; Bratko, I. (2006), <em>Is Real-Valued Minimax Pathological?</em>, Artificial Intelligence
+170, 620–642.</p>
 <p><strong>Search (MCTS / tree search).</strong> Coulom, R. (2006), <em>Efficient Selectivity and Backup Operators in
 Monte-Carlo Tree Search</em>, Computers and Games. · Kocsis, L. &amp; Szepesvári, C. (2006), <em>Bandit Based
 Monte-Carlo Planning</em> (UCT), ECML. · Rosin, C. D. (2011), <em>Multi-Armed Bandits with Episode Context</em>

@@ -1,0 +1,15 @@
+{
+  "metric": "greedy",
+  "anchor": 1500.0,
+  "level_difficulty": {
+    "1": 1271,
+    "2": 1392,
+    "3": 1485,
+    "4": 1605,
+    "5": 1748
+  },
+  "model_gelo": {
+    "Qwen2.5-1.5B-Instruct-4bit": 1515,
+    "Qwen3.5-4B-MLX-4bit": 1268
+  }
+}
