@@ -1,0 +1,25 @@
+{
+ "pair": "ET-8b: gen1 on cross-fitted gen0 vs gen0, HELD OUT \u2014 does a second generation add anything",
+ "n": 75,
+ "base_success_pct": 41.3,
+ "G_success_pct": 38.7,
+ "success_delta_points": -2.7,
+ "success_95CI": [
+  -12.0,
+  6.7
+ ],
+ "base_actions": 7.47,
+ "G_actions": 7.48,
+ "actions_delta": 0.01,
+ "actions_95CI": [
+  -0.12,
+  0.15
+ ],
+ "McNemar": {
+  "base_only_solved": 7,
+  "G_only_solved": 5,
+  "discordant": 12,
+  "exact_two_sided_p": 0.7744
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}

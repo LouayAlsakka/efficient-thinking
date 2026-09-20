@@ -1,0 +1,63 @@
+{
+ "document": "ET-8b — the accumulation limb, on cross-fitted trajectories. THE HEADLINE IS THE LIMB, AND IT IS UNDERPOWERED BY DESIGN OF THE TASK SET.",
+ "reading_note_written_BEFORE_this_number": "docs/et8b-reading-note.md, committed c2652fe while the chain was still running",
+
+ "1_the_accumulation_limb": {
+  "pair": "gen1 (fitted on CROSS-FITTED gen0 trajectories) vs gen0, HELD OUT on tasks 226-300",
+  "n": 75,
+  "gen0_pct": 41.3, "gen1_pct": 38.7,
+  "delta_points": -2.7, "CI95": [-12.0, 6.7],
+  "McNemar": {"gen0_only": 7, "gen1_only": 5, "exact_two_sided_p": 0.7744},
+  "actions": {"gen0": 7.47, "gen1": 7.48, "delta": 0.01, "CI95": [-0.12, 0.15]},
+  "§4_cell_this_would_hit": "gen1 ≈ gen0 (interval contains zero) with gen0 > base -> ONE-SHOT",
+  "🔴_BUT_IT_IS_NOT_REPORTED_AS_ONE_SHOT": "the pre-registered reading note fixed this before the number existed: the interval is 18.7 points wide on n=75, and an accumulation increment of a plausible size is smaller than that. This run is consistent with one-shot AND with a real increment it cannot see. §4's one-shot reading needs the independent 300 the spec asks for."
+ },
+
+ "2_gen1_still_carries_gen0s_gain": {
+  "pair": "gen1 (cross-fitted source) vs base, HELD OUT", "n": 75,
+  "base_pct": 24.0, "gen1_pct": 38.7, "delta_points": 14.7, "CI95": [2.7, 26.7],
+  "McNemar_p": 0.03469,
+  "reading": "a second generation neither adds to nor destroys the first generation's gain. Contrast the CONTAMINATED gen1, which was indistinguishable from base (+5.3, p=0.45) and significantly worse than gen0 (-12.0, p=0.0117)."
+ },
+
+ "3_the_gen0_limb_is_now_far_better_powered": {
+  "pair": "CROSS-FITTED gen0 vs base on 225 tasks — every episode steered by a head that had never seen its task",
+  "n": 225,
+  "base_pct": 18.2, "gen0cf_pct": 36.9, "delta_points": 18.7, "CI95": [12.9, 24.9],
+  "McNemar": {"base_only": 6, "G_only": 48, "exact_two_sided_p": 3.257e-09},
+  "actions": {"base": 8.31, "G": 7.57, "delta": -0.73, "CI95": [-1.00, -0.48]},
+  "relation_to_the_published_number": "the published gen0 limb is +17.3 [5.3, 29.3] on n=75. This is the same effect on three times the n, with a head trained on 150 tasks instead of 225 — so it is a LOWER bound on the full head's effect, not a re-measurement. Both are reported; neither replaces the other."
+ },
+
+ "4_the_fix_worked_measured_three_ways": {
+  "a_the_statistic_that_exposed_the_defect": {
+   "statistic": "fraction of episodes where the TRUE bug region had already been hypothesized before decision k, tasks 1-225",
+   "base": {"d2": 21.0, "d3": 32.1},
+   "gen0_CONTAMINATED": {"d2": 100.0, "d3": 100.0},
+   "gen0_CROSS_FITTED": {"d2": 38.3, "d3": 41.5},
+   "reading": "the cross-fitted row looks like the base row, not the contaminated one. It sits above base because a working head DOES find the region earlier — which is the effect, not the defect."
+  },
+  "b_the_heads_learn_again": {
+   "contaminated_gen1": {"d1": 40.0, "d2": 22.4, "d3": 20.4, "chance": "~20.9", "verdict": "d2/d3 AT CHANCE"},
+   "crossfit_gen1_CV": {"d1": 44.4, "d2": 62.2, "d3": 67.1, "chance": "~20.1"},
+   "note": "CV over training tasks because the cross-fitted source covers 1-225 only; descriptive, nothing selected on it"
+  },
+  "c_the_shortcut_is_gone": {
+   "control": "PCA-8. If eight dimensions match the full head, the probe is copying a key rather than reading a state.",
+   "contaminated": {"d2": "acc 74.2 vs PCA-8 75.8 — MATCHES", "d3": "acc 77.3 vs PCA-8 73.0 — MATCHES"},
+   "cross_fitted": {"d1": "acc 44.4 vs PCA-8 29.8", "d2": "acc 62.2 vs PCA-8 33.9", "d3": "acc 67.1 vs PCA-8 45.1"},
+   "verdict": "PCA-8 separates at every decision on the cross-fitted heads. The row subsample matches at d1 and d3, which is a KNOWN property of this probe on these states and not a flag — gen0's published heads have 45.3 vs 40.0 and 59.1 vs 60.6.",
+   "permutation_controls": "collapse to chance at every decision, both arms"
+  }
+ },
+
+ "5_a_gate_that_errored_and_did_not_stop_the_chain": "the shortcut check in the chain died with a SyntaxError — my patch had cut the heredoc at the wrong 'PYS' — and the chain printed the traceback and CARRIED ON to run the loop. A gate that errors without stopping is not a gate. The check was run by hand afterwards and passes (§4c), so nothing here rests on it having been skipped; the chain pattern is the defect and it is recorded as one.",
+
+ "6_what_is_NOT_claimed": [
+  "Not one-shot. See §1: n=75 cannot separate one-shot from a small real increment.",
+  "Not 'accumulation fails'. The limb is a null with a wide interval, not a negative.",
+  "gen0's cross-fitted +18.7 is a lower bound on the full head's effect (150 training tasks, not 225), measured on tasks 1-225, a different population from the 226-300 the other arms use.",
+  "Two synthetic environments sharing one harness, the bound 8a already carries."
+ ],
+ "signed": "Sautee (sha-ta)"
+}

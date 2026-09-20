@@ -1,0 +1,61 @@
+{
+ "document": "ET-8b gen0cf_fold1 heads — per-decision, the architecture FIXED at gen0",
+ "architecture_not_rechosen": "gen0 applied docs/et8b-loop-gates.md §3 (shared vs per-decision, on held-out probe accuracy, before any loop run) and selected per-decision. This generation inherits that choice. Nothing here is selected on the held-out set.",
+ "fit_on": "task ids [[76, 150], [151, 225]] (CROSS-FIT)",
+ "held_out": "task_id >= 226 — THE LOOP'S EVALUATION SET, and the loop must run only this",
+ "⚠️_why_the_split_is_stated_twice": "gen0's chain fitted on task_id < 226 and ran the loop on all 300, so 225 of 300 evaluation tasks sat in the head's own training set. It printed +35.0 and the result is +17.3. The boundary is in the npz (train_task_max) so it travels.",
+ "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_states",
+ "layer": 18,
+ "heads": {
+  "decision_1": {
+   "held_out_pick_pct": 52.0,
+   "n": 75,
+   "chance_pct": 20.4,
+   "train_decisions": 150,
+   "CONTROL_permuted": [
+    14.7,
+    21.3,
+    13.3,
+    18.7,
+    21.3
+   ],
+   "CONTROL_pca8": 34.7,
+   "CONTROL_n500rows": 52.0,
+   "weights": "head_d1_layer18.npz"
+  },
+  "decision_2": {
+   "held_out_pick_pct": 52.2,
+   "n": 69,
+   "chance_pct": 20.4,
+   "train_decisions": 136,
+   "CONTROL_permuted": [
+    26.1,
+    20.3,
+    18.8,
+    15.9,
+    18.8
+   ],
+   "CONTROL_pca8": 20.3,
+   "CONTROL_n500rows": 52.2,
+   "weights": "head_d2_layer18.npz"
+  },
+  "decision_3": {
+   "held_out_pick_pct": 61.5,
+   "n": 65,
+   "chance_pct": 20.4,
+   "train_decisions": 128,
+   "CONTROL_permuted": [
+    23.1,
+    15.4,
+    24.6,
+    26.2,
+    30.8
+   ],
+   "CONTROL_pca8": 30.8,
+   "CONTROL_n500rows": 53.8,
+   "weights": "head_d3_layer18.npz"
+  }
+ },
+ "how_to_read_the_controls": "permuted must collapse to chance. If PCA-8 or the row subsample matches the full head, the signal needs neither dimensions nor examples and is a key being copied.",
+ "signed": "Sautee (sha-ta)"
+}

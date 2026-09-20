@@ -1,0 +1,25 @@
+{
+ "pair": "ET-8b: cross-fitted gen0 vs base on 225 tasks (head trained on 150, never on the task it ran)",
+ "n": 225,
+ "base_success_pct": 18.2,
+ "G_success_pct": 36.9,
+ "success_delta_points": 18.7,
+ "success_95CI": [
+  12.9,
+  24.9
+ ],
+ "base_actions": 8.31,
+ "G_actions": 7.57,
+ "actions_delta": -0.73,
+ "actions_95CI": [
+  -1.0,
+  -0.48
+ ],
+ "McNemar": {
+  "base_only_solved": 6,
+  "G_only_solved": 48,
+  "discordant": 54,
+  "exact_two_sided_p": 3.257e-09
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}

@@ -1,0 +1,25 @@
+{
+ "pair": "ET-8b: gen1 on cross-fitted gen0 vs base, HELD OUT",
+ "n": 75,
+ "base_success_pct": 24.0,
+ "G_success_pct": 38.7,
+ "success_delta_points": 14.7,
+ "success_95CI": [
+  2.7,
+  26.7
+ ],
+ "base_actions": 8.04,
+ "G_actions": 7.48,
+ "actions_delta": -0.56,
+ "actions_95CI": [
+  -1.05,
+  -0.12
+ ],
+ "McNemar": {
+  "base_only_solved": 6,
+  "G_only_solved": 17,
+  "discordant": 23,
+  "exact_two_sided_p": 0.03469
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}
