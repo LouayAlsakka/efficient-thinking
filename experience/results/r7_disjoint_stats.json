@@ -1,0 +1,26 @@
+{
+ "pair": "R7 SQL DISJOINT (seed 89, zero signature overlap, P3 57.3% PASSES): G vs base",
+ "n": 300,
+ "base_success_pct": 11.3,
+ "G_success_pct": 23.7,
+ "success_delta_points": 12.3,
+ "success_95CI": [
+  6.7,
+  18.0
+ ],
+ "base_actions": 11.74,
+ "G_actions": 11.09,
+ "actions_delta": -0.65,
+ "actions_95CI": [
+  -0.89,
+  -0.43
+ ],
+ "McNemar": {
+  "base_only_solved": 23,
+  "G_only_solved": 60,
+  "discordant": 83,
+  "exact_two_sided_p": 5.974e-05
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs",
+ "_label_correction": "the runner's --name said 'seed 47'; the run READ tasks from sql89s and the data is seed 89 — verified 75/75 on slice-1 n_regions against each candidate set (seed21 56/75, seed47 51/75, seed89 75/75). A stale label on correct data; corrected here, and the verification is recorded rather than asserted."
+}

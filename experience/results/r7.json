@@ -1,0 +1,59 @@
+{
+ "document": "R7 RESULT — a SECOND SEARCH STRUCTURE. The mechanism transfers. (理 11398/11552/11568)",
+ "WHICH_OF_理S_THREE_OUTCOMES": "(i) FIRES. The probe is far above chance with controls flat, AND G beats the base by more than the CI on a DISJOINT 300. The mechanism is not specific to v3's pipeline grammar; it works on a clause grammar with a different verifier.",
+ "environment": {
+  "regions": "SQL clauses select/where/join/group/order",
+  "verifier": "the expected RESULT SET, not query text",
+  "gates": "P0 1.000 · P1' every task has a sibling region · prompt gate 1.000 · P3 57.3% (<=60) · k varies (4 or 5), chance PER TASK"
+ },
+ "THE_RESULT_disjoint_300": {
+  "base": "11.3%",
+  "G": "23.7%",
+  "delta": "+12.3 points",
+  "ci95": [
+   6.7,
+   18.0
+  ],
+  "mcnemar": "base-only 23 · G-only 60 · exact two-sided p = 5.974e-05",
+  "actions": "11.74 -> 11.09, -0.65 [-0.89, -0.43]",
+  "set": "seed 89, ZERO signature overlap with the training seed, P3 PASSES"
+ },
+ "the_held_out_75_which_did_NOT_decide_it": {
+  "delta": "+10.7 [-2.7, +24.0]",
+  "mcnemar_p": 0.1686,
+  "reading": "same direction, same size, NOT significant at n=75. Reported at the time as not deciding anything; the disjoint 300 is what decides it."
+ },
+ "PROBE": {
+  "layer18": "89.3%",
+  "layer27": "93.3%",
+  "chance": "20.9% (per task)",
+  "agent_own_pick": "30.7%",
+  "symptom_only_lookup_table": "57.3% — and this IS P3's own statistic",
+  "margin_over_the_table": "32 points; a reader of the symptom STRING tops out near the gate cap, so the head is reading structure rather than the string"
+ },
+ "arms": {
+  "base_seed89": {
+   "n": 300,
+   "success_pct": 11.3,
+   "model_tokens": 4364.9,
+   "actions": 11.74
+  },
+  "G_seed89": {
+   "n": 300,
+   "success_pct": 23.7,
+   "model_tokens": 4312.9,
+   "actions": 11.09
+  }
+ },
+ "WHAT_R7_CAN_AND_CANNOT_CONCLUDE": {
+  "can": "the claim is EXPERIENCE-DIRECTED SEARCH, supported on two structures rather than one — a pipeline grammar with a test-suite verifier, and a clause grammar with a result-set verifier.",
+  "cannot": "⚠️ two environments are not 'environments in general'. Both are synthetic, both are mine, both share a harness and a verifier-decides-the-bug discipline whose blind spots would be invisible to both. That bound was written in the scope BEFORE the generator existed."
+ },
+ "bounds": [
+  "One model (Qwen2.5-7B-Instruct), head RE-FITTED from this environment's own base episodes — the mechanism transfers, not the weights.",
+  "300 per arm, paired per problem, seed 89 with zero signature overlap against the fitting seed.",
+  "P3 sits ON the boundary in this grammar (56.0-69.3% across eight seeds). seed 47 FAILED at 61.3% and its run was stopped; nothing from it is reported.",
+  "The verifier accepts ANY query returning the right rows — two queries can be equivalent."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
