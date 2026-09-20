@@ -1,6 +1,5 @@
 # Efficient Thinking 8: Experience Priors — moved
 
-The paper of record is **[Efficient Thinking 8a: Experience Priors — the Constraint and the Carrier](efficient-thinking-8a-experience-priors.md)**
-(accepted 2026-09-18). The chronological working record this file used to hold is
-[efficient-thinking-8-working-record.md](efficient-thinking-8-working-record.md). The series plan is
-[et8-series-plan.md](et8-series-plan.md).
+The paper of record is **[Efficient Thinking VIII: Experience Priors](whitepaper8.md)** (`docs/whitepaper8.md`).
+This path was the monolithic draft; it was written backward as "8a" on 2026-09-18 and polished into Paper VIII on
+2026-09-20. The chronological working record is `efficient-thinking-8-working-record.md`.

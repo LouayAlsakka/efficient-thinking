@@ -71,3 +71,6 @@ reasoning/data/
 # permanently unauditable. 26 MB total. Persist what a later question needs, or mark the claim.
 !docs/series-completion-plan.md
 !docs/et8b-loop-gates.md
+!docs/whitepaper8.md
+!docs/whitepaper8.html
+!docs/whitepaper8.pdf

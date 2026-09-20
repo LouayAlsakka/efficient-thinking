@@ -1,3 +1,5 @@
+> **2026-09-20:** 8a is published as **Efficient Thinking VIII: Experience Priors** — `docs/whitepaper8.md` (html/pdf beside it). The working label "8a" is retired; 8b/8c/8d are Papers VIII-b/c/d.
+
 # Efficient Thinking 8 — a series, written backward
 
 Ruling (Louay, 2026-09-17): ET-8 is a series, not one paper. A long plan is broken into papers; each paper closes

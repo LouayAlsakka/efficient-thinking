@@ -87,6 +87,16 @@ core pattern out of chess: search scales reasoning accuracy but saturates at a *
 **perfect verifier breaks (+14.2 pts)** — the "evaluator is the bottleneck" finding, in language.
 In progress — see [`docs/whitepaper2.md`](docs/whitepaper2.md) and [`docs/gelo.md`](docs/gelo.md).
 
+*Efficient Thinking III* ([`docs/whitepaper3.md`](docs/whitepaper3.md)) prices the LLM judge against its free baselines.
+
+*Efficient Thinking VIII: Experience Priors* ([`docs/whitepaper8.md`](docs/whitepaper8.md) · [`html`](docs/whitepaper8.html) · [`pdf`](docs/whitepaper8.pdf))
+asks what happens after the intelligence has experience of how to think: an experience prior is defined as a
+constraint (cost down, capability held) and, generally, as an improvement of the frozen model's quality–compute
+frontier. Six carriers fail it; a read-only linear head over the frozen model's hidden state passes — replicated
+across task sets and model families, at matched compute, across a budget curve, against the strongest simple
+baselines, and on a second search structure with the head re-fitted. Papers VIII-b (accumulation), VIII-c and
+VIII-d follow; the plan is [`docs/et8-series-plan.md`](docs/et8-series-plan.md).
+
 ## Citation
 
 ```bibtex
