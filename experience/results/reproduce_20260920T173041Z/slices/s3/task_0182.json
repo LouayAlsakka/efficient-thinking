@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0182",
+ "family": "v3",
+ "bug_class": "drop_first",
+ "bug_region": "intake",
+ "program": "# region: intake\ndef intake(raw):\n    out = []\n    for tok in raw[1:]:\n        try:\n            out.append(float(tok))\n        except ValueError:\n            pass\n    return out\n\n# region: sift\ndef sift(xs, limit=5):\n    return [v if v <= limit else limit for v in xs]\n\n# region: digest\ndef digest(xs):\n    return [v * v for v in xs]\n\n# region: emit\ndef emit(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: gather\ndef gather(xs):\n    return {'n': len(xs), 'min': min(xs) if xs else 0, 'span': (max(xs) - min(xs)) if xs else 0}\n\n# region: render\ndef render(summary, bar=2):\n    out = dict(summary)\n    n = summary.get('n', 0)\n    out['ratio'] = round(n / bar, 3) if bar else 0.0\n    return out\n\n# region: run\ndef run(raw):\n    return render(gather(emit(digest(sift(intake(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'min': 9.0, 'span': 5.0, 'ratio': 1.5})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'min': 25, 'span': 25.0, 'ratio': 1.5})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'min': 25.0, 'span': 29.0, 'ratio': 1.5})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'min': 0, 'span': 0, 'ratio': 0.0})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'min': 25, 'span': 26.0, 'ratio': 1.5})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'min': 0.0, 'span': 0.0, 'ratio': 0.5})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 25, 'span': 75, 'ratio': 2.0})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'min': 4.0, 'span': 25.0, 'ratio': 1.0})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?         ^         ^             ^          ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "intake",
+  "sift",
+  "digest",
+  "emit",
+  "gather",
+  "render"
+ ],
+ "seed": 260285392,
+ "_signature": "c64e626294e6",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "sift"
+ ],
+ "_shape": {
+  "parser": "parse_floats",
+  "mappers": [
+   "clamp",
+   "squares",
+   "running"
+  ],
+  "agg": "minspan",
+  "fmt": "ratio"
+ }
+}

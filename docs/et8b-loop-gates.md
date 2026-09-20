@@ -32,8 +32,17 @@ different agent; the loop agent is a new agent and is compared only with itself.
   base-loop states BEFORE any loop run, and fixed.
 - **gen1:** head fitted on the states the gen0-head loop produced, with the verifier's outcomes. Same recipe, same
   three probe controls (permutation ×5, PCA-8, n=100 ×5 draws).
-- **gen1-unverified (the VII bridge):** head fitted on the same gen0 states but labelled by the agent's OWN
-  judgment of success (its final "tests pass" claim, not the verifier). Everything else identical.
+- **gen1-unverified (the VII bridge), defined 2026-09-20 after the first definition was found to name the verifier under
+  another name (`agent_claims_pass` is the test verdict):** the label is an OFFLINE SELF-ASSESSMENT — for each patch step
+  of the cross-fitted gen0 trajectories, the state is replayed and the frozen model is asked whether the tests now pass,
+  with the verifier's answer withheld; the head is fitted on the same states with that yes/no as the label. The rollouts
+  are untouched, so "everything else identical" holds exactly. A second arm, **gen1-self-stopped** — a rollout in which the
+  verdict is never fed back and the agent stops on its own belief — is registered as OPTIONAL: it measures the arm and the
+  changed rollout together, and if run it is read only beside the first, never instead of it.
+- **Cross-fitting rule (added 2026-09-20, after gen0's memorised training trajectories contaminated gen1's fit):** every
+  generation's trajectories used as a later generation's training data are produced under k-fold cross-fitting, so no
+  episode is steered by a head that saw its task; each head file carries its training range and the chain refuses to
+  launch a fold whose head overlaps it. A withdrawn number does not clean a corpus; the corpus is regenerated.
 
 ## 4. Readings, written before the runs
 

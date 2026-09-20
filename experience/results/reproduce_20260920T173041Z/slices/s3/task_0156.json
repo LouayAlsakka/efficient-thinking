@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0156",
+ "family": "v3",
+ "bug_class": "comparator",
+ "bug_region": "shape",
+ "program": "# region: digest\ndef digest(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.isdigit() and int(s) > 0:\n            out.append(int(s))\n    return out\n\n# region: shape\ndef shape(xs, floor_=3):\n    return [v for v in xs if v > floor_]\n\n# region: gather\ndef gather(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: sift\ndef sift(xs):\n    return [v * v for v in xs]\n\n# region: intake\ndef intake(xs):\n    return {'n': len(xs), 'total': sum(xs)}\n\n# region: render\ndef render(summary, bar=4):\n    out = dict(summary)\n    out['grade'] = 'high' if summary.get('n', 0) >= bar else 'low'\n    return out\n\n# region: run\ndef run(raw):\n    return render(intake(sift(gather(shape(digest(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 1, 'total': 9, 'grade': 'low'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'total': 389, 'grade': 'low'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 2, 'total': 194, 'grade': 'low'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'grade': 'low'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 2, 'total': 720, 'grade': 'low'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'total': 0, 'grade': 'low'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 1080, 'grade': 'high'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 1, 'total': 1600, 'grade': 'low'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                       ^           ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "digest",
+  "shape",
+  "gather",
+  "sift",
+  "intake",
+  "render"
+ ],
+ "seed": 878798754,
+ "_signature": "e8be05208350",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "digest"
+ ],
+ "_shape": {
+  "parser": "parse_positive",
+  "mappers": [
+   "drop_small",
+   "running",
+   "squares"
+  ],
+  "agg": "total",
+  "fmt": "grade"
+ }
+}

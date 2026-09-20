@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0227",
+ "family": "v3",
+ "bug_class": "wrong_agg",
+ "bug_region": "fold",
+ "program": "# region: emit\ndef emit(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n    return out\n\n# region: gather\ndef gather(xs):\n    return [v * v for v in xs]\n\n# region: digest\ndef digest(xs, offset=1):\n    return [v + offset for v in xs]\n\n# region: render\ndef render(xs):\n    return [v for v in xs if v % 2 == 0]\n\n# region: fold\ndef fold(xs):\n    return {'n': len(xs), 'total': max(xs)}\n\n# region: sift\ndef sift(summary):\n    out = dict(summary)\n    out['flags'] = sorted(k for k, v in summary.items() if isinstance(v, int) and v > 0)\n    return out\n\n# region: run\ndef run(raw):\n    return sift(fold(render(digest(gather(emit(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 2, 'total': 12, 'flags': ['n', 'total']})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 1, 'total': 50, 'flags': ['n', 'total']})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 1, 'total': 26, 'flags': ['n', 'total']})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'total': 0, 'flags': []})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 1, 'total': 2, 'flags': ['n', 'total']})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'total': 0, 'flags': []})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 0, 'total': 0, 'flags': []})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 0, 'total': 0, 'flags': []})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "ERROR: ValueError: max() arg is an empty sequence",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "emit",
+  "gather",
+  "digest",
+  "render",
+  "fold",
+  "sift"
+ ],
+ "seed": 889861198,
+ "_signature": "ed1c3be661d3",
+ "_test_identity": "test_case_03",
+ "_p1_sibling_regions": [
+  "emit"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "squares",
+   "shift",
+   "keep_even"
+  ],
+  "agg": "total",
+  "fmt": "flags"
+ }
+}
