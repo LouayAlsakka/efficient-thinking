@@ -37,10 +37,16 @@ def load_prices(path=COST_ARTIFACT):
     """Prices come from the artifact 理 approved. A literal in this file could drift from it."""
     with open(path) as f:
         doc = json.load(f)
+    # Both tables are loaded: the direct-API one for the record of what was planned against, and
+    # the Bedrock one the meter actually bills through (理 11747). They are keyed differently —
+    # Bedrock ids are INFERENCE PROFILE ids (us.anthropic.…), because these models are
+    # INFERENCE_PROFILE-only and the bare foundation-model id will not invoke (雲 11749, confirmed
+    # by experience/tangyin/judge.py having run us.anthropic.claude-opus-4-7).
     prices = {}
-    for k, v in doc["prices_read_2026-09-20"].items():
-        if isinstance(v, dict) and "in_per_M" in v:
-            prices[k] = (float(v["in_per_M"]), float(v["out_per_M"]))
+    for block in ("prices_read_2026-09-20", "bedrock_prices_2026-09-21"):
+        for k, v in doc.get(block, {}).items():
+            if isinstance(v, dict) and "in_per_M" in v:
+                prices[k] = (float(v["in_per_M"]), float(v["out_per_M"]))
     if not prices:
         raise SystemExit("STOP: no prices in %s" % path)
     return prices
