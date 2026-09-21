@@ -1,0 +1,25 @@
+{
+ "pair": "ET-8b INDEPENDENT 300 (seed 73): gen2 vs base",
+ "n": 300,
+ "base_success_pct": 20.7,
+ "G_success_pct": 38.0,
+ "success_delta_points": 17.3,
+ "success_95CI": [
+  11.7,
+  23.3
+ ],
+ "base_actions": 8.19,
+ "G_actions": 7.67,
+ "actions_delta": -0.52,
+ "actions_95CI": [
+  -0.73,
+  -0.32
+ ],
+ "McNemar": {
+  "base_only_solved": 17,
+  "G_only_solved": 69,
+  "discordant": 86,
+  "exact_two_sided_p": 1.35e-08
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}

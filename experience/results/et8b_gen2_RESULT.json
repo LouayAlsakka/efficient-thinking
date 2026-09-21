@@ -1,0 +1,61 @@
+{
+ "document": "ET-8b gen2 — accumulation does NOT continue. The result falls BETWEEN two pre-registered rows and I am not choosing between them.",
+
+ "THE_LIMB": {
+  "seed_73_llm1": {"gen1_pct": 40.0, "gen2_pct": 38.0, "delta": -2.0, "CI95": [-6.3, 2.3],
+                   "McNemar_p": 0.4408, "discordant": "gen1-only 24 · gen2-only 18",
+                   "row_it_fires": "§7 'gen2 ≈ gen1 (interval contains zero)' — PLATEAU"},
+  "seed_47_llm2": {"gen1_pct": 43.7, "gen2_pct": 36.7, "delta": -7.0, "CI95": [-11.0, -3.0],
+                   "McNemar_p": 0.00145, "discordant": "gen1-only 31 · gen2-only 10",
+                   "row_it_fires": "§7 'gen2 < gen1, interval excluding zero' — CONSUMPTION"},
+  "🔴_NEITHER_ROW_FIRES_ON_BOTH_SEEDS": "§7 requires plateau on BOTH or consumption with the interval excluding zero. Seed 73 gives the first, seed 47 the second.",
+  "🔵_BUT_THE_SEEDS_DO_NOT_DISAGREE": "both point estimates are NEGATIVE (-2.0 and -7.0) and the intervals OVERLAP on [-6.3, -3.0]. §7's fourth row ('seeds disagree in direction') does NOT fire: the direction is the same on both. They differ in whether the effect clears significance, not in sign.",
+  "what_is_established_on_both_seeds": "gen2 does not improve on gen1. On neither seed does the interval reach a positive effect of any size worth the name; on one it excludes zero downward."
+ },
+
+ "THE_COST_LIMB": {
+  "tokens_per_episode": {"seed_73": {"gen1": 3806.5, "gen2": 3798.0, "delta_pct": -0.2},
+                         "seed_47": {"gen1": 3721.7, "gen2": 3736.3, "delta_pct": 0.4}},
+  "actions": {"seed_73": {"gen1": 7.66, "gen2": 7.67}, "seed_47": {"gen1": 7.44, "gen2": 7.52}},
+  "reading": "cost is flat. gen2 is not buying its decline back in compute, and the §4 cost condition is not what decides this."
+ },
+
+ "AND_gen2_STILL_BEATS_BASE_AND_gen0_IS_NOT_RECOVERED": {
+  "gen2_vs_base": {"seed_73": "+17.3 [11.7, 23.3] p=1.4e-08", "seed_47": "+15.7 [10.0, 21.3] p=1.4e-07"},
+  "gen2_vs_gen0": {"seed_73": "+3.7 [-1.3, 8.7] p=0.20", "seed_47": "+2.7 [-2.0, 7.7] p=0.34"},
+  "reading": "gen2 keeps most of the mechanism's gain over base and lands BETWEEN gen0 and gen1 — above gen0 without significance, below gen1. The series' best head is gen1."
+ },
+
+ "🔑_THE_CONSTRAINT_THAT_MAKES_THIS_INTERPRETABLE": {
+  "recorded_before_the_arms_reported": "results/et8b_gen2_isolates_d3.json, 15:38Z",
+  "fact": "gen2's decision-1 and decision-2 heads are BYTE-IDENTICAL to gen1's (md5 f814f6c4… and 28a5c401…). Only the decision-3 head differs (24ad0b9c… -> ac96bc32…).",
+  "consequence": "the entire gen2-vs-gen1 difference is attributable to ONE head, at ONE decision. This is not three heads getting slightly worse; it is the decision-3 head getting worse while everything before it is held byte-identical."
+ },
+
+ "THE_STATISTIC_理_REQUIRED_BESIDE_A_CONSUMPTION_READING": {
+  "computed_at": "15:35Z, before either arm reported (results/et8b_consumption_statistic.json)",
+  "true_region_already_hypothesized_before_decision_k": {
+   "base": {"d2": "21.0%", "d3": "32.1%"},
+   "gen0_cross_fitted": {"d2": "38.3%", "d3": "41.5%"},
+   "gen1_cross_fitted": {"d2": "38.3%", "d3": "48.8%"}},
+  "how_it_reads_against_the_result": "gen2's d3 head was fitted on gen1-steered trajectories in which the true region had ALREADY been put in front of the agent by decision 3 in 48.8% of surviving episodes, against 41.5% for the trajectories gen1's d3 head learned from. The one head that changed is the one whose training signal was most depleted — which is the consumption mechanism, named as gen2's risk before gen2 ran, and now consistent with where the loss actually landed. ⚠️ CONSISTENT WITH, not demonstrated: d2 is identical between the generations, so only one point of the trend is informative and a single 7-point move in one statistic is not a mechanism established."
+ },
+
+ "WHAT_I_AM_NOT_DOING": [
+  "Not choosing between §7's plateau and consumption rows. Seed 73 fires one, seed 47 the other, and which the paper reports is 理's ruling — the readings were fixed in advance precisely so the executor does not pick after seeing them.",
+  "Not calling it 'seeds disagree'. That row is for a disagreement in DIRECTION and there is none; both are negative and the intervals overlap.",
+  "Not claiming the consumption MECHANISM is demonstrated. It is consistent with the d3 isolation and the already-found statistic, and one more generation is not available to test it — the loop has three decisions and gen2 moved the last one."
+ ],
+
+ "INSTRUMENT_BY_HASH": {
+  "model": "Qwen/Qwen2.5-7B-Instruct (bf16)",
+  "gen2_heads": {"d1": "f814f6c428d4c7a5d4f32dd25bd8cfc3", "d2": "28a5c401e43f7981628a08452dbb79f3",
+                 "d3": "ac96bc32e8cfb0067efb5481434313cb"},
+  "fitted_on": "2,819 rows from 225 CROSS-FITTED gen1 episodes (no episode steered by a head that saw its task)",
+  "task_sets": {"v3 (training, seed 21)": "d28f98f1308008b6", "v3c (seed 73)": "f2bf92edef0d31bd",
+                "v3rep (seed 47)": "c33887d80e51d114"},
+  "disjointness": "measured, overlap 0",
+  "heads_md5_verified_identical_on_both_boxes_before_the_runs": true
+ },
+ "signed": "Sautee (sha-ta)"
+}
