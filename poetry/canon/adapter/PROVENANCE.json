@@ -1,0 +1,15 @@
+{
+ "document": "ET-IV 7d — the canon-judge LoRA, recovered into this repo. WHAT CAN AND CANNOT BE PROVEN.",
+ "why_this_file_exists": "poetry/canon/selection_7d.py loads adapter_path='poetry/canon/adapter'. That directory DID NOT EXIST in this repository. The weights were found in a different checkout on llm1 — /Users/lab/chess-scaling/poetry/canon/adapter — untracked, dated 2026-07-24. So results/selection_7d.json, which IS committed here, rested on an artifact this repo did not hold.",
+ "the_repo_s_own_rule": ".gitignore: 'every run persists the artifacts a later question could need, or its downstream claims are marked unauditable' (理, after the v1 defect). Copying it in executes that rule rather than making a new decision; the alternative was marking 7d unauditable.",
+ "identity_evidence": {
+  "adapter_config.model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit — what selection_7d.py loads",
+  "adapter_config.data": "poetry/canon/lora_data — the canon corpus",
+  "adapter_config.adapter_path": "poetry/canon/adapter — the path the script names",
+  "fine_tune_type": "lora, 8 layers, rank 8, scale 20.0, 120 iters"
+ },
+ "🔴_WHAT_IS_NOT_PROVEN": "that THIS is the adapter that produced the committed selection_7d.json. That artifact records n, mean_persona, g2p_holds and scale — and NO ADAPTER HASH. So identity with the original run cannot be established, only consistency with the path and config the script names. Any 7d number I produce is therefore a NEW measurement on this adapter, not a reproduction of the old one, and I will report it that way.",
+ "md5_adapters_safetensors": "312d7cccc54607b396421e8f0cc1a8ec",
+ "size_bytes": 10563230,
+ "signed": "Sautee (sha-ta)"
+}
