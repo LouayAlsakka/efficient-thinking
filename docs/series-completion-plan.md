@@ -56,4 +56,4 @@ A budget in the prompt makes each budget a different agent. Nothing scored by a 
 |---|---|---|---|
 | X Representation | is language the efficient representation for a reasoner | concept registered; X-a next | after VIII-b is written |
 | XI Communication | is language the efficient channel between two reasoners; a discovery ladder | idea (`efficient-thinking-11-concept.md`) | after X-a; inherits its instruments |
-| XII Skills | a skill as an additive adapter and a head that chooses it from verified history | idea (`efficient-thinking-12-concept.md`) | first experiment can run beside X-a or XI-a; needs no new field |
+| XII Skills | a head that chooses which additive skill to bring, from verified history (merging dropped: it changes the intelligence) | idea (`efficient-thinking-12-concept.md`) | first experiment can run beside X-a or XI-a; needs no new field |
