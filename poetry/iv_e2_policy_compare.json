@@ -1,0 +1,82 @@
+{
+ "document": "ET-IV E2 — Pareto collapse across policies and dimension sets",
+ "why": "53.3% collapse on the 7B halves E2's n. Whether that is the policy or the checker's dimension set decides whether the fix is a different generator or a corrected DIMS.",
+ "no_API_spend": true,
+ "policies": {
+  "7B": {
+   "briefs": 300,
+   "candidates_per_brief": 16.0,
+   "dimension_varies_in_n_briefs": {
+    "valid": 213,
+    "meter": 245,
+    "score": 298,
+    "clean": 200
+   },
+   "briefs_with_no_form_valid_candidate": 87,
+   "collapse_by_dimension_set": {
+    "all four (valid,meter,score,clean)": {
+     "collapse_pct": 53.3,
+     "realizable_n": 140
+    },
+    "no composite (valid,meter,clean)": {
+     "collapse_pct": 36.7,
+     "realizable_n": 190
+    },
+    "craft only (valid,meter)": {
+     "collapse_pct": 28.7,
+     "realizable_n": 214
+    },
+    "with composite, no clean": {
+     "collapse_pct": 84.0,
+     "realizable_n": 48
+    }
+   }
+  },
+  "14B": {
+   "briefs": 300,
+   "candidates_per_brief": 16.0,
+   "dimension_varies_in_n_briefs": {
+    "valid": 231,
+    "meter": 273,
+    "score": 299,
+    "clean": 197
+   },
+   "briefs_with_no_form_valid_candidate": 67,
+   "collapse_by_dimension_set": {
+    "all four (valid,meter,score,clean)": {
+     "collapse_pct": 60.0,
+     "realizable_n": 120
+    },
+    "no composite (valid,meter,clean)": {
+     "collapse_pct": 32.3,
+     "realizable_n": 203
+    },
+    "craft only (valid,meter)": {
+     "collapse_pct": 28.3,
+     "realizable_n": 215
+    },
+    "with composite, no clean": {
+     "collapse_pct": 76.7,
+     "realizable_n": 70
+    }
+   }
+  }
+ },
+ "verdict": {
+  "collapse_under_the_current_set_across_policies": {
+   "7B": 53.3,
+   "14B": 60.0
+  },
+  "spread_across_policies_points": 6.7,
+  "drop_from_removing_the_composite_points": {
+   "7B": 16.6,
+   "14B": 27.7
+  },
+  "reading": "the composite explains more than the policy does — removing it drops collapse by 16.6-27.7 points while changing policy moves it 6.7"
+ },
+ "⚠️_method": "these numbers are for 理 to rule on. Choosing a dimension set by the n it yields would be selecting an instrument on its result; the argument for dropping `score` is that it is a COMPOSITE of its own co-dimensions, and it holds regardless of which way the n moves.",
+ "signed": "Sautee (sha-ta)",
+ "🔴_THE_DECISIVE_FACT": "the STRONGER policy collapses MORE: 14B 60.0% against 7B 53.3% under the current dimension set. That kills the 'weak policy the checker can totally order' explanation outright -- it predicts the opposite. And the mechanism is visible in the same table: the 14B has FEWER briefs with no form-valid candidate (67 vs 87), so more of its candidates TIE on `valid` and `meter`, which leaves the composite `score` as the sole discriminator and lets one candidate dominate. The composite's domination effect gets WORSE as the policy improves.",
+ "what_this_settles": "the fix is the DIMENSION SET, not the generator. Removing the composite drops collapse by 16.6 points on the 7B and 27.7 on the 14B, while changing policy moves it 6.7 -- in the wrong direction. The argument for dropping `score` was principled before this ran (it is n_meter + rhyme_ok + iamb/10, a composite of `valid` and `meter`), and the measurement now agrees with the argument rather than the argument resting on the measurement.",
+ "still_理s_ruling": "DIMS is unchanged in code. This is evidence for the ruling, not the ruling."
+}
