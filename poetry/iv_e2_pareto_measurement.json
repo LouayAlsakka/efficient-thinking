@@ -1,0 +1,42 @@
+{
+ "document": "ET-IV E2 — the Pareto collapse rate, measured on real candidates BEFORE any spend (the number I owed 理)",
+ "candidates": "poetry/cache/e1_7B.jsonl — mlx-community/Qwen2.5-7B-Instruct-4bit, 300 briefs x 16 samples, temp 0.8, max_tokens 96, generated on llm1. No API spend.",
+
+ "the_number": {
+  "briefs": 300, "candidates_per_brief": 16,
+  "briefs_whose_Pareto_set_collapses_to_ONE": 160,
+  "collapse_pct": 53.3,
+  "realizable_n_for_E2": 140,
+  "⚠️": "E2's cost line assumed 300 pairs. The realizable n is 140. That is not a cost problem — it is FEWER calls, not more — it is a POWER problem, and it changes what q is measured on."
+ },
+
+ "pareto_set_size_distribution": {"1": 160, "2": 83, "3": 30, "4": 8, "5": 6, "6": 5,
+                                  "8": 1, "11": 1, "13": 3, "15": 1, "16": 2},
+
+ "🔴_a_design_error_in_my_dimension_set_and_it_is_not_an_n_problem": {
+  "what_I_used": ["valid", "meter", "score", "clean"],
+  "the_error": "`score` is not an independent craft dimension. e1_score.score_sample computes it as `n_meter + (1.0 if rhyme_ok else 0) + mean(iamb_score)/10` — a COMPOSITE of exactly what `valid` (meter AND rhyme) and `meter` already encode. Including it alongside its own components double-counts that evidence and makes THE CHECKER'S OWN COMPOSITE RANKING a domination axis. Since `score` varies in 298 of 300 briefs while the booleans are often constant, the top-scoring candidate dominates everything it ties with — which is why the set collapses.",
+  "why_that_is_worse_than_a_lost_n": "E2 exists to test whether a frontier judge agrees with the CHECKER'S selection. Letting the checker's composite score decide who is even SHOWN means the arm has already prejudged the thing it is measuring.",
+  "the_principled_dimension_set": ["valid", "meter", "clean"],
+  "note_on_clean": "`clean` is -oov_rate, a vocabulary/degeneracy measure computed from the same checks but NOT part of the score composite. It is a genuine independent axis and stays."
+ },
+
+ "collapse_under_each_dimension_set": {
+  "all_four_valid_meter_score_clean": {"collapse_pct": 53.3, "n": 140, "status": "what I built"},
+  "valid_meter_clean_NO_COMPOSITE": {"collapse_pct": 36.7, "n": 190, "status": "the principled set"},
+  "valid_meter_only": {"collapse_pct": 28.7, "n": 214, "status": "drops the degeneracy axis too"},
+  "valid_meter_score_no_clean": {"collapse_pct": 84.0, "n": 48},
+  "score_clean_only": {"collapse_pct": 54.0, "n": 138},
+  "⚠️_METHOD_WARNING": "these are listed because 理 needs them to rule, NOT as a menu to pick the largest n from. Choosing a dimension set by the n it yields is selecting an instrument on its result. The argument for dropping `score` is that it is a composite of its co-dimensions, and it would hold if it LOWERED the n."
+ },
+
+ "a_separate_fact_about_the_policy_worth_recording": {
+  "briefs_where_NO_candidate_is_form_valid": 87,
+  "of": 300,
+  "reading": "for 29% of briefs the judge would be comparing two form-BROKEN poems. That is a real property of the 7B policy at this sampling budget, and it bounds what q can mean on those briefs. It should be reported as a stratum, not averaged away."
+ },
+
+ "what_is_NOT_in_this_file": "no q, no self-consistency, no rating result. The dry run used the fake transport and its q values are artifacts of an alternating fake rater. Nothing here was rated by a model and nothing here cost anything.",
+ "spend_to_date_usd": 0.0,
+ "signed": "Sautee (sha-ta)"
+}
