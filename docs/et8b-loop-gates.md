@@ -128,3 +128,13 @@ which learned from trajectories where the region was already found by decision 3
 decisions and gen2 moved the last — independently of the stop rule. **VIII-b's experimental package is closed.**
 The frontier moved twice — base → gen0 → gen1 — and did not move a third time on this loop; the paper is written
 backward from that sentence.
+
+## 9. Pre-registered 2026-09-21 18:1xZ — the loop base at the generations' compute
+
+The loop's generations spend about 30% more model tokens per episode than the loop base (≈3,800 vs ≈2,950). The
+accumulation limb (gen1 vs gen0) is equal-cost by construction and needs no control; the loop's gain over base does.
+Arm: on each independent seed, a small ladder of base action budgets on slice 1, the budget whose mean tokens per
+episode is nearest 3,800 chosen by absolute distance before the ladder is read, then that budget on the full 300,
+paired against gen0 and gen1. Readings: base-matched below gen0 by more than the interval → the loop's gain is
+experience, not compute; base-matched ≈ gen0 → generation 0's gain was bought with compute and only the gen1-vs-gen0
+increment stands as the frontier claim. Printed either way.
