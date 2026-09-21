@@ -138,3 +138,12 @@ episode is nearest 3,800 chosen by absolute distance before the ladder is read, 
 paired against gen0 and gen1. Readings: base-matched below gen0 by more than the interval → the loop's gain is
 experience, not compute; base-matched ≈ gen0 → generation 0's gain was bought with compute and only the gen1-vs-gen0
 increment stands as the frontier claim. Printed either way.
+
+**Outcome (2026-09-21 19:1xZ): the arm is unbuildable, and that is the finding.** The action budget does not bind on the
+loop — base tokens per episode are flat from budget 14 to 24 (≈2,880 and ≈2,930 on the two seeds) because the
+three-decision cap ends the episode first; the selection rule then chose on noise (budget 14 on one seed, 20 on the
+other). The generations' extra compute is endogenous: fewer actions (7.7 vs 8.2) at 37% more tokens per action,
+because the head's choice of where to look lengthens the context the agent carries. It cannot be matched with a knob,
+and a base with a raised decision cap or a forced-inspect policy is a different agent. VIII-b therefore reports the
+loop's gain over its base with the per-action decomposition and does not claim it as a frontier shift; the
+accumulation claim (gen1 over gen0) is at equal cost by construction and stands on its own.
