@@ -113,3 +113,18 @@ written backward from there.
 there is no person unless the author supplies the K preferences. Ruled 2026-09-21: E5 is PARKED unless the author
 writes K statements of his own poetic preference; the version that elicits the judge's own preferences is not run,
 because it measures a model learning a model, not the registered question.
+
+## 8. gen2, measured 2026-09-21 16:35Z — accumulation stops at generation 1
+
+Seed by seed, not pooled: gen2 vs gen1 −2.0 [−6.3, +2.3], p 0.44 (seed 73); −7.0 [−11.0, −3.0], p 0.0015 (seed 47).
+Cost flat (−0.2%, +0.4%). gen2 vs base +17.3 / +15.7 — between gen0 and gen1 on both. §7's plateau row fires on one
+seed and its consumption row on the other; the fourth row does not fire, since both estimates are negative and the
+intervals overlap on [−6.3, −3.0]. **Ruling (2026-09-21 17:1xZ):** the paper reports both rows as they fired, per
+seed, and the sentence established on both is: *a third generation does not improve on the second; on one seed it is
+significantly worse; the series' best head is generation 1.* The consumption mechanism is reported as consistent, not
+demonstrated: the d1 and d2 heads are byte-identical between gen1 and gen2, so the whole difference is the d3 head,
+which learned from trajectories where the region was already found by decision 3 in 48.8% of surviving episodes
+(41.5% for gen1's). One moved point is not a mechanism. A gen3 would be empty by construction — the loop has three
+decisions and gen2 moved the last — independently of the stop rule. **VIII-b's experimental package is closed.**
+The frontier moved twice — base → gen0 → gen1 — and did not move a third time on this loop; the paper is written
+backward from that sentence.
