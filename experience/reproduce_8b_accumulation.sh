@@ -10,6 +10,12 @@
 #     seed 47   gen0 34.0% -> gen1 43.7%    +9.7 [+4.7, +15.0]   McNemar p = 0.00042
 #     model tokens/episode: gen1 +0.1% (seed 73) and -3.0% (seed 47) against gen0
 #
+# AND THAT IT STOPS THERE. A third generation does not improve on the second:
+#     seed 73   gen1 40.0% -> gen2 38.0%    -2.0 [-6.3, +2.3]    p = 0.4408
+#     seed 47   gen1 43.7% -> gen2 36.7%    -7.0 [-11.0, -3.0]   p = 0.00145
+# Both are checked. A reproduction that confirms the rise and not the stop has reproduced half a
+# claim, and the half it leaves out is the one a reader is most likely to doubt.
+#
 # THE THING A REPRODUCER MUST NOT SKIP: both heads were fitted on v3 (seed 21) and must never have
 # seen the set they run on. That is checked here by SIGNATURE DISJOINTNESS, not by trusting the seed
 # — two generator runs with different seeds are not guaranteed disjoint, and task IDs are per-set so
@@ -37,9 +43,9 @@ say(){ echo "=== $(date -u +%H:%M:%SZ) $*"; }
 
 # published points, per set, for the final containment check
 case "$SET" in
-  v3c)   PUB_G1G0=5.7;  PUB_SEED=73 ;;
-  v3rep) PUB_G1G0=9.7;  PUB_SEED=47 ;;
-  *)     PUB_G1G0="";   PUB_SEED="?" ;;
+  v3c)   PUB_G1G0=5.7;  PUB_G2G1=-2.0;  PUB_SEED=73 ;;
+  v3rep) PUB_G1G0=9.7;  PUB_G2G1=-7.0;  PUB_SEED=47 ;;
+  *)     PUB_G1G0="";   PUB_G2G1="";    PUB_SEED="?" ;;
 esac
 
 say "ET-8b accumulation reproduction — set $SET (seed $PUB_SEED)"
@@ -54,14 +60,20 @@ declare -a WANT=(
  "gen0_head_d3_layer18.npz be2d1b4177c20b02982ca4810110e63b"
  "gen1_head_d1_layer18.npz f814f6c428d4c7a5d4f32dd25bd8cfc3"
  "gen1_head_d2_layer18.npz 28a5c401e43f7981628a08452dbb79f3"
- "gen1_head_d3_layer18.npz 24ad0b9cadc1bc0dc969f0e36678a0d3")
+ "gen1_head_d3_layer18.npz 24ad0b9cadc1bc0dc969f0e36678a0d3"
+ "gen2_head_d1_layer18.npz f814f6c428d4c7a5d4f32dd25bd8cfc3"
+ "gen2_head_d2_layer18.npz 28a5c401e43f7981628a08452dbb79f3"
+ "gen2_head_d3_layer18.npz ac96bc32e8cfb0067efb5481434313cb")
 for w in "${WANT[@]}"; do
   f="${w%% *}"; want="${w##* }"; p="$H/$f"
   [ -f "$p" ] || die "missing head $p"
   got=$("$PY" -c "import hashlib,sys;print(hashlib.md5(open(sys.argv[1],'rb').read()).hexdigest())" "$p")
   [ "$got" = "$want" ] || die "head $f md5 $got, expected $want"
 done
-say "gate 1: all six heads match their published md5"
+say "gate 1: all nine heads match their published md5"
+# gen2's d1 and d2 are byte-identical to gen1's BY CONSTRUCTION — decision 1's state depends only on
+# the task, so every generation fits the same d1 head, and d2 follows from d1. Only d3 differs. If a
+# future change breaks that identity, these md5s catch it.
 
 # ------------------------------------------------- (b) DISJOINTNESS, measured
 "$PY" - "$R" "$TRAIN_SET" "$SET" <<'PYG' || die "disjointness gate"
@@ -110,10 +122,12 @@ say "arm 1/3: base (no head)"
 run_arm base
 say "arm 2/3: gen0"
 run_arm gen0 --heads "$H/gen0_head_d1_layer18.npz" "$H/gen0_head_d2_layer18.npz" "$H/gen0_head_d3_layer18.npz"
-say "arm 3/3: gen1"
+say "arm 3/4: gen1"
 run_arm gen1 --heads "$H/gen1_head_d1_layer18.npz" "$H/gen1_head_d2_layer18.npz" "$H/gen1_head_d3_layer18.npz"
+say "arm 4/4: gen2"
+run_arm gen2 --heads "$H/gen2_head_d1_layer18.npz" "$H/gen2_head_d2_layer18.npz" "$H/gen2_head_d3_layer18.npz"
 
-for p in "base gen0" "base gen1" "gen0 gen1"; do
+for p in "base gen0" "base gen1" "gen0 gen1" "gen1 gen2" "gen0 gen2" "base gen2"; do
   set -- $p
   "$PY" "$R/experience/paired_stats.py" --base "$OUT/$1.episodes.jsonl" --g "$OUT/$2.episodes.jsonl" \
     --expect 300 --name "reproduction ($SET): $2 vs $1" --out "$OUT/${2}_vs_${1}.json" \
@@ -121,17 +135,23 @@ for p in "base gen0" "base gen1" "gen0 gen1"; do
 done
 
 # ------------------------------------------------- (d) does it agree with what was published?
-[ -n "$PUB_G1G0" ] && "$PY" - "$OUT" "$PUB_G1G0" <<'PYC'
+[ -n "$PUB_G1G0" ] && "$PY" - "$OUT" "$PUB_G1G0" "$PUB_G2G1" <<'PYC'
 import json,sys
-o,pub=sys.argv[1],float(sys.argv[2])
-d=json.load(open(o+"/gen1_vs_gen0.json"))
-lo,hi=d["success_95CI"]; pt=d["success_delta_points"]
-print("\n  PUBLISHED   gen1 vs gen0  %+.1f"%pub)
-print("  REPRODUCED  %+.1f  95%% CI [%+.1f, %+.1f]  p=%.4g"%(pt,lo,hi,d["McNemar"]["exact_two_sided_p"]))
-ok = lo <= pub <= hi
-print("  %s"%("REPRODUCED: the published point lies inside this run's interval." if ok else
-      "🔴 DISAGREES: the published point is OUTSIDE this run's interval. Report that, not a number."))
-sys.exit(0 if ok else 3)
+o,rise,stop=sys.argv[1],float(sys.argv[2]),float(sys.argv[3])
+bad=[]
+for name,f,pub in (("gen1 vs gen0  (the rise)","gen1_vs_gen0.json",rise),
+                   ("gen2 vs gen1  (the stop)","gen2_vs_gen1.json",stop)):
+    d=json.load(open(o+"/"+f)); lo,hi=d["success_95CI"]; pt=d["success_delta_points"]
+    ok = lo <= pub <= hi
+    print("\n  %s"%name)
+    print("    PUBLISHED   %+.1f"%pub)
+    print("    REPRODUCED  %+.1f  95%% CI [%+.1f, %+.1f]  p=%.4g"%(pt,lo,hi,d["McNemar"]["exact_two_sided_p"]))
+    print("    %s"%("REPRODUCED: the published point lies inside this run's interval." if ok else
+          "🔴 DISAGREES: the published point is OUTSIDE this run's interval."))
+    if not ok: bad.append(name)
+if bad:
+    print("\n  🔴 %s disagree(s). Report THAT, not a number."%" and ".join(bad)); sys.exit(3)
+print("\n  BOTH LIMBS REPRODUCED — the rise and the stop.")
 PYC
 rc=$?
 say "artifacts in $OUT"
