@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Efficient Thinking</title>
+<style>
+body{font-family:Georgia,'Times New Roman',serif;color:#1a1a1a;max-width:820px;margin:32px auto;padding:0 16px;line-height:1.5;font-size:16px}
+h1{font-size:30px;border-bottom:3px solid #2c3e50;padding-bottom:10px;color:#1a2a3a}
+h2{font-size:20px;color:#2c3e50;border-bottom:1px solid #ccd;padding-bottom:5px;margin-top:34px}
+table{border-collapse:collapse;width:100%;font-size:15px}th,td{border-bottom:1px solid #ddd;padding:7px 8px;text-align:left;vertical-align:top}
+th{background:#f4f6f8}code,pre{font-family:Menlo,Consolas,monospace;font-size:14px;background:#f4f6f8;padding:2px 5px;border-radius:3px}
+pre{padding:10px 12px;overflow-x:auto}.q{border-left:4px solid #c0392b;padding:8px 14px;background:#fbf6f5;margin:18px 0}
+.small{color:#555;font-size:14px}a{color:#1f4e79}img{max-width:100%;border:1px solid #ddd}
+</style></head><body>
+<h1>Efficient Thinking</h1>
+<p><strong>One question, from every angle:</strong> how much useful capability can a fixed intelligence get per unit of computation, and what moves that number? Each paper holds the model fixed, measures capability with an external verifier, and changes one thing: search, the evaluator, the judge, taste, feedback, labels, the internal ceiling, experience, symmetry, representation.</p>
+
+<div class="q"><strong>The result to try to break.</strong> A frozen 7B model, given a read-only linear head fitted on its own verified history, solves more problems at the same inference compute — and, at equal quality, spends 2.3× less. The mechanism transfers to a second search structure with the head re-fitted, and a second generation of experience beats the first, then a third does not. <strong>The headline reproduces from one command in about three hours on an Apple-silicon Mac.</strong></p>
+<pre>git clone https://github.com/LouayAlsakka/efficient-thinking && cd efficient-thinking
+bash experience/reproduce_matched_compute.sh      # base at the head's compute vs the head, n = 300, paired</pre>
+<p>It refuses to print a table if any gate fails and exits non-zero if the published interval is not reproduced. An independent run on a second machine by someone who had not touched the work read +8.0 [+3.0, +13.3] against the published +9.3 [+3.7, +15.0].</p>
+
+<p><a href="figs/fig1_frontier.png"><img src="figs/fig1_frontier.png" alt="Figure 1: the quality–compute frontier, the paired effect everywhere it was measured, and the same-decision baselines"></a></p>
+
+<h2>Papers</h2>
+<table>
+<tr><th>#</th><th>Title</th><th>State</th><th>Read</th></tr>
+<tr><td>I</td><td>Measuring What Capability Costs — search substitutes for size on a frozen chess evaluator</td><td>measured</td><td><a href="efficient-thinking-1.html">html</a> · <a href="efficient-thinking-1.pdf">pdf</a> · <a href="efficient-thinking-1.md">md</a></td></tr>
+<tr><td>II</td><td>Where Search Pays and Where It Can't — the evaluator's ceiling, in games and in language</td><td>measured</td><td><a href="efficient-thinking-2.html">html</a> · <a href="efficient-thinking-2.pdf">pdf</a> · <a href="efficient-thinking-2.md">md</a></td></tr>
+<tr><td>III</td><td>Efficient Judging — when an LLM judge is worth its compute</td><td>measured, draft</td><td><a href="efficient-thinking-3.pdf">pdf</a> · <a href="efficient-thinking-3.md">md</a></td></tr>
+<tr><td>IV</td><td>Search Where Taste Is the Evaluator</td><td>machine arms measured; rater arms running</td><td><a href="efficient-thinking-4-proposal.md">proposal</a></td></tr>
+<tr><td>V</td><td>The Exchange Rate of Feedback</td><td>concept</td><td><a href="efficient-thinking-5-concept.md">concept</a></td></tr>
+<tr><td>VI</td><td>The Label Ceiling — why self-play plateaus</td><td>measured, unwritten</td><td><a href="efficient-thinking-6-concept.md">concept</a> · <a href="et6-ledger.md">ledger</a></td></tr>
+<tr><td>VII</td><td>The Elicitation Gap — what a fixed system can get from inside</td><td>concept; probe running</td><td><a href="efficient-thinking-7-concept.md">concept</a></td></tr>
+<tr><td><strong>VIII</strong></td><td><strong>Experience Priors — the constraint and the carrier</strong></td><td><strong>closed, reproduced</strong></td><td><a href="efficient-thinking-8.html">html</a> · <a href="efficient-thinking-8.pdf">pdf</a> · <a href="efficient-thinking-8.md">md</a></td></tr>
+<tr><td>VIII-b</td><td>Accumulation — does experience move the frontier again</td><td>measured; paper in progress</td><td><a href="et8b-loop-gates.md">record</a></td></tr>
+<tr><td>IX</td><td>Symmetry — invariance as thought compression</td><td>concept</td><td><a href="efficient-thinking-9-symmetry-concept.md">concept</a></td></tr>
+<tr><td>X</td><td>Machine-Native Representation</td><td>concept</td><td><a href="efficient-thinking-10-concept.md">concept</a> · <a href="et10-series-plan.md">plan</a></td></tr>
+</table>
+<p class="small">Every paper opens with a state line — MEASURED, REGISTERED, CONCEPT or IDEA — so that a concept is never read as a finding. Withdrawn claims stay in the record, dated. Readings are written before runs. Result artefacts name their instruments by hash. The series plan and the one-question rule are in <a href="series-completion-plan.md">series-completion-plan.md</a>.</p>
+
+<h2>Review</h2>
+<p>There is no venue, no referee and no gate. Review is public and runs through the repository's <a href="https://github.com/LouayAlsakka/efficient-thinking/issues">issues</a>. The four places the author thinks Paper VIII is weakest, so you know where to aim: an alternative explanation for the matched-compute frontier shift; leakage in how the experience was constructed; a flaw in the paired statistics; a reason the second search structure does not establish transfer of the mechanism. A fatal flaw is worth more than praise, and the author will run any experiment you name.</p>
+
+<h2>Author</h2>
+<p>Louay Alsakka. An electrical engineer from the semiconductor industry; this is a first research project, done outside any institution with AI assistance, and published directly. The chess engine of Paper I is where the two interests meet.</p>
+<p class="small">Repository: <a href="https://github.com/LouayAlsakka/efficient-thinking">github.com/LouayAlsakka/efficient-thinking</a></p>
+</body></html>
