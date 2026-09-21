@@ -1,0 +1,88 @@
+{
+ "document": "ET-8b — the compute-matched base arm is UNBUILDABLE. The flat ladder is the evidence (理 11887).",
+ "why_it_was_cut": "gen0/gen1 spend ~3,800 model tokens per episode against the base's ~2,935 (+30%). The accumulation limb (gen1 vs gen0) is equal-cost by construction, but the loop's gain OVER BASE is at different compute and a reader will ask. 理 11871 ordered R5-E's rule: a ladder of base action budgets, pick the one nearest 3,800 by absolute distance, run it on 300.",
+ "THE_LADDER": {
+  "seed_73": {
+   "14": {
+    "tokens_per_episode": 2883.1,
+    "actions": 8.04,
+    "decisions": 2.68,
+    "solved_pct": 25.3,
+    "n": 75
+   },
+   "16": {
+    "tokens_per_episode": 2880.7,
+    "actions": 8.04,
+    "decisions": 2.68,
+    "solved_pct": 21.3,
+    "n": 75
+   },
+   "18": {
+    "tokens_per_episode": 2881.9,
+    "actions": 8.04,
+    "decisions": 2.68,
+    "solved_pct": 22.7,
+    "n": 75
+   },
+   "20": {
+    "tokens_per_episode": 2864.1,
+    "actions": 8.0,
+    "decisions": 2.67,
+    "solved_pct": 25.3,
+    "n": 75
+   },
+   "24": {
+    "tokens_per_episode": 2867.6,
+    "actions": 8.0,
+    "decisions": 2.67,
+    "solved_pct": 30.7,
+    "n": 75
+   }
+  },
+  "seed_47": {
+   "14": {
+    "tokens_per_episode": 2937.7,
+    "solved_pct": 24.0
+   },
+   "16": {
+    "tokens_per_episode": 2921.5,
+    "solved_pct": 25.3
+   },
+   "18": {
+    "tokens_per_episode": 2923.4,
+    "solved_pct": 24.0
+   },
+   "20": {
+    "tokens_per_episode": 2941.3,
+    "solved_pct": 20.0
+   },
+   "24": {
+    "tokens_per_episode": 2927.2,
+    "solved_pct": 25.3
+   },
+   "note": "read from the llm2 run log; the episode files stayed on llm2"
+  }
+ },
+ "WHY_IT_IS_FLAT": "the ACTION BUDGET DOES NOT BIND on the loop. Across budgets 14-24 the base takes 8.00-8.04 actions and 2.67-2.68 decisions. The binding constraint is the THREE-DECISION CAP: the loop ends after decision 3 long before 24 actions are spent. R5-E worked in 8a because there the budget genuinely bound.",
+ "THE_RULE_FAILED_VISIBLY_AND_THAT_IS_HOW_IT_WAS_CAUGHT": "'nearest 3,800 by absolute distance' picked budget 14 on seed 73 and budget 20 on seed 47. Every rung is ~917 tokens from the target, so the rule was selecting on NOISE. Two seeds, one rule, different answers — which is what a selection rule looks like when the quantity it selects on does not vary. The highest rung reaches 2,941 against 3,800: a 24% shortfall, unreachable.",
+ "WHERE_THE_30_PERCENT_ACTUALLY_GOES": {
+  "base@12": {
+   "actions": 8.19,
+   "tokens": 2935.5,
+   "tokens_per_action": 358.4
+  },
+  "gen0": {
+   "actions": 7.76,
+   "tokens": 3802.9,
+   "tokens_per_action": 490.1
+  },
+  "gen1": {
+   "actions": 7.66,
+   "tokens": 3806.5,
+   "tokens_per_action": 496.9
+  },
+  "reading": "the steered arms take FEWER actions and spend 37% MORE PER ACTION. The head changes which region is hypothesised, which changes what is inspected next, which lengthens the context the agent carries. The extra compute is ENDOGENOUS to the mechanism — not a knob set differently, but something the head causes the agent to do."
+ },
+ "RULED_理_11887": "No substitute arm. A base with a raised decision cap or a forced-inspect policy is a DIFFERENT AGENT, not a control. VIII-b states it as a bound: the accumulation claim (gen1 over gen0) is at equal cost by construction; the loop's gain over its base is at +30% model tokens, that compute is caused by the mechanism, and it is reported with the per-action decomposition and NOT claimed as a frontier shift. VIII's matched-compute result covers the single head; the loop inherits it as an argument, not a measurement.",
+ "signed": "Sautee (sha-ta)"
+}
