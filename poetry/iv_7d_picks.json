@@ -1,0 +1,3510 @@
+{
+ "document": "ET-IV 7d stage 1 — the three selectors' picks, local, $0.00",
+ "⚠️_new_measurement_not_a_reproduction": "selection_7d.json records its scores and not its instrument (理 11768 §3), so identity with the run that produced canon 7.62 cannot be established.",
+ "prototype_bound": "the 7b canon judge is a noise-level prototype (n=34 corpus); this measures the PIPELINE, not G2p (selection_7d.py's own header)",
+ "instrument": {
+  "canon_model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+  "canon_adapter_md5": "312d7cccc54607b396421e8f0cc1a8ec",
+  "candidate_cache": "/Users/lab/github/efficient-thinking/poetry/cache/e1_7B.jsonl",
+  "task": "sonnet",
+  "n_per_field": 4,
+  "seed": 0
+ },
+ "fields": 100,
+ "selector_agreement": {
+  "random_eq_checker": 26,
+  "random_eq_canon": 22,
+  "checker_eq_canon": 7
+ },
+ "pairs_to_rate": 245,
+ "rows": [
+  {
+   "field_id": "sonnet_000",
+   "brief": "Write a single four-line stanza (a quatrain) about the sea at dawn. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The dawn awakens with quiet light on waves,",
+     "Gentle whispers rise where the mist and sea engage,",
+     "In whispers soft, the morning answers back,",
+     "And shadows yield to the sun’s first bright engage."
+    ],
+    [
+     "The dawn breaks o'er the waves in golden light,",
+     "Where sleepy ripples cradle dawn's first ray,",
+     "The misty shroud撤去不合适的部分，恢复原样：",
+     "The dawn breaks o'er the waves in golden light,"
+    ],
+    [
+     "The sea at dawn doth breathe in rosy light,",
+     "Its waves, in gentle motion, kiss the shore,",
+     "A hush doth settle, like a whispered note,",
+     "Then day in orange flames overtakes the door."
+    ],
+    [
+     "Upon the crest of dawn, the sea does grin,",
+     "With rosy fingers, gently clasps the shore,",
+     "The misty shroud it weaves in softest spin,",
+     "Unveils the world in tender, pearly bore."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 2,
+    "canon": 2
+   }
+  },
+  {
+   "field_id": "sonnet_001",
+   "brief": "Write a single four-line stanza (a quatrain) about a fading autumn. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The leaves in golden hues do fall,",
+     "A dance of days that slowly wane,",
+     "The crispness in the air does call,",
+     "To frost where summer's warmth was lain."
+    ],
+    [
+     "The golden leaves do gently fall, adieu,",
+     "In twilight's embrace, they drift away,",
+     "The once-bounteous trees now stark and true,",
+     "Proclaim the fading light of day by day."
+    ],
+    [
+     "The leaves in gold and russet fall, doth say,",
+     "Each one a whisper to the crisp, cool air,",
+     "The sun doth bathe them in a fading light,",
+     "Till night claims all, and winter's breath doth draw near."
+    ],
+    [
+     "The leaves doth fall in golden showers, a-slow,",
+     "And bid the year with sighing farewells,",
+     "The once-robust now withers cold and low,",
+     "A somber harbinger of waning spells."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_002",
+   "brief": "Write a single four-line stanza (a quatrain) about lost love. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In shadows of the fading light you went,",
+     "From hearts that still could hear your gentle tread,",
+     "No echo now remains, our love is spent,",
+     "Save in the memories where we used to tread."
+    ],
+    [
+     "In fading eyes a once-luminous flame,",
+     "Now dimmed and cold, as erstwhile hearts did flame,",
+     "No word, no sign, no trace of what we were,",
+     "Left only in the memory, sad and small."
+    ],
+    [
+     "In shadows deep where once our spirits danced,",
+     "Now echoes lone a silence, void, and cold,",
+     "Our laughter fades, like fading morning glances,",
+     "Till heart to heart no longer feels, but tells."
+    ],
+    [
+     "In twilight's shadow, where the ghostly leaves sigh,",
+     "My heart still whispers oft thy name, I pine,",
+     "No spring returns to bloom where thou didst lie,",
+     "But wintry gloom doth wither love's fair prime."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_003",
+   "brief": "Write a single four-line stanza (a quatrain) about the passage of time. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Hours like leaves on ancient trees do fall,",
+     "Day by day, in time's unending scroll,",
+     "Sunsets paint the sky with gold and violet,",
+     "Night succeeds, to claim the day's release."
+    ],
+    [
+     "The sunset paints the sky in golden hue,",
+     "As hours unheedingly do pass and go,",
+     "The twilight comes to claim the day's last view,",
+     "As shadows lengthen, time's soft grip does show."
+    ],
+    [
+     "Hours like leaves in autumn, once fallen, are lost,",
+     "Days like doves in twilight, are gone in a trice,",
+     "Weeks like waves at sundown, recede and take boast,",
+     "Months like moonlit dreams fade, in the dark of thenice"
+    ],
+    [
+     "The sun doth rise, then sets in silent doom,",
+     "Each day a stone in time's unyielding stream,",
+     "The leaves in spring, in autumn's frosty gloom,",
+     "Do fall, to rise no more till verdant dream."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_004",
+   "brief": "Write a single four-line stanza (a quatrain) about a winter night. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In twilight's fade where day and night交接处，",
+     "Snow whispers hush upon the pine,",
+     "The moon casts shadows in the glen,",
+     "While winds doth moan in solemn chime。"
+    ],
+    [
+     "Snow muffles earth in quiet slumber deep,",
+     "While moonbeams dance upon the windows' sheen,",
+     "The world in white, in frosty breath doth keep,",
+     "A watchful vigil o'er the wintereen."
+    ],
+    [
+     "Silent the night, where snow doth softly lie,",
+     "By moonlight gilding frost upon the ground,",
+     "The world in hush beneath the wintry sky,",
+     "No sound but breath upon the frosty air."
+    ],
+    [
+     "The moon doth shine with frosted light, so pale,",
+     "Upon the frost, where twigs do stand at attention,",
+     "The silent air with ice doth hold its breath,",
+     "Till breaks the breeze, a whisper through creation."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_005",
+   "brief": "Write a single four-line stanza (a quatrain) about spring rain. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Spring rain whispers in soft measured time,",
+     "Gentle upon the petals new and prime,",
+     "It sings a song of life's rebirth and bloom,",
+     "In every drop, the promise it renews."
+    ],
+    [
+     "Spring rain falls softly, nature's steady beat,",
+     "Misting the earth with life's sustaining thread,",
+     "In gentle drops it whispers to the seed,",
+     "Awakening slumber in the winter's heat."
+    ],
+    [
+     "Softly the spring rain falls, a whispering thread,",
+     "Washing the world clean, its pale green handspread,",
+     "New buds uncurl under the moistening touch,",
+     "Life breathes again as winter's grip relaxes,"
+    ],
+    [
+     "Spring rain falls soft on budding leaves,",
+     "Awakening sleep with liquid streams,",
+     "In gentle showers it seems to breathe,",
+     "Life under skies that wearily gleam."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_006",
+   "brief": "Write a single four-line stanza (a quatrain) about an old friend. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In days of old, our spirits did entwine,",
+     "With laughter bright and shared dreams unconfined,",
+     "But time, a river ever wide and deep,",
+     "Doth part us now where once we did weep."
+    ],
+    [
+     "In misty glens we used to roam, my friend,",
+     "Where shadows loiter and the wildwood's breath",
+     "Doth whisper secrets of aearlier days,",
+     "Now distant echoes in the quiet west."
+    ],
+    [
+     "Our paths did long ago diverge, we part,",
+     "Yet still thy voice in memory I recall,",
+     "A friend so dear, though time may shift and shift,",
+     "Thy laughter's echo still my heart doth enthral."
+    ],
+    [
+     "In twilight of years, our paths did cross again,",
+     "Memories like wine, grew richer as we drank,",
+     "Together we laughed at life's soft irony,",
+     "Parting hence, old friend, with nod and thank."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_007",
+   "brief": "Write a single four-line stanza (a quatrain) about the moon. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Silvered moon doth high悬在空中，",
+     "Guides night's sleep with gossamer touch，",
+     "Stars fade as her light swayают，",
+     "Solves all darkness in lunar clutch."
+    ],
+    [
+     "The moon doth rise in silent, mystic grace,",
+     "Its silver light doth softly, gently pour,",
+     "On hills and dales, a spell that dreams may chase,",
+     "In twilight's arms, where only shadows soar."
+    ],
+    [
+     "The moon doth wax and wane in silent grace,",
+     "A luminous round in the velvet sky,",
+     "Its silver light doth bathe the world in peace,",
+     "While shadows lengthen as the night draws nigh."
+    ],
+    [
+     "Silent moon doth hang in the twilight's embrace,",
+     "Its cold light bathes the world in silver grace,",
+     "Then whispers fade as dawn its edge does trace,",
+     "And moon withdraws to dreams within the space."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_008",
+   "brief": "Write a single four-line stanza (a quatrain) about a distant city. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In misty dawn's embrace, afar I spy,",
+     "A city sleeps, in silvery light arrayed,",
+     "Its spires reach high where shadows softly lie,",
+     "Beneath the moon, in tranquil dreams arrayed."
+    ],
+    [
+     "In misty veils the city whispers far,",
+     "Its spires in twilight's grasp do bravely stand,",
+     "A dream of light where shadows softly bar,",
+     "And noise of life in tranquil silence glides."
+    ],
+    [
+     "In misty veils, afar I spy thy towers,",
+     "Gilded spires in sunlight, silent, proud, and grand,",
+     "Thy streets with shadows weave in even hours,",
+     "A city dreams beneath the watchful land."
+    ],
+    [
+     "In twilight's hue her spires doth wear, Berlin,",
+     "With history's ghosts in silent wheel,",
+     "Where shadows sweep o'er boulevards old,",
+     "In whispers of the past, Berlin, Berlin."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_009",
+   "brief": "Write a single four-line stanza (a quatrain) about childhood memory. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In fields of green where buttercups did gleam,",
+     "I ran, a laughing sprite, 'neath azure sky,",
+     "Each daisy chain a circlet for my dream,",
+     "Where time stood still, in memory's embrace."
+    ],
+    [
+     "In fields of green beneath the azure sky,",
+     "I gathered flowers where my grandmother'd lie,",
+     "Her hands so warm, her love a honeyed flood,",
+     "Beneath the shade where whispered winds did brood."
+    ],
+    [
+     "In fields of golden wheat I used to play,",
+     "Where sunbeams danced and shadows lightly swayed;",
+     "Each blade a sword, each stalk a xếp of knight,",
+     "In dreams of green I lost the brightly-bled."
+    ],
+    [
+     "In fields of green where daisies danced with breeze,",
+     "I ran unbound by time or worry's lease,",
+     "Each moment pure, a memory untold,",
+     "In sunlit days that sang where I did roam."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_010",
+   "brief": "Write a single four-line stanza (a quatrain) about a burning candle. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In votive flame that dances with the night,",
+     "Its golden tears upon the wick do fall,",
+     "Until the core of self it doth enshrine,",
+     "And with a hiss, in sighing silence, falls."
+    ],
+    [
+     "A flame that flickers, weak or strong, doth stand,",
+     "In shadows cast, its light a fragile thing;",
+     "Yet as it burns, itself it slowly kills,",
+     "Till nothing left remains but cold, blackening."
+    ],
+    [
+     "A flame doth dance with liquid gold, so bright,",
+     "Its breath kept steady by the air's soft touch,",
+     "Yet warmth and light shall soon to shadows bring,",
+     "Till waxen tears in silence sob and clutch."
+    ],
+    [
+     "A flame that dances in the dark, it glows,",
+     "Its waxen tears in flickering streams descend,",
+     "But soon its fuel spent, it willno more bestow",
+     "Its light, nor be than dust and shadow send."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_011",
+   "brief": "Write a single four-line stanza (a quatrain) about the mountain wind. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Through mountain passes whispers swift and free,",
+     "Its breath a dance of chill upon the skin,",
+     "In valleys echoes low a mournful sigh,",
+     "As shadows lengthen with the setting sun."
+    ],
+    [
+     "Mountain wind whispers, cold and keen,",
+     "Through the pines it sighs, deep and deep,",
+     "Echoes in the valley green,",
+     "Chilling the breeze where shadows steep."
+    ],
+    [
+     "The mountain wind doth whisper, soft and low,",
+     "Through hollows deep where ancient pines alternate,",
+     "It sings a ballad of the misty mow,",
+     "In crevices where shadows dare to start."
+    ],
+    [
+     "The mountain wind doth moan and sigh,",
+     "With gusts that dance upon the peak,",
+     "It whispers secrets in the night,",
+     "As shadows play where none may speak."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_012",
+   "brief": "Write a single four-line stanza (a quatrain) about a quiet garden. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In still nook where shadows softly slumber,",
+     "Flowers nod to breezes that barely stir,",
+     "A peaceful hush lies over every bower,",
+     "Where time itself seems slow in twilight's turn."
+    ],
+    [
+     "In silent nook where shadows softly play,",
+     "No sound but whispers of the zephyr's breath,",
+     "A rose reclines 'neath twilight's tender sway,",
+     "In calm repose where time and cares takeflight."
+    ],
+    [
+     "In silent nook where shadows softly play,",
+     "The rose entwines its fragrant, tender way,",
+     "No noisy breeze to stir each leafy crest,",
+     "But hush reigns where only peace is lest."
+    ],
+    [
+     "In silent bower where shadows play,",
+     "The whispering breeze does gently stray,",
+     "Around each flower in delicate array,",
+     "The quietude doth hold its mystic sway."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_013",
+   "brief": "Write a single four-line stanza (a quatrain) about the first snow. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "First snowflakes dance in twilight's gray,",
+     "Adorning barren boughs with frosty lace,",
+     "The world in hush beneath the winter's play,",
+     "Silent, stark, in purity's embrace."
+    ],
+    [
+     "The hush of snow whispers, a silent refrain,",
+     "Adorning earth's cloak, in soft, unyielding sheen,",
+     "A world transformed, in frosty, crystal chains,",
+     "White peace descends, where twilight's edge is seen."
+    ],
+    [
+     "First flakes descend in silent, dancing play,",
+     "Soft veils of white upon the night do fall,",
+     "Each crystal star a gift from heaven's eye,",
+     "Adorning earth in silver, quiet, small."
+    ],
+    [
+     "The silent flurries kiss the thawing ground,",
+     "In hushed embrace they lay their snowy spoon,",
+     "The world in white, a blanket newly wound,",
+     "Night's breath in frost, the dawn's first frosted crown."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 2,
+    "canon": 2
+   }
+  },
+  {
+   "field_id": "sonnet_014",
+   "brief": "Write a single four-line stanza (a quatrain) about a river's journey. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The river winds through tranquil meadows wide,",
+     "To where the mountains loom in twilight's shade,",
+     "Then dashes down steep banks to valleys wide,",
+     "In foaming surge, its journey's rapture made."
+    ],
+    [
+     "The river winds through glades and shady dells,",
+     "Its murmuring voice a soothing lullaby,",
+     "Then swift it flows o'er pebbles, clear, and knells",
+     "Its silver song as daylight fades to night."
+    ],
+    [
+     "Through winding banks the river softly flows,",
+     "Its silver current mirrors heaven's bow,",
+     "O'er stones and pastures it unwinds its voice,",
+     "In murmurs gentle as a lover's vow."
+    ],
+    [
+     "From mountain springs to plains it winds its way,",
+     "In sunlight glimmers water cold and clear,",
+     "Through valleys flows beneath the leafy shade,",
+     "Then meets the sea in tranquil murmurs dear."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_015",
+   "brief": "Write a single four-line stanza (a quatrain) about solitude. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In quiet chambers where no voice intrudes,",
+     "The mind with former thoughts repeals alone,",
+     "No friendly breath the silence does confute,",
+     "But shadows dance where none may breathe a lone."
+    ],
+    [
+     "In quietude where whispers softly play,",
+     "No echo answers but the silent sky,",
+     "Alone I dwell with thoughts that gently sway,",
+     "In solitude, where no one eyes do spy."
+    ],
+    [
+     "In silent nook where shadows softly fall,",
+     "Each thought does run in sweetest, calmest thrall,",
+     "Unto the stars that watch o'er solitude,",
+     "Where none but time and stillness may enthrall."
+    ],
+    [
+     "In quiet chambers of the mind un-shared,",
+     "Where whispers of the self in silence bide,",
+     "No echo answers to its naked word,",
+     "But close the doors upon the world outside."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_016",
+   "brief": "Write a single four-line stanza (a quatrain) about a summer storm. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Thunder roars, then silence, as dark clouds gather,",
+     "Raindrops pitter-patter, in quick, relentless measure,",
+     "Lightning splits the night, a fierce, white-blushing racer,",
+     "Hush falls, the storm's wild dance begins to waver."
+    ],
+    [
+     "Thunder roars, a summer night's unrest,",
+     "Rain drums fierce upon the plain below,",
+     "Lightning flashes, nature's fiery feast,",
+     "Heralding rain's return from highen'd woe."
+    ],
+    [
+     "Thunder roars in deepening twilight's shade,",
+     "An ominous cloud descends from heaven's glade,",
+     "The rain begins in sudden, driving flood,",
+     "As lightning splits the night in jagged blade."
+    ],
+    [
+     "The thunder roars, the skies a darkening shroud,",
+     "The lightning flashes, nature's lance well-aimed,",
+     "The rain descends in angry, icy showers,",
+     "The storm.icons its threatening, awful claim."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_017",
+   "brief": "Write a single four-line stanza (a quatrain) about the harvest. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The golden fields in swathes of amber fall,",
+     "A harvest bold, where labor's sweat has been,",
+     "Each ear a testament to sun and stall,",
+     "In bounty gathered where the crops have been."
+    ],
+    [
+     "The golden fields bow low in the cool breeze,",
+     "ripe fruit hung heavy on the fruitful trees;",
+     "The scythes stand idle, the barns are well filled,",
+     "and autumn joys make the laborers smile."
+    ],
+    [
+     "The golden fields in twilight's gentle glow,",
+     "Reap vengeance on the laboring scythe's wide throw,",
+     "Each ear a testament to sun and rain,",
+     "In bounteous sheaves they nod, the harvest's chain."
+    ],
+    [
+     "The golden fields in swathes of amber lie,",
+     "Reapers with bounteous sheaves in joyful throng,",
+     "The sun a burning eye that doth them supply,",
+     "Harvest of crops in thankfulness they sung."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_018",
+   "brief": "Write a single four-line stanza (a quatrain) about a sleeping child. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In slumber's grasp, the child doth rest, so still,",
+     "Each breath a whisper in the quiet air,",
+     "Dreams weave their magic in her closed eyelill,",
+     "Untroubled by the world, she finds her lair."
+    ],
+    [
+     "In slumber's hold, soft breaths do gently blow,",
+     "Eyes closed tight where dreams in darkness grow,",
+     "No noise intrudes, in quiet's deep domain,",
+     "Till morn summons with gentle, rising strain."
+    ],
+    [
+     "In slumber's sweetest hold, he lies so still,",
+     "Dreaming through closed lids, as night unwinds,",
+     "A breath soft whispers through the silence chill,",
+     "In peaceful arms, a quiet world he finds."
+    ],
+    [
+     "In slumber's embrace, soft and still he lies,",
+     "Dreams woven round his gently closed eyes;",
+     "The world beyond his sheltered senses fades,",
+     "Till morn in whispers calls the slumberer'srades."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_019",
+   "brief": "Write a single four-line stanza (a quatrain) about the northern star. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In icy skies the northern star does shine,",
+     "A guiding light through winter's darkest night,",
+     "Its steady beam across the cold expanse,",
+     "Endures in heaven, ever bright, delight."
+    ],
+    [
+     "In skies where cold Sirius doth oft resound,",
+     "The Northern Star in tranquil vigil burns,",
+     "A steady guide for night-worn souls unwound,",
+     "Its light unchanging in the starry urns."
+    ],
+    [
+     "In northern skies, a beacon steadfast glows,",
+     "Guiding lost souls with its eternal light,",
+     "Its steady flame through darkest nights bestows,",
+     "A hopeful star in cosmic solitude's night."
+    ],
+    [
+     "In northern skies, a beacon steady glows,",
+     "Unchanging gaze, through darkest night it gleams,",
+     "A guide for voyagers on boundless oceans,",
+     "immutable light, through ages it streameth."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_020",
+   "brief": "Write a single four-line stanza (a quatrain) about a ruined tower. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "On crumbling stones the melancholy sun doth shine,",
+     "In whispering winds its tales of yore it still doth tell,",
+     "An echo of glory where once proud knights had been,",
+     "Now lone and ghostly, in shadows, it doth steadfast dwell."
+    ],
+    [
+     "Amidst the whispering grasses lay the tower,",
+     "Its stones half-hidden in the sun's gold light,",
+     "Gone are its proud days in the keen blower,",
+     "Now echoes only where its former height."
+    ],
+    [
+     "Risen in splendor once, now shadows lie,",
+     "Its walls doth whisper tales of yore, and die,",
+     "In ruin crashed it leaves its pride behind,",
+     "Save where the ivy glitters like unpruned vine."
+    ],
+    [
+     "In ruins doth the tower still stand,",
+     "Its spire a shadow 'gainst the sky,",
+     "Mute witness to a bygone land,",
+     "Where once it held the heavens high."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_021",
+   "brief": "Write a single four-line stanza (a quatrain) about morning mist. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Morning mist doth whisper, soft and shy,",
+     "Enveloping hills in diaphanous veils,",
+     "Daybreak struggles, light at distant cry,",
+     "Silent shadows held by pale prevails."
+    ],
+    [
+     "Morning mist doth softly veil the dawning light,",
+     "Enveloping the earth in gentle, cool repose,",
+     "The world in veiling veils, in softest, artful sight,",
+     "Revealing not, but shrouding in a mystic close."
+    ],
+    [
+     "Morning mist doth whisper soft, obscure the sun's first light,",
+     "Enveloping the world in veils of translucid white.",
+     "A hush descends as nature takes a breath anew,",
+     "In misty gloaming, shadows dance where none are nigh."
+    ],
+    [
+     "Morning mist doth rise in softest gray,",
+     "Enveloping earth in gentle veil,",
+     "Sunlight struggles, shoots its beams in play,",
+     "Fingered through vapor, wins its way."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_022",
+   "brief": "Write a single four-line stanza (a quatrain) about the tide. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The tide doth ebb and flow beneath the moon's soft gaze,",
+     "In measured rhythm, governed by the lunar rays,",
+     "Each surge a pulse, in darkness or in sun's embrace,",
+     "A dance eternal, under night or day's pale face."
+    ],
+    [
+     "The wave doth kiss the shore, then sighing falls,",
+     "Drawn by the moon's invisible, compelling hand,",
+     "The sands reclaim their quiet holds, enthralls,",
+     "Ere night in silver tears the darkness charted."
+    ],
+    [
+     "The tide does ebb and flow, a gentle dance,",
+     "By moon's soft grace, in rhythmic, measured beat,",
+     "Then rises high, a mighty, silvery lance,",
+     "To kiss the shore with spray at ebb's release."
+    ],
+    [
+     "The tide doth ebb and flow beneath the moon's soft light,",
+     "A rhythmic dance upon the shore, in eelgrass' hold,",
+     "The waves caress the beach with gentle, whispered might,",
+     "Then recede, to gather strength, in nature's solemn fold."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_023",
+   "brief": "Write a single four-line stanza (a quatrain) about a nightingale. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In twilight's hush the nightingale doth sing,",
+     "A melody so sweet, so clear, so strong,",
+     "No earthly strain can touch its soft regret,",
+     "Till morn's first light its song shall fade, unmingling."
+    ],
+    [
+     "In twilight's hush the nightingale does sing,",
+     "Her song so sweet 'neath starlit heaven's throng,",
+     "No earthly minstrel such a note can bring,",
+     "O'er verdant boughs her liquid music flings."
+    ],
+    [
+     "In twilight's embrace, the nightingale doth sing,",
+     "A melody so sweet, it seems to bring",
+     "The very stars to dance upon the night,",
+     "Till morn shall wake and steal its magic light."
+    ],
+    [
+     "In twilight's hush, where shadows softly play,",
+     "The nightingale doth sing her sweetest lay,",
+     "No human ear her melody can stay,",
+     "But in the night, her song doth fill the may."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_024",
+   "brief": "Write a single four-line stanza (a quatrain) about falling leaves. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Fading leaves in twilight's gentle hold,",
+     "Dance from trees with autumn's whispered stride,",
+     "Crimson, gold, and amber, falling still,",
+     "Soft caress of seasons' end, we bide."
+    ],
+    [
+     "Falling leaves in twilight's hush doth lie,",
+     "Each whispering, \"Winter draws nigh,\"",
+     "The golden dancer from branch to ground,",
+     "Till silence rests where once they bounded."
+    ],
+    [
+     "Falling leaves in gentle cascade,",
+     "Crimson, gold, and amber blend;",
+     "Drift and whirl, then softly lands,",
+     "Muffling earth with feathered tend."
+    ],
+    [
+     "Falling leaves in golden dance doth spin,",
+     "Each a leaflet singing under autumn's breath,",
+     "Tumbling, turning, to the earth they bind,",
+     "Whispering tales as winter draws its breath."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_025",
+   "brief": "Write a single four-line stanza (a quatrain) about the desert. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The sandy wastes where sunbeams dance in light,",
+     "Unyielding dunes that stretch in hushed repose,",
+     "A whispered breeze the vast silence takes flight,",
+     "And shadows grow where no moon dare disclose."
+    ],
+    [
+     "The sun-blazed sands in golden waves unfold,",
+     "Where scarce a blade ofWithered grass is rolled,",
+     "The silence broods in heat-congested breath,",
+     "Till whispers ride the dry and dusty west."
+    ],
+    [
+     "Deserts whisper in the heat's soft haze,",
+     "Where sun's relentless dance never finds ease,",
+     "In sands that shift with time's slow tease,",
+     "Echoes fade where once life did dispose."
+    ],
+    [
+     "The sun doth blare in fiery noon's embrace,",
+     "Beneath the vast and empty azure dome,",
+     "No shade to soothe the arid, thirsty space,",
+     "Where sands in golden waves doth ebb and come."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_026",
+   "brief": "Write a single four-line stanza (a quatrain) about a lighthouse. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "By night its beam across the darkness flares,",
+     "Rescuing ships from ruthless, wrathful waves;",
+     "By day it stands a proud, unyielding stairs,",
+     "Defying storms, forever watching, caves."
+    ],
+    [
+     "By night its beam across the darkness flings,",
+     "In solitude unwavering it holds,",
+     "A watchful sentinel against the ling",
+     "Wave's peril, guiding mariners to fiends."
+    ],
+    [
+     "By night its beam across the darkness plays,",
+     "In stormy weather guiding shipmen's ways;",
+     "By day a welcome to the sun's warm rays,",
+     "Its steady flame a constant, sure bouquet."
+    ],
+    [
+     "Amidst the darkening tide's fierce whisper, it stands,",
+     "Its beam a steadfast guide through night's encompassing hands,",
+     "Where waves and winds in ceaseless dance entwine,",
+     "It shines unyielding, through the storm, the sunshine."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_027",
+   "brief": "Write a single four-line stanza (a quatrain) about twilight. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The day doth fade to twilight's hushful tone,",
+     "Soft shadows stretch across the waning light,",
+     "The sky in hues of purple and of gold,",
+     "Doth close the day's record 'gainst night's bright fight."
+    ],
+    [
+     "The day doth fade in twilight's gentle shade,",
+     "Where shadows lengthen as the sun retreats,",
+     "The sky ambers, pinks, in rosy state,",
+     "Till darkness claims the realm of light's retreat."
+    ],
+    [
+     "The sun descends in golden afterglow,",
+     "Its rays retreat in tender, fading light,",
+     "The dusk receives the world in somber glow,",
+     "As shadows stretch and twilight's peace takes flight."
+    ],
+    [
+     "The sun descends in golden afterglow,",
+     "Its rays in twilight's embrace doth drown,",
+     "The world in softest hues it slowly throw,",
+     "Till darkness gently whispers, \"Now is soon.\""
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_028",
+   "brief": "Write a single four-line stanza (a quatrain) about an empty road. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "An empty road stretches to the fading light,",
+     "In silent stretch where none but shadows dare,",
+     "The moonrise whispers to the lonely night,",
+     "And echoes softly in the crisp, cold air."
+    ],
+    [
+     "An empty road stretches to twilight's gray,",
+     "In silence it waits under moon's cool eye,",
+     "No echo with step breaks the night's lullay,",
+     "Save for wind's soft sigh where none souls reply."
+    ],
+    [
+     "An empty road lies quiet, dust unbroken,",
+     "By pale moonlight, where no footprints are taken,",
+     "The silence stretched, a heavy, breathless darkness,",
+     "Until the dawn breaks, and day's cold hand shaken."
+    ],
+    [
+     "An empty road stretches to twilight's embrace,",
+     "In silent hollows where none dare to trace,",
+     "No footprints mar its solitude's cold space,",
+     "Till moonlight weeps upon the unyielding base."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_029",
+   "brief": "Write a single four-line stanza (a quatrain) about the orchard in bloom. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Bare boughs in spring now bud and burst with bloom,",
+     "Soft petals catch the sun's first waking ray,",
+     "A fragrant mist doth fill each tranquil room,",
+     "Where orchard sweet in blossom holds its sway."
+    ],
+    [
+     "In boughs athwart the sapphire sky they stretch,",
+     "With bloom erectile, pearls of pink and white,",
+     "Where zephyrs breathe on them a perfumed breath,",
+     "And blush them deeper where the sunbeams light."
+    ],
+    [
+     "Blossoms kiss each branch in rosy hue,",
+     "And sweetest scent the quiet air does breathe,",
+     "Amongst the boughs a gentle breeze doth dew,",
+     "Soft shadows dance where petals gently weave."
+    ],
+    [
+     "In bloom the orchard stands in rosy hue,",
+     "Each bud a promise, soft and sweetly swears,",
+     "The gentle zephyr whispers through the trees,",
+     "Unfurling petals, white and new, and wars."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_030",
+   "brief": "Write a single four-line stanza (a quatrain) about a grandmother's hands. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Wrinkled with time's gentle, unyielding hand,",
+     "They trace the stories in the silken yarn,",
+     "Each line a testament to what was planned,",
+     "In loving care, through every day, each year, far."
+    ],
+    [
+     "With hands that time has softly worn, she weaves,",
+     "A tapestry of love, where threads entwine,",
+     "In gentle strokes, each story they bespeaks,",
+     "From laughter loud to tears that gently chine."
+    ],
+    [
+     "/weathered hands hold secrets old /",
+     "/gentle guides through life's wild fold /",
+     "/touch soft as spring's first blush bold /",
+     "/wise as time itself, grown old /"
+    ],
+    [
+     "In wrinkled clutch they hold my tender palm,",
+     "With stories spun where time and hands entwine,",
+     "Each line a thread, each crevice lined with skill,",
+     "A chronicle of hands both strong and fine."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_031",
+   "brief": "Write a single four-line stanza (a quatrain) about the last train. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The final whistle cuts the evening air,",
+     "A lonely shadow glides along the line,",
+     "The glow of lamps reflected in the glass,",
+     "A sigh of homes and hours that cannot sign."
+    ],
+    [
+     "The last train roars its lonely horn, aglow,",
+     "Departing shadows with each clanking sound,",
+     "The city sleeps, no more to be bestow,",
+     "In darkness cradled, peace it does confound."
+    ],
+    [
+     "The last train rumbles through the night in silence,",
+     "Whispering promises of distant slumber,",
+     "Its echoing chug a lullaby provisional,",
+     "Leaving dreams in tracks of silver imagination."
+    ],
+    [
+     "The last train whispers to the night,",
+     "Its lonely horn a sad goodnight,",
+     "In empty carriages it sails alone,",
+     "A ghostly steed on tracks unknown."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_032",
+   "brief": "Write a single four-line stanza (a quatrain) about a field of wheat. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In fields where golden waves undulate,",
+     "The wheat afar in sunlight glows,",
+     "Each stalk a measure of nature's state,",
+     "A harvest's hope, from earth below."
+    ],
+    [
+     "In golden fields the wheatheads sway and bend,",
+     "By sun and wind through summer days refined,",
+     "Each stalk a soldier standing straight and stern,",
+     "In rows that stretch where once the earth was lined."
+    ],
+    [
+     "In golden fields the wheat doth bend and sway,",
+     "By morning's light, in amber waves it stands,",
+     "The breeze doth whisper secrets as it plays,",
+     "A harvest's hope in every ear it cradles."
+    ],
+    [
+     "In golden fields where whispers sway and dance,",
+     "The wheat bends low, a sea of shade and light,",
+     "Each ear a story of the sun's warm stance,",
+     "In golden fields where time itself takes flight."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_033",
+   "brief": "Write a single four-line stanza (a quatrain) about the ocean floor. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Beneath the waves in darkness cradled, deep,",
+     "Mysteries lie where sunlight dare not tread,",
+     "Caverns of stone in shadow's quiet keep,",
+     "Untold stories in the ocean's very bed."
+    ],
+    [
+     "Beneath the waves in darkness deep and dim,",
+     "Mystic ruins of the sunken lie,",
+     "Whispering secrets to the ocean's grin,",
+     "Ancient bones and tales in watery sigh."
+    ],
+    [
+     "Beneath the waves in deep and dismal dark,",
+     "Where sunlit splendors of the surface quail,",
+     "Lie treasures worn by time, uncounted mark,",
+     "And ancient secrets locked in watery jail."
+    ],
+    [
+     "Beneath the waves in darkness cradled lies,",
+     "Ancient secrets in the ooze entombed,",
+     "A realm of shadow where the sun despises,",
+     "And silent ruins stand in watery shroud."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_034",
+   "brief": "Write a single four-line stanza (a quatrain) about a candle's smoke. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "From waxen birth to gasping death it climbs,",
+     "In gentle wreaths, to ceilings far away,",
+     "Then fades to naught where darkness claims its rights,",
+     "Leaving but memories of light's transient play."
+    ],
+    [
+     "From wick doth rise a gentle breath, I say,",
+     "In curls ascending, where the shadows play,",
+     "A fragrant tear that nature seems to steal,",
+     "In quiet darkness, like a ghostly veil."
+    ],
+    [
+     "From waxen wick the smoke doth rise in mist,",
+     "In curls ascending, like a memory,",
+     "Then fades the ghostly trail, a vanishing",
+     "In air, like thoughts we cannot catch or see."
+    ],
+    [
+     "From waxen heart it rises, slow andwhite,",
+     "A wisp of smoke doth float and then takesflight,",
+     "In twilight's gentle embrace it dances,",
+     "Till fades to naught its frail, soft-form'd price."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_035",
+   "brief": "Write a single four-line stanza (a quatrain) about the migrating geese. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In skies so vast, they wheel their formation wide,",
+     "Their rhythmic cries a song both loud and pride,",
+     "Across the heavens, where each winged heart aspires,",
+     "They journey on, through clouds both few and fires."
+    ],
+    [
+     "Gently northward they sail on the breeze, repose,",
+     "Their voices a soothing song in the air,",
+     "Across skies uncharted, their wings find the rose,",
+     "In their flight, a persistence beyond compare."
+    ],
+    [
+     "In formation they glide with a deliberate sweep,",
+     "Across the vast canvas of twilight's soft sheen,",
+     "Their voices a haunting refrain, deep and deep,",
+     "As they voyage toward distant realms, night and thence."
+    ],
+    [
+     "In skies so vast, their V-form takes flight, resounding",
+     "With calls that echo through the cooling air,",
+     "Each wing a beat of silent, disciplined might,",
+     "Toward distant lands where ice does not hold sway, sweet deer."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_036",
+   "brief": "Write a single four-line stanza (a quatrain) about a frozen lake. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Ice clads the lake in still repose,",
+     "Its glassy surface smooth and white,",
+     "No breath of wind the silence closes,",
+     "A mirror calm beneath the cope of night."
+    ],
+    [
+     "A glassy mirror lieed beneath the snow,",
+     "Its surface still, where not a breath did blow,",
+     "No rime nor ripple marred the purest white,",
+     "Till boots did crunch upon the silent lake, no night."
+    ],
+    [
+     "Beneath the winter's icy grip it lies, (A)",
+     "A mirror cracked by frost where branches lie, (B)",
+     "In stillness wrapped, no sound disturbs the sigh, (A)",
+     "Save for the crunch beneath the boot's release. (B)"
+    ],
+    [
+     "Frost bites the glassy surface, silent, still,",
+     "Icicles in frost, like diamonds, hold,",
+     "The moon's pale light, a shimmer, pale and chill,",
+     "While shadows stretch, in darkness, cold and bold."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_037",
+   "brief": "Write a single four-line stanza (a quatrain) about the city at night. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In streets where shadows stretch their hands, we see",
+     "The city's breath in misty, silver trees,",
+     "While neon signs in vibrant hues declare",
+     "A dance of light where night's soft shadows sway."
+    ],
+    [
+     "In streets where lamps do softly glow,",
+     "At night the city's spirit flows,",
+     "With shadows dancing in the show,",
+     "In lights that never seem to close."
+    ],
+    [
+     "The city sleeps beneath the watchful moon's eye,",
+     "Glimmering lights in twilight's peaceful repose,",
+     "The night's soft hush a blanket o'er the sky,",
+     "While shadows dance where lamplight gently glows."
+    ],
+    [
+     "The city sleeps below in neon light,",
+     "Where every sign a story doth display,",
+     "In streets where shadows stretch and shorten night,",
+     "The silent whispers of the world allay."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_038",
+   "brief": "Write a single four-line stanza (a quatrain) about an abandoned house. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Abandoned walls do stand so still,",
+     "In shadows long and darker grown,",
+     "With every breeze a ghostly chill,",
+     "That whispers of a vanished town."
+    ],
+    [
+     "Abandoned walls do echo still,",
+     "No light within to cheer or warn,",
+     "In shadows grow the wild red will,",
+     "Where once the house did hold its part."
+    ],
+    [
+     "Abandoned walls doth gloomly stand and loom,",
+     "In shadows long, where silent winds do sigh,",
+     "Each pane of glass a hollow eye that gloms,",
+     "Its darkness fills the night with spectral cry."
+    ],
+    [
+     "Whispers echo in halls long unoccupied,",
+     "Moss creeps up walls where sunlight dares not reach,",
+     "Echoes of lives now vanished with each step,",
+     "Ghosts of the past haunt corridors of speech."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_039",
+   "brief": "Write a single four-line stanza (a quatrain) about the first love. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In eyes that shining pools of starlight keep,",
+     "A heart doth leap, as if by angels led,",
+     "In dreams where only love and truth do steep,",
+     "First love, a tender budrophic beauty shed."
+    ],
+    [
+     "In eyes of misty grace, her smile did shine,",
+     "A tender bud where love's first pulse did dine,",
+     "On whispered words and dreams that dared to fly,",
+     "Within my heart, her image ever thrived,bine"
+    ],
+    [
+     "In heart's first throb, a gentle flame does light,",
+     "With whispers soft, and eyes that fully shine,",
+     "Where sweetest dreams in tender sighs take flight,",
+     "And every step feels like the worlds align."
+    ],
+    [
+     "In eyes that shone like summer's earliest dew,",
+     "Desire found voice, soft whispers of the heart,",
+     "A tender bud beneath the spring's bright hue,",
+     "First love, in silence, knowing none can part."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_040",
+   "brief": "Write a single four-line stanza (a quatrain) about a soldier's return. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "From distant lands where cannons roared and drums,",
+     "He steps once more upon his native shore,",
+     "Where quiet whispers of a safer world",
+     "Await his tread, like home from distant shore."
+    ],
+    [
+     "From battle's fiery forge he comes, resplendent,",
+     "With scars of valor where once wounds had been,",
+     "Now home at last, his carriage steady,",
+     "The soldier's heart, though tired, beats serene."
+    ],
+    [
+     "From distant shores he sails at last,",
+     "Where echoes soft his name begin,",
+     "To foes who dared his valor blast,",
+     "Now comrades welcome him again."
+    ],
+    [
+     "From distant lands where silence spoke in drums,",
+     "He steps again where eagles dare to soar,",
+     "And winds of home do whisper, \"Welcome home,\"",
+     "Where laurels bloom on soil no longer sore."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_041",
+   "brief": "Write a single four-line stanza (a quatrain) about the potter's wheel. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "On clay that spins beneath the potter's hand,",
+     "The wheel begins its rhythmic, steady hum,",
+     "Each turn a dance, in soft dirt cradled, planned,",
+     "A vessel born, from nothing, form, and limb."
+    ],
+    [
+     "Upon the wheel that turns with steady spin,",
+     "The clay doth shape and form, a work of art,",
+     "In rhythmic rise and fall, anon,",
+     "Beneath the potter's skilled and steady heart."
+    ],
+    [
+     "Upon the potter's wheel the clay dothspin,",
+     "In rhythmic rise and fall, with maker's will;",
+     "His hands command its motion, deep within,",
+     "The form takes life, where dust and art beguile."
+    ],
+    [
+     "Upon the wheel that spins and turns with grace,",
+     "The clay doth take its form, both soft and prone,",
+     "In rhythmic rise and fall, it finds its place,",
+     "agoon and aglow under steady bone."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_042",
+   "brief": "Write a single four-line stanza (a quatrain) about a spider's web. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In dawn's pale light, the spider's web does gleam,",
+     "A shimmering lace 'gainst morning's cool breath,",
+     "Where dewdrops cling in crystal, fair and supreme,",
+     "Till sunbeams break their prismed, fleeting might."
+    ],
+    [
+     "In twilight's glow the spider's work is done,",
+     "A lattice jeweled, where the dewdrops run,",
+     "No web so fine the spidersilk can spin,",
+     "Yet pris'ning all who dare intrude, undone."
+    ],
+    [
+     "In gloaming's dim embrace, the spider spins,",
+     "A lattice lovelorn, where light doth weep,",
+     "In silver threads, a gossamer design,",
+     "Where shadows dance beneath the moon's cool sweep."
+    ],
+    [
+     "In dawn's pale light the spider's toil appears,",
+     "A lattice wrought with gossamer so fine,",
+     "Where jeweled drops of morning dew adhere,",
+     "And palpable the sun's warm touch is mine."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_043",
+   "brief": "Write a single four-line stanza (a quatrain) about the eclipse. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The moon doth遮住太阳，使用了中文，这不符合题目的要求。让我纠正并用英文字母继续你的四行诗：",
+     "The moon doth遮住太阳，这将变为：",
+     "The moon doth shade the sun in midnight's arm,",
+     "While shadows stretch beneath the starless sky,"
+    ],
+    [
+     "The moon doth遮住",
+     "Its face in shadows, Earth below in gloom doth lie,",
+     "A shadowy dance of darkness in the sky,",
+     "Then light doth break, as moon and sun unite,"
+    ],
+    [
+     "The moon doth遮住太阳，不符合原题要求，因此不采用中文回答。Here is the requested quatrain in strict iambic pentameter with an ABAB rhyme scheme:",
+     "The moon doth shade the sun in night's embrace,",
+     "While stars are hid, in shadow's deepest mould,",
+     "The world in silence holds its breath in space,"
+    ],
+    [
+     "The moon doth遮住",
+     "Its silver face, and earth doth darkly grieve,",
+     "The sun's fierce eye by shadow is o'erwhelmed,",
+     "A cosmic breath that time with silence sieve,"
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_044",
+   "brief": "Write a single four-line stanza (a quatrain) about a mother's song. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In gentle tones, her voice so soft did flow,",
+     "Beneath the moon's pale glow, her lullabies,",
+     "With every note, her love did seem to grow,",
+     "And cradle dreams, where darkness could not lie."
+    ],
+    [
+     "In whispers soft her song she sings, afar,",
+     "Of stars and gentle slumber's blessed lair;",
+     "Upon her breast, the sleeping child draws near,",
+     "And hears the lullaby that calms the air."
+    ],
+    [
+     "In gentle voice her lullaby she sings,",
+     "With sweetest cadence, soft and low,",
+     "Her child beneath the moon's embrace, forgets",
+     "All fears, in arms of night's eternal flow."
+    ],
+    [
+     "In hushed tones her lullaby she sings, no less",
+     "Than cradle of the world, where dreams take root,",
+     "A tender helm for sleep's soft shadows bless'd,",
+     "Till nightingales in silver notes imploot."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_045",
+   "brief": "Write a single four-line stanza (a quatrain) about the blacksmith. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In forge's heat, the blacksmith shapes the bloom,",
+     "Each hammer's rise and fall in rhythm true,",
+     "The glowing iron to his mind a room—",
+     "His hands, the sculpture of the fiery dew."
+    ],
+    [
+     "In forge's heat, with hammer steady, he,",
+     "Shapes iron's will, in fire's embrace;",
+     "Each glowing bar, a tale he can see,",
+     "From humble stake to steed that craves no chase."
+    ],
+    [
+     "In forge’s glow the blacksmith shapes the iron,",
+     "Hammer on anvil, rhythmic pulse of work,",
+     "Then lifts the piece, now tempered, cool and firm,",
+     "Fit for the horse, in service, strong and shrunk."
+    ],
+    [
+     "In forge's glow, he hammers hot forgings,",
+     "Each blow a rhythm, strong and steady beat,",
+     "On anvil's heart, where fire's breath is singing,",
+     "His hands shape steel, in glowing shadows' sheet."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_046",
+   "brief": "Write a single four-line stanza (a quatrain) about a paper boat. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Upon the gently lapping waves it rides,",
+     "Its frail form buoyed by dreams that softly glide,",
+     "In silent drift it follows moonlit ways,",
+     "Till morning sun its parchment pages dries."
+    ],
+    [
+     "A paper boat upon the river's bend",
+     "Gently floats, its fate so lightly cast,",
+     "Unfettered by the land, its path unended,",
+     "On the current's breath, it finds its last."
+    ],
+    [
+     "A paper sail doth gently ride,",
+     "Upon the stream, beneath the sky,",
+     "Its voyage brief, yet dreams are tried,",
+     "In currents swift, its course on high."
+    ],
+    [
+     "In still, clear stream, a paper craft doth float,",
+     "Gently it glides where waves caress its form,",
+     "Soft as a breeze that skims across the boat,",
+     "Unto the shore its journey soon will norm."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_047",
+   "brief": "Write a single four-line stanza (a quatrain) about the church bell. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "From steeple high at dusk it tolls, resounding,",
+     "Its echo through the twilight shadows branching,",
+     "Then hush, as night enwraps the silent village,",
+     "Till dawn repeats the bell's soft calling."
+    ],
+    [
+     "The church bell tolls with solemn chime,",
+     "Resounding through the twilight dim,",
+     "Its echo wandering, far and wide,",
+     "Till night's embrace consumes the noise, confide."
+    ],
+    [
+     "The bell tolls loud its solemn chime afar,",
+     "Resounding through the twilight's hush, I hear,",
+     "Then echoes in the night's deep quiet jar,",
+     "And peace descends upon the tranquil air."
+    ],
+    [
+     "From steeple's height, the bell does ring,",
+     "Its tones in twilight's embrace,",
+     "With solemn chime it sings a thing,",
+     "Of time and heaven's silent grace."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_048",
+   "brief": "Write a single four-line stanza (a quatrain) about a wild horse. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Wild steeds of freedom's boundless plain doth leap,",
+     "In skies uncurtained, where their spirits steep,",
+     "Each bound in air a painting bold they make,",
+     "Unbridled, wild, where heaven meets their snaking trace."
+    ],
+    [
+     "Wild steed of freedom, untamed, thou breeze,",
+     "In boundless plains thy fiery mane doth dance,",
+     "The wind thy bridle, wild and free thy stance,",
+     "O horse of power, where'er thy steps advance."
+    ],
+    [
+     "In freedom's thrill he bounds o'er hill and dale,",
+     "Unbridled, wild, where stormy passions burn,",
+     "No trace of man upon his sturdy sail,",
+     "Ungoverned, swift as lightning's swift return."
+    ],
+    [
+     "A wild horse roams free, untamed, unbound,",
+     "His hooves strike fire on ancient sun-warmed ground,",
+     "In boundless prairies, he finds joy and might,",
+     "A king unchained, in freedom's open flight."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_049",
+   "brief": "Write a single four-line stanza (a quatrain) about the vineyard. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Amidst the hills where vines do climb and twine,",
+     "In rows so neat, a green and fertile bed,",
+     "The sun doth kiss each cluster ripe and fine,",
+     "While shadows play where clustered grapes are shed."
+    ],
+    [
+     "In rows the vines in green embrace do lie,",
+     "Each cluster hung with grapes in ripe array,",
+     "The sun doth paint them gold at setting time,",
+     "While cool night breezes dance upon the vine."
+    ],
+    [
+     "Vines stretch their leaves to capture sun's warm rays,",
+     "rows align in tranquil, rhythmic embrace,",
+     "Grapes cluster close in nature's gentle clasp,",
+     "night wakens them with dews of mystic grace."
+    ],
+    [
+     "Amidst the rows where vines in tandem climb,",
+     "The sun bestows its gold upon her leaves,",
+     "In tender shoots the life-blood starts to prime,",
+     "And grapes in clusters hang where shadows weave."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_050",
+   "brief": "Write a single four-line stanza (a quatrain) about a broken clock. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "A lifeless tick tock, now mute and still,",
+     "No longer does its pulse the hours count,",
+     "In silence hangs the weight of what is past,",
+     "A chime of loss in every quiet pang."
+    ],
+    [
+     "A silent hand points nowhere, mute it stands,",
+     "Its chimes once sweet now dead, a drowsy sound,",
+     "The room in shadows shrouds as time itounds,",
+     "And hands that marked the hours no longer bound."
+    ],
+    [
+     "A hand still points where time did part its wings,",
+     "Yet in the hush of room, no sound it brings;",
+     "Its face, a mock of what it used to show,",
+     "Gazes in silence at the space it knows."
+    ],
+    [
+     "A broken clock stands still, its hands aglow,",
+     "No longer marking time with any role,",
+     "Yet in its silence, hours softly flow,",
+     "Unmeasured by the ceaseless hands that go."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_051",
+   "brief": "Write a single four-line stanza (a quatrain) about the tundra. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In icy silence, stretched the tundra's wide expanse,",
+     "Where winds do howl, and polar bears take stance,",
+     "The sun doth set, then rise in frigid dance,",
+     "While lichens cling, in cold and barren chance."
+    ],
+    [
+     "Bare and cold, the tundra's vast expanse doth lie,",
+     "Where winds howl through the barren, icy night,",
+     "No green shoots dare to spring in such severity,",
+     "Tundra's purity in frosty white doth write."
+    ],
+    [
+     "In icy silence, winds do howl their song,",
+     "Where scanty life doth barely eke existence,",
+     "The tundra's lap, a frigid cradle strong,",
+     "Doth clothe itself in garments white and cerulean."
+    ],
+    [
+     "In arctic silence where the winds do moan,",
+     "The tundra lies in frosty slumber's hold,",
+     "No green does peek, nor life with buds aglow,",
+     "'Til sun returns, then life blooms cold and bold."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 3,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_052",
+   "brief": "Write a single four-line stanza (a quatrain) about a street musician. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Upon the corner, where the nightingale's soft cry,",
+     "In rhythmic trill, meets hawk's harsh, lonely call,",
+     "He plays on worn-out violin so lowly,",
+     "Telling tales in smoky pubs, by lamplight's fall."
+    ],
+    [
+     "On worn-out street where echoes play,",
+     "His dulcimer doth softly sway,",
+     "In tattered vest, he sings his woe,",
+     "To passersby his tunes convey."
+    ],
+    [
+     "On curb and corner, harp and voice he blends,",
+     "His melody meets twilight's soft embrace,",
+     "In shadows' dance, where stars half-veiled descend,",
+     "He sings, a lone note through the fading grace."
+    ],
+    [
+     "On pavement gray his worn guitar he claspeth,",
+     "Notes doth he weave that waft like autumn leaves,",
+     "Through city din his solitary voice doth raspeth,",
+     "Echoes fading as the day's last light release."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_053",
+   "brief": "Write a single four-line stanza (a quatrain) about the comet. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "From heaven's realms it pierces night's own veil,",
+     "In fiery cloak of glowing tail it streams,",
+     "Across the dark expanse its path it traces,",
+     "Then fades back to where it touched the homers' beams."
+    ],
+    [
+     "From skies above descends the fiery guest,",
+     "With tail that shines in night's expansive breast;",
+     "A wanderer through the cosmic, silent vast,",
+     "It glides in silence, then in glory rests."
+    ],
+    [
+     "In skies where stars with silent radiance gleam,",
+     "The comet comes, a specter grand and grim,",
+     "Its tail a stream of fire across the dream,",
+     "A harbinger of change, of time resigned."
+    ],
+    [
+     "In skies obscureth, a fiery beam doth stream,",
+     "Its tail a streamer, long and brightly gleam,",
+     "Across the dark the wanderer leaves its trace,",
+     "Then fades, a ghostly trace, in cosmic space."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_054",
+   "brief": "Write a single four-line stanza (a quatrain) about a forgotten letter. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In dusty drawer, sealed with time's cold breath,",
+     "The letter lies, its story stale and mute,",
+     "No pen, no ink, no linger of its depth,",
+     "Forgotten thus, in history's wide mute."
+    ],
+    [
+     "In dusty drawer, sealed and still, the letter lies,",
+     "Unopened, through the years with care it lies,",
+     "Untouched by hands, its words unwritten, still",
+     "Wait silently, a secret to fulfill."
+    ],
+    [
+     "In dusty drawer, sealed with years, it lay,",
+     "Unnoticed, till a drawer's deep silence broke,",
+     "Then whispered tales of days we thought were dead,",
+     "And faded hopes that time had almost woke."
+    ],
+    [
+     "In dusty folds of papered chest it lay,",
+     "Unopened, sealed by time's impenetrable might,",
+     "Till chance resounded, and its words I found,",
+     "A silent echo from a distant bygone night."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_055",
+   "brief": "Write a single four-line stanza (a quatrain) about the coral reef. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Amidst the sea's deep cradle, vibrant life does swell,",
+     "Where vivid hues in myriad colors dwell,",
+     "Each polyp clings to porous stone so dear,",
+     "Beneath the waves, a world of wonder clear."
+    ],
+    [
+     "Beneath the waves where sunlight dances, reefs do lie,",
+     "In hues of pink and orange, life springs high;",
+     "Corals grow in tangled, jeweled, branching arrays,",
+     "A world beneath the sea, both vast and eschatological ways."
+    ],
+    [
+     "Beneath the waves a city breathes, in hues uncounted,",
+     "Sculptures of stone that never knew a sculptor's hand,",
+     "In ever-shifting dance the corals breathe and blest,",
+     "Where sunlight kisses earth in secrets manifold."
+    ],
+    [
+     "Beneath the waves a world of vivid hue,",
+     "Where corals stand in nature's painted bowers,",
+     "Each polyp's touch with life and color woo,",
+     "A kingdom thrives beneath the liquid flowers."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 3,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_056",
+   "brief": "Write a single four-line stanza (a quatrain) about a widow's grief. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In quiet corners of her fading light, she weeps,",
+     "Each lost day's shadow stirs anew her deep despair,",
+     "The world a hush where once life's vibrant notes did steep,",
+     "Now silent, mourning all the years withdrawn in air."
+    ],
+    [
+     "In silent chambers lonely I abide,",
+     "Where echoes bear the burden of my woe,",
+     "Each sunset paints the sky with tears denied,",
+     "Till darkness claims, and bids my sorrow flow."
+    ],
+    [
+     "In solitary chambers her sighs doth weigh,",
+     "As shadows lengthen with twilight's soft decline,",
+     "Each echo answers her wail, vain, and untame,",
+     "Till night falls heavy, and her grief entwine."
+    ],
+    [
+     "In twilight's pale embrace, her heart doth weep,",
+     "Where echoes of his laughter still reside,",
+     "Each sunset marks her loss, a solemn steep,",
+     "Till moonlight's balm her anguish softly bides."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_057",
+   "brief": "Write a single four-line stanza (a quatrain) about the wheat mill. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Within the mill, the wheat doth enter,",
+     "Grinding to flour, a whispering storm,",
+     "The stones beneath it cease not theirнтер",
+     "<|im_start|><|im_start|>user"
+    ],
+    [
+     "Within the mill, the wheat doth grind to flour,",
+     "A rhythmic motion, ceaseless, day by day,",
+     "The stones beneath the wheel in silent power,",
+     "Turn secrets of the grain into our prey."
+    ],
+    [
+     "In stone the silences of dawn are ground,",
+     "The flour that feeds the baker's art takes form,",
+     "Each grain whispers its harvest to the round,",
+     "In mill, the seasons' work a cycle norms."
+    ],
+    [
+     "In gristmill's rhythmic dance the wheat is ground,",
+     "Its flour descending through the dusty air,",
+     "Each grain encased in silent, powdery shroud,",
+     "Transformed by stone, to baked delights it bears."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_058",
+   "brief": "Write a single four-line stanza (a quatrain) about a caged bird. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In bars of brass her wings are bound, she sings,",
+     "A mournful song that doth the silence fill,",
+     "Yet still she warbles through the gloom profound,",
+     "As if her heart could never be beguiled."
+    ],
+    [
+     "In ironed bonds his wings are forced to lie,",
+     "No longer skies his boundless nature knew,",
+     "In gilded prison he must learn to sigh,",
+     "And sing the bars that hinder his sweet flew."
+    ],
+    [
+     "In ironed bars he flaps his golden wings,",
+     "Wails songs of freedom, where none dare to roam,",
+     "Yet still he sings, though every note is framed,",
+     "In bars that chains his spirit to this room."
+    ],
+    [
+     "In ironed retreat, his wings confined, he sings,",
+     "A captive melody, where echoes prison,",
+     "Each note a struggle, yet his heart does fling",
+     "Beyond the bars, where freedom's glow does-winning."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_059",
+   "brief": "Write a single four-line stanza (a quatrain) about the glacier. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Craggy with age, the glacier slowly grinds,",
+     "In icy embrace, where waters quietly blend,",
+     "Time's relentless hand shapes its ancient lines,",
+     "Leaving in stone, a testament to time's design."
+    ],
+    [
+     "Glacial ice advances, silent, slow,",
+     "In icy grip it sculpts the world below,",
+     "Time's great artist, patient, vast, and deep,",
+     "Carving peaks where once was only sheep."
+    ],
+    [
+     "The glacier moves with slow and steady tread,",
+     "A frozen river, creeping, vast, and cold,",
+     "Its ice a prism, where sunlight's edges shed,",
+     "A world of whispering silence, vast and old."
+    ],
+    [
+     "The glacier crawls in icy garments, slow and deep,",
+     "Its ancient heart unchanged, a frozen, silent sleep,",
+     "Time's sculptor, shaping stone with frosty breath so cold,",
+     "In limitless repose, where ages quietly unfold."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_060",
+   "brief": "Write a single four-line stanza (a quatrain) about a fisherman's net. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In deep sea's darkness, it doth gently lie,",
+     "Entwining threads of rope and willowy,",
+     "Where fish, unguessing, in its mesh may fall—",
+     "And silent draws the fisherman at morn."
+    ],
+    [
+     "With weighty mesh and wood frail frame, it draws,",
+     "The silver bounty from the squall-furried deep,",
+     "Each looped embrace holds promise or suspends,",
+     "In night's dark wake, its secret to dep."
+    ],
+    [
+     "With rope and weight he casts his waiting net,",
+     "Imbuing deep the brine with keen intent,",
+     "Then pulls with might at dawn's first light,",
+     "Netting the sea's rich bounty, vast and wet."
+    ],
+    [
+     "With weighted line the water doth divide,",
+     "In silent toil, his网瘾问题与解决方法",
+     "<|im_start|>用户提供了一个关于鱼网的四行诗，但输出中出现了中文，这里我将直接提供符合要求的四行英文诗：",
+     "With weighted line the water doth divide,"
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_061",
+   "brief": "Write a single four-line stanza (a quatrain) about the meadow. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In grasses swaying soft and green does lie",
+     "A meadow fair, where butterflies take flight,",
+     "And sunbeams dance upon the dew-kissed sigh,",
+     "In nature's arms, where time itself takes flight."
+    ],
+    [
+     "Amidst the grass where larks do love to stray,",
+     "The meadow sleeps beneath the azure sky,",
+     "In verdant waves the gentle zephyr play,",
+     "A tranquil scene where time does softly sigh."
+    ],
+    [
+     "In fields where golden daisies sweetly smile,",
+     "Doth nature paint the scenes in vivid prime,",
+     "Where breezes through the grasses softly chime,",
+     "And shadows dance upon the verdantile."
+    ],
+    [
+     "Amidst the grass where sunbeams dance and play,",
+     "The meadow thrives, in softest green array,",
+     "Its flowers nod to zephyrs light and free,",
+     "In sweet converse, where shadows gently sway."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_062",
+   "brief": "Write a single four-line stanza (a quatrain) about a dying fire. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The flickering flame doth softly sigh,",
+     "Diminish its glow, then fade away,",
+     "In whispers low it bids the night good-bye,",
+     "Till naught remains but shadowy fray."
+    ],
+    [
+     "The flickering flame with waning breath doth tread,",
+     "A final spark in shadows long deferred,",
+     "Each glow a ghost, in blackness soon outbred,",
+     "Till none remains but coldness and reposed."
+    ],
+    [
+     "The flickering flame doth wane and sicken,",
+     "Its feeble breath a whispered, dying sigh,",
+     "No longer bold, it quivers, tremble,",
+     "Till hectic flushes ebb to ash and lie."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 1,
+    "canon": 2
+   }
+  },
+  {
+   "field_id": "sonnet_063",
+   "brief": "Write a single four-line stanza (a quatrain) about the archer. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The bowman draws with sinew strong and sure,",
+     "The arrow whips through air with deadly poise,",
+     "Upon the mark it strikes with silent power,",
+     "No falter, no miss, in master's eyes."
+    ],
+    [
+     "With bow unyielding, arrow true, he stands,",
+     "In silence drawing back the sinew strong,",
+     "Then looses forth, where arrows find their end,",
+     "In plumes of red that mark his skill's prolong."
+    ],
+    [
+     "The bowman draws his arrow tight and true,",
+     "With sinewy arm he aims the deadly flight,",
+     "The target marksman's steady gaze does hold,",
+     "Until with silent hiss it through the air is told."
+    ],
+    [
+     "With steady hand and keen-eyed gaze he bends,",
+     "The bow's soft curve his sinewy arm's response,",
+     "An arrow whispers through the air with ends,",
+     "In target's heart, a silent, swift design."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_064",
+   "brief": "Write a single four-line stanza (a quatrain) about a snowdrift. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Beneath the pall of night, the drifts enfold,",
+     "In silent shrouds the world in white are laid,",
+     "A spectral blanket seals the earth of old,",
+     "Where whispers hide beneath the frosted shade."
+    ],
+    [
+     "Beneath the twilight's hush, where shadows play,",
+     "The drifts in moonlight's grip doth hold their sway,",
+     "In peaceful stillness, time does seem to stay,",
+     "Till winds awake and scatter all away."
+    ],
+    [
+     "Beneath the sullen clouds the drifts unceasing lie,",
+     "Whispering with the softest, quietest sigh;",
+     "In frost's tight grasp they hold the world as prey,",
+     "Till sun in triumph breaks the whiteen'd day."
+    ],
+    [
+     "Beneath the wintry sky so stark and wide,",
+     "The drift of snow doth lie in silent heaps,",
+     "Each flake a whisper of the frozen tide,",
+     "In darkness holding all its quietkeeps."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_065",
+   "brief": "Write a single four-line stanza (a quatrain) about the weaver. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "With shuttle swift the weaver weaves his art,",
+     "DeftlyYmd his hands the thread's fine dance start;",
+     "Upon the loom, the fabric slowly grows,",
+     "Each thread a story, in the weave, it charts."
+    ],
+    [
+     "The weaver sits with steady hand and thought,",
+     "Plying the shuttle with an even sway,",
+     "His eyes upon the warp, both keen and caught,",
+     "In loom's embrace, where threads do intertwine."
+    ],
+    [
+     "With shuttle swift and steady hand,",
+     "He织布者敏捷地操作梭子，",
+     "在节拍中编织着梦想的篇章，",
+     "经纬交错间是心灵的轨迹，"
+    ],
+    [
+     "The weaver plies his skilled and steady trade,",
+     "With thread that winds in measured, rhythmic dance,",
+     "Each shuttle carries on its lightened tide,",
+     "A fabric woven, rich with loom's romance."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_066",
+   "brief": "Write a single four-line stanza (a quatrain) about a fallen empire. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Once proud in splendor, now in shadows dwelt,",
+     "Its walls that echoed now to hoots and jeers,",
+     "Where once great kings did rule with stern intent,",
+     "Now naught remains but ruins, cold and drear."
+    ],
+    [
+     "In ruins lie where once proud towers stood,",
+     "Echoes of grandeur now in dust enshrined,",
+     "The scepter shattered, and the glory judged,",
+     "By time that dooms all to its cold design."
+    ],
+    [
+     "Once mighty walls now crumble to the dust,",
+     "Where once great kings their power did display,",
+     "In ruins lie the tales of once proud guests,",
+     "Now silent under the vast, sorrowing sky."
+    ],
+    [
+     "Desolate walls whisper tales of grand decay,",
+     "Ruins beneath the brooding skies remain,",
+     "Once vibrant life now shadows of its day,",
+     "Echoes fade where once great fosters did wane."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_067",
+   "brief": "Write a single four-line stanza (a quatrain) about the estuary. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "At river's end where waters find their sea,",
+     "The estuary whispers secrets soft and deep,",
+     "In tidal dance, the brine and salt submerge,",
+     "From land's embrace, a new world subtly steep."
+    ],
+    [
+     "By floods of river and the sea's rimmed wave,",
+     "The estuary cradles where they softly blend,",
+     "In tranquil hold they ebb and flow in love,",
+     "A sheltered vales where waters gently blend."
+    ],
+    [
+     "Where river meets the tide, in gentle flow,",
+     "The estuary breathes, a环节融合,",
+     "Salt and fresh in tender balance hold,",
+     "A realm where waters softly sway and fold."
+    ],
+    [
+     "By estuaries, rivers find their sea,",
+     "Softly they murmur to the gently tide,",
+     "In salt and fresh a mingled life doth be,",
+     "Where waters blend in nature's tender pride."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 3,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_068",
+   "brief": "Write a single four-line stanza (a quatrain) about a child's kite. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In skies aloft, the child's kite dances light,",
+     "Its colors flashing, in blue and gold arrayed,",
+     "The string held tight, the breeze lifts it upright,",
+     "A joyous dance where child and kite are made."
+    ],
+    [
+     "In skies of blue, the child's kite dances light,",
+     "Its colors gleam where winds and dreams take flight.",
+     "A string of trust does hold it through the day,",
+     "In sun or cloud, its journey does not sway."
+    ],
+    [
+     "In skies aloft the child's kite dances light,",
+     "Its colors flashing in the sun's warm embrace,",
+     "The string unwinds, a child's delight, takes flight,",
+     "And soars where dreams in gentle breezesaise."
+    ],
+    [
+     "A child's kite dances in skies so blue,",
+     "With strings in hand, he runs with joyous crew,",
+     "Each fluttered sail caught where the winds muse,",
+     "And child and kite in twin delight pursue."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_069",
+   "brief": "Write a single four-line stanza (a quatrain) about the observatory. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "High on the hill, where night's soft veils unroll,",
+     "The observatory watches stars of old,",
+     "Its lenses gazing through the cosmic fog,",
+     "In search of truths where time and space are bold."
+    ],
+    [
+     "Through glass high domed with stars the telescope peers,",
+     "Its silent watch o'er night's vast curtain holds,",
+     "While patient astronomers their secrets divine,",
+     "In shadows deep where time and thought conspire."
+    ],
+    [
+     "Through telescopes the stars we trace and count,",
+     "In stony silence, night's wide dome we haunt;",
+     "Each ring of Saturn, each moon's soft dance,",
+     "Reveals the secrets time and space have learned."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 2
+   }
+  },
+  {
+   "field_id": "sonnet_070",
+   "brief": "Write a single four-line stanza (a quatrain) about a monastery. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In silent cloisters where the monkish hours pass,",
+     "Echoes of prayer fill the stone-hewn halls,",
+     "The tranquil life within its ancient bass,",
+     "Whispers of peace through the ever-turning walls."
+    ],
+    [
+     "Amidst the hills where shadows softly play,",
+     "In silent peace the monkish lives are cast,",
+     "Their voices hushed in prayer by day and night,",
+     "Till waking morning bids them to their task."
+    ],
+    [
+     "In silent shade where ancient walls do stand,",
+     "The monks in brown their vigil still pursue,",
+     "Their voices raised in hymns both sweet and grand,",
+     "Ere shadows lengthen and the sun withdraws."
+    ],
+    [
+     "In silent cloisters where the monkish breviary,",
+     "With measured tones, the psalms resound and rise,",
+     "The stone walls bind a solitude so airy,",
+     "Where gods and men in shadows find their prize."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_071",
+   "brief": "Write a single four-line stanza (a quatrain) about the salt marsh. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "By thankful marsh-winds gently greeted,",
+     "The salt-kissed grasses nod in sweet greeting,",
+     "The sun's warm touch draws life from the mist,",
+     "In this brine cradle, where the waves ebb and beat."
+    ],
+    [
+     "Beneath the watchful gaze of sky and tide,",
+     "The salt marsh whispers secrets soft and wise,",
+     "Where ancient marshes meet the incoming tide,",
+     "In quietude, they tell the tides' release."
+    ],
+    [
+     "Beneath the watchful sun's warm, golden gaze,",
+     "The salt marsh bends, a verdant, intricate maze,",
+     "Where tidal waves caress each gently rooted base,",
+     "In tranquil dance, the marshes own an ebb and tide'saised"
+    ],
+    [
+     "By coastal edges where the tide does creep,",
+     "The salt marsh sways, a verdant, marshy sweep,",
+     "In sun's soft glint, its grasses seem to weep,",
+     "A tranquil zone 'twixt land and briny keep."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 1,
+    "canon": 0
+   }
+  },
+  {
+   "field_id": "sonnet_072",
+   "brief": "Write a single four-line stanza (a quatrain) about a violin. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In hollow night, the violin doth sing,",
+     "Its strings a-thrum, in sweet and solemn ring;",
+     "Each note doth touch the soul's deep, secret spring,",
+     "Where echoes linger, mournful, long and ling."
+    ],
+    [
+     "In wood and sinews carved with art and care,",
+     "Its resonant voice doth seem to claim",
+     "A life of its own, a sweeter charm",
+     "Than words can give, in eloquence rare."
+    ],
+    [
+     "In wood and horsehair sings the violin,",
+     "Its voice, a whispered secret 'fore the thrill,",
+     "Of dance and dream, in measure it doth spin,",
+     "A melody that tugs at heart and will."
+    ],
+    [
+     "In resonant hands, it weaves a song so fine,",
+     "Its strings do sing with mournful, sweet design,",
+     "A lament or a joy, its voice doth pine,",
+     "In every note, a heart's deep echo swine."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_073",
+   "brief": "Write a single four-line stanza (a quatrain) about the quarry. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In shadowed depths where labor's sweat has worn,",
+     "The stone doth rest beneath the sun's wide scorn,",
+     "From mountains' hearts in rhythmic blows unshorn,",
+     "New cities rise, while quarry's labor mourn."
+    ],
+    [
+     "By daylight's glow, the quarry's face is cut,",
+     "In stone, the quarry's silent whisper waits,",
+     "A shadowed chasm where the miners quit,",
+     "In darkness, carved by hand, its depths confine."
+    ],
+    [
+     "In dawn's embrace, the quarry's massive bulk doth stand,",
+     "Its stone-jeweled flanks glisten where sunlight spans,",
+     "From deep within, the chisels' steady drone resounds,",
+     "In shadowed heart, where time itself seems scant."
+    ],
+    [
+     "In shadowed depths where silent stones lie hid,",
+     "The quarry's edge doth mark the sun's decline,",
+     "Each chiseled face, a story carved in tid,",
+     "Of hands that labor and of time that thine."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_074",
+   "brief": "Write a single four-line stanza (a quatrain) about a wanderer. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "A traveler trod where silent winds did blow,",
+     "Through ancient woods and over hills away,",
+     "His heart with storms of hope did oft bestow,",
+     "While paths of life did lead him on his way."
+    ],
+    [
+     "A lone traveler wanders through the night,",
+     "His path unsung, beneath the moon's pale light,",
+     "With weary steps he seeks some peaceful rest,",
+     "In dreams unbound, his burdens take no flight."
+    ],
+    [
+     "A lone traveler walks where winds do call,",
+     "Across the boundless waste his path does sprawl,",
+     "Beneath the watchful gaze of stars at night,",
+     "His journey takes him far from hearth and light."
+    ],
+    [
+     "A solitary soul doth roam afar,",
+     "Where none have tread, beneath the open star,",
+     "Each step a echo in the silent night,",
+     "Till dawn doth break and end the wandering rite."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_075",
+   "brief": "Write a single four-line stanza (a quatrain) about the cathedral. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Ancient stones rise in silent grand discourse,",
+     "Their shadows stretch like time's unyielding grasp,",
+     "In light and shadow, they in might outpurse,",
+     "The transient days that fleeting hopes did lash."
+    ],
+    [
+     "Stones whisper tales of times now past, (A)",
+     "Archways hold the voices of the blessed; (B)",
+     "In shadows deep where silent prayers cast, (A)",
+     "Cathedral stands in time's unending.mk (B)"
+    ],
+    [
+     "Stones whisper secrets to the stone-cold ground,",
+     "Archways stretch to embrace the heavens wide,",
+     "Gargoyles keep watch through night and blinding sun,",
+     "Echoes hold court in chambers high and proud."
+    ],
+    [
+     "Stones sleep in silent rows, each hewn and cut,",
+     "By hands of men in days of olden years,",
+     "Gargoyles grim watch night's and day's mute trust,",
+     "While spires reach heavenward, proud and ever upright."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_076",
+   "brief": "Write a single four-line stanza (a quatrain) about a summer fair. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In July's heat, the fair doth lively gleam,",
+     "With merry crowds in revelry they seem,",
+     "The sweetest scents, and laughter fill the air,",
+     "While carousals in the sun they freely share."
+    ],
+    [
+     "Summer's fair winds through the fields of green,",
+     "Merriment and joy, under the sun's golden sheen,",
+     "Children laugh, their voices light as summer breeze,",
+     "While night's cool arm wraps 'round the festive scene."
+    ],
+    [
+     "Summer's fair with lights and laughter aglow,",
+     "Merriment in every heart bestows,",
+     "Music swells in sweetest harmony,",
+     "Dancing shadows under moonlit skies."
+    ],
+    [
+     "In fields where golden wheat sways to the breeze,",
+     "The fair begins where children’s laughter glides,",
+     "With merry-go-rounds and sweet-cake stands that please,",
+     "And shadows stretch as sunbeams dance and hides."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_077",
+   "brief": "Write a single four-line stanza (a quatrain) about the shipwreck. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "O'er waves that danced with moonlit grace did crash,",
+     "The ship, a giant in the watery dance,",
+     "Its timbers groaning as the brine did clasp,",
+     "Now sunk, no more than ghostly phantom's stance."
+    ],
+    [
+     "On rosy crest the waves did furiously arise,",
+     "And ship and all did to the watery grave conspire,",
+     "In deafening roar they crashed upon the cruel shore,",
+     "The hull did crack like thunder, in the engulfing fire."
+    ],
+    [
+     "On waves of night, the ship did groan and split,",
+     "Its lights like dying eyes in darkness cast,",
+     "Then suddenly, a splash, and all was tight,",
+     "With screams that mingled with the furious blast."
+    ],
+    [
+     "Upon the waves the ship doth groan and groan,",
+     "Its timbers strain beneath the tempest's blows,",
+     "And with a crack the mast doth shatter,",
+     "O'erboard the crew, in horror, wildly go."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 2
+   }
+  },
+  {
+   "field_id": "sonnet_078",
+   "brief": "Write a single four-line stanza (a quatrain) about a beekeeper. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In wood-smoke's curl and sunlit comb, he keeps",
+     "The busy dwellers in their waxen cells,",
+     "With smoker's hiss he quiets hive from leaps,",
+     "Unveiling gold, where sun and labor swell."
+    ],
+    [
+     "In hive and hive beneath the sun's warm breath,",
+     "The keeper tames the buzzing throng with ease,",
+     "With smoker's puff, he calms their amber death,",
+     "And honeyed comb he merrily doth please."
+    ],
+    [
+     "In hive and apiary, he tends the cell,",
+     "With smoker's puff, the guard bees take no cheer,",
+     "Upon the frame, the golden work he sees,",
+     "And hums a tune, as if for busy year."
+    ],
+    [
+     "In hive's warm heart the busy beekeeper glimmers,",
+     "With smoker's hiss and box of wood, his hands impose,",
+     "Each delicate frame with golden stores he imquires,",
+     "Through bees' soft hum, his quiet purpose glows."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_079",
+   "brief": "Write a single four-line stanza (a quatrain) about the aurora. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In skies where night's deep cloak is barely drawn,",
+     "The aurora dances with ethereal flame,",
+     "In shifting hues of pink and sapphire dawn,",
+     "A celestial ballet in the cold northern clime."
+    ],
+    [
+     "In skies where silent stars their watchers keep,",
+     "The aurora dances in the night's deep breath,",
+     "Its light in ghostly veils of green and red,",
+     "Doth whisper tales in the cold air's breath."
+    ],
+    [
+     "In night's embrace, where darkness does entwine,",
+     "The northern lights their waltz will swiftly spin,",
+     "In ruby hues or sapphire as they dance,",
+     "Above the earth, their magic softest kind."
+    ],
+    [
+     "In skies where darkness softly veils its cloak,",
+     "The northern lights in shimmering splendor flash,",
+     "Their dancing hues a cosmic dance un spoiled,",
+     "In ethereal waves, they keep their mystic watch."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_080",
+   "brief": "Write a single four-line stanza (a quatrain) about a stone bridge. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Ancient stone arches doth the river span,",
+     "In twilight's gentle fall, their shadows dance,",
+     "Beneath the moon's soft glow, time does stand,",
+     "A testament still to craftsman's skill advance."
+    ],
+    [
+     "Ancient stone arches doth uphold",
+     "The weight of waters flowing still,",
+     "While time doth gently in its hold",
+     "Softly unbuild what erst was built."
+    ],
+    [
+     "O'er waters still, the ancient stone doth lie,",
+     "In quietude, a steadfast, steady sigh;",
+     "Its arches bend where once the river flowed,",
+     "Now frozen in time's enduring, iron chain."
+    ],
+    [
+     "Amidst the valley's depths it spans so grand,",
+     "In stone, its age has silently unrolled,",
+     "A sentinel of time, it witnessed many a band,",
+     "Of footfalls light and shadows cast and rolled."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_081",
+   "brief": "Write a single four-line stanza (a quatrain) about the almond tree. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In spring's soft kiss, the boughs do bud and bloom,",
+     "With tender leaves that seem to catch the light,",
+     "Then blossoms burst in purest white and swoon,",
+     "Till fruits of promise swell in tender night."
+    ],
+    [
+     "Almond blossoms white as winter's frost do lie,",
+     "In spring's first warmth, they yield to tender leaf,",
+     "The boughs, thus dressed, in pale green shadows weave,",
+     "A sight that warms the heart, like sunshine brief."
+    ],
+    [
+     "In boughs where spring's first buds appear and blush,",
+     "The almond blooms, a silent, pure delight,",
+     "Its snow-like petals fall in gentle rush,",
+     "While buds of love in human hearts take flight."
+    ],
+    [
+     "Almond boughs in spring's first blush do dress,",
+     "Soft petals like snowflakes flit and fall,",
+     "Then yield to the leaves' more sturdyress,",
+     "Guarding fruit where life in dormant thrall."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_082",
+   "brief": "Write a single four-line stanza (a quatrain) about a clockmaker. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "With bated breath, he fixes gears of brass,",
+     "Each cogs' soft clank in silence, like a wish,",
+     "His hands, a dance of patience and of class,",
+     "In time's embrace, his маст'ry does enrich."
+    ],
+    [
+     "With hands that gently turn the cogs, he weaves,",
+     "Each ticking heart with utmost care and thought,",
+     "In shadows cast by oil lamp's softened sheen,",
+     "His hands create time's silent, steady thought."
+    ],
+    [
+     "With hands that never know repose,",
+     "He winds each wheel, each cogs' embrace,",
+     "In quiet nook where time arose,",
+     "His art the ticking heart finds trace."
+    ],
+    [
+     "With hands that steady mark the time's pale course,",
+     "In silence, ticks the lifeblood of his art,",
+     "Each gear and tooth in perfectly poised force,",
+     "Doth speak the poet's verse in metal's part."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_083",
+   "brief": "Write a single four-line stanza (a quatrain) about the reservoir. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "By tranquil waters, shadows dance at dusk,",
+     "Reflecting moonlight in their glassy deep,",
+     "A guardian's breath, they hold the night and dusk,",
+     "In silence vast, where stars their watch do keep."
+    ],
+    [
+     "Beneath the watchful eyes of hills it lies,",
+     "Gathering the rain in its wide lap,",
+     "Its waters mirror skies, both clear and high,",
+     "While shadows dance upon its patient lap."
+    ],
+    [
+     "By reservoir's deep blue expanse, it gleams,",
+     "Reflecting clouds that drift in gentle streams,",
+     "Its waters calm beneath the open skies,",
+     "A mirror still where shadows find their lies."
+    ],
+    [
+     "By distant hills the reservoir does lie,",
+     "Its glassy surface mirrors sky on high,",
+     "In morning's light, it catches rosy hue,",
+     "A peaceful mirror for the birds to view."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_084",
+   "brief": "Write a single four-line stanza (a quatrain) about a shepherd. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "On hilltops oft the shepherd tends his flock,",
+     "Where gentle bells the shepherds' pipes attend,",
+     "And as the sun doth set, the day's work done,",
+     "He rests beneath the stars' soft sheen and glimmer."
+    ],
+    [
+     "Upon the hilltop watches he, the shepherd,",
+     "Guiding his flock where verdant pastures meet,",
+     "With staff in hand he walks beneath the heaven,",
+     "Content in nature's quiet, gentle hold."
+    ],
+    [
+     "Upon the hill, the shepherd doth recline,",
+     "His staff beside him, under twilight's sheen,",
+     "The sheep around him, in soft silence dine,",
+     "O'er lonely pastures where the wildflowers lean."
+    ],
+    [
+     "By morn's first light, the shepherd tends his flock,",
+     "Upon the hillside where the wildflowers spread,",
+     "And as the sun ascends, his pipe he blows,",
+     "Echoing through the glen in sweetest ode."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_085",
+   "brief": "Write a single four-line stanza (a quatrain) about the printing press. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Invention's pulse did press with silent grace,",
+     "The words did spring from metal and from haste,",
+     "Each page did gain its voice in even measure,",
+     "And knowledge's boundless field began to baste."
+    ],
+    [
+     "Invention's dawn with Cophehn's press did break,",
+     "Each page from type emerged with inked grace,",
+     "Thus words immortal on the page did speak,",
+     "And knowledge spread where once it seemed but space."
+    ],
+    [
+     "Invention's heart, that set the words in print,",
+     "Did bind the learned to a common quest,",
+     "From page to page, the ink did run delight,",
+     "In every hand, the light of wisdom metast."
+    ],
+    [
+     "In town must needs a press, with letters set,",
+     "And ink to blacken every page, I pledge,",
+     "Where words in rows, with steady hand, align,",
+     "To press the type, each page to bind, I shine."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_086",
+   "brief": "Write a single four-line stanza (a quatrain) about a moth at the window. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "At glass it hovers, drawn by errant light,",
+     "Then strikes in blind ambition, crashes mute,",
+     "piteous claim to fire with feeble wing,",
+     "And lies in twilight, where the night takes note."
+    ],
+    [
+     "A moth at窗前扑影，轻轻，",
+     "寻光而来夜的薄纱，",
+     "窗纸轻震心微惊，",
+     "寂夜中舞独怜她。"
+    ],
+    [
+     "At glass it hovers, drawn by lamplight's gleam,",
+     "Then strikes in desperation, thudding loud,",
+     "From shadow darting to the fragile beam,",
+     "In futile dance, where morning's glow is rude."
+    ],
+    [
+     "At glass it hovers, drawn by lamplight's glow,",
+     "Then strikes in panic, faltering to the pane,",
+     "Its futile dance on cold and cheerless show,",
+     "Till twilight claims it where the night began."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_087",
+   "brief": "Write a single four-line stanza (a quatrain) about the canyon. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Gloomy depths where shadows dance at noon, (A)",
+     "Rugged walls in twilight's embrace bound, (B)",
+     "Echoes murmured in the chill air, (A)",
+     "Spill secrets of the earth profound. (B)"
+    ],
+    [
+     "In depths where shadows stretch and sunlight glints,",
+     "The canyon's walls in silence stand unchanted,",
+     "Then echoing back in hollow, awe-inspiring tones,",
+     "The echo answers in a solemn, resonantlatable."
+    ],
+    [
+     "Canyon walls do rise in ancient hue, (A)",
+     "In dusk's embrace, their shadows softly threw; (B)",
+     "The sun descends, a gold-tinged orb bestow, (A)",
+     "On chasms deep, where time and silence grew. (B)"
+    ],
+    [
+     "Grand canyon shadows stretch to twilight's embrace,",
+     "Sculpted by time's relentless, silent brook's embrace,",
+     "Sunset paints its hues upon ancient stone's face,",
+     "Echoes of eras under vast skies, wild and broad."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_088",
+   "brief": "Write a single four-line stanza (a quatrain) about a sailor's wife. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "By distant seas her anchor ties,",
+     "Her heart aloft where ships arise,",
+     "In every wave a letter flies,",
+     "Through storms of time, her love feeds vice."
+    ],
+    [
+     "By sea and shore she waits and watches, ever true,",
+     "While sails to distant ports his ship does steer;",
+     "In dreams he comes, upon the winds, to greet her dew,",
+     "And she, unchanging, stands where hours draw near."
+    ],
+    [
+     "By shore she waits in constant vigil's trance,",
+     "Where whispers tell of sails that darken skies,",
+     "Upon the beach her hopeful eyes she places,",
+     "Till home returns the ship her heart adores."
+    ],
+    [
+     "By twilight's soft declined, her eyes did watch,",
+     "Upon the sea where his lone ship did sail,",
+     "In every wave she saw his homecoming flash,",
+     "Till darkness claimed him, and she lone did gale."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_089",
+   "brief": "Write a single four-line stanza (a quatrain) about the greenhouse. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In glass cocoon where sunbeams gently play,",
+     "The tender shoots in verdant tendrils sway,",
+     "Around the frames in warm embrace they clasp,",
+     "Till buds unfold where once cold growth delayed."
+    ],
+    [
+     "In glass confines where the sunbeams kiss the pane,",
+     "Each leaf and bud in verdant splendor glows,",
+     "No frost shall touch, no drought shall dry the vein,",
+     "But balmy air with life eternal flows."
+    ],
+    [
+     "In glassine cradle cradled, plants do grow,",
+     "Where sunbeams kiss the dew-kissed leaves and bow,",
+     "No frost shall touch these tepid, tender throngs,",
+     "Till chill night falls, each tender sprout bestows."
+    ],
+    [
+     "In glass abode where tender shoots unfold,",
+     "The sun's warm touch and whispered breezes blend,",
+     "Each leaf and bud in gentle nurturing,",
+     "Guarded worlds where life in safety descends."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_090",
+   "brief": "Write a single four-line stanza (a quatrain) about a chess game. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Two kings do war in squares of wood and space,",
+     "With rooks and knights who guard their sovereign's fate,",
+     "Each move a thought, a skirmish, pawn by pawn,",
+     "Till checkmate ends the game, or play's entranced, at dawn."
+    ],
+    [
+     "Two kings on thrones, in silent strength they hold",
+     "Their realms, where knights and pawns in ranks are cold,",
+     "Each move a thought, in mind and muscle told,",
+     "Till checkmate seals the wisdom of the world."
+    ],
+    [
+     "Two men in quiet strife do play,",
+     "With pieces moved by thoughtful mind,",
+     "Each square a realm where power may",
+     "In warring ranks, its sway design."
+    ],
+    [
+     "The pieces march in silent, steady line,",
+     "The king watches with solemn, steady eye,",
+     "Each move a step, in thought and silence joined,",
+     "Till checkmate claims the game, night's silent cry."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 3,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_091",
+   "brief": "Write a single four-line stanza (a quatrain) about the lighthouse keeper. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "By night he tends the persistent flame, his watch,",
+     "Each turn of cogs, each flicker, through the dark assuaged;",
+     "By day he waits, in solitude unmatch,",
+     "His lantern steady, through the shifting graded."
+    ],
+    [
+     "By night he tends the glowing beacon's light,",
+     "While owls and waves in harmony take flight;",
+     "By day he repairs the chipped and worn stone,",
+     "Guarding the shore where tempests might have moan."
+    ],
+    [
+     "In watches through the night, he tends the light, he keeps,",
+     "Each flame alive, where whispers of the sea hehears,",
+     "With steady hand, against the wild winds' grip,",
+     "Through storms and calm, his vigil never slips."
+    ],
+    [
+     "In solitary watch he stands to guide,",
+     "Each night his flame a silent, steady voice,",
+     "Through storms and calm, his vigil neveruide,",
+     "Till dawn breaks free, and darkness doth abridge."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 3,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_092",
+   "brief": "Write a single four-line stanza (a quatrain) about a field of poppies. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In fields where poppies blush beneath the sun,",
+     "Each petal soft as dream or whispered sigh,",
+     "They weave a tapestry of red and dun,",
+     "Where shadows dance and time itself doth sigh."
+    ],
+    [
+     "Amidst the plain where sunbeams kiss the ground,",
+     "Each poppy blooms in crimson, proud and free,",
+     "Their petals dance where zephyrs gently swoon,",
+     "In fields of red, they wild and lovely be."
+    ],
+    [
+     "In fields where poppies blush beneath the sun's warm kiss,",
+     "They nod and sway where gentle breezes pass,",
+     "Each petal soft as dreams that gently dismiss,",
+     "In crimson waves they dance from dawn to last."
+    ],
+    [
+     "In fields where poppies nod at dawn's first light,",
+     "Their crimson petals kissed by early dew,",
+     "Each bloom a silent sentinel of night,",
+     "Guarding dreams where mortal fears subdue."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_093",
+   "brief": "Write a single four-line stanza (a quatrain) about the telescope. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "Through glass and metal, vast the view unfolds,",
+     "Starlight condensed where human eyes behold.",
+     "In darkness, distant lights a tale do tell,",
+     "Each planet, star, in silent dance entwined."
+    ],
+    [
+     "Through lens of glass, the stars unveil their light,",
+     "In silent quest, beyond the mortal night,",
+     "Their distant glows in mystic lines we trace,",
+     "And secrets of the universe we embrace."
+    ],
+    [
+     "Through glass and metal,视野延伸至远方,",
+     "stars unseen find voice, 听见遥远星辰的低语,",
+     "in cosmic dance they sing, 在宇宙的舞步中歌唱,",
+     "discordant or in chime. 和谐或错乱的旋律中。"
+    ],
+    [
+     "In domed embrace, the lens does gather light,",
+     "From starry realms where time is but a thought,",
+     "Its gaze unwavering, in the velvet night,",
+     "Unveiling distant worlds in hidden thought."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_094",
+   "brief": "Write a single four-line stanza (a quatrain) about a train station. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "At station halted, echo of the bell,",
+     "Whistling wind through timbers seems to tell",
+     "Of tracks that stretch to farthest bounds of sight,",
+     "Where distant vapor trails in blue uncoil."
+    ],
+    [
+     "At dusk the platform shadows stretch,_stockstill,",
+     "Echoes in air where wheels have dwelt;",
+     "Silent now, each waiting soul,_haspill,",
+     "Holds breath, then walks where dreams do plight."
+    ],
+    [
+     "At dawn the whistle cries its loud regale,",
+     "The platforms echo to the rhythmic beat,",
+     "Men hustle, women pause, in hurried thrall,",
+     "Then drift apart as vapor fades to heat."
+    ],
+    [
+     "At dawn, the station breathes in misty sighs,",
+     "Echoes of whistles break the hush profound,",
+     "Steam rises where the engines grumble by,",
+     "Leaving behind the sleepy town astound."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 2,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_095",
+   "brief": "Write a single four-line stanza (a quatrain) about the olive grove. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In shade where olives kiss the ground they grew,",
+     "Their ancient boughs beneath the sun expand,",
+     "Each leaf a promise in the light they drew,",
+     "In groves where time and quiet shadows stand."
+    ],
+    [
+     "Beneath the olive boughs, where shadows play,",
+     "The sun descends in golden, gentle grace,",
+     "Each leaf whispers in twilight’s hush away,",
+     "A tranquil dance where time itself finds grace."
+    ],
+    [
+     "In olive groves where shadows softly drape,",
+     "The ancient trees hold secrets in their shade,",
+     "Green whispers fill the air with eons' tale,",
+     "As sunlight dances, where the leaves enfold."
+    ],
+    [
+     "In rows so neat, the olives bow their heads,",
+     "Beneath the watchful sun's unyielding pride,",
+     "Their leaves a rustling song that time outspeeds,",
+     "In verdant realms where shadows softly glide."
+    ]
+   ],
+   "picks": {
+    "random": 1,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_096",
+   "brief": "Write a single four-line stanza (a quatrain) about a winter fox. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "In frosty boughs he seeks his lair, the fox,",
+     "Where winter's hush enwraps each silent brake,",
+     "Sleek fur resists the chill, a hunted star,",
+     "Gleaming platinum, in the moonlit stake."
+    ],
+    [
+     "In frosty glade the winter fox does play,",
+     "Where snow-clad hills his stealthy feet uphold,",
+     "Across the white expanse, he silently strays,",
+     "Till twilight wraps the woods in chillest fold."
+    ],
+    [
+     "In frosty boughs the fox doth hide, and sly",
+     "His russet coat doth match the deaden'd ground, no",
+     "A silent hunter, swift and fine, yes",
+     "Upon the snow, his padded feet resound."
+    ],
+    [
+     "In frost-bitten glade the crimson fox does stray,",
+     "Its coat a cloak of white where shadows play,",
+     "The moonlit snow its silken pelt does catch,",
+     "Each padded step in silent, wintry way."
+    ]
+   ],
+   "picks": {
+    "random": 2,
+    "checker": 1,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_097",
+   "brief": "Write a single four-line stanza (a quatrain) about the harbor. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "By twilight's hush the harbor sleeps in peace,",
+     "Beneath the watchful moon's soft silver sheen,",
+     "The gentle breeze doth kiss each anchored keel,",
+     "In harbor's arms, secure from life's wild lease."
+    ],
+    [
+     "By twilight's kissing light, the harbor sleeps,",
+     "Its shadowed cradle rocked by gentle tides,",
+     "Where ships in dreamland moor their silent ships,",
+     "And stars their watchful eyes upon them rise."
+    ],
+    [
+     "By twilight's glow, the harbor sways its light,",
+     "The docking ships in twilight's arms take rest,",
+     "A gentle breeze, the only sound at night,",
+     "Softly waves caress the quays in hush and zest."
+    ],
+    [
+     "By twilight's soft embrace the harbor lies,",
+     "Its hush'd embrace in shadow's tender thrall,",
+     "Then swells a distant cry that pierces night,",
+     "And lamps along the quays their watch doth call."
+    ]
+   ],
+   "picks": {
+    "random": 3,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_098",
+   "brief": "Write a single four-line stanza (a quatrain) about a candle in a window. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "A candle in the window burns with sighs,",
+     "Its glow a welcoming light from within,",
+     "The night it warms with purpose, not denies,",
+     "A beacon bright where shadows dare not win."
+    ],
+    [
+     "In windowpane a taper gleams, its light,",
+     "A steadfast friend in dusk's long shade,",
+     "Its flicker tells of homes within, in night,",
+     "A warm embrace against the cold's sharp edge."
+    ],
+    [
+     "In window pane its light does softly gleam,",
+     "A herald bright in night's encompassing shade,",
+     "Its flickering wick a guardian's watch-troop dream,",
+     "Against the dark, a steadfast, gentle glade."
+    ],
+    [
+     "A candle gleams within the pane, its light does fall,",
+     "In twilight's embrace, alone it does enthrall,",
+     "Its glow a silent sentinel in dimly,",
+     "Dusk's dusk, where shadows seek the flickering will."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  },
+  {
+   "field_id": "sonnet_099",
+   "brief": "Write a single four-line stanza (a quatrain) about the last leaf. Use strict iambic pentameter (ten syllables per line) and an ABAB rhyme scheme. Output only the four lines, nothing else.",
+   "candidates": [
+    [
+     "The last leaf hangs, a stubborn vestige still,",
+     "Defying gusts with what's left of its will,",
+     "Perched lone and proud upon the withered bough,",
+     "Till stray winds claim it, its time truly through."
+    ],
+    [
+     "The last leaf clings, a lonely sentry bound,",
+     "Unyielding still, though winter's breath is cold,",
+     "Its hues of gold and amber scarcely wound,",
+     "Till frozen breezes bid it to be rolled."
+    ],
+    [
+     "The last leaf clung with sighing breath, a span,",
+     "Upon the bough, defying winter's hand;",
+     "No gust could stir it now, a final mark,",
+     "Of summer's end, where once the green did spark."
+    ],
+    [
+     "The last leaf clings with fading emerald hue,",
+     "A lonely sentinel, in boughs outworn,",
+     "Its time within the canopy is few,",
+     "Yet holds on still, a sprig of summer born."
+    ]
+   ],
+   "picks": {
+    "random": 0,
+    "checker": 0,
+    "canon": 3
+   }
+  }
+ ]
+}
