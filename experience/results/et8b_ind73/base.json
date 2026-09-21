@@ -1,0 +1,24 @@
+{
+ "document": "ET-8b independent 300 (seed 73) — the BASE arm, scored against a prediction written before it was computed",
+ "prediction": {
+  "written": "2026-09-21 05:05Z, docs/et8b-ind73-base-prediction.md, while the arm was mid-run",
+  "band": "15% to 24%",
+  "most_likely": "near 18%",
+  "priors": {
+   "8a R3 single-decision on THIS set (seed 73)": "18.0%",
+   "8a R3 seed 47": "16.7%",
+   "8a seed 21": "18.7%",
+   "8b base LOOP on seed 21 tasks 1-225": "18.2%, actions 8.31"
+  }
+ },
+ "result": {
+  "green": 62,
+  "n": 300,
+  "success_pct": 20.7,
+  "actions": 8.19,
+  "decisions": 2.73
+ },
+ "verdict": "INSIDE the band. 20.7% against a 15-24% prediction, actions 8.19 against seed 21's 8.31. The harness is behaving and the gen0/gen1 arms can be built on it.",
+ "why_a_prediction_was_written_first": "a base arm is the one number in this run with independent priors, so it is the one that can catch a harness fault before it becomes a finding. Written afterwards, any number looks like what was expected. The failure branch was fixed too: below 12% or above 30% would have meant investigating the slices, the budget and silent per-episode errors BEFORE reporting anything, because a base that disagrees with four independent priors is a harness fault until proven otherwise and both other arms inherit it.",
+ "signed": "Sautee (sha-ta)"
+}
