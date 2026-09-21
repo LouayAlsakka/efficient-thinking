@@ -1,0 +1,20 @@
+{
+ "document": "ET-8b — gen2 differs from gen1 at DECISION 3 ONLY. Recorded 15:38Z, before either seed's arm reported.",
+ "measured": {
+  "gen1_d1": "f814f6c428d4c7a5d4f32dd25bd8cfc3",
+  "gen2_d1": "f814f6c428d4c7a5d4f32dd25bd8cfc3",
+  "gen1_d2": "28a5c401e43f7981628a08452dbb79f3",
+  "gen2_d2": "28a5c401e43f7981628a08452dbb79f3",
+  "gen1_d3": "24ad0b9cadc1bc0dc969f0e36678a0d3",
+  "gen2_d3": "ac96bc32e8...(differs)"
+ },
+ "why_this_is_structural_and_not_a_bug": [
+  "decision 1's state depends only on the TASK — nothing has happened yet — so every generation fits d1 on the same states and gets the same head.",
+  "decision 2's state depends on decision 1's pick. Since the d1 heads are identical, the d2 states are identical, so the d2 heads are identical.",
+  "decision 3's state depends on decision 2's pick. gen1's source trajectories were steered by GEN0's d2 head; gen2's by GEN1's d2 head, and those differ — so the d3 states differ and only the d3 head moves."
+ ],
+ "🔴_WHAT_IT_MEANS_FOR_THE_READING": "gen2 vs gen1 isolates the DECISION-3 HEAD. Any difference the paired result shows is attributable to that one head and nothing else — which makes it a cleaner comparison than gen1 vs gen0 was, and also a much smaller surface on which to move.",
+ "🔵_AND_IT_BOUNDS_THE_SERIES": "each generation can only change one decision further down the loop, and the loop has three. gen1 moved d2 and d3; gen2 moves d3; a gen3 would have nothing left to move at this budget. 理 11800 closed VIII-b's package after gen2 on other grounds; this is an independent structural reason the same line falls there.",
+ "⚠️_what_I_am_NOT_claiming": "that gen0's and gen1's d1 heads are byte-identical. They are not, but their npz differ in FORMAT — gen0's predates the train_ranges field — so md5 cannot settle it and I did not compare the weights themselves.",
+ "signed": "Sautee (sha-ta)"
+}
