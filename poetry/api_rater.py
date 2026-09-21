@@ -127,6 +127,52 @@ def check_plan(planned_usd, gate=GO_GATE_USD):
 
 
 # -- transports ---------------------------------------------------------
+def bedrock_transport(req, client=None, region=None, **_):
+    """AWS Bedrock, via the SAME client shape experience/tangyin/judge.py already uses.
+
+    理 11747: Paper IV's judge runs on Bedrock, not a direct Anthropic key. judge.py has run Opus 4.7
+    this way, so this is that path re-used rather than a second one invented.
+
+    Two details carried over from judge.py rather than rediscovered:
+      - `temperature` is REJECTED by opus-4-7 on Bedrock, so inferenceConfig carries only maxTokens.
+        Determinism is therefore not claimed for the rater; the pairing seed is what is fixed.
+      - the response must contain no toolUse block; a judge that called a tool is not a judge.
+
+    Returns the same shape every other transport here returns, so ApiRater and the meter are
+    unchanged: {"content": [{"type": "text", "text": ...}], "usage": {input_tokens, output_tokens}}.
+    """
+    if client is None:
+        import boto3
+        client = boto3.client("bedrock-runtime",
+                              region_name=region or os.environ.get("AWS_REGION", "us-east-1"))
+    prompt = req["messages"][0]["content"]
+    r = client.converse(modelId=req["model"],
+                        messages=[{"role": "user", "content": [{"text": prompt}]}],
+                        inferenceConfig={"maxTokens": req["max_tokens"]})
+    out = r["output"]["message"]["content"]
+    if "toolUse" in json.dumps(r["output"]):
+        raise RuntimeError("tool use in a judge response — refusing to score it")
+    u = r.get("usage", {})
+    return {"content": [{"type": "text", "text": "".join(c.get("text", "") for c in out)}],
+            "usage": {"input_tokens": u.get("inputTokens", 0),
+                      "output_tokens": u.get("outputTokens", 0)}}
+
+
+class FakeBedrock:
+    """A boto3 bedrock-runtime stand-in: same converse() shape, no network, no spend."""
+
+    def __init__(self, answers, out_tokens=8, tool=False):
+        self.answers, self.out_tokens, self.tool, self.seen = list(answers), out_tokens, tool, []
+
+    def converse(self, modelId, messages, inferenceConfig):
+        self.seen.append((modelId, messages, inferenceConfig))
+        text = self.answers[(len(self.seen) - 1) % len(self.answers)]
+        content = [{"toolUse": {"name": "x"}}] if self.tool else [{"text": text}]
+        return {"output": {"message": {"content": content}},
+                "usage": {"inputTokens": 213, "outputTokens": self.out_tokens}}
+
+
+
 def http_transport(req, api_key, url="https://api.anthropic.com/v1/messages", timeout=120):
     body = json.dumps(req).encode()
     r = urllib.request.Request(url, data=body, headers={
@@ -291,6 +337,23 @@ def _selftest():
     print("  [6] GO gate: planned $%.2f <= $%.2f -> GO; an over-gate plan is refused"
           % (planned, GO_GATE_USD))
 
+    # 7b. CONTROL — the Bedrock path: correct shape, usage mapped, and a tool-using response REFUSED
+    m7b = CostMeter(ledger=tmp + "7b", prices=prices)
+    fb = FakeBedrock(["A"])
+    rb = ApiRater(m7b, lambda req, **kw: bedrock_transport(req, client=fb), model="claude-fable-5-1")
+    assert rb(pairs[0]) == "A", "bedrock transport did not return a parsed answer"
+    assert m7b.state["entries"][0]["input_tokens"] == 213, "bedrock usage not mapped to the meter"
+    assert fb.seen[0][2] == {"maxTokens": rb.max_tokens}, "inferenceConfig carried more than maxTokens"
+    assert "temperature" not in json.dumps(fb.seen[0][2]), "temperature sent — opus-4-7 rejects it"
+    fbt = FakeBedrock(["A"], tool=True)
+    rbt = ApiRater(CostMeter(ledger=tmp + "7c", prices=prices),
+                   lambda req, **kw: bedrock_transport(req, client=fbt))
+    try:
+        rbt(pairs[0]); raise AssertionError("CONTROL FAILED: a tool-using response was scored")
+    except RuntimeError:
+        pass
+    print("  [7b] bedrock: usage mapped to the meter, maxTokens only, tool-use REFUSED")
+
     # 7. an unparseable answer is dropped, not coerced
     m7 = CostMeter(ledger=tmp + "7", prices=prices)
     r7 = ApiRater(m7, FakeTransport(["I cannot choose", "Both are good", "A", "B.", " b ",
@@ -301,10 +364,10 @@ def _selftest():
     print("  [7] answers that CONTAIN a letter are dropped, not coerced: %r (%d dropped)"
           % (got, r7.unparsed))
 
-    for p in (tmp, tmp + ".tmp", tmp + "5", tmp + "7"):
+    for p in (tmp, tmp + ".tmp", tmp + "5", tmp + "7", tmp + "7b", tmp + "7c"):
         if os.path.exists(p):
             os.remove(p)
-    print("\n  SELFTEST PASSED — 7 checks, $0.00 spent. BUILD-ONLY until 理 gives GO.")
+    print("\n  SELFTEST PASSED — 8 checks including the Bedrock path, $0.00 spent.")
 
 
 def main():
