@@ -1,0 +1,113 @@
+{
+ "document": "ET-8b — the two independent 300s, per seed",
+ "seeds": {
+  "73": "llm1, experience/tasks/v3c",
+  "47": "llm2, experience/tasks/v3rep"
+ },
+ "heads": "identical across boxes; all six npz md5-matched before the runs",
+ "rule": "per-seed numbers are the result. Pooling is secondary and only when the intervals overlap; disagreeing seeds are a finding, not something to average.",
+ "comparisons": {
+  "gen0_vs_base": {
+   "seed_73": {
+    "base_success_pct": 20.7,
+    "G_success_pct": 34.3,
+    "success_delta_points": 13.7,
+    "success_95CI": [
+     8.0,
+     19.3
+    ],
+    "McNemar": {
+     "base_only_solved": 20,
+     "G_only_solved": 61,
+     "discordant": 81,
+     "exact_two_sided_p": 5.656e-06
+    }
+   },
+   "seed_47": {
+    "base_success_pct": 21.0,
+    "G_success_pct": 34.0,
+    "success_delta_points": 13.0,
+    "success_95CI": [
+     7.0,
+     19.0
+    ],
+    "McNemar": {
+     "base_only_solved": 23,
+     "G_only_solved": 62,
+     "discordant": 85,
+     "exact_two_sided_p": 2.771e-05
+    }
+   },
+   "intervals_overlap": true,
+   "reading": "the two seeds agree; a pooled reading is defensible and is 理's to call"
+  },
+  "gen1_vs_base": {
+   "seed_73": {
+    "base_success_pct": 20.7,
+    "G_success_pct": 40.0,
+    "success_delta_points": 19.3,
+    "success_95CI": [
+     13.3,
+     25.3
+    ],
+    "McNemar": {
+     "base_only_solved": 17,
+     "G_only_solved": 75,
+     "discordant": 92,
+     "exact_two_sided_p": 7.293e-10
+    }
+   },
+   "seed_47": {
+    "base_success_pct": 21.0,
+    "G_success_pct": 43.7,
+    "success_delta_points": 22.7,
+    "success_95CI": [
+     16.7,
+     28.7
+    ],
+    "McNemar": {
+     "base_only_solved": 17,
+     "G_only_solved": 85,
+     "discordant": 102,
+     "exact_two_sided_p": 4.698e-12
+    }
+   },
+   "intervals_overlap": true,
+   "reading": "the two seeds agree; a pooled reading is defensible and is 理's to call"
+  },
+  "gen1_vs_gen0": {
+   "seed_73": {
+    "base_success_pct": 34.3,
+    "G_success_pct": 40.0,
+    "success_delta_points": 5.7,
+    "success_95CI": [
+     0.7,
+     10.7
+    ],
+    "McNemar": {
+     "base_only_solved": 22,
+     "G_only_solved": 39,
+     "discordant": 61,
+     "exact_two_sided_p": 0.03962
+    }
+   },
+   "seed_47": {
+    "base_success_pct": 34.0,
+    "G_success_pct": 43.7,
+    "success_delta_points": 9.7,
+    "success_95CI": [
+     4.7,
+     15.0
+    ],
+    "McNemar": {
+     "base_only_solved": 18,
+     "G_only_solved": 47,
+     "discordant": 65,
+     "exact_two_sided_p": 0.0004221
+    }
+   },
+   "intervals_overlap": true,
+   "reading": "the two seeds agree; a pooled reading is defensible and is 理's to call"
+  }
+ }
+}
