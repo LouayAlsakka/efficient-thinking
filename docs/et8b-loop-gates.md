@@ -65,3 +65,20 @@ no re-fit after seeing the independent set; exclusions as line items.
 
 Harness 2 days. Base loop 300 ≈ 4 h. gen0 fit + 300 ≈ 5 h. gen1 fit + 300 ≈ 5 h. Bridge arm ≈ 5 h. One box, one
 week, after 8a's R7.
+
+## 6. Record, 2026-09-21
+
+- gen0 (single fit, tasks < 226) on held-out 75: +17.3 [+5.3, +29.3]. Its training trajectories were memorised (true region
+  found at decision 1 on 100% of training tasks) and contaminated gen1's first fit; that arm read −12.0 vs gen0 and is
+  recorded as the defect's signature, not as accumulation.
+- Cross-fitted gen0 (3-fold, head on 150 tasks each) on all 225: +18.7 [+12.9, +24.9], p 3×10⁻⁹ — a lower bound on the
+  full head, reported as its own arm.
+- gen1 (fitted on cross-fitted gen0 trajectories) on held-out 75: vs gen0 −2.7 [−12.0, +6.7], p 0.77; vs base +14.7
+  [+2.7, +26.7]. Interval 18.7 points wide at n = 75: consistent with one-shot and with an increment it cannot see. NOT
+  filed as §4's one-shot. The independent 300 decides (running).
+- gen1-unverified: closed by its precondition. The frozen model's own judgment of success is a constant — 0 of 568 patch
+  points called "pass", including all 83 that passed; agreement with the verifier 85.4% = the base rate of failure; four
+  prompt wordings × two temperatures, said-pass never above 3.3%. No positive class, no head. Reading, bounded to one
+  model and one setting: there are no internal bits about success to improve on — VII's Internal-Improvement Bound
+  observed one level earlier than the arm built to test it. The optional self-stopped arm is not run: an agent that never
+  believes it has succeeded never stops.
