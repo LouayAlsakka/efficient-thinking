@@ -83,3 +83,24 @@ better model, merging models — is someone else's programme and is cited, not p
 
 Every row holds the intelligence fixed and measures capability against compute. The test for a new idea is one
 sentence in the middle column; if it cannot be written, the idea is not in this series.
+
+## Publication route (the author, 2026-09-21): direct, no venues
+
+The work is published where it is made. No conference, no journal, no endorsement, no submission form. The route:
+
+1. **The record** — `docs/efficient-thinking-<n>.md` with html and pdf beside it, on GitHub, served from the author's
+   domain. A DOI from Zenodo for each paper so it is citable without a gatekeeper.
+2. **The cut** — an eight-page version of VIII (and of VIII-b when written) for a reader deciding in ten minutes whether
+   to spend three hours; a courtesy to the reader, not a rule of anyone's. Figure 1, the claim in three sentences, the
+   reproduction command.
+3. **The challenge** — one page per paper: the claim, the figure, the command, the four attack angles stated by the
+   author (an alternative explanation for the matched-compute shift; leakage in the experience construction; a flaw in
+   the paired statistics; a reason the second search structure does not establish transfer), an open invitation to break
+   it, the repository's issues as the review channel, and a bounty for a fatal flaw.
+4. **Readers** — practitioners who will run the command: the MLX community (it runs on Apple silicon), builders of agents,
+   the forums that argue about self-improvement. Two readers who run it and report back outrank a venue.
+5. **What is kept** — the series' own discipline, which is what makes the challenge credible: pre-registered readings,
+   withdrawn claims kept, instruments named by hash, a reproduction that fails loud, the author named plainly as an
+   engineer from outside the field working with AI assistance.
+
+Owner of 2–3: 理. Owner of 1's DOI and 4's posts: the author, on his word.
