@@ -1,0 +1,321 @@
+{
+ "document": "ET-8b — THE ARTEFACT TABLE. Every arm, every seed, every interval, every instrument hash, one file. 理 11853.",
+ "the_sentence_this_table_supports": "The frontier moved twice and stopped. A second generation improves on the first on both independent 300s at no extra cost; a third does not improve on the second, and on one seed is significantly worse. The best head is generation 1.",
+ "how_to_read_it": "Seed by seed, never pooled. Two independent 300s (v3c/seed 73 on llm1, v3rep/seed 47 on llm2), disjoint from the heads' training set by MEASURED signature overlap of zero.",
+ "1_ARMS": {
+  "seed73_base": {
+   "n": 300,
+   "solved": 62,
+   "success_pct": 20.7,
+   "actions": 8.19,
+   "tokens_per_episode": 2935.5
+  },
+  "seed73_gen0": {
+   "n": 300,
+   "solved": 103,
+   "success_pct": 34.3,
+   "actions": 7.76,
+   "tokens_per_episode": 3802.9
+  },
+  "seed73_gen1": {
+   "n": 300,
+   "solved": 120,
+   "success_pct": 40.0,
+   "actions": 7.66,
+   "tokens_per_episode": 3806.5
+  },
+  "seed73_gen2": {
+   "n": 300,
+   "solved": 114,
+   "success_pct": 38.0,
+   "actions": 7.67,
+   "tokens_per_episode": 3798.0
+  },
+  "seed47_base": {
+   "n": 300,
+   "solved": 63,
+   "success_pct": 21.0,
+   "actions": 8.32,
+   "tokens_per_episode": 2980.6
+  },
+  "seed47_gen0": {
+   "n": 300,
+   "solved": 102,
+   "success_pct": 34.0,
+   "actions": 7.71,
+   "tokens_per_episode": 3837.2
+  },
+  "seed47_gen1": {
+   "n": 300,
+   "solved": 131,
+   "success_pct": 43.7,
+   "actions": 7.44,
+   "tokens_per_episode": 3721.7
+  },
+  "seed47_gen2": {
+   "n": 300,
+   "solved": 110,
+   "success_pct": 36.7,
+   "actions": 7.52,
+   "tokens_per_episode": 3736.3
+  }
+ },
+ "2_PAIRED_COMPARISONS": {
+  "seed73_gen0_vs_base": {
+   "delta_points": 13.7,
+   "CI95": [
+    8.0,
+    19.3
+   ],
+   "McNemar_p": 5.656e-06,
+   "discordant": {
+    "base_only": 20,
+    "G_only": 61
+   },
+   "actions_delta": -0.43,
+   "actions_CI95": [
+    -0.64,
+    -0.23
+   ]
+  },
+  "seed73_gen1_vs_base": {
+   "delta_points": 19.3,
+   "CI95": [
+    13.3,
+    25.3
+   ],
+   "McNemar_p": 7.293e-10,
+   "discordant": {
+    "base_only": 17,
+    "G_only": 75
+   },
+   "actions_delta": -0.53,
+   "actions_CI95": [
+    -0.73,
+    -0.34
+   ]
+  },
+  "seed73_gen1_vs_gen0": {
+   "delta_points": 5.7,
+   "CI95": [
+    0.7,
+    10.7
+   ],
+   "McNemar_p": 0.03962,
+   "discordant": {
+    "base_only": 22,
+    "G_only": 39
+   },
+   "actions_delta": -0.1,
+   "actions_CI95": [
+    -0.22,
+    0.02
+   ]
+  },
+  "seed73_gen2_vs_base": {
+   "delta_points": 17.3,
+   "CI95": [
+    11.7,
+    23.3
+   ],
+   "McNemar_p": 1.35e-08,
+   "discordant": {
+    "base_only": 17,
+    "G_only": 69
+   },
+   "actions_delta": -0.52,
+   "actions_CI95": [
+    -0.73,
+    -0.32
+   ]
+  },
+  "seed73_gen2_vs_gen0": {
+   "delta_points": 3.7,
+   "CI95": [
+    -1.3,
+    8.7
+   ],
+   "McNemar_p": 0.2,
+   "discordant": {
+    "base_only": 25,
+    "G_only": 36
+   },
+   "actions_delta": -0.09,
+   "actions_CI95": [
+    -0.21,
+    0.03
+   ]
+  },
+  "seed73_gen2_vs_gen1": {
+   "delta_points": -2.0,
+   "CI95": [
+    -6.3,
+    2.3
+   ],
+   "McNemar_p": 0.4408,
+   "discordant": {
+    "base_only": 24,
+    "G_only": 18
+   },
+   "actions_delta": 0.01,
+   "actions_CI95": [
+    -0.07,
+    0.09
+   ]
+  },
+  "seed47_gen0_vs_base": {
+   "delta_points": 13.0,
+   "CI95": [
+    7.0,
+    19.0
+   ],
+   "McNemar_p": 2.771e-05,
+   "discordant": {
+    "base_only": 23,
+    "G_only": 62
+   },
+   "actions_delta": -0.61,
+   "actions_CI95": [
+    -0.84,
+    -0.38
+   ]
+  },
+  "seed47_gen1_vs_base": {
+   "delta_points": 22.7,
+   "CI95": [
+    16.7,
+    28.7
+   ],
+   "McNemar_p": 4.698e-12,
+   "discordant": {
+    "base_only": 17,
+    "G_only": 85
+   },
+   "actions_delta": -0.88,
+   "actions_CI95": [
+    -1.12,
+    -0.65
+   ]
+  },
+  "seed47_gen1_vs_gen0": {
+   "delta_points": 9.7,
+   "CI95": [
+    4.7,
+    15.0
+   ],
+   "McNemar_p": 0.0004221,
+   "discordant": {
+    "base_only": 18,
+    "G_only": 47
+   },
+   "actions_delta": -0.27,
+   "actions_CI95": [
+    -0.4,
+    -0.15
+   ]
+  },
+  "seed47_gen2_vs_base": {
+   "delta_points": 15.7,
+   "CI95": [
+    10.0,
+    21.3
+   ],
+   "McNemar_p": 1.427e-07,
+   "discordant": {
+    "base_only": 17,
+    "G_only": 64
+   },
+   "actions_delta": -0.8,
+   "actions_CI95": [
+    -1.04,
+    -0.57
+   ]
+  },
+  "seed47_gen2_vs_gen0": {
+   "delta_points": 2.7,
+   "CI95": [
+    -2.0,
+    7.7
+   ],
+   "McNemar_p": 0.3409,
+   "discordant": {
+    "base_only": 23,
+    "G_only": 31
+   },
+   "actions_delta": -0.19,
+   "actions_CI95": [
+    -0.31,
+    -0.08
+   ]
+  },
+  "seed47_gen2_vs_gen1": {
+   "delta_points": -7.0,
+   "CI95": [
+    -11.0,
+    -3.0
+   ],
+   "McNemar_p": 0.00145,
+   "discordant": {
+    "base_only": 31,
+    "G_only": 10
+   },
+   "actions_delta": 0.08,
+   "actions_CI95": [
+    0.01,
+    0.16
+   ]
+  }
+ },
+ "3_THE_TWO_LIMBS": {
+  "the_rise__gen1_vs_gen0": {
+   "seed_73": "+5.7 [+0.7, +10.7] p=0.0396",
+   "seed_47": "+9.7 [+4.7, +15.0] p=0.0004",
+   "cost": "model tokens +0.1% and -3.0%; controller cost identical by construction",
+   "reading": "§4 row 1 — ACCUMULATION, the frontier moved twice"
+  },
+  "the_stop__gen2_vs_gen1": {
+   "seed_73": "-2.0 [-6.3, +2.3] p=0.4408",
+   "seed_47": "-7.0 [-11.0, -3.0] p=0.00145",
+   "cost": "model tokens -0.2% and +0.4%",
+   "reading": "理 11853: BOTH §7 rows reported as they fired — PLATEAU on seed 73, CONSUMPTION on seed 47. The seeds do NOT disagree in direction (both negative; intervals overlap on [-6.3,-3.0])."
+  }
+ },
+ "4_INSTRUMENT_BY_HASH": {
+  "rule": "理 11768 §3 — a result artefact names its instrument by hash or its downstream claims are marked unauditable",
+  "model": "Qwen/Qwen2.5-7B-Instruct (bf16)",
+  "head_md5": {
+   "gen0_head_d1_layer18.npz": "461d5b1ebfe1cd204c5918e3026ab2e2",
+   "gen0_head_d2_layer18.npz": "778a949f35ad7a7bb1a879d621726016",
+   "gen0_head_d3_layer18.npz": "be2d1b4177c20b02982ca4810110e63b",
+   "gen1_head_d1_layer18.npz": "f814f6c428d4c7a5d4f32dd25bd8cfc3",
+   "gen1_head_d2_layer18.npz": "28a5c401e43f7981628a08452dbb79f3",
+   "gen1_head_d3_layer18.npz": "24ad0b9cadc1bc0dc969f0e36678a0d3",
+   "gen2_head_d1_layer18.npz": "f814f6c428d4c7a5d4f32dd25bd8cfc3",
+   "gen2_head_d2_layer18.npz": "28a5c401e43f7981628a08452dbb79f3",
+   "gen2_head_d3_layer18.npz": "ac96bc32e8cfb0067efb5481434313cb"
+  },
+  "⚠️_gen2_d1_and_d2_are_byte_identical_to_gen1s": "BY CONSTRUCTION, not by accident: decision 1's state depends only on the task, so every generation fits the same d1 head, and d2 follows from d1. Only d3 differs. These hashes are what would catch a future change breaking that.",
+  "task_set_signatures_sha256_16": {
+   "v3 (seed 21) — TRAINING, never evaluated on": "d28f98f1308008b6",
+   "v3c (seed 73) — independent A": "f2bf92edef0d31bd",
+   "v3rep (seed 47) — independent B": "c33887d80e51d114",
+   "method": "sha256 over each task's program|symptom|bug_region, files sorted"
+  },
+  "disjointness": "MEASURED: v3-vs-v3c overlap 0, v3-vs-v3rep overlap 0",
+  "heads_verified_identical_on_both_boxes_before_the_runs": true
+ },
+ "5_WHAT_WAS_WITHDRAWN_AND_WHY": [
+  "gen0's +35.0 on all 300 — the head was fitted on tasks <226 and the loop ran all 300. Held out: +17.3.",
+  "gen1's FIRST run (-12.0 vs gen0) — its heads were fitted on gen0's contaminated episodes, where the true region is already found at decision 1 in 128 of 128 training episodes against 22.4% held out. Recorded as the defect's signature, quoted nowhere as accumulation.",
+  "the n=75 screen's -2.7 [-12.0, +6.7] for gen1 vs gen0 — underpowered, NOT filed as §4's one-shot, per a reading note committed before the number existed."
+ ],
+ "6_BOUNDS_CARRIED": [
+  "One model, one environment family (v3), one budget (12 actions across up to 3 decisions).",
+  "Two synthetic environments sharing one harness whose blind spots would be invisible to both.",
+  "gen1's heads were fitted on 2,824 rows against gen0's 4,052 — fewer, so the rise is conservative, but it is not a matched-data comparison.",
+  "Consumption is CONSISTENT with the d3-only change and the 48.8% vs 41.5% already-found fractions; it is NOT demonstrated. d2 is identical between generations, so one point of that trend is informative.",
+  "gen3 is empty by construction: the loop has three decisions and gen2 moved the last one."
+ ],
+ "7_REPRODUCTION": "experience/reproduce_8b_accumulation.sh — four arms, six pairings, containment checked over BOTH limbs (the rise AND the stop). Nine head md5s and measured signature disjointness gate it; both gates exercised by making them fail.",
+ "signed": "Sautee (sha-ta)"
+}
