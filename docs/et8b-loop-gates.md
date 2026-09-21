@@ -82,3 +82,34 @@ week, after 8a's R7.
   model and one setting: there are no internal bits about success to improve on — VII's Internal-Improvement Bound
   observed one level earlier than the arm built to test it. The optional self-stopped arm is not run: an agent that never
   believes it has succeeded never stops.
+
+## 7. Accumulation, measured 2026-09-21 — and gen2 pre-registered before it runs
+
+**Result.** On two independent 300s, reported seed by seed and not pooled: gen1 vs gen0 +5.7 [+0.7, +10.7], p 0.040
+(seed 73) and +9.7 [+4.7, +15.0], p 0.0004 (seed 47); model tokens per episode +0.1% and −3.0%; controller cost
+identical by construction. §4 row 1 fires: the frontier moved twice. gen0 vs base +13.7 / +13.0; gen1 vs base +19.3 /
++22.7. The n = 75 screen had read −2.7 [−12.0, +6.7]; both 300s lie inside or at the edge of that interval — an
+underpowered screen, not a contradiction — and it was not filed as one-shot because the reading note fixed that before
+the number existed. Bounds: one model, one environment family, gen1's heads fitted on fewer rows than gen0's (2,824 vs
+4,052), so the comparison is conservative and not matched-data. Instrument by hash: model, three task-set signatures,
+six head md5s, disjointness measured zero. One-command reproduction: `experience/reproduce_8b_accumulation.sh`, both
+gates exercised by making them fail.
+
+**gen2, registered now (this commit precedes the run).** gen1 trajectories on tasks 1–225, 3-fold cross-fitted (no
+episode steered by a head that saw its task); gen2 heads fitted on them with the same recipe and controls; gen2 run
+on both independent 300s, paired vs gen1, vs gen0, vs base; cost condition as §4. Readings, fixed before the run:
+
+| result | reading |
+|---|---|
+| gen2 > gen1 on both seeds, intervals excluding zero, at ≤ gen1's cost | accumulation continues; the series asks in VIII-b's paper what bounds it |
+| gen2 ≈ gen1 (intervals contain zero) on both | the loop reaches a plateau at generation 1 — reported as such, with the verifier's ceiling named as the candidate bound |
+| gen2 < gen1, interval excluding zero | consumption: a head steering the search removes the signal its successor needs; reported at full prominence with the already-found-at-decision-1 fraction printed beside it |
+| seeds disagree in direction | the disagreement is the result; no pooling |
+
+No gen3 without a ruling; VIII-b's experimental package closes after gen2 whichever way it falls, and the paper is
+written backward from there.
+
+**E5 under amendment 2.** The arm asks whether a specific person's stated preferences transfer. With a model rater
+there is no person unless the author supplies the K preferences. Ruled 2026-09-21: E5 is PARKED unless the author
+writes K statements of his own poetic preference; the version that elicits the judge's own preferences is not run,
+because it measures a model learning a model, not the registered question.
