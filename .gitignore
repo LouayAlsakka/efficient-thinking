@@ -92,11 +92,11 @@ reasoning/data/
 # ET-8 spec and reading notes. docs/* ignores by default and every spec doc so far has been
 # force-added one at a time, which means the NEXT one is silently untracked until someone notices.
 # et8b-reading-note.md was: `git add` refused it and only the error revealed the rule.
-!docs/et8*.md
-!docs/et4-*.md
-!docs/et2-*.md
-!docs/et3-*.md
-!docs/et6-*.md
+# ET spec and reading notes. This list was written 09-20 as et2/3/4/6/8 and it was INCOMPLETE the
+# next day: docs/et7-ee-prereg.md was refused because nothing covered et7. I patched the symptom
+# (the patterns I happened to need) instead of the class. One pattern for every paper in the series:
+!docs/et[0-9]*-*.md
+!docs/et[0-9]*.md
 !docs/series-execution-plan.md
 !docs/efficient-thinking-10-concept.md
 !docs/et10-review.md
