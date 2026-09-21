@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0146",
+ "family": "v3",
+ "bug_class": "wrong_agg",
+ "bug_region": "render",
+ "program": "# region: intake\ndef intake(raw):\n    out = []\n    for tok in raw:\n        try:\n            out.append(float(tok))\n        except ValueError:\n            pass\n    return out\n\n# region: digest\ndef digest(xs, floor_=3):\n    return [v for v in xs if v >= floor_]\n\n# region: fold\ndef fold(xs, limit=20):\n    return [v if v <= limit else limit for v in xs]\n\n# region: render\ndef render(xs):\n    return {'n': len(xs), 'min': min(xs) if xs else 0, 'span': (min(xs) - min(xs)) if xs else 0}\n\n# region: emit\ndef emit(summary):\n    out = dict(summary)\n    out['flags'] = sorted(k for k, v in summary.items() if isinstance(v, int) and v > 0)\n    return out\n\n# region: run\ndef run(raw):\n    return emit(render(fold(digest(intake(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 1, 'min': 3.0, 'span': 0.0, 'flags': ['n']})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'min': 7.0, 'span': 3.0, 'flags': ['n']})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 2, 'min': 5.0, 'span': 3.0, 'flags': ['n']})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'min': 0, 'span': 0, 'flags': []})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 2, 'min': 12.0, 'span': 0.0, 'flags': ['n']})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'min': 0, 'span': 0, 'flags': []})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 6.0, 'span': 0.0, 'flags': ['n']})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 1, 'min': 20, 'span': 0, 'flags': ['min', 'n']})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                              ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "intake",
+  "digest",
+  "fold",
+  "render",
+  "emit"
+ ],
+ "seed": 692513849,
+ "_signature": "cd277eb43e46",
+ "_test_identity": "test_case_01",
+ "_p1_sibling_regions": [
+  "intake"
+ ],
+ "_shape": {
+  "parser": "parse_floats",
+  "mappers": [
+   "drop_small",
+   "clamp"
+  ],
+  "agg": "minspan",
+  "fmt": "flags"
+ }
+}

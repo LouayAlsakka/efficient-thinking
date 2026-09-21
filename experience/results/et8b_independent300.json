@@ -1,0 +1,45 @@
+{
+ "document": "ET-8b — the INDEPENDENT 300 (v3, seed 89). Generated, gated, and DISJOINTNESS-CHECKED before any arm runs on it.",
+ "why": "docs/et8b-reading-note.md: the accumulation limb was evaluated on 75 held-out tasks with an 18.7-point interval, which cannot separate §4's one-shot reading from a small real increment. §4 asks for an independent 300. This is that set, prepared so the decision to spend it is not conditioned on the screen's direction.",
+ "generation": "python3 et8_env_v3.py gen --n 300 --seed 89 --out experience/tasks/v3ind89",
+ "gates_at_generation": {
+  "P0_distinct_signatures": 300,
+  "P0_ratio": 1.0,
+  "P0_largest_group": 1,
+  "P1prime_tasks_with_no_sibling_region": 0,
+  "P2prime_assertion_detail_pct": 100.0,
+  "P2prime_symptom_distinctness": 0.643,
+  "P2_entropy_bits_printed_never_a_bar": 0.7,
+  "P3_heldout_lookup_pct": 6.7,
+  "P3_bar": "<= 60%",
+  "distinct_programs": 300,
+  "distinct_symptoms": 193,
+  "attempts": 790,
+  "verdict": "GATE PASS — gen refuses to write otherwise"
+ },
+ "DISJOINTNESS_because_independent_is_a_claim_not_a_seed": {
+  "vs_tasks_v3_seed21": {
+   "program_sha_overlap": 0,
+   "full_signature_overlap": 0,
+   "⚠️_shared_symptom_strings": 71,
+   "note": "71 symptom strings appear in both sets. Different seeds do not guarantee different symptoms, and a shared symptom is a leakage path that P3 only tests WITHIN a set."
+  },
+  "vs_tasks_v3rep_seed47": {
+   "full_signature_overlap": 0
+  },
+  "vs_tasks_v3c": {
+   "full_signature_overlap": 0
+  }
+ },
+ "CROSS_SET_P3_the_test_the_shared_symptoms_require": {
+  "instrument": "build the symptom -> bug_region lookup table on v3 (seed 21) and apply it to seed 89 — the table a leaker would have",
+  "seed89_tasks_whose_symptom_appears_in_v3": "159 of 300 = 53.0%",
+  "table_names_the_right_region_on_those": "18 of 159 = 11.3%",
+  "over_all_300_unmatched_counted_as_a_miss": "6.0%",
+  "chance_on_this_set": "21.2%",
+  "verdict": "BELOW CHANCE. A symptom table learned on v3 actively fails on seed 89, so the 71 shared symptom strings carry no region information across the sets."
+ },
+ "STILL_PROVISIONAL": "P4 runs on the EMITTED set and needs a base arm's outcome spread. Until a base run reports it, this set is gated but not validated — the same status every v3 set has before its base arm.",
+ "status": "PREPARED AND STANDING BY. No arm has run on it. 理 rules whether it is spent.",
+ "signed": "Sautee (sha-ta)"
+}

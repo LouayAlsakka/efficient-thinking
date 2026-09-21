@@ -1,0 +1,31 @@
+{
+ "task_id": "task_0116",
+ "family": "v3",
+ "bug_class": "wrong_agg",
+ "bug_region": "digest",
+ "program": "# region: shape\ndef shape(raw):\n    return [len(tok.strip()) for tok in raw if tok.strip()]\n\n# region: emit\ndef emit(xs, factor=3):\n    return [v * factor for v in xs]\n\n# region: digest\ndef digest(xs):\n    return {'n': len(xs), 'total': max(xs)}\n\n# region: intake\ndef intake(summary, bar=3):\n    out = dict(summary)\n    n = summary.get('n', 0)\n    out['ratio'] = round(n / bar, 3) if bar else 0.0\n    return out\n\n# region: run\ndef run(raw):\n    return intake(digest(emit(shape(raw))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'total': 9, 'ratio': 1.0})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 4, 'total': 15, 'ratio': 1.333})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'total': 12, 'ratio': 1.0})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 3, 'total': 27, 'ratio': 1.0})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'total': 15, 'ratio': 1.0})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'total': 3, 'ratio': 0.333})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 12, 'ratio': 1.333})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 3, 'total': 24, 'ratio': 1.0})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                 ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "shape",
+  "emit",
+  "digest",
+  "intake"
+ ],
+ "seed": 303612029,
+ "_signature": "7b948eb0c875",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "emit"
+ ],
+ "_shape": {
+  "parser": "parse_lengths",
+  "mappers": [
+   "scale"
+  ],
+  "agg": "total",
+  "fmt": "ratio"
+ }
+}

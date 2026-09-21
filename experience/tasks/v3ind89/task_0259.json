@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0259",
+ "family": "v3",
+ "bug_class": "boundary",
+ "bug_region": "shape",
+ "program": "# region: fold\ndef fold(raw):\n    out = []\n    for tok in raw:\n        try:\n            out.append(float(tok))\n        except ValueError:\n            pass\n    return out\n\n# region: gather\ndef gather(xs, factor=10):\n    return [v * factor for v in xs]\n\n# region: digest\ndef digest(xs, factor=10):\n    return [v * factor for v in xs]\n\n# region: shape\ndef shape(xs):\n    acc = 0\n    out = []\n    for v in xs[:-1]:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: render\ndef render(xs):\n    return {'n': len(xs), 'min': min(xs) if xs else 0, 'span': (max(xs) - min(xs)) if xs else 0}\n\n# region: emit\ndef emit(summary, bar=2):\n    out = dict(summary)\n    out['grade'] = 'high' if summary.get('n', 0) >= bar else 'low'\n    return out\n\n# region: run\ndef run(raw):\n    return emit(render(shape(digest(gather(fold(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'min': 300.0, 'span': 300.0, 'grade': 'high'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'min': 1000.0, 'span': 700.0, 'grade': 'high'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'min': 300.0, 'span': 800.0, 'grade': 'high'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'min': 0, 'span': 0, 'grade': 'low'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'min': 1200.0, 'span': 1300.0, 'grade': 'high'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'min': 0.0, 'span': 0.0, 'grade': 'low'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 600.0, 'span': 1800.0, 'grade': 'high'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'min': 200.0, 'span': 4000.0, 'grade': 'high'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                      ^          ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "fold",
+  "gather",
+  "digest",
+  "shape",
+  "render",
+  "emit"
+ ],
+ "seed": 62247712,
+ "_signature": "37d5ce843592",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "fold"
+ ],
+ "_shape": {
+  "parser": "parse_floats",
+  "mappers": [
+   "scale",
+   "scale",
+   "running"
+  ],
+  "agg": "minspan",
+  "fmt": "grade"
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0202",
+ "family": "v3",
+ "bug_class": "boundary",
+ "bug_region": "gather",
+ "program": "# region: emit\ndef emit(raw):\n    return [len(tok.strip()) for tok in raw if tok.strip()]\n\n# region: gather\ndef gather(xs):\n    acc = 0\n    out = []\n    for v in xs[:-1]:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: intake\ndef intake(xs, factor=10):\n    return [v * factor for v in xs]\n\n# region: digest\ndef digest(xs):\n    return {'n': len(xs), 'min': min(xs) if xs else 0, 'span': (max(xs) - min(xs)) if xs else 0}\n\n# region: sift\ndef sift(summary, name='beta'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return sift(digest(intake(gather(emit(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'min': 10, 'span': 20, 'label': 'BETA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 4, 'min': 20, 'span': 30, 'label': 'BETA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'min': 10, 'span': 30, 'label': 'BETA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 3, 'min': 30, 'span': 60, 'label': 'BETA'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'min': 20, 'span': 30, 'label': 'BETA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'min': 10, 'span': 0, 'label': 'BETA'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 10, 'span': 30, 'label': 'BETA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 3, 'min': 10, 'span': 70, 'label': 'BETA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                   ^          ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "emit",
+  "gather",
+  "intake",
+  "digest",
+  "sift"
+ ],
+ "seed": 808661774,
+ "_signature": "1e7a2b88bacf",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "intake"
+ ],
+ "_shape": {
+  "parser": "parse_lengths",
+  "mappers": [
+   "running",
+   "scale"
+  ],
+  "agg": "minspan",
+  "fmt": "label"
+ }
+}

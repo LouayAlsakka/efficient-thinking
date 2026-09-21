@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0130",
+ "family": "v3",
+ "bug_class": "int_division",
+ "bug_region": "emit",
+ "program": "# region: sift\ndef sift(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.isdigit() and int(s) > 0:\n            out.append(int(s))\n    return out\n\n# region: shape\ndef shape(xs):\n    return [v * v for v in xs]\n\n# region: fold\ndef fold(xs):\n    return [v for v in xs if v % 2 == 0]\n\n# region: digest\ndef digest(xs):\n    n = len(xs)\n    return {'n': n, 'mean': (sum(xs) / n) if n else 0.0, 'max': max(xs) if xs else 0}\n\n# region: emit\ndef emit(summary, bar=2):\n    out = dict(summary)\n    n = summary.get('n', 0)\n    out['ratio'] = round(n // bar, 3) if bar else 0.0\n    return out\n\n# region: run\ndef run(raw):\n    return emit(digest(fold(shape(sift(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 1, 'mean': 4.0, 'max': 4, 'ratio': 0.5})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 1, 'mean': 100.0, 'max': 100, 'ratio': 0.5})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 1, 'mean': 64.0, 'max': 64, 'ratio': 0.5})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'mean': 0.0, 'max': 0, 'ratio': 0.0})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 2, 'mean': 144.0, 'max': 144, 'ratio': 1.0})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'mean': 0.0, 'max': 0, 'ratio': 0.0})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'mean': 36.0, 'max': 36, 'ratio': 2.0})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'mean': 802.0, 'max': 1600, 'ratio': 1.0})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                           ++",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "sift",
+  "shape",
+  "fold",
+  "digest",
+  "emit"
+ ],
+ "seed": 675517446,
+ "_signature": "8385f9248418",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "sift"
+ ],
+ "_shape": {
+  "parser": "parse_positive",
+  "mappers": [
+   "squares",
+   "keep_even"
+  ],
+  "agg": "meanmax",
+  "fmt": "ratio"
+ }
+}

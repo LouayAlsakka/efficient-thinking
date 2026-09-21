@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0300",
+ "family": "v3",
+ "bug_class": "int_division",
+ "bug_region": "gather",
+ "program": "# region: emit\ndef emit(raw):\n    return [len(tok.strip()) for tok in raw if tok.strip()]\n\n# region: render\ndef render(xs, offset=4):\n    return [v + offset for v in xs]\n\n# region: sift\ndef sift(xs, factor=10):\n    return [v * factor for v in xs]\n\n# region: shape\ndef shape(xs):\n    return {'n': len(xs), 'min': min(xs) if xs else 0, 'span': (max(xs) - min(xs)) if xs else 0}\n\n# region: gather\ndef gather(summary, bar=4):\n    out = dict(summary)\n    n = summary.get('n', 0)\n    out['ratio'] = round(n // bar, 3) if bar else 0.0\n    return out\n\n# region: run\ndef run(raw):\n    return gather(shape(sift(render(emit(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'min': 50, 'span': 0, 'ratio': 0.75})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 4, 'min': 50, 'span': 10, 'ratio': 1.0})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'min': 50, 'span': 10, 'ratio': 0.75})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 3, 'min': 70, 'span': 0, 'ratio': 0.75})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'min': 50, 'span': 10, 'ratio': 0.75})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'min': 50, 'span': 0, 'ratio': 0.25})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 50, 'span': 0, 'ratio': 1.0})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 3, 'min': 50, 'span': 40, 'ratio': 0.75})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                               +++",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "emit",
+  "render",
+  "sift",
+  "shape",
+  "gather"
+ ],
+ "seed": 350077812,
+ "_signature": "980dc7beb811",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "render"
+ ],
+ "_shape": {
+  "parser": "parse_lengths",
+  "mappers": [
+   "shift",
+   "scale"
+  ],
+  "agg": "minspan",
+  "fmt": "ratio"
+ }
+}

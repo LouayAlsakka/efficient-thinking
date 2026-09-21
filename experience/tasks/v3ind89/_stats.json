@@ -1,0 +1,52 @@
+{
+ "n": 300,
+ "seed": 89,
+ "gate": {
+  "n": 300,
+  "P0_distinct_signatures": 300,
+  "P0_ratio": 1.0,
+  "P0_largest_group": 1,
+  "P1prime_tasks_with_no_sibling_region": 0,
+  "P1prime_singletons": [],
+  "P2prime_assertion_detail_pct": 100.0,
+  "P2prime_symptom_distinctness": 0.643,
+  "P2_entropy_bits_PRINTED_NEVER_A_BAR": 0.7,
+  "P3_heldout_lookup_pct": 6.7,
+  "distinct_symptoms": 193,
+  "distinct_programs": 300,
+  "bug_region_distribution": {
+   "intake": 35,
+   "emit": 35,
+   "digest": 36,
+   "fold": 48,
+   "render": 30,
+   "shape": 41,
+   "sift": 36,
+   "gather": 39
+  },
+  "bug_class_distribution": {
+   "boundary2": 57,
+   "wrong_agg": 29,
+   "drop_first": 39,
+   "boundary": 24,
+   "comparator": 10,
+   "off_by_one_slice": 44,
+   "int_division": 30,
+   "early_return": 47,
+   "comparator2": 6,
+   "swap_sign": 14
+  },
+  "region_count_distribution": {
+   "4": 111,
+   "5": 129,
+   "6": 60
+  },
+  "red_herring_pct": null,
+  "symptom_uniqueness": 0.643,
+  "attempts": 790,
+  "seed": 89
+ },
+ "sha256_of_tasks_in_order": "6d182631e078cad6dd212c6983863c46b3b1cdc3b147b4a32fa0f1824f4a108c",
+ "regenerate": "python3 et8_env_v3.py gen --n 300 --seed 89 --out <dir>",
+ "P4": "NOT YET RUN \u2014 the set is PROVISIONAL until a baseline reports its outcome spread. A set of programs that are superficially different and behaviourally identical passes P0 and is the previous set with more strings."
+}
