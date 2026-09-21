@@ -23,6 +23,8 @@ sys.path.insert(0, HERE)
 import api_rater as AR
 import human_session as HS
 
+SELECTION = ["pareto"]          # set from --selection; named in every artifact this writes
+
 
 def load_candidates(cache_path, prompts_path, limit=0):
     """poetry_gen.py's cache: one record per brief with `samples`. Scored by the COMMITTED checker."""
@@ -55,7 +57,29 @@ def load_candidates(cache_path, prompts_path, limit=0):
     return out
 
 
-DIMS = ["valid", "meter", "score", "clean"]
+# 理 11741: "the checker's composite `score` is dropped from E2's selection ... Selection =
+# valid ∧ meter, then Pareto on the rest."
+#
+# `score` is e1_score's n_meter + rhyme_ok + mean(iamb)/10 — a COMPOSITE of what `valid` and
+# `meter` already encode. Including it beside its own components made the checker's own ranking a
+# domination axis, in an arm whose purpose is to test that ranking, and drove the Pareto set onto a
+# single candidate in 53-67% of briefs at three policies.
+DIMS = ["valid", "meter", "clean"]
+
+# The ruling has two readable forms and they differ by up to 41 briefs, so both are implemented and
+# the one used is named in the artifact rather than assumed:
+#   "pareto"    single-stage Pareto over DIMS. The literal "drop `score`", and the form the ET-IV
+#               amendment's own words describe ("dominated on EVERY craft/taste dimension").
+#   "two-stage" Pareto on (valid, meter) first, then Pareto on the rest among the survivors.
+# Measured, 7B: pareto n=190 vs two-stage n=149; 3B 210/193; 14B 203/182.
+CRAFT = ["valid", "meter"]
+REST = ["clean"]
+
+
+def select_pareto(candidates, mode="pareto"):
+    if mode == "two-stage":
+        return HS.pareto_prune(HS.pareto_prune(candidates, CRAFT), REST)
+    return HS.pareto_prune(candidates, DIMS)
 
 
 def selectors_for(pair, pareto, rng):
@@ -86,7 +110,7 @@ def build_pair(item, rng):
     see form breakage, which the checker already answers. The pair is drawn from the Pareto set so
     the comparison is between candidates the checker cannot separate.
     """
-    pareto = HS.pareto_prune(item["candidates"], DIMS)
+    pareto = select_pareto(item["candidates"], SELECTION[0])
     if len(pareto) < 2:
         return None, None, None
     by = {c["cand_id"]: c for c in pareto}
@@ -142,7 +166,7 @@ def _selftest():
     cands = [{"cand_id": "c%02d" % i, "text": "p%d" % i, "model": "m",
               "scores": {"valid": i % 2, "meter": i % 3, "score": i * 0.7 % 5, "clean": -(i % 4)}}
              for i in range(8)]
-    pairs = HS.make_ab_pairs(HS.pareto_prune(cands, DIMS), rng)
+    pairs = HS.make_ab_pairs(select_pareto(cands, "pareto"), rng)
     assert pairs, "no pairs to test"
     for R, expect, label in ((_FixedPref(), 1.0, "consistent, no position bias"),
                              (_AlwaysA(), 0.0, "pure position bias")):
@@ -172,9 +196,13 @@ def main():
     ap.add_argument("--rerate-frac", type=float, default=0.25)
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--selection", choices=("pareto", "two-stage"), default="pareto",
+                    help="how 理 11741's 'valid AND meter, then Pareto on the rest' is applied; "
+                         "the choice is recorded in the result file")
     ap.add_argument("--dry", action="store_true", help="fake transport, $0.00, exercises the arm")
     ap.add_argument("--live", action="store_true", help="real calls; needs ANTHROPIC_API_KEY")
     a = ap.parse_args()
+    SELECTION[0] = a.selection
     if a.selftest:
         _selftest(); return
     if not (a.dry or a.live):
@@ -187,7 +215,15 @@ def main():
     items = load_candidates(a.cache, a.prompts, a.limit)
     print("  briefs with >= 2 candidates: %d" % len(items))
     rng = random.Random(a.seed)
-    meter = AR.CostMeter(ledger=a.ledger)
+    # 🔴 A DRY RUN MUST NOT CHARGE THE REAL LEDGER. The meter is deliberately real in --dry so the
+    # accounting path is exercised, but it was writing to the SAME file the live cap reads: after a
+    # handful of dry runs the ledger said $2.16 of $40 spent with zero calls ever sent, and --live
+    # would eventually refuse with a message about a budget nothing had used. The cap must be hard
+    # against real spend and blind to rehearsals.
+    ledger = a.ledger if a.live else (os.path.splitext(a.ledger)[0] + ".DRY.json")
+    meter = AR.CostMeter(ledger=ledger)
+    if not a.live:
+        print("  dry run: metering to %s, NOT the live ledger" % os.path.basename(ledger))
     if a.live:
         key = os.environ.get("ANTHROPIC_API_KEY")
         if not key:
@@ -248,6 +284,10 @@ def main():
         "how_to_read_q": "q is read against self-consistency, not against 1.0: a judge that agrees "
                          "with itself %s of the time cannot agree with anything else more often."
                          % (sc if sc is not None else "<unmeasured>"),
+        "selection_rule": {"mode": a.selection, "dims": DIMS,
+            "ruling": "理 11741 — the composite `score` is dropped from E2's selection",
+            "note": "two readable forms; this run used %r. Measured difference at the 7B: "
+                    "pareto n=190 vs two-stage n=149." % a.selection},
         "pair_construction": "the verifier's top pick against another PARETO-SURVIVING candidate — "
                              "pairing it against a dominated one would measure whether the judge "
                              "can see form breakage, which the checker already answers",
