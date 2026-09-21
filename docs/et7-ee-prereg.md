@@ -49,6 +49,51 @@ the answer in the training set). Three controls at every fit, all three printed:
 v1 of the 8a probe scored 100% held out and PASSED its permutation control; PCA-8 and the subsample
 are what exposed the label sitting in the prompt. That is why all three ship, always.
 
+## 3a. AMENDMENT, made before any episode — the policy-identity confound
+
+*Added after stage 1's cell census (`reasoning/et7_ee_cells.py`, no model, no GPU) and before the
+first judge call. Nothing has been run; this changes the design, not the reading of a result.*
+
+The cells are pairs across POLICIES, and the stronger policy is usually the correct side:
+
+| pair | n | stronger-is-correct |
+|---|---|---|
+| 0.5B / 7B | 155 | **98.1%** |
+| 0.5B / 14B | 160 | 95.0% |
+| 1.5B / 7B | 93 | 96.8% |
+| 1.5B / 14B | 94 | 93.6% |
+| 3B / 7B | 111 | 90.1% |
+| 14B / 3B | 110 | 88.2% |
+| 0.5B / 1.5B | 96 | 82.3% |
+| 0.5B / 3B | 94 | 81.9% |
+| **1.5B / 3B** | **96** | **49.0%** |
+| **14B / 7B** | **41** | **43.9%** |
+
+**A probe that merely detects WHICH MODEL WROTE AN ANSWER would score 82–98% on eight of these ten
+pairs while knowing nothing about correctness.** Answer text carries style; the probe reads the
+judge's state over that text. None of the three registered controls catches this — it is a real
+signal in the representation, not a key copied from the prompt, so permutation collapses it, PCA-8
+may well need the full space for it, and a subsample has plenty of it.
+
+**Three changes, all fixed now:**
+
+1. **The baseline is not 50%.** For each pair it is `max(p, 1−p)` of the table above. Δ is measured
+   against the judge on the same cells, so this does not bias Δ itself — but a probe accuracy
+   reported without it would read as a competence it does not have.
+2. **The PRIMARY cells are the two balanced pairs — 1.5B/3B and 14B/7B, 137 cells over the problems
+   they span.** There, policy identity buys nothing, so a probe that scores must be reading
+   correctness. The other eight pairs are reported as a secondary, confounded stratum and Δ from
+   them is not the headline. ⚠️ 137 cells held out BY PROBLEM is thin, and if the held-out split is
+   too small to carry an interval, that is reported as the arm's limit rather than patched by
+   pooling the confounded pairs back in.
+3. **A FOURTH CONTROL: the policy-identity probe.** Train the same probe, on the same states, to
+   predict which side came from the stronger policy. If it scores near the correctness probe on the
+   confounded pairs, the two are not separable there and that stratum's Δ is withdrawn. Its score on
+   the balanced pairs is the check that the balancing worked.
+
+This is the kind of thing the cell census exists to find. Stage 1 costs no GPU precisely so the arm's
+confounds are visible before its first episode rather than in its results.
+
 ## 4. Readings, fixed before the run
 
 | result | reading |
