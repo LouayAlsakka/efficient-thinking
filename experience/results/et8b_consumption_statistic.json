@@ -1,0 +1,28 @@
+{
+ "document": "ET-8b — the already-found-at-decision-1 statistic 理 §7 requires beside the consumption reading. COMPUTED BEFORE gen2's RESULT EXISTS.",
+ "when": "2026-09-21 15:35Z, while gen2's states were still extracting. Recorded now so it cannot be fitted to the answer it is meant to interpret.",
+ "statistic": "fraction of episodes in which the TRUE bug region had already been hypothesized before decision k, tasks 1-225",
+ "rows": {
+  "base (no head)": {
+   "d2": "43/205 = 21.0%",
+   "d3": "62/193 = 32.1%"
+  },
+  "gen0 CONTAMINATED (withdrawn arm, kept for contrast)": {
+   "d2": "128/128 = 100.0%",
+   "d3": "109/109 = 100.0%"
+  },
+  "gen0 cross-fitted": {
+   "d2": "69/180 = 38.3%",
+   "d3": "68/164 = 41.5%"
+  },
+  "gen1 cross-fitted": {
+   "d2": "69/180 = 38.3%",
+   "d3": "80/164 = 48.8%"
+  }
+ },
+ "why_d2_is_IDENTICAL_and_that_is_expected_not_suspicious": "d2's rate is decided entirely by what happened at decision 1, and at decision 1 nothing has happened yet — the state depends only on the task, so it is the same in every arm. gen1's d1 head is therefore fitted on the same d1 states as gen0's and makes the same picks. The same identity appeared at gen1's fit (d1 40.0% in both). An arm whose d2 rate MOVED would need explaining, not one whose rate did not.",
+ "what_moved": "d3: 41.5% -> 48.8%. By decision 3, gen1 has already put the true region in front of the agent in about half of the surviving episodes, against gen0's four in ten.",
+ "the_reading_registered_in_advance": "if a head CONSUMES the signal its successor needs, this rate climbs with each honest generation. It climbed at d3 between gen0 and gen1. That is consistent with gen1 simply being the better head AND with the consumption mechanism starting to operate; this statistic alone does not separate them. What separates them is gen2's paired result, which is why 理 required the two be read together.",
+ "⚠️_not_a_prediction_of_gen2": "I am not forecasting the outcome from this. The last mechanism I asserted from a monotone pair died on a third point the same morning.",
+ "signed": "Sautee (sha-ta)"
+}
