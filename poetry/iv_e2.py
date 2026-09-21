@@ -116,8 +116,54 @@ def run(items, rater, rng, brief_of):
     return log, selector, collapsed
 
 
+class _FixedPref:
+    """Perfectly consistent, no position bias: always prefers the lower-sorting cand_id."""
+    def __init__(self): self.unparsed = 0
+    def __call__(self, pair, brief=None):
+        return "A" if pair["A"]["cand_id"] < pair["B"]["cand_id"] else "B"
+
+
+class _AlwaysA:
+    """Pure position bias: always picks whatever is shown first."""
+    def __init__(self): self.unparsed = 0
+    def __call__(self, pair, brief=None): return "A"
+
+
+def _selftest():
+    """The order-swap bookkeeping, checked at BOTH extremes.
+
+    Re-rating swaps A and B, so the same CANDIDATE comes back as the other letter and the winner
+    has to be translated before comparing. If that translation is inverted, a perfectly consistent
+    judge scores 0.0 and the arm reports "the judge disagrees with itself half the time" as a
+    finding about the model. One-sided testing cannot catch it: a rater that scores 1.0 under a
+    correct mapping scores 0.0 under an inverted one, and vice versa, so both ends are required.
+    """
+    rng = random.Random(0)
+    cands = [{"cand_id": "c%02d" % i, "text": "p%d" % i, "model": "m",
+              "scores": {"valid": i % 2, "meter": i % 3, "score": i * 0.7 % 5, "clean": -(i % 4)}}
+             for i in range(8)]
+    pairs = HS.make_ab_pairs(HS.pareto_prune(cands, DIMS), rng)
+    assert pairs, "no pairs to test"
+    for R, expect, label in ((_FixedPref(), 1.0, "consistent, no position bias"),
+                             (_AlwaysA(), 0.0, "pure position bias")):
+        log = []
+        for i, p in enumerate(pairs):
+            log.append(HS.log_choice(p, R(p), ts=i)); log[-1]["_pair"] = p
+        rr = []
+        for i, p in enumerate(pairs):
+            w = R({"pair_id": p["pair_id"], "A": p["B"], "B": p["A"]})
+            rr.append({"pair_id": p["pair_id"], "winner": "B" if w == "A" else "A", "ts": 1000 + i})
+        got = HS.self_consistency(log, rr)
+        assert got == expect, "order-swap bookkeeping is wrong: %s gave %s, expected %s" % (
+            label, got, expect)
+        print("  [swap] %-32s self-consistency %.1f  (expected %.1f)" % (label, got, expect))
+    print("  SELFTEST PASSED — the swap maps candidates, not letters. $0.00 spent.")
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true",
+                    help="check the order-swap bookkeeping at both extremes; no model, no spend")
     ap.add_argument("--cache", default=os.path.join(HERE, "cache", "e1_7B.jsonl"))
     ap.add_argument("--prompts", default=os.path.join(HERE, "data", "e1_prompts.jsonl"))
     ap.add_argument("--model", default="claude-fable-5-1")
@@ -129,6 +175,8 @@ def main():
     ap.add_argument("--dry", action="store_true", help="fake transport, $0.00, exercises the arm")
     ap.add_argument("--live", action="store_true", help="real calls; needs ANTHROPIC_API_KEY")
     a = ap.parse_args()
+    if a.selftest:
+        _selftest(); return
     if not (a.dry or a.live):
         raise SystemExit("STOP: pass --dry (fake transport, $0) or --live (real calls).")
 
