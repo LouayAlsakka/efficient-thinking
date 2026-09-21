@@ -1,0 +1,138 @@
+{
+ "document": "ET-IV E2 — Pareto collapse across policies and dimension sets",
+ "why": "53.3% collapse on the 7B halves E2's n. Whether that is the policy or the checker's dimension set decides whether the fix is a different generator or a corrected DIMS.",
+ "no_API_spend": true,
+ "policies": {
+  "3B": {
+   "briefs": 300,
+   "candidates_per_brief": 16.0,
+   "dimension_varies_in_n_briefs": {
+    "score": 299,
+    "clean": 196,
+    "valid": 121,
+    "meter": 240
+   },
+   "briefs_with_no_form_valid_candidate": 178,
+   "collapse_by_dimension_set": {
+    "all four (valid,meter,score,clean)": {
+     "collapse_pct": 66.7,
+     "realizable_n": 100
+    },
+    "no composite (valid,meter,clean)": {
+     "collapse_pct": 30.0,
+     "realizable_n": 210
+    },
+    "craft only (valid,meter)": {
+     "collapse_pct": 28.3,
+     "realizable_n": 215
+    },
+    "with composite, no clean": {
+     "collapse_pct": 83.3,
+     "realizable_n": 50
+    }
+   }
+  },
+  "7B": {
+   "briefs": 300,
+   "candidates_per_brief": 16.0,
+   "dimension_varies_in_n_briefs": {
+    "valid": 213,
+    "meter": 245,
+    "score": 298,
+    "clean": 200
+   },
+   "briefs_with_no_form_valid_candidate": 87,
+   "collapse_by_dimension_set": {
+    "all four (valid,meter,score,clean)": {
+     "collapse_pct": 53.3,
+     "realizable_n": 140
+    },
+    "no composite (valid,meter,clean)": {
+     "collapse_pct": 36.7,
+     "realizable_n": 190
+    },
+    "craft only (valid,meter)": {
+     "collapse_pct": 28.7,
+     "realizable_n": 214
+    },
+    "with composite, no clean": {
+     "collapse_pct": 84.0,
+     "realizable_n": 48
+    }
+   }
+  },
+  "14B": {
+   "briefs": 300,
+   "candidates_per_brief": 16.0,
+   "dimension_varies_in_n_briefs": {
+    "valid": 231,
+    "meter": 273,
+    "score": 299,
+    "clean": 197
+   },
+   "briefs_with_no_form_valid_candidate": 67,
+   "collapse_by_dimension_set": {
+    "all four (valid,meter,score,clean)": {
+     "collapse_pct": 60.0,
+     "realizable_n": 120
+    },
+    "no composite (valid,meter,clean)": {
+     "collapse_pct": 32.3,
+     "realizable_n": 203
+    },
+    "craft only (valid,meter)": {
+     "collapse_pct": 28.3,
+     "realizable_n": 215
+    },
+    "with composite, no clean": {
+     "collapse_pct": 76.7,
+     "realizable_n": 70
+    }
+   }
+  }
+ },
+ "verdict": {
+  "collapse_under_the_current_set_across_policies": {
+   "3B": 66.7,
+   "7B": 53.3,
+   "14B": 60.0
+  },
+  "spread_across_policies_points": 13.4,
+  "drop_from_removing_the_composite_points": {
+   "3B": 36.7,
+   "7B": 16.6,
+   "14B": 27.7
+  },
+  "reading": "the composite explains more than the policy does — removing it drops collapse by 16.6-36.7 points while changing policy moves it 13.4"
+ },
+ "⚠️_method": "these numbers are for 理 to rule on. Choosing a dimension set by the n it yields would be selecting an instrument on its result; the argument for dropping `score` is that it is a COMPOSITE of its own co-dimensions, and it holds regardless of which way the n moves.",
+ "signed": "Sautee (sha-ta)",
+ "🔴_MY_MECHANISM_SENTENCE_IS_WITHDRAWN": {
+  "what_I_said_in_nirai_11734": "'the composite's domination effect gets WORSE as the policy improves' — from 7B 53.3% -> 14B 60.0%, with form-invalid briefs falling 87 -> 67.",
+  "the_prediction_it_made": "a third, WEAKER policy must collapse LEAST. Written down in docs/et4-e2-policy3b-prediction.md at 05:23Z, before the 3B ran, together with the withdrawal condition.",
+  "what_happened": "the 3B collapses MOST: 66.7%. Collapse is U-shaped in policy strength — 3B 66.7 > 14B 60.0 > 7B 53.3 — not monotone. The sentence is withdrawn under the condition I registered for it.",
+  "the_two_predictions_that_DID_hold": "the 3B has by far the most form-invalid briefs (178 of 300), and craft-only collapse is flat across all three policies (28.3 / 28.7 / 28.3). Neither rescues the mechanism."
+ },
+ "🔴_AND_THE_OBVIOUS_REPLACEMENT_FAILS_TOO": {
+  "the_story": "collapse is highest when the BOOLEAN dimensions go uniform — all-invalid at the weak end, all-valid at the strong end — leaving the composite as the only discriminator.",
+  "measured_not_asserted": {
+   "valid constant across candidates": {
+    "3B": 179,
+    "7B": 87,
+    "14B": 69
+   },
+   "meter constant": {
+    "3B": 60,
+    "7B": 55,
+    "14B": 27
+   },
+   "collapse": {
+    "3B": 200,
+    "7B": 160,
+    "14B": 180
+   }
+  },
+  "verdict": "boolean uniformity is MONOTONE in policy strength while collapse is U-SHAPED, so it cannot be what produces the U. Withdrawn before it was published anywhere."
+ },
+ "WHAT_I_ACTUALLY_HAVE": "I do not have a mechanism for the U shape and am not proposing a third story. What is measured, at three policies: the composite drives the collapse. Removing it takes collapse to 30.0 / 36.7 / 32.3 — far lower and far flatter — a drop of 16.6 to 36.7 points, while changing policy moves the current-set number by 13.4. The ruling-relevant conclusion never rested on the mechanism: `score` is n_meter + rhyme_ok + iamb/10, a composite of its own co-dimensions, and that argument is about the dimension set's construction, not about any policy trend."
+}
