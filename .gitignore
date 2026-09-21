@@ -106,3 +106,4 @@ reasoning/data/
 !poetry/preferences/
 !poetry/preferences/*
 !docs/index.html
+!docs/CNAME
