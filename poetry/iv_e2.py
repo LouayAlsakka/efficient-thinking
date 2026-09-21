@@ -200,11 +200,18 @@ def main():
                     help="how 理 11741's 'valid AND meter, then Pareto on the rest' is applied; "
                          "the choice is recorded in the result file")
     ap.add_argument("--dry", action="store_true", help="fake transport, $0.00, exercises the arm")
+    ap.add_argument("--dry-bedrock", action="store_true",
+                    help="dry run through the REAL Bedrock code path with a fake boto client. The "
+                         "generic --dry exercises the arm; this exercises the transport that will "
+                         "actually spend — converse() shape, usage mapping, tool-use refusal — at "
+                         "full scale, for $0.00.")
     ap.add_argument("--live", action="store_true", help="real calls; needs ANTHROPIC_API_KEY")
     a = ap.parse_args()
     SELECTION[0] = a.selection
     if a.selftest:
         _selftest(); return
+    if a.dry_bedrock:
+        a.dry = True
     if not (a.dry or a.live):
         raise SystemExit("STOP: pass --dry (fake transport, $0) or --live (real calls).")
 
@@ -221,14 +228,24 @@ def main():
     # would eventually refuse with a message about a budget nothing had used. The cap must be hard
     # against real spend and blind to rehearsals.
     ledger = a.ledger if a.live else (os.path.splitext(a.ledger)[0] + ".DRY.json")
+    if not a.live and os.path.exists(ledger):
+        # A DRY LEDGER THAT ACCUMULATES ACROSS REHEARSALS ANSWERS THE WRONG QUESTION. The point of a
+        # dry run is "what would THIS arm cost", and a carried-over total reads as this arm's cost
+        # while being the sum of every rehearsal. Truncated per run; the live ledger never is.
+        os.remove(ledger)
     meter = AR.CostMeter(ledger=ledger)
     if not a.live:
-        print("  dry run: metering to %s, NOT the live ledger" % os.path.basename(ledger))
+        print("  dry run: metering to a FRESH %s, NOT the live ledger"
+              % os.path.basename(ledger))
     if a.live:
         key = os.environ.get("ANTHROPIC_API_KEY")
         if not key:
             raise SystemExit("STOP: --live but ANTHROPIC_API_KEY is not set. Nothing was sent.")
         transport = lambda req, **kw: AR.http_transport(req, api_key=key)
+    elif a.dry_bedrock:
+        fb = AR.FakeBedrock(["A", "B"])
+        transport = lambda req, **kw: AR.bedrock_transport(req, client=fb)
+        print("  dry run through the REAL bedrock transport (fake boto client)")
     else:
         transport = AR.FakeTransport(["A", "B"])
     rater = AR.ApiRater(meter, transport, model=a.model)
@@ -269,7 +286,9 @@ def main():
 
     json.dump({
         "document": "ET-IV E2 — blind A/B, one pair per brief, rated by the frontier judge",
-        "mode": "LIVE" if a.live else "DRY (fake transport, $0.00 — not a result)",
+        "mode": ("LIVE" if a.live else
+                 "DRY-BEDROCK (real transport, fake boto client, $0.00 — not a result)"
+                 if a.dry_bedrock else "DRY (fake transport, $0.00 — not a result)"),
         "judge": a.model, "briefs": len(items), "pairs_rated": len(log),
         "unparsed_dropped": rater.unparsed + rater2.unparsed,
         "q_verifier_vs_judge": q,
@@ -291,7 +310,8 @@ def main():
         "pair_construction": "the verifier's top pick against another PARETO-SURVIVING candidate — "
                              "pairing it against a dominated one would measure whether the judge "
                              "can see form breakage, which the checker already answers",
-        "spend_usd_this_ledger": round(meter.spent, 4), "cap_usd": meter.cap,
+        "spend_usd_this_run": round(meter.spent, 4), "cap_usd": meter.cap,
+        "calls_this_run": meter.state["calls"],
         "signed": "Sautee (sha-ta)"}, open(a.out, "w"), indent=1, ensure_ascii=False)
     print("  wrote %s" % a.out)
 
