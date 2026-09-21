@@ -172,7 +172,22 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
             "green": green, "actions": actions, "decisions": decisions_made,
             "tokens_in": total_in, "tokens_out": total_out,
             "first_correct_decision": first_correct,
-            "agent_claims_pass": bool(green)}
+            # `agent_claims_pass` USED TO BE bool(green) -- the VERIFIER's verdict under another
+            # name. docs/et8b-loop-gates.md §3 labels the VII bridge arm by "the agent's OWN
+            # judgment of success ... not the verifier", so an arm reading that field would have
+            # agreed with gen1 BY CONSTRUCTION, and §4's table would have read the tautology as
+            # "the verifier's bits were not what carried the gain". Nothing ever read it, so no
+            # published number was affected; it was a trap, not a live error.
+            #
+            # The loop has no agent-side success signal at all: the harness runs the tests and
+            # feeds the result straight back into the history, so the agent never forms an
+            # independent belief here to record. The claim is collected OFFLINE instead, by
+            # experience/et8b_selfassess.py, which replays each patch state with the verdict
+            # withheld. (Measured there: the agent said "tests_pass": false on 568 of 568 points,
+            # including all 83 where the patch worked, so its 85.4% agreement with the verifier IS
+            # the 85.4% base rate. The arm is closed by that precondition.)
+            "agent_claims_pass": None,
+            "agent_claims_pass_NOTE": "not measured here; see experience/et8b_selfassess.py"}
 
 
 def main():
