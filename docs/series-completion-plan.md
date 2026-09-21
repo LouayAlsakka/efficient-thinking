@@ -57,3 +57,29 @@ A budget in the prompt makes each budget a different agent. Nothing scored by a 
 | X Representation | is language the efficient representation for a reasoner | concept registered; X-a next | after VIII-b is written |
 | XI Communication | is language the efficient channel between two reasoners; a discovery ladder | idea (`efficient-thinking-11-concept.md`) | after X-a; inherits its instruments |
 | XII Skills | a head that chooses which additive skill to bring, from verified history (merging dropped: it changes the intelligence) | idea (`efficient-thinking-12-concept.md`) | first experiment can run beside X-a or XI-a; needs no new field |
+
+## The one question, and the rule for admitting a paper (the author, 2026-09-21)
+
+The series asks one question from every angle: **how much useful capability can a fixed intelligence get per unit of
+computation, and what moves that number?** A paper is admitted only if it is one angle on that question, with the
+intelligence held fixed and the capability externally verified. A paper that changes the intelligence — training a
+better model, merging models — is someone else's programme and is cited, not pursued.
+
+| paper | the angle | the lever |
+|---|---|---|
+| I | search moves along the frontier | inference-time search |
+| II | where search pays and where it cannot | the evaluator's ceiling |
+| III | the price of selecting | an LLM judge against free baselines |
+| IV | search where the verifier is taste | a human, then a frontier model, as evaluator |
+| V | the price of external information | feedback, per bit and per minute |
+| VI | why self-play stops | label fidelity |
+| VII | what a fixed system can get from inside | the elicitation gap |
+| VIII | experience moves the frontier | a read-only prior from verified history |
+| VIII-b | does it move again | accumulation across generations |
+| IX | the cost of not knowing what does not matter | symmetry |
+| X | is language the efficient representation | representation |
+| XI | is language the efficient channel between two | communication |
+| XII | experience chooses which skill to bring | the selector as an experience prior |
+
+Every row holds the intelligence fixed and measures capability against compute. The test for a new idea is one
+sentence in the middle column; if it cannot be written, the idea is not in this series.
