@@ -1,6 +1,6 @@
 # Efficient Thinking X: Machine-Native Representation — concept
 
-> **STATE 2026-09-21: CONCEPT.** Drafted by the author 2026-09-21 and registered by this commit; nothing measured. Reviewed the same day (理, `docs/et10-review.md`): to be run as a ladder X-a … X-d, each rung its own paper, X-a first on harnesses the series already holds.
+> **STATE 2026-09-21: CONCEPT.** Drafted by the author 2026-09-21 and registered by this commit; nothing measured. Ruled the same day: run as a ladder X-a … X-d, one rung per paper, written backward (`et10-series-plan.md`); X-a first, on the chess and debugging harnesses, with a length-matched control.
 
 ## Working title
 
