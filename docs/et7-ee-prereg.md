@@ -117,3 +117,63 @@ The scaling limb needs ≥ 3 judges. Available locally: Qwen2.5 1.5B / 7B / 14B 
   probe found little, and §4's third row exists so that distinction is not quietly lost.
 
 — Sautée (沙汰), for WO-302 box B
+
+## 3b. AMENDMENT, made after the tie-scored run and BEFORE any forced-choice run — the definition of A
+
+*Written 2026-09-22 by R, after an outside reader's objection to draft v0.2. Committed before the measurement it governs.*
+
+**The objection, accepted.** Under §2's definition the 7B judge commits on 46 of 137 primary cells and is 73.9% right
+when it does; the probe is 73.0%. On the cells where the judge speaks, Δ ≈ −0.01. The registered Δ = 0.482 is
+therefore almost entirely 91 ties scored wrong by a rule — a gap between the state and what one prompt format
+extracts, not between the state and what the system can express. The 1.5B judge tying on 98.5% of pairs, and the 14B
+curve being a tie-rate curve, say the same thing. The tie-scored number cannot be the headline.
+
+**A second admission.** §4 registered that a subsample control matching the probe withdraws the Δ. At 7B the
+n = 100 subsample reads 0.730 against a probe of 0.730. Draft v0.1/v0.2 called that "a known property"; by the letter
+of §4 the control fired, and a registered gate is not relaxed after it fails. The tie-scored 7B Δ is WITHDRAWN as a
+claim under the registered reading. The reason the control fired is that at ~110 training cells per fold a 100-row
+subsample is 90% of the data and cannot detect anything; that is a defect of the control's size, not evidence about
+the gap, and it is stated as such — but the withdrawal stands, and the re-measurement below carries controls sized
+for the n it has.
+
+**The definition that will be published.** A is the judge's *forced preference*: at the decision position, the
+log-probability of the token "A" against the token "B", the higher one being the pick. No tie is available to it.
+Two prompt forms are read, both at the same decision position and on the same 137 cells:
+
+- **F2 (primary):** the §3 prompt with the tie option removed ("Reply with EXACTLY one token: A or B."). This is
+  what "expressed" means for a bound about expression.
+- **F1 (check):** the original three-way prompt, reading logit(A) vs logit(B) and ignoring TIE. If F1 and F2
+  disagree by more than 5 points the prompt is doing work and both are reported.
+
+Position bias: the primary reading uses the ordering the probe's states were taken under (each cell's randomised
+order is on disk in `meta.json`); the swapped ordering is also scored and the mean of the two is reported beside the
+primary. P(TIE) under F1 is recorded per cell so the abstention decomposition can be redone on a continuous quantity.
+
+**The probe is unchanged.** Same states, same five folds over problems, same fits; only A changes. Δ_forced is a
+paired quantity per fold: (probe fold accuracy − forced-judge fold accuracy).
+
+**Controls, sized to n = 137.** Permutation ×5 as before. PCA-8 as before, now read against the fold interval: it
+"does not suffice" only if it sits below the probe's fold-interval lower bound, else the reading is "PCA-8 within
+interval — the probe's excess over eight dimensions is not established at this n". Subsample: **n = 30 training rows**
+(about a quarter of a fold's training set); a subsample at that size matching the probe within 0.02 withdraws the Δ.
+Policy-identity probe as in §3a.
+
+**Readings, fixed now.** Per judge, on the primary stratum:
+
+| result | reading |
+|---|---|
+| Δ_forced fold-interval (t, df 4) excludes zero and its lower bound ≥ 0.05 | the elicitation gap is real under the publishable definition — the registered claim, restated under §3b |
+| Δ_forced interval contains zero, or forced judge ≥ probe | **the state and the output agree; the abstention was format.** The registered claim FAILS under the definition that matters. Reported at full prominence, as §4 promised for Δ ≈ 0 |
+| Δ_forced > 0 at 7B but not at 14B | the gap is real and closes with scale under forced choice; §9's "flat probe" reading is re-examined against the forced curve |
+| any §3b control fires | that judge's Δ_forced is withdrawn before anything is said |
+
+**Additional statistic, registered.** Probe accuracy restricted to the cells where the three-way judge tied, and to
+the cells where it committed, from the same fold predictions (requested 2026-09-22, 理 12092). It is descriptive: it
+tells what the tie-scored gap was made of; it does not license a claim on its own.
+
+**What §3b does not change.** The tie-scored A stays in the paper as a secondary reading ("as a selector the judge is
+useless two thirds of the time"), with §6's decomposition. The scaling limb (§5) is re-measured under F2 on the same
+cells at every size, so the curve is measured under the definition that will be published, before the 32B point is
+read.
+
+— R, for E; the run is E's, on the cached states plus one forward pass per cell per judge per prompt form.
