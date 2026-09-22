@@ -1,6 +1,6 @@
 # Efficient Thinking VII: The Elicitation Gap
 ## What a fixed system knows that it does not say — a bound, and its first measurements
-> **STATE 2026-09-22: DRAFT v0.4 — under the definition the paper will publish, the registered claim FAILS at 7B and at 14B.** The first headline (Δ 0.482) was ties scored wrong by a rule and is withdrawn (§5–§6). Pre-registration §3b, committed before the run, redefined \(A\) as the judge's forced preference — logit A against logit B, no tie — and pre-stated both outcomes. The failing one happened: Δ_forced is +0.063 [−0.131, +0.257] at 7B and −0.025 [−0.198, +0.147] at 14B, where the forced judge beats the probe. On this task, what the three-way prompt threw away was recoverable from the logits it was already producing; the abstention was format. One structured residual — the state out-reads the output on the cells where the output abstains, and not elsewhere — is registered as §3d before the arms that can test it (32B, the depth sweep). 1.5B forced is running; the §3c depth sweep, which decides whether the probe column is comparable across sizes at all, runs after it. E-C and E-D are registered and not run; on the two judges measured E-D has no gap to recover. The tie-scored numbers stay in this draft as what was measured, labelled. E-C and E-D are registered and not run; the bound's formal statements are to be verified against textbook forms before publication. Every number below is on disk under `experience/results/` with its command; the reading rules were committed before the run (`docs/et7-ee-prereg.md`, with its §3a amendment). Nothing here is a law; §10 says what is a finding and what is a registration.
+> **STATE 2026-09-22: DRAFT v0.4 — under the definition the paper will publish, the registered claim FAILS at 1.5B, 7B and 14B.** The first headline (Δ 0.482) was ties scored wrong by a rule and is withdrawn (§5–§6). Pre-registration §3b, committed before the run, redefined \(A\) as the judge's forced preference — logit A against logit B, no tie — and pre-stated both outcomes. The failing one happened at all three sizes run: Δ_forced is +0.063 [−0.131, +0.257] at 7B, −0.025 [−0.198, +0.147] at 14B where the forced judge beats the probe, and +0.150 [−0.048, +0.347] at 1.5B against a forced judge that is at chance. On this task, what the three-way prompt threw away was recoverable from the logits it was already producing; the abstention was format. One structured residual — the state out-reads the output on the cells where the output abstains, and not elsewhere — is registered as §3d before the arms that can test it (32B, the depth sweep). The §3c depth sweep, which decides whether the probe column is comparable across sizes at all, runs after it. E-C and E-D are registered and not run; on the two judges measured E-D has no gap to recover. The tie-scored numbers stay in this draft as what was measured, labelled. E-C and E-D are registered and not run; the bound's formal statements are to be verified against textbook forms before publication. Every number below is on disk under `experience/results/` with its command; the reading rules were committed before the run (`docs/et7-ee-prereg.md`, with its §3a amendment). Nothing here is a law; §10 says what is a finding and what is a registration.
 
 **Louay Alsakka** · September 22, 2026 · *draft v0.4*
 
@@ -41,7 +41,7 @@ on labels no internal procedure has. On the two judges measured the room is not 
 | the bound | internal computation cannot raise \(I(T;W)\); realised accuracy rises toward \(A^*(W)\), never through it | §2 |
 | the gap, defined | \(\Delta = A^* - A\); the probe lower-bounds \(A^*\), so \(\Delta \ge A_{\text{probe}} - A\); \(A\) is the judge's own pick with a tie scored wrong | §3 |
 | the gap, tie-scored — WITHDRAWN as headline | judge 24.8% (A/B/tie), probe 73.0% [0.62, 0.84] on 137 balanced pairs; on the 46 committed cells judge 73.9% ≈ probe; the difference is the tie rule | §5, §6 |
-| the gap, forced-choice — the registered claim FAILS | 7B: forced 0.667 vs probe 0.730, Δ +0.063 [−0.131, +0.257]; 14B: forced 0.697 vs probe 0.672, Δ −0.025 [−0.198, +0.147]; same states, same folds, controls at real sizes | §5, §10 |
+| the gap, forced-choice — the registered claim FAILS at every size | 1.5B: forced at chance, Δ +0.150 [−0.048, +0.347] (a floor, not a gap); 7B: forced 0.667 vs probe 0.730, Δ +0.063 [−0.131, +0.257]; 14B: forced 0.697 vs probe 0.672, Δ −0.025 [−0.198, +0.147]; same states, same folds, controls at real sizes | §5, §10 |
 | the residual, registered | where the output abstains the state out-reads it (7B +8.8, 14B +33 on tied cells) and where it commits it does not (7B 0, 14B −16); §3d, to be tested at 32B and matched depth | §6 |
 | the controls | permutation collapses (7B pooled 0.488, 14B 0.512); PCA-8 (7B 0.658, 14B 0.587) sits inside the probe's fold interval — the probe's excess over eight dimensions is not established; subsample at 30 of ~110 rows sits 10 points under the probe and does not fire (the first run's "subsample" had been the probe itself); policy identity 0.574 / 0.648, descriptive on the balanced stratum | §5 |
 | the confounded stratum, withdrawn | 913 pairs where policy identity predicts correctness: PCA-8 matches the probe, identity probe 0.826 — not a finding | §5 |
@@ -49,7 +49,7 @@ on labels no internal procedure has. On the two judges measured the room is not 
 | what it is not | answer length (43.1%, below chance); policy identity (0.577, uninformative by construction) | §7 |
 | the same shape in Paper VIII | the frozen model's own log-probability preference 20.3% where a probe on its state reads 66.7% | §8 |
 | scale, tie-scored | probe 0.68 · 0.73 · 0.67 across 1.5B–14B at absolute layer 18 — which is 64%, 64% and 37.5% of depth, so "flat" is not yet a controlled comparison (prereg §3c); tie rate 98.5% → 66.4% → 26.3%; the curve is a tie-rate curve; re-measured under forced choice at matched depth | §9 |
-| not yet measured | 1.5B forced (running); depth sweep §3c; 32B; §3d on fresh cells; E-C; E-D | §10, §12 |
+| not yet measured | depth sweep §3c (running); 32B; §3d on fresh cells; E-C; E-D | §10, §12 |
 
 ## 1. The question
 
@@ -155,10 +155,17 @@ with tie ignored as a check; both orderings scored):
 
 | judge | probe | forced \(A\) (F2) | Δ_forced, fold interval | F1 − F2 | swap gap | tie-scored \(A\) |
 |---|---:|---:|---:|---:|---:|---:|
+| 1.5B | 0.677 | 0.528 (mean of orderings 0.509 [0.46, 0.56]) | +0.150 [−0.048, +0.347] | — | tracks label side, r = 0.86 | 0.008 |
 | 7B | 0.730 [0.62, 0.84] | 0.667 [0.55, 0.78] | **+0.063 [−0.131, +0.257]** | 2.3 pts | 0.5 pts | 0.246 |
 | 14B | 0.672 [0.55, 0.79] | 0.697 | **−0.025 [−0.198, +0.147]** | 0.1 pts | 5.0 pts | 0.557 |
 
-Both intervals contain zero; at 14B the forced judge is above the probe. The forced reading is not a broken
+All three intervals contain zero; at 14B the forced judge is above the probe. The 1.5B row is the largest number in
+the column and the emptiest: its forced accuracy averaged over both orderings is at chance, its per-fold accuracy is
+predicted by which side the correct answer happened to be on (r = 0.86 against the fold's label balance; −0.03 at 7B),
+and its two orderings sum to about one, the arithmetic of a near-constant letter. A gap measured against a judge at
+chance is the probe's accuracy minus a half and says nothing about elicitation. That row is the floor of the table,
+not its largest gap; the direct check, the forced pick distribution, is not yet in the artefact and is re-emitted
+after the depth sweep. The forced reading is not a broken
 instrument — at 7B it sits fifteen points above the majority baseline — it simply does not read worse than the probe.
 Neither prompt form does the work (F1 and F2 within the 5-point clause), and position bias, five points at 14B, moves
 the forced judge further above the probe on the mean-order reading. Controls at their real sizes: permutation
@@ -274,7 +281,7 @@ a bigger judge does not raise the ceiling, it starts nearer to it.
 
 | prediction (registered before the run) | outcome |
 |---|---|
-| E-E: \(\Delta > 0\) and material — the judge's representations know more than its judgments express | **Withdrawn under the tie-scored definition** (the gap was the tie rule, §5–§6; and its subsample control never ran). **FAILS under the forced-choice definition** (prereg §3b) at 7B, interval [−0.131, +0.257] containing zero, and at 14B, forced judge above the probe. 1.5B and 32B pending |
+| E-E: \(\Delta > 0\) and material — the judge's representations know more than its judgments express | **Withdrawn under the tie-scored definition** (the gap was the tie rule, §5–§6; and its subsample control never ran). **FAILS under the forced-choice definition** (prereg §3b) at 1.5B (forced judge at chance), 7B (interval [−0.131, +0.257]) and 14B (forced judge above the probe). 32B pending |
 | E-E: \(\Delta\) shrinks with judge scale slower than \(A\) rises | **Fails under the tie-scored definition** — the curve is a tie-rate curve (§9). **Moot under forced choice** at the two sizes measured, where \(\Delta\) is not distinguishable from zero at either |
 | §3d: the state out-reads the output on abstained cells only | **Registered after 7B/14B were seen, not scored on them.** Scored at 32B and at matched depth |
 | E-D: coherence training raises \(q\) by a real, bounded amount, the residual being what only external signal fixes | **Not run, and on the two judges measured it has no gap to recover.** If §3d holds, its target is the abstained cells only |
@@ -338,7 +345,7 @@ was how much a fixed intelligence can get from inside. On this task, the answer 
 states and fit) and its pre-registration `docs/et7-ee-prereg.md`; the judging cells are Paper III's
 (`reasoning/et7_ee_cells.json`, built by `et7_ee_cells.py`); results `experience/results/et7_ee_RESULT.json` (the
 five-fold evaluation at 7B), `et7_ee_foldwise.json` (the fold-wise probe numbers and interval), `et7_ee_scaling.json`
-(1.5B, 7B, 14B, tie-scored), `et7_ee_tie_split.json` (the fold predictions split by the judge's tie), `et7_ee_forced_7B.json` and `et7_ee_forced_14B.json` (the §3b forced arms, run under 5afdf01) and `et7_ee_holdout25.json` (the withdrawn first pass), each carrying the judge id, layer, cell counts
+(1.5B, 7B, 14B, tie-scored), `et7_ee_tie_split.json` (the fold predictions split by the judge's tie), `et7_ee_forced.json` with its three per-judge files (the §3b forced arms, run under 5afdf01) and `et7_ee_holdout25.json` (the withdrawn first pass), each carrying the judge id, layer, cell counts
 and every control. States are persisted per cell.
 
 ## References
