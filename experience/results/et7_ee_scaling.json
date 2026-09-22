@@ -1,0 +1,48 @@
+{
+ "document": "ET-VII E-E — THE SCALING CURVE. The registered second prediction FAILS, and why it fails is the finding.",
+ "prereg": "docs/efficient-thinking-7-concept.md:74-78 — 'Δ > 0 and material' AND 'Δ shrinks with judge scale slower than A rises'",
+ "evaluation": "5-fold CV over PROBLEMS, all 137 primary cells scored at every scale; balanced pairs only (policy identity carries no information about correctness there)",
+ "THE_CURVE": {
+  "1.5B": {
+   "TIE_pct": 98.5,
+   "A": 0.007,
+   "A_star": 0.679,
+   "delta": 0.672,
+   "PCA_8": 0.635
+  },
+  "7B": {
+   "TIE_pct": 66.4,
+   "A": 0.248,
+   "A_star": 0.73,
+   "delta": 0.482,
+   "PCA_8": 0.657
+  },
+  "14B": {
+   "TIE_pct": 26.3,
+   "A": 0.562,
+   "A_star": 0.672,
+   "delta": 0.109,
+   "PCA_8": 0.584
+  }
+ },
+ "🔴_THE_REGISTERED_PREDICTION_FAILS": {
+  "registered": "Δ shrinks with judge scale SLOWER than A rises",
+  "measured": "across 1.5B -> 14B, A rises +0.555 and Δ shrinks -0.563. Δ shrinks slightly FASTER, and essentially in lockstep.",
+  "verdict": "the second half of the concept's registration is NOT confirmed. Reported as a failed prediction, not quietly dropped."
+ },
+ "🔑_WHY_IT_FAILS_IS_THE_RESULT": {
+  "A_star_is_FLAT": "0.679 · 0.730 · 0.672 across a ~10x parameter range — within 0.06, with no trend",
+  "A_rises_steeply": "0.007 · 0.248 · 0.562",
+  "TIE_collapses": "98.5% · 66.4% · 26.3%",
+  "the_sentence": "scale does not make the judge KNOW more — the probe reads about the same amount from a 1.5B state as from a 14B one. Scale makes the judge SAY more. The elicitation gap closes because abstention falls, not because the representation improves.",
+  "why_the_prediction_had_to_fail": "if A* is constant then Δ = A* − A moves exactly opposite to A, so 'Δ shrinks slower than A rises' is arithmetically impossible. The concept assumed scale would raise A* too. On this range it does not."
+ },
+ "what_this_does_to_E_D": "E-D trains a judge against its own incoherence with no external labels. If the headroom at every scale is abstention rather than knowledge, E-D's target is the ABSTENTION and its ceiling is A* — which is flat, so a bigger judge does not raise the ceiling, it only starts nearer it. That is a sharper cross-registration than 'E-D's gains must not exceed E-E's Δ'.",
+ "⚠️_BOUNDS": [
+  "ONE MODEL FAMILY: Qwen2.5 Instruct 4-bit at 1.5B / 7B / 14B. A flat A* across one family's scale range is not a claim about scale in general.",
+  "One layer (18) at every scale. A larger model's best probe layer may not be the same fraction of its depth, and I did not sweep layers — so A* is a lower bound that may be tighter at 14B than at 1.5B.",
+  "137 cells, 5-fold CV. The trend across three points is clear; each point's interval is not computed here.",
+  "4-bit quantisation at every scale."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
