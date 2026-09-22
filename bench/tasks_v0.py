@@ -93,7 +93,19 @@ def main():
         staff_opts = roster if picks_staff else [None]
         for si, staff in enumerate(staff_opts):
             for di, day in enumerate(days if picks_day else days[:1]):
+                # RESPECT duration_min: a 60-minute offer on a 30-minute grid cannot start in the
+                # last slot before closing. v0 could never show this — one offer, 30 min, 30-min
+                # grid — and v1's dry-clean exposed it: 6 of 396 slot-offer pairs a week would run
+                # past closing, and the engine agrees (庭 measured 242 / 231 / 242 bookable, the
+                # 231 being exactly one lost slot a day). A task list that names a slot the engine
+                # refuses is a task the scripted user cannot complete, and §4 would read that as
+                # the WORLD being broken.
                 sl = slots_for(hours, day["weekday"], grid) if picks_time else [None]
+                if picks_time:
+                    dm = offer.get("duration_min") or grid
+                    close_min = hours[day["weekday"]][1] * 60
+                    sl = [t_ for t_ in sl
+                          if int(t_[:2]) * 60 + int(t_[3:]) + dm <= close_min]
                 for ti, t in enumerate(sl):
                     targets.append({"offer": offer, "offer_index": oi,
                                     "staff": staff, "staff_index": si,
@@ -175,7 +187,10 @@ def main():
         "what_varies": ("only DEPTH — which of 3 staff, how far down the open-day strip, and how far "
                         "into the day's %d slots. Those are recorded per task because they are the "
                         "only thing a predicted head could exploit." % len(slots_for(hours, days[0]["weekday"], grid))),
-        "stratified_on": "(staff_index, min(open_day_index,3), slot third)",
+        "stratified_on": "(offer_index, staff_index, min(open_day_index,3), slot third)",
+        "duration_respected": ("slots whose start + the offer's duration_min runs past closing are "
+                               "not offered as targets; v1's 60-minute dry-clean on a 30-minute grid "
+                               "loses the last slot of each day, which is what the engine reports too"),
         "tasks": tasks,
         "verified_against_running_ui": ("the arg shapes are read from the bench's own dispatch calls in "
                                        "src/main.tsx, not inferred from the fixture: day takes a date "

@@ -1,0 +1,6135 @@
+{
+ "document": "WO-312 — scripted task list v0, quick-cuts.chelsea",
+ "prereg": "docs/wo312-measurement-prereg.md",
+ "space_file": "fresh-fold-laundry_space.json",
+ "space_md5": "277b180e0498bcbe64dc902feaf605be",
+ "reference_date": "2026-09-22",
+ "reference_date_is_today": true,
+ "open_days_offered": 7,
+ "seed": 312,
+ "n_tasks": 100,
+ "n_reachable_targets": 455,
+ "offer_count": 3,
+ "roster": [],
+ "path_shape_from_transaction": {
+  "picks_staff": false,
+  "picks_day": true,
+  "picks_time": true,
+  "granularity": "slot",
+  "resource_kind": "none",
+  "resource_select": "auto"
+ },
+ "OPTIMAL_TAPS_IS_CONSTANT": {
+  "values_present": [
+   4
+  ],
+  "why": "one offer means one path: offer -> staff -> day -> slot -> identity -> submit. Taps-to-goal has no variance across tasks for an arm that navigates correctly, so it cannot separate two correct arms on this venue. Registered before the run: hit@N and seconds-to-goal carry the signal here; taps-to-goal becomes a discriminating measure only on a second venue with more than one offer."
+ },
+ "what_varies": "only DEPTH — which of 3 staff, how far down the open-day strip, and how far into the day's 22 slots. Those are recorded per task because they are the only thing a predicted head could exploit.",
+ "stratified_on": "(offer_index, staff_index, min(open_day_index,3), slot third)",
+ "duration_respected": "slots whose start + the offer's duration_min runs past closing are not offered as targets; v1's 60-minute dry-clean on a 30-minute grid loses the last slot of each day, which is what the engine reports too",
+ "tasks": [
+  {
+   "task_id": "qc-001",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 09:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "09:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:00",
+     "args": {
+      "slot": "09:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 2,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.095
+   }
+  },
+  {
+   "task_id": "qc-002",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 12:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 9,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.429
+   }
+  },
+  {
+   "task_id": "qc-003",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 16:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "16:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:00",
+     "args": {
+      "slot": "16:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 16,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.762
+   }
+  },
+  {
+   "task_id": "qc-004",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 09:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "09:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:00",
+     "args": {
+      "slot": "09:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 2,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.095
+   }
+  },
+  {
+   "task_id": "qc-005",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 12:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "12:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:00",
+     "args": {
+      "slot": "12:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 8,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.381
+   }
+  },
+  {
+   "task_id": "qc-006",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 15:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "15:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "15:30",
+     "args": {
+      "slot": "15:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 15,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.714
+   }
+  },
+  {
+   "task_id": "qc-007",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 10:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "10:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:30",
+     "args": {
+      "slot": "10:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 5,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.238
+   }
+  },
+  {
+   "task_id": "qc-008",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 14:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "14:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:30",
+     "args": {
+      "slot": "14:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 13,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.619
+   }
+  },
+  {
+   "task_id": "qc-009",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 18:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "18:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "18:30",
+     "args": {
+      "slot": "18:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 21,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 1.0
+   }
+  },
+  {
+   "task_id": "qc-010",
+   "goal": "Book Wash & Fold on 2026-09-29 (tue) at 11:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-29",
+    "weekday": "tue",
+    "slot": "11:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-29",
+     "args": {
+      "day": "2026-09-29"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "11:30",
+     "args": {
+      "slot": "11:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 6,
+    "slot_index": 7,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.333
+   }
+  },
+  {
+   "task_id": "qc-011",
+   "goal": "Book Wash & Fold on 2026-09-26 (sat) at 13:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-26",
+    "weekday": "sat",
+    "slot": "13:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-26",
+     "args": {
+      "day": "2026-09-26"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "13:00",
+     "args": {
+      "slot": "13:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 4,
+    "slot_index": 10,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.476
+   }
+  },
+  {
+   "task_id": "qc-012",
+   "goal": "Book Wash & Fold on 2026-09-29 (tue) at 16:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-29",
+    "weekday": "tue",
+    "slot": "16:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-29",
+     "args": {
+      "day": "2026-09-29"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:00",
+     "args": {
+      "slot": "16:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 6,
+    "slot_index": 16,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.762
+   }
+  },
+  {
+   "task_id": "qc-013",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 09:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "09:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:30",
+     "args": {
+      "slot": "09:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 3,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.15
+   }
+  },
+  {
+   "task_id": "qc-014",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 14:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "14:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:00",
+     "args": {
+      "slot": "14:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 12,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.6
+   }
+  },
+  {
+   "task_id": "qc-015",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 15:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "15:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "15:00",
+     "args": {
+      "slot": "15:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 14,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.7
+   }
+  },
+  {
+   "task_id": "qc-016",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 08:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "08:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "08:00",
+     "args": {
+      "slot": "08:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 0,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.0
+   }
+  },
+  {
+   "task_id": "qc-017",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 12:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 9,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.45
+   }
+  },
+  {
+   "task_id": "qc-018",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 16:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "16:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:00",
+     "args": {
+      "slot": "16:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 16,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.8
+   }
+  },
+  {
+   "task_id": "qc-019",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 09:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "09:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:00",
+     "args": {
+      "slot": "09:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 2,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.1
+   }
+  },
+  {
+   "task_id": "qc-020",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 14:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "14:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:30",
+     "args": {
+      "slot": "14:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 13,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.65
+   }
+  },
+  {
+   "task_id": "qc-021",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 16:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "16:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:00",
+     "args": {
+      "slot": "16:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 16,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.8
+   }
+  },
+  {
+   "task_id": "qc-022",
+   "goal": "Book Dry Clean (per garment) on 2026-09-28 (mon) at 11:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-28",
+    "weekday": "mon",
+    "slot": "11:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-28",
+     "args": {
+      "day": "2026-09-28"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "11:00",
+     "args": {
+      "slot": "11:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 5,
+    "slot_index": 6,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.3
+   }
+  },
+  {
+   "task_id": "qc-023",
+   "goal": "Book Dry Clean (per garment) on 2026-09-25 (fri) at 13:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-25",
+    "weekday": "fri",
+    "slot": "13:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-25",
+     "args": {
+      "day": "2026-09-25"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "13:00",
+     "args": {
+      "slot": "13:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 3,
+    "slot_index": 10,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.5
+   }
+  },
+  {
+   "task_id": "qc-024",
+   "goal": "Book Dry Clean (per garment) on 2026-09-29 (tue) at 16:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-29",
+    "weekday": "tue",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-29",
+     "args": {
+      "day": "2026-09-29"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 6,
+    "slot_index": 17,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.85
+   }
+  },
+  {
+   "task_id": "qc-025",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 08:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "08:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "08:30",
+     "args": {
+      "slot": "08:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 1,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.048
+   }
+  },
+  {
+   "task_id": "qc-026",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 14:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "14:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:00",
+     "args": {
+      "slot": "14:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 12,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.571
+   }
+  },
+  {
+   "task_id": "qc-027",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 16:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "16:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:00",
+     "args": {
+      "slot": "16:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 16,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.762
+   }
+  },
+  {
+   "task_id": "qc-028",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-23 (wed) at 08:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "08:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "08:00",
+     "args": {
+      "slot": "08:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 0,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.0
+   }
+  },
+  {
+   "task_id": "qc-029",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-23 (wed) at 12:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 9,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.429
+   }
+  },
+  {
+   "task_id": "qc-030",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-23 (wed) at 17:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "17:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "17:30",
+     "args": {
+      "slot": "17:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 19,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.905
+   }
+  },
+  {
+   "task_id": "qc-031",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-24 (thu) at 11:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "11:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "11:30",
+     "args": {
+      "slot": "11:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 7,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.333
+   }
+  },
+  {
+   "task_id": "qc-032",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-24 (thu) at 14:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "14:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:30",
+     "args": {
+      "slot": "14:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 13,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.619
+   }
+  },
+  {
+   "task_id": "qc-033",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-24 (thu) at 16:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 17,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.81
+   }
+  },
+  {
+   "task_id": "qc-034",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-26 (sat) at 10:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-26",
+    "weekday": "sat",
+    "slot": "10:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-26",
+     "args": {
+      "day": "2026-09-26"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:30",
+     "args": {
+      "slot": "10:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 4,
+    "slot_index": 5,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.238
+   }
+  },
+  {
+   "task_id": "qc-035",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-26 (sat) at 12:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-26",
+    "weekday": "sat",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-26",
+     "args": {
+      "day": "2026-09-26"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 4,
+    "slot_index": 9,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.429
+   }
+  },
+  {
+   "task_id": "qc-036",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-26 (sat) at 16:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-26",
+    "weekday": "sat",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-26",
+     "args": {
+      "day": "2026-09-26"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 4,
+    "slot_index": 17,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.81
+   }
+  },
+  {
+   "task_id": "qc-037",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 10:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "10:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:30",
+     "args": {
+      "slot": "10:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 5,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.238
+   }
+  },
+  {
+   "task_id": "qc-038",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 13:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "13:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "13:30",
+     "args": {
+      "slot": "13:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 11,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.524
+   }
+  },
+  {
+   "task_id": "qc-039",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 15:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "15:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "15:30",
+     "args": {
+      "slot": "15:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 15,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.714
+   }
+  },
+  {
+   "task_id": "qc-040",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 11:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "11:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "11:30",
+     "args": {
+      "slot": "11:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 7,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.333
+   }
+  },
+  {
+   "task_id": "qc-041",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 12:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 9,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.429
+   }
+  },
+  {
+   "task_id": "qc-042",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 17:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "17:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "17:00",
+     "args": {
+      "slot": "17:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 18,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.857
+   }
+  },
+  {
+   "task_id": "qc-043",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 08:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "08:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "08:30",
+     "args": {
+      "slot": "08:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 1,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.048
+   }
+  },
+  {
+   "task_id": "qc-044",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 15:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "15:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "15:00",
+     "args": {
+      "slot": "15:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 14,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.667
+   }
+  },
+  {
+   "task_id": "qc-045",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 16:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "16:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:00",
+     "args": {
+      "slot": "16:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 16,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.762
+   }
+  },
+  {
+   "task_id": "qc-046",
+   "goal": "Book Wash & Fold on 2026-09-28 (mon) at 10:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-28",
+    "weekday": "mon",
+    "slot": "10:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-28",
+     "args": {
+      "day": "2026-09-28"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:30",
+     "args": {
+      "slot": "10:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 5,
+    "slot_index": 5,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.238
+   }
+  },
+  {
+   "task_id": "qc-047",
+   "goal": "Book Wash & Fold on 2026-09-25 (fri) at 14:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-25",
+    "weekday": "fri",
+    "slot": "14:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-25",
+     "args": {
+      "day": "2026-09-25"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:30",
+     "args": {
+      "slot": "14:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 3,
+    "slot_index": 13,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.619
+   }
+  },
+  {
+   "task_id": "qc-048",
+   "goal": "Book Wash & Fold on 2026-09-25 (fri) at 18:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-25",
+    "weekday": "fri",
+    "slot": "18:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-25",
+     "args": {
+      "day": "2026-09-25"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "18:30",
+     "args": {
+      "slot": "18:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 3,
+    "slot_index": 21,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 1.0
+   }
+  },
+  {
+   "task_id": "qc-049",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 11:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "11:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "11:00",
+     "args": {
+      "slot": "11:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 6,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.3
+   }
+  },
+  {
+   "task_id": "qc-050",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 12:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 9,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.45
+   }
+  },
+  {
+   "task_id": "qc-051",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 16:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 17,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.85
+   }
+  },
+  {
+   "task_id": "qc-052",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 10:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "10:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:30",
+     "args": {
+      "slot": "10:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 5,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.25
+   }
+  },
+  {
+   "task_id": "qc-053",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 12:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "12:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:00",
+     "args": {
+      "slot": "12:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 8,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.4
+   }
+  },
+  {
+   "task_id": "qc-054",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 17:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "17:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "17:00",
+     "args": {
+      "slot": "17:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 18,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.9
+   }
+  },
+  {
+   "task_id": "qc-055",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 10:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "10:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:30",
+     "args": {
+      "slot": "10:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 5,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.25
+   }
+  },
+  {
+   "task_id": "qc-056",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 12:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 9,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.45
+   }
+  },
+  {
+   "task_id": "qc-057",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 15:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "15:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "15:30",
+     "args": {
+      "slot": "15:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 15,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.75
+   }
+  },
+  {
+   "task_id": "qc-058",
+   "goal": "Book Dry Clean (per garment) on 2026-09-26 (sat) at 10:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-26",
+    "weekday": "sat",
+    "slot": "10:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-26",
+     "args": {
+      "day": "2026-09-26"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:00",
+     "args": {
+      "slot": "10:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 4,
+    "slot_index": 4,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.2
+   }
+  },
+  {
+   "task_id": "qc-059",
+   "goal": "Book Dry Clean (per garment) on 2026-09-29 (tue) at 12:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-29",
+    "weekday": "tue",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-29",
+     "args": {
+      "day": "2026-09-29"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 6,
+    "slot_index": 9,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.45
+   }
+  },
+  {
+   "task_id": "qc-060",
+   "goal": "Book Dry Clean (per garment) on 2026-09-25 (fri) at 16:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-25",
+    "weekday": "fri",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-25",
+     "args": {
+      "day": "2026-09-25"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 3,
+    "slot_index": 17,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.85
+   }
+  },
+  {
+   "task_id": "qc-061",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 09:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "09:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:00",
+     "args": {
+      "slot": "09:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 2,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.095
+   }
+  },
+  {
+   "task_id": "qc-062",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 12:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "12:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:00",
+     "args": {
+      "slot": "12:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 8,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.381
+   }
+  },
+  {
+   "task_id": "qc-063",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 16:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 17,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.81
+   }
+  },
+  {
+   "task_id": "qc-064",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-23 (wed) at 10:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "10:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:00",
+     "args": {
+      "slot": "10:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 4,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.19
+   }
+  },
+  {
+   "task_id": "qc-065",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-23 (wed) at 12:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "12:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:00",
+     "args": {
+      "slot": "12:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 8,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.381
+   }
+  },
+  {
+   "task_id": "qc-066",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-23 (wed) at 17:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "17:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "17:00",
+     "args": {
+      "slot": "17:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 18,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.857
+   }
+  },
+  {
+   "task_id": "qc-067",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-24 (thu) at 08:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "08:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "08:00",
+     "args": {
+      "slot": "08:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 0,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.0
+   }
+  },
+  {
+   "task_id": "qc-068",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-24 (thu) at 13:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "13:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "13:30",
+     "args": {
+      "slot": "13:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 11,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.524
+   }
+  },
+  {
+   "task_id": "qc-069",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-24 (thu) at 17:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "17:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "17:30",
+     "args": {
+      "slot": "17:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 19,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.905
+   }
+  },
+  {
+   "task_id": "qc-070",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-28 (mon) at 10:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-28",
+    "weekday": "mon",
+    "slot": "10:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-28",
+     "args": {
+      "day": "2026-09-28"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:30",
+     "args": {
+      "slot": "10:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 5,
+    "slot_index": 5,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.238
+   }
+  },
+  {
+   "task_id": "qc-071",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-26 (sat) at 14:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-26",
+    "weekday": "sat",
+    "slot": "14:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-26",
+     "args": {
+      "day": "2026-09-26"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:30",
+     "args": {
+      "slot": "14:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 4,
+    "slot_index": 13,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.619
+   }
+  },
+  {
+   "task_id": "qc-072",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-25 (fri) at 15:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-25",
+    "weekday": "fri",
+    "slot": "15:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-25",
+     "args": {
+      "day": "2026-09-25"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "15:30",
+     "args": {
+      "slot": "15:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 3,
+    "slot_index": 15,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.714
+   }
+  },
+  {
+   "task_id": "qc-073",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 09:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "09:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:30",
+     "args": {
+      "slot": "09:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 3,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.143
+   }
+  },
+  {
+   "task_id": "qc-074",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 14:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "14:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:30",
+     "args": {
+      "slot": "14:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 13,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.619
+   }
+  },
+  {
+   "task_id": "qc-075",
+   "goal": "Book Wash & Fold on 2026-09-22 (tue) at 16:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 17,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.81
+   }
+  },
+  {
+   "task_id": "qc-076",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 08:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "08:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "08:00",
+     "args": {
+      "slot": "08:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 0,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.0
+   }
+  },
+  {
+   "task_id": "qc-077",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 13:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "13:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "13:30",
+     "args": {
+      "slot": "13:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 11,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.524
+   }
+  },
+  {
+   "task_id": "qc-078",
+   "goal": "Book Wash & Fold on 2026-09-23 (wed) at 16:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "16:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:00",
+     "args": {
+      "slot": "16:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 16,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.762
+   }
+  },
+  {
+   "task_id": "qc-079",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 11:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "11:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "11:30",
+     "args": {
+      "slot": "11:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 7,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.333
+   }
+  },
+  {
+   "task_id": "qc-080",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 14:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "14:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:00",
+     "args": {
+      "slot": "14:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 12,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.571
+   }
+  },
+  {
+   "task_id": "qc-081",
+   "goal": "Book Wash & Fold on 2026-09-24 (thu) at 18:00",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "18:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "18:00",
+     "args": {
+      "slot": "18:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 20,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.952
+   }
+  },
+  {
+   "task_id": "qc-082",
+   "goal": "Book Wash & Fold on 2026-09-25 (fri) at 09:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-25",
+    "weekday": "fri",
+    "slot": "09:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-25",
+     "args": {
+      "day": "2026-09-25"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:30",
+     "args": {
+      "slot": "09:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 3,
+    "slot_index": 3,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.143
+   }
+  },
+  {
+   "task_id": "qc-083",
+   "goal": "Book Wash & Fold on 2026-09-29 (tue) at 12:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-29",
+    "weekday": "tue",
+    "slot": "12:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-29",
+     "args": {
+      "day": "2026-09-29"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "12:30",
+     "args": {
+      "slot": "12:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 6,
+    "slot_index": 9,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.429
+   }
+  },
+  {
+   "task_id": "qc-084",
+   "goal": "Book Wash & Fold on 2026-09-26 (sat) at 18:30",
+   "target": {
+    "offer_id": "wash-and-fold",
+    "staff": null,
+    "date": "2026-09-26",
+    "weekday": "sat",
+    "slot": "18:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Wash & Fold",
+     "args": {
+      "offer_id": "wash-and-fold"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-26",
+     "args": {
+      "day": "2026-09-26"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "18:30",
+     "args": {
+      "slot": "18:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 0,
+    "staff_index": 0,
+    "open_day_index": 4,
+    "slot_index": 21,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 1.0
+   }
+  },
+  {
+   "task_id": "qc-085",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 09:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "09:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:00",
+     "args": {
+      "slot": "09:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 2,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.1
+   }
+  },
+  {
+   "task_id": "qc-086",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 13:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "13:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "13:30",
+     "args": {
+      "slot": "13:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 11,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.55
+   }
+  },
+  {
+   "task_id": "qc-087",
+   "goal": "Book Dry Clean (per garment) on 2026-09-22 (tue) at 17:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "17:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "17:30",
+     "args": {
+      "slot": "17:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 19,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.95
+   }
+  },
+  {
+   "task_id": "qc-088",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 10:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "10:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:00",
+     "args": {
+      "slot": "10:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 4,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.2
+   }
+  },
+  {
+   "task_id": "qc-089",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 11:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "11:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "11:30",
+     "args": {
+      "slot": "11:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 7,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.35
+   }
+  },
+  {
+   "task_id": "qc-090",
+   "goal": "Book Dry Clean (per garment) on 2026-09-23 (wed) at 16:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 17,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.85
+   }
+  },
+  {
+   "task_id": "qc-091",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 10:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "10:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:00",
+     "args": {
+      "slot": "10:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 4,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.2
+   }
+  },
+  {
+   "task_id": "qc-092",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 14:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "14:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:00",
+     "args": {
+      "slot": "14:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 12,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.6
+   }
+  },
+  {
+   "task_id": "qc-093",
+   "goal": "Book Dry Clean (per garment) on 2026-09-24 (thu) at 16:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-24",
+    "weekday": "thu",
+    "slot": "16:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-24",
+     "args": {
+      "day": "2026-09-24"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:30",
+     "args": {
+      "slot": "16:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 2,
+    "slot_index": 17,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.85
+   }
+  },
+  {
+   "task_id": "qc-094",
+   "goal": "Book Dry Clean (per garment) on 2026-09-25 (fri) at 09:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-25",
+    "weekday": "fri",
+    "slot": "09:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-25",
+     "args": {
+      "day": "2026-09-25"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "09:30",
+     "args": {
+      "slot": "09:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 3,
+    "slot_index": 3,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.15
+   }
+  },
+  {
+   "task_id": "qc-095",
+   "goal": "Book Dry Clean (per garment) on 2026-09-29 (tue) at 14:30",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-29",
+    "weekday": "tue",
+    "slot": "14:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-29",
+     "args": {
+      "day": "2026-09-29"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "14:30",
+     "args": {
+      "slot": "14:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 6,
+    "slot_index": 13,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.65
+   }
+  },
+  {
+   "task_id": "qc-096",
+   "goal": "Book Dry Clean (per garment) on 2026-09-26 (sat) at 16:00",
+   "target": {
+    "offer_id": "dry-clean",
+    "staff": null,
+    "date": "2026-09-26",
+    "weekday": "sat",
+    "slot": "16:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Dry Clean (per garment)",
+     "args": {
+      "offer_id": "dry-clean"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-26",
+     "args": {
+      "day": "2026-09-26"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "16:00",
+     "args": {
+      "slot": "16:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 1,
+    "staff_index": 0,
+    "open_day_index": 4,
+    "slot_index": 16,
+    "slots_that_day": 21,
+    "slot_fraction_into_day": 0.8
+   }
+  },
+  {
+   "task_id": "qc-097",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 11:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "11:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "11:30",
+     "args": {
+      "slot": "11:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 7,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.333
+   }
+  },
+  {
+   "task_id": "qc-098",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 13:00",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "13:00"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "13:00",
+     "args": {
+      "slot": "13:00"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 10,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.476
+   }
+  },
+  {
+   "task_id": "qc-099",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-22 (tue) at 17:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-22",
+    "weekday": "tue",
+    "slot": "17:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-22",
+     "args": {
+      "day": "2026-09-22"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "17:30",
+     "args": {
+      "slot": "17:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 0,
+    "slot_index": 19,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.905
+   }
+  },
+  {
+   "task_id": "qc-100",
+   "goal": "Book Alterations (hem or simple repair) on 2026-09-23 (wed) at 10:30",
+   "target": {
+    "offer_id": "alterations",
+    "staff": null,
+    "date": "2026-09-23",
+    "weekday": "wed",
+    "slot": "10:30"
+   },
+   "optimal_path": [
+    {
+     "kind": "select",
+     "label": "Pick Alterations (hem or simple repair)",
+     "args": {
+      "offer_id": "alterations"
+     },
+     "dispatches": [
+      "SELECT offer_ids",
+      "OPEN_SHEET book"
+     ]
+    },
+    {
+     "kind": "select",
+     "label": "2026-09-23",
+     "args": {
+      "day": "2026-09-23"
+     }
+    },
+    {
+     "kind": "select",
+     "label": "10:30",
+     "args": {
+      "slot": "10:30"
+     }
+    },
+    {
+     "kind": "form-fill",
+     "label": "name and phone",
+     "args": {
+      "form": "book"
+     }
+    },
+    {
+     "kind": "submit",
+     "label": "Request this booking",
+     "args": {
+      "action": "request"
+     }
+    }
+   ],
+   "optimal_taps": 4,
+   "depth": {
+    "offer_index": 2,
+    "staff_index": 0,
+    "open_day_index": 1,
+    "slot_index": 5,
+    "slots_that_day": 22,
+    "slot_fraction_into_day": 0.238
+   }
+  }
+ ],
+ "verified_against_running_ui": "the arg shapes are read from the bench's own dispatch calls in src/main.tsx, not inferred from the fixture: day takes a date string, slot takes HH:MM, and the offer press fires two reducer actions for one tap",
+ "signed": "Sautee (sha-ta)"
+}
