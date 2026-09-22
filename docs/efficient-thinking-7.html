@@ -211,21 +211,29 @@ id="what-a-fixed-system-knows-that-it-does-not-say-a-bound-and-its-first-measure
 a fixed system knows that it does not say — a bound, and its first
 measurements</h2>
 <blockquote>
-<p><strong>STATE 2026-09-22: DRAFT v0.2, written backward from what is
-measured.</strong> E-E is measured on three judge sizes (1.5B, 7B, 14B;
-32B pending) — the first registered prediction is hit, the second FAILS
-and the failure is the finding. One statistic the reading now leans on —
-probe accuracy restricted to the judge’s tie cells — is requested and
-not yet on disk (§6). E-C and E-D are registered and not run; the
-bound’s formal statements are to be verified against textbook forms
-before publication. Every number below is on disk under
-<code>experience/results/</code> with its command; the reading rules
-were committed before the run (<code>docs/et7-ee-prereg.md</code>, with
-its §3a amendment). Nothing here is a law; §10 says what is a finding
-and what is a registration.</p>
+<p><strong>STATE 2026-09-22: DRAFT v0.3 — the headline number is
+WITHDRAWN and being re-measured under a registered definition.</strong>
+The tie-scored gap (§5, §6, §9) is a scoring artefact: on the cells
+where the 7B judge commits, the probe and the judge agree within a
+point, and the 48 points are ties scored wrong by a rule. It also fails
+the registered subsample control by the letter. Pre-registration §3b
+(committed before the run) redefines <span
+class="math inline"><em>A</em></span> as the judge’s forced preference —
+logit A against logit B, no tie — with both outcomes pre-stated: either
+the forced judge meets the probe and the registered claim fails, or a
+gap survives the objection. The forced-choice run at 1.5B/7B/14B/32B and
+the tie-restricted probe are requested and not on disk. The tie-scored
+numbers stay in this draft as what was measured, labelled. E-C and E-D
+are registered and not run; the bound’s formal statements are to be
+verified against textbook forms before publication. Every number below
+is on disk under <code>experience/results/</code> with its command; the
+reading rules were committed before the run
+(<code>docs/et7-ee-prereg.md</code>, with its §3a amendment). Nothing
+here is a law; §10 says what is a finding and what is a
+registration.</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 22, 2026 · <em>draft
-v0.2</em></p>
+v0.3</em></p>
 <h2 id="abstract">Abstract</h2>
 <p>A fixed system — a model whose weights and inputs do not change — can
 improve its realised performance only toward the information its state
@@ -243,26 +251,31 @@ probe on the state scores at most <span
 class="math inline"><em>A</em><sup>*</sup></span>, so <span
 class="math inline"><em>Δ</em> ≥ <em>A</em><sub>probe</sub> − <em>A</em></span>.
 On the stratum of a judging task where the policy that wrote an answer
-carries no information about its correctness, a 7B judge picks the
-correct answer 24.8% of the time while a probe on its own hidden states
-reaches 73.0% (five-fold interval over problems [0.62, 0.84]): the gap
-is at least 48 points, with shuffled labels collapsing to the majority
-baseline, eight principal components failing to recover the probe, and a
-probe for policy identity near chance. The gap is abstention rather than
-ignorance: the judge declines to choose on 66.4% of pairs and is 73.9%
-correct when it commits, almost exactly the probe’s accuracy over all
-pairs. Across judge sizes the picture sharpens: from 1.5B to 14B the
-probe reads about the same amount from the state (0.68, 0.73, 0.67)
+carries no information about its correctness, a 7B judge scored A/B/tie
+picks the correct answer 24.8% of the time while a probe on its own
+hidden states reaches 73.0% (five-fold interval over problems [0.62,
+0.84]). That 48-point number is withdrawn as a headline: the judge
+declines to choose on 66.4% of pairs and is 73.9% correct when it
+commits, so on the cells where it speaks the probe and the judge agree,
+and the difference is the tie rule. The gap under the definition this
+paper will publish — the judge’s forced preference between A and B at
+the decision, no tie — is registered (§3b of the pre-registration) and
+not yet measured; both outcomes are pre-stated and one of them fails the
+paper’s claim. Across judge sizes the picture sharpens: from 1.5B to 14B
+the probe reads about the same amount from the state (0.68, 0.73, 0.67)
 while the judge’s tie rate falls from 98.5% to 26.3% and its accuracy
-rises from 0.7% to 56.2%. Scale makes the judge <em>say</em> more, not
-<em>know</em> more, on this range; the registered prediction that the
-gap shrinks slower than accuracy rises is therefore arithmetically
-impossible and is reported as failed. Two shallow explanations — answer
-length and policy identity — are tested and rejected. What follows from
-the bound is not that self-improvement is impossible but that its
-internal room is exactly <span class="math inline"><em>Δ</em></span>,
-and on these judges that room is abstention with a ceiling that scale
-does not raise.</p>
+rises from 0.7% to 56.2%: under the tie rule the scaling curve is a
+tie-rate curve, and the registered prediction that the gap shrinks
+slower than accuracy rises fails for that reason. Two shallow
+explanations — answer length and policy identity — are tested and
+rejected. What the bound licenses is narrower than “the room is large”:
+<span class="math inline"><em>Δ</em></span> is an upper bound on what
+any internal procedure can recover, and the probe that measures it was
+fitted on labels no internal procedure has, so nothing here shows any of
+it is reachable from inside. That is E-D’s question, and the paper’s
+honest state is a well-instrumented design whose first number was a
+scoring artefact, now being re-measured under the definition it will
+publish.</p>
 <h2 id="results-at-a-glance">Results at a glance</h2>
 <table>
 <colgroup>
@@ -299,15 +312,23 @@ a tie scored wrong</td>
 <td>§3</td>
 </tr>
 <tr>
-<td>the gap, measured</td>
-<td>judge 24.8%, probe 73.0% [0.62, 0.84], <span
-class="math inline"><em>Δ</em> ≥ 0.482</span> on 137 balanced pairs,
-5-fold CV over problems</td>
-<td>§5</td>
+<td>the gap, tie-scored — WITHDRAWN as headline</td>
+<td>judge 24.8% (A/B/tie), probe 73.0% [0.62, 0.84] on 137 balanced
+pairs; on the 46 committed cells judge 73.9% ≈ probe; the difference is
+the tie rule</td>
+<td>§5, §6</td>
+</tr>
+<tr>
+<td>the gap, forced-choice — registered, not measured</td>
+<td><span class="math inline"><em>A</em></span> = logit A vs logit B, no
+tie; same states, same folds; outcomes pre-stated in prereg §3b</td>
+<td>§3, §10</td>
 </tr>
 <tr>
 <td>the controls</td>
-<td>permuted labels 0.41–0.52 (baseline 0.518); PCA-8 0.657;
+<td>permuted labels 0.41–0.52 (baseline 0.518); PCA-8 0.657 is inside
+the probe’s fold interval — not established; subsample n = 100 matched
+the probe exactly and by the registered rule withdraws the tie-scored Δ;
 policy-identity probe 0.577</td>
 <td>§5</td>
 </tr>
@@ -337,15 +358,15 @@ probe on its state reads 66.7%</td>
 <td>§8</td>
 </tr>
 <tr>
-<td>scale</td>
+<td>scale, tie-scored</td>
 <td>probe flat across 1.5B–14B (0.68 · 0.73 · 0.67); tie rate 98.5% →
-66.4% → 26.3%; judge 0.7% → 24.8% → 56.2%; the second registered
-prediction fails</td>
+66.4% → 26.3%; the curve is a tie-rate curve; the second registered
+prediction fails; to be re-measured under forced choice</td>
 <td>§9</td>
 </tr>
 <tr>
 <td>not yet measured</td>
-<td>32B; tie-restricted probe; E-C; E-D</td>
+<td>forced-choice A at four sizes; tie-restricted probe; E-C; E-D</td>
 <td>§10, §12</td>
 </tr>
 </tbody>
@@ -395,12 +416,27 @@ class="math inline"><em>A</em>(<em>W</em><sup>′</sup>) ≤ <em>A</em><sup>
 (Blackwell: garbling cannot improve Bayes risk).</p>
 <p><strong>Definition.</strong> The elicitation gap is <span
 class="math inline"><em>Δ</em>(<em>W</em>) = <em>A</em><sup>*</sup>(<em>W</em>) − <em>A</em>(<em>W</em>)</span>:
-held but misprocessed information. Internal self-improvement is worth at
+held and unexpressed information. Internal self-improvement is worth at
 most <span class="math inline"><em>Δ</em></span>; everything above <span
-class="math inline"><em>A</em><sup>*</sup></span> must be imported. The
-proposition is standard results applied to this setting; the size of
-<span class="math inline"><em>Δ</em></span> is empirical, and the series
-took no advance position on it.</p>
+class="math inline"><em>A</em><sup>*</sup></span> must be imported.</p>
+<p><strong>What <span class="math inline"><em>Δ</em></span> licenses,
+and what it does not.</strong> <span
+class="math inline"><em>Δ</em></span> is an upper bound on internal
+room, not a measure of it. The decoder that estimates <span
+class="math inline"><em>A</em><sup>*</sup></span> in this paper is
+fitted on labels of <span class="math inline"><em>T</em></span>; an
+internal procedure has no access to <span
+class="math inline"><em>T</em></span> and cannot find that decoder the
+way the experimenter did. Nothing in the bound, and nothing in this
+paper’s measurements, shows that any part of <span
+class="math inline"><em>Δ</em></span> is reachable from inside. Whether
+some fraction is — recovered by an internal procedure without labels —
+is exactly what E-D tests (§11), and a large <span
+class="math inline"><em>Δ</em></span> must not be read as “a fixed model
+could gain that much from inside”. The proposition is standard results
+applied to this setting; the size of <span
+class="math inline"><em>Δ</em></span> is empirical, and the series took
+no advance position on it.</p>
 <h2 id="measuring-the-gap">3. Measuring the gap</h2>
 <p><span class="math inline"><em>A</em><sup>*</sup></span> is not
 observable, but it is bounded from below: any decoder trained on the
@@ -416,10 +452,19 @@ can only widen it. Three rules make the bound a measurement rather than
 a story.</p>
 <ul>
 <li><strong><span class="math inline"><em>A</em></span> is the judge’s
-pick with a tie scored wrong.</strong> A judge may answer A, B, or tie.
-An unexpressed judgment is not a judgment: a selector that declines has
-not selected. The rule was registered before the run and is kept after
-it, and §6 reports what it hides.</li>
+forced preference.</strong> The definition first registered — the
+judge’s A/B/tie answer with a tie scored wrong — was measured and is
+reported in §5–§6 and §9 as what it is: a gap between the state and what
+one prompt format extracts. It is not what “expressed” should mean for a
+bound about expression, and prereg §3b, committed after that reading and
+before any further run, replaces it: <span
+class="math inline"><em>A</em></span> is the log-probability of the
+token A against the token B at the decision position, no tie available,
+on the same cells and states. Two prompt forms are read (tie option
+removed, primary; three-way prompt with tie ignored, check), both
+orderings scored. The tie-scored <span
+class="math inline"><em>A</em></span> is kept as a secondary reading: as
+a selector the judge is useless where it abstains.</li>
 <li><strong>The stratum is chosen so that a shortcut cannot produce the
 number.</strong> The judging cells come from Paper III’s grid (GSM8K,
 two policies per pair). Where the stronger policy is usually correct, a
@@ -517,18 +562,25 @@ class="math inline"><em>Δ</em>≥</span></th>
 <p>The interval on the probe is across the five problem-folds (0.846 ·
 0.800 · 0.704 · 0.621 · 0.680; sd 0.092, t with four degrees of
 freedom), not a binomial over 137 cells, which would overstate the
-precision of cells that share problems. On the primary stratum the
-reading written before the run applies: permutation collapses to the
-baseline, eight dimensions do not suffice (0.657 against 0.730), and the
-policy-identity probe sits near chance, which is what the balancing was
-for. The registered prediction — <span
-class="math inline"><em>Δ</em> &gt; 0</span> and material — is
-confirmed. On the secondary stratum the PCA-8 control matches the probe
-and the identity probe reaches 0.826: exactly the confound the
-stratification predicted, and that gap is withdrawn by the rule that
-admits the first. The subsample matching (0.730 at n = 100) is a known
-property of this probe family on these states and is not on its own a
-flag.</p>
+precision of cells that share problems. Read against that interval the
+controls are weaker than v0.1 said. Permutation collapses to the
+baseline. PCA-8 at 0.657 sits inside the probe’s interval [0.62, 0.84]:
+the probe’s excess over eight dimensions is not established at this
+n. The subsample control matched the probe exactly (0.730 at n = 100);
+v0.1 called that a known property, but the pre-registration says a
+subsample matching the probe withdraws the gap, and a registered gate is
+not relaxed after it fails — so <strong>the tie-scored 7B gap is
+withdrawn under the registered reading</strong>. The reason it fired is
+stated beside the withdrawal: with about 110 training cells per fold,
+100 rows is 90% of the data and the control cannot detect anything,
+which is a defect of its size and not evidence about the gap; the
+re-measurement carries a subsample at n = 30. The policy-identity probe
+sits near chance, which is what the balancing was for. On the secondary
+stratum the PCA-8 control matches the probe and the identity probe
+reaches 0.826: exactly the confound the stratification predicted, and
+that gap is withdrawn too. What survives §5 unconditionally is the
+design: the balanced stratum is where a readout can be told from a
+shortcut, and the 913-pair stratum shows why.</p>
 <h2 id="what-the-gap-is-abstention">6. What the gap is: abstention</h2>
 <p>The headline invites a misreading — a model worse than a coin — and
 the decomposition removes it:</p>
@@ -559,20 +611,26 @@ the decomposition removes it:</p>
 </tbody>
 </table>
 <p>The probe’s accuracy over all cells (73.0%) is, within a point, the
-judge’s accuracy on the third of cells where it commits (73.9%). That is
-an equality of aggregates and is stated as one: it suggests that much of
-the measured gap lies in information present during the judge’s
-abstentions, and it does not by itself show that the probe reconstructs
-the judge’s withheld answer on the 91 tie cells. The statistic that
-would show it is the probe’s accuracy restricted to the tie cells, read
-from the same fold predictions; it is requested and will be printed here
-with its counts. If it sits near the committed-case accuracy the
-sentence “the state carries what the judge would say where it stays
-silent” becomes nearly literal; if it does not, this section softens
-further. The tie rule is kept either way — scored as a coin, the judge
-would read about 58%, and a judge that abstains two thirds of the time
-is useless as a selector whatever its state knows — but the reader
-should hold both numbers.</p>
+judge’s accuracy on the third of cells where it commits (73.9%). On the
+cells where the judge speaks, then, the gap is about −0.01: the 48
+points of §5 are the 91 ties scored wrong by a rule. That is the reason
+the tie-scored number is withdrawn as a headline (§3), and it is also
+the observation that makes the forced-choice re-measurement decisive —
+if the judge, denied the tie, lands near the probe, the abstention was
+format and the paper’s claim fails; if it lands well below, the gap
+survives the objection. The 73.0 ≈ 73.9 match is an equality of
+aggregates and is stated as one: it suggests that much of the tie-scored
+gap lies in information present during the judge’s abstentions, and it
+does not by itself show that the probe reconstructs the judge’s withheld
+answer on the 91 tie cells. The statistic that would show it is the
+probe’s accuracy restricted to the tie cells, read from the same fold
+predictions; it is requested and will be printed here with its counts.
+If it sits near the committed-case accuracy the sentence “the state
+carries what the judge would say where it stays silent” becomes nearly
+literal; if it does not, this section softens further. The tie rule is
+kept either way — scored as a coin, the judge would read about 58%, and
+a judge that abstains two thirds of the time is useless as a selector
+whatever its state knows — but the reader should hold both numbers.</p>
 <h2 id="what-the-gap-is-not">7. What the gap is not</h2>
 <p>Two shallow readings of the state were tested and rejected.
 <em>Answer length:</em> “the longer answer is correct” holds on 43.1% of
@@ -597,8 +655,11 @@ do not explain each other; they measure one phenomenon at two decisions,
 and the relation between them — whether the head of VIII is reading the
 abstentions of VII — is a question for VIII-b’s record and not a claim
 of either paper.</p>
-<h2 id="scale-the-judge-says-more-it-does-not-know-more">9. Scale: the
-judge says more, it does not know more</h2>
+<h2 id="scale-tie-scored-a-tie-rate-curve">9. Scale, tie-scored: a
+tie-rate curve</h2>
+<p><em>Measured under the withdrawn definition; kept because it is what
+was measured, and because it is the reason the definition changed. It is
+re-measured under forced choice before the 32B point is read.</em></p>
 <p>The concept registered a second prediction: that <span
 class="math inline"><em>Δ</em></span> shrinks with judge scale more
 slowly than <span class="math inline"><em>A</em></span> rises. Three
@@ -662,11 +723,17 @@ class="math inline"><em>A</em><sup>*</sup></span>’s lower bound is flat
 and the gap moves exactly opposite to <span
 class="math inline"><em>A</em></span>. The concept had assumed scale
 would raise <span class="math inline"><em>A</em><sup>*</sup></span> as
-well; on this range it does not. What scale does is collapse the tie
-rate, from 98.5% to 26.3%. On this family and task, a bigger judge does
-not know more about which answer is right; it is willing to say more of
-what the smaller judge already held. Two cautions. The 1.5B row is a
-format floor — a judge that ties on 98.5% of pairs is not measured at
+well; on this range the linear readout does not. What scale does is
+collapse the tie rate, from 98.5% to 26.3% — which is to say that under
+the tie rule this is a tie-rate curve and not a curve of the gap.
+Whether the gap itself closes with scale is the question the
+forced-choice re-measurement answers, and it is the one that would make
+this a paper: a forced-choice gap that stays at fifteen points or more
+from 7B through 32B while accuracy rises would be a clean claim nobody
+has made, that elicitation loss does not close with scale; a gap that
+shrinks toward zero by 32B is the modest finding that small models do
+not say what they know and large ones do. Two cautions. The 1.5B row is
+a format floor — a judge that ties on 98.5% of pairs is not measured at
 <span class="math inline"><em>A</em> = 0.007</span>, it is declining the
 task — and it enters the curve only with its tie rate beside it. And
 “flat” is three points with fold intervals of about ±0.1; the 32B point,
@@ -696,20 +763,19 @@ scored</h2>
 <tr>
 <td>E-E: <span class="math inline"><em>Δ</em> &gt; 0</span> and material
 — the judge’s representations know more than its judgments express</td>
-<td><strong>Hit.</strong> <span
-class="math inline"><em>Δ</em> ≥ 0.482</span> on the balanced stratum at
-7B with controls behaving; the confounded stratum withdrawn (§5); the
-same sign at 1.5B and 14B</td>
+<td><strong>Withdrawn under the tie-scored definition</strong>
+(subsample control fired; and the gap was the tie rule, §5–§6).
+<strong>Unscored under the forced-choice definition</strong> registered
+in prereg §3b: hit if the fold interval on (probe − forced judge)
+excludes zero with lower bound ≥ 0.05; fails if the forced judge meets
+the probe</td>
 </tr>
 <tr>
 <td>E-E: <span class="math inline"><em>Δ</em></span> shrinks with judge
 scale slower than <span class="math inline"><em>A</em></span> rises</td>
-<td><strong>Fails.</strong> Across 1.5B → 14B, <span
-class="math inline"><em>A</em></span> rises 0.555 and <span
-class="math inline"><em>Δ</em></span> shrinks 0.563. The probe is flat,
-so the gap can only move opposite to <span
-class="math inline"><em>A</em></span> (§9). Reported as failed, not
-dropped</td>
+<td><strong>Fails under the tie-scored definition</strong> — the curve
+is a tie-rate curve (§9). Re-scored under forced choice at four
+sizes</td>
 </tr>
 <tr>
 <td>E-D: coherence training raises <span
@@ -727,8 +793,8 @@ errors correlate</td>
 <tr>
 <td>cross-registration: E-D’s realised gains must not exceed E-E’s
 probed <span class="math inline"><em>Δ</em></span></td>
-<td><strong>Not scored;</strong> the bound it tests is now at least
-0.482 at 7B and 0.109 at 14B</td>
+<td><strong>Not scored;</strong> the bound it tests is the forced-choice
+<span class="math inline"><em>Δ</em></span>, not yet measured</td>
 </tr>
 <tr>
 <td>synthesis: every route that works smuggles external information</td>
@@ -748,48 +814,62 @@ external signal. The synthesis prediction, also registered, is that
 every route that works smuggles external information, and the paper
 prices the exchange rate of each. None is measured in this draft.</p>
 <h2 id="related-work">Related work</h2>
-<p>Latent-knowledge probing [Kadavath et al. 2022; Burns et al. 2022;
-Azaria &amp; Mitchell 2023] established that a model’s representations
-often carry more about correctness than its outputs express; this paper
-takes that observation as the instrument, gives the distance a name and
-a bound, and measures it under controls that separate a readout from a
-shortcut. Linear probes [Alain &amp; Bengio 2016] are the decoder.
-LLM-as-judge evaluation [Zheng et al. 2023] and Paper III measure how
-well a judge agrees with ground truth; this paper measures how much of
-what the judge knows reaches its verdict. The bound rests on the
-data-processing inequality [Cover &amp; Thomas 2006] and Blackwell’s
-comparison of experiments [Blackwell 1953]; the Löbian and
-incompleteness lineage is motivation only and carries no weight here.
-The recursive-self-improvement debate [Good 1965 and after] is the
-argument this paper’s coda would enter, after the measurement and not
-before.</p>
+<p>The bare fact that a probe on hidden states beats the model’s own
+output is established: Burns et al. [2022] report CCS on hidden states
+beating zero-shot prompting on the same model, and Kadavath et
+al. [2022] report P(IK) calibration exceeding expressed self-assessment;
+Azaria &amp; Mitchell [2023] read truthfulness from the state directly.
+This paper does not claim that fact. What it adds is narrower: a
+stratification that kills the policy-identity shortcut — the withdrawn
+913-pair stratum shows that without it a probe scores well for the wrong
+reason — a decomposition of the output-side number into abstention and
+error, and a definition of <span class="math inline"><em>A</em></span>
+under which the comparison is between the state and what the system can
+express rather than what one prompt format extracts. Linear probes
+[Alain &amp; Bengio 2016] are the decoder. LLM-as-judge evaluation
+[Zheng et al. 2023] and Paper III measure how well a judge agrees with
+ground truth; this paper measures how much of what the judge knows
+reaches its verdict. The bound rests on the data-processing inequality
+[Cover &amp; Thomas 2006] and Blackwell’s comparison of experiments
+[Blackwell 1953]; the Löbian and incompleteness lineage is motivation
+only and carries no weight here. The recursive-self-improvement debate
+[Good 1965 and after] is the argument this paper’s coda would enter,
+after the measurement and not before.</p>
 <h2 id="limitations">12. Limitations</h2>
 <p>One model family, one benchmark, one form of the question, three
-sizes. The probe lower-bounds <span
+sizes, 137 pairs from two policy pairs — enough for a first arm, not for
+the word “material” without an interval, and the word is not used of a
+measured number in this draft. The probe lower-bounds <span
 class="math inline"><em>A</em><sup>*</sup></span>; every gap here is a
 lower bound and a better decoder can only widen it, so “flat” in §9
-means the <em>linear</em> readout is flat. The primary stratum is 137
-pairs and the fold interval on the 7B probe is [0.62, 0.84]; the scaling
-shape rests on three points with intervals of that width. The
-tie-restricted probe accuracy, on which §6’s strongest reading depends,
-is not yet on disk. The tie rule is a choice, stated and kept. Nothing
-about a ceiling of self-improvement is claimed: the bound is textbook
-and the numbers are three points on one task. The formal statements are
-to be checked against the textbook forms before any publication, and the
-coda on the wider debate is withheld until the 32B point and the
-tie-restricted statistic land.</p>
+means the <em>linear</em> readout is flat. The fold interval on the 7B
+probe is [0.62, 0.84]; the scaling shape rests on three points with
+intervals of that width, and under the tie rule it is a tie-rate curve.
+The 66% tie rate on decisive GSM8K pairs is high enough that the prompt
+itself is checked before the forced-choice runs. The tie-restricted
+probe accuracy is not yet on disk. The headline definition has changed
+once, after measurement, by a registered amendment that pre-states both
+outcomes; that is recorded in Appendix A and the reader is entitled to
+weigh it. Nothing about a ceiling of self-improvement is claimed: the
+bound is textbook and the numbers are three points on one task. The
+formal statements are to be checked against the textbook forms before
+any publication, and the coda on the wider debate is withheld until the
+32B point and the tie-restricted statistic land.</p>
 <h2 id="conclusion">13. Conclusion</h2>
-<p>A fixed 7B judge is accurate when it commits, but abstains on two
-thirds of comparisons even though its hidden state carries enough
-decodable information to classify those comparisons far better than its
-expressed decisions do. Across sizes the state does not carry more; the
-judge only abstains less. The series’ claim in this paper is exactly
-that and no more: the room a fixed system has to improve from inside is
-the elicitation gap, on these judges the gap is abstention, and its
-ceiling did not move with scale. What decides whether it matters beyond
-one family is the 32B point, the tie-restricted readout, and whether E-D
-can turn silence into correct commitment — the only internal route the
-bound allows, tested against the bound itself.</p>
+<p>As drafted this is a well-instrumented design whose first number was
+a scoring artefact. A fixed 7B judge, allowed to abstain, abstains on
+two thirds of comparisons and is as accurate as a probe on its own state
+where it commits; the 48-point gap was the abstentions, and it is
+withdrawn. What the paper will claim is the gap under forced choice, at
+four sizes, with a fold interval, and both of its outcomes are written
+down before the run: the state and the output agree and the claim fails,
+or a gap survives the objection and its scaling shape is the result.
+Beyond that lies the experiment the series has pointed at from the
+start: whether an internal procedure, with no labels, recovers any
+measurable fraction of the gap. Even a small fraction, cleanly shown,
+would be the first quantified exchange rate between internal compute and
+elicited accuracy. That is E-D, it is the only internal route the bound
+allows, and it is tested against the bound itself.</p>
 <h2 id="reproducibility">Reproducibility</h2>
 <p><code>reasoning/et7_ee_probe.py</code> (the committed script is the
 held-out form; the five-fold evaluation reuses its cached states and
@@ -863,6 +943,21 @@ statistic was requested and §6 was softened until it lands. The 14B
 point arrived the same day, the second registered prediction failed, and
 the reason it failed — a flat probe — became §9. <em>Rule: when a
 prediction fails, the arithmetic of why is the result.</em></li>
+<li><strong>09-22, later still.</strong> A second outside reader put the
+objection in one sentence: on the 46 cells where the judge commits the
+probe and the judge agree, so the 48 points are ties scored wrong by a
+rule — a gap between the state and a prompt format, not between the
+state and what the system can express. Accepted. The same reading showed
+the registered subsample control had fired at 7B and had been waved
+through as “a known property”; the tie-scored gap was withdrawn under
+the registered reading, and the reason the control fired (a 100-row
+subsample of 110 training cells) was recorded as a defect of the
+control’s size. Prereg §3b was committed before any new run: <span
+class="math inline"><em>A</em></span> is the forced preference, both
+outcomes pre-stated, controls sized to the n. <em>Rule: a gate that
+fired is a gate that fired; explain it, do not relax it. And: the
+definition of the thing measured is registered with the same care as the
+threshold.</em></li>
 </ol>
 </body>
 </html>
