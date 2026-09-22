@@ -119,9 +119,14 @@ because it measures a model learning a model, not the registered question.
 Seed by seed, not pooled: gen2 vs gen1 −2.0 [−6.3, +2.3], p 0.44 (seed 73); −7.0 [−11.0, −3.0], p 0.0015 (seed 47).
 Cost flat (−0.2%, +0.4%). gen2 vs base +17.3 / +15.7 — between gen0 and gen1 on both. §7's plateau row fires on one
 seed and its consumption row on the other; the fourth row does not fire, since both estimates are negative and the
-intervals overlap on [−6.3, −3.0]. **Ruling (2026-09-21 17:1xZ):** the paper reports both rows as they fired, per
-seed, and the sentence established on both is: *a third generation does not improve on the second; on one seed it is
-significantly worse; the series' best head is generation 1.* The consumption mechanism is reported as consistent, not
+intervals overlap on [−6.3, −3.0]. **Ruling (2026-09-21 17:1xZ), RESTATED 2026-09-22 after the reproduction:** the reproduction script re-ran both seeds
+and seed 47's −7.0 did not reproduce — the re-run read −2.0 [−6.3, +2.3], on top of the other three measurements (−2.0,
+−2.3, −2.0). The rise reproduced on both seeds (+5.0 and +7.3 against the published +5.7 and +9.7, each inside the
+other's interval). The sentence the record now supports is: *a third generation does not improve on the second — four
+estimates between −2.0 and −7.0, the three that agree at about −2, and no significant decline that survives
+re-measurement; the series' best head is generation 1.* The plateau row fires on three of four; the consumption row
+fired once and did not reproduce, and is reported as such. Run-to-run variance on this loop is larger than one seed's
+interval suggests; every single-run number in VIII-b carries that variance and only this one was measured twice. The consumption mechanism is reported as consistent, not
 demonstrated: the d1 and d2 heads are byte-identical between gen1 and gen2, so the whole difference is the d3 head,
 which learned from trajectories where the region was already found by decision 3 in 48.8% of surviving episodes
 (41.5% for gen1's). One moved point is not a mechanism. A gen3 would be empty by construction — the loop has three
