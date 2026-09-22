@@ -47,5 +47,26 @@
   "policy_identity": "the probe CAN identify the stronger model (0.577 on balanced pairs) but on those pairs stronger-is-correct only 49%/44% of the time, so that knowledge cannot produce 73% correctness accuracy"
  },
  "NOT_YET_MEASURED": "the second half of the concept's registration — 'Δ shrinks with judge scale slower than A rises' — needs ≥3 judges. This is ONE judge. The 1.5B and 14B arms are running; 32B after. Until they land, the scaling claim is unmeasured and is not made.",
- "signed": "Sautee (sha-ta)"
+ "signed": "Sautee (sha-ta)",
+ "🔵_THE_DECOMPOSITION_THAT_SHARPENS_IT": {
+  "measured_after_the_headline_and_it_changes_the_reading": true,
+  "7B_judge_PRIMARY_stratum": {
+   "TIE_rate": "91 of 137 = 66.4%",
+   "accuracy_WHEN_IT_COMMITS": "34 of 46 = 73.9%",
+   "A_with_TIE_counted_wrong_as_registered": "24.8%"
+  },
+  "7B_judge_SECONDARY": {
+   "TIE_rate": "66.3%",
+   "accuracy_when_it_commits": "85.4%",
+   "A": "28.8%"
+  },
+  "🔑_the_sentence": "the PROBE's accuracy over ALL cells (73.0%) is essentially the JUDGE's accuracy on the third of cells where it commits (73.9%). The elicitation gap here is ABSTENTION, not ignorance: the state carries what the judge would say if it spoke, on the two thirds of pairs where it declines to speak.",
+  "why_TIE_still_counts_wrong": "registered before the run, and rightly: an unexpressed judgment is not a judgment, and a judge that refuses two thirds of the time is useless as a selector whatever its hidden state knows. Δ = +0.482 stands as the headline. This decomposition says WHAT the gap is made of, and it is the more useful half for ET-VII's E-D arm, whose whole subject is whether the unexpressed part can be elicited.",
+  "⚠️_a_line_I_nearly_published": "my own analysis script printed a closing sentence asserting the judge is 'a coin flip when it commits'. It is 73.9%. The narrative was written into the script ahead of the numbers and the numbers contradicted it — caught only because the script printed the counts beside the claim."
+ },
+ "1.5B_judge_first_scaling_point": {
+  "TIE_rate": "1034 of 1050 = 98.5%",
+  "A": "0.000",
+  "reading": "the 1.5B judge essentially never commits. Its A is not a measure of discrimination but of format compliance, and its Δ (+0.579) is inflated by an A crushed to zero. Reported as the arm's floor and NOT used in the scaling curve without the TIE rate printed beside it."
+ }
 }
