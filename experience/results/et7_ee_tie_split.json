@@ -1,0 +1,41 @@
+{
+ "document": "ET-VII E-E — probe accuracy SPLIT BY WHETHER THE JUDGE TIED (理 12092)",
+ "why": "'probe 73.0% over all ~ judge 73.9% when committing' is an equality of AGGREGATES. It does not show the probe reads the cells the judge ABSTAINED on. This splits the SAME fold predictions by the judge's own behaviour — no new inference, no new fit.",
+ "method": "the identical 5-fold-over-problems predictions used for A*; each held-out cell's prediction is bucketed by whether that cell's judge_pick was TIE",
+ "judges": {
+  "1.5B": {
+   "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+   "layer": 18,
+   "tie_cells": 135,
+   "probe_on_ties": 0.6741,
+   "committed_cells": 2,
+   "probe_on_committed": 1.0,
+   "judge_on_committed": 0.5
+  },
+  "7B": {
+   "model": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+   "layer": 18,
+   "tie_cells": 91,
+   "probe_on_ties": 0.7143,
+   "committed_cells": 46,
+   "probe_on_committed": 0.7609,
+   "judge_on_committed": 0.7391
+  },
+  "14B": {
+   "model": "mlx-community/Qwen2.5-14B-Instruct-4bit",
+   "layer": 18,
+   "tie_cells": 36,
+   "probe_on_ties": 0.8333,
+   "committed_cells": 101,
+   "probe_on_committed": 0.6139,
+   "judge_on_committed": 0.7624
+  }
+ },
+ "THE_REVIEWERS_QUESTION_ANSWERED": "on the 7B primary stratum the probe reads 71.4% of the 91 cells the judge TIED on, against 76.1% of the 46 it committed on. The §6 sentence is SUPPORTED near-literally: the probe reads the abstained cells at essentially the rate it reads the rest.",
+ "⚠️_READ_THE_COUNTS_WITH_EACH_ROW": {
+  "1.5B": "only 2 committed cells — it ties on 98.5% of pairs. Its 'probe on committed 1.000' is two cells and means nothing. The TIE row (0.674 on 135 cells) is the only usable number for that judge.",
+  "7B": "91 ties / 46 committed. Both usable; this is the row §6 rests on.",
+  "14B": "36 ties / 101 committed. The TIE row is the thinner one here — the opposite of the 1.5B."
+ },
+ "🔵_AND_THE_14B_INVERTS": "at 14B the probe reads the TIED cells BETTER than the committed ones — 0.833 of 36 against 0.614 of 101. Directionally that is the strongest form of the abstention claim: when the biggest judge declines, its state still carries the answer, and more clearly than when it speaks. ⚠️ BUT n = 36 and no interval is computed, and a 22-point gap on 36 cells is roughly 8 cells. It is a flag for a later arm, NOT a finding, and it is not to be quoted as one."
+}
