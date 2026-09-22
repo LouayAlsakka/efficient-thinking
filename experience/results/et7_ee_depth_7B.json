@@ -1,0 +1,539 @@
+{
+ "document": "ET-VII E-E — probe across relative depth",
+ "prereg": "docs/et7-ee-prereg.md §3c",
+ "prereg_sha": "e03c2c7c7359ca7cf22f7b835ed9713f5218c665",
+ "why": "§9 read every judge at absolute layer 18, which is 64% of the way through 1.5B and 7B and 37.5% through 14B; the flat-A* curve is confounded with reading earlier as the model grows",
+ "judge": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+ "n_blocks": 28,
+ "grid_relative": [
+  0.25,
+  0.375,
+  0.5,
+  0.64,
+  0.75
+ ],
+ "layers": [
+  7,
+  10,
+  14,
+  18,
+  21
+ ],
+ "n_cells": 137,
+ "folds": 5,
+ "prompt": "the ORIGINAL three-way prompt the published states were taken under",
+ "layer18_reproduction": {
+  "checked": true,
+  "published_layer18": [
+   0.8462,
+   0.8,
+   0.7037,
+   0.6207,
+   0.68
+  ],
+  "recomputed_layer18": [
+   0.8462,
+   0.8,
+   0.7037,
+   0.6207,
+   0.68
+  ],
+  "max_abs_diff": 0.0,
+  "reproduces": true,
+  "why": "a re-extraction of the same prompt at the same layer must return the published fold, or this sweep is measuring something else"
+ },
+ "per_layer": {
+  "7": {
+   "layer": 7,
+   "relative_depth": 0.25,
+   "per_fold": [
+    {
+     "fold": 1,
+     "cells": 26,
+     "A_star": 0.7308,
+     "CONTROL_permuted": [
+      0.5385,
+      0.6154,
+      0.3462,
+      0.4231,
+      0.6538
+     ],
+     "CONTROL_pca8": 0.6923,
+     "CONTROL_subsample": 0.6154,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 111,
+     "CONTROL_policy_identity": 0.6154
+    },
+    {
+     "fold": 2,
+     "cells": 30,
+     "A_star": 0.6333,
+     "CONTROL_permuted": [
+      0.3333,
+      0.5,
+      0.5,
+      0.5667,
+      0.5667
+     ],
+     "CONTROL_pca8": 0.7,
+     "CONTROL_subsample": 0.5667,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 107,
+     "CONTROL_policy_identity": 0.6333
+    },
+    {
+     "fold": 3,
+     "cells": 27,
+     "A_star": 0.3704,
+     "CONTROL_permuted": [
+      0.4815,
+      0.5556,
+      0.4074,
+      0.2593,
+      0.3704
+     ],
+     "CONTROL_pca8": 0.4074,
+     "CONTROL_subsample": 0.4444,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 110,
+     "CONTROL_policy_identity": 0.7407
+    },
+    {
+     "fold": 4,
+     "cells": 29,
+     "A_star": 0.6897,
+     "CONTROL_permuted": [
+      0.5517,
+      0.5517,
+      0.3793,
+      0.2414,
+      0.4828
+     ],
+     "CONTROL_pca8": 0.5862,
+     "CONTROL_subsample": 0.6207,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 108,
+     "CONTROL_policy_identity": 0.6207
+    },
+    {
+     "fold": 5,
+     "cells": 25,
+     "A_star": 0.68,
+     "CONTROL_permuted": [
+      0.4,
+      0.36,
+      0.48,
+      0.52,
+      0.52
+     ],
+     "CONTROL_pca8": 0.68,
+     "CONTROL_subsample": 0.56,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 112,
+     "CONTROL_policy_identity": 0.6
+    }
+   ],
+   "A_star_fold_mean": 0.6208,
+   "fold_se": 0.0645,
+   "CI95_t_df4": [
+    0.4418,
+    0.7999
+   ]
+  },
+  "10": {
+   "layer": 10,
+   "relative_depth": 0.3571,
+   "per_fold": [
+    {
+     "fold": 1,
+     "cells": 26,
+     "A_star": 0.6923,
+     "CONTROL_permuted": [
+      0.4615,
+      0.3077,
+      0.4615,
+      0.4615,
+      0.4615
+     ],
+     "CONTROL_pca8": 0.7692,
+     "CONTROL_subsample": 0.7692,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 111,
+     "CONTROL_policy_identity": 0.6154
+    },
+    {
+     "fold": 2,
+     "cells": 30,
+     "A_star": 0.5667,
+     "CONTROL_permuted": [
+      0.4,
+      0.5333,
+      0.5667,
+      0.5667,
+      0.4
+     ],
+     "CONTROL_pca8": 0.6,
+     "CONTROL_subsample": 0.7,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 107,
+     "CONTROL_policy_identity": 0.5667
+    },
+    {
+     "fold": 3,
+     "cells": 27,
+     "A_star": 0.4074,
+     "CONTROL_permuted": [
+      0.3704,
+      0.5926,
+      0.5185,
+      0.4815,
+      0.4815
+     ],
+     "CONTROL_pca8": 0.4074,
+     "CONTROL_subsample": 0.5185,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 110,
+     "CONTROL_policy_identity": 0.6667
+    },
+    {
+     "fold": 4,
+     "cells": 29,
+     "A_star": 0.6552,
+     "CONTROL_permuted": [
+      0.2759,
+      0.4138,
+      0.4138,
+      0.5517,
+      0.5517
+     ],
+     "CONTROL_pca8": 0.5517,
+     "CONTROL_subsample": 0.7931,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 108,
+     "CONTROL_policy_identity": 0.5517
+    },
+    {
+     "fold": 5,
+     "cells": 25,
+     "A_star": 0.6,
+     "CONTROL_permuted": [
+      0.44,
+      0.56,
+      0.48,
+      0.4,
+      0.52
+     ],
+     "CONTROL_pca8": 0.64,
+     "CONTROL_subsample": 0.64,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 112,
+     "CONTROL_policy_identity": 0.4
+    }
+   ],
+   "A_star_fold_mean": 0.5843,
+   "fold_se": 0.0493,
+   "CI95_t_df4": [
+    0.4476,
+    0.7211
+   ]
+  },
+  "14": {
+   "layer": 14,
+   "relative_depth": 0.5,
+   "per_fold": [
+    {
+     "fold": 1,
+     "cells": 26,
+     "A_star": 0.6154,
+     "CONTROL_permuted": [
+      0.5385,
+      0.3462,
+      0.4615,
+      0.5769,
+      0.4615
+     ],
+     "CONTROL_pca8": 0.5769,
+     "CONTROL_subsample": 0.6538,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 111,
+     "CONTROL_policy_identity": 0.6538
+    },
+    {
+     "fold": 2,
+     "cells": 30,
+     "A_star": 0.6,
+     "CONTROL_permuted": [
+      0.4667,
+      0.6333,
+      0.5667,
+      0.3333,
+      0.6667
+     ],
+     "CONTROL_pca8": 0.6,
+     "CONTROL_subsample": 0.5333,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 107,
+     "CONTROL_policy_identity": 0.6333
+    },
+    {
+     "fold": 3,
+     "cells": 27,
+     "A_star": 0.4444,
+     "CONTROL_permuted": [
+      0.5926,
+      0.5185,
+      0.4074,
+      0.4444,
+      0.4444
+     ],
+     "CONTROL_pca8": 0.5185,
+     "CONTROL_subsample": 0.5185,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 110,
+     "CONTROL_policy_identity": 0.6296
+    },
+    {
+     "fold": 4,
+     "cells": 29,
+     "A_star": 0.6552,
+     "CONTROL_permuted": [
+      0.4828,
+      0.3448,
+      0.5862,
+      0.4138,
+      0.5517
+     ],
+     "CONTROL_pca8": 0.4483,
+     "CONTROL_subsample": 0.5517,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 108,
+     "CONTROL_policy_identity": 0.6207
+    },
+    {
+     "fold": 5,
+     "cells": 25,
+     "A_star": 0.64,
+     "CONTROL_permuted": [
+      0.56,
+      0.4,
+      0.44,
+      0.64,
+      0.52
+     ],
+     "CONTROL_pca8": 0.6,
+     "CONTROL_subsample": 0.6,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 112,
+     "CONTROL_policy_identity": 0.68
+    }
+   ],
+   "A_star_fold_mean": 0.591,
+   "fold_se": 0.0379,
+   "CI95_t_df4": [
+    0.4859,
+    0.6961
+   ]
+  },
+  "18": {
+   "layer": 18,
+   "relative_depth": 0.6429,
+   "per_fold": [
+    {
+     "fold": 1,
+     "cells": 26,
+     "A_star": 0.8462,
+     "CONTROL_permuted": [
+      0.5769,
+      0.3846,
+      0.4231,
+      0.6154,
+      0.3846
+     ],
+     "CONTROL_pca8": 0.7308,
+     "CONTROL_subsample": 0.6923,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 111,
+     "CONTROL_policy_identity": 0.5
+    },
+    {
+     "fold": 2,
+     "cells": 30,
+     "A_star": 0.8,
+     "CONTROL_permuted": [
+      0.3333,
+      0.4,
+      0.5667,
+      0.4,
+      0.6
+     ],
+     "CONTROL_pca8": 0.6667,
+     "CONTROL_subsample": 0.7667,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 107,
+     "CONTROL_policy_identity": 0.6667
+    },
+    {
+     "fold": 3,
+     "cells": 27,
+     "A_star": 0.7037,
+     "CONTROL_permuted": [
+      0.6296,
+      0.5185,
+      0.6667,
+      0.7037,
+      0.6296
+     ],
+     "CONTROL_pca8": 0.5926,
+     "CONTROL_subsample": 0.5556,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 110,
+     "CONTROL_policy_identity": 0.6296
+    },
+    {
+     "fold": 4,
+     "cells": 29,
+     "A_star": 0.6207,
+     "CONTROL_permuted": [
+      0.5862,
+      0.4138,
+      0.4828,
+      0.3793,
+      0.4483
+     ],
+     "CONTROL_pca8": 0.6207,
+     "CONTROL_subsample": 0.4828,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 108,
+     "CONTROL_policy_identity": 0.5517
+    },
+    {
+     "fold": 5,
+     "cells": 25,
+     "A_star": 0.68,
+     "CONTROL_permuted": [
+      0.56,
+      0.4,
+      0.52,
+      0.56,
+      0.4
+     ],
+     "CONTROL_pca8": 0.68,
+     "CONTROL_subsample": 0.52,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 112,
+     "CONTROL_policy_identity": 0.52
+    }
+   ],
+   "A_star_fold_mean": 0.7301,
+   "fold_se": 0.041,
+   "CI95_t_df4": [
+    0.6164,
+    0.8438
+   ]
+  },
+  "21": {
+   "layer": 21,
+   "relative_depth": 0.75,
+   "per_fold": [
+    {
+     "fold": 1,
+     "cells": 26,
+     "A_star": 0.7308,
+     "CONTROL_permuted": [
+      0.4231,
+      0.5385,
+      0.4231,
+      0.6154,
+      0.4231
+     ],
+     "CONTROL_pca8": 0.7308,
+     "CONTROL_subsample": 0.6538,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 111,
+     "CONTROL_policy_identity": 0.5385
+    },
+    {
+     "fold": 2,
+     "cells": 30,
+     "A_star": 0.7,
+     "CONTROL_permuted": [
+      0.6333,
+      0.5333,
+      0.4333,
+      0.4,
+      0.4333
+     ],
+     "CONTROL_pca8": 0.8,
+     "CONTROL_subsample": 0.6333,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 107,
+     "CONTROL_policy_identity": 0.6667
+    },
+    {
+     "fold": 3,
+     "cells": 27,
+     "A_star": 0.7407,
+     "CONTROL_permuted": [
+      0.5185,
+      0.4074,
+      0.5185,
+      0.5556,
+      0.4444
+     ],
+     "CONTROL_pca8": 0.8148,
+     "CONTROL_subsample": 0.7037,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 110,
+     "CONTROL_policy_identity": 0.6296
+    },
+    {
+     "fold": 4,
+     "cells": 29,
+     "A_star": 0.6207,
+     "CONTROL_permuted": [
+      0.3793,
+      0.4483,
+      0.5862,
+      0.4138,
+      0.4483
+     ],
+     "CONTROL_pca8": 0.6897,
+     "CONTROL_subsample": 0.6207,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 108,
+     "CONTROL_policy_identity": 0.5862
+    },
+    {
+     "fold": 5,
+     "cells": 25,
+     "A_star": 0.76,
+     "CONTROL_permuted": [
+      0.52,
+      0.52,
+      0.4,
+      0.44,
+      0.44
+     ],
+     "CONTROL_pca8": 0.72,
+     "CONTROL_subsample": 0.72,
+     "CONTROL_subsample_n": 30,
+     "CONTROL_subsample_train_n": 112,
+     "CONTROL_policy_identity": 0.64
+    }
+   ],
+   "A_star_fold_mean": 0.7104,
+   "fold_se": 0.0244,
+   "CI95_t_df4": [
+    0.6426,
+    0.7783
+   ]
+  }
+ },
+ "best_layer": {
+  "layer": 18,
+  "relative_depth": 0.6429,
+  "A_star_fold_mean": 0.7301
+ },
+ "how_to_read": "the scaling claim is read at MATCHED RELATIVE DEPTH across judges; best-layer-per-judge is reported and is NOT the headline -- a probe accuracy that moves with an instrument setting is not a measurement, which is why the grid was fixed before any of it was seen",
+ "signed": "Sautee (sha-ta)"
+}

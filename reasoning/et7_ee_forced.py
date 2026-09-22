@@ -167,6 +167,9 @@ def main():
                                                      sub=rngnp.choice(ti, size=min(30, len(ti)),
                                                                       replace=False)).mean()), 4)
         d["CONTROL_subsample_n"] = int(min(30, len(ti)))
+        d["CONTROL_subsample_train_n"] = int(len(ti))   # PRINT THE PAIR, never the draw alone:
+        # a subsample control whose size is not shown beside its input can silently be the whole
+        # training set. The cap that produced the withdrawn "control fired" was min(200, 99).
         d["CONTROL_policy_identity"] = round(float(fit(mtr, mte, y_str).mean()), 4)
         fold_out.append(d)
         print("    fold %d n=%2d  A* %.3f  F2 %.3f/%.3f  F1 %.3f/%.3f  tie-scored %.3f"
@@ -203,6 +206,22 @@ def main():
              "forced_F2_on_committed": frac(com, "F2_ok_primary"),
              "three_way_judge_on_committed": round(float(np.mean(
                  [meta[i]["judge_pick"] == meta[i]["correct"] for i in com])), 4) if com else None}
+
+    # THE PICK DISTRIBUTION, BESIDE THE ACCURACY. A judge that answers the same letter every time
+    # scores the fold's label balance and nothing else, and its accuracy alone cannot show that.
+    # A 1.5B A of 0.000 read as a finding until the pick distribution showed 1034 of 1050 ties.
+    picks = {}
+    for form in ("F2", "F1"):
+        for order in ("primary", "swapped"):
+            key = "%s_pick_%s" % (form, order)
+            n_a = sum(1 for r in rows if r[key] == "A")
+            picks["%s_%s" % (form, order)] = {
+                "n": len(rows), "picked_A": n_a, "picked_B": len(rows) - n_a,
+                "frac_A": round(n_a / len(rows), 4)}
+    picks["reading"] = ("frac_A near 0 or 1 in BOTH orderings means the forced pick is a constant "
+                        "letter: the accuracy is then the stratum's label balance, not a reading of "
+                        "the answers. frac_A that FLIPS between the orderings is the judge tracking "
+                        "the content.")
 
     f2p = [f["A_forced_F2_primary_order"] for f in fold_out]
     f1p = [f["A_forced_F1_primary_order"] for f in fold_out]
@@ -258,6 +277,7 @@ def main():
         "P_TIE_F1": {"mean_primary": round(float(np.mean([r["P_TIE_primary"] for r in rows])), 4),
                      "median_primary": round(float(np.median([r["P_TIE_primary"] for r in rows])), 4),
                      "generated_tie_rate": round(float(np.mean([meta[i]["judge_pick"] == "TIE" for i in idx])), 4)},
+        "pick_distribution": picks,
         "tie_split": split,
         "how_to_read": ("§3b's registered readings. Δ_forced interval excluding zero with lower bound ≥ 0.05: "
                         "the elicitation gap is real under the publishable definition. Interval containing zero, "
