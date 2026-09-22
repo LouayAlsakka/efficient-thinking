@@ -1,0 +1,45 @@
+{
+ "document": "ET-VII E-E — A, A* and Δ",
+ "prereg": "docs/et7-ee-prereg.md",
+ "judge": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+ "layer": 18,
+ "cells": 1050,
+ "strata": {
+  "PRIMARY_balanced_pairs": {
+   "n_test": 38,
+   "n_train": 99,
+   "A_judge_pick_accuracy": 0.316,
+   "A_star_probe_accuracy": 0.763,
+   "delta": 0.447,
+   "majority_class_baseline": 0.526,
+   "CONTROL_permuted": [
+    0.658,
+    0.605,
+    0.632,
+    0.421,
+    0.553
+   ],
+   "CONTROL_pca8": 0.789,
+   "CONTROL_row_subsample": 0.763,
+   "CONTROL_policy_identity_probe": 0.684
+  },
+  "SECONDARY_confounded_pairs": {
+   "n_test": 226,
+   "n_train": 687,
+   "A_judge_pick_accuracy": 0.252,
+   "A_star_probe_accuracy": 0.85,
+   "delta": 0.597,
+   "majority_class_baseline": 0.54,
+   "CONTROL_permuted": [
+    0.504,
+    0.504,
+    0.549,
+    0.407,
+    0.509
+   ],
+   "CONTROL_pca8": 0.819,
+   "CONTROL_row_subsample": 0.814,
+   "CONTROL_policy_identity_probe": 0.805
+  }
+ }
+}
