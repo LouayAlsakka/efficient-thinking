@@ -227,3 +227,37 @@ of 1.0 about 5,700 (19×). **Ruling: §11 is reported as it stands — the accum
 not established at this n — and nothing further is spent on it unless the author wants the mechanism sentence badly
 enough to pay 8×.** The author's question is answered on both halves: combining does not beat gen1; whether gen1's
 advantage is about which trajectories or how many cannot be told at this size.
+
+**§12 null replicate on seed 73 — FIRED (2026-09-22 23:01Z).** Base against base, same box, same command, same
+code path (the two intervening commits touch a recorded field and a branch a no-heads run never enters), same mlx,
+same task bytes (md5 per slice, files dated before the first run): **+5.0 [+1.7, +8.3], p = 0.0059, McNemar 6/21**,
+ind73_base 20.7% → null73 25.7%. The registered ±4 branch applies (the interval reaches +8.3). Two readings of the
+rule are printed, because the rule as written names the lower bound and the stricter reading names the point:
+
+- *as written* (lower bound inside [+1.7, +8.3]): `s11_combined_vs_gen0` +8.3 [+3.3, +13.3] → marked WITHIN THE NOISE
+  FLOOR.
+- *by point estimate* (E's reading, stricter and adopted alongside): `ind73_gen1_vs_gen0` **+5.7 [+0.7, +10.7]** — the
+  accumulation row — `ind73_gen2_vs_gen0` +3.7, `s11_combined_vs_gen1` +2.7, `s11_gen0matched_vs_gen0` +3.3, and
+  `s11_combined_vs_gen0` +8.3 → all marked WITHIN THE NOISE FLOOR until the null is characterised.
+
+Untouched, by a wide margin: every row against base — gen0 +13.7, gen1 +19.3, gen2 +17.3, combined +22.0,
+gen0matched +17.0, p from 5.7e-06 to 7.4e-12 — all far outside [+1.7, +8.3]. **The head's effect over no head is not
+in question. What the null reaches is every between-generation comparison, which is exactly where §4's accumulation
+claim lives.** The "accumulation reproduced" count is re-read as: reproduced on two 300s under pairing, and on seed 73
+not distinguishable from one draw of the loop's own run-to-run variance.
+
+This is one draw from the null distribution, not its characterisation. It also contradicts the v3-300 null of the
+same afternoon (+0.0 [−1.3, +1.3]), which is informative: `et8_agent` (one decision per episode) is nearly
+deterministic; `et8b_loop` (up to three head decisions at budget 12) is not. **Run-to-run variance is a property of
+the loop harness, and every VIII-b generation row is measured on the loop.**
+
+**Registered now, before they run: two further null replicates on seed 73 (600 episodes), same configuration.**
+Reading fixed: the three null draws give a distribution; a between-generation row is reported as a finding only if its
+point estimate lies outside the range of the null draws and its lower bound exceeds the largest null point estimate;
+otherwise it is reported beside the null draws as "within run-to-run variance" and the accumulation claim is restated
+as not established on seed 73. A time-order check is run beside them: whether the later of two identical runs scores
+systematically higher (the sign of +5.0 is the sign of the accumulation rows, and the generations were run in time
+order). **Exposure beyond VIII-b, to be checked and not assumed:** Paper VIII's independent reproduction
+(+8.0 [+3.0, +13.3]) — if it was measured on the loop harness with base and head as separate runs, its lower bound
+sits inside this null's interval, and VIII's reproducibility section gains a sentence once the null is characterised.
+VIII's headline rows (matched compute, R6, R7) are paired within one run pair and far outside the interval.
