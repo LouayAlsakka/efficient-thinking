@@ -110,17 +110,26 @@ run_arm(){
   local name="$1"; shift
   mkdir -p "$OUT/$name"
   for s in 1 2 3 4; do
-    "$PY" "$R/experience/et8b_loop.py" --tasks "$OUT/slices/s$s" --out "$OUT/$name/a_s$s" \
-       --model "$MODEL" --budget 12 "$@" >> "$OUT/$name/s$s.log" 2>&1
-    local n; n=$(wc -l < "$OUT/$name/a_s$s.episodes.jsonl" 2>/dev/null | tr -d ' '); n=${n:-0}
-    say "  $name slice $s: $n episodes"
+    # RESUMABLE. Four arms x four slices is hours; a kill in arm 4 used to re-run arms 1-3 from
+    # zero, and a re-run is a different sample. A slice that already holds EXPECT complete
+    # episodes is kept and not touched: the same rows, not new ones.
+    local f="$OUT/$name/a_s$s"
+    local n; n=$( [ -f "$f.episodes.jsonl" ] && wc -l < "$f.episodes.jsonl" | tr -d ' ' || echo 0 )
+    if [ "$n" -ne "$EXPECT" ]; then
+      "$PY" "$R/experience/et8b_loop.py" --tasks "$OUT/slices/s$s" --out "$f" \
+         --model "$MODEL" --budget 12 "$@" >> "$OUT/$name/s$s.log" 2>&1
+      n=$( [ -f "$f.episodes.jsonl" ] && wc -l < "$f.episodes.jsonl" | tr -d ' ' || echo 0 )
+      say "  $name slice $s: $n episodes"
+    else
+      say "  $name slice $s: $n episodes (kept, already complete)"
+    fi
     [ "$n" -eq "$EXPECT" ] || { tail -20 "$OUT/$name/s$s.log"; die "$name slice $s produced $n of $EXPECT"; }
   done
   cat "$OUT/$name"/a_s{1,2,3,4}.episodes.jsonl > "$OUT/$name.episodes.jsonl"
 }
-say "arm 1/3: base (no head)"
+say "arm 1/4: base (no head)"
 run_arm base
-say "arm 2/3: gen0"
+say "arm 2/4: gen0"
 run_arm gen0 --heads "$H/gen0_head_d1_layer18.npz" "$H/gen0_head_d2_layer18.npz" "$H/gen0_head_d3_layer18.npz"
 say "arm 3/4: gen1"
 run_arm gen1 --heads "$H/gen1_head_d1_layer18.npz" "$H/gen1_head_d2_layer18.npz" "$H/gen1_head_d3_layer18.npz"
