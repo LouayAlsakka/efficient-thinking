@@ -261,3 +261,13 @@ order). **Exposure beyond VIII-b, to be checked and not assumed:** Paper VIII's 
 (+8.0 [+3.0, +13.3]) — if it was measured on the loop harness with base and head as separate runs, its lower bound
 sits inside this null's interval, and VIII's reproducibility section gains a sentence once the null is characterised.
 VIII's headline rows (matched compute, R6, R7) are paired within one run pair and far outside the interval.
+
+**§12 carriers, final (2026-09-22 23:39Z), v3 300 against base 11.7% at 11.10 actions:** A_memory +0.7 [−3.7, +5.0]
+p .88; naive_symptom +0.3 [−0.7, +1.7] p 1.0 (mechanism verified from the code path `et8_agent.py:262` and the
+flag's reach, NOT from episode-level token diffs — the void F arm also differs from base in `tokens_out` on 242/300 with
+nothing loaded, so token diffs are downstream of the loop's own nondeterminism and prove nothing; the standard is the
+code path and the run's own log); F_logitbias void (§12 above). All three inside the v3 null floor of ±1.3: §7.3's
+carriers do not move the 300-problem set, as a bounded statement. The contrast is the instrument finding of the day:
+`et8_agent` (one decision) nulls at ±1.3; `et8b_loop` (up to three head decisions) nulls at +5.0 [+1.7, +8.3].
+Null73b is complete and null73c running — four base arms, six pairwise draws, ~00:10Z — started by E with the box
+idle and the ±4 branch already fired; approved after the fact as controls that touch nothing published.
