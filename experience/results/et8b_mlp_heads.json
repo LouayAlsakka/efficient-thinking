@@ -1,0 +1,59 @@
+{
+ "document": "ET-8b §10 — the NONLINEAR (MLP) gen0 head",
+ "prereg": "docs/et8b-loop-gates.md §10",
+ "architecture": "2-layer MLP, hidden 256, ReLU, on the SAME frozen states and verifier labels as the linear gen0 head",
+ "controller_arithmetic_per_candidate": {
+  "linear": 3584,
+  "mlp": 917760,
+  "ratio": 256.1,
+  "note": "§10 charges the head its own inference. A win that costs 256x the controller arithmetic is not the same finding as a win for free."
+ },
+ "heads": {
+  "decision_1": {
+   "held_out_pick_pct": 41.3,
+   "n": 75,
+   "TRAIN_pick_pct": 94.7,
+   "chance_pct": 21.0,
+   "CONTROL_permuted": [
+    14.7,
+    24.0,
+    18.7,
+    24.0,
+    14.7
+   ],
+   "CONTROL_pca8": 34.7,
+   "CONTROL_row_subsample": 42.7
+  },
+  "decision_2": {
+   "held_out_pick_pct": 68.2,
+   "n": 66,
+   "TRAIN_pick_pct": 100.0,
+   "chance_pct": 20.7,
+   "CONTROL_permuted": [
+    25.8,
+    15.2,
+    22.7,
+    25.8,
+    18.2
+   ],
+   "CONTROL_pca8": 45.5,
+   "CONTROL_row_subsample": 66.7
+  },
+  "decision_3": {
+   "held_out_pick_pct": 68.3,
+   "n": 60,
+   "TRAIN_pick_pct": 100.0,
+   "chance_pct": 20.7,
+   "CONTROL_permuted": [
+    21.7,
+    16.7,
+    13.3,
+    25.0,
+    15.0
+   ],
+   "CONTROL_pca8": 43.3,
+   "CONTROL_row_subsample": 60.0
+  }
+ },
+ "signed": "Sautee (sha-ta)"
+}

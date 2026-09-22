@@ -111,7 +111,15 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
                 hs = hstate["hidden"](model, tok, cur, [hstate["layer"]], prefix=pre)
                 z = _np.array(hs[hstate["layer"]].astype(hstate["mx"].float32), copy=False)
                 z = (z.astype(_np.float64) - hstate["mu"]) / hstate["sd"]
-                scores[r] = float(z @ hstate["w"] + hstate["b"]); pres[r] = pre
+                # §10's nonlinear arm: if the npz carries MLP weights, score through them.
+                # The linear path is untouched — an npz without mlp_W1 behaves exactly as before,
+                # so the two arms differ in the HEAD and in nothing else.
+                if hstate.get("mlp_W1") is not None:
+                    _h = z @ hstate["mlp_W1"] + hstate["mlp_b1"]
+                    scores[r] = float(_np.maximum(_h, 0) @ hstate["mlp_W2"] + hstate["mlp_b2"])
+                else:
+                    scores[r] = float(z @ hstate["w"] + hstate["b"])
+                pres[r] = pre
             pick = max(scores, key=scores.get)
             text, ni, no = A.generate(model, tok, cur, temp=0.0)
             total_in += ni; total_out += no; actions += 1
@@ -208,7 +216,12 @@ def main():
         import numpy as _np, mlx.core as _mx, et8_head_v3 as _H
         def _load(p):
             z = _np.load(p)
+            _k = z.files
             return {"w": z["w"], "b": float(z["b"][0]), "mu": z["mu"], "sd": z["sd"],
+                    "mlp_W1": z["mlp_W1"] if "mlp_W1" in _k else None,
+                    "mlp_b1": z["mlp_b1"] if "mlp_b1" in _k else None,
+                    "mlp_W2": z["mlp_W2"] if "mlp_W2" in _k else None,
+                    "mlp_b2": float(z["mlp_b2"][0]) if "mlp_b2" in _k else 0.0,
                     "layer": a.head_layer, "hidden": _H.hidden_at, "mx": _mx}
         if a.heads:
             head = {d + 1: _load(p) for d, p in enumerate(a.heads)}
