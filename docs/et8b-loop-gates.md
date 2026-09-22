@@ -215,3 +215,15 @@ run in this session (not imported).*
   interval is marked "within the noise floor" in the paper and the row count for "accumulation reproduced" is re-read.
 - **naive_symptom:** running; mechanism verified live from the step log (33/33 episodes differ from base in
   `tokens_out`), paired when complete, reported against the base and against the null floor.
+
+**Joint reading, §11 (2026-09-22 22:33Z, both arms on seed 73's independent 300, wrapper pairings identical to the
+read-only ones):** gen0-at-gen1-rows lands at 37.7% — between gen0 (34.3%) and gen1 (40.0%) and compatible with both:
++3.3 [−1.0, +7.7] over gen0, −2.3 [−7.7, +2.7] under gen1. Combined (arm 1) +2.7 [−2.3, +7.7] over gen1. Both
+intervals span zero. **The decomposition of the +5.7 into amount and origin is not established at 300 tasks.** The
+point estimates read as "mostly amount" and that sentence is not written: the interval on the 3.3 contains zero and
+contains 5.7. Against the v3 null floor of ±1.3 these ±4–5 intervals are not noise; the arm is underpowered for a
+five-point effect split in two. Sized: a half-width of 1.5 on the origin component needs about 2,500 tasks (8.4×),
+of 1.0 about 5,700 (19×). **Ruling: §11 is reported as it stands — the accumulation is real and its decomposition is
+not established at this n — and nothing further is spent on it unless the author wants the mechanism sentence badly
+enough to pay 8×.** The author's question is answered on both halves: combining does not beat gen1; whether gen1's
+advantage is about which trajectories or how many cannot be told at this size.
