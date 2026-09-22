@@ -36,6 +36,37 @@ Named in WO-312; the definitions below are mine and are what makes them comparab
 5. **cost per turn** — the predictor's metered spend. **$0 for STATIC and CHAT-without-prediction by
    construction; $0.0052/turn measured for PREDICTED v0** (Opus 4.7 on Bedrock, nirai 12059).
 
+## 2a. AMENDMENT, written when the task list was built and BEFORE any arm was run — taps-to-goal
+has no variance on this venue
+
+*Added 2026-09-22 by Sautée, on building `bench/tasks_v0.py` against 庭's compiled fixture.*
+
+`quick-cuts.chelsea` sells **one** offer. The path to every reachable target is therefore the same
+path — offer → staff → day → slot → identity → submit — and the task generator confirms it: across
+100 tasks drawn from 378 reachable targets, `optimal_taps` takes exactly **one** value, 5.
+
+**So measurement 1 cannot separate two arms that both navigate correctly here.** Taps-to-goal can
+only move UP (a wrong guess costs a tap) or, for PREDICTED, down by collapsing a step. It is still
+worth recording — an arm that takes *more* taps is a real finding, and §4's third reading depends on
+it — but it is no longer the headline it is in WO-312's own list, and saying so after seeing a flat
+column would be indefensible.
+
+**What carries the signal on this venue instead:** hit@N (measurement 4) and seconds-to-goal
+(measurement 2). The only thing that varies across tasks here is DEPTH — which of three staff, how
+far down the open-day strip, how far into the day's eighteen slots — and depth costs *finding*, not
+tapping. The task list records those three features per task for exactly this reason.
+
+**And it names the fix, which is already the WO's next step.** Taps-to-goal becomes discriminating
+on a venue with more than one offer, where the tail actions differ per task. That is the same second
+compiled venue WO-312 already requires as its programmability test, so this is not extra work — it
+is an argument for doing that step before reading too much into a flat taps column.
+
+**One more thing the task list fixes rather than inherits.** The bench's day strip is built from the
+run date and Mondays are closed, so a task naming a literal date is unreachable on a later run. Task
+targets are expressed as (staff, Nth open day, Nth slot) and resolved to dates only for a stated
+reference date, which is stamped into the artefact along with the fixture's md5 — verified identical
+to 庭's compiled space, not assumed.
+
 ## 3. Pairing and the test
 
 Paired **per task across the three arms** — the same task list, so each task contributes one triple.
