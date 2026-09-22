@@ -177,3 +177,32 @@ cells at every size, so the curve is measured under the definition that will be 
 read.
 
 — R, for E; the run is E's, on the cached states plus one forward pass per cell per judge per prompt form.
+
+## 3c. AMENDMENT, made before the layer sweep — probe depth across judge sizes
+
+*Written 2026-09-22 by R on E's finding, before any state beyond layer 18 is read.*
+
+**The confound.** Every judge in §5's scaling limb was probed at absolute layer 18, which is 64% of depth at 1.5B
+and 7B (28 blocks), 37.5% at 14B (48 blocks) and would be 28% at 32B (64 blocks). "A\* is flat across scale" was
+therefore measured on an instrument that walks earlier in the network as the model grows. The comparison is not
+controlled, and it is the one bound that could manufacture the finding. The 14B tie-split inversion (probe 0.833 on
+tied cells, 0.614 on committed) has an under-read layer as a candidate explanation.
+
+**The sweep, registered.** One forward pass per cell per judge returns every layer in a grid fixed here, by
+*relative depth* {0.25, 0.375, 0.50, 0.64, 0.75}: 1.5B/7B → layers 7, 10, 14, 18, 21; 14B → 12, 18, 24, 31, 36;
+32B → 16, 24, 32, 41, 48. Layer 18 stays in every judge's grid so the published number is visible in its curve. Same
+137 primary cells, same five folds over problems, same four controls (permutation ×5, PCA-8 against the fold interval,
+subsample n = 30 with `sub n / train n` printed, policy identity) at every depth.
+
+**Readings, fixed now.**
+- The scaling comparison is read at **matched relative depth 0.64** (the setting the 7B headline was measured at),
+  with the full per-depth curve shipped for every judge so it can be read any other way.
+- Best-layer-per-judge is reported and is **not** the headline: a probe accuracy that moves with an instrument setting
+  is not a measurement, and the grid is fixed before any of it is seen.
+- If, at matched depth, A\* across 1.5B–14B (and 32B when read) stays within the 7B fold interval, §9's "flat"
+  stands, restated at matched depth. If it moves by more than that interval, "flat" is withdrawn as written and the
+  second registered prediction is re-scored on the matched-depth curve, under the forced-choice A of §3b.
+- A control firing at any depth withdraws that depth's A\* for that judge before anything is said.
+
+**Order.** Forced run (§3b) first — it is unaffected, reading logits at the output and reusing the layer-18 states.
+Sweep second, same box, after the forced run finishes. The 32B tie-scored read waits for both.

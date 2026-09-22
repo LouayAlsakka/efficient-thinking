@@ -42,7 +42,7 @@ was a scoring artefact, now being re-measured under the definition it will publi
 | what the gap is | abstention: ties on 66.4% of pairs, 73.9% correct when committing, the probe over all pairs 73.0%; the tie-restricted probe number is requested, not yet measured | §6 |
 | what it is not | answer length (43.1%, below chance); policy identity (0.577, uninformative by construction) | §7 |
 | the same shape in Paper VIII | the frozen model's own log-probability preference 20.3% where a probe on its state reads 66.7% | §8 |
-| scale, tie-scored | probe flat across 1.5B–14B (0.68 · 0.73 · 0.67); tie rate 98.5% → 66.4% → 26.3%; the curve is a tie-rate curve; the second registered prediction fails; to be re-measured under forced choice | §9 |
+| scale, tie-scored | probe 0.68 · 0.73 · 0.67 across 1.5B–14B at absolute layer 18 — which is 64%, 64% and 37.5% of depth, so "flat" is not yet a controlled comparison (prereg §3c); tie rate 98.5% → 66.4% → 26.3%; the curve is a tie-rate curve; re-measured under forced choice at matched depth | §9 |
 | not yet measured | forced-choice A at four sizes; E-C; E-D | §10, §12 |
 
 ## 1. The question
@@ -223,7 +223,12 @@ elicitation loss does not close with scale; a gap that shrinks toward zero by 32
 models do not say what they know and large ones do. Two cautions. The 1.5B
 row is a format floor — a judge that ties on 98.5% of pairs is not measured at \(A = 0.007\), it is declining the
 task — and it enters the curve only with its tie rate beside it. And "flat" is three points with fold intervals of
-about ±0.1; the 32B point, pending, is what would make the shape a claim rather than a reading.
+about ±0.1; the 32B point, pending, is what would make the shape a claim rather than a reading. A third, found
+after v0.2 and larger than either: every judge was probed at absolute layer 18, which is 64% of depth at 1.5B and 7B
+but 37.5% at 14B (and would be 28% at 32B), so the "flat" probe walks earlier in the network as the model grows. The
+comparison is not controlled at this draft. Prereg §3c registers a depth sweep on a fixed relative-depth grid, read at
+matched depth 0.64, before any further state is read; the 14B inversion in §6 has an under-read layer as a candidate
+explanation and is tested the same way.
 
 The consequence for the internal route is sharper than the cross-registration the concept wrote. E-D trains a judge
 against its own incoherence, with no external labels. If the headroom at every scale is abstention rather than
