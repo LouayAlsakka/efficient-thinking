@@ -49,3 +49,58 @@ No text before numbers. Proposals commit before runs; the timestamp is the regis
 prediction is scored hit or miss; misses at the same prominence. Per-problem logging from the first cell. Every
 table carries its command. A conclusion may not outrun its own stated bound. Three probe controls at every fit.
 A budget in the prompt makes each budget a different agent. Nothing scored by a persona oracle is a paper claim.
+
+## Pipeline — ideas recorded, not registered (2026-09-21)
+
+| paper | one line | state | order |
+|---|---|---|---|
+| X Representation | is language the efficient representation for a reasoner | concept registered; X-a next | after VIII-b is written |
+| XI Communication | is language the efficient channel between two reasoners; a discovery ladder | idea (`efficient-thinking-11-concept.md`) | after X-a; inherits its instruments |
+| XII Skills | a head that chooses which additive skill to bring, from verified history (merging dropped: it changes the intelligence) | idea (`efficient-thinking-12-concept.md`) | first experiment can run beside X-a or XI-a; needs no new field |
+
+## The one question, and the rule for admitting a paper (the author, 2026-09-21)
+
+The series asks one question from every angle: **how much useful capability can a fixed intelligence get per unit of
+computation, and what moves that number?** A paper is admitted only if it is one angle on that question, with the
+intelligence held fixed and the capability externally verified. A paper that changes the intelligence — training a
+better model, merging models — is someone else's programme and is cited, not pursued.
+
+| paper | the angle | the lever |
+|---|---|---|
+| I | search moves along the frontier | inference-time search |
+| II | where search pays and where it cannot | the evaluator's ceiling |
+| III | the price of selecting | an LLM judge against free baselines |
+| IV | search where the verifier is taste | a human, then a frontier model, as evaluator |
+| V | the price of external information | feedback, per bit and per minute |
+| VI | why self-play stops | label fidelity |
+| VII | what a fixed system can get from inside | the elicitation gap |
+| VIII | experience moves the frontier | a read-only prior from verified history |
+| VIII-b | does it move again | accumulation across generations |
+| IX | the cost of not knowing what does not matter | symmetry |
+| X | is language the efficient representation | representation |
+| XI | is language the efficient channel between two | communication |
+| XII | experience chooses which skill to bring | the selector as an experience prior |
+
+Every row holds the intelligence fixed and measures capability against compute. The test for a new idea is one
+sentence in the middle column; if it cannot be written, the idea is not in this series.
+
+## Publication route (the author, 2026-09-21): direct, no venues
+
+The work is published where it is made. No conference, no journal, no endorsement, no submission form. The route:
+
+1. **The record** — `docs/efficient-thinking-<n>.md` with html and pdf beside it, on GitHub, served from the author's
+   domain. A DOI from Zenodo for each paper so it is citable without a gatekeeper.
+2. **The cut** — an eight-page version of VIII (and of VIII-b when written) for a reader deciding in ten minutes whether
+   to spend three hours; a courtesy to the reader, not a rule of anyone's. Figure 1, the claim in three sentences, the
+   reproduction command.
+3. **The challenge** — one page per paper: the claim, the figure, the command, the four attack angles stated by the
+   author (an alternative explanation for the matched-compute shift; leakage in the experience construction; a flaw in
+   the paired statistics; a reason the second search structure does not establish transfer), an open invitation to break
+   it, the repository's issues as the review channel, and a bounty for a fatal flaw.
+4. **Readers** — practitioners who will run the command: the MLX community (it runs on Apple silicon), builders of agents,
+   the forums that argue about self-improvement. Two readers who run it and report back outrank a venue.
+5. **What is kept** — the series' own discipline, which is what makes the challenge credible: pre-registered readings,
+   withdrawn claims kept, instruments named by hash, a reproduction that fails loud, the author named plainly as an
+   engineer from outside the field working with AI assistance.
+
+Owner of 2–3: 理. Owner of 1's DOI and 4's posts: the author, on his word.

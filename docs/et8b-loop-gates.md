@@ -147,3 +147,15 @@ because the head's choice of where to look lengthens the context the agent carri
 and a base with a raised decision cap or a forced-inspect policy is a different agent. VIII-b therefore reports the
 loop's gain over its base with the per-action decomposition and does not claim it as a frontier shift; the
 accumulation claim (gen1 over gen0) is at equal cost by construction and stands on its own.
+
+## 10. Pre-registered 2026-09-22 — the nonlinear head at matched compute (from the site's first outside review)
+
+The obvious alternative to a linear read of the hidden state is a small nonlinear head on the same states. Arm: a
+two-layer MLP (hidden 256, ReLU) fitted on the same training states and verifier labels as the linear head, same
+three decisions, same probe controls (permutation ×5, PCA-8, n = 100 ×5), charged its own inference; run as gen0 on
+both independent 300s, paired against the linear gen0 and against base. Readings, fixed now: MLP ≈ linear (interval
+contains zero) → the linear head is the efficient form and the claim stands as an efficiency claim; MLP > linear by
+more than the interval → the linear head is a cheap approximation of a trained value head and the paper says so in
+those words; MLP < linear → overfitting on 300 episodes, printed with the training-set accuracy beside it. Also
+registered: the six failed carriers of VIII §7.3 re-run on the 300-problem set, so their failures become results
+rather than directions.
