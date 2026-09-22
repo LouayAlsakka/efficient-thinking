@@ -1,0 +1,49 @@
+{
+ "document": "ET-VII E-E — fold-wise A* for the interval (理 12089)",
+ "judge": "Qwen2.5-7B-Instruct-4bit",
+ "stratum": "PRIMARY balanced pairs",
+ "K": 5,
+ "folds": [
+  {
+   "fold": 1,
+   "cells": 26,
+   "A_star": 0.8462,
+   "A_judge": 0.1538
+  },
+  {
+   "fold": 2,
+   "cells": 30,
+   "A_star": 0.8,
+   "A_judge": 0.3333
+  },
+  {
+   "fold": 3,
+   "cells": 27,
+   "A_star": 0.7037,
+   "A_judge": 0.2222
+  },
+  {
+   "fold": 4,
+   "cells": 29,
+   "A_star": 0.6207,
+   "A_judge": 0.2414
+  },
+  {
+   "fold": 5,
+   "cells": 25,
+   "A_star": 0.68,
+   "A_judge": 0.28
+  }
+ ],
+ "pooled_A_star_cell_weighted": 0.7299,
+ "pooled_A_judge": 0.2482,
+ "fold_mean_A_star": 0.7301,
+ "fold_sd": 0.0916,
+ "fold_se": 0.0409,
+ "CI95_across_folds_t_df4": [
+  0.6164,
+  0.8438
+ ],
+ "why_folds_are_the_unit": "cells within a problem share the problem text and are not independent; the folds are split BY PROBLEM, so the fold is the independent unit. A binomial interval over 137 cells would be narrower and would overstate the precision.",
+ "signed": "Sautee (sha-ta)"
+}
