@@ -164,3 +164,19 @@ more than the interval → the linear head is a cheap approximation of a trained
 those words; MLP < linear → overfitting on 300 episodes, printed with the training-set accuracy beside it. Also
 registered: the six failed carriers of VIII §7.3 re-run on the 300-problem set, so their failures become results
 rather than directions.
+
+## 11. Pre-registered 2026-09-22 — is accumulation a data effect? (the author's question)
+
+The author asked: if gen1 beats gen0 and gen2 does not beat gen1, can generations 0 and 1 be combined into one head
+applied once? Two arms, both cheap, both on the two independent 300s, paired against gen1 and gen0:
+
+- **gen0+1 combined:** one head fitted on the union of gen0's training trajectories (base-steered) and gen1's
+  (gen0-steered), same recipe and controls, applied once.
+- **gen1-at-gen0-rows control:** the gen1 head re-fitted on a subsample of its own data at gen0's row count, and gen0
+  re-fitted at gen1's, so that origin of data and amount of data are separated.
+
+Readings, fixed before the run: combined ≈ gen1 → accumulation is a DATA effect — the loop's value is that a steered
+agent generates better training data, and the paper says so in those words; combined < gen1 by more than the interval →
+order matters, mixing base trajectories dilutes the signal, the loop does sequential work; combined > gen1 → data was
+being discarded at each generation and the right procedure accumulates the corpus. The control decides whether gen1's
+advantage survives at matched rows.
