@@ -67,6 +67,43 @@ targets are expressed as (staff, Nth open day, Nth slot) and resolved to dates o
 reference date, which is stamped into the artefact along with the fixture's md5 — verified identical
 to 庭's compiled space, not assumed.
 
+## 2b. AMENDMENT — what the SCRIPTED run can and cannot show, written after driving it and before
+scoring 100 tasks
+
+*Added 2026-09-22 by Sautée, after driving real tasks through the built STATIC and CHAT arms with
+the logger running.*
+
+§2a said taps-to-goal has no variance here. Driving it showed the same is true of three more of the
+five, **for a scripted user on this venue**:
+
+| measurement | on this venue, with a scripted user | why |
+|---|---|---|
+| 1 taps-to-goal | **constant 5** | one offer, one path (§2a) |
+| 2 seconds-to-goal | **measures the driver** | the scripted user resolves a chip by selector; it never scans. A human's cost is *finding*, and a selector has no finding |
+| 3 task completion | **unmeasurable** | the bench makes no engine call; `submit_fired` is recorded and completion stays null rather than being quietly redefined as "the screen said so" |
+| 4 hit@N | **1.0 for STATIC by construction** | STATIC's head IS the whole menu — measured, not assumed: 18 of 18 slot chips fully inside a 480 px viewport, nothing off screen. A head that shows everything cannot miss. Undefined for CHAT |
+| 5 cost per turn | **$0 for both built arms** | no predictor is wired yet |
+
+**So the first measurement, run as WO-312 orders it, does not separate the arms.** It produces a
+FLOOR and a sanity gate — §4's void condition is exactly that use: if the scripted user cannot
+finish on a known-optimal path, the world is broken and nothing else is interpretable. That is worth
+having, and it is not the comparison the WO's headline asks for. Saying so now, with the arms built
+and driven and before 100 tasks are scored, is the point of writing readings down first.
+
+**What each degeneracy costs, and what removes it** — all four are already steps in WO-312's own
+order, so this is an argument about sequence, not scope:
+
+- **the engine** removes 3. Blocked on 女将's answer to 形's 12055.
+- **a second compiled venue with more than one offer** removes 1, and is the WO's own programmability test.
+- **a user who must choose rather than be told** removes 2 and 4: a frontier-model user picks from
+  what is shown and can miss; a human scans and the scan costs seconds.
+- **PREDICTED with N = 5** removes 4 on its own side — 5 of 18 slots is a head that can miss, and
+  the comparison then has something to compare. It waits on Louay reading the principle doc.
+
+⚠️ **The reading this fixes in advance.** If the scripted run is reported as "no difference between
+the arms", that is a statement about the scripted user and this venue, **not** about predicted heads.
+Any such sentence must carry this table beside it.
+
 ## 3. Pairing and the test
 
 Paired **per task across the three arms** — the same task list, so each task contributes one triple.
