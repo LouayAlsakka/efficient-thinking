@@ -51,7 +51,12 @@ def main():
     ap.add_argument("--space", required=True, help="the compiled venue the bench renders")
     ap.add_argument("--n", type=int, default=100)
     ap.add_argument("--open-days", type=int, default=7, help="how many OPEN days a task may target")
-    ap.add_argument("--from", dest="frm", default="2026-09-23", help="reference date; stamped, not implicit")
+    # DEFAULT IS TODAY, because the bench's day strip is nextDays(TODAY, 14) — verified against the
+    # running UI, whose first chip was the run date itself. A list generated from a different
+    # reference date still names reachable days, but its open_day_index is then off by one against
+    # the strip the user actually sees, and open_day_index is one of only three things that vary here.
+    ap.add_argument("--from", dest="frm", default=str(__import__("datetime").date.today()),
+                    help="reference date; stamped, not implicit. Defaults to today.")
     ap.add_argument("--seed", type=int, default=312)
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
@@ -134,7 +139,7 @@ def main():
         "document": "WO-312 — scripted task list v0, quick-cuts.chelsea",
         "prereg": "docs/wo312-measurement-prereg.md",
         "space_file": os.path.basename(a.space), "space_md5": hashlib.md5(raw).hexdigest(),
-        "reference_date": a.frm, "open_days_offered": a.open_days, "seed": a.seed,
+        "reference_date": a.frm, "reference_date_is_today": a.frm == str(datetime.date.today()), "open_days_offered": a.open_days, "seed": a.seed,
         "n_tasks": len(tasks), "n_reachable_targets": len(targets),
         "offer_count": len(offers), "roster": roster,
         "OPTIMAL_TAPS_IS_CONSTANT": {
