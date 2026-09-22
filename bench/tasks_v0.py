@@ -66,19 +66,39 @@ def main():
     tx = space["transaction"]
     hours = tx["schedule"]["declared"]["hours"]
     grid = tx["schedule"]["declared"]["slot_grid_min"]
-    roster = tx["resource"]["roster"]
+    # .get, not [] — a venue with resource.kind "none" HAS NO ROSTER KEY. The synthetic
+    # no-staff probe crashed here, which is what the probe was for.
+    roster = (tx.get("resource") or {}).get("roster") or []
     offers = space["offer_sheet"]
     start = datetime.date.fromisoformat(a.frm)
     days = open_days(hours, start, a.open_days)
 
+    # THE PATH IS READ FROM THE TRANSACTION BLOCK, NOT ASSUMED. Every offer in a venue shares that
+    # block, which is why three offers do not change the depth (理 12184, on the schema at a2a
+    # ed97c406): `resource.kind: "none"` or `select: "auto"` removes the staff step, and
+    # granularity decides whether a day and a time are chosen at all. A generator that hardcodes
+    # offer -> staff -> day -> slot -> submit measures v0 and nothing else, and the WO's own
+    # acceptance test is that a NEW compiled definition works with zero code either side. This is
+    # that test applied to the harness.
+    res = tx.get("resource") or {}
+    picks_staff = res.get("kind") not in (None, "none") and res.get("select") != "auto"
+    gran = (tx.get("schedule") or {}).get("granularity", "slot")
+    picks_day = gran in ("slot", "date_range", "occurrence")
+    picks_time = gran == "slot"
+    if not picks_staff:
+        roster = []
+
     targets = []
-    for si, staff in enumerate(roster):
-        for di, day in enumerate(days):
-            sl = slots_for(hours, day["weekday"], grid)
-            for ti, t in enumerate(sl):
-                targets.append({"staff": staff, "staff_index": si,
-                                "open_day_index": di, "weekday": day["weekday"], "date": day["date"],
-                                "slot": t, "slot_index": ti, "slots_that_day": len(sl)})
+    for oi, offer in enumerate(offers):
+        staff_opts = roster if picks_staff else [None]
+        for si, staff in enumerate(staff_opts):
+            for di, day in enumerate(days if picks_day else days[:1]):
+                sl = slots_for(hours, day["weekday"], grid) if picks_time else [None]
+                for ti, t in enumerate(sl):
+                    targets.append({"offer": offer, "offer_index": oi,
+                                    "staff": staff, "staff_index": si,
+                                    "open_day_index": di, "weekday": day["weekday"], "date": day["date"],
+                                    "slot": t, "slot_index": ti, "slots_that_day": len(sl)})
     rng = random.Random(a.seed)
 
     # STRATIFY on the only things that vary: which staff, how far down the day strip, and where in
@@ -87,7 +107,7 @@ def main():
     def bucket(t):
         third = 0 if t["slot_index"] < t["slots_that_day"] / 3 else (
             1 if t["slot_index"] < 2 * t["slots_that_day"] / 3 else 2)
-        return (t["staff_index"], min(t["open_day_index"], 3), third)
+        return (t["offer_index"], t["staff_index"], min(t["open_day_index"], 3), third)
     by = {}
     for t in targets:
         by.setdefault(bucket(t), []).append(t)
@@ -103,33 +123,32 @@ def main():
         if i > len(keys) * 200:
             break
 
-    offer = offers[0]
     tasks = []
     for n, t in enumerate(picked):
-        path = [
-            # ONE TAP, TWO DISPATCHES: the offer press fires SELECT offer_ids AND OPEN_SHEET book.
-            # taps counts the press; the logger will see two reducer actions for it.
-            {"kind": "select", "label": "Pick %s" % offer["name"], "args": {"offer_id": offer["offer_id"]},
-             "dispatches": ["SELECT offer_ids", "OPEN_SHEET book"]},
-            {"kind": "select", "label": "Book with %s" % t["staff"], "args": {"staff": t["staff"]}},
-            {"kind": "select", "label": t["date"], "args": {"day": t["date"]}},
-            # THE SLOT ARG IS "HH:MM", NOT AN ISO DATETIME. Read out of the bench's own dispatch:
-            # onSelect: (t) => dispatch({verb:'SELECT', field:'slot', value:t}) where t comes
-            # straight from slotsFor(weekday), i.e. "09:00". My first version wrote
-            # "2026-09-23T09:00" and would have driven nothing — a task list expressed in terms the
-            # thing it measures cannot consume. Checked against the running UI, not the fixture.
-            {"kind": "select", "label": t["slot"], "args": {"slot": t["slot"]}},
-            {"kind": "form-fill", "label": "name and phone", "args": {"form": "book"}},
-            {"kind": "submit", "label": "Request this booking", "args": {"action": "request"}},
-        ]
+        offer = t["offer"]
+        path = [{"kind": "select", "label": "Pick %s" % offer["name"],
+                 "args": {"offer_id": offer.get("offer_id") or offer["name"]},
+                 "dispatches": ["SELECT offer_ids", "OPEN_SHEET book"]}]
+        if picks_staff:
+            path.append({"kind": "select", "label": "Book with %s" % t["staff"],
+                         "args": {"staff": t["staff"]}})
+        if picks_day:
+            path.append({"kind": "select", "label": t["date"], "args": {"day": t["date"]}})
+        if picks_time:
+            path.append({"kind": "select", "label": t["slot"], "args": {"slot": t["slot"]}})
+        path.append({"kind": "form-fill", "label": "name and phone", "args": {"form": "book"}})
+        path.append({"kind": "submit", "label": "Request this booking", "args": {"action": "request"}})
+        goal = "Book %s%s on %s (%s)%s" % (
+            offer["name"], " with %s" % t["staff"] if t["staff"] else "", t["date"], t["weekday"],
+            " at %s" % t["slot"] if t["slot"] else "")
         tasks.append({
-            "task_id": "qc-%03d" % (n + 1),
-            "goal": "Book %s with %s on %s (%s) at %s" % (offer["name"], t["staff"], t["date"],
-                                                          t["weekday"], t["slot"]),
-            "target": {k: t[k] for k in ("staff", "date", "weekday", "slot")},
+            "task_id": "qc-%03d" % (n + 1), "goal": goal,
+            "target": {"offer_id": offer.get("offer_id") or offer["name"], "staff": t["staff"],
+                       "date": t["date"], "weekday": t["weekday"], "slot": t["slot"]},
             "optimal_path": path,
-            "optimal_taps": sum(1 for s in path if s["kind"] != "form-fill"),
-            "depth": {"staff_index": t["staff_index"], "open_day_index": t["open_day_index"],
+            "optimal_taps": sum(1 for s_ in path if s_["kind"] != "form-fill"),
+            "depth": {"offer_index": t["offer_index"], "staff_index": t["staff_index"],
+                      "open_day_index": t["open_day_index"],
                       "slot_index": t["slot_index"], "slots_that_day": t["slots_that_day"],
                       "slot_fraction_into_day": round(t["slot_index"] / max(1, t["slots_that_day"] - 1), 3)},
         })
@@ -142,6 +161,9 @@ def main():
         "reference_date": a.frm, "reference_date_is_today": a.frm == str(datetime.date.today()), "open_days_offered": a.open_days, "seed": a.seed,
         "n_tasks": len(tasks), "n_reachable_targets": len(targets),
         "offer_count": len(offers), "roster": roster,
+        "path_shape_from_transaction": {"picks_staff": picks_staff, "picks_day": picks_day,
+                                        "picks_time": picks_time, "granularity": gran,
+                                        "resource_kind": res.get("kind"), "resource_select": res.get("select")},
         "OPTIMAL_TAPS_IS_CONSTANT": {
             "values_present": taps,
             "why": ("one offer means one path: offer -> staff -> day -> slot -> identity -> submit. "
@@ -166,6 +188,7 @@ def main():
           % (len(tasks), len(targets), taps, out["space_md5"][:8]))
     import collections
     print("  staff:", dict(collections.Counter(t["target"]["staff"] for t in tasks)))
+    print("  offers:", dict(collections.Counter(t["target"]["offer_id"] for t in tasks)))
     print("  day index:", dict(sorted(collections.Counter(t["depth"]["open_day_index"] for t in tasks).items())))
     print("  slot third:", dict(sorted(collections.Counter(
         0 if t["depth"]["slot_fraction_into_day"] < 1/3 else (1 if t["depth"]["slot_fraction_into_day"] < 2/3 else 2)
