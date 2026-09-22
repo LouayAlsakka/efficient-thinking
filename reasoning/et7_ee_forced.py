@@ -164,7 +164,9 @@ def main():
         d["CONTROL_pca8"] = round(float(fit(mtr, mte, y_cor, P=Vt[:8].T).mean()), 4)
         ti = np.where(mtr)[0]
         d["CONTROL_subsample_n30"] = round(float(fit(mtr, mte, y_cor,
-                                                     sub=rngnp.choice(ti, size=30, replace=False)).mean()), 4)
+                                                     sub=rngnp.choice(ti, size=min(30, len(ti)),
+                                                                      replace=False)).mean()), 4)
+        d["CONTROL_subsample_n"] = int(min(30, len(ti)))
         d["CONTROL_policy_identity"] = round(float(fit(mtr, mte, y_str).mean()), 4)
         fold_out.append(d)
         print("    fold %d n=%2d  A* %.3f  F2 %.3f/%.3f  F1 %.3f/%.3f  tie-scored %.3f"
@@ -215,7 +217,28 @@ def main():
         "prompts_verbatim": {"F2_system": SYS_F2, "F2_user_template": USER % ("<problem>", "<left>", "<right>", TAIL_F2),
                              "F1_system": SYS_F1, "F1_user_template": USER % ("<problem>", "<left>", "<right>", TAIL_F1)},
         "token_ids": {"A": ID_A, "B": ID_B, "TIE": ID_T,
-                      "full_encodings": {"A": ids_a, "B": ids_b, "TIE": ids_t}},
+                      "full_encodings": {"A": ids_a, "B": ids_b, "TIE": ids_t},
+                      "note": ("A and B are single tokens; TIE is not -- its id here is the FIRST token of "
+                               "\"TIE\" (the model must emit it to say TIE, so P(TIE) is read on it, and it is "
+                               "an UPPER bound: that token also begins other words). The forced pick never "
+                               "touches it: the pick is logit(A) vs logit(B) alone.")},
+        "prompt_inspection": {
+            "asked_by": "理 12095 — 66% ties on decisive pairs is high; say whether the prompt or the template invites TIE",
+            "chat_template": ("Qwen2.5's template contributes NO system text of its own once a system message is "
+                              "supplied, and adds no tie language: the rendered prompt is exactly "
+                              "<|im_start|>system\\n<our system><|im_end|>\\n<|im_start|>user\\n<our user><|im_end|>"
+                              "\\n<|im_start|>assistant\\n. The template is not the cause."),
+            "the_prompt_does_invite_it": ("TIE is named TWICE — once in the system line and again as the last three "
+                                          "characters of the user's question — and it is offered as a peer of A and "
+                                          "B, in final position. Nothing in the prompt tells the judge that the pairs "
+                                          "are DECISIVE (exactly one side is correct by construction), so on the "
+                                          "judge's information TIE is a legitimate answer that is never right. A "
+                                          "grader asked to be strict and given a costless abstention will take it."),
+            "but_it_is_not_the_whole_cause": ("the same prompt produces a 98.5% tie rate at 1.5B and 26% at 14B, so "
+                                              "the rate is prompt AND capability; the prompt sets the floor on how "
+                                              "cheap abstaining is, and §3b's F2 removes exactly that."),
+            "not_changed_for_F1": "per 理 12095 the three-way prompt is read verbatim as the check arm; only F2 differs.",
+        },
         "probe_reproduction_assertion": assertion,
         "per_fold": fold_out,
         "A_star_probe": interval([f["A_star_probe"] for f in fold_out]),
