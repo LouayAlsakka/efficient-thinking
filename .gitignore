@@ -108,3 +108,8 @@ reasoning/data/
 !docs/index.html
 !docs/CNAME
 !docs/efficient-thinking-3.html
+
+# Third time a doc was silently refused (et7 09-22, wo312 09-22). Patterns per-prefix do not
+# hold: the next doc always has a new prefix. Negate ALL markdown under docs/ and keep the
+# binary/derived exclusions explicit below.
+!docs/*.md
