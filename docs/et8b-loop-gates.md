@@ -271,3 +271,31 @@ carriers do not move the 300-problem set, as a bounded statement. The contrast i
 `et8_agent` (one decision) nulls at ±1.3; `et8b_loop` (up to three head decisions) nulls at +5.0 [+1.7, +8.3].
 Null73b is complete and null73c running — four base arms, six pairwise draws, ~00:10Z — started by E with the box
 idle and the ±4 branch already fired; approved after the fact as controls that touch nothing published.
+
+**§12 — the null is not flat in time (2026-09-22 23:46Z).** Three draws: null73 vs ind73_base (41 h apart) +5.0
+[+1.7, +8.3]; null73b vs ind73_base (42 h) +6.3 [+2.3, +10.3]; null73b vs null73 (43 min) **+1.3 [−2.3, +5.0],
+p = 0.58**. The draws closest in time agree and the furthest differ most. Mechanical causes eliminated (both
+intervening commits read in full; mlx unchanged since Aug 13; weights since Sep 14; same box, command, task bytes).
+Three draws cannot separate "a wide distribution that put ind73_base low" from "a step between the dates"; null73c
+(~00:10Z) is the fourth point. **Regime of each row, from the run ids:** ind73_base, gen0 and gen1 ran in one
+continuous session on 09-21 (base 04:46–05:11, gen0 05:19–06:01, gen1 06:16–06:58Z), so **the accumulation row
+gen1 vs gen0 is a within-session comparison, 57 minutes apart**, whose relevant null is the one within-session draw
+(+1.3, p .58) — a materially weaker challenge than +5.0, not a clearance (n = 1). gen2 (09-21 15:37) is an
+intermediate regime. **Every §11 comparison is cross-date** (both arms 09-22, all comparators 09-21): re-paired against
+the same-day bases, combined vs base moves +22.0 → +17.0/+15.7 and gen0matched vs base +17.0 → +12.0/+10.7 — arithmetic
+by construction, not new evidence, and the two rows the decomposition rests on (combined vs gen1, gen0matched vs gen0)
+have no same-day comparator at all. **§11 is exposed to the cross-date step; §4's accumulation row is not.**
+
+**Paper VIII's independent reproduction: not exposed.** `reproduce_matched_compute.sh` invokes `et8_agent.py` (one
+decision per episode) for both arms; its +8.0 [+3.0, +13.3] sits on the instrument whose null is ±1.3, and its lower
+bound is well outside. Two separate runs, different machine, budget 16 vs 12 — the right family, not an identical
+configuration. VIII gains no sentence.
+
+**Registered now, to run after null73c on one box in ONE CONTINUOUS SESSION (~1,800 episodes, about three hours):**
+`base_a → gen0 → gen1 → combined → gen0matched → base_b`, same seed-73 300, same code. Readings fixed: (i) base_a vs
+base_b is the within-session null draw that brackets every arm; (ii) every §11 row is re-read within this session
+against its within-session comparator; (iii) the accumulation row is re-read as gen1 vs gen0 within this session and
+reported beside the 09-21 row; (iv) a between-generation row is a finding only if its point lies outside the range of
+all within-session null draws (base_a vs base_b here, null73b vs null73) and its lower bound exceeds their largest
+point; (v) the cross-date step, if null73c confirms it, is reported as a property of the harness — comparisons are
+made within a session or not at all — and every VIII-b table names the session of each arm.
