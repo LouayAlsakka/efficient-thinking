@@ -206,3 +206,40 @@ subsample n = 30 with `sub n / train n` printed, policy identity) at every depth
 
 **Order.** Forced run (§3b) first — it is unaffected, reading logits at the output and reusing the layer-18 states.
 Sweep second, same box, after the forced run finishes. The 32B tie-scored read waits for both.
+
+## 3d. AMENDMENT, made after the 7B and 14B forced arms and BEFORE the 1.5B split, the depth sweep and 32B — complementarity
+
+*Written 2026-09-22 by R. The 7B and 14B tie-splits below were seen before this was written; it is post-hoc for
+them and pre-registered for everything after.*
+
+**Seen.** Under §3b the registered claim fails at 7B (Δ_forced +0.063 [−0.131, +0.257]) and at 14B (−0.025
+[−0.198, +0.147], the forced judge above the probe). But the two halves of each judge's cells are not alike:
+
+```
+                   7B  tied (91)  committed (46)      14B  tied (36)  committed (101)
+  probe                 0.714        0.761                  0.833        0.614
+  forced F2             0.626        0.761                  0.500        0.772
+```
+
+At 7B the forced reading equals the probe exactly where the judge commits and trails it by 8.8 points where it
+abstains. At 14B the two cross: the probe leads by 33 points on the abstained cells and trails by 16 on the committed
+ones, and the aggregate Δ is zero because the halves cancel.
+
+**The hypothesis, registered for what has not been seen.** *Where the output abstains, the state out-reads the
+output; where the output commits, it does not.* Concretely, per judge and per fold, on the cells the three-way judge
+tied: (probe − forced) > 0; on the cells it committed: (probe − forced) ≤ 0.
+
+**Readings, fixed now.**
+- Tested on 32B (fresh) and, at matched depth 0.64, on every judge of the §3c sweep. 1.5B's committed cells are two
+  and its split is uninformative by count; it is reported and not scored.
+- Scored per fold on the tied cells only, paired (probe − forced), t-interval df 4. "Holds" if the interval excludes
+  zero on the positive side at 32B and at 14B-at-matched-depth. "Fails" otherwise. Either is printed.
+- If it holds, the paper's claim is not "the state knows more than the output" but "the state knows more than the
+  output *on the cells where the output declines to speak*, and the forced logit does not recover those" — a gap
+  that is real and confined to abstentions. If it fails, the abstention was format and there is no elicitation gap on
+  this task at any size measured; that is reported as the paper's result.
+- The tied-cell count is printed with every number, and a judge whose tie cells are fewer than 30 is reported and
+  not scored.
+
+**Not changed.** §3b's Δ_forced over all cells remains the registered headline quantity and has failed at 7B and 14B;
+§3d does not reinstate it. §3c's matched-depth reading governs whether the 14B probe column is comparable at all.
