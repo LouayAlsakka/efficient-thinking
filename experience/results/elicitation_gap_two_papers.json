@@ -1,0 +1,29 @@
+{
+ "document": "ONE PHENOMENON, TWO PAPERS — the elicitation gap in VIII's debugging agent and VII's math judge (理 12058).",
+ "the_shape": "a model's EXPRESSED preference carries little; a read-only probe on the SAME model's state, at the same moment, carries a great deal. Two papers measured it in different domains with different instruments and did not connect it until now.",
+ "VIII_the_debugging_agent": {
+  "expressed_preference": "SELF-RERANK by the model's own mean log-prob per token over its candidates — 20.3% success against base's 18.7%, +1.7 points [-1.7, +5.3], interval containing zero (results/r6.json, n=300, pre-registered)",
+  "the_state_read_at_the_same_moment": "a read-only logistic head on the frozen hidden state picks the correct bug region 66.7% of the time (56.0% on the other seed) against 20.4% chance (results/v3_head_fit_lbfgs.json)",
+  "and_what_it_buys_when_acted_on": "G@12 31.7% against base@12 18.7%, at FEWER model tokens (6,706 vs 6,854)",
+  "the_sentence": "the agent's own ranking of its candidates is worth nothing measurable; the same network's state, one layer down, ranks them well enough to be worth +13 points."
+ },
+ "VII_the_math_judge": {
+  "expressed_preference": "the judge's A/B/TIE pick — 24.8% correct on the balanced stratum, BELOW the 51.8% majority baseline, because it ties on 66.4% of pairs",
+  "the_state_read_at_the_same_moment": "a linear probe on the judge's hidden states reads 73.0%",
+  "delta": "+0.482",
+  "the_decomposition": "the probe over ALL cells (73.0%) is essentially the judge's accuracy on the third where it COMMITS (73.9%) — the gap is abstention"
+ },
+ "WHY_PUTTING_THEM_SIDE_BY_SIDE_IS_MORE_THAN_A_REPHRASING": [
+  "Different domains: program repair and mathematics.",
+  "Different expressions: a log-prob ranking over generated candidates, and a forced A/B/TIE choice.",
+  "Different instruments, both read-only, both linear, both with the same three controls.",
+  "Different failure modes at the expressed end — VIII's agent RANKS badly, VII's judge REFUSES — and the same finding at the state end.",
+  "VIII's number was a NEGATIVE result (R6: a simple baseline the mechanism had to beat) and VII's is the POSITIVE headline. Neither was collected to make this point."
+ ],
+ "⚠️_WHAT_THE_PAIR_DOES_NOT_ESTABLISH": [
+  "Not that the gap is the same SIZE in the two settings — the quantities are not commensurable (points of task success vs pick accuracy against different baselines).",
+  "Not a claim about models in general: two model families, two domains, four probes.",
+  "Not that the state's knowledge is FULLY elicitable — VIII acted on it through a head and got +13 of a possible ~47 points; the probe knowing something does not mean a controller can use all of it. That gap between what the probe reads and what acting on it buys is itself unmeasured and is the interesting third quantity."
+ ],
+ "signed": "Sautee (sha-ta)"
+}
