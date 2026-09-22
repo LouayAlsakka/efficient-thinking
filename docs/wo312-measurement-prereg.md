@@ -73,4 +73,22 @@ bigger vocabulary and not whose head was better. `bench/predictor_v0.py` enforce
 results table beside hit@N. If drops are common, hit@N is reported over the *offered* head and the
 drop rate is reported beside it — never silently folded in.
 
+**The same trap, one level down: the VENUE.** A kind can be legal and the action still unshowable,
+because its args name something the compiled venue does not have — an offer that is not on the sheet,
+a barber who is not on the roster, a day the shop is shut. Added 2026-09-22, before the first
+measurement, after wiring the predictor against niwa's fixture: the first version of the prompt never
+told the model what the venue *contained*, so it could only guess names, and a guessed name would
+have been scored as a miss attributable to the model when it was attributable to me. Two changes,
+both registered here:
+
+1. The compiled venue — offer sheet, roster, open days, flow — is in the prompt every turn. A
+   predictor asked for the next action without being told what exists is being measured on a
+   handicap the STATIC arm does not carry, since STATIC is drawn from the same compiled definition.
+2. An in-vocabulary action whose args name an unresolvable id is held back and **counted as
+   `unresolved`**, exactly as an out-of-vocabulary kind is counted as `dropped`. It is never shown
+   and never counted as a hit. Both counts ship beside hit@N in the results table.
+
+A run in which `unresolved` is common is not a result about prediction; it is a result about the
+prompt, and it is reported that way.
+
 — Sautée (沙汰)
