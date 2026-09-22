@@ -189,3 +189,29 @@ stopped. What arm 1 does not settle: whether gen1's rows are the ones that matte
 this row count (amount). Arm 2 — gen0's trajectories at gen1's row count — separates them and is running; the joint
 reading is written only when both are on disk. The author's question — combine and apply once — is answered on this
 half: combining does not beat gen1, so there is nothing to gain by merging the generations.
+
+## 12. §10 arm 2 carriers on the v3 300 — readings, and a null replicate registered
+
+*2026-09-22 22:0xZ. Base for every carrier: `et8_agent`, budget 12, no head, v3 300, 11.7% green at 11.10 actions,
+run in this session (not imported).*
+
+- **A_memory (text memory carrier):** 11.7% → 12.3%, **+0.7 [−3.7, +5.0]**, p = 0.88, McNemar 22/24. Instrumented
+  (every episode carries `memory: true`, base `memory: false`). A real null: the carrier does not move the set.
+- **F_logitbias: VOID, not negative.** The bias table is keyed by the v1 family names and every v3 episode carries
+  `family: 'v3'`, so the agent ran unbiased on all 300 (log: `no bias row for family 'v3' — running UNBIASED`).
+  Ruling: §7.3's F is **reported as untestable on v3** — its instrument is keyed to a task taxonomy this set does not
+  use — and no hand-made mapping of `bug_class` onto the four families is admitted, because the mapping would decide
+  which bias each episode gets. A v3-native logit-bias carrier, if ever built, is a different row and says so.
+- **The void arm re-labelled as what it is: a null replicate.** Same model, tasks, budget, inert flag — a second base
+  arm. base vs base: +0.0 [−1.3, +1.3] success, −0.03 [−0.09, +0.01] actions, McNemar 2/2, `tokens_out` differs on
+  242/300 (greedy decoding on this stack is not bit-reproducible run to run). **The harness's run-to-run noise floor
+  on the v3 300 is ±1.3 points**, four discordant pairs from nothing. Nobody registered it; it ran by accident; it is
+  kept with that label.
+- **Registered now, before it runs: a null replicate on seed 73's independent 300.** The accumulation row there is
+  +5.7 [+0.7, +10.7], whose lower bound is half the v3 noise floor. A noise floor is not a bias and the row stands as
+  paired; but the reader will ask, and the answer is measured, not argued: one further base arm on seed 73's set, paired
+  against the existing base. Reading fixed: if the null's interval is within ±2 points, the +5.7 row is reported beside
+  it unchanged; if the null's interval reaches ±4 or more, every seed-73 row whose lower bound is inside the null's
+  interval is marked "within the noise floor" in the paper and the row count for "accumulation reproduced" is re-read.
+- **naive_symptom:** running; mechanism verified live from the step log (33/33 episodes differ from base in
+  `tokens_out`), paired when complete, reported against the base and against the null floor.
