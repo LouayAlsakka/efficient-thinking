@@ -180,3 +180,12 @@ agent generates better training data, and the paper says so in those words; comb
 order matters, mixing base trajectories dilutes the signal, the loop does sequential work; combined > gen1 → data was
 being discarded at each generation and the right procedure accumulates the corpus. The control decides whether gen1's
 advantage survives at matched rows.
+
+**Reading, arm 1 (2026-09-22 21:27Z, seed-73 independent 300, same task set as every comparator):** combined
+gen0+1 head 42.7% vs gen1 40.0%: **+2.7 [−2.3, +7.7], p = 0.36** (McNemar 25/33); vs gen0 +8.3 [+3.3, +13.3],
+p = 0.0015; vs base +22.0 [+16.0, +28.0]. Actions 8.19 → 7.76 → 7.66 → 7.62. By the registered reading, combined ≈
+gen1: more data does not extend the accumulation, and the combined head is a working head that stops where gen1
+stopped. What arm 1 does not settle: whether gen1's rows are the ones that matter (origin) or the head saturates at
+this row count (amount). Arm 2 — gen0's trajectories at gen1's row count — separates them and is running; the joint
+reading is written only when both are on disk. The author's question — combine and apply once — is answered on this
+half: combining does not beat gen1, so there is nothing to gain by merging the generations.
