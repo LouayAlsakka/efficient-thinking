@@ -102,10 +102,18 @@ def main():
     tasks = []
     for n, t in enumerate(picked):
         path = [
-            {"kind": "select", "label": "Pick %s" % offer["name"], "args": {"offer_id": offer["offer_id"]}},
+            # ONE TAP, TWO DISPATCHES: the offer press fires SELECT offer_ids AND OPEN_SHEET book.
+            # taps counts the press; the logger will see two reducer actions for it.
+            {"kind": "select", "label": "Pick %s" % offer["name"], "args": {"offer_id": offer["offer_id"]},
+             "dispatches": ["SELECT offer_ids", "OPEN_SHEET book"]},
             {"kind": "select", "label": "Book with %s" % t["staff"], "args": {"staff": t["staff"]}},
             {"kind": "select", "label": t["date"], "args": {"day": t["date"]}},
-            {"kind": "select", "label": t["slot"], "args": {"slot": "%sT%s" % (t["date"], t["slot"])}},
+            # THE SLOT ARG IS "HH:MM", NOT AN ISO DATETIME. Read out of the bench's own dispatch:
+            # onSelect: (t) => dispatch({verb:'SELECT', field:'slot', value:t}) where t comes
+            # straight from slotsFor(weekday), i.e. "09:00". My first version wrote
+            # "2026-09-23T09:00" and would have driven nothing — a task list expressed in terms the
+            # thing it measures cannot consume. Checked against the running UI, not the fixture.
+            {"kind": "select", "label": t["slot"], "args": {"slot": t["slot"]}},
             {"kind": "form-fill", "label": "name and phone", "args": {"form": "book"}},
             {"kind": "submit", "label": "Request this booking", "args": {"action": "request"}},
         ]
@@ -142,6 +150,10 @@ def main():
                         "only thing a predicted head could exploit." % len(slots_for(hours, days[0]["weekday"], grid))),
         "stratified_on": "(staff_index, min(open_day_index,3), slot third)",
         "tasks": tasks,
+        "verified_against_running_ui": ("the arg shapes are read from the bench's own dispatch calls in "
+                                       "src/main.tsx, not inferred from the fixture: day takes a date "
+                                       "string, slot takes HH:MM, and the offer press fires two reducer "
+                                       "actions for one tap"),
         "signed": "Sautee (sha-ta)",
     }
     json.dump(out, open(a.out, "w"), indent=1, ensure_ascii=False)
