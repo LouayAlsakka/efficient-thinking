@@ -8,10 +8,30 @@ table{border-collapse:collapse;width:100%;font-size:15px}th,td{border-bottom:1px
 th{background:#f4f6f8}code,pre{font-family:Menlo,Consolas,monospace;font-size:14px;background:#f4f6f8;padding:2px 5px;border-radius:3px}
 pre{padding:10px 12px;overflow-x:auto}.q{border-left:4px solid #c0392b;padding:8px 14px;background:#fbf6f5;margin:18px 0}
 .small{color:#555;font-size:14px}a{color:#1f4e79}img{max-width:100%;border:1px solid #ddd}
+.lead{font-size:22px;line-height:1.35;margin:18px 0 8px}.sub{font-size:16px;color:#444;font-weight:normal}
+.arc{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;margin:22px 0 26px}
+.stage{flex:1 1 110px;border:1px solid #ccd;border-radius:6px;padding:8px 6px;text-align:center;background:#f8f9fb}
+.stage .n{font-size:12px;color:#666;letter-spacing:.04em}.stage .w{font-size:14px;color:#1a2a3a;margin-top:2px}
+.stage.key{border-color:#c0392b;background:#fbf6f5}.stage.key .w{color:#c0392b;font-weight:bold}
+.arrow{align-self:center;color:#999;font-size:18px}
+@media (max-width:640px){.arrow{display:none}.stage{flex-basis:45%}}
 </style></head><body>
 <h1>Efficient Thinking</h1>
+<p class="lead">Can a fixed AI model become more capable without becoming larger?<br><span class="sub">Efficient Thinking measures how search, evaluation, feedback, experience, symmetry and representation change the useful capability obtained from a fixed model and a fixed compute budget.</span></p>
+
+<div class="arc">
+<div class="stage"><div class="n">I – II</div><div class="w">Search</div></div><div class="arrow">→</div>
+<div class="stage"><div class="n">III – V</div><div class="w">Evaluation &amp; feedback</div></div><div class="arrow">→</div>
+<div class="stage"><div class="n">VI – VII</div><div class="w">Labels &amp; the internal ceiling</div></div><div class="arrow">→</div>
+<div class="stage key"><div class="n">VIII</div><div class="w">Experience</div></div><div class="arrow">→</div>
+<div class="stage"><div class="n">IX</div><div class="w">Symmetry</div></div><div class="arrow">→</div>
+<div class="stage"><div class="n">X</div><div class="w">Representation</div></div>
+</div>
+
 <p><strong>One question, from every angle:</strong> how much useful capability can a fixed intelligence get per unit of computation, and what moves that number? Each paper holds the model fixed, measures capability with an external verifier, and changes one thing: search, the evaluator, the judge, taste, feedback, labels, the internal ceiling, experience, symmetry, representation.</p>
 
+<h2>The key result — Paper VIII</h2>
+<p class="small">Papers I–VII establish the frontier and its limits: search moves a fixed model along its quality–compute frontier, and only external information raises the ceiling. Paper VIII is the first result that moves the frontier itself.</p>
 <div class="q"><strong>The result to try to break.</strong> A frozen 7B model, given a read-only linear head fitted on its own verified history, solves more problems at the same inference compute — and, at equal quality, spends 2.3× less. The mechanism transfers to a second search structure with the head re-fitted, and a second generation of experience beats the first, then a third does not. <strong>The headline reproduces from one command in about three hours on an Apple-silicon Mac.</strong></p>
 <pre>git clone https://github.com/LouayAlsakka/efficient-thinking && cd efficient-thinking
 bash experience/reproduce_matched_compute.sh      # base at the head's compute vs the head, n = 300, paired</pre>
@@ -19,7 +39,7 @@ bash experience/reproduce_matched_compute.sh      # base at the head's compute v
 
 <p><a href="figs/fig1_frontier.png"><img src="figs/fig1_frontier.png" alt="Figure 1: the quality–compute frontier, the paired effect everywhere it was measured, and the same-decision baselines"></a></p>
 
-<h2>Papers</h2>
+<h2>The series</h2>
 <table>
 <tr><th>#</th><th>Title</th><th>State</th><th>Read</th></tr>
 <tr><td>I</td><td>Measuring What Capability Costs — search substitutes for size on a frozen chess evaluator</td><td>measured</td><td><a href="efficient-thinking-1.html">html</a> · <a href="efficient-thinking-1.pdf">pdf</a> · <a href="efficient-thinking-1.md">md</a></td></tr>
