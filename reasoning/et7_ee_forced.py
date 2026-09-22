@@ -277,6 +277,15 @@ def main():
         "P_TIE_F1": {"mean_primary": round(float(np.mean([r["P_TIE_primary"] for r in rows])), 4),
                      "median_primary": round(float(np.median([r["P_TIE_primary"] for r in rows])), 4),
                      "generated_tie_rate": round(float(np.mean([meta[i]["judge_pick"] == "TIE" for i in idx])), 4)},
+        # PER CELL, because §3d splits these by a property of the cell (did the three-way judge
+        # tie?) and a fold mean cannot be split after the fact. The probe's per-cell predictions
+        # live in the depth artefacts; these are the forced half of the same pairing.
+        "per_cell": {str(r["cell"]): {"problem": r["problem"], "correct": r["correct_primary"],
+                                      "judge_pick": r["judge_pick_generated"],
+                                      "F2_ok_primary": r["F2_ok_primary"],
+                                      "F2_ok_swapped": r["F2_ok_swapped"],
+                                      "F1_ok_primary": r["F1_ok_primary"],
+                                      "probe_ok": probe_pred.get(r["cell"])} for r in rows},
         "pick_distribution": picks,
         "tie_split": split,
         "how_to_read": ("§3b's registered readings. Δ_forced interval excluding zero with lower bound ≥ 0.05: "
