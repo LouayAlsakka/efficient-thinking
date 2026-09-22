@@ -191,8 +191,16 @@ def main():
                          "CONTROL_subsample_n": int(sn), "CONTROL_subsample_train_n": int(len(ti)),
                          "CONTROL_policy_identity": round(float(fit(X, mtr, mte, y_str).mean()), 4)})
         pred_at[l] = cellpred
+        # KEY BY THE ABSOLUTE CELL INDEX, as the other judges' depth artefacts do. Internally this
+        # loop indexes `meta` (0..136); the other scripts key by the cell's position in
+        # et7_ee_cells.json. Two conventions in one series is how a later join silently scores the
+        # wrong stratum — et7_ee_crossing.py refuses on a key mismatch, but a refusal is a
+        # consolation prize, not a design.
         per_layer[str(l)] = {"layer": l, "relative_depth": round(l / meta[0]["n_blocks"], 4),
-                             "per_fold": rows, "per_cell_correct": {str(a_): b_ for a_, b_ in sorted(cellpred.items())},
+                             "per_fold": rows,
+                             "per_cell_correct": {str(meta[a_]["cell"]): b_
+                                                  for a_, b_ in sorted(cellpred.items())},
+                             "per_cell_key": "absolute index into et7_ee_cells.json",
                              **interval([r["A_star"] for r in rows])}
         print("    layer %2d (%.0f%%)  A* %.3f" % (l, 100 * l / meta[0]["n_blocks"],
                                                    per_layer[str(l)]["mean"]), file=sys.stderr)
