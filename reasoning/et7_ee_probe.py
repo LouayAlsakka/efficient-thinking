@@ -117,10 +117,15 @@ def main():
         w3, b3 = H.logistic_fit((Z @ P)[mask_tr], y[mask_tr])
         pca8 = float(((((Z @ P)[mask_te] @ w3 + b3) > 0).astype(float) == y[mask_te]).mean())
         idx = np.where(mask_tr)[0]
+        # THE CAP CAN SWALLOW THE STRATUM. min(200, n_train) on the primary stratum (n_train = 99)
+        # draws every training row in a new order: same rows, same fit, identical accuracy, at any
+        # signal level. That identity was published as "the registered control fired". The draw is
+        # left as it was so this script still reproduces what it produced, but the REALISED size is
+        # returned and printed beside the number, and a control that drew its whole input says so.
         sub = rngnp.choice(idx, size=min(200, len(idx)), replace=False)
         w4, b4 = H.logistic_fit(Z[sub], y[sub])
         sacc = float((((Z[mask_te] @ w4 + b4) > 0).astype(float) == y[mask_te]).mean())
-        return acc, perm, pca8, sacc
+        return acc, perm, pca8, (sacc, len(sub), len(idx))
 
     out = {"document": "ET-VII E-E — A, A* and Δ", "prereg": "docs/et7-ee-prereg.md",
            "judge": a.judge, "layer": a.layer, "cells": len(cells), "strata": {}}
@@ -134,7 +139,7 @@ def main():
             continue
         A = float(np.mean([m["judge_pick"] == m["correct"] for m, s in zip(meta, sel) if s and not tr[meta.index(m)]])) \
             if False else float(np.mean([meta[i]["judge_pick"] == meta[i]["correct"] for i in np.where(mte)[0]]))
-        Astar, perm, pca8, sacc = fit_eval(mtr, mte, y_cor, rngnp)
+        Astar, perm, pca8, (sacc, sub_n, tr_n) = fit_eval(mtr, mte, y_cor, rngnp)
         pid, _, _, _ = fit_eval(mtr, mte, y_str, rngnp)
         base = float(max(np.mean(y_cor[mte]), 1 - np.mean(y_cor[mte])))
         out["strata"][tag] = {"n_test": int(mte.sum()), "n_train": int(mtr.sum()),
@@ -145,10 +150,16 @@ def main():
                               "CONTROL_permuted": [round(x, 3) for x in perm],
                               "CONTROL_pca8": round(pca8, 3),
                               "CONTROL_row_subsample": round(sacc, 3),
+                              "CONTROL_row_subsample_realised_n": sub_n,
+                              "CONTROL_row_subsample_train_n": tr_n,
+                              "CONTROL_row_subsample_is_the_identity": sub_n >= tr_n,
                               "CONTROL_policy_identity_probe": round(pid, 3)}
         print("    %-28s n=%3d  A %.3f  A* %.3f  Δ %+.3f  base %.3f | perm %s pca8 %.3f sub %.3f POLICY %.3f"
               % (tag, mte.sum(), A, Astar, Astar - A, base,
                  [round(x, 2) for x in perm], pca8, sacc, pid), file=sys.stderr)
+        print("      subsample drew %d of %d training rows%s" % (sub_n, tr_n,
+              "  <-- THE WHOLE TRAINING SET: this is not a control" if sub_n >= tr_n else ""),
+              file=sys.stderr)
     json.dump(out, open(a.out, "w"), indent=1, ensure_ascii=False)
     print("  wrote %s" % a.out, file=sys.stderr)
 
