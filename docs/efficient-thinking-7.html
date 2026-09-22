@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Efficient Thinking VII: The Elicitation Gap</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
+  @page { size: A4; margin: 20mm 18mm; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
+         line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
+         font-size: 15px; }
+  h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
+       padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
+  h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
+       margin-top: 34px; }
+  h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
+  p, li { font-size: 15px; }
+  strong { color: #111; }
+  code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
+         padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
+  pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
+        overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
+  pre code { background: none; color: #24292e; padding: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
+  th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+  th { background: #2c3e50; color: #fff; }
+  tr:nth-child(even) td { background: #f6f8fa; }
+  td[align="right"], th[align="right"] { text-align: right; }
+  hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
+  blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
+               color: #333; background: #f6f8fa; font-style: italic; }
+  a { color: #0969da; }
+  img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+  </style></head><body><h1>Efficient Thinking: Measuring What Capability Costs</h1>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Efficient Thinking VII: The Elicitation Gap</h1>
+</header>
+<h1 id="efficient-thinking-vii-the-elicitation-gap">Efficient Thinking
+VII: The Elicitation Gap</h1>
+<h2
+id="what-a-fixed-system-knows-that-it-does-not-say-a-bound-and-its-first-measurement">What
+a fixed system knows that it does not say — a bound, and its first
+measurement</h2>
+<blockquote>
+<p><strong>STATE 2026-09-22: DRAFT v0.1, written backward from ONE
+measured arm.</strong> E-E is measured on one judge (Qwen2.5-7B) and its
+scaling half is running; E-C and E-D are registered and not run; the
+bound’s formal statements are to be verified against textbook forms
+before publication. Every number below is on disk under
+<code>experience/results/</code> with its command; the reading rules
+were committed before the run (<code>docs/et7-ee-prereg.md</code>, with
+its §3a amendment). Nothing here is a law; §10 says what is a finding
+and what is a registration.</p>
+</blockquote>
+<p><strong>Louay Alsakka</strong> · September 22, 2026 · <em>draft
+v0.1</em></p>
+<h2 id="abstract">Abstract</h2>
+<p>A fixed system — a model whose weights and inputs do not change — can
+improve its realised performance only toward the information its state
+already carries about the target, never through it. That is a theorem
+(the data-processing inequality and Blackwell monotonicity applied to a
+statistical judge), and it is trivial unless the distance between what
+the state carries and what the system expresses is measured. This paper
+defines that distance, the <em>elicitation gap</em> <span
+class="math inline"><em>Δ</em> = <em>A</em><sup>*</sup> − <em>A</em></span>,
+where <span class="math inline"><em>A</em></span> is the judge’s
+realised accuracy and <span
+class="math inline"><em>A</em><sup>*</sup></span> a lower bound on the
+accuracy the best decoder of its state could reach, and measures it. On
+the stratum of a judging task where the policy that wrote an answer
+carries no information about its correctness, a 7B judge picks the
+correct answer 24.8% of the time while a linear probe on its own hidden
+states reaches 73.0%: <span
+class="math inline"><em>Δ</em> = +0.482</span>, with shuffled labels
+collapsing to the majority baseline, eight principal components failing
+to recover it, and a probe for policy identity near chance. The gap is
+abstention rather than ignorance: the judge declines to choose on 66.4%
+of pairs and is 73.9% correct when it commits, so the probe reads what
+the judge would say where it stays silent. Two shallow explanations —
+answer length and policy identity — are tested and rejected. What
+follows from the bound is not that self-improvement is impossible but
+that its internal room is exactly <span
+class="math inline"><em>Δ</em></span>, and this paper’s registered claim
+is that the room is large on the one judge measured. Whether it shrinks
+with scale more slowly than accuracy rises, and whether any internal
+procedure can convert abstentions into correct commitments, are the two
+registered questions this draft does not answer.</p>
+<h2 id="results-at-a-glance">Results at a glance</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>finding</th>
+<th>measurement</th>
+<th>where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the bound</td>
+<td>internal computation cannot raise <span
+class="math inline"><em>I</em>(<em>T</em>; <em>W</em>)</span>; realised
+accuracy rises toward <span
+class="math inline"><em>A</em><sup>*</sup>(<em>W</em>)</span>, never
+through it</td>
+<td>§2</td>
+</tr>
+<tr>
+<td>the gap, defined</td>
+<td><span
+class="math inline"><em>Δ</em> = <em>A</em><sup>*</sup> − <em>A</em></span>;
+<span class="math inline"><em>A</em><sup>*</sup></span> lower-bounded by
+a linear probe on the judge’s state, <span
+class="math inline"><em>A</em></span> the judge’s own pick with a tie
+scored wrong</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>the gap, measured</td>
+<td>judge 24.8%, probe 73.0%, <span
+class="math inline"><em>Δ</em> = +0.482</span> on 137 balanced pairs,
+5-fold CV over problems</td>
+<td>§5</td>
+</tr>
+<tr>
+<td>the controls</td>
+<td>permuted labels 0.41–0.52 (baseline 0.518); PCA-8 0.657;
+policy-identity probe 0.577</td>
+<td>§5</td>
+</tr>
+<tr>
+<td>the confounded stratum, withdrawn</td>
+<td>913 pairs where policy identity predicts correctness: PCA-8 matches
+the probe, identity probe 0.826 — not a finding</td>
+<td>§5</td>
+</tr>
+<tr>
+<td>what the gap is</td>
+<td>abstention: ties on 66.4% of pairs, 73.9% correct when committing;
+the probe reads the silent two thirds</td>
+<td>§6</td>
+</tr>
+<tr>
+<td>what it is not</td>
+<td>answer length (43.1%, below chance); policy identity (0.577,
+uncorrelated with correctness by construction)</td>
+<td>§7</td>
+</tr>
+<tr>
+<td>the same shape in Paper VIII</td>
+<td>the frozen model’s own log-probability preference 20.3% where a
+probe on its state reads 66.7%</td>
+<td>§8</td>
+</tr>
+<tr>
+<td>not yet measured</td>
+<td>scaling (1.5B ties on 98.5% of pairs — a format floor, not a point);
+E-C; E-D</td>
+<td>§10, §11</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-question">1. The question</h2>
+<p>Efficient Thinking I–III measured what search buys a fixed
+intelligence and found its ceiling: search extracts what the evaluator
+already contains, and only information from outside raises the ceiling.
+Paper VIII found that verified history moves the quality–compute
+frontier of a frozen model. Between those two sits a question the series
+had stated and not measured: how much can a fixed system get from
+<em>inside</em> — from re-processing what its own state already holds,
+with no new information? The public argument about recursive
+self-improvement is conducted almost entirely in words on exactly this
+question. This paper gives it a definition, a bound, and one number.</p>
+<h2 id="the-bound">2. The bound</h2>
+<p><strong>Setting.</strong> Let <span
+class="math inline"><em>T</em></span> be the external target a judge
+tracks (here, which of two answers is correct), <span
+class="math inline"><em>D</em></span> everything the system has ever
+received, <span class="math inline"><em>W</em></span> its state, and
+<span class="math inline"><em>J</em></span> its expressed judgments. A
+procedure is <em>internal</em> if it updates the state as <span
+class="math inline"><em>W</em><sup>′</sup> = <em>ϕ</em>(<em>W</em>, <em>R</em>)</span>
+with <span class="math inline"><em>R</em></span> internal randomness
+carrying no information about <span
+class="math inline"><em>T</em></span> beyond <span
+class="math inline"><em>W</em></span>. Coherence training is internal;
+self-play in a game is not, because terminal outcomes are a <span
+class="math inline"><em>T</em></span>-correlated channel the rules
+supply.</p>
+<p><strong>Proposition.</strong> For any judge and any internal
+procedure: (i) <span
+class="math inline"><em>I</em>(<em>T</em>; <em>W</em><sup>′</sup>) ≤ <em>I</em>(<em>T</em>; <em>W</em>)</span>
+— internal computation cannot increase the information the state carries
+about the target (the data-processing inequality over <span
+class="math inline"><em>T</em> → <em>D</em> → <em>W</em> → <em>W</em><sup>′</sup></span>);
+(ii) with <span class="math inline"><em>A</em>(<em>W</em>)</span> the
+judge’s realised accuracy under a proper score and <span
+class="math inline"><em>A</em><sup>*</sup>(<em>W</em>)</span> the
+Bayes-optimal accuracy of the best decoder of <span
+class="math inline"><em>T</em></span> from <span
+class="math inline"><em>W</em></span>, every internally reachable judge
+satisfies <span
+class="math inline"><em>A</em>(<em>W</em><sup>′</sup>) ≤ <em>A</em><sup>*</sup>(<em>W</em>)</span>
+(Blackwell: garbling cannot improve Bayes risk).</p>
+<p><strong>Definition.</strong> The elicitation gap is <span
+class="math inline"><em>Δ</em>(<em>W</em>) = <em>A</em><sup>*</sup>(<em>W</em>) − <em>A</em>(<em>W</em>)</span>:
+held but misprocessed information. Internal self-improvement is worth at
+most <span class="math inline"><em>Δ</em></span>; everything above <span
+class="math inline"><em>A</em><sup>*</sup></span> must be imported. The
+proposition is standard results applied to this setting; the size of
+<span class="math inline"><em>Δ</em></span> is empirical, and the series
+took no advance position on it.</p>
+<h2 id="measuring-the-gap">3. Measuring the gap</h2>
+<p><span class="math inline"><em>A</em><sup>*</sup></span> is not
+observable, but it is lower-boundable: a small decoder trained on the
+judge’s internal representation to predict <span
+class="math inline"><em>T</em></span> directly scores at most <span
+class="math inline"><em>A</em><sup>*</sup></span>, so <span
+class="math inline">probe − <em>A</em></span> estimates <span
+class="math inline"><em>Δ</em></span> from below. Three rules make that
+a measurement rather than a story.</p>
+<ul>
+<li><strong><span class="math inline"><em>A</em></span> is the judge’s
+pick with a tie scored wrong.</strong> A judge may answer A, B, or tie.
+An unexpressed judgment is not a judgment: a selector that declines has
+not selected. The rule was registered before the run and is kept after
+it, and §6 reports what it hides.</li>
+<li><strong>The stratum is chosen so that a shortcut cannot produce the
+number.</strong> The judging cells come from Paper III’s grid (GSM8K,
+two policies per pair). Where the stronger policy is usually correct, a
+probe that merely identifies the policy would score well for the wrong
+reason. The primary stratum is the two policy pairs in which the
+stronger model is correct 49.0% and 43.9% of the time, so policy
+identity carries no information about correctness. The remaining 913
+pairs are the secondary stratum and are reported only to be
+withdrawn.</li>
+<li><strong>The probe is admitted only under three controls, with a
+fourth added for this task.</strong> Permuted labels (five draws) must
+collapse to the majority baseline; an eight-dimensional projection must
+fail to recover the probe; a hundred-example fit is reported; and a
+probe trained to predict <em>policy identity</em> from the same states
+must sit near chance on the primary stratum, or the balancing has
+failed.</li>
+</ul>
+<h2 id="instruments">4. Instruments</h2>
+<p>The judge is Qwen2.5-7B-Instruct at layer 18; 1,050 decisive pairs
+over 205 problems. The probe is a linear head fitted by L-BFGS on the
+judge’s hidden state at the decision, evaluated by five-fold
+cross-validation over <em>problems</em> — never over pairs, since two
+pairs from one problem share its text — so that all 137 primary cells
+are scored. The first evaluation held out 25% of problems, leaving 38
+test cells; on that split the PCA-8 control fired (0.789 against a probe
+at 0.763), and the registered rule withdraws a Δ whose control fires.
+But 38 cells were too thin to measure their own controls: the
+permutation control spanned 0.42–0.66 against a 0.53 baseline, and a
+control whose spread is ±0.12 cannot adjudicate a 0.03 gap. The thinness
+had been registered in advance as the arm’s possible limit; the fix
+scores the same cells, states and controls, changing how many are
+evaluated and not which count. Both evaluations are committed
+(<code>et7_ee_holdout25.json</code>, <code>et7_ee_RESULT.json</code>)
+and the earlier one is reported here as the withdrawn first pass.</p>
+<h2 id="the-measurement">5. The measurement</h2>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr>
+<th>stratum</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">judge <span
+class="math inline"><em>A</em></span></th>
+<th style="text-align: right;">probe <span
+class="math inline"><em>A</em><sup>*</sup></span></th>
+<th style="text-align: right;"><span
+class="math inline"><em>Δ</em></span></th>
+<th style="text-align: right;">baseline</th>
+<th>permuted ×5</th>
+<th style="text-align: right;">PCA-8</th>
+<th style="text-align: right;">n = 100</th>
+<th style="text-align: right;">policy-identity probe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>primary, balanced</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">0.248</td>
+<td style="text-align: right;">0.730</td>
+<td style="text-align: right;"><strong>+0.482</strong></td>
+<td style="text-align: right;">0.518</td>
+<td>0.52 · 0.50 · 0.41 · 0.50 · 0.48</td>
+<td style="text-align: right;">0.657</td>
+<td style="text-align: right;">0.730</td>
+<td style="text-align: right;">0.577</td>
+</tr>
+<tr>
+<td>secondary, confounded</td>
+<td style="text-align: right;">913</td>
+<td style="text-align: right;">0.288</td>
+<td style="text-align: right;">0.838</td>
+<td style="text-align: right;">(0.550)</td>
+<td style="text-align: right;">0.540</td>
+<td>collapses</td>
+<td style="text-align: right;"><strong>0.834</strong></td>
+<td style="text-align: right;">0.816</td>
+<td style="text-align: right;"><strong>0.826</strong></td>
+</tr>
+</tbody>
+</table>
+<p>On the primary stratum the reading written before the run applies:
+permutation collapses to the baseline, eight dimensions do not suffice
+(0.657 against 0.730), and the policy-identity probe sits near chance,
+which is what the balancing was for. The registered prediction — <span
+class="math inline"><em>Δ</em> &gt; 0</span> and material — is
+confirmed. On the secondary stratum the PCA-8 control matches the probe
+and the identity probe reaches 0.826: exactly the confound the
+stratification predicted, and that Δ is withdrawn by the rule that
+admits the first. The subsample matching (0.730 at n = 100) is a known
+property of this probe family on these states and is not on its own a
+flag.</p>
+<h2 id="what-the-gap-is-abstention">6. What the gap is: abstention</h2>
+<p>The headline invites a misreading — a model worse than a coin — and
+the decomposition removes it:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">pairs</th>
+<th style="text-align: right;">correct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the judge commits</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">34 (73.9%)</td>
+</tr>
+<tr>
+<td>the judge ties</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">0 by rule</td>
+</tr>
+<tr>
+<td>all</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">34 (24.8%)</td>
+</tr>
+</tbody>
+</table>
+<p>The probe’s accuracy over all cells (73.0%) is, within a point, the
+judge’s accuracy on the third of cells where it commits (73.9%). The
+state carries what the judge would say if it spoke, on the two thirds of
+pairs where it declines to. That is a more precise claim than <span
+class="math inline"><em>Δ</em> = +0.482</span> and a more useful one:
+the internal room the bound permits is, on this judge, almost entirely
+in the abstentions. The tie rule is kept — scored as a coin, the judge
+would read about 58%, and a judge that abstains two thirds of the time
+is useless as a selector whatever its state knows — but the reader
+should hold both numbers.</p>
+<h2 id="what-the-gap-is-not">7. What the gap is not</h2>
+<p>Two shallow readings of the state were tested and rejected.
+<em>Answer length:</em> “the longer answer is correct” holds on 43.1% of
+primary pairs, below chance, so a length-reading probe could reach about
+57% by inverting the rule and not 73%. <em>Policy identity:</em> the
+probe can tell which policy wrote an answer (0.577 on balanced pairs),
+but on those pairs the stronger policy is correct 49% and 44% of the
+time, so that knowledge cannot produce 73% correctness. A third, the
+probe reading the answer’s surface form, is bounded by the same
+stratification and is the one E-D will test directly.</p>
+<h2 id="the-same-shape-in-paper-viii">8. The same shape in Paper
+VIII</h2>
+<p>Paper VIII measured, at a different decision, the same gap from the
+other side. Its frozen model, asked to rank enumerated candidates by its
+own log-probability, reached 20.3% of problems solved; a linear head
+read from its state at the same decision reached a probe accuracy of
+66.7% and, as a controller, 31.7%. There the gap was closed by a head
+fitted on verified history — external bits — and the bridge arm found
+the model had no internal signal about its own success at all. Here the
+gap is measured on a judge with no controller attached. The two papers
+do not explain each other; they measure one phenomenon at two decisions,
+and the relation between them — whether the head of VIII is reading the
+abstentions of VII — is a question for VIII-b’s record and not a claim
+of either paper.</p>
+<h2 id="routes-above-the-level-registered">9. Routes above the level,
+registered</h2>
+<p>The bound partitions every route to judge improvement into internal
+(worth at most <span class="math inline"><em>Δ</em></span>) and external
+(imports information about <span class="math inline"><em>T</em></span>).
+Five were registered before any measurement: search amplification;
+asymmetric verification; ensemble decorrelation (E-C); coherence
+constraints, the only genuinely internal route (E-D); and deferred
+external signal. The synthesis prediction, also registered, is that
+every route that works smuggles external information, and the paper
+prices the exchange rate of each. None is measured in this draft.</p>
+<h2 id="related-work">Related work</h2>
+<p>Latent-knowledge probing [Kadavath et al. 2022; Burns et al. 2022;
+Azaria &amp; Mitchell 2023] established that a model’s representations
+often carry more about correctness than its outputs express; this paper
+takes that observation as the instrument, gives the distance a name and
+a bound, and measures it under controls that separate a readout from a
+shortcut. Linear probes [Alain &amp; Bengio 2016] are the decoder.
+LLM-as-judge evaluation [Zheng et al. 2023] and Paper III measure how
+well a judge agrees with ground truth; this paper measures how much of
+what the judge knows reaches its verdict. The bound rests on the
+data-processing inequality [Cover &amp; Thomas 2006] and Blackwell’s
+comparison of experiments [Blackwell 1953]; the Löbian and
+incompleteness lineage is motivation only and carries no weight here.
+The recursive-self-improvement debate [Good 1965 and after] is the
+argument this paper’s coda would enter, after the measurement and not
+before.</p>
+<h2 id="registered-predictions-scored">10. Registered predictions,
+scored</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>prediction (registered before the run)</th>
+<th>outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-E: <span class="math inline"><em>Δ</em> &gt; 0</span> and material
+— the judge’s representations know more than its judgments express</td>
+<td><strong>Hit, on one judge.</strong> +0.482 on the balanced stratum
+with controls behaving; the confounded stratum withdrawn (§5)</td>
+</tr>
+<tr>
+<td>E-E: <span class="math inline"><em>Δ</em></span> shrinks with judge
+scale slower than <span class="math inline"><em>A</em></span> rises</td>
+<td><strong>Not scored.</strong> One judge measured; 1.5B ties on 98.5%
+of pairs (<span class="math inline"><em>A</em> = 0.000</span>, a format
+floor entering the curve only with its tie rate beside it); 14B and 32B
+running</td>
+</tr>
+<tr>
+<td>E-D: coherence training raises <span
+class="math inline"><em>q</em></span> by a real, bounded amount, the
+residual being what only external signal fixes</td>
+<td><strong>Not run.</strong> §6 names its target: the abstentions</td>
+</tr>
+<tr>
+<td>E-C: ensemble <span class="math inline"><em>q</em></span> exceeds
+the best single judge by variance reduction; vanishes where family
+errors correlate</td>
+<td><strong>Not run</strong></td>
+</tr>
+<tr>
+<td>cross-registration: E-D’s realised gains must not exceed E-E’s
+probed <span class="math inline"><em>Δ</em></span></td>
+<td><strong>Not scored;</strong> the bound it tests is now 0.482 on this
+judge</td>
+</tr>
+<tr>
+<td>synthesis: every route that works smuggles external information</td>
+<td><strong>Not scored</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="limitations">11. Limitations</h2>
+<p>One judge, one size, one benchmark, one form of the question. The
+probe lower-bounds <span
+class="math inline"><em>A</em><sup>*</sup></span>; a better decoder
+could raise it, and the gap can only be larger than measured, not
+smaller. The primary stratum is 137 pairs; the interval on 0.730 under
+five-fold CV is wide and is not yet printed because the fold-wise
+numbers are not in the artifact — the next commit adds them. The tie
+rule is a choice, stated and kept. Nothing about a ceiling of
+self-improvement is claimed: the bound is textbook and the number is one
+point. The formal statements are to be checked against the textbook
+forms before any publication, and the coda on the wider debate is
+withheld until the scaling half lands.</p>
+<h2 id="conclusion">12. Conclusion</h2>
+<p>A fixed system’s room to improve from inside is the elicitation gap,
+and on the one judge measured the gap is large: the judge reaches a
+quarter of pairs where its state reaches three quarters, and the
+difference is abstention. The series’ claim in this paper is exactly
+that and no more. What decides whether it matters beyond one model is
+the scaling half, running, and whether E-D can turn silence into correct
+commitment — the only internal route the bound allows, tested against
+the bound itself.</p>
+<h2 id="reproducibility">Reproducibility</h2>
+<p><code>experience/et7_ee_probe.py</code> and its pre-registration
+<code>docs/et7-ee-prereg.md</code>; the judging cells are Paper III’s
+(<code>judging/</code>, inputs listed in
+<code>docs/inputs-manifest.md</code>); results
+<code>experience/results/et7_ee_RESULT.json</code> (the five-fold
+evaluation) and <code>et7_ee_holdout25.json</code> (the withdrawn first
+pass), each carrying the judge id, layer, cell counts and every control.
+States are persisted per cell.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Alain, G. &amp; Bengio, Y. (2016). <em>Understanding intermediate
+layers using linear classifier probes.</em> arXiv:1610.01644.</li>
+<li>Alsakka, L. (2026). <em>Efficient Thinking III: Efficient
+Judging.</em> This series.</li>
+<li>Alsakka, L. (2026). <em>Efficient Thinking VIII: Experience
+Priors.</em> This series.</li>
+<li>Azaria, A. &amp; Mitchell, T. (2023). <em>The Internal State of an
+LLM Knows When It’s Lying.</em> arXiv:2304.13734.</li>
+<li>Blackwell, D. (1953). <em>Equivalent comparisons of
+experiments.</em> Annals of Mathematical Statistics 24.</li>
+<li>Burns, C. et al. (2022). <em>Discovering Latent Knowledge in
+Language Models Without Supervision.</em> arXiv:2212.03827.</li>
+<li>Cover, T. M. &amp; Thomas, J. A. (2006). <em>Elements of Information
+Theory</em>, 2nd ed. Wiley.</li>
+<li>Good, I. J. (1965). <em>Speculations concerning the first
+ultraintelligent machine.</em> Advances in Computers 6.</li>
+<li>Kadavath, S. et al. (2022). <em>Language Models (Mostly) Know What
+They Know.</em> arXiv:2207.05221.</li>
+<li>Zheng, L. et al. (2023). <em>Judging LLM-as-a-Judge with MT-Bench
+and Chatbot Arena.</em> NeurIPS.</li>
+</ul>
+<h2 id="appendix-a.-how-this-was-found">Appendix A. How This Was
+Found</h2>
+<p>Dates are 2026. The work was done by one experimenter (E) and one
+reviewer (R), pseudonymous here and belonging to no institution named in
+this series.</p>
+<ol type="1">
+<li><strong>07 to 09-19.</strong> The concept and the bound, registered;
+parked behind the human-rater papers; unparked when Paper III’s judging
+cells and caches were found on a second checkout rather than
+regenerated.</li>
+<li><strong>09-21.</strong> E-E pre-registered before the first episode.
+Stage 1 found a confound none of the registered controls would catch —
+policy identity predicting correctness on most pairs — and the design
+was amended before the run (§3a: stratify on pairs where identity
+carries nothing). <em>Rule: a control that cannot fire is not a
+control.</em></li>
+<li><strong>09-22.</strong> The first evaluation held out 25% of
+problems; the PCA-8 control fired on 38 cells whose own controls spanned
+±0.12. Re-evaluated by five-fold CV over problems, as the
+pre-registration had allowed for; both kept. The result landed. Then the
+decomposition: E’s analysis script carried a closing sentence written
+before the numbers — “a coin flip when it commits” — and the printed
+counts beside it read 73.9%. <em>Rule: print the counts next to the
+sentence; the sentence is the part that can be wrong without anything
+failing.</em> The 1.5B judge tied on 98.5% of pairs and its <span
+class="math inline"><em>A</em> = 0</span> was recognised as format
+compliance before being read as a point.</li>
+</ol>
+</body>
+</html>

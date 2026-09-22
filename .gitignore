@@ -113,3 +113,5 @@ reasoning/data/
 # hold: the next doc always has a new prefix. Negate ALL markdown under docs/ and keep the
 # binary/derived exclusions explicit below.
 !docs/*.md
+!docs/efficient-thinking-7.md
+!docs/efficient-thinking-7.html
