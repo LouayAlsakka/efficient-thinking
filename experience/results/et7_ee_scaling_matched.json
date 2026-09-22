@@ -1,0 +1,240 @@
+{
+ "document": "ET-VII E-E — scaling at matched relative depth 0.64",
+ "prereg": "docs/et7-ee-prereg.md §3b + §3c",
+ "yardstick": {
+  "judge": "7B",
+  "A_star_matched_CI": [
+   0.6164,
+   0.8438
+  ],
+  "why": "§3c names the 7B fold interval at its headline setting as the test"
+ },
+ "comparability": {
+  "A_forced": "read at the OUTPUT, no layer — comparable across sizes as it stands",
+  "A_star": "read at a LAYER — comparable only at matched relative depth",
+  "delta_forced": "inherits A_star's, so it is recomputed paired per fold at the matched layer"
+ },
+ "per_judge": [
+  {
+   "judge": "1.5B",
+   "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+   "n_blocks": 28,
+   "matched_layer": 18,
+   "matched_relative": 0.6429,
+   "A_star_matched": {
+    "mean": 0.6774,
+    "se": 0.0282,
+    "CI95_t_df4": [
+     0.5991,
+     0.7556
+    ]
+   },
+   "A_star_layer18": {
+    "mean": 0.6774,
+    "se": 0.0282,
+    "CI95_t_df4": [
+     0.5991,
+     0.7556
+    ]
+   },
+   "A_forced_F2": {
+    "mean": 0.5278,
+    "se": 0.0598,
+    "CI95_t_df4": [
+     0.3617,
+     0.6939
+    ]
+   },
+   "A_tie_scored": {
+    "mean": 0.008,
+    "se": 0.008,
+    "CI95_t_df4": [
+     -0.0142,
+     0.0302
+    ]
+   },
+   "tie_rate": 0.9854,
+   "delta_forced_matched": {
+    "mean": 0.1496,
+    "se": 0.0711,
+    "CI95_t_df4": [
+     -0.0478,
+     0.3469
+    ]
+   },
+   "delta_forced_layer18_as_first_reported": [
+    -0.0478,
+    0.3469
+   ],
+   "layer18_column_agrees_with_forced_run": true,
+   "source": "et7_ee_depth_1.5B.json + et7_ee_forced_1.5B.json",
+   "inside_7B_fold_interval": true,
+   "delta_reading_3b": "FAILS — the state and the output agree; the abstention was format"
+  },
+  {
+   "judge": "7B",
+   "model": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+   "n_blocks": 28,
+   "matched_layer": 18,
+   "matched_relative": 0.6429,
+   "A_star_matched": {
+    "mean": 0.7301,
+    "se": 0.041,
+    "CI95_t_df4": [
+     0.6164,
+     0.8438
+    ]
+   },
+   "A_star_layer18": {
+    "mean": 0.7301,
+    "se": 0.041,
+    "CI95_t_df4": [
+     0.6164,
+     0.8438
+    ]
+   },
+   "A_forced_F2": {
+    "mean": 0.6673,
+    "se": 0.0413,
+    "CI95_t_df4": [
+     0.5527,
+     0.7819
+    ]
+   },
+   "A_tie_scored": {
+    "mean": 0.2461,
+    "se": 0.0299,
+    "CI95_t_df4": [
+     0.1632,
+     0.3291
+    ]
+   },
+   "tie_rate": 0.6642,
+   "delta_forced_matched": {
+    "mean": 0.0628,
+    "se": 0.07,
+    "CI95_t_df4": [
+     -0.1314,
+     0.257
+    ]
+   },
+   "delta_forced_layer18_as_first_reported": [
+    -0.1314,
+    0.257
+   ],
+   "layer18_column_agrees_with_forced_run": true,
+   "source": "et7_ee_depth_7B.json + et7_ee_forced_7B.json",
+   "inside_7B_fold_interval": true,
+   "delta_reading_3b": "FAILS — the state and the output agree; the abstention was format"
+  },
+  {
+   "judge": "14B",
+   "model": "mlx-community/Qwen2.5-14B-Instruct-4bit",
+   "n_blocks": 48,
+   "matched_layer": 31,
+   "matched_relative": 0.6458,
+   "A_star_matched": {
+    "mean": 0.6987,
+    "se": 0.0471,
+    "CI95_t_df4": [
+     0.5679,
+     0.8294
+    ]
+   },
+   "A_star_layer18": {
+    "mean": 0.6719,
+    "se": 0.0431,
+    "CI95_t_df4": [
+     0.5522,
+     0.7916
+    ]
+   },
+   "A_forced_F2": {
+    "mean": 0.6971,
+    "se": 0.0678,
+    "CI95_t_df4": [
+     0.5089,
+     0.8853
+    ]
+   },
+   "A_tie_scored": {
+    "mean": 0.5574,
+    "se": 0.0684,
+    "CI95_t_df4": [
+     0.3677,
+     0.7472
+    ]
+   },
+   "tie_rate": 0.2628,
+   "delta_forced_matched": {
+    "mean": 0.0016,
+    "se": 0.0254,
+    "CI95_t_df4": [
+     -0.0689,
+     0.0721
+    ]
+   },
+   "delta_forced_layer18_as_first_reported": [
+    -0.1979,
+    0.1474
+   ],
+   "layer18_column_agrees_with_forced_run": true,
+   "source": "et7_ee_depth_14B.json + et7_ee_forced_14B.json",
+   "inside_7B_fold_interval": true,
+   "delta_reading_3b": "FAILS — the state and the output agree; the abstention was format"
+  },
+  {
+   "judge": "32B",
+   "model": "mlx-community/Qwen2.5-32B-Instruct-4bit",
+   "n_blocks": 64,
+   "matched_layer": 41,
+   "matched_relative": 0.6406,
+   "A_star_matched": {
+    "mean": 0.7209,
+    "se": 0.0191,
+    "CI95_t_df4": [
+     0.6679,
+     0.7738
+    ]
+   },
+   "A_star_layer18": {
+    "mean": 0.6008,
+    "se": 0.0393,
+    "CI95_t_df4": [
+     0.4918,
+     0.7098
+    ]
+   },
+   "A_forced_F2": {
+    "mean": 0.731,
+    "se": 0.0726,
+    "CI95_t_df4": [
+     0.5296,
+     0.9325
+    ]
+   },
+   "A_tie_scored": {
+    "mean": 0.6387,
+    "se": 0.0635,
+    "CI95_t_df4": [
+     0.4624,
+     0.8151
+    ]
+   },
+   "tie_rate": 0.2117,
+   "delta_forced_matched": {
+    "mean": -0.0102,
+    "se": 0.0799,
+    "CI95_t_df4": [
+     -0.232,
+     0.2117
+    ]
+   },
+   "source": "et7_ee_32B.json (one run)",
+   "inside_7B_fold_interval": true,
+   "delta_reading_3b": "FAILS — the state and the output agree; the abstention was format"
+  }
+ ],
+ "flat_verdict": "§9's 'flat' STANDS, restated at matched depth — every judge's matched-depth A* lies inside the 7B fold interval",
+ "signed": "Sautee (sha-ta)"
+}
