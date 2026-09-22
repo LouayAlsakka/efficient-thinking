@@ -38,6 +38,9 @@ DEFAULT_KINDS = ("select", "set", "add", "remove", "next", "back", "cancel", "co
 
 PROMPT = """You are predicting what a user will do NEXT in a booking interface.
 
+THE VENUE — every id you name in args must come from here
+{world}
+
 CURRENT STATE
 {state}
 
@@ -49,6 +52,47 @@ You may ONLY choose from these action kinds: {kinds}
 Reply with a JSON array of at most {n} objects, most likely first, nothing else:
 [{{"kind": "<one of the kinds>", "label": "<short button text>", "args": {{}}}}]"""
 
+NO_WORLD = ("(none supplied — name no ids; an action whose args name an offer, a person or a day "
+            "that does not exist cannot be rendered as a tap)")
+
+# Which arg keys carry an id that must resolve against the venue. An action proposing barber
+# "Alex" at a shop staffed by Marcus, Priya and Dae-Ho is not a near miss: it is unshowable, the
+# same failure as an out-of-vocabulary kind, and it is counted the same way and never shown.
+ID_ARGS = {"offer_id": "offers", "offer": "offers", "service": "offers",
+           "staff": "staff", "staff_id": "staff", "barber": "staff", "stylist": "staff",
+           "day": "days", "weekday": "days"}
+
+
+WEEK = ("mon", "tue", "wed", "thu", "fri", "sat", "sun")
+
+
+def world_from_space(space):
+    """The compiled venue reduced to what a predictor may name. niwa's fixture shape."""
+    sp = space.get("space", {})
+    offers = [{"offer_id": o.get("offer_id"), "name": o.get("name"),
+               "price": (o.get("price") or {}).get("amount"),
+               "duration_min": o.get("duration_min")} for o in space.get("offer_sheet", [])]
+    tx = space.get("transaction", {})
+    roster = ((tx.get("resource") or {}).get("roster")) or []
+    hours = (((tx.get("schedule") or {}).get("declared") or {}).get("hours")) or sp.get("hours") or {}
+    return {"handle": sp.get("handle"), "name": sp.get("name"), "flow": tx.get("flow"),
+            # WEEKDAY ORDER, not alphabetical: sorted() puts Friday first, and a head that offers
+            # Fri/Sat/Sun on a Tuesday is wrong for a reason that has nothing to do with the model.
+            "offers": offers, "staff": list(roster),
+            "days": sorted(hours.keys(), key=lambda d: WEEK.index(d[:3].lower())
+                           if d[:3].lower() in WEEK else 9),
+            "hours": hours, "confirm": tx.get("confirm"), "identity_min": tx.get("identity_min")}
+
+
+def _resolvable(world):
+    """The id sets an action's args may name, lowercased."""
+    if not world:
+        return None
+    return {"offers": {str(o.get("offer_id", "")).lower() for o in world.get("offers", [])}
+                      | {str(o.get("name", "")).lower() for o in world.get("offers", [])},
+            "staff": {str(x).lower() for x in world.get("staff", [])},
+            "days": {str(x).lower() for x in world.get("days", [])}}
+
 
 @dataclass
 class Prediction:
@@ -56,43 +100,61 @@ class Prediction:
     cost_usd: float = 0.0
     raw: str = ""
     dropped: list = field(default_factory=list)
+    unresolved: list = field(default_factory=list)   # in-vocabulary, but names an id the venue lacks
     error: str = ""
 
 
-def _parse(text, kinds, n):
-    """Extract the array. Returns (kept, dropped). Unparseable is ([], []) and the caller reports it."""
+def _parse(text, kinds, n, ids=None):
+    """Extract the array. Returns (kept, dropped, unresolved); unparseable is ([], [], [])."""
     if not text:
-        return [], []
+        return [], [], []
     i, j = text.find("["), text.rfind("]")
     if i < 0 or j <= i:
-        return [], []
+        return [], [], []
     try:
         arr = json.loads(text[i:j + 1])
     except Exception:
-        return [], []
-    kept, dropped = [], []
+        return [], [], []
+    kept, dropped, unresolved = [], [], []
     for a in arr if isinstance(arr, list) else []:
         if not isinstance(a, dict):
             continue
         k = str(a.get("kind", "")).strip().lower()
-        item = {"kind": k, "label": str(a.get("label", ""))[:80], "args": a.get("args") or {}}
-        (kept if k in kinds else dropped).append(item)
-    return kept[:n], dropped
+        args = a.get("args") or {}
+        item = {"kind": k, "label": str(a.get("label", ""))[:80], "args": args}
+        if k not in kinds:
+            dropped.append(item)
+            continue
+        bad = None
+        if ids and isinstance(args, dict):
+            for key, bucket in ID_ARGS.items():
+                if key in args and args[key] not in (None, ""):
+                    if str(args[key]).lower() not in ids.get(bucket, set()):
+                        bad = "%s=%r not in %s" % (key, args[key], bucket)
+                        break
+        if bad:
+            unresolved.append({**item, "why": bad})
+        else:
+            kept.append(item)
+    return kept[:n], dropped, unresolved
 
 
 class PredictorV0:
     """Callable. Construct once per session; the renderer calls predict() per turn."""
 
     def __init__(self, model="us.anthropic.claude-opus-4-7", kinds=DEFAULT_KINDS,
-                 transport=None, ledger=None, max_tokens=300, cap=None):
+                 transport=None, ledger=None, max_tokens=300, cap=None, world=None):
         self.model, self.kinds, self.max_tokens = model, tuple(kinds), max_tokens
+        self.world, self.ids = world, _resolvable(world)
         self.meter = AR.CostMeter(ledger=ledger or os.path.join(HERE, "bench_spend_ledger.json"),
                                   **({"cap": cap} if cap else {}))
         self.transport = transport or (lambda req, **kw: AR.bedrock_transport(req))
         self.turns = 0
 
     def predict(self, state, last_exchange="", n=5) -> Prediction:
-        prompt = PROMPT.format(state=json.dumps(state, ensure_ascii=False)[:4000],
+        prompt = PROMPT.format(world=(json.dumps(self.world, ensure_ascii=False)[:2000]
+                                      if self.world else NO_WORLD),
+                               state=json.dumps(state, ensure_ascii=False)[:4000],
                                last=str(last_exchange)[:1000],
                                kinds=", ".join(self.kinds), n=n)
         est_in = max(1, len(prompt) // 4)
@@ -109,15 +171,47 @@ class PredictorV0:
         cost = self.meter.settle(rid, u.get("input_tokens", est_in),
                                  u.get("output_tokens", self.max_tokens))
         text = "".join(c.get("text", "") for c in r.get("content", []))
-        kept, dropped = _parse(text, set(self.kinds), n)
+        kept, dropped, unresolved = _parse(text, set(self.kinds), n, self.ids)
         self.turns += 1
         return Prediction(actions=kept, cost_usd=cost, raw=text, dropped=dropped,
-                          error="" if kept else "no in-vocabulary action parsed")
+                          unresolved=unresolved,
+                          error="" if kept else "no showable action parsed")
+
+
+# The REAL open state, generated by running initialState() in the bench's uiState.ts and sent by
+# 形 (nirai 12065) — not a shape I invented. The first version of this file tested against
+# {"screen": "salon", "service": None, ...}, which no renderer ever produces.
+REAL_STATE = {
+    "space": "quick-cuts.chelsea", "audience": "customer", "tab": "overview", "view": None,
+    "selection": {"offer_ids": [], "staff": None, "day": None, "slot": None,
+                  "thread": None, "cell": None},
+    "filters": {}, "form": {}, "sheet": "none", "highlight": None,
+    "runtime_sections": {}, "return_to": None, "submit_key": None,
+    "ask": {"draft": "", "reply": None, "pending": False, "error": None, "chips": [], "images": []},
+}
+
+# niwa's compiled fixture, reduced to the keys world_from_space reads (source of truth:
+# niraikanai reports/niwa/wo312-bench-fixture-2026-09-22/quick-cuts-barbershop_space.json).
+REAL_SPACE = {
+    "space": {"handle": "quick-cuts.chelsea", "name": "Quick Cuts Barbershop",
+              "hours": {"tue": "09:00-18:00", "wed": "09:00-18:00", "thu": "09:00-18:00",
+                        "fri": "09:00-18:00", "sat": "09:00-18:00", "sun": "09:00-18:00"}},
+    "offer_sheet": [{"name": "Haircut", "offer_id": "haircut", "kind": "service",
+                     "price": {"amount": 35, "currency": "USD"}, "duration_min": 30}],
+    "transaction": {"flow": "booking", "confirm": "manual", "identity_min": "named",
+                    "resource": {"kind": "staff", "select": "customer",
+                                 "roster": ["Marcus", "Priya", "Dae-Ho"]},
+                    "schedule": {"granularity": "slot", "duration_min": 30, "source": "declared",
+                                 "declared": {"slot_grid_min": 30,
+                                              "hours": {"tue": [9, 18], "wed": [9, 18],
+                                                        "thu": [9, 18], "fri": [9, 18],
+                                                        "sat": [9, 18], "sun": [9, 18]}}}},
+}
 
 
 def _selftest():
     """Every path, with a fake transport. No network, no spend."""
-    state = {"screen": "salon", "service": None, "stylist": None, "slot": None}
+    state = REAL_STATE
     good = json.dumps([{"kind": "select", "label": "Choose service", "args": {}},
                        {"kind": "ask", "label": "Ask a question", "args": {}}])
     # 1 — the happy path
@@ -150,12 +244,35 @@ def _selftest():
                      ledger="/tmp/_bench_t5.json").predict(state, n=3)
     assert len(p5.actions) == 3
     print("  [5] n honoured: asked 3 of 9 proposed, got %d" % len(p5.actions))
-    for i in range(1, 6):
+    # 6 — the venue extractor reads niwa's compiled shape
+    w = world_from_space(REAL_SPACE)
+    assert w["staff"] == ["Marcus", "Priya", "Dae-Ho"], w
+    assert [o["offer_id"] for o in w["offers"]] == ["haircut"] and w["offers"][0]["price"] == 35, w
+    assert w["days"] == ["tue", "wed", "thu", "fri", "sat", "sun"], w["days"]
+    print("  [6] world_from_space: %s, %d offer(s), %d staff, %d open days"
+          % (w["handle"], len(w["offers"]), len(w["staff"]), len(w["days"])))
+    # 7 — an id the VENUE does not have is unshowable and is counted, never shown. A barber named
+    #     Alex is not a near miss; it is the same failure as an out-of-vocabulary kind.
+    ghost = json.dumps([{"kind": "select", "label": "Book with Alex", "args": {"barber": "Alex"}},
+                        {"kind": "select", "label": "Book with Priya", "args": {"barber": "Priya"}},
+                        {"kind": "select", "label": "Haircut", "args": {"offer_id": "haircut"}}])
+    p6 = PredictorV0(transport=lambda req, **kw: AR.bedrock_transport(req, client=AR.FakeBedrock([ghost])),
+                     ledger="/tmp/_bench_t6.json", world=w).predict(state)
+    assert [a["label"] for a in p6.actions] == ["Book with Priya", "Haircut"], p6.actions
+    assert len(p6.unresolved) == 1 and "Alex" in p6.unresolved[0]["why"], p6.unresolved
+    print("  [7] out-of-VENUE args held back and counted: shown %d, unresolved %s"
+          % (len(p6.actions), [u["why"] for u in p6.unresolved]))
+    # 8 — with no world, ids are not checked (the old behaviour, unchanged)
+    p7 = PredictorV0(transport=lambda req, **kw: AR.bedrock_transport(req, client=AR.FakeBedrock([ghost])),
+                     ledger="/tmp/_bench_t7.json").predict(state)
+    assert len(p7.actions) == 3 and not p7.unresolved
+    print("  [8] no world supplied -> no id check, 3 shown (unchanged behaviour)")
+    for i in range(1, 8):
         for s in ("", ".tmp"):
             f = "/tmp/_bench_t%d.json%s" % (i, s)
             if os.path.exists(f):
                 os.remove(f)
-    print("\n  SELFTEST PASSED — 5 checks, $0.00, no network.")
+    print("\n  SELFTEST PASSED — 8 checks, $0.00, no network.")
 
 
 if __name__ == "__main__":
