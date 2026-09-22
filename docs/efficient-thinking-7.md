@@ -1,6 +1,6 @@
 # Efficient Thinking VII: The Elicitation Gap
 ## What a fixed system knows that it does not say — a bound, and its first measurements
-> **STATE 2026-09-22: DRAFT v0.3 — the headline number is WITHDRAWN and being re-measured under a registered definition.** The tie-scored gap (§5, §6, §9) is a scoring artefact: on the cells where the 7B judge commits, the probe and the judge agree within a point, and the 48 points are ties scored wrong by a rule. It also fails the registered subsample control by the letter. Pre-registration §3b (committed before the run) redefines \(A\) as the judge's forced preference — logit A against logit B, no tie — with both outcomes pre-stated: either the forced judge meets the probe and the registered claim fails, or a gap survives the objection. The forced-choice run at 1.5B/7B/14B/32B and the tie-restricted probe are requested and not on disk. The tie-scored numbers stay in this draft as what was measured, labelled. E-C and E-D are registered and not run; the bound's formal statements are to be verified against textbook forms before publication. Every number below is on disk under `experience/results/` with its command; the reading rules were committed before the run (`docs/et7-ee-prereg.md`, with its §3a amendment). Nothing here is a law; §10 says what is a finding and what is a registration.
+> **STATE 2026-09-22: DRAFT v0.3 — the headline number is WITHDRAWN and being re-measured under a registered definition.** The tie-scored gap (§5, §6, §9) is a scoring artefact: on the cells where the 7B judge commits, the probe and the judge agree within a point, and the 48 points are ties scored wrong by a rule. Separately, the registered subsample control never ran on the primary stratum — its cap exceeded the training set, so it refitted the probe on all of its own rows — and the tie-scored gap was therefore never under that control. Pre-registration §3b (committed before the run) redefines \(A\) as the judge's forced preference — logit A against logit B, no tie — with both outcomes pre-stated: either the forced judge meets the probe and the registered claim fails, or a gap survives the objection. The forced-choice run at 1.5B/7B/14B/32B and the tie-restricted probe are requested and not on disk. The tie-scored numbers stay in this draft as what was measured, labelled. E-C and E-D are registered and not run; the bound's formal statements are to be verified against textbook forms before publication. Every number below is on disk under `experience/results/` with its command; the reading rules were committed before the run (`docs/et7-ee-prereg.md`, with its §3a amendment). Nothing here is a law; §10 says what is a finding and what is a registration.
 
 **Louay Alsakka** · September 22, 2026 · *draft v0.3*
 
@@ -37,7 +37,7 @@ was a scoring artefact, now being re-measured under the definition it will publi
 | the gap, defined | \(\Delta = A^* - A\); the probe lower-bounds \(A^*\), so \(\Delta \ge A_{\text{probe}} - A\); \(A\) is the judge's own pick with a tie scored wrong | §3 |
 | the gap, tie-scored — WITHDRAWN as headline | judge 24.8% (A/B/tie), probe 73.0% [0.62, 0.84] on 137 balanced pairs; on the 46 committed cells judge 73.9% ≈ probe; the difference is the tie rule | §5, §6 |
 | the gap, forced-choice — registered, not measured | \(A\) = logit A vs logit B, no tie; same states, same folds; outcomes pre-stated in prereg §3b | §3, §10 |
-| the controls | permuted labels 0.41–0.52 (baseline 0.518); PCA-8 0.657 is inside the probe's fold interval — not established; subsample n = 100 matched the probe exactly and by the registered rule withdraws the tie-scored Δ; policy-identity probe 0.577 | §5 |
+| the controls | permuted labels 0.41–0.52 (baseline 0.518); PCA-8 0.657 is inside the probe's fold interval — not established; the subsample control did not run (cap 200 > 99 training rows, so it was the probe itself); policy-identity probe 0.577 | §5 |
 | the confounded stratum, withdrawn | 913 pairs where policy identity predicts correctness: PCA-8 matches the probe, identity probe 0.826 — not a finding | §5 |
 | what the gap is | abstention: ties on 66.4% of pairs, 73.9% correct when committing, the probe over all pairs 73.0%; the tie-restricted probe number is requested, not yet measured | §6 |
 | what it is not | answer length (43.1%, below chance); policy identity (0.577, uninformative by construction) | §7 |
@@ -122,21 +122,23 @@ earlier one is reported here as the withdrawn first pass.
 
 ## 5. The measurement
 
-| stratum | n | judge \(A\) | probe \(A_{\text{probe}}\) | \(\Delta \ge\) | baseline | permuted ×5 | PCA-8 | n = 100 | policy-identity probe |
+| stratum | n | judge \(A\) | probe \(A_{\text{probe}}\) | \(\Delta \ge\) | baseline | permuted ×5 | PCA-8 | subsample (min(200, train)) | policy-identity probe |
 |---|---:|---:|---:|---:|---:|---|---:|---:|---:|
-| primary, balanced | 137 | 0.248 | 0.730 [0.62, 0.84] | **0.482** | 0.518 | 0.52 · 0.50 · 0.41 · 0.50 · 0.48 | 0.657 | 0.730 | 0.577 |
-| secondary, confounded | 913 | 0.288 | 0.838 | (0.550) | 0.540 | collapses | **0.834** | 0.816 | **0.826** |
+| primary, balanced | 137 | 0.248 | 0.730 [0.62, 0.84] | **0.482** | 0.518 | 0.52 · 0.50 · 0.41 · 0.50 · 0.48 | 0.657 | did not run (99 of 99 rows) | 0.577 |
+| secondary, confounded | 913 | 0.288 | 0.838 | (0.550) | 0.540 | collapses | **0.834** | 0.816 (200 of 687) | **0.826** |
 
 The interval on the probe is across the five problem-folds (0.846 · 0.800 · 0.704 · 0.621 · 0.680; sd 0.092, t with
 four degrees of freedom), not a binomial over 137 cells, which would overstate the precision of cells that share
 problems. Read against that interval the controls are weaker than v0.1 said. Permutation collapses to the baseline.
 PCA-8 at 0.657 sits inside the probe's interval [0.62, 0.84]: the probe's excess over eight dimensions is not
-established at this n. The subsample control matched the probe exactly (0.730 at n = 100); v0.1 called that a known
-property, but the pre-registration says a subsample matching the probe withdraws the gap, and a registered gate is not
-relaxed after it fails — so **the tie-scored 7B gap is withdrawn under the registered reading**. The reason it fired is
-stated beside the withdrawal: with about 110 training cells per fold, 100 rows is 90% of the data and the control
-cannot detect anything, which is a defect of its size and not evidence about the gap; the re-measurement carries a
-subsample at n = 30. The policy-identity probe sits near chance, which is what the balancing was for. On the
+established at this n. The subsample control did not run on the primary stratum. Its size is `min(200, training
+rows)`, and the held-out evaluation had 99 training rows, so the "subsample" was all 99 rows in a different order: the
+same fit, the same 0.730, by construction and at any signal level. v0.1 printed it as "n = 100" and called the match a
+known property; v0.3 first read it as a gate that fired; both were wrong, and the truth is that nothing ran. So the
+tie-scored gap was never under a subsample control at all, and the re-measurement carries one that is a real draw
+(n = 30 against about 110 training cells per fold) and prints the size it used beside the training-set size. On the
+secondary stratum the draw was real (200 of 687). The policy-identity probe sits near chance, which is what the
+balancing was for. On the
 secondary stratum the PCA-8 control matches the probe and the identity probe reaches 0.826: exactly the confound the
 stratification predicted, and that gap is withdrawn too. What survives §5 unconditionally is the design: the
 balanced stratum is where a readout can be told from a shortcut, and the 913-pair stratum shows why.
@@ -232,7 +234,7 @@ a bigger judge does not raise the ceiling, it starts nearer to it.
 
 | prediction (registered before the run) | outcome |
 |---|---|
-| E-E: \(\Delta > 0\) and material — the judge's representations know more than its judgments express | **Withdrawn under the tie-scored definition** (subsample control fired; and the gap was the tie rule, §5–§6). **Unscored under the forced-choice definition** registered in prereg §3b: hit if the fold interval on (probe − forced judge) excludes zero with lower bound ≥ 0.05; fails if the forced judge meets the probe |
+| E-E: \(\Delta > 0\) and material — the judge's representations know more than its judgments express | **Withdrawn under the tie-scored definition** (the gap was the tie rule, §5–§6; and its subsample control never ran). **Unscored under the forced-choice definition** registered in prereg §3b: hit if the fold interval on (probe − forced judge) excludes zero with lower bound ≥ 0.05; fails if the forced judge meets the probe |
 | E-E: \(\Delta\) shrinks with judge scale slower than \(A\) rises | **Fails under the tie-scored definition** — the curve is a tie-rate curve (§9). Re-scored under forced choice at four sizes |
 | E-D: coherence training raises \(q\) by a real, bounded amount, the residual being what only external signal fixes | **Not run.** §6 and §9 name its target: the abstentions, under a flat ceiling |
 | E-C: ensemble \(q\) exceeds the best single judge by variance reduction; vanishes where family errors correlate | **Not run** |
@@ -333,10 +335,12 @@ institution named in this series.
    the arithmetic of why is the result.*
 5. **09-22, later still.** A second outside reader put the objection in one sentence: on the 46 cells where the
    judge commits the probe and the judge agree, so the 48 points are ties scored wrong by a rule — a gap between the
-   state and a prompt format, not between the state and what the system can express. Accepted. The same reading
-   showed the registered subsample control had fired at 7B and had been waved through as "a known property"; the
-   tie-scored gap was withdrawn under the registered reading, and the reason the control fired (a 100-row subsample
-   of 110 training cells) was recorded as a defect of the control's size. Prereg §3b was committed before any new
-   run: \(A\) is the forced preference, both outcomes pre-stated, controls sized to the n. *Rule: a gate that fired
-   is a gate that fired; explain it, do not relax it. And: the definition of the thing measured is registered with
-   the same care as the threshold.*
+   state and a prompt format, not between the state and what the system can express. Accepted; the tie-scored gap
+   was withdrawn on that ground. R also wrote that the registered subsample control had fired at 7B and been waved
+   through; E checked the code within the hour and it was wrong in the other direction — the control's cap (200)
+   exceeded the 99 training rows, so it had refitted the probe on all of its own rows and had never run on that
+   stratum in any evaluation. The "n = 100" in v0.1's table was a number never drawn. Prereg §3b was committed before
+   any new run: \(A\) is the forced preference, both outcomes pre-stated, controls sized to the n and printed with
+   their sizes. *Rule: a subsample control whose size is not printed beside the training-set size is not a control —
+   print `sub n / train n` or it can silently be the identity. And: the definition of the thing measured is registered
+   with the same care as the threshold.*

@@ -128,13 +128,13 @@ therefore almost entirely 91 ties scored wrong by a rule — a gap between the s
 extracts, not between the state and what the system can express. The 1.5B judge tying on 98.5% of pairs, and the 14B
 curve being a tie-rate curve, say the same thing. The tie-scored number cannot be the headline.
 
-**A second admission.** §4 registered that a subsample control matching the probe withdraws the Δ. At 7B the
-n = 100 subsample reads 0.730 against a probe of 0.730. Draft v0.1/v0.2 called that "a known property"; by the letter
-of §4 the control fired, and a registered gate is not relaxed after it fails. The tie-scored 7B Δ is WITHDRAWN as a
-claim under the registered reading. The reason the control fired is that at ~110 training cells per fold a 100-row
-subsample is 90% of the data and cannot detect anything; that is a defect of the control's size, not evidence about
-the gap, and it is stated as such — but the withdrawal stands, and the re-measurement below carries controls sized
-for the n it has.
+**A second admission, corrected the same hour.** §4 registered that a subsample control matching the probe withdraws
+the Δ. At 7B the subsample reads 0.730 against a probe of 0.730, and this amendment first said the control had fired.
+E checked the code: the draw is `min(200, training rows)` and the primary stratum had 99 training rows, so the
+"subsample" was all 99 rows — the probe itself, by construction. The control did not fire; it never ran on the primary
+stratum, in any evaluation (on the secondary stratum, 200 of 687, it was real). The tie-scored 7B Δ is WITHDRAWN on
+the first ground alone, which is sufficient. The re-measurement below carries a subsample that is a real draw and
+prints `sub n / train n` per fold; a control whose size is not printed beside the training-set size is not a control.
 
 **The definition that will be published.** A is the judge's *forced preference*: at the decision position, the
 log-probability of the token "A" against the token "B", the higher one being the pick. No tie is available to it.
