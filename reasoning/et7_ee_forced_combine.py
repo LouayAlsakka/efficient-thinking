@@ -38,13 +38,25 @@ def readings(d):
                     "the probe's excess over eight dimensions is not established at this n"))
     perm = [x for f in folds for x in f["CONTROL_permuted"]]
     pm = sum(perm) / len(perm)
-    if pm > lo_probe:
-        fired.append("permutation pooled mean %.3f is not below the probe's interval" % pm)
+    if pm >= lo_probe:
+        fired.append("permutation pooled mean %.3f did not collapse below the probe's interval" % pm)
     notes.append("permutation pooled %.3f, range %.3f–%.3f" % (pm, min(perm), max(perm)))
+
+    # POLICY IDENTITY IS NOT A WITHDRAWAL TRIGGER ON THIS STRATUM, and an earlier version of this
+    # function made it one. §3a: "If it scores near the correctness probe ON THE CONFOUNDED PAIRS,
+    # the two are not separable there and THAT STRATUM's Δ is withdrawn. Its score ON THE BALANCED
+    # PAIRS is the check that the balancing worked." Everything here is the balanced stratum, so the
+    # reading is descriptive. It has to be: the balancing makes policy identity UNINFORMATIVE ABOUT
+    # CORRECTNESS (the stronger policy is right 49.0% / 43.9% of the time), not undetectable in the
+    # states — a model plainly encodes which answer came from the bigger policy. A correctness probe
+    # cannot ride on a feature that predicts correctness below chance; if it did, it would be dragged
+    # toward 0.439, not lifted. Reporting a high number here as a fired control would have withdrawn
+    # a Δ the pre-registration does not license withdrawing.
     pol = sum(f["CONTROL_policy_identity"] for f in folds) / len(folds)
-    if pol > lo_probe:
-        fired.append("policy-identity probe %.3f is not below the probe's interval" % pol)
-    notes.append("policy-identity %.3f" % pol)
+    notes.append("policy-identity %.3f on the BALANCED stratum — descriptive per §3a, not a trigger; "
+                 "the stronger policy is correct 49.0%%/43.9%% here, so this feature cannot lift a "
+                 "correctness probe%s" % (pol, " (and it reads close to the correctness probe, so say "
+                 "so out loud rather than leaving it in the file)" if abs(pol - probe) < 0.05 else ""))
 
     ci = d["delta_forced_F2"]["CI95_t_df4"]
     forced = d["A_forced_F2_primary"]["mean"]

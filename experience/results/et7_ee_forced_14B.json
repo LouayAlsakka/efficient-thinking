@@ -1,0 +1,274 @@
+{
+ "document": "ET-VII E-E — forced-preference A (prereg §3b)",
+ "prereg": "docs/et7-ee-prereg.md §3b",
+ "prereg_sha": "5afdf0132629fc6bd2286f4cb4f73dd3e573549c",
+ "judge": "mlx-community/Qwen2.5-14B-Instruct-4bit",
+ "layer": 18,
+ "states": "/Users/lab/ee_states_14B",
+ "primary_stratum": "the two balanced policy pairs (§3a)",
+ "n_cells": 137,
+ "n_problems": 124,
+ "folds": 5,
+ "fold_seed": 13,
+ "prompts_verbatim": {
+  "F2_system": "You are a strict, impartial grader. Two assistants answered the same problem. Decide whose FINAL answer is correct. Reply with EXACTLY one token: A or B.",
+  "F2_user_template": "[Problem]\n<problem>\n\n[Assistant A]\n<left>\n\n[Assistant B]\n<right>\n\nWhich is correct? A or B.",
+  "F1_system": "You are a strict, impartial grader. Two assistants answered the same problem. Decide whose FINAL answer is correct. Reply with EXACTLY one token: A, B, or TIE.",
+  "F1_user_template": "[Problem]\n<problem>\n\n[Assistant A]\n<left>\n\n[Assistant B]\n<right>\n\nWhich is correct? A, B, or TIE."
+ },
+ "token_ids": {
+  "A": 32,
+  "B": 33,
+  "TIE": 51,
+  "full_encodings": {
+   "A": [
+    32
+   ],
+   "B": [
+    33
+   ],
+   "TIE": [
+    51,
+    5371
+   ]
+  },
+  "note": "A and B are single tokens; TIE is not -- its id here is the FIRST token of \"TIE\" (the model must emit it to say TIE, so P(TIE) is read on it, and it is an UPPER bound: that token also begins other words). The forced pick never touches it: the pick is logit(A) vs logit(B) alone."
+ },
+ "prompt_inspection": {
+  "asked_by": "理 12095 — 66% ties on decisive pairs is high; say whether the prompt or the template invites TIE",
+  "chat_template": "Qwen2.5's template contributes NO system text of its own once a system message is supplied, and adds no tie language: the rendered prompt is exactly <|im_start|>system\\n<our system><|im_end|>\\n<|im_start|>user\\n<our user><|im_end|>\\n<|im_start|>assistant\\n. The template is not the cause.",
+  "the_prompt_does_invite_it": "TIE is named TWICE — once in the system line and again as the last three characters of the user's question — and it is offered as a peer of A and B, in final position. Nothing in the prompt tells the judge that the pairs are DECISIVE (exactly one side is correct by construction), so on the judge's information TIE is a legitimate answer that is never right. A grader asked to be strict and given a costless abstention will take it.",
+  "but_it_is_not_the_whole_cause": "the same prompt produces a 98.5% tie rate at 1.5B and 26% at 14B, so the rate is prompt AND capability; the prompt sets the floor on how cheap abstaining is, and §3b's F2 removes exactly that.",
+  "not_changed_for_F1": "per 理 12095 the three-way prompt is read verbatim as the check arm; only F2 differs."
+ },
+ "probe_reproduction_assertion": {
+  "checked": false
+ },
+ "per_fold": [
+  {
+   "fold": 1,
+   "cells": 26,
+   "A_star_probe": 0.6154,
+   "A_judge_tie_scored": 0.5,
+   "A_forced_F2_primary_order": 0.5769,
+   "A_forced_F2_swapped_order": 0.6154,
+   "A_forced_F2_mean_order": 0.5962,
+   "delta_forced_F2": 0.0385,
+   "A_forced_F1_primary_order": 0.5385,
+   "A_forced_F1_swapped_order": 0.6538,
+   "A_forced_F1_mean_order": 0.5962,
+   "delta_forced_F1": 0.0769,
+   "CONTROL_permuted": [
+    0.3462,
+    0.5385,
+    0.6923,
+    0.4231,
+    0.6154
+   ],
+   "CONTROL_pca8": 0.6538,
+   "CONTROL_subsample_n30": 0.5769,
+   "CONTROL_subsample_n": 30,
+   "CONTROL_policy_identity": 0.7308
+  },
+  {
+   "fold": 2,
+   "cells": 30,
+   "A_star_probe": 0.7333,
+   "A_judge_tie_scored": 0.7667,
+   "A_forced_F2_primary_order": 0.9333,
+   "A_forced_F2_swapped_order": 0.8333,
+   "A_forced_F2_mean_order": 0.8833,
+   "delta_forced_F2": -0.2,
+   "A_forced_F1_primary_order": 0.8667,
+   "A_forced_F1_swapped_order": 0.8,
+   "A_forced_F1_mean_order": 0.8333,
+   "delta_forced_F1": -0.1334,
+   "CONTROL_permuted": [
+    0.4,
+    0.4667,
+    0.5333,
+    0.6,
+    0.6333
+   ],
+   "CONTROL_pca8": 0.5667,
+   "CONTROL_subsample_n30": 0.6667,
+   "CONTROL_subsample_n": 30,
+   "CONTROL_policy_identity": 0.6667
+  },
+  {
+   "fold": 3,
+   "cells": 27,
+   "A_star_probe": 0.5556,
+   "A_judge_tie_scored": 0.6667,
+   "A_forced_F2_primary_order": 0.7037,
+   "A_forced_F2_swapped_order": 0.8889,
+   "A_forced_F2_mean_order": 0.7963,
+   "delta_forced_F2": -0.1481,
+   "A_forced_F1_primary_order": 0.7407,
+   "A_forced_F1_swapped_order": 0.7407,
+   "A_forced_F1_mean_order": 0.7407,
+   "delta_forced_F1": -0.1851,
+   "CONTROL_permuted": [
+    0.4074,
+    0.4815,
+    0.5926,
+    0.5185,
+    0.5926
+   ],
+   "CONTROL_pca8": 0.4815,
+   "CONTROL_subsample_n30": 0.5185,
+   "CONTROL_subsample_n": 30,
+   "CONTROL_policy_identity": 0.6296
+  },
+  {
+   "fold": 4,
+   "cells": 29,
+   "A_star_probe": 0.6552,
+   "A_judge_tie_scored": 0.4138,
+   "A_forced_F2_primary_order": 0.5517,
+   "A_forced_F2_swapped_order": 0.7586,
+   "A_forced_F2_mean_order": 0.6552,
+   "delta_forced_F2": 0.1035,
+   "A_forced_F1_primary_order": 0.5862,
+   "A_forced_F1_swapped_order": 0.8621,
+   "A_forced_F1_mean_order": 0.7241,
+   "delta_forced_F1": 0.069,
+   "CONTROL_permuted": [
+    0.6207,
+    0.4828,
+    0.4483,
+    0.3793,
+    0.3793
+   ],
+   "CONTROL_pca8": 0.5517,
+   "CONTROL_subsample_n30": 0.4483,
+   "CONTROL_subsample_n": 30,
+   "CONTROL_policy_identity": 0.6552
+  },
+  {
+   "fold": 5,
+   "cells": 25,
+   "A_star_probe": 0.8,
+   "A_judge_tie_scored": 0.44,
+   "A_forced_F2_primary_order": 0.72,
+   "A_forced_F2_swapped_order": 0.64,
+   "A_forced_F2_mean_order": 0.68,
+   "delta_forced_F2": 0.08,
+   "A_forced_F1_primary_order": 0.76,
+   "A_forced_F1_swapped_order": 0.48,
+   "A_forced_F1_mean_order": 0.62,
+   "delta_forced_F1": 0.04,
+   "CONTROL_permuted": [
+    0.68,
+    0.56,
+    0.36,
+    0.64,
+    0.4
+   ],
+   "CONTROL_pca8": 0.68,
+   "CONTROL_subsample_n30": 0.64,
+   "CONTROL_subsample_n": 30,
+   "CONTROL_policy_identity": 0.56
+  }
+ ],
+ "A_star_probe": {
+  "mean": 0.6719,
+  "sd": 0.0964,
+  "se": 0.0431,
+  "CI95_t_df4": [
+   0.5522,
+   0.7916
+  ]
+ },
+ "A_forced_F2_primary": {
+  "mean": 0.6971,
+  "sd": 0.1516,
+  "se": 0.0678,
+  "CI95_t_df4": [
+   0.5089,
+   0.8853
+  ]
+ },
+ "A_forced_F2_swapped": {
+  "mean": 0.7472,
+  "sd": 0.1188,
+  "se": 0.0531,
+  "CI95_t_df4": [
+   0.5997,
+   0.8948
+  ]
+ },
+ "A_forced_F2_mean_order": {
+  "mean": 0.7222,
+  "sd": 0.1157,
+  "se": 0.0518,
+  "CI95_t_df4": [
+   0.5785,
+   0.8659
+  ]
+ },
+ "A_forced_F1_primary": {
+  "mean": 0.6984,
+  "sd": 0.1342,
+  "se": 0.06,
+  "CI95_t_df4": [
+   0.5318,
+   0.8651
+  ]
+ },
+ "A_forced_F1_swapped": {
+  "mean": 0.7073,
+  "sd": 0.1485,
+  "se": 0.0664,
+  "CI95_t_df4": [
+   0.523,
+   0.8917
+  ]
+ },
+ "A_judge_tie_scored": {
+  "mean": 0.5574,
+  "sd": 0.1528,
+  "se": 0.0684,
+  "CI95_t_df4": [
+   0.3677,
+   0.7472
+  ]
+ },
+ "delta_forced_F2": {
+  "mean": -0.0252,
+  "sd": 0.1391,
+  "se": 0.0622,
+  "CI95_t_df4": [
+   -0.1979,
+   0.1474
+  ]
+ },
+ "delta_forced_F1": {
+  "mean": -0.0265,
+  "sd": 0.1233,
+  "se": 0.0551,
+  "CI95_t_df4": [
+   -0.1796,
+   0.1266
+  ]
+ },
+ "F1_vs_F2_gap_points": 0.13,
+ "F1_vs_F2_reading": "F1 and F2 agree within 5 points; F2 is the published reading",
+ "position_bias_swap_gap_points_F2": 5.01,
+ "P_TIE_F1": {
+  "mean_primary": 0.2848,
+  "median_primary": 0.0244,
+  "generated_tie_rate": 0.2628
+ },
+ "tie_split": {
+  "tie_cells": 36,
+  "committed_cells": 101,
+  "probe_on_ties": 0.8333,
+  "probe_on_committed": 0.6139,
+  "forced_F2_on_ties": 0.5,
+  "forced_F2_on_committed": 0.7723,
+  "three_way_judge_on_committed": 0.7624
+ },
+ "how_to_read": "§3b's registered readings. Δ_forced interval excluding zero with lower bound ≥ 0.05: the elicitation gap is real under the publishable definition. Interval containing zero, or forced ≥ probe: the state and the output agree and the abstention was format — the registered claim FAILS, at full prominence. Any control firing withdraws that judge's Δ_forced before anything is said.",
+ "signed": "Sautee (sha-ta)"
+}
