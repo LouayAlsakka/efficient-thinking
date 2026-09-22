@@ -1,0 +1,45 @@
+{
+ "document": "ET-8b §11 — gen0_at_gen1_rows",
+ "prereg": "docs/et8b-loop-gates.md §11",
+ "construction": "gen0's TRAINING states down-sampled to gen1's training row count: 2824 training rows over 207 tasks (gen1 has 2824). Sampled BY TASK — dropping half a task's candidates would leave decisions whose correct answer was never in the training set. The HELD-OUT range is kept whole so both arms are scored on the same evaluation set.",
+ "evaluation": "held out",
+ "heads": {
+  "decision_1": {
+   "held_out_pick_pct": 38.7,
+   "n": 75,
+   "train_rows": 1023,
+   "CONTROL_permuted": [
+    29.3,
+    22.7,
+    18.7,
+    25.3,
+    21.3
+   ]
+  },
+  "decision_2": {
+   "held_out_pick_pct": 53.0,
+   "n": 66,
+   "train_rows": 928,
+   "CONTROL_permuted": [
+    18.2,
+    13.6,
+    18.2,
+    18.2,
+    18.2
+   ]
+  },
+  "decision_3": {
+   "held_out_pick_pct": 65.0,
+   "n": 60,
+   "train_rows": 873,
+   "CONTROL_permuted": [
+    25.0,
+    21.7,
+    16.7,
+    23.3,
+    16.7
+   ]
+  }
+ },
+ "signed": "Sautee (sha-ta)"
+}

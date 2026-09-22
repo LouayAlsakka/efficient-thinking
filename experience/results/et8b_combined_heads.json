@@ -1,0 +1,45 @@
+{
+ "document": "ET-8b §11 — combined",
+ "prereg": "docs/et8b-loop-gates.md §11",
+ "construction": "UNION of gen0's and gen1's training trajectories (4052 + 2824 rows)",
+ "evaluation": "held out",
+ "heads": {
+  "decision_1": {
+   "held_out_pick_pct": 40.0,
+   "n": 75,
+   "train_rows": 2226,
+   "CONTROL_permuted": [
+    22.7,
+    14.7,
+    16.0,
+    17.3,
+    24.0
+   ]
+  },
+  "decision_2": {
+   "held_out_pick_pct": 59.1,
+   "n": 66,
+   "train_rows": 1907,
+   "CONTROL_permuted": [
+    28.8,
+    21.2,
+    24.2,
+    27.3,
+    22.7
+   ]
+  },
+  "decision_3": {
+   "held_out_pick_pct": 68.3,
+   "n": 60,
+   "train_rows": 1777,
+   "CONTROL_permuted": [
+    26.7,
+    16.7,
+    18.3,
+    15.0,
+    26.7
+   ]
+  }
+ },
+ "signed": "Sautee (sha-ta)"
+}
