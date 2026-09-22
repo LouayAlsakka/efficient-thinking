@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""ET-VII E-E — the probe across RELATIVE DEPTH. Proposed to 理 2026-09-22 (channel 12102).
+"""ET-VII E-E — the probe across RELATIVE DEPTH. Pre-registered: docs/et7-ee-prereg.md §3c.
 
 §9's scaling limb probed every judge at ABSOLUTE layer 18. `hidden_at` indexes inner.layers[i], and
 the models are not the same depth: 18 is 64% of the way through 1.5B and 7B (28 blocks), 37.5%
@@ -143,6 +143,8 @@ def main():
 
     best = max(per_layer.values(), key=lambda d: d["A_star_fold_mean"])
     json.dump({"document": "ET-VII E-E — probe across relative depth",
+               "prereg": "docs/et7-ee-prereg.md §3c",
+               "prereg_sha": os.environ.get("PREREG_SHA", ""),
                "why": ("§9 read every judge at absolute layer 18, which is 64% of the way through "
                        "1.5B and 7B and 37.5% through 14B; the flat-A* curve is confounded with "
                        "reading earlier as the model grows"),
