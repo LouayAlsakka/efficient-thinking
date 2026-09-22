@@ -1,0 +1,1039 @@
+{
+ "document": "WO-312 — scripted sweep on STATIC, the sanity gate (prereg §4 / §2b)",
+ "arm": "static",
+ "tasks_file": "/Users/lab/github/efficient-thinking/bench/tasks_v0.json",
+ "n": 100,
+ "reached_submit_screen": 100,
+ "completion_rate_SCREEN_ONLY": 1,
+ "completion_note": "SCREEN, not engine. §2 measurement 3 is the ENGINE's answer and the bench makes no engine call; this is the sanity gate only.",
+ "taps_values": [
+  5
+ ],
+ "optimal_taps_values": [
+  5
+ ],
+ "seconds_median": 1.786,
+ "seconds_min": 1.735,
+ "seconds_max": 1.825,
+ "failures": [],
+ "results": [
+  {
+   "task_id": "qc-001",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 11:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.825,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-002",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 13:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.806,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-003",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.769,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-004",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 10:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.753,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-005",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 13:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.802,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-006",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 15:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.737,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-007",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 09:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-008",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 14:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.805,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-009",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 15:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-010",
+   "goal": "Book Haircut with Marcus on 2026-09-29 (tue) at 10:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-011",
+   "goal": "Book Haircut with Marcus on 2026-09-29 (tue) at 13:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.809,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-012",
+   "goal": "Book Haircut with Marcus on 2026-09-26 (sat) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-013",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 11:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.787,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-014",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 12:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.809,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-015",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 17:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.806,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-016",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 11:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.769,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-017",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 13:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-018",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 15:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.769,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-019",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 09:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-020",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 13:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-021",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 17:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-022",
+   "goal": "Book Haircut with Priya on 2026-09-25 (fri) at 09:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.751,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-023",
+   "goal": "Book Haircut with Priya on 2026-09-27 (sun) at 13:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.807,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-024",
+   "goal": "Book Haircut with Priya on 2026-09-25 (fri) at 16:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.75,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-025",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 09:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-026",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 12:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.808,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-027",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-028",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-23 (wed) at 11:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.771,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-029",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-23 (wed) at 14:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.806,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-030",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-23 (wed) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-031",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-24 (thu) at 10:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.807,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-032",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-24 (thu) at 14:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-033",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-24 (thu) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-034",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-29 (tue) at 11:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.804,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-035",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-29 (tue) at 12:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-036",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-26 (sat) at 16:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.807,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-037",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 09:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.809,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-038",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 12:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.804,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-039",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 16:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.787,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-040",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 11:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.807,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-041",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 12:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.769,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-042",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.809,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-043",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 09:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.808,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-044",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 13:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.805,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-045",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.808,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-046",
+   "goal": "Book Haircut with Marcus on 2026-09-29 (tue) at 11:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-047",
+   "goal": "Book Haircut with Marcus on 2026-09-25 (fri) at 12:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-048",
+   "goal": "Book Haircut with Marcus on 2026-09-29 (tue) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.809,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-049",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 11:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.804,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-050",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 12:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-051",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 15:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.806,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-052",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 11:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.769,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-053",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 14:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.768,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-054",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 16:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-055",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 10:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-056",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 14:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-057",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-058",
+   "goal": "Book Haircut with Priya on 2026-09-29 (tue) at 11:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.807,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-059",
+   "goal": "Book Haircut with Priya on 2026-09-27 (sun) at 13:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.809,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-060",
+   "goal": "Book Haircut with Priya on 2026-09-29 (tue) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.787,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-061",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 09:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.77,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-062",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 13:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.807,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-063",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 17:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.807,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-064",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-23 (wed) at 11:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.735,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-065",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-23 (wed) at 12:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-066",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-23 (wed) at 16:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-067",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-24 (thu) at 10:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.784,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-068",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-24 (thu) at 12:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.787,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-069",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-24 (thu) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.804,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-070",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-27 (sun) at 10:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-071",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-29 (tue) at 14:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.806,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-072",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-26 (sat) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.784,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-073",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 10:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-074",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 14:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.807,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-075",
+   "goal": "Book Haircut with Marcus on 2026-09-22 (tue) at 17:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-076",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 09:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.784,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-077",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 14:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.769,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-078",
+   "goal": "Book Haircut with Marcus on 2026-09-23 (wed) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.808,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-079",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 11:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.753,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-080",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 12:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-081",
+   "goal": "Book Haircut with Marcus on 2026-09-24 (thu) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.769,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-082",
+   "goal": "Book Haircut with Marcus on 2026-09-29 (tue) at 09:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-083",
+   "goal": "Book Haircut with Marcus on 2026-09-26 (sat) at 14:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-084",
+   "goal": "Book Haircut with Marcus on 2026-09-29 (tue) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.806,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-085",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 10:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.736,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-086",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 13:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.783,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-087",
+   "goal": "Book Haircut with Priya on 2026-09-22 (tue) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.753,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-088",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 10:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.783,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-089",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 13:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.804,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-090",
+   "goal": "Book Haircut with Priya on 2026-09-23 (wed) at 17:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-091",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 11:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.787,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-092",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 12:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.808,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-093",
+   "goal": "Book Haircut with Priya on 2026-09-24 (thu) at 15:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.786,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-094",
+   "goal": "Book Haircut with Priya on 2026-09-26 (sat) at 10:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.784,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-095",
+   "goal": "Book Haircut with Priya on 2026-09-26 (sat) at 14:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.738,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-096",
+   "goal": "Book Haircut with Priya on 2026-09-26 (sat) at 17:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.808,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-097",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 11:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.806,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-098",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 13:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.752,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-099",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-22 (tue) at 16:30",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.788,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  },
+  {
+   "task_id": "qc-100",
+   "goal": "Book Haircut with Dae-Ho on 2026-09-23 (wed) at 09:00",
+   "taps": 5,
+   "optimal_taps": 5,
+   "seconds": 1.785,
+   "submit_screen_reached": true,
+   "error": null,
+   "console_errors": []
+  }
+ ],
+ "DEPTH_DOES_NOT_MOVE_SECONDS": {
+  "by_slot_third": {
+   "0": {
+    "n": 34,
+    "median_seconds": 1.785
+   },
+   "1": {
+    "n": 33,
+    "median_seconds": 1.787
+   },
+   "2": {
+    "n": 33,
+    "median_seconds": 1.786
+   }
+  },
+  "reading": "§2b registered, BEFORE this run, that seconds-to-goal measures the driver and not human finding-time, because a scripted user resolves a chip by selector and never scans. Measured: a target in the last third of the day costs the same as one in the first, to 0.01 s. The whole spread across 100 tasks is 0.08 s. The registered prediction is now measured rather than argued."
+ },
+ "signed": "Sautee (sha-ta)"
+}
