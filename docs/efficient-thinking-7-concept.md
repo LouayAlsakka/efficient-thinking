@@ -1,5 +1,5 @@
 # Efficient Thinking VII: The Elicitation Gap — What a Judge Knows but Doesn't Say (concept)
-> **STATE 2026-09-19: CONCEPT.** The bound is stated; nothing is measured. E-E (probe Δ on the III judge cells) is scheduled week of 2026-09-22, E-C the week after, E-D the week after that, with the cross-registration E-D gain ≤ E-E's Δ. The Internal-Improvement Bound is to be verified against textbook forms before any publication. Nothing below is a finding.
+> **STATE 2026-09-22: E-E MEASURED on one judge (7B): the elicitation gap is large — the judge picks correctly 24.8% (ties count as wrong) while a linear probe on its own hidden states reaches 73.0%, Δ = +0.482 on the balanced stratum (n = 137, 5-fold CV over problems; permutation collapses, PCA-8 separates, policy-identity near chance); the confounded stratum withdrawn on its own controls (`experience/results/et7_ee_RESULT.json`). The scaling half (1.5B, 14B) is running and the scaling claim is not made until it lands. E-C and E-D are not run. The bound is to be verified against textbook forms before publication.**
 
 *Status: concept, parked behind ET-IV for its aesthetic arm; the math-domain arms (E-E, E-D, E-C)
 need only the ET-III harness and ground-truth caches. One sentence: internal self-improvement of
