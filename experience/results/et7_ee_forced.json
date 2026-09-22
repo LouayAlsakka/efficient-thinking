@@ -1,0 +1,117 @@
+{
+ "document": "ET-VII E-E — forced-preference A, all judges (prereg §3b)",
+ "prereg": "docs/et7-ee-prereg.md §3b",
+ "prereg_sha": {
+  "1.5B": "5afdf0132629fc6bd2286f4cb4f73dd3e573549c",
+  "7B": "5afdf0132629fc6bd2286f4cb4f73dd3e573549c",
+  "14B": "5afdf0132629fc6bd2286f4cb4f73dd3e573549c"
+ },
+ "primary_stratum": "the two balanced policy pairs (§3a)",
+ "WHAT_IS_COMPARABLE_ACROSS_SIZES": "A_forced is read at the OUTPUT and has no layer, so its row IS comparable across judges now. A_star_probe is read at ABSOLUTE layer 18 — 64% of depth at 1.5B and 7B, 37.5% at 14B — so its row is NOT comparable until the §3c relative-depth sweep lands, and delta_forced inherits that from its A* term. Read the A_forced row for the scaling question; read the A* row only within a judge.",
+ "scaling_under_forced_A": "no judge shows a gap under the publishable definition",
+ "per_judge": [
+  {
+   "judge_tag": "1.5B",
+   "judge": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+   "n_cells": 137,
+   "A_forced_F2": 0.5278,
+   "A_forced_F2_CI": [
+    0.3617,
+    0.6939
+   ],
+   "A_forced_F1": 0.5256,
+   "A_star_probe_LAYER18": 0.6774,
+   "A_star_probe_CI": [
+    0.5991,
+    0.7556
+   ],
+   "A_tie_scored": 0.008,
+   "delta_forced_F2": 0.1496,
+   "delta_forced_F2_CI": [
+    -0.0478,
+    0.3469
+   ],
+   "generated_tie_rate": 0.9854,
+   "P_TIE_median": 0.8584,
+   "F1_vs_F2_gap_points": 0.22,
+   "swap_gap_points": 3.68,
+   "reading": "the state and the output agree; the abstention was format. The registered claim FAILS under the definition that matters (§3b)",
+   "controls_fired": [],
+   "control_notes": [
+    "PCA-8 0.635 within the probe's fold-interval lower bound 0.599 — the probe's excess over eight dimensions is not established at this n",
+    "permutation pooled 0.525, range 0.308–0.667",
+    "policy-identity 0.654 on the BALANCED stratum — descriptive per §3a, not a trigger; the stronger policy is correct 49.0%/43.9% here, so this feature cannot lift a correctness probe (and it reads close to the correctness probe, so say so out loud rather than leaving it in the file)"
+   ],
+   "probe_reproduces_published_fold": null
+  },
+  {
+   "judge_tag": "7B",
+   "judge": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+   "n_cells": 137,
+   "A_forced_F2": 0.6673,
+   "A_forced_F2_CI": [
+    0.5527,
+    0.7819
+   ],
+   "A_forced_F1": 0.6905,
+   "A_star_probe_LAYER18": 0.7301,
+   "A_star_probe_CI": [
+    0.6164,
+    0.8438
+   ],
+   "A_tie_scored": 0.2461,
+   "delta_forced_F2": 0.0628,
+   "delta_forced_F2_CI": [
+    -0.1314,
+    0.257
+   ],
+   "generated_tie_rate": 0.6642,
+   "P_TIE_median": 0.7883,
+   "F1_vs_F2_gap_points": 2.32,
+   "swap_gap_points": 0.54,
+   "reading": "the state and the output agree; the abstention was format. The registered claim FAILS under the definition that matters (§3b)",
+   "controls_fired": [],
+   "control_notes": [
+    "PCA-8 0.658 within the probe's fold-interval lower bound 0.616 — the probe's excess over eight dimensions is not established at this n",
+    "permutation pooled 0.488, range 0.259–0.800",
+    "policy-identity 0.574 on the BALANCED stratum — descriptive per §3a, not a trigger; the stronger policy is correct 49.0%/43.9% here, so this feature cannot lift a correctness probe"
+   ],
+   "probe_reproduces_published_fold": true
+  },
+  {
+   "judge_tag": "14B",
+   "judge": "mlx-community/Qwen2.5-14B-Instruct-4bit",
+   "n_cells": 137,
+   "A_forced_F2": 0.6971,
+   "A_forced_F2_CI": [
+    0.5089,
+    0.8853
+   ],
+   "A_forced_F1": 0.6984,
+   "A_star_probe_LAYER18": 0.6719,
+   "A_star_probe_CI": [
+    0.5522,
+    0.7916
+   ],
+   "A_tie_scored": 0.5574,
+   "delta_forced_F2": -0.0252,
+   "delta_forced_F2_CI": [
+    -0.1979,
+    0.1474
+   ],
+   "generated_tie_rate": 0.2628,
+   "P_TIE_median": 0.0244,
+   "F1_vs_F2_gap_points": 0.13,
+   "swap_gap_points": 5.01,
+   "reading": "the state and the output agree; the abstention was format. The registered claim FAILS under the definition that matters (§3b)",
+   "controls_fired": [],
+   "control_notes": [
+    "PCA-8 0.587 within the probe's fold-interval lower bound 0.552 — the probe's excess over eight dimensions is not established at this n",
+    "permutation pooled 0.512, range 0.346–0.692",
+    "policy-identity 0.648 on the BALANCED stratum — descriptive per §3a, not a trigger; the stronger policy is correct 49.0%/43.9% here, so this feature cannot lift a correctness probe (and it reads close to the correctness probe, so say so out loud rather than leaving it in the file)"
+   ],
+   "probe_reproduces_published_fold": null
+  }
+ ],
+ "signed": "Sautee (sha-ta)"
+}
