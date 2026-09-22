@@ -4,7 +4,8 @@
 body{font-family:Georgia,'Times New Roman',serif;color:#1a1a1a;max-width:820px;margin:32px auto;padding:0 16px;line-height:1.5;font-size:16px}
 h1{font-size:30px;border-bottom:3px solid #2c3e50;padding-bottom:10px;color:#1a2a3a}
 h2{font-size:20px;color:#2c3e50;border-bottom:1px solid #ccd;padding-bottom:5px;margin-top:34px}
-table{border-collapse:collapse;width:100%;font-size:15px}th,td{border-bottom:1px solid #ddd;padding:7px 8px;text-align:left;vertical-align:top}
+table{border-collapse:collapse;width:100%;font-size:15px}
+.facts{margin:14px 0 10px;font-size:14px}.facts th{width:150px;background:#f8f9fb;font-weight:600;color:#2c3e50}th,td{border-bottom:1px solid #ddd;padding:7px 8px;text-align:left;vertical-align:top}
 th{background:#f4f6f8}code,pre{font-family:Menlo,Consolas,monospace;font-size:14px;background:#f4f6f8;padding:2px 5px;border-radius:3px}
 pre{padding:10px 12px;overflow-x:auto}.q{border-left:4px solid #c0392b;padding:8px 14px;background:#fbf6f5;margin:18px 0}
 .small{color:#555;font-size:14px}a{color:#1f4e79}img{max-width:100%;border:1px solid #ddd}
@@ -33,6 +34,14 @@ pre{padding:10px 12px;overflow-x:auto}.q{border-left:4px solid #c0392b;padding:8
 <h2>The key result — Paper VIII</h2>
 <p class="small">Papers I–VII establish the frontier and its limits: search moves a fixed model along its quality–compute frontier, and only external information raises the ceiling. Paper VIII is the first result that moves the frontier itself.</p>
 <div class="q"><strong>The result to try to break.</strong> A frozen 7B model, given a read-only linear head fitted on its own verified history, solves more problems at the same inference compute — and, at equal quality, spends 2.3× less. The mechanism transfers to a second search structure with the head re-fitted, and a second generation of experience beats the first, then a third does not. <strong>The headline reproduces from one command in about three hours on an Apple-silicon Mac.</strong></p>
+<table class="facts">
+<tr><th>Model</th><td>Qwen2.5-7B-Instruct, bf16, weights never changed; the head is a linear layer read from one hidden layer (18) at one decision</td></tr>
+<tr><th>Task</th><td>Debugging: 300 synthetic programs with an injected bug; the agent inspects, hypothesises a region, patches and runs the tests. Every task has a sibling region so the symptom cannot give the bug away</td></tr>
+<tr><th>Capability</th><td>Problems solved, decided by the test suite, never by a model. Paired per problem; 95% intervals from a paired bootstrap; McNemar on the discordant pairs</td></tr>
+<tr><th>Compute</th><td>Total tokens per episode with the controller's own inference charged; the matched control gives the base the head's token budget</td></tr>
+<tr><th>"Verified history"</th><td>The frozen model's own earlier episodes on other problems, labelled by the test suite — not by the model, not by a person. Only successes teach; the head is fitted once and never updated during the run</td></tr>
+<tr><th>Second structure</th><td>SQL query repair against a fixed schema; regions are clauses; the verifier is the result set. The head was re-fitted there from that environment's own history, so the mechanism transfers, not the weights</td></tr>
+</table>
 <pre>git clone https://github.com/LouayAlsakka/efficient-thinking && cd efficient-thinking
 bash experience/reproduce_matched_compute.sh      # base at the head's compute vs the head, n = 300, paired</pre>
 <p>It refuses to print a table if any gate fails and exits non-zero if the published interval is not reproduced. An independent run on a second machine by someone who had not touched the work read +8.0 [+3.0, +13.3] against the published +9.3 [+3.7, +15.0].</p>
@@ -42,18 +51,19 @@ bash experience/reproduce_matched_compute.sh      # base at the head's compute v
 <h2>The series</h2>
 <table>
 <tr><th>#</th><th>Title</th><th>State</th><th>Read</th></tr>
-<tr><td>I</td><td>Measuring What Capability Costs — search substitutes for size on a frozen chess evaluator</td><td>measured</td><td><a href="efficient-thinking-1.html">html</a> · <a href="efficient-thinking-1.pdf">pdf</a> · <a href="efficient-thinking-1.md">md</a></td></tr>
-<tr><td>II</td><td>Where Search Pays and Where It Can't — the evaluator's ceiling, in games and in language</td><td>measured</td><td><a href="efficient-thinking-2.html">html</a> · <a href="efficient-thinking-2.pdf">pdf</a> · <a href="efficient-thinking-2.md">md</a></td></tr>
-<tr><td>III</td><td>Efficient Judging — when an LLM judge is worth its compute</td><td>measured, draft</td><td><a href="efficient-thinking-3.pdf">pdf</a> · <a href="efficient-thinking-3.md">md</a></td></tr>
-<tr><td>IV</td><td>Search Where Taste Is the Evaluator</td><td>machine arms measured; rater arms running</td><td><a href="efficient-thinking-4-proposal.md">proposal</a></td></tr>
-<tr><td>V</td><td>The Exchange Rate of Feedback</td><td>concept</td><td><a href="efficient-thinking-5-concept.md">concept</a></td></tr>
-<tr><td>VI</td><td>The Label Ceiling — why self-play plateaus</td><td>measured, unwritten</td><td><a href="efficient-thinking-6-concept.md">concept</a> · <a href="et6-ledger.md">ledger</a></td></tr>
-<tr><td>VII</td><td>The Elicitation Gap — what a fixed system can get from inside</td><td>concept; probe running</td><td><a href="efficient-thinking-7-concept.md">concept</a></td></tr>
-<tr><td><strong>VIII</strong></td><td><strong>Experience Priors — the constraint and the carrier</strong></td><td><strong>closed, reproduced</strong></td><td><a href="efficient-thinking-8.html">html</a> · <a href="efficient-thinking-8.pdf">pdf</a> · <a href="efficient-thinking-8.md">md</a></td></tr>
+<tr><td>I</td><td>Measuring What Capability Costs — a 14 MB chess net gains ~650 Elo from search alone</td><td>measured</td><td><a href="efficient-thinking-1.html">html</a> · <a href="efficient-thinking-1.pdf">pdf</a> · <a href="efficient-thinking-1.md">md</a></td></tr>
+<tr><td>II</td><td>Where Search Pays and Where It Can't — sampling saturates at a consensus ceiling that only a verifier breaks</td><td>measured</td><td><a href="efficient-thinking-2.html">html</a> · <a href="efficient-thinking-2.pdf">pdf</a> · <a href="efficient-thinking-2.md">md</a></td></tr>
+<tr><td>III</td><td>Efficient Judging — an LLM judge beats free majority vote only for weak policies and small fields</td><td>measured, draft</td><td><a href="efficient-thinking-3.pdf">pdf</a> · <a href="efficient-thinking-3.md">md</a></td></tr>
+<tr><td>IV</td><td>Search Where Taste Is the Evaluator — poetry and music, where no checker can score the answer</td><td>machine arms measured; rater arms running</td><td><a href="efficient-thinking-4-proposal.md">proposal</a></td></tr>
+<tr><td>V</td><td>The Exchange Rate of Feedback — improvement per bit of human correction</td><td>concept</td><td><a href="efficient-thinking-5-concept.md">concept</a></td></tr>
+<tr><td>VI</td><td>The Label Ceiling — self-play stops where its labels stop being true</td><td>measured, unwritten</td><td><a href="efficient-thinking-6-concept.md">concept</a> · <a href="et6-ledger.md">ledger</a></td></tr>
+<tr><td>VII</td><td>The Elicitation Gap — how much a model knows that it does not say</td><td>concept; probe running</td><td><a href="efficient-thinking-7-concept.md">concept</a></td></tr>
+<tr><td><strong>VIII</strong></td><td><strong>Experience Priors</strong> — a frozen model learns where to look from its own verified past</td><td><strong>closed, reproduced</strong></td><td><a href="efficient-thinking-8.html">html</a> · <a href="efficient-thinking-8.pdf">pdf</a> · <a href="efficient-thinking-8.md">md</a></td></tr>
 <tr><td>VIII-b</td><td>Accumulation — does experience move the frontier again</td><td>measured; paper in progress</td><td><a href="et8b-loop-gates.md">record</a></td></tr>
-<tr><td>IX</td><td>Symmetry — invariance as thought compression</td><td>concept</td><td><a href="efficient-thinking-9-symmetry-concept.md">concept</a></td></tr>
-<tr><td>X</td><td>Machine-Native Representation</td><td>concept</td><td><a href="efficient-thinking-10-concept.md">concept</a> · <a href="et10-series-plan.md">plan</a></td></tr>
+<tr><td>IX</td><td>Symmetry — solve one case, cover its whole orbit; test a prior for reading surface</td><td>concept</td><td><a href="efficient-thinking-9-symmetry-concept.md">concept</a></td></tr>
+<tr><td>X</td><td>Machine-Native Representation — is language the efficient form for a machine to reason in</td><td>concept</td><td><a href="efficient-thinking-10-concept.md">concept</a> · <a href="et10-series-plan.md">plan</a></td></tr>
 </table>
+<p class="small">Read the table by its state column: two papers and the key result are measured and written; one is a draft; the rest are registered designs or ideas, and say so. The series is one investigation, and most of it is still ahead.</p>
 <p class="small">Every paper opens with a state line — MEASURED, REGISTERED, CONCEPT or IDEA — so that a concept is never read as a finding. Withdrawn claims stay in the record, dated. Readings are written before runs. Result artefacts name their instruments by hash. The series plan and the one-question rule are in <a href="series-completion-plan.md">series-completion-plan.md</a>.</p>
 
 <h2>Review</h2>
