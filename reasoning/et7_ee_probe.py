@@ -36,6 +36,11 @@ def main():
     ap.add_argument("--layer", type=int, default=18)
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--states", default="",
+                    help="cache dir for X/meta. THE GENERATION IS THE EXPENSIVE HALF — 1,050 judge "
+                         "calls plus hidden states — and the first run of this script threw it all "
+                         "away when the FIT died on a missing scipy. Written before the fit, reused "
+                         "if present, so a fit failure costs seconds instead of hours.")
     a = ap.parse_args()
     import et8_head_v3 as H
     from mlx_lm import load, generate as gen
@@ -51,7 +56,14 @@ def main():
     print("  judge %s · layer %d · %d cells" % (a.judge, a.layer, len(cells)), file=sys.stderr)
 
     X, meta = [], []
-    for i, c in enumerate(cells):
+    if a.states and os.path.exists(os.path.join(a.states, "meta.json")):
+        X = np.load(os.path.join(a.states, "X.npy"))
+        meta = json.load(open(os.path.join(a.states, "meta.json")))
+        for m in meta:
+            m["pair"] = tuple(m["pair"])
+        print("  reusing %d cached states from %s" % (len(meta), a.states), file=sys.stderr)
+        cells = cells[:len(meta)]
+    for i, c in enumerate([] if meta else cells):
         # ORDER RANDOMISED and the judge BLINDED — the existing harness's own presentation
         flip = rng.random() < 0.5
         left, right = (c["answer_B"], c["answer_A"]) if flip else (c["answer_A"], c["answer_B"])
@@ -73,7 +85,15 @@ def main():
                      "balanced": pair_key(c) in BAL})
         if (i + 1) % 100 == 0:
             print("  %d/%d" % (i + 1, len(cells)), file=sys.stderr)
-    X = np.stack(X).astype(np.float64)
+    if not isinstance(X, np.ndarray):
+        X = np.stack(X).astype(np.float64)
+        if a.states:
+            os.makedirs(a.states, exist_ok=True)
+            np.save(os.path.join(a.states, "X.npy"), X)
+            json.dump([{**m, "pair": list(m["pair"])} for m in meta],
+                      open(os.path.join(a.states, "meta.json"), "w"))
+            print("  cached states -> %s" % a.states, file=sys.stderr)
+    X = X.astype(np.float64)
 
     probs = sorted({m["problem"] for m in meta})
     rng2 = random.Random(7); rng2.shuffle(probs)
