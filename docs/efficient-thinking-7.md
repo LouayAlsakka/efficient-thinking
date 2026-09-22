@@ -43,7 +43,7 @@ was a scoring artefact, now being re-measured under the definition it will publi
 | what it is not | answer length (43.1%, below chance); policy identity (0.577, uninformative by construction) | §7 |
 | the same shape in Paper VIII | the frozen model's own log-probability preference 20.3% where a probe on its state reads 66.7% | §8 |
 | scale, tie-scored | probe flat across 1.5B–14B (0.68 · 0.73 · 0.67); tie rate 98.5% → 66.4% → 26.3%; the curve is a tie-rate curve; the second registered prediction fails; to be re-measured under forced choice | §9 |
-| not yet measured | forced-choice A at four sizes; tie-restricted probe; E-C; E-D | §10, §12 |
+| not yet measured | forced-choice A at four sizes; E-C; E-D | §10, §12 |
 
 ## 1. The question
 
@@ -156,12 +156,24 @@ commits (73.9%). On the cells where the judge speaks, then, the gap is about −
 ties scored wrong by a rule. That is the reason the tie-scored number is withdrawn as a headline (§3), and it is also
 the observation that makes the forced-choice re-measurement decisive — if the judge, denied the tie, lands near the
 probe, the abstention was format and the paper's claim fails; if it lands well below, the gap survives the objection.
-The 73.0 ≈ 73.9 match is an equality of aggregates and is stated as one: it suggests that much of the tie-scored gap
-lies in information present during the judge's abstentions, and it does not by itself show that the probe reconstructs
-the judge's withheld answer on the 91 tie cells. The statistic that would show it is the probe's accuracy restricted to
-the tie cells, read from the same fold predictions; it is requested and will be printed here with its counts. If it
-sits near the committed-case accuracy the sentence "the state carries what the judge would say where it stays silent"
-becomes nearly literal; if it does not, this section softens further. The tie rule is kept either way — scored as a
+The 73.0 ≈ 73.9 match is an equality of aggregates. The statistic that tests it directly — the same fold predictions
+split by whether the judge tied on that cell, no new fit — is now on disk (`et7_ee_tie_split.json`):
+
+| judge | tie cells | probe on ties | committed cells | probe on committed | judge on committed |
+|---|---:|---:|---:|---:|---:|
+| 1.5B | 135 | 0.674 | 2 | (1.000, two cells) | (0.500, two cells) |
+| 7B | 91 | 0.714 | 46 | 0.761 | 0.739 |
+| 14B | 36 | 0.833 | 101 | 0.614 | 0.762 |
+
+At 7B the probe reads the abstained cells at 71.4%, essentially the rate it reads the committed ones (76.1%): the
+state carries the answer where the judge stays silent, nearly literally. Under §3b that is descriptive — it says what
+the tie-scored gap was made of, and it does not license a claim, because the judge was never asked to choose on those
+cells. Two rows carry warnings with them. The 1.5B committed row is two cells and means nothing. The 14B row inverts —
+the probe reads the tied cells better (0.833) than the committed ones (0.614), and on the committed cells the *judge*
+beats the probe (0.762 against 0.614) — but the tied row is 36 cells with no interval, a 22-point difference on 36
+cells is about eight cells, and it is a flag for a later arm and not a finding. The 14B committed row is worth holding
+in mind for the forced-choice outcome: where the largest judge speaks, it already out-reads a linear probe on its
+own state. The tie rule is kept either way — scored as a
 coin, the judge would read about 58%, and a judge that abstains two thirds of the time is useless as a selector
 whatever its state knows — but the reader should hold both numbers.
 
@@ -257,8 +269,7 @@ first arm, not for the word "material" without an interval, and the word is not 
 draft. The probe lower-bounds \(A^*\); every gap here is a lower bound and a better decoder can only widen it, so
 "flat" in §9 means the *linear* readout is flat. The fold interval on the 7B probe is [0.62, 0.84]; the scaling shape
 rests on three points with intervals of that width, and under the tie rule it is a tie-rate curve. The 66% tie rate on
-decisive GSM8K pairs is high enough that the prompt itself is checked before the forced-choice runs. The tie-restricted
-probe accuracy is not yet on disk. The headline definition has changed once, after measurement, by a registered
+decisive GSM8K pairs is high enough that the prompt itself is checked before the forced-choice runs. The headline definition has changed once, after measurement, by a registered
 amendment that pre-states both outcomes; that is recorded in Appendix A and the reader is entitled to weigh it. Nothing about a ceiling of self-improvement is claimed: the
 bound is textbook and the numbers are three points on one task. The formal statements are to be checked against the
 textbook forms before any publication, and the coda on the wider debate is withheld until the 32B point and the
@@ -282,7 +293,7 @@ tested against the bound itself.
 states and fit) and its pre-registration `docs/et7-ee-prereg.md`; the judging cells are Paper III's
 (`reasoning/et7_ee_cells.json`, built by `et7_ee_cells.py`); results `experience/results/et7_ee_RESULT.json` (the
 five-fold evaluation at 7B), `et7_ee_foldwise.json` (the fold-wise probe numbers and interval), `et7_ee_scaling.json`
-(1.5B, 7B, 14B) and `et7_ee_holdout25.json` (the withdrawn first pass), each carrying the judge id, layer, cell counts
+(1.5B, 7B, 14B), `et7_ee_tie_split.json` (the fold predictions split by the judge's tie) and `et7_ee_holdout25.json` (the withdrawn first pass), each carrying the judge id, layer, cell counts
 and every control. States are persisted per cell.
 
 ## References

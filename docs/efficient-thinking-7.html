@@ -366,7 +366,7 @@ prediction fails; to be re-measured under forced choice</td>
 </tr>
 <tr>
 <td>not yet measured</td>
-<td>forced-choice A at four sizes; tie-restricted probe; E-C; E-D</td>
+<td>forced-choice A at four sizes; E-C; E-D</td>
 <td>§10, §12</td>
 </tr>
 </tbody>
@@ -619,17 +619,71 @@ the observation that makes the forced-choice re-measurement decisive —
 if the judge, denied the tie, lands near the probe, the abstention was
 format and the paper’s claim fails; if it lands well below, the gap
 survives the objection. The 73.0 ≈ 73.9 match is an equality of
-aggregates and is stated as one: it suggests that much of the tie-scored
-gap lies in information present during the judge’s abstentions, and it
-does not by itself show that the probe reconstructs the judge’s withheld
-answer on the 91 tie cells. The statistic that would show it is the
-probe’s accuracy restricted to the tie cells, read from the same fold
-predictions; it is requested and will be printed here with its counts.
-If it sits near the committed-case accuracy the sentence “the state
-carries what the judge would say where it stays silent” becomes nearly
-literal; if it does not, this section softens further. The tie rule is
-kept either way — scored as a coin, the judge would read about 58%, and
-a judge that abstains two thirds of the time is useless as a selector
+aggregates. The statistic that tests it directly — the same fold
+predictions split by whether the judge tied on that cell, no new fit —
+is now on disk (<code>et7_ee_tie_split.json</code>):</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>judge</th>
+<th style="text-align: right;">tie cells</th>
+<th style="text-align: right;">probe on ties</th>
+<th style="text-align: right;">committed cells</th>
+<th style="text-align: right;">probe on committed</th>
+<th style="text-align: right;">judge on committed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.5B</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">0.674</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">(1.000, two cells)</td>
+<td style="text-align: right;">(0.500, two cells)</td>
+</tr>
+<tr>
+<td>7B</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">0.714</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">0.761</td>
+<td style="text-align: right;">0.739</td>
+</tr>
+<tr>
+<td>14B</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">0.833</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">0.614</td>
+<td style="text-align: right;">0.762</td>
+</tr>
+</tbody>
+</table>
+<p>At 7B the probe reads the abstained cells at 71.4%, essentially the
+rate it reads the committed ones (76.1%): the state carries the answer
+where the judge stays silent, nearly literally. Under §3b that is
+descriptive — it says what the tie-scored gap was made of, and it does
+not license a claim, because the judge was never asked to choose on
+those cells. Two rows carry warnings with them. The 1.5B committed row
+is two cells and means nothing. The 14B row inverts — the probe reads
+the tied cells better (0.833) than the committed ones (0.614), and on
+the committed cells the <em>judge</em> beats the probe (0.762 against
+0.614) — but the tied row is 36 cells with no interval, a 22-point
+difference on 36 cells is about eight cells, and it is a flag for a
+later arm and not a finding. The 14B committed row is worth holding in
+mind for the forced-choice outcome: where the largest judge speaks, it
+already out-reads a linear probe on its own state. The tie rule is kept
+either way — scored as a coin, the judge would read about 58%, and a
+judge that abstains two thirds of the time is useless as a selector
 whatever its state knows — but the reader should hold both numbers.</p>
 <h2 id="what-the-gap-is-not">7. What the gap is not</h2>
 <p>Two shallow readings of the state were tested and rejected.
@@ -846,15 +900,14 @@ means the <em>linear</em> readout is flat. The fold interval on the 7B
 probe is [0.62, 0.84]; the scaling shape rests on three points with
 intervals of that width, and under the tie rule it is a tie-rate curve.
 The 66% tie rate on decisive GSM8K pairs is high enough that the prompt
-itself is checked before the forced-choice runs. The tie-restricted
-probe accuracy is not yet on disk. The headline definition has changed
-once, after measurement, by a registered amendment that pre-states both
-outcomes; that is recorded in Appendix A and the reader is entitled to
-weigh it. Nothing about a ceiling of self-improvement is claimed: the
-bound is textbook and the numbers are three points on one task. The
-formal statements are to be checked against the textbook forms before
-any publication, and the coda on the wider debate is withheld until the
-32B point and the tie-restricted statistic land.</p>
+itself is checked before the forced-choice runs. The headline definition
+has changed once, after measurement, by a registered amendment that
+pre-states both outcomes; that is recorded in Appendix A and the reader
+is entitled to weigh it. Nothing about a ceiling of self-improvement is
+claimed: the bound is textbook and the numbers are three points on one
+task. The formal statements are to be checked against the textbook forms
+before any publication, and the coda on the wider debate is withheld
+until the 32B point and the tie-restricted statistic land.</p>
 <h2 id="conclusion">13. Conclusion</h2>
 <p>As drafted this is a well-instrumented design whose first number was
 a scoring artefact. A fixed 7B judge, allowed to abstain, abstains on
@@ -879,9 +932,10 @@ built by <code>et7_ee_cells.py</code>); results
 <code>experience/results/et7_ee_RESULT.json</code> (the five-fold
 evaluation at 7B), <code>et7_ee_foldwise.json</code> (the fold-wise
 probe numbers and interval), <code>et7_ee_scaling.json</code> (1.5B, 7B,
-14B) and <code>et7_ee_holdout25.json</code> (the withdrawn first pass),
-each carrying the judge id, layer, cell counts and every control. States
-are persisted per cell.</p>
+14B), <code>et7_ee_tie_split.json</code> (the fold predictions split by
+the judge’s tie) and <code>et7_ee_holdout25.json</code> (the withdrawn
+first pass), each carrying the judge id, layer, cell counts and every
+control. States are persisted per cell.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>Alain, G. &amp; Bengio, Y. (2016). <em>Understanding intermediate
