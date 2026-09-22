@@ -37,6 +37,17 @@ def main():
     from botocore.exceptions import ClientError
     res = {"document": "ET-IV — Bedrock acceptance check", "region": a.region}
 
+    # WRITE WHAT WE KNOW, EVEN IF A LATER CHECK THROWS. Checks 1-3 passed against the real scoped
+    # principal on 09-22 and check [4] raised before the final dump, so the artefact on disk stayed
+    # the one from 09-20 — a file asserting "REFUSED — still the root key" about a principal that
+    # had already been replaced. A stale artefact making a FALSE security claim is worse than no
+    # artefact: it answers the question wrongly to whoever reads it next.
+    import atexit
+    res["incomplete"] = True
+    def _flush():
+        json.dump(res, open(a.out, "w"), indent=1, ensure_ascii=False)
+    atexit.register(_flush)
+
     # 1 — not root
     ident = boto3.client("sts", region_name=a.region).get_caller_identity()
     arn = ident.get("Arn", "")
@@ -98,6 +109,7 @@ def main():
                       "PASS WITH A NOTE — the bare model id did NOT fail; 雲's INFERENCE_PROFILE "
                       "reading may not hold for this model and should be re-checked before it is "
                       "relied on elsewhere")
+    res.pop("incomplete", None)
     json.dump(res, open(a.out, "w"), indent=1, ensure_ascii=False)
     print("\n  %s -> %s" % (res["verdict"], a.out))
 

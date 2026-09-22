@@ -1,0 +1,65 @@
+{
+ "document": "ET-8b gen2 heads — per-decision, the architecture FIXED at gen0",
+ "evaluation_mode": "3-fold CV over training tasks",
+ "fit_on": "task_id < 226",
+ "⚠️_why_CV_here": "the cross-fitted source runs cover tasks 1-225 only, so a head fitted on task_id < 226 has an empty held-out mask. The parent fitter writes 0.0%% with every control at 0.0 in that case, which reads as a failed head with PASSING controls when nothing was measured at all. Accuracy and all three controls are computed inside the CV loop here.",
+ "architecture_not_rechosen": "gen0 applied docs/et8b-loop-gates.md §3 before any loop ran and selected per-decision; this generation inherits it. Nothing here is selected on the evaluation.",
+ "the_bar": "problems solved on a paired run (理 11068). Probe accuracy is a sanity check.",
+ "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/gen2/states",
+ "layer": 18,
+ "heads": {
+  "decision_1": {
+   "cv_pick_pct": 44.4,
+   "n": 225,
+   "chance_pct": 20.2,
+   "evaluation": "3-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+   "train_rows": 1113,
+   "CONTROL_permuted": [
+    17.3,
+    22.7,
+    23.6,
+    16.9,
+    16.9
+   ],
+   "CONTROL_pca8": 29.8,
+   "CONTROL_row_subsample": 47.1,
+   "weights": "head_d1_layer18.npz"
+  },
+  "decision_2": {
+   "cv_pick_pct": 62.2,
+   "n": 180,
+   "chance_pct": 20.2,
+   "evaluation": "3-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+   "train_rows": 893,
+   "CONTROL_permuted": [
+    25.0,
+    20.6,
+    22.8,
+    20.0,
+    21.1
+   ],
+   "CONTROL_pca8": 33.9,
+   "CONTROL_row_subsample": 58.9,
+   "weights": "head_d2_layer18.npz"
+  },
+  "decision_3": {
+   "cv_pick_pct": 69.5,
+   "n": 164,
+   "chance_pct": 20.2,
+   "evaluation": "3-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+   "train_rows": 813,
+   "CONTROL_permuted": [
+    25.6,
+    22.0,
+    23.8,
+    26.2,
+    21.3
+   ],
+   "CONTROL_pca8": 50.0,
+   "CONTROL_row_subsample": 67.7,
+   "weights": "head_d3_layer18.npz"
+  }
+ },
+ "how_to_read_the_controls": "permuted must collapse to chance. If PCA-8 or the row subsample matches the full head, the signal needs neither dimensions nor examples and is a key being copied.",
+ "signed": "Sautee (sha-ta)"
+}

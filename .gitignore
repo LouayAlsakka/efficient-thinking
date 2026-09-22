@@ -115,3 +115,11 @@ reasoning/data/
 !docs/*.md
 !docs/efficient-thinking-7.md
 !docs/efficient-thinking-7.html
+
+# Run OUTPUTS and caches, not sources. bedrock_acceptance.json in particular: a stale copy sat
+# untracked for two days asserting "REFUSED — still the root key" about a principal that had been
+# replaced, because the run that superseded it crashed before its write. The script now flushes on
+# exit; the artefact itself is generated, never committed.
+poetry/bedrock_acceptance.json
+poetry/cache/
+bench/*_ledger.json.FAKE
