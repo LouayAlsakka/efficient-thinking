@@ -1,0 +1,46 @@
+{
+ "task_id": "task_0218",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "group",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.dname, AVG(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.region = 'east' GROUP BY d.region ORDER BY 1",
+ "clean": "SELECT d.dname, AVG(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.region = 'east' GROUP BY d.dname ORDER BY 1",
+ "parts": {
+  "select": "d.dname, AVG(e.salary)",
+  "where": "d.region = 'east'",
+  "join": "JOIN dept d ON e.dept_id = d.id AND d.region = 'east'",
+  "group": "GROUP BY d.region",
+  "order": "ORDER BY 1"
+ },
+ "expected_rows": [
+  [
+   "eng",
+   123.33333333333333
+  ],
+  [
+   "sales",
+   92.5
+  ]
+ ],
+ "got_rows": [
+  [
+   "eng",
+   111.0
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "where"
+ ],
+ "_signature": "6f893d66641a",
+ "tests": "expected result set (2 rows) on the fixed fixtures"
+}

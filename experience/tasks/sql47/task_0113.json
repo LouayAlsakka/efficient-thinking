@@ -1,0 +1,78 @@
+{
+ "task_id": "task_0113",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "where",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.name, e.salary FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.salary BETWEEN 85 AND 120 ORDER BY e.name",
+ "clean": "SELECT e.name, e.salary FROM emp e JOIN dept d ON e.dept_id = d.id WHERE e.salary BETWEEN 85 AND 140 ORDER BY e.name",
+ "parts": {
+  "select": "e.name, e.salary",
+  "where": "e.salary BETWEEN 85 AND 120",
+  "join": "JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY e.name"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   120
+  ],
+  [
+   "bo",
+   90
+  ],
+  [
+   "cy",
+   140
+  ],
+  [
+   "di",
+   95
+  ],
+  [
+   "el",
+   110
+  ],
+  [
+   "ha",
+   85
+  ]
+ ],
+ "got_rows": [
+  [
+   "ada",
+   120
+  ],
+  [
+   "bo",
+   90
+  ],
+  [
+   "di",
+   95
+  ],
+  [
+   "el",
+   110
+  ],
+  [
+   "ha",
+   85
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "order",
+  "select"
+ ],
+ "_signature": "4179814d75e6",
+ "tests": "expected result set (6 rows) on the fixed fixtures"
+}

@@ -1,0 +1,51 @@
+{
+ "task_id": "task_0005",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "order",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.dname, AVG(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id WHERE d.dname <> 'sales' GROUP BY e.dept_id ORDER BY 2, 1",
+ "clean": "SELECT d.dname, AVG(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id WHERE d.dname <> 'sales' GROUP BY e.dept_id ORDER BY 1, 2",
+ "parts": {
+  "select": "d.dname, AVG(e.salary)",
+  "where": "d.dname <> 'sales'",
+  "join": "JOIN dept d ON e.dept_id = d.id",
+  "group": "GROUP BY e.dept_id",
+  "order": "ORDER BY 2, 1"
+ },
+ "expected_rows": [
+  [
+   "eng",
+   123.33333333333333
+  ],
+  [
+   "ops",
+   106.66666666666667
+  ]
+ ],
+ "got_rows": [
+  [
+   "ops",
+   106.66666666666667
+  ],
+  [
+   "eng",
+   123.33333333333333
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "group",
+  "join",
+  "where"
+ ],
+ "_signature": "3e629fc3a7e2",
+ "tests": "expected result set (2 rows) on the fixed fixtures"
+}

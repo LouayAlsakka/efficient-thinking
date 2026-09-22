@@ -1,0 +1,37 @@
+{
+ "task_id": "task_0253",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "where",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.dname, COUNT(*) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.region = 'west' GROUP BY d.region ORDER BY e.name",
+ "clean": "SELECT d.dname, COUNT(*) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.region = 'east' GROUP BY d.region ORDER BY e.name",
+ "parts": {
+  "select": "d.dname, COUNT(*)",
+  "where": "d.region = 'west'",
+  "join": "JOIN dept d ON e.dept_id = d.id AND d.region = 'east'",
+  "group": "GROUP BY d.region",
+  "order": "ORDER BY e.name"
+ },
+ "expected_rows": [
+  [
+   "eng",
+   5
+  ]
+ ],
+ "got_rows": [],
+ "_p1_sibling_regions": [
+  "group",
+  "join"
+ ],
+ "_signature": "6fdda635adb0",
+ "tests": "expected result set (1 rows) on the fixed fixtures"
+}

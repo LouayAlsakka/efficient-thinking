@@ -1,0 +1,42 @@
+{
+ "task_id": "task_0095",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "where",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.region, SUM(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.dname = 'sales' GROUP BY d.dname ORDER BY e.salary DESC",
+ "clean": "SELECT d.region, SUM(e.salary) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE d.dname <> 'sales' GROUP BY d.dname ORDER BY e.salary DESC",
+ "parts": {
+  "select": "d.region, SUM(e.salary)",
+  "where": "d.dname = 'sales'",
+  "join": "JOIN dept d ON e.dept_id = d.id AND d.region = 'east'",
+  "group": "GROUP BY d.dname",
+  "order": "ORDER BY e.salary DESC"
+ },
+ "expected_rows": [
+  [
+   "east",
+   370
+  ]
+ ],
+ "got_rows": [
+  [
+   "east",
+   185
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "select"
+ ],
+ "_signature": "13b3a700d97d",
+ "tests": "expected result set (1 rows) on the fixed fixtures"
+}

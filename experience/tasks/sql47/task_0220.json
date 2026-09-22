@@ -1,0 +1,37 @@
+{
+ "task_id": "task_0220",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "join",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.dname, COUNT(*) FROM emp e JOIN dept d ON e.dept_id = d.region AND d.region = 'east' WHERE e.salary > 90 GROUP BY d.region ORDER BY 1",
+ "clean": "SELECT d.dname, COUNT(*) FROM emp e JOIN dept d ON e.dept_id = d.id AND d.region = 'east' WHERE e.salary > 90 GROUP BY d.region ORDER BY 1",
+ "parts": {
+  "select": "d.dname, COUNT(*)",
+  "where": "e.salary > 90",
+  "join": "JOIN dept d ON e.dept_id = d.region AND d.region = 'east'",
+  "group": "GROUP BY d.region",
+  "order": "ORDER BY 1"
+ },
+ "expected_rows": [
+  [
+   "eng",
+   3
+  ]
+ ],
+ "got_rows": [],
+ "_p1_sibling_regions": [
+  "group",
+  "where"
+ ],
+ "_signature": "b2af7ebb4bf5",
+ "tests": "expected result set (1 rows) on the fixed fixtures"
+}

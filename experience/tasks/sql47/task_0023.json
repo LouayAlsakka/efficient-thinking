@@ -1,0 +1,69 @@
+{
+ "task_id": "task_0023",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "where",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.name, e.salary FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary > 95 ORDER BY 1, 2",
+ "clean": "SELECT e.name, e.salary FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary >= 95 ORDER BY 1, 2",
+ "parts": {
+  "select": "e.name, e.salary",
+  "where": "e.salary > 95",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY 1, 2"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   120
+  ],
+  [
+   "cy",
+   140
+  ],
+  [
+   "di",
+   95
+  ],
+  [
+   "el",
+   110
+  ],
+  [
+   "gu",
+   160
+  ]
+ ],
+ "got_rows": [
+  [
+   "ada",
+   120
+  ],
+  [
+   "cy",
+   140
+  ],
+  [
+   "el",
+   110
+  ],
+  [
+   "gu",
+   160
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "order",
+  "select"
+ ],
+ "_signature": "92f7518152fd",
+ "tests": "expected result set (5 rows) on the fixed fixtures"
+}

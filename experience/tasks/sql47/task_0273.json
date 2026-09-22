@@ -1,0 +1,56 @@
+{
+ "task_id": "task_0273",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "group",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.region, SUM(e.salary) FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary > 90 GROUP BY d.dname ORDER BY e.salary DESC",
+ "clean": "SELECT d.region, SUM(e.salary) FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary > 90 GROUP BY d.region ORDER BY e.salary DESC",
+ "parts": {
+  "select": "d.region, SUM(e.salary)",
+  "where": "e.salary > 90",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "GROUP BY d.dname",
+  "order": "ORDER BY e.salary DESC"
+ },
+ "expected_rows": [
+  [
+   "west",
+   235
+  ],
+  [
+   "east",
+   390
+  ]
+ ],
+ "got_rows": [
+  [
+   "west",
+   235
+  ],
+  [
+   "east",
+   280
+  ],
+  [
+   "east",
+   110
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "order",
+  "select",
+  "where"
+ ],
+ "_signature": "06264c56d2cc",
+ "tests": "expected result set (2 rows) on the fixed fixtures"
+}

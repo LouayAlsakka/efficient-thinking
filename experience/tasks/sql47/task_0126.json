@@ -1,0 +1,81 @@
+{
+ "task_id": "task_0126",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.id, e.hired FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary BETWEEN 85 AND 140 ORDER BY e.salary DESC",
+ "clean": "SELECT e.name, e.hired FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.salary BETWEEN 85 AND 140 ORDER BY e.salary DESC",
+ "parts": {
+  "select": "e.id, e.hired",
+  "where": "e.salary BETWEEN 85 AND 140",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY e.salary DESC"
+ },
+ "expected_rows": [
+  [
+   "cy",
+   "2018-01-09"
+  ],
+  [
+   "ada",
+   "2019-03-01"
+  ],
+  [
+   "el",
+   "2017-05-22"
+  ],
+  [
+   "di",
+   "2021-11-30"
+  ],
+  [
+   "bo",
+   "2020-07-15"
+  ],
+  [
+   "ha",
+   "2023-04-18"
+  ]
+ ],
+ "got_rows": [
+  [
+   3,
+   "2018-01-09"
+  ],
+  [
+   1,
+   "2019-03-01"
+  ],
+  [
+   5,
+   "2017-05-22"
+  ],
+  [
+   4,
+   "2021-11-30"
+  ],
+  [
+   2,
+   "2020-07-15"
+  ],
+  [
+   8,
+   "2023-04-18"
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "order",
+  "where"
+ ],
+ "_signature": "cd4c3bf755ea",
+ "tests": "expected result set (6 rows) on the fixed fixtures"
+}

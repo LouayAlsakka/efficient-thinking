@@ -1,0 +1,74 @@
+{
+ "task_id": "task_0094",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "order"
+ ],
+ "n_regions": 4,
+ "chance_pct": 25.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT e.id, e.hired FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE d.region = 'east' ORDER BY e.name",
+ "clean": "SELECT e.name, e.hired FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE d.region = 'east' ORDER BY e.name",
+ "parts": {
+  "select": "e.id, e.hired",
+  "where": "d.region = 'east'",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "",
+  "order": "ORDER BY e.name"
+ },
+ "expected_rows": [
+  [
+   "ada",
+   "2019-03-01"
+  ],
+  [
+   "bo",
+   "2020-07-15"
+  ],
+  [
+   "el",
+   "2017-05-22"
+  ],
+  [
+   "fi",
+   "2022-02-14"
+  ],
+  [
+   "gu",
+   "2016-09-03"
+  ]
+ ],
+ "got_rows": [
+  [
+   1,
+   "2019-03-01"
+  ],
+  [
+   2,
+   "2020-07-15"
+  ],
+  [
+   5,
+   "2017-05-22"
+  ],
+  [
+   6,
+   "2022-02-14"
+  ],
+  [
+   7,
+   "2016-09-03"
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "join",
+  "order",
+  "where"
+ ],
+ "_signature": "33a78717be53",
+ "tests": "expected result set (5 rows) on the fixed fixtures"
+}

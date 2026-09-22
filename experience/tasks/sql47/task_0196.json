@@ -1,0 +1,59 @@
+{
+ "task_id": "task_0196",
+ "family": "sql",
+ "regions": [
+  "select",
+  "where",
+  "join",
+  "group",
+  "order"
+ ],
+ "n_regions": 5,
+ "chance_pct": 20.0,
+ "bug_region": "select",
+ "bug_class": "clause_edit",
+ "program": "SELECT d.region, AVG(e.salary) FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.hired > '2019-01-01' GROUP BY d.dname ORDER BY 1, 2",
+ "clean": "SELECT d.region, SUM(e.salary) FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.hired > '2019-01-01' GROUP BY d.dname ORDER BY 1, 2",
+ "parts": {
+  "select": "d.region, AVG(e.salary)",
+  "where": "e.hired > '2019-01-01'",
+  "join": "LEFT JOIN dept d ON e.dept_id = d.id",
+  "group": "GROUP BY d.dname",
+  "order": "ORDER BY 1, 2"
+ },
+ "expected_rows": [
+  [
+   "east",
+   75
+  ],
+  [
+   "east",
+   210
+  ],
+  [
+   "west",
+   180
+  ]
+ ],
+ "got_rows": [
+  [
+   "east",
+   75.0
+  ],
+  [
+   "east",
+   105.0
+  ],
+  [
+   "west",
+   90.0
+  ]
+ ],
+ "_p1_sibling_regions": [
+  "group",
+  "join",
+  "order"
+ ],
+ "_signature": "27b8246b0e97",
+ "tests": "expected result set (3 rows) on the fixed fixtures"
+}
