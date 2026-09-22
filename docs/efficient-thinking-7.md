@@ -345,7 +345,7 @@ was how much a fixed intelligence can get from inside. On this task, the answer 
 states and fit) and its pre-registration `docs/et7-ee-prereg.md`; the judging cells are Paper III's
 (`reasoning/et7_ee_cells.json`, built by `et7_ee_cells.py`); results `experience/results/et7_ee_RESULT.json` (the
 five-fold evaluation at 7B), `et7_ee_foldwise.json` (the fold-wise probe numbers and interval), `et7_ee_scaling.json`
-(1.5B, 7B, 14B, tie-scored), `et7_ee_tie_split.json` (the fold predictions split by the judge's tie), `et7_ee_forced.json` with its three per-judge files (the §3b forced arms, run under 5afdf01) and `et7_ee_holdout25.json` (the withdrawn first pass), each carrying the judge id, layer, cell counts
+(1.5B, 7B, 14B, tie-scored), `et7_ee_tie_split.json` (the fold predictions split by the judge's tie), `et7_ee_forced.json` with its three per-judge files (the §3b forced arms, run under 5afdf01), `et7_ee_depth_{1.5B,7B,14B}.json` (the §3c depth sweep, run under e03c2c7) and `et7_ee_holdout25.json` (the withdrawn first pass), each carrying the judge id, layer, cell counts
 and every control. States are persisted per cell.
 
 ## References

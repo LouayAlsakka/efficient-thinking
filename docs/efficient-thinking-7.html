@@ -1116,10 +1116,11 @@ evaluation at 7B), <code>et7_ee_foldwise.json</code> (the fold-wise
 probe numbers and interval), <code>et7_ee_scaling.json</code> (1.5B, 7B,
 14B, tie-scored), <code>et7_ee_tie_split.json</code> (the fold
 predictions split by the judge’s tie), <code>et7_ee_forced.json</code>
-with its three per-judge files (the §3b forced arms, run under 5afdf01)
-and <code>et7_ee_holdout25.json</code> (the withdrawn first pass), each
-carrying the judge id, layer, cell counts and every control. States are
-persisted per cell.</p>
+with its three per-judge files (the §3b forced arms, run under 5afdf01),
+<code>et7_ee_depth_{1.5B,7B,14B}.json</code> (the §3c depth sweep, run
+under e03c2c7) and <code>et7_ee_holdout25.json</code> (the withdrawn
+first pass), each carrying the judge id, layer, cell counts and every
+control. States are persisted per cell.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>Alain, G. &amp; Bengio, Y. (2016). <em>Understanding intermediate
