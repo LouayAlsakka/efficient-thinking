@@ -1,6 +1,6 @@
 # Efficient Thinking VII: The Elicitation Gap
 ## What a fixed system knows that it does not say — a bound, and its first measurements
-> **STATE 2026-09-22: DRAFT v0.4 — under the definition the paper will publish, the registered claim FAILS at 1.5B, 7B and 14B.** The first headline (Δ 0.482) was ties scored wrong by a rule and is withdrawn (§5–§6). Pre-registration §3b, committed before the run, redefined \(A\) as the judge's forced preference — logit A against logit B, no tie — and pre-stated both outcomes. The failing one happened at all three sizes run: Δ_forced is +0.063 [−0.131, +0.257] at 7B, −0.025 [−0.198, +0.147] at 14B where the forced judge beats the probe, and +0.150 [−0.048, +0.347] at 1.5B against a forced judge that is at chance. On this task, what the three-way prompt threw away was recoverable from the logits it was already producing; the abstention was format. One structured residual — the state out-reads the output on the cells where the output abstains, and not elsewhere — is registered as §3d before the arms that can test it (32B, the depth sweep). The §3c depth sweep, which decides whether the probe column is comparable across sizes at all, runs after it. E-C and E-D are registered and not run; on the two judges measured E-D has no gap to recover. The tie-scored numbers stay in this draft as what was measured, labelled. E-C and E-D are registered and not run; the bound's formal statements are to be verified against textbook forms before publication. Every number below is on disk under `experience/results/` with its command; the reading rules were committed before the run (`docs/et7-ee-prereg.md`, with its §3a amendment). Nothing here is a law; §10 says what is a finding and what is a registration.
+> **STATE 2026-09-22: DRAFT v0.4 — under the definition the paper will publish, the registered claim FAILS at 1.5B, 7B and 14B.** The first headline (Δ 0.482) was ties scored wrong by a rule and is withdrawn (§5–§6). Pre-registration §3b, committed before the run, redefined \(A\) as the judge's forced preference — logit A against logit B, no tie — and pre-stated both outcomes. The failing one happened at all three sizes run: Δ_forced is +0.063 [−0.131, +0.257] at 7B, −0.025 [−0.198, +0.147] at 14B where the forced judge beats the probe, and +0.150 [−0.048, +0.347] at 1.5B against a forced judge that is at chance. On this task, what the three-way prompt threw away was recoverable from the logits it was already producing; the abstention was format. One structured residual — the state out-reads the output on the cells where the output abstains, and not elsewhere — is registered as §3d before the arms that can test it (32B, the depth sweep). The §3c depth sweep is done: at matched relative depth every judge sits inside the 7B fold interval, so the probe column is comparable and "flat" stands. E-C and E-D are registered and not run; on the two judges measured E-D has no gap to recover. The tie-scored numbers stay in this draft as what was measured, labelled. E-C and E-D are registered and not run; the bound's formal statements are to be verified against textbook forms before publication. Every number below is on disk under `experience/results/` with its command; the reading rules were committed before the run (`docs/et7-ee-prereg.md`, with its §3a amendment). Nothing here is a law; §10 says what is a finding and what is a registration.
 
 **Louay Alsakka** · September 22, 2026 · *draft v0.4*
 
@@ -48,8 +48,8 @@ on labels no internal procedure has. On the two judges measured the room is not 
 | what the gap is | abstention: ties on 66.4% of pairs, 73.9% correct when committing, the probe over all pairs 73.0%; the tie-restricted probe number is requested, not yet measured | §6 |
 | what it is not | answer length (43.1%, below chance); policy identity (0.577, uninformative by construction) | §7 |
 | the same shape in Paper VIII | the frozen model's own log-probability preference 20.3% where a probe on its state reads 66.7% | §8 |
-| scale, tie-scored | probe 0.68 · 0.73 · 0.67 across 1.5B–14B at absolute layer 18 — which is 64%, 64% and 37.5% of depth, so "flat" is not yet a controlled comparison (prereg §3c); tie rate 98.5% → 66.4% → 26.3%; the curve is a tie-rate curve; re-measured under forced choice at matched depth | §9 |
-| not yet measured | depth sweep §3c (running); 32B; §3d on fresh cells; E-C; E-D | §10, §12 |
+| scale | probe at matched depth 0.64: 0.677 · 0.730 · 0.699 across 1.5B–14B, all inside the 7B fold interval — "flat" stands after the §3c depth sweep (14B moved 2.7 points off absolute layer 18); tie rate 98.5% → 66.4% → 26.3% is a curve about the output | §9 |
+| not yet measured | 32B (tie-scored, forced, depth grid); §3d on fresh cells; E-C; E-D | §10, §12 |
 
 ## 1. The question
 
@@ -265,12 +265,17 @@ elicitation loss does not close with scale; a gap that shrinks toward zero by 32
 models do not say what they know and large ones do. Two cautions. The 1.5B
 row is a format floor — a judge that ties on 98.5% of pairs is not measured at \(A = 0.007\), it is declining the
 task — and it enters the curve only with its tie rate beside it. And "flat" is three points with fold intervals of
-about ±0.1; the 32B point, pending, is what would make the shape a claim rather than a reading. A third, found
-after v0.2 and larger than either: every judge was probed at absolute layer 18, which is 64% of depth at 1.5B and 7B
-but 37.5% at 14B (and would be 28% at 32B), so the "flat" probe walks earlier in the network as the model grows. The
-comparison is not controlled at this draft. Prereg §3c registers a depth sweep on a fixed relative-depth grid, read at
-matched depth 0.64, before any further state is read; the 14B inversion in §6 has an under-read layer as a candidate
-explanation and is tested the same way.
+about ±0.1; the 32B point, pending, is what would make the shape a claim rather than a reading. A third was found
+after v0.2 and measured rather than argued: every judge had been probed at absolute layer 18, which is 64% of depth at
+1.5B and 7B but 37.5% at 14B, so the "flat" probe walked earlier in the network as the model grew. Prereg §3c
+registered a depth sweep on a fixed relative-depth grid before any further state was read, with the comparison to be
+made at matched depth 0.64 against the 7B fold interval [0.62, 0.84]. Read there, the 14B probe moves from 0.672
+(layer 18) to 0.699 (layer 31) and every judge sits inside the interval: 0.677 · 0.730 · 0.699. The confound was real
+and small, and "flat" stands restated at matched depth. The full curves ship (`et7_ee_depth_*.json`); they are not
+monotone — 1.5B and 7B dip near 0.36 and recover — and the best layer is 0.75 for 1.5B and 14B and 0.64 for 7B, where
+the three read 0.692 · 0.710 · 0.735, also inside the interval. Best-layer is reported and is not the headline. Every
+sweep re-extracted its layer-18 column from scratch and returned the forced run's probe accuracy to five decimals, and
+no control fired at matched depth for any judge.
 
 The consequence for the internal route is sharper than the cross-registration the concept wrote. E-D trains a judge
 against its own incoherence, with no external labels. If the headroom at every scale is abstention rather than
@@ -318,7 +323,8 @@ One model family, one benchmark, one form of the question, three sizes, 137 pair
 first arm, not for the word "material" without an interval, and the word is not used of a measured number in this
 draft. The probe lower-bounds \(A^*\); every gap here is a lower bound and a better decoder can only widen it, so
 "flat" in §9 means the *linear* readout is flat. The fold interval on the 7B probe is [0.62, 0.84]; the scaling shape
-rests on three points with intervals of that width, and under the tie rule it is a tie-rate curve. The 66% tie rate on
+rests on three points with intervals of that width, now read at matched relative depth, and under the tie rule it is a
+tie-rate curve. The 66% tie rate on
 decisive GSM8K pairs is high enough that the prompt itself is checked before the forced-choice runs. The headline definition has changed once, after measurement, by a registered
 amendment that pre-states both outcomes; that is recorded in Appendix A and the reader is entitled to weigh it. Nothing about a ceiling of self-improvement is claimed: the
 bound is textbook and the numbers are three points on one task. The formal statements are to be checked against the
@@ -334,8 +340,8 @@ abstention, it reads its own state about as well as a linear probe does, and a 1
 away was recoverable from the logits the judge was already producing. That is the result, and it is reported at the
 prominence the pre-registration promised for it. What remains open is narrower and better posed than what the paper
 set out with: whether the state out-reads the output on exactly the cells where the output declines to speak, which
-is registered and will be scored on the judges not yet read; and whether the probe column is even comparable across
-sizes, which the depth sweep decides. If neither survives, the elicitation gap on this task is zero at every size
+is registered and will be scored on the judges not yet read; and the 32B point, read at matched depth. If neither
+survives, the elicitation gap on this task is zero at every size
 measured, and E-D — the only internal route the bound allows — has nothing here to recover. The series' question
 was how much a fixed intelligence can get from inside. On this task, the answer so far is: what it already says.
 
@@ -403,3 +409,8 @@ institution named in this series.
    finding", acquired a shape and was registered as §3d for the arms not yet read. *Rule: the outcome you pre-stated
    as failure is reported with the same type as the one you hoped for; and a hypothesis seen in the data is registered
    for the data not yet seen, and scored only there.*
+7. **09-22, night.** The depth sweep E had proposed as the one bound that could manufacture "flat" came back the other
+   way: at matched relative depth every judge sat inside the 7B interval, the 14B probe moving 2.7 points. E wrote
+   that they would rather have found otherwise, and that the point had been to measure it instead of arguing it. Each
+   sweep re-extracted its layer-18 column from scratch and matched the forced run to five decimals. *Rule: the bound
+   you raise against your own finding is run, not argued, and its null is printed with the same care as its hit.*
