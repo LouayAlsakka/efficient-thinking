@@ -40,6 +40,10 @@ def main():
     ap.add_argument("--cache", default="", help="dir to write X_layer<N>.npy so a fit failure is cheap")
     ap.add_argument("--foldwise", default="", help="published fold-wise json to check layer 18 against")
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--blocks", type=int, default=0,
+                    help="skip loading the model when --cache is already populated. The fits are "
+                         "CPU work on a 137xD matrix; re-deriving them should not need 17 GB of "
+                         "weights and a GPU another job is using.")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     import et8_head_v3 as H
@@ -51,15 +55,22 @@ def main():
     idx = np.array([i for i, m in enumerate(meta) if tuple(m["pair"]) in BAL])
     if a.limit:
         idx = idx[:a.limit]
-    model, tok = load(a.judge)
-    n_blocks = len(model.model.layers)
-    LAYERS = layers_for(n_blocks)
+    cache_ready = a.cache and a.blocks and os.path.isdir(a.cache)
+    if cache_ready:
+        n_blocks = a.blocks
+        LAYERS = layers_for(n_blocks)
+        cache_ready = all(os.path.exists(os.path.join(a.cache, "X_layer%d.npy" % l)) for l in LAYERS)
+    if not cache_ready:
+        model, tok = load(a.judge)
+        n_blocks = len(model.model.layers)
+        LAYERS = layers_for(n_blocks)
     print("  %s · %d blocks · layers %s (relative %s) · %d primary cells"
           % (a.judge, n_blocks, LAYERS, [round(l / n_blocks, 3) for l in LAYERS], len(idx)),
           file=sys.stderr)
 
     Xs = {l: [] for l in LAYERS}
-    cached = a.cache and all(os.path.exists(os.path.join(a.cache, "X_layer%d.npy" % l)) for l in LAYERS)
+    cached = cache_ready or (a.cache and all(
+        os.path.exists(os.path.join(a.cache, "X_layer%d.npy" % l)) for l in LAYERS))
     if cached:
         Xs = {l: np.load(os.path.join(a.cache, "X_layer%d.npy" % l)) for l in LAYERS}
         print("  reusing cached states from %s" % a.cache, file=sys.stderr)
@@ -101,10 +112,15 @@ def main():
     per_layer = {}
     for l in LAYERS:
         X = Xs[l]
-        rows = []
+        rows, cellpred = [], {}
         for k, f in enumerate(FOLDS):
             mte = np.array([p in f for p in probsn]); mtr = ~mte
-            acc = float(fit(X, mtr, mte, y_cor).mean())
+            ok = fit(X, mtr, mte, y_cor)
+            acc = float(ok.mean())
+            # PER-CELL, not just the fold mean: §3d scores the crossing on the cells the three-way
+            # judge TIED, and a fold accuracy cannot be split by a property of its cells.
+            for j, ci in enumerate(np.where(mte)[0]):
+                cellpred[int(idx[ci])] = bool(ok[j])
             perm = []
             for _ in range(5):
                 ys = y_cor.copy(); ti = np.where(mtr)[0]
@@ -126,6 +142,7 @@ def main():
         per_layer[str(l)] = {
             "layer": l, "relative_depth": round(l / n_blocks, 4), "per_fold": rows,
             "A_star_fold_mean": round(float(v.mean()), 4), "fold_se": round(se, 4),
+            "per_cell_correct": {str(k_): v_ for k_, v_ in sorted(cellpred.items())},
             "CI95_t_df4": [round(float(v.mean() - 2.776 * se), 4), round(float(v.mean() + 2.776 * se), 4)]}
         print("    layer %2d (%.0f%%)  A* %.3f  CI %s" % (l, 100 * l / n_blocks, v.mean(),
               per_layer[str(l)]["CI95_t_df4"]), file=sys.stderr)
