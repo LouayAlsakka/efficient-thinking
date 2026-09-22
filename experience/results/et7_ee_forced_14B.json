@@ -68,6 +68,7 @@
    "CONTROL_pca8": 0.6538,
    "CONTROL_subsample_n30": 0.5769,
    "CONTROL_subsample_n": 30,
+   "CONTROL_subsample_train_n": 111,
    "CONTROL_policy_identity": 0.7308
   },
   {
@@ -93,6 +94,7 @@
    "CONTROL_pca8": 0.5667,
    "CONTROL_subsample_n30": 0.6667,
    "CONTROL_subsample_n": 30,
+   "CONTROL_subsample_train_n": 107,
    "CONTROL_policy_identity": 0.6667
   },
   {
@@ -118,6 +120,7 @@
    "CONTROL_pca8": 0.4815,
    "CONTROL_subsample_n30": 0.5185,
    "CONTROL_subsample_n": 30,
+   "CONTROL_subsample_train_n": 110,
    "CONTROL_policy_identity": 0.6296
   },
   {
@@ -143,6 +146,7 @@
    "CONTROL_pca8": 0.5517,
    "CONTROL_subsample_n30": 0.4483,
    "CONTROL_subsample_n": 30,
+   "CONTROL_subsample_train_n": 108,
    "CONTROL_policy_identity": 0.6552
   },
   {
@@ -168,6 +172,7 @@
    "CONTROL_pca8": 0.68,
    "CONTROL_subsample_n30": 0.64,
    "CONTROL_subsample_n": 30,
+   "CONTROL_subsample_train_n": 112,
    "CONTROL_policy_identity": 0.56
   }
  ],
@@ -259,6 +264,1268 @@
   "mean_primary": 0.2848,
   "median_primary": 0.0244,
   "generated_tie_rate": 0.2628
+ },
+ "per_cell": {
+  "2": {
+   "problem": 1,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "5": {
+   "problem": 1,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "13": {
+   "problem": 3,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "17": {
+   "problem": 4,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "33": {
+   "problem": 8,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "46": {
+   "problem": 10,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "49": {
+   "problem": 11,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "61": {
+   "problem": 14,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "72": {
+   "problem": 18,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "75": {
+   "problem": 18,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "77": {
+   "problem": 19,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "84": {
+   "problem": 21,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "87": {
+   "problem": 22,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "93": {
+   "problem": 24,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "99": {
+   "problem": 25,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "109": {
+   "problem": 28,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "114": {
+   "problem": 29,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "122": {
+   "problem": 32,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "125": {
+   "problem": 32,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "131": {
+   "problem": 36,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "138": {
+   "problem": 37,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "143": {
+   "problem": 38,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "149": {
+   "problem": 39,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "150": {
+   "problem": 39,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "155": {
+   "problem": 40,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "162": {
+   "problem": 41,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "165": {
+   "problem": 42,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "171": {
+   "problem": 43,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "172": {
+   "problem": 43,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "178": {
+   "problem": 45,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "182": {
+   "problem": 46,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "187": {
+   "problem": 47,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "193": {
+   "problem": 48,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "197": {
+   "problem": 49,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "203": {
+   "problem": 50,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "209": {
+   "problem": 55,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "214": {
+   "problem": 56,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "226": {
+   "problem": 59,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "239": {
+   "problem": 63,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "245": {
+   "problem": 64,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "259": {
+   "problem": 67,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "289": {
+   "problem": 72,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "295": {
+   "problem": 73,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "299": {
+   "problem": 74,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "303": {
+   "problem": 75,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "309": {
+   "problem": 76,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "310": {
+   "problem": 76,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "324": {
+   "problem": 80,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "330": {
+   "problem": 81,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "348": {
+   "problem": 87,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "380": {
+   "problem": 94,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "392": {
+   "problem": 98,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "405": {
+   "problem": 102,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "415": {
+   "problem": 104,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "418": {
+   "problem": 105,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "428": {
+   "problem": 108,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "431": {
+   "problem": 108,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "446": {
+   "problem": 112,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "453": {
+   "problem": 114,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "464": {
+   "problem": 116,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "475": {
+   "problem": 119,
+   "correct": "A",
+   "judge_pick": "B",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "494": {
+   "problem": 122,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "502": {
+   "problem": 124,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "508": {
+   "problem": 125,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "513": {
+   "problem": 126,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "519": {
+   "problem": 128,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "520": {
+   "problem": 128,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "536": {
+   "problem": 132,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "541": {
+   "problem": 133,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "545": {
+   "problem": 134,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "556": {
+   "problem": 136,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "562": {
+   "problem": 137,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "569": {
+   "problem": 140,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "576": {
+   "problem": 141,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "581": {
+   "problem": 142,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "587": {
+   "problem": 144,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "604": {
+   "problem": 149,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "608": {
+   "problem": 150,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "611": {
+   "problem": 150,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "615": {
+   "problem": 151,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "619": {
+   "problem": 152,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "623": {
+   "problem": 153,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "627": {
+   "problem": 154,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "634": {
+   "problem": 155,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "644": {
+   "problem": 157,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "649": {
+   "problem": 158,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "656": {
+   "problem": 159,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "665": {
+   "problem": 161,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "683": {
+   "problem": 167,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "684": {
+   "problem": 167,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "705": {
+   "problem": 171,
+   "correct": "A",
+   "judge_pick": "B",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "710": {
+   "problem": 172,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "715": {
+   "problem": 174,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "725": {
+   "problem": 178,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "731": {
+   "problem": 179,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "737": {
+   "problem": 180,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "745": {
+   "problem": 183,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "751": {
+   "problem": 184,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "758": {
+   "problem": 185,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "768": {
+   "problem": 187,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "783": {
+   "problem": 192,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "790": {
+   "problem": 193,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "795": {
+   "problem": 194,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "814": {
+   "problem": 198,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "818": {
+   "problem": 199,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "834": {
+   "problem": 204,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "840": {
+   "problem": 207,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "861": {
+   "problem": 212,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "862": {
+   "problem": 212,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "867": {
+   "problem": 213,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "873": {
+   "problem": 214,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "879": {
+   "problem": 215,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "891": {
+   "problem": 219,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "913": {
+   "problem": 226,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "921": {
+   "problem": 229,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "928": {
+   "problem": 231,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "942": {
+   "problem": 237,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "948": {
+   "problem": 238,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "952": {
+   "problem": 239,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "958": {
+   "problem": 240,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "963": {
+   "problem": 244,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "966": {
+   "problem": 245,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "972": {
+   "problem": 246,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "977": {
+   "problem": 247,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "980": {
+   "problem": 248,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "983": {
+   "problem": 248,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "993": {
+   "problem": 257,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": true
+  },
+  "1001": {
+   "problem": 259,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "1004": {
+   "problem": 260,
+   "correct": "A",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "1008": {
+   "problem": 265,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "1024": {
+   "problem": 268,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "1028": {
+   "problem": 271,
+   "correct": "B",
+   "judge_pick": "TIE",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "1031": {
+   "problem": 272,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  },
+  "1037": {
+   "problem": 276,
+   "correct": "B",
+   "judge_pick": "B",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": false
+  },
+  "1038": {
+   "problem": 276,
+   "correct": "B",
+   "judge_pick": "A",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "1043": {
+   "problem": 279,
+   "correct": "A",
+   "judge_pick": "B",
+   "F2_ok_primary": false,
+   "F2_ok_swapped": false,
+   "F1_ok_primary": false,
+   "probe_ok": false
+  },
+  "1047": {
+   "problem": 282,
+   "correct": "A",
+   "judge_pick": "A",
+   "F2_ok_primary": true,
+   "F2_ok_swapped": true,
+   "F1_ok_primary": true,
+   "probe_ok": true
+  }
+ },
+ "pick_distribution": {
+  "F2_primary": {
+   "n": 137,
+   "picked_A": 90,
+   "picked_B": 47,
+   "frac_A": 0.6569
+  },
+  "F2_swapped": {
+   "n": 137,
+   "picked_A": 80,
+   "picked_B": 57,
+   "frac_A": 0.5839
+  },
+  "F1_primary": {
+   "n": 137,
+   "picked_A": 102,
+   "picked_B": 35,
+   "frac_A": 0.7445
+  },
+  "F1_swapped": {
+   "n": 137,
+   "picked_A": 95,
+   "picked_B": 42,
+   "frac_A": 0.6934
+  },
+  "reading": "frac_A near 0 or 1 in BOTH orderings means the forced pick is a constant letter: the accuracy is then the stratum's label balance, not a reading of the answers. frac_A that FLIPS between the orderings is the judge tracking the content."
  },
  "tie_split": {
   "tie_cells": 36,

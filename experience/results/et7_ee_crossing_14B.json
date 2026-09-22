@@ -1,0 +1,75 @@
+{
+ "document": "ET-VII E-E §3d — the crossing on tied cells",
+ "prereg": "docs/et7-ee-prereg.md §3d",
+ "status_label": "post-hoc (§3d registered for 32B; this judge is post-hoc)",
+ "judge": "mlx-community/Qwen2.5-14B-Instruct-4bit",
+ "layer": 31,
+ "relative_depth": 0.6458,
+ "n_cells": 137,
+ "sources": {
+  "probe": "et7_ee_depth_14B.json",
+  "forced": "et7_ee_forced_14B.json"
+ },
+ "aggregate_on_tied_cells": {
+  "n": 36,
+  "probe": 0.7778,
+  "forced_F2": 0.5,
+  "probe_minus_forced": 0.2778
+ },
+ "aggregate_on_committed_cells": {
+  "n": 101,
+  "probe": 0.6733,
+  "forced_F2": 0.7723,
+  "probe_minus_forced": -0.099
+ },
+ "per_fold": [
+  {
+   "fold": 1,
+   "tie_cells": 7,
+   "probe": 0.7143,
+   "forced": 0.1429,
+   "paired_diff": 0.5714
+  },
+  {
+   "fold": 2,
+   "tie_cells": 5,
+   "probe": 1.0,
+   "forced": 0.8,
+   "paired_diff": 0.2
+  },
+  {
+   "fold": 3,
+   "tie_cells": 5,
+   "probe": 1.0,
+   "forced": 0.2,
+   "paired_diff": 0.8
+  },
+  {
+   "fold": 4,
+   "tie_cells": 9,
+   "probe": 0.6667,
+   "forced": 0.5556,
+   "paired_diff": 0.1111
+  },
+  {
+   "fold": 5,
+   "tie_cells": 10,
+   "probe": 0.7,
+   "forced": 0.7,
+   "paired_diff": 0.0
+  }
+ ],
+ "paired_probe_minus_forced": {
+  "folds_scored": 5,
+  "df": 4,
+  "t_crit": 2.776,
+  "mean": 0.3365,
+  "se": 0.1504,
+  "CI95": [
+   -0.0811,
+   0.7541
+  ]
+ },
+ "verdict": "no separation on the abstained cells at this n — the aggregate crossing is not established per fold",
+ "signed": "Sautee (sha-ta)"
+}
