@@ -318,3 +318,14 @@ largest base-vs-base draw. If it is not a finding, VIII-b's accumulation claim i
 n on this harness, and the paper's subject becomes what it has actually measured: the loop's noise floor, the
 unbuildable matched-compute arm, the constant bridge arm, the MLP head, the null carriers — the negative space around
 VIII's positive result.
+
+**§12 — six draws (E, 2026-09-23 01:00Z), confirming the fourth:** four bases 20.7 · 25.7 · 27.0 · 22.0 (mean 23.85,
+sd 2.98, range 6.3). Draws: +5.0, +6.3, +1.3, +1.3, −3.7, −5.0; time separation does not predict magnitude (33 min gave
+−5.0, 43 min +1.3, 41 h +5.0). E's 23:46Z "close regime" reassurance withdrawn by E. **Instrument finding: four of six
+null draws reach p < 0.06 under McNemar on 300 paired tasks** — the test treats run-to-run variance as zero and calls
+nothing-at-all significant two times in three. Every p-value on a VIII-b loop row is from that test and is therefore
+not a measure of anything but within-run pairing; the replicate design's interval (across replicates) replaces it as
+the reported uncertainty, and VIII-b prints McNemar only as a within-run descriptive. Author's ruling (2026-09-23):
+treat the loop like a chess match — many games, average, track bias, report "ahead of noise by X over k games", never
+"clear winner". Author also approved the 8× §11 arm ("8x. yes"); sequenced AFTER the replicate match and only if the
+accumulation row is ahead of noise there, since a decomposition of an effect not yet established measures nothing.
