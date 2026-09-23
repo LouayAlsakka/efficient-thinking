@@ -340,3 +340,12 @@ is the noisy instrument" is a two-points-at-different-settings reading. E is run
 task set (`et8_agent` on ind73, two arms) to separate them; registered reading: spread near 0.7 → the task set is
 innocent and the loop's head decisions carry the variance (a design property, reducible); spread toward 7 → the task
 set carries it and no loop redesign helps. Either answer conditions how the match's result is read.
+
+**§12 — separation arm, first draw (2026-09-23 07:21Z):** `et8_agent` (one decision) on the LOOP's task set (ind73):
+two base arms 10.7 / 9.7, −1.0 [−2.7, +0.3], p = 0.38 — the v3 neighbourhood (0.7), not the loop's (5–6). Reading, by
+the registered rule: the task set is largely innocent and the variance is a property of `et8b_loop` — a design
+property, therefore potentially reducible. Mechanism offered by E as a hypothesis to test, not a finding: three head
+decisions per episode are three branch points; one decision → sd 0.33, three → sd 3.0; prediction: a loop restricted
+to one decision shows the tight spread. **One draw; two more arms running (four arms, six draws) before the separation
+is called established** — the same discipline the first null taught. `experience/match_analysis.py` is committed
+before the match's numbers exist.
