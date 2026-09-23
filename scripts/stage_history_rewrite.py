@@ -35,6 +35,11 @@ over seven days, 321 distinct ids, `before` on each push being the pre-push tip,
 construction the list a rewrite is meant to orphan. That feed is a residue store OUTSIDE the
 repository, so the sha-map cannot reach it and neither can any edit we make.
 """
+# filter-repo: do-not-rewrite
+# This file DESCRIBES the strings a rewrite removes, so a blanket text replacement mangles its
+# own rules — a dry run turned a detector pattern into its own replacement text. The marker is
+# read by the rewrite driver and is the only exclusion it honours.
+
 import argparse, collections, json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

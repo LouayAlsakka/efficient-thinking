@@ -21,6 +21,11 @@ same. The classes below are shapes, not spellings: "a number next to a name", no
 
 Exit status is 0 unless --strict: routing, not gating.
 """
+# filter-repo: do-not-rewrite
+# This file DESCRIBES the strings a rewrite removes, so a blanket text replacement mangles its
+# own rules — a dry run turned a detector pattern into its own replacement text. The marker is
+# read by the rewrite driver and is the only exclusion it honours.
+
 import argparse, os, re, subprocess, sys
 
 # Shapes, each with the reason a human should look -- never a bare pattern.
