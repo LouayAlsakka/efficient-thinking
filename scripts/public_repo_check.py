@@ -78,6 +78,21 @@ def scan(files, rev=None, self_path=None):
     return hits
 
 
+def completeness_statement(files):
+    """What this searched for, printed WITH the result. A zero from an unstated needle set licenses
+    "the needle fired and these are its hits" and never a total -- the completeness claim belongs to
+    a reader, not to a pattern. Transplanted from the erasure register's own sentence rather than
+    invented here.
+    """
+    return ("\n  WHAT WAS SEARCHED FOR, so the result can be read as what it is:\n"
+            + "".join("    - %s\n" % why for _, _, why in RULES)
+            + "    over %d files, case-insensitively, with no word boundaries.\n"
+            "  An empty result is NOT a statement that this corpus carries no estate reference.\n"
+            "  It is a statement that THESE SHAPES are absent. A DISCLOSURE -- a sentence describing\n"
+            "  a deficiency in how we handle other people's data -- carries no name, no number and no\n"
+            "  path, and would pass every rule above. That claim needs a reader." % len(files))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--rev", default="", help="scan a git revision instead of the working tree")
@@ -99,6 +114,7 @@ def main():
         for f, i, name, why, tok, line in hits:
             print("%s:%d  [%s] %r\n    %s\n    -> %s" % (f, i, name, tok, line, why))
         print("\n%d line(s) for a person to read, over %d files." % (len(hits), len(files)))
+    print(completeness_statement(files))
     if hits and a.strict:
         sys.exit(1)
 
