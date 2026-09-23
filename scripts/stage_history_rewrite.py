@@ -6,9 +6,12 @@ of a file is one ordinary command away, and an unauthenticated fetch of the pare
 A rewrite is the only thing that changes that, and it is a decision above this lane. So this builds
 the three artefacts the decision needs and stops:
 
+  purge-request.txt  🔴 THE FIRST STEP, NOT THE LAST. Measured on this repository: the host's
+                     public events feed hands out 321 commit ids with no credentials, and ALL 321
+                     serve text HEAD no longer has. A force-push moves the tip; without the purge
+                     it changes nothing a stranger can reach, and nobody needs to have cloned.
   replacements.txt   every sensitive literal mapped to the replacement it ALREADY HAS at HEAD
   acceptance.sh      the check that the rewrite changed history and did NOT change HEAD
-  purge-request.txt  the text asking the host to garbage-collect the unreachable objects
 
 WHY TEXT REPLACEMENT RATHER THAN HUNK SURGERY. The strings were introduced across the whole
 timeline, not in the commits that removed them -- a host name enters on the repository's first day
@@ -25,6 +28,12 @@ memory would carry exactly the band and case assumptions that made two of those 
 anonymous clone already fetched; the host keeps force-pushed commits reachable BY SHA until its own
 collection runs; and every sha ever quoted in a decision record dies with the rewrite, including
 those quoted where no map can reach them.
+
+🔴 AND THE SHAs ARE PUBLISHED BY THE HOST ITSELF. The usual comfort about "reachable by sha" is
+"but who has the sha?" -- and the answer here is anyone who reads a public endpoint: 300 events
+over seven days, 321 distinct ids, `before` on each push being the pre-push tip, which is by
+construction the list a rewrite is meant to orphan. That feed is a residue store OUTSIDE the
+repository, so the sha-map cannot reach it and neither can any edit we make.
 """
 import argparse, collections, json, os, re, subprocess, sys
 
