@@ -402,3 +402,45 @@ circular here (gen1's rows ARE that agent's trajectory), so SEEN-BY (task-id ove
 module docstring. **§13b is now the decisive arm and carries a prediction made before it runs:** a gen1′ head from a
 different task family should not be half-duplicated, so if independence binds, gen1′ > gen1; if not, the hypothesis is
 wrong in a way more data cannot fix.
+
+**§12 — THE MATCH (2026-09-23 08:28Z, `3eaeb1a`, nine arms interleaved in one session, 2,700 episodes, 300/300 each, no
+duplicates):**
+
+```
+  b    27.7  25.7  25.0    mean 26.11   sd 1.39
+  g0   37.0  36.7  36.3    mean 36.67   sd 0.33
+  g1   39.3  40.3  39.3    mean 39.67   sd 0.58
+  means of three:  b→g0 +10.56 [+7.01, +14.10]   g0→g1 +3.00 [+1.78, +4.22]   b→g1 +13.56 [+10.79, +16.32]
+  nine single g1−g0 pairings: +2.33 +3.33 +2.33 +2.67 +3.67 +2.67 +3.00 +4.00 +3.00  (all positive; min g1 39.3 > max g0 37.0)
+  within-arm null draws:  base −2.00 −2.67 −0.67 (sd 1.39) · gen0 −0.33 −0.67 −0.33 (sd 0.33) · gen1 +1.00 0.00 −1.00 (sd 0.58)
+```
+
+**Verdict under the registered rule (iv): NOT A FINDING.** The null set is nine base-vs-base draws (last night's six
+plus the match's three), range −5.0 … +6.3; +3.00 lies inside it. Recorded as the verdict. The rule is not relaxed
+after it fired.
+
+**What the match measured about the instrument, which was not known when rule (iv) was written:** head arms are
+three to four times less variable than base arms (within-arm sd 0.33 / 0.58 against 1.39, and ~3.0 across last
+night's five base arms). Every null draw to date was a base-vs-base draw. **A base-arm null is the wrong yardstick for
+a head-vs-head comparison: it imports a variance the comparison does not have.** This is a fact about the instrument,
+measured by the match rather than chosen, and it would be equally true had the effect been zero. E raised it and
+declined to apply it; R records it and declines to apply it to this data: re-reading a fired rule against a
+yardstick found after the reading is motivated search, whatever the yardstick's merits.
+
+## 14. Re-registered yardstick — applies ONLY to data not yet collected (2026-09-23 08:4xZ)
+
+For a comparison between two HEAD arms, the null is the within-head-arm draw set (head-arm replicates of the same
+configuration in the same session), not base-vs-base. A between-generation row is a finding only if (a) the
+replicate-mean interval excludes zero and (b) its lower bound exceeds the largest within-head-arm null draw of that
+session; base-vs-base draws are reported beside it as the unsteered agent's variance, not as the bar. **The first match
+is reported under rule (iv) as not a finding and as the measurement that revealed the yardstick; it is not re-scored.**
+
+**Confirmatory test:** §13b, as designed (`g0 g1 g1′` × 3 interleaved with a base bracket, seed 73), is ALSO the
+confirmatory replication of accumulation: its three g1 − g0 games are scored under §14 on data that does not yet
+exist. Readings fixed: §14 (a) and (b) hold on 13b's g1 − g0 → accumulation is reported as established over six
+games (three from each match) with the first match's verdict printed beside it; either fails → not established, and
+the first match's all-positive nine pairings are reported as suggestive and nothing more. Beside it, 13b measures
+within-arm sd for every arm including g1′, which tests the second new claim — **the head stabilises the run, not only
+raises its mean** — stated here as a hypothesis, scored in 13b as: head-arm within-sd < base within-sd in that session,
+for all three head arms. gen1′'s duplicate fraction against gen0 is measured by the §13a instrument before its head is
+scored. Order: separation arms (running) → 13b. No other VIII-b run.
