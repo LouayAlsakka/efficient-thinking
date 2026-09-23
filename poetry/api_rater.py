@@ -133,6 +133,21 @@ def check_plan(planned_usd, gate=GO_GATE_USD):
 
 
 # -- transports ---------------------------------------------------------
+def bedrock_client(region=None, service="bedrock-runtime"):
+    """The ONE place this repo names its AWS principal.
+
+    llm1's [default] profile was the account ROOT key until 2026-09-23, and ten call sites across
+    this repo built a client with `boto3.client(...)` bare — so each of them authenticated as
+    whatever happened to sit in [default] (鉄, nirai 12305). One definition, not ten copies that
+    drift: AWS_PROFILE overrides, NIRA_AWS_PROFILE='' restores the implicit session deliberately,
+    and the default is the SCOPED rater principal.
+    """
+    import boto3
+    prof = os.environ.get("AWS_PROFILE", os.environ.get("NIRA_AWS_PROFILE", "et-bedrock-rater"))
+    sess = boto3.Session(profile_name=prof) if prof else boto3.Session()
+    return sess.client(service, region_name=region or os.environ.get("AWS_REGION", "us-east-1"))
+
+
 def bedrock_transport(req, client=None, region=None, **_):
     """AWS Bedrock, via the SAME client shape experience/tangyin/judge.py already uses.
 
@@ -148,16 +163,7 @@ def bedrock_transport(req, client=None, region=None, **_):
     unchanged: {"content": [{"type": "text", "text": ...}], "usage": {input_tokens, output_tokens}}.
     """
     if client is None:
-        import boto3
-        # NAME THE PRINCIPAL. llm1's [default] AWS profile was the ROOT key until tonight, and an
-        # implicit default session resolves to whatever happens to be there — which is how a
-        # metered paper run ends up on a credential nobody chose for it. Defaults to the scoped
-        # rater principal; AWS_PROFILE still overrides, and NIRA_AWS_PROFILE='' restores the old
-        # implicit behaviour for anyone who needs it deliberately rather than by accident.
-        prof = os.environ.get("AWS_PROFILE", os.environ.get("NIRA_AWS_PROFILE", "et-bedrock-rater"))
-        sess = boto3.Session(profile_name=prof) if prof else boto3.Session()
-        client = sess.client("bedrock-runtime",
-                             region_name=region or os.environ.get("AWS_REGION", "us-east-1"))
+        client = bedrock_client(region)
     prompt = req["messages"][0]["content"]
     r = client.converse(modelId=req["model"],
                         messages=[{"role": "user", "content": [{"text": prompt}]}],

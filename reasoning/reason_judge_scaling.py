@@ -13,6 +13,9 @@ import argparse, json, random
 from collections import Counter
 import boto3
 from reason_math_sweep import extract_boxed, normalize
+import os as _o, sys as _s
+_s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "..", "poetry"))
+import api_rater as _AR   # the ONE place this repo names its AWS principal (nirai 12305)
 
 MODEL_ID = "moonshotai.kimi-k2.5"
 
@@ -63,7 +66,7 @@ def main():
     rng.shuffle(decisive); decisive = decisive[:args.pairs]
     print(f"[judge-scaling] {len(decisive)} clean decisive pairs x up to {args.votes} votes", flush=True)
 
-    rt = boto3.client("bedrock-runtime", region_name="us-east-1")
+    rt = _AR.bedrock_client("us-east-1")   # named principal, nirai 12305
     votes = []                                                 # per pair: (list_of_votes, true_slot)
     for k, (prob, pa, pb, true_slot) in enumerate(decisive):
         vs = [jcall(rt, prob, pa, pb, args.temp) for _ in range(args.votes)]

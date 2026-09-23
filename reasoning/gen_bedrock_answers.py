@@ -6,6 +6,9 @@ so a frontier model can sit on the pairwise reasoning-GELO ladder as the high an
       --model-id moonshotai.kimi-k2.5 --name Kimi-K2.5 --out reasoning/arena_answers_5.json
 """
 import argparse, json, boto3
+import os as _o, sys as _s
+_s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "..", "poetry"))
+import api_rater as _AR   # the ONE place this repo names its AWS principal (nirai 12305)
 
 
 def main():
@@ -20,7 +23,7 @@ def main():
     args = ap.parse_args()
 
     d = json.load(open(args.answers))
-    rt = boto3.client("bedrock-runtime", region_name=args.region)
+    rt = _AR.bedrock_client(args.region)   # named principal, nirai 12305
     outs = []
     for i, q in enumerate(d["questions"]):
         body = {"messages": [{"role": "user", "content": q["problem"] + "\nSolve step by step, then state your final answer."}],

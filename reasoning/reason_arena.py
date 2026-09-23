@@ -53,11 +53,16 @@ def generate(args):
 
 # ---------------- stage 2: master judge + Bradley-Terry Elo ------------------------------------------
 def make_bedrock_client(region="us-east-1"):
-    import boto3
+    # NAMED PRINCIPAL, keeping this call site's own timeout/retry Config. llm1's [default] profile
+    # was the account ROOT key until 2026-09-23 (鉄, nirai 12305); a bare boto3.client() here
+    # authenticated as whatever sat in it.
+    import boto3, os
     from botocore.config import Config
-    return boto3.client("bedrock-runtime", region_name=region,
-                        config=Config(read_timeout=40, connect_timeout=10,
-                                      retries={"max_attempts": 4, "mode": "adaptive"}))
+    prof = os.environ.get("AWS_PROFILE", os.environ.get("NIRA_AWS_PROFILE", "et-bedrock-rater"))
+    sess = boto3.Session(profile_name=prof) if prof else boto3.Session()
+    return sess.client("bedrock-runtime", region_name=region,
+                       config=Config(read_timeout=40, connect_timeout=10,
+                                     retries={"max_attempts": 4, "mode": "adaptive"}))
 
 
 def kimi_judge(problem, ans_A, ans_B, rt=None, model_id="moonshotai.kimi-k2.5"):

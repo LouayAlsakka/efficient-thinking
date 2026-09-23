@@ -13,6 +13,9 @@ from __future__ import annotations
 import argparse, json, math, random, sys, time
 import chess, chess.engine
 import boto3
+import os as _o, sys as _s
+_s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "..", "poetry"))
+import api_rater as _AR   # the ONE place this repo names its AWS principal (nirai 12305)
 
 SF = "/opt/homebrew/bin/stockfish"
 MODEL_ID = "moonshotai.kimi-k2.5"
@@ -78,7 +81,7 @@ def main():
     ap.add_argument("--out", default="runs/llm_chess.json")
     args = ap.parse_args()
     random.seed(args.seed)
-    rt = boto3.client("bedrock-runtime", region_name="us-east-1")
+    rt = _AR.bedrock_client("us-east-1")   # named principal, nirai 12305
     sf = chess.engine.SimpleEngine.popen_uci(SF)
     illegal = [0]; nmoves = [0]
     print(f"[llm-chess] Kimi-K2.5 vs random + SF{args.ladder} | {args.games} games/rung", flush=True)

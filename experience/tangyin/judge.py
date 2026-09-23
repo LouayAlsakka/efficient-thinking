@@ -46,7 +46,9 @@ class Judge:
         self.calls = 0
         if not dry:
             if provider == "bedrock":
-                import boto3; self.client = boto3.client("bedrock-runtime", region_name=os.environ.get("AWS_REGION", "us-east-1"))
+                import sys as _s, os as _o
+                _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "..", "..", "poetry"))
+                import api_rater as _AR; self.client = _AR.bedrock_client()   # named principal, nirai 12305
             elif provider == "anthropic":
                 import anthropic; self.client = anthropic.Anthropic()
             else: raise SystemExit(f"unknown provider {provider}")
