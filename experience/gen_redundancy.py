@@ -137,7 +137,13 @@ def main():
         "exact_duplicate_definition": ("later rows byte-identical to an earlier row. An identical "
                                        "hidden state means an identical history prefix: the steered "
                                        "agent was in exactly the situation the earlier agent was in."),
-        "same_decision_key_fraction": round(samekey / len(Ml), 4),
+        # VOID under --different-task-family for the SAME REASON problem overlap is: the key is
+        # (task_id, decision, candidate), and task_id is task_0001.. in every draw. Suppressing
+        # the overlap number while printing this one leaves the id collision on the page under a
+        # different name — which is worse than not suppressing either, because the reader has been
+        # told the tool knows about the collision.
+        "same_decision_key_fraction": (None if a.different_task_family
+                                       else round(samekey / len(Ml), 4)),
         "same_decision_key_definition": "later rows sharing %s with an earlier row" % key_name,
         "later_nn_distance_quartiles": [round(float(q), 5) for q in np.percentile(d_l, [25, 50, 75])],
         "signed": "Sautee (sha-ta)",
@@ -152,7 +158,11 @@ def main():
     print("    NEIGHBOUR REDUNDANCY   %.1f%%  of later rows sit closer to the old corner than it sits to itself"
           % (100 * redundant))
     print("    EXACT DUPLICATES       %.1f%%  of later rows are BYTE-IDENTICAL to an earlier row" % (100 * exact / len(L32)))
-    print("    SAME DECISION KEY      %.1f%%  share (task, decision, candidate) with an earlier row" % (100 * samekey / len(Ml)))
+    if a.different_task_family:
+        print("    SAME DECISION KEY      n/a   — the key contains task_id, which collides too")
+    else:
+        print("    SAME DECISION KEY      %.1f%%  share (task, decision, candidate) with an earlier row"
+              % (100 * samekey / len(Ml)))
     print("    (earlier self median NN distance %.4f; later NN quartiles %s)"
           % (med, out["later_nn_distance_quartiles"]))
     if a.out:
