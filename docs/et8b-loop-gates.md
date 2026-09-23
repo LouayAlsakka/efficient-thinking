@@ -378,3 +378,27 @@ gen1′ ≈ gen1 → domain of origin does not matter at this row count; the red
 gen1′ < gen1 by more than the draws → same-domain experience carries something transfer does not, and 13a's
 redundancy is not the limit. Every outcome is printed. Sequenced AFTER the match block (§12) and the four-arm
 separation; 13a may run at any time since it touches no GPU.
+
+**§13a — MEASURED (2026-09-23 07:58Z, `ce47d9e`, read-only on the recorded rows, no GPU):**
+
+```
+                                    gen1 vs gen0      gen2 vs gen0 ∪ gen1
+  EXACT duplicate rows (byte-equal state)   49.2%             85.9%
+  neighbour redundancy (closer than the
+    prior set's own median self-NN)         67.2%             90.1%
+  same (task, decision, candidate)          98.8%             99.5%   (partly by construction — cross-fit on tasks 1–225)
+  median nearest-prior distance             0.0213            0.0000
+```
+
+By the registered reading (redundant fraction ≥ 0.5 → the margin is explained by correlation): **gen1's rows are half
+redundant with gen0's; gen2's are five sixths redundant with gen0 ∪ gen1, on a stricter bar** (the union is denser,
+median self-NN 0.0416 vs 0.0830). An identical hidden state is an identical history prefix: the steered agent stood
+where the previous agent stood and produced the same activation. **Redundancy rises with generation, 49% → 86%, and
+the gains fall with it: gen1 adds ~51% new rows → a small gain (+5.7, inside the loop's noise by §12); gen2 adds ~14%
+new rows → none (−2.0). Accumulation stops because the experience stops being new.** The author's hypothesis is
+measured, and it explains §11 without the decomposition: gen0 ∪ gen1 is barely larger in unique content than gen0, so
+combined ≈ gen1 is the prediction. E's definitional substitution is recorded: "problems gen0's agent already solved" is
+circular here (gen1's rows ARE that agent's trajectory), so SEEN-BY (task-id overlap) was implemented and named in the
+module docstring. **§13b is now the decisive arm and carries a prediction made before it runs:** a gen1′ head from a
+different task family should not be half-duplicated, so if independence binds, gen1′ > gen1; if not, the hypothesis is
+wrong in a way more data cannot fix.
