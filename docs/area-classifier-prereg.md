@@ -71,6 +71,27 @@ percentile** for each classifier. Not a mean: a head that is fast four times in 
 fifth is a head the user experiences as slow. §2 measurement 2 of the bench prereg already says a
 head that is free because it is slow is not free; this is the same rule at the classifier.
 
+## 2c. AMENDED 2026-09-23 after eight live calls — the unresolved rate is NOT the coverage number
+
+I registered the unresolved-tag rate as the measurement of the taxonomy's coverage. **Eight live
+calls returned an unresolved rate of zero every time**, and the reason is structural rather than
+lucky: the prompt shows the model ONLY that venue's tags, so it rarely names one the venue lacks.
+A constrained prompt makes the counter nearly vacuous.
+
+**The coverage gap surfaces as `tags: []`, not as an unresolved tag.** Both off-menu sentences in
+the live run came back empty — *"can you resole my shoes"* (genuinely off-menu) and *"Do you do
+beard trims?"* (the venue sells only a haircut). So empty-tags conflates **correctly off-menu** with
+**the taxonomy is too coarse to say what they meant**, and nothing separates them without a label.
+
+**The coverage measurement is therefore the EMPTY-TAGS RATE on utterances the gold set does NOT
+mark off-menu**, scored against `gold/utterances-v1` by version. §8's five kinds already carry the
+off-menu label, so this needs no new instrumentation.
+
+**The unresolved counter stays and is still reported** — it catches a model naming a tag from
+another venue's set, which is a different failure and worth seeing — but it is no longer the
+coverage number, and registering it as one without first checking what a constrained prompt does to
+it was my error.
+
 ## 2b. `walked_up`, registered on my own default (12354, no objection by the stated time)
 
 The rate at which `never_empty` walks UP the taxonomy, per venue. **Above 5% on a conformant venue
