@@ -517,3 +517,25 @@ far less often under gen0's heads, the head has fewer positive labels and (b) ha
 (b) is the cause, a second disjoint collection (~1 h) to fit gen1″ at gen1's full row count against a shared-head
 gen1 at the same count — amount matched at the higher level — run only after the diagnostic, not before. Timings:
 §13c games ~21:05Z; §13b games 2–3 ~22:50Z.
+
+**§13c — diagnostic (E, 18:32Z): R's (b)-has-a-cause hypothesis REFUTED at the collection level, and the real cause
+found in the matching procedure.** Collections are near-identical (gen1 v3: 3,186 rows / 649 decisions / 20.4%
+positive; gen1″ disjoint: 3,838 / 769 / 20.0%; every decision has a positive in both). The weak head came from RANDOM
+ROW SUBSAMPLING: the head is fitted per candidate but scored per decision, and dropping rows splits a decision's
+candidates — gen1-matched kept a positive in 53.7% of its decisions, gen1″ in 41.1%, and the probe accuracies (35.2,
+26.7) track that column; gen1′ (92.7) was never subsampled. **Rule, adopted: the unit of "amount" is the DECISION
+(a whole candidate group), never the row.** Re-cut by decision (`subsample_by_decision.py`, whole groups, fixed seed,
+indices recorded): gen1-matched 1,435 rows / 290 decisions → probe 60.7%; gen1″ 1,447 / 290 → 53.4%, controls clean
+(gen1-matched's subsample control still edges its head, 61.4 vs 60.7, read as early saturation, printed). E stopped
+§13c's games after one base slice and restarted them on the corrected heads at 18:32Z — approved: the design is
+untouched and the correction is strictly closer to what was registered. §13d is NOT collected; the row count was never
+the problem. Descriptive, before the games: the origin effect on the probe is 7.3 points (60.7 vs 53.4) at matched
+decisions; the loop result decides.
+
+**Consequence for §13b (running on box B, not touched):** its g1-matched arm is the row-shredded head (probe 35.2%).
+The pair g1′ − g1-matched is therefore CONFOUNDED by the matching unit and is not read as an origin effect. The
+confound works against g1-matched, and g1-matched still beat g1′ by 14 points in game 1 (37.3 vs 23.3), so the
+domain-shift conclusion — a head from another task family does not steer this loop — is conservative and stands
+without a re-cut; no further box time is spent on §13b's g1′ pair. §13b's confirmatory g1 − g0 replication and the
+stabilisation test use intact heads and are unaffected. Open question for E: were §11's gen0matched and combined
+heads cut by row? If so, §11's "not established" reading stands but carries the same confound and says so.
