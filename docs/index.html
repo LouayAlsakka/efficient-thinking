@@ -31,10 +31,19 @@ img.author{float:left;width:96px;height:96px;border-radius:6px;margin:4px 16px 8
 </div>
 
 <p><strong>One question, from every angle:</strong> how much useful capability can a fixed intelligence get per unit of computation, and what moves that number? Each paper holds the model fixed, measures capability with an external verifier, and changes one thing: search, the evaluator, the judge, taste, feedback, labels, the internal ceiling, experience, symmetry, representation.</p>
+<p><strong>What each paper established, one sentence each:</strong></p>
+<ul>
+<li><strong>I</strong> — search extracts what the evaluator already contains.</li>
+<li><strong>II</strong> — sampling saturates because errors correlate; only an external verifier lifts the ceiling.</li>
+<li><strong>III</strong> — how much judging you get per unit of compute is itself the capability.</li>
+<li><strong>VII</strong> — made to answer, the model says what its state knows; nothing is free inside.</li>
+<li><strong>VIII</strong> — verified history, read by a frozen head, moves the frontier.</li>
+<li><strong>VIII-b</strong> — whether that moves again on the next generation is being measured against the loop's own run-to-run noise.</li>
+</ul>
 
 <h2>The key result — Paper VIII</h2>
 <p class="small">Papers I–VII establish the frontier and its limits: search moves a fixed model along its quality–compute frontier, and only external information raises the ceiling. Paper VIII is the first result that moves the frontier itself.</p>
-<div class="q"><strong>The result to try to break.</strong> A frozen 7B model, given a read-only linear head fitted on its own verified history, solves more problems at the same inference compute — and, at equal quality, spends 2.3× less. The mechanism transfers to a second search structure with the head re-fitted, and a second generation of experience beats the first, then a third does not. <strong>The headline reproduces from one command in about three hours on an Apple-silicon Mac.</strong></p>
+<div class="q"><strong>The result to try to break.</strong> A frozen 7B model, given a read-only linear head fitted on its own verified history, solves more problems at the same inference compute — and, at equal quality, spends 2.3× less. The mechanism transfers to a second search structure with the head re-fitted. Whether a second generation of experience beats the first is being measured against the loop's own run-to-run noise, replicate against replicate, and is not claimed here. <strong>The headline reproduces from one command in about three hours on an Apple-silicon Mac.</strong></p>
 <table class="facts">
 <tr><th>Model</th><td>Qwen2.5-7B-Instruct, bf16, weights never changed; the head is a linear layer read from one hidden layer (18) at one decision</td></tr>
 <tr><th>Task</th><td>Debugging: 300 synthetic programs with an injected bug; the agent inspects, hypothesises a region, patches and runs the tests. Every task has a sibling region so the symptom cannot give the bug away</td></tr>
