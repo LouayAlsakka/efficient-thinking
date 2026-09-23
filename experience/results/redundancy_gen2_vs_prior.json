@@ -1,0 +1,30 @@
+{
+ "document": "ET-8b §13a — generation redundancy",
+ "prereg": "gates §13a (理 12342)",
+ "comparison": "gen2 vs gen0 U gen1",
+ "earlier_dirs": [
+  "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_states",
+  "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_gen1cf_states"
+ ],
+ "later_dir": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/gen2/states",
+ "n_earlier_rows": 6876,
+ "n_later_rows": 2819,
+ "n_earlier_problems": 300,
+ "n_later_problems": 225,
+ "problem_overlap_fraction": 1.0,
+ "problem_overlap_definition": "fraction of LATER rows whose task_id also appears in the EARLIER rows — SEEN-BY, not solved-by; see the module docstring for why solved-by is circular here",
+ "earlier_self_median_nn_distance": 0.04155,
+ "neighbour_redundancy_fraction": 0.9014,
+ "neighbour_redundancy_definition": "fraction of LATER rows whose nearest EARLIER row is closer than the EARLIER set's own median nearest-neighbour distance — closer to the old corner than the old corner is to itself",
+ "exact_duplicate_rows": 2422,
+ "exact_duplicate_fraction": 0.8592,
+ "exact_duplicate_definition": "later rows byte-identical to an earlier row. An identical hidden state means an identical history prefix: the steered agent was in exactly the situation the earlier agent was in.",
+ "same_decision_key_fraction": 0.9954,
+ "same_decision_key_definition": "later rows sharing (task_id, decision, candidate) with an earlier row",
+ "later_nn_distance_quartiles": [
+  -0.0,
+  0.0,
+  0.0
+ ],
+ "signed": "Sautee (sha-ta)"
+}
