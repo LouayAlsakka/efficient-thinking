@@ -1035,5 +1035,10 @@
   },
   "reading": "§2b registered, BEFORE this run, that seconds-to-goal measures the driver and not human finding-time, because a scripted user resolves a chip by selector and never scans. Measured: a target in the last third of the day costs the same as one in the first, to 0.01 s. The whole spread across 100 tasks is 0.08 s. The registered prediction is now measured rather than argued."
  },
- "signed": "Sautee (sha-ta)"
+ "signed": "Sautee (sha-ta)",
+ "RUN_CLOCK": {
+  "local_time_of_run": "2026-09-22 15:40 PDT (22:40Z)",
+  "why_it_is_recorded": "localSlots.nextDays() derived each day's DATE in UTC and its WEEKDAY in local time, so west of UTC after 17:00 local they disagree by one and the strip offers the closed Monday while hiding the open Tuesday. THIS SWEEP RAN BEFORE THAT BOUNDARY and is valid. A re-run after 17:00 local would fail tasks, and §4 reads a scripted-user failure as 'the world or the engine is broken... the measurement is void' — so a timezone bug would have been read as a broken world. Any future sweep must record which side of the boundary it was taken on, until the fix lands.",
+  "reported": "nirai 12248"
+ }
 }
