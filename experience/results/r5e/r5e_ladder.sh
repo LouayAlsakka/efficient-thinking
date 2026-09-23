@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# R5-E ladder (理 11364): give the BASE more compute and ask whether it buys G's success.
+# R5-E ladder (理: give the BASE more compute and ask whether it buys G's success.
 #
 # WHY THIS EXPERIMENT EXISTS. R2's "+34%" compared TWO POINTS AT DIFFERENT COMPUTE, so it decides
 # nothing about the frontier. The reviewer's criterion: an experience prior must improve the
@@ -49,7 +49,7 @@ for b in (14,16,18):
                  "success_pct_slice1":round(100*sum(x["green"] for x in e)/n,1),
                  "actions":round(sum(x["actions"] for x in e)/n,2)})
 pick=min(rows,key=lambda r:r["distance_to_target"])
-out={"document":"R5-E ladder — slice 1, the budget selection (理 11364)",
+out={"document":"R5-E ladder — slice 1, the budget selection (理",
  "target_tokens_per_episode":TARGET,
  "rule_fixed_before_the_run":"pick the budget NEAREST the target by measured mean tokens/episode on "
    "slice 1. Nearest in absolute distance -- not nearest-from-below, not whichever reads best.",

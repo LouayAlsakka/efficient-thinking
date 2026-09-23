@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# R4 second model (理 11300): a DIFFERENT FAMILY at comparable size. Llama-3.1-8B-Instruct-4bit.
+# R4 second model (理: a DIFFERENT FAMILY at comparable size. Llama-3.1-8B-Instruct-4bit.
 # Floor 5% on 300, unchanged. If it floors, R4 = (c) and NO THIRD MODEL is run.
 #
 # THE GUARD r4.sh LACKED, now a rule: a slice that does not produce its full 75 episodes STOPS THE

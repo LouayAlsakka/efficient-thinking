@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# R5-Q (理 11364): G at SMALLER budgets. The smallest budget whose success >= 18.7% on the 300,
+# R5-Q (理: G at SMALLER budgets. The smallest budget whose success >= 18.7% on the 300,
 # and its tokens/episode against the base's 6,854.
 #
 # SAME HEAD AS THE MEASURED G-300, checked rather than assumed: v3repstates/head_layer18.npz --
@@ -37,7 +37,7 @@ for b in (10,8,6):
                  "clears_base_18.7":100*g/n>=BAR})
 ok=[r for r in rows if r["clears_base_18.7"]]
 pick=min(ok,key=lambda r:r["budget"]) if ok else None
-out={"document":"R5-Q — G at smaller budgets (理 11364)",
+out={"document":"R5-Q — G at smaller budgets (理",
  "bar":"success >= %.1f%% (the base's own 300 at budget 12)"%BAR,
  "base_tokens_per_episode":BASE_TOK,"ladder":rows,
  "SMALLEST_BUDGET_CLEARING_THE_BAR":(pick["budget"] if pick else None),

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# R5-C (理 11395, amended 11397): the frontier as a CURVE, not one point.
+# R5-C (理, amended 11397): the frontier as a CURVE, not one point.
 #
 # BASE budgets 8, 12, 14, 16, 18, 24  (~5k -> ~15k tokens/episode)   12 and 16 already measured
 # HEAD budgets 6, 8, 10, 12                                          12 measured; 6/8/10 from R5-Q

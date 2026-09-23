@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# R6 — the strongest SIMPLE baselines at G's own compute (理 11398). Readings pre-written in
+# R6 — the strongest SIMPLE baselines at G's own compute (理. Readings pre-written in
 # experience/et8_r6_baselines.py, before this ran.
 #
 #   (a) self-rerank    the frozen model's own mean log-prob over the SAME enumerated candidates

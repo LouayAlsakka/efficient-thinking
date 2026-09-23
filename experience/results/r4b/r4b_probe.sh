@@ -14,7 +14,7 @@ cd "$R" || exit 1
 
 V=$("$PY" -c "import json;print(json.load(open('$SP/r4b_floor.json'))['VERDICT'][:5])" 2>/dev/null)
 if [ "$V" != "ABOVE" ]; then
-  say "STOP: floor verdict is '$V', not ABOVE. No probe is fit. R4 = (c) per 理 11300."
+  say "STOP: floor verdict is '$V', not ABOVE. No probe is fit. R4 = (c) per 理."
   exit 1
 fi
 say "floor cleared -> states at layers 18 and 27, on the model's OWN post-inspect decisions"
