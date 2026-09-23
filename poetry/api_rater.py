@@ -136,7 +136,7 @@ def check_plan(planned_usd, gate=GO_GATE_USD):
 def bedrock_client(region=None, service="bedrock-runtime"):
     """The ONE place this repo names its AWS principal.
 
-    llm1's [default] profile was the account ROOT key until 2026-09-23, and ten call sites across
+    box A's [default] profile was the account ROOT key until 2026-09-23, and ten call sites across
     this repo built a client with `boto3.client(...)` bare — so each of them authenticated as
     whatever happened to sit in [default] (鉄, the record). One definition, not ten copies that
     drift: AWS_PROFILE overrides, NIRA_AWS_PROFILE='' restores the implicit session deliberately,

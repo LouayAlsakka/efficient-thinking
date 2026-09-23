@@ -1,7 +1,7 @@
 {
  "stage": "P8 PRE-REGISTRATION, written BEFORE the sweep (理",
  "prior": {
-  "source": "300 self-play games by the FROZEN conv_value_llm1 (experience/traj/chess_v0.jsonl)",
+  "source": "300 self-play games by the FROZEN conv_value_boxA (experience/traj/chess_v0.jsonl)",
   "games_generated": 300,
   "decisive": 189,
   "drawn": 111,

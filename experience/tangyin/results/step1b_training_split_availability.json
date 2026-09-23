@@ -1,7 +1,7 @@
 {
  "measurement": "ET-8 tangyin step 1b — can a training split for 唐寅 be obtained, and is it disjoint from the held-out set?",
  "run_sha": "1fff46c0a461709862d5892afba977910b98260b",
- "run_host": "llm1 (LLM1.local)",
+ "run_host": "box A (LLM1.local)",
  "date": "2026-09-14",
  "ctext": {
   "api_reachable": true,

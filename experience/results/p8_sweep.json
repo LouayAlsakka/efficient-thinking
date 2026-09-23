@@ -1,6 +1,6 @@
 {
  "design": "理, pre-registered",
- "run_dir": "runs/conv_value_llm1",
+ "run_dir": "runs/conv_value_boxA",
  "prior": "experience/chess_prior/v0.json",
  "beta": 0.5,
  "rows": [

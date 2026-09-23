@@ -3,7 +3,7 @@
 **Registered:** §10 names "a true n ≈ 1,000 MATH rerun for a tighter interval" as remaining queue.
 Fresh **seed-0 draw of 1000 problems from the full Hendrycks MATH test** (`math1000.jsonl`; gold-extractor
 gated 100% on MATH-500 before any generation). 7B/14B Qwen2.5-Instruct-4bit, 16-sample caches at temp 0.8,
-**true greedy decoded separately** (flip-decider rule), canonical `reason_cache` extractors. Run on llm1,
+**true greedy decoded separately** (flip-decider rule), canonical `reason_cache` extractors. Run on box A,
 finished 2026-07-25.
 
 ## Result

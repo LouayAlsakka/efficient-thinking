@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 """Search-distillation on a FIXED, diverse position set (no new games).
 
-Jump-start from a strong net (e.g. conv_value_llm1, whose MCTS-800 plays ~2800). Each iteration:
+Jump-start from a strong net (e.g. conv_value_boxA, whose MCTS-800 plays ~2800). Each iteration:
 run MCTS on the *current* net over a fixed set of diverse positions, and distill the resulting
 visit-distribution (improved policy) + backed-up root value into the net. Repeat. This is
 AlphaZero-style policy/value iteration but on a fixed diverse dataset (avoids self-play's
 diversity collapse) with a strong search teacher. Question: does the RAW policy climb toward the
 search's level (~2800) -- and where does it flatten (the value-net ceiling)?
 
-  PYTHONPATH=. python scripts/distill.py --run-dir runs/distill --init runs/conv_value_llm1/model.npz \
-      --arch-from runs/conv_value_llm1 --sims 800 --positions 4000 --workers 16 --iters 20
+  PYTHONPATH=. python scripts/distill.py --run-dir runs/distill --init runs/conv_value_boxA/model.npz \
+      --arch-from runs/conv_value_boxA --sims 800 --positions 4000 --workers 16 --iters 20
 """
 from __future__ import annotations
 import argparse, json, os, sys, time, random

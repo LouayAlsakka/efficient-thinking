@@ -26,7 +26,7 @@ points**, and 100K venues multiplies a classifier's spread by 100,000.
 
 ## 0. Amended 2026-09-23 on 理
 
-- **Two classifiers are measured, not one.** A local 7B (MLX, on llm2, scheduled around VIII-b) and
+- **Two classifiers are measured, not one.** A local 7B (MLX, on box B, scheduled around VIII-b) and
   Bedrock. **The choice between them is made on disagreement rate and phone latency, not on cost**
   (理 §2) — so latency is a measured quantity here, below, and not a footnote.
 - **Cap: $10 total Bedrock spend for WO-318**, enforced in the same meter as IV's $40, which is

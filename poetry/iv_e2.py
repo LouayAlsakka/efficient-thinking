@@ -34,7 +34,7 @@ def load_candidates(cache_path, prompts_path, limit=0):
             "  E2 rates poems that must be generated first:\n"
             "    python poetry/poetry_gen.py --model <mlx model> --tag <tag> --nmax 16 \\\n"
             "        --temp 0.8 --max-tokens 96 --out %s\n"
-            "  It runs on llm1's GPU and costs no API spend." % (cache_path, cache_path))
+            "  It runs on box A's GPU and costs no API spend." % (cache_path, cache_path))
     import e1_score as E1
     briefs = {json.loads(l)["id"]: json.loads(l) for l in open(prompts_path)}
     out = []

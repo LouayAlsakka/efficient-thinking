@@ -2,10 +2,10 @@
 """ET-8 P8: does an experience prior buy SEARCH? Head-to-head, pre-registered by 理.
 
     # 0. the instrument check -- ALWAYS run this before spending the GPU
-    python3 experience/et8_chess_p8.py selftest --run-dir runs/conv_value_llm1 --prior <prior.json>
+    python3 experience/et8_chess_p8.py selftest --run-dir runs/conv_value_boxA --prior <prior.json>
 
     # 1. the measurement
-    python3 experience/et8_chess_p8.py sweep --run-dir runs/conv_value_llm1 --prior <prior.json> \
+    python3 experience/et8_chess_p8.py sweep --run-dir runs/conv_value_boxA --prior <prior.json> \
         --pgn /Users/lab/chess-scaling/data/lichess/2013-01.pgn --games 80 --out <out.json>
 
 THE DESIGN, 理, written here because a pre-registration that lives only in a channel is not
@@ -13,7 +13,7 @@ one:
 
     headline    HEAD-TO-HEAD, not the ladder: "simulations to equal strength". The ladder runs
                 once, no prior, at baseline sims, only to NAME the rung in Stockfish Elo.
-    baseline    frozen conv_value_llm1, NO prior, 256 sims.
+    baseline    frozen conv_value_boxA, NO prior, 256 sims.
     arms        WITH prior at {64, 128, 256} vs baseline-256      <- the claim
                 WITHOUT prior at {64, 128}   vs baseline-256      <- the control curve: what more
                                                                      simulations alone would buy

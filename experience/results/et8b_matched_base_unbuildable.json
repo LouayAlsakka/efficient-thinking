@@ -60,7 +60,7 @@
     "tokens_per_episode": 2927.2,
     "solved_pct": 25.3
    },
-   "note": "read from the llm2 run log; the episode files stayed on llm2"
+   "note": "read from the box B run log; the episode files stayed on box B"
   }
  },
  "WHY_IT_IS_FLAT": "the ACTION BUDGET DOES NOT BIND on the loop. Across budgets 14-24 the base takes 8.00-8.04 actions and 2.67-2.68 decisions. The binding constraint is the THREE-DECISION CAP: the loop ends after decision 3 long before 24 actions are spent. R5-E worked in 8a because there the budget genuinely bound.",

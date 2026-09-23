@@ -64,7 +64,7 @@ one that fails:
 | item | estimate | basis |
 |---|---|---|
 | generator + verifier + gates | ~1 day | v3's generator took that, and this reuses its harness, action protocol and gate code |
-| base run, 300 | ~3.5 h | measured: v3's 300 at budget 12 on llm1 |
+| base run, 300 | ~3.5 h | measured: v3's 300 at budget 12 on box A |
 | states + probe fit | ~20 min | measured: R4's 300-decision fit |
 | G run, 300 | ~3.5 h | measured |
 | one matched-compute point | ~3.5 h | one extra base arm at the head's all-in budget |

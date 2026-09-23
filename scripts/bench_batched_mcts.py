@@ -5,7 +5,7 @@ Times single-position (batch-1) MCTS vs batched-leaf MCTS (virtual loss, one for
 at several batch sizes, on a fixed set of positions. Reports per-move latency and nodes/sec (nps).
 Run on a FREE GPU (batching's benefit is filling idle GPU lanes; CPU won't show it).
 
-  PYTHONPATH=. python scripts/bench_batched_mcts.py --run-dir runs/conv_value_llm1 --sims 800
+  PYTHONPATH=. python scripts/bench_batched_mcts.py --run-dir runs/conv_value_boxA --sims 800
 """
 import argparse, os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -27,7 +27,7 @@ def bench(player, boards, warmup=1):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--run-dir", default="runs/conv_value_llm1")
+    ap.add_argument("--run-dir", default="runs/conv_value_boxA")
     ap.add_argument("--sims", type=int, default=800)
     ap.add_argument("--positions", type=int, default=12)
     ap.add_argument("--batches", default="8,16,32,64,128")

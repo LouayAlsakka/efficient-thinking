@@ -1,5 +1,5 @@
 {
- "run_dir": "runs/conv_value_llm1",
+ "run_dir": "runs/conv_value_boxA",
  "beam": 8,
  "depth": 1,
  "raw_elo": 1801.5712482155059,
@@ -9,7 +9,7 @@
  "gain": 181.81668480508733,
  "WHAT_THIS_IS": {
   "purpose": "the single ladder run 理 ruled (11052): it NAMES the rung in Stockfish Elo so the P8 table's figures stop reading as ratings. No prior, 256 sims, 60 games per rung, one rung (1500) plus a random-mover anchor.",
-  "the_rung": "the P8 BASELINE — frozen conv_value_llm1, no prior, 256 sims — plays at ~1983 Elo (+/- 73). The raw policy with no search plays at ~1802 (+/- 73).",
+  "the_rung": "the P8 BASELINE — frozen conv_value_boxA, no prior, 256 sims — plays at ~1983 Elo (+/- 73). The raw policy with no search plays at ~1802 (+/- 73).",
   "so_the_P8_table_reads": "WITH-256's +30 Elo sits around 2013; WITH-64's -168 around 1815; WITHOUT-64's -215 around 1768. Those are anchored figures, not ratings in their own right.",
   "the_closed_loop_gain_is_a_free_by_product": "+182 Elo from adding 256-simulation MCTS to the raw policy. For scale: the PRIOR's effect across the whole P8 sweep was 0.03 +- 0.08 of win rate, about +20 +- 55 Elo. Search is worth nine times what the prior is worth, and the prior's interval includes zero.",
   "bounds": [

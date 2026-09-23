@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0127",
+ "family": "v3",
+ "bug_class": "drop_first",
+ "bug_region": "render",
+ "program": "# region: render\ndef render(raw):\n    out = []\n    for tok in raw[1:]:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n    return out\n\n# region: shape\ndef shape(xs):\n    return [v * v for v in xs]\n\n# region: sift\ndef sift(xs):\n    return [v * v for v in xs]\n\n# region: fold\ndef fold(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: intake\ndef intake(xs):\n    n = len(xs)\n    return {'n': n, 'mean': (sum(xs) / n) if n else 0.0, 'max': max(xs) if xs else 0}\n\n# region: emit\ndef emit(summary, name='alpha'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return emit(intake(fold(sift(shape(render(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'mean': 87.0, 'max': 98, 'label': 'ALPHA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'mean': 10800.333333333334, 'max': 12401, 'label': 'ALPHA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'mean': 2001.0, 'max': 4737, 'label': 'ALPHA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'mean': 0.0, 'max': 0, 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'mean': 34560.333333333336, 'max': 41473, 'label': 'ALPHA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'mean': 0.0, 'max': 0, 'label': 'ALPHA'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'mean': 3240.0, 'max': 5184, 'label': 'ALPHA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'mean': 1280016.0, 'max': 2560016, 'label': 'ALPHA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                           ^^          ^^         ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "render",
+  "shape",
+  "sift",
+  "fold",
+  "intake",
+  "emit"
+ ],
+ "seed": 447336111,
+ "_signature": "5704c8a2b0e6",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "shape"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "squares",
+   "squares",
+   "running"
+  ],
+  "agg": "meanmax",
+  "fmt": "label"
+ }
+}

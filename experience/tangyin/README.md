@@ -10,7 +10,7 @@ numbers, scored predictions written before any run.
 |---|---|---|
 | verifier (external, objective) | FORM: line count, chars per hemistich, rhyme class (平水韻), 平仄 against the standard 七絕/七律 patterns | `verify_form.py` (to write) — pass/fail per rule, like the failing test in `et8_env.py` |
 | judge (Claude, no tools) | STYLE: blind DISCRIMINATION — one generated poem vs one held-out real poem, "which is real?" Mimicry = how far accuracy falls toward 50%. Same-circle control poet (文徵明) says whether we learned Tang Yin or Ming style | plain Messages API call, **no tools attached**; every request/response logged; usage.server_tool_use must be absent/0 |
-| trainee (Qwen, local) | Qwen2.5-7B-Instruct bf16 under mlx-lm (llm1). Mechanism A = distilled two lists as a text prior; mechanism E = LoRA on corpus + Claude preference pairs | `et8_agent.py`-style loop; LoRA via mlx-lm `lora` |
+| trainee (Qwen, local) | Qwen2.5-7B-Instruct bf16 under mlx-lm (box A). Mechanism A = distilled two lists as a text prior; mechanism E = LoRA on corpus + Claude preference pairs | `et8_agent.py`-style loop; LoRA via mlx-lm `lora` |
 
 ## Judge contamination controls (Louay's question: search vs memorization)
 - **Search** is a request property: the judge runs with no tools; the logged response has no server-tool-use blocks and
@@ -35,8 +35,8 @@ numbers, scored predictions written before any run.
 - Training split: 六如居士集 / 唐伯虎全集 from the Chinese Text Project (ctext.org) — Sautee fetches (step 1b), same JSONL schema.
 - Control poet: `fetch_corpus.py --author 文徵明` (same circle, same city, same forms).
 
-## Hand-off #2 to Sautee (llm1) — build order
-0. Report llm1 state first: `python3 -c "import mlx_lm; print(mlx_lm.__version__)"`, repo clone present?, free disk. (09-05: no mlx-lm, python 3.9.6.)
+## Hand-off #2 to Sautee (box A) — build order
+0. Report box A state first: `python3 -c "import mlx_lm; print(mlx_lm.__version__)"`, repo clone present?, free disk. (09-05: no mlx-lm, python 3.9.6.)
 1. `pip install mlx-lm` (or ask tetsu for a python ≥3.10); `git pull`; `python3 experience/tangyin/fetch_corpus.py --author 文徵明 --out experience/tangyin/corpus/wenzhengming_wikisource.jsonl`.
    1b. ctext fetch for the training split — write `fetch_ctext.py` beside this one, same schema; respect their rate limit.
 2. `verify_form.py`: rhyme classes from a 平水韻 table, 平仄 from a tone table (中華新韻 is NOT acceptable — Ming poets used 平水韻). Unit-test on the corpus: real Tang Yin 七絕 must pass ≥ 90% (the 10% is variant readings; list them).
@@ -72,7 +72,7 @@ Ordered. Each item is runnable WITHOUT waiting on the judge or on a ruling; take
 1. **Form-preserving LoRA arm, built now** (so the judge's answer picks an arm instead of starting one): iter-60 shape, rank 8, ONE epoch,
    plus either (a) KL-to-base regularization per the proposal's loss, or (b) a mixed batch — the 63 poems interleaved with an equal
    number of the model's own instruction-style prompts. Three seeds, all four forms observed, 七絕 scored. Publish beside the two arms.
-2. **The OS-axis experiment on mini6** the moment 巳紗 opens the box (prepare the venv + adapter copy now so the run is minutes).
+2. **The OS-axis experiment on a mini** the moment 巳紗 opens the box (prepare the venv + adapter copy now so the run is minutes).
 3. **The control poet as a discrimination reference:** build `judge.py`-shaped pairs where the real poem is 文徵明's 七絕 (not 唐寅's),
    so the judge run can report Tang-Yin-vs-generated beside Wen-vs-generated in one pass. Write the pairs file; do not call the judge.
 4. **ET-8 core — the paper's own next step** (`experience/`): wire `--steer` into `et8_agent.py`, run the held-out d′ `check`, then

@@ -309,7 +309,7 @@ calls — which is the only diagnostic of *what* gives the 7B away.
 candidates. Both outcomes are written here first, so the reading cannot follow the number.
 
 **Shape, fixed now:** n = 20 × 2 conditions (in-scope, shuffled-family control) × 2 arms (with
-lesson, without) × **all 12 lessons**, no subset. ~5 h of llm1 GPU. A rejection rate computed over
+lesson, without) × **all 12 lessons**, no subset. ~5 h of box A GPU. A rejection rate computed over
 a confidence-chosen subset is not the rate P0 predicts, which is why every lesson runs.
 
 **The situation that makes this sharp:** v1_7b's lessons are *true*. `[A_boundary, consumer] start

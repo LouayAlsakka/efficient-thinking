@@ -3,7 +3,7 @@
 Measures Elo (tall SF ladder) AND speed (ms/move) so we can plot score & speed vs #levels.
 Writes runs/cascade_sweep.json incrementally (crash-safe).
 
-  PYTHONPATH=. python scripts/cascade_sweep.py --run-dir runs/conv_value_llm1 \
+  PYTHONPATH=. python scripts/cascade_sweep.py --run-dir runs/conv_value_boxA \
       --ladder 2400,2700,3000 --games-per-rung 20 --nmax 10
 """
 from __future__ import annotations

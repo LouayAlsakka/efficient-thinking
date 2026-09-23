@@ -1,0 +1,31 @@
+{
+ "task_id": "task_0085",
+ "family": "v3",
+ "bug_class": "boundary2",
+ "bug_region": "render",
+ "program": "# region: intake\ndef intake(raw):\n    out = []\n    for tok in raw:\n        try:\n            out.append(float(tok))\n        except ValueError:\n            pass\n    return out\n\n# region: fold\ndef fold(xs, factor=3):\n    return [v * factor for v in xs]\n\n# region: render\ndef render(xs):\n    return {'n': len(xs) - 1, 'min': min(xs) if xs else 0, 'span': (max(xs) - min(xs)) if xs else 0}\n\n# region: gather\ndef gather(summary, name='beta'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return gather(render(fold(intake(raw))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'min': 3.0, 'span': 6.0, 'label': 'BETA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'min': 0.0, 'span': 30.0, 'label': 'BETA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'min': -6.0, 'span': 30.0, 'label': 'BETA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'min': 0, 'span': 0, 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'min': 3.0, 'span': 33.0, 'label': 'BETA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'min': 0.0, 'span': 0.0, 'label': 'BETA'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 18.0, 'span': 0.0, 'label': 'BETA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 2, 'min': 6.0, 'span': 114.0, 'label': 'BETA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                    ^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "intake",
+  "fold",
+  "render",
+  "gather"
+ ],
+ "seed": 707250942,
+ "_signature": "1af965315348",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "intake"
+ ],
+ "_shape": {
+  "parser": "parse_floats",
+  "mappers": [
+   "scale"
+  ],
+  "agg": "minspan",
+  "fmt": "label"
+ }
+}

@@ -35,15 +35,15 @@ pip install -r requirements.txt          # mlx, numpy, python-chess
 # also install Stockfish for rating/labels:  brew install stockfish
 
 # Play the closed loop (search on the included 3.45M value net) vs a Stockfish ladder:
-PYTHONPATH=. python scripts/eval_search.py --run-dir runs/conv_value_llm1 \
+PYTHONPATH=. python scripts/eval_search.py --run-dir runs/conv_value_boxA \
     --method mcts --sims 800 --ladder 2400,2700,3000 --games-per-rung 20
 
 # The wide→narrow MCTS cascade (faster per move, but break-even at equal wall-clock — see cascade.md):
-PYTHONPATH=. python scripts/eval_search.py --run-dir runs/conv_value_llm1 \
+PYTHONPATH=. python scripts/eval_search.py --run-dir runs/conv_value_boxA \
     --method mstage --mstages 8:150:3.0,3:250:1.5,1:400:0.5 --ladder 2400,2700,3000
 ```
 
-The best model (`runs/conv_value_llm1/`, conv-96x8 + value head, 3.45M params) is included so search
+The best model (`runs/conv_value_boxA/`, conv-96x8 + value head, 3.45M params) is included so search
 runs out of the box — no training required.
 
 ## Repository layout

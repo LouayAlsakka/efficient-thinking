@@ -454,9 +454,9 @@ row g1 − g1-matched is DROPPED**, not reported: it would confound three-heads-
 uninterpretable. The form difference between gen1′ and the published gen1 is printed in the artefact and the paper,
 so nobody later quotes a form effect as the origin effect. Option (ii), regenerating SQL states from a loop run, is
 not spent: it keeps a row that was never the point. **Boxes:** the box effect is zero within 0.17 on the tight
-instrument (llm1 35/37 inside llm2's 35–37) — measured because a cross-box result had already been shipped assuming
-it; NOT measured under the loop, and not extrapolated. §13b stays on llm2 in one session, because interleaving in one
-session was the design. **llm1, idle, gets a separate registered arm — the one-decision-loop test of the variance
+instrument (box A 35/37 inside box B's 35–37) — measured because a cross-box result had already been shipped assuming
+it; NOT measured under the loop, and not extrapolated. §13b stays on box B in one session, because interleaving in one
+session was the design. **box A, idle, gets a separate registered arm — the one-decision-loop test of the variance
 mechanism:** `et8b_loop` restricted to ONE head decision per episode, two base arms and two gen0-head arms on seed
 73's 300; reading fixed: within-arm sd near the tight instrument's 0.4 → the variance is the number of decisions (a
 design property, reducible); near 2.6 → it is the loop's machinery regardless of decisions. Independent of §13b;
@@ -470,7 +470,7 @@ same actions 70/75, same tokens_out 10/75 → **non-deterministic on one box; th
 3** (E's alternative (b), a box effect, is excluded). The 2.6 sd is a property of the loop's later decisions — carried
 state and longer context — a design property and reducible. The first decision is deterministic at temperature 0.
 
-**§13b — game 1, all five arms (llm2, read 16:5xZ):**
+**§13b — game 1, all five arms (box B, read 16:5xZ):**
 ```
   b1x 24.7 · g0x 33.0 · g1x 38.3 · g1′x 23.3 · g1-matched x 37.3      (game 2 partial: b 24.0 · g0 35.3 · g1 running)
 ```
@@ -498,5 +498,5 @@ n = 300), verified disjoint BY CONTENT (program + symptom hash, never task id) f
 and from the evaluation set (∩ ind73 = 0); gen0's own heads steer the collection; states at layer 18 by the same
 extractor; rows subsampled to exactly 1,437 at a fixed seed with kept indices recorded, the identical procedure
 g1-matched went through. The on-disk alternative (894 disjoint rows of r8b_gen1states) was rejected because it breaks
-the matched amount. Collection started 16:59Z on llm1 (E, decide-do-inform); §13c's three games run on llm1 in their
-own session as soon as the head and its §13a duplicate check exist — they do not wait for §13b on llm2.
+the matched amount. Collection started 16:59Z on box A (E, decide-do-inform); §13c's three games run on box A in their
+own session as soon as the head and its §13a duplicate check exist — they do not wait for §13b on box B.

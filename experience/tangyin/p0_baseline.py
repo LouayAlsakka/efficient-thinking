@@ -3,7 +3,7 @@
 
     python3 p0_baseline.py --out results/p0_base_7b.jsonl --report results/p0_base_7b.json
 
-50 topics × 4 forms = 200 prompts, temp 0.7, Qwen2.5-7B-Instruct bf16 under mlx-lm on llm1.
+50 topics × 4 forms = 200 prompts, temp 0.7, Qwen2.5-7B-Instruct bf16 under mlx-lm on box A.
 The prediction being scored is 理's P0: the baseline passes the form verifier on < 40% of
 七絕 attempts.
 

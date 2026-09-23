@@ -5,7 +5,7 @@ and GELO comes from the Bradley-Terry cross-table, anchored to a chosen referenc
 
 Two stages so the GPU-heavy part and the AWS part can run on different machines:
 
-  # 1) on a machine with mlx_lm + the local models (e.g. llm2): each contestant answers every question
+  # 1) on a machine with mlx_lm + the local models (e.g. box B): each contestant answers every question
   python reason_arena.py generate --models mlx-community/Qwen2.5-1.5B-Instruct-4bit,mlx-community/Qwen3.5-4B-MLX-4bit \
       --per-level 8 --out reasoning/arena_answers.json
 
@@ -53,7 +53,7 @@ def generate(args):
 
 # ---------------- stage 2: master judge + Bradley-Terry Elo ------------------------------------------
 def make_bedrock_client(region="us-east-1"):
-    # NAMED PRINCIPAL, keeping this call site's own timeout/retry Config. llm1's [default] profile
+    # NAMED PRINCIPAL, keeping this call site's own timeout/retry Config. box A's [default] profile
     # was the account ROOT key until 2026-09-23 (鉄, the record); a bare boto3.client here
     # authenticated as whatever sat in it.
     import boto3, os

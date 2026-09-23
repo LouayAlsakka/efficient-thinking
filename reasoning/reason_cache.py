@@ -3,7 +3,7 @@
 sc@{1,4,16,32}, oracle-best-of-N, and the whole graded-verifier curve post-hoc over the same cache — three
 headline experiments as byproducts of one generation run. Resumable (append-only); one cache file per model.
 
-  # generate (llm2 / llm1, splittable by --model and --data)
+  # generate (box B / box A, splittable by --model and --data)
   python reasoning/reason_cache.py generate --model mlx-community/Qwen2.5-3B-Instruct-4bit \
       --problems 300 --nmax 32 --out reasoning/cache/gsm8k_3B.jsonl
   # score (any machine, mlx-free)

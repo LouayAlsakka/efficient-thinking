@@ -1,7 +1,7 @@
 {
  "document": "ET-8b — THE ARTEFACT TABLE. Every arm, every seed, every interval, every instrument hash, one file. 理.",
  "the_sentence_this_table_supports": "The frontier moved twice and stopped. A second generation improves on the first on both independent 300s at no extra cost; a third does not improve on the second, and on one seed is significantly worse. The best head is generation 1.",
- "how_to_read_it": "Seed by seed, never pooled. Two independent 300s (v3c/seed 73 on llm1, v3rep/seed 47 on llm2), disjoint from the heads' training set by MEASURED signature overlap of zero.",
+ "how_to_read_it": "Seed by seed, never pooled. Two independent 300s (v3c/seed 73 on box A, v3rep/seed 47 on box B), disjoint from the heads' training set by MEASURED signature overlap of zero.",
  "1_ARMS": {
   "seed73_base": {
    "n": 300,

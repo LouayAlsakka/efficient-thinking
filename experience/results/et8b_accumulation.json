@@ -7,20 +7,20 @@
   "model": "Qwen/Qwen2.5-7B-Instruct (bf16)",
   "task_set_signatures_sha256_16": {
    "v3 (seed 21) — the heads' TRAINING set, never evaluated on here": "d28f98f1308008b6",
-   "v3c (seed 73) — independent set A, llm1": "f2bf92edef0d31bd",
-   "v3rep (seed 47) — independent set B, llm2": "c33887d80e51d114",
+   "v3c (seed 73) — independent set A, box A": "f2bf92edef0d31bd",
+   "v3rep (seed 47) — independent set B, box B": "c33887d80e51d114",
    "method": "sha256 over each task's program|symptom|bug_region, task files sorted"},
   "head_md5": {
    "gen0_d1": "461d5b1ebfe1cd204c5918e3026ab2e2", "gen0_d2": "778a949f35ad7a7bb1a879d621726016",
    "gen0_d3": "be2d1b4177c20b02982ca4810110e63b", "gen1_d1": "f814f6c428d4c7a5d4f32dd25bd8cfc3",
    "gen1_d2": "28a5c401e43f7981628a08452dbb79f3", "gen1_d3": "24ad0b9cadc1bc0dc969f0e36678a0d3",
-   "note": "all six verified identical on llm1 and llm2 before the runs — one matching hash proves a copy happened, not that the arms are identical"},
+   "note": "all six verified identical on box A and box B before the runs — one matching hash proves a copy happened, not that the arms are identical"},
   "disjointness": "measured, not assumed: v3 vs v3c signature overlap 0, v3 vs v3rep overlap 0. No head has seen any problem it was evaluated on."
  },
 
  "THE_ACCUMULATION_LIMB": {
-  "seed_73_llm1": {"gen0_pct": 34.3, "gen1_pct": 40.0, "delta": 5.7, "CI95": [0.7, 10.7], "McNemar_p": 0.03962, "discordant": "gen0-only 22 · gen1-only 39"},
-  "seed_47_llm2": {"gen0_pct": 34.0, "gen1_pct": 43.7, "delta": 9.7, "CI95": [4.7, 15.0], "McNemar_p": 0.0004221, "discordant": "gen0-only 18 · gen1-only 47"},
+  "seed_73_box A": {"gen0_pct": 34.3, "gen1_pct": 40.0, "delta": 5.7, "CI95": [0.7, 10.7], "McNemar_p": 0.03962, "discordant": "gen0-only 22 · gen1-only 39"},
+  "seed_47_box B": {"gen0_pct": 34.0, "gen1_pct": 43.7, "delta": 9.7, "CI95": [4.7, 15.0], "McNemar_p": 0.0004221, "discordant": "gen0-only 18 · gen1-only 47"},
   "both_exclude_zero": true, "intervals_overlap": true, "n_each": 300,
   "reported_seed_by_seed": "NOT POOLED. 理: reported seed by seed, never pooled without a sentence saying so. These are two independent replications, not one 600."
  },

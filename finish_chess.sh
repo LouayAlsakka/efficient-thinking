@@ -1,8 +1,8 @@
 #!/bin/bash
-# Two-machine chess close-out (llm1 = train, llm2 = eval; neither idles).
-#   llm2 is ALREADY busy: absolute MCTS-6400 on the current net (definitive current-net ceiling).
-#   This script (on llm1): wait for epoch-1 -> epoch-2 DOUBLE TRAINING (batch 4096, warm-start) ->
-#   ship the double-trained net to llm2 (free by then) for the full ceiling test (abs MCTS-800/3200
+# Two-machine chess close-out (box A = train, box B = eval; neither idles).
+#   box B is ALREADY busy: absolute MCTS-6400 on the current net (definitive current-net ceiling).
+#   This script (on box A): wait for epoch-1 -> epoch-2 DOUBLE TRAINING (batch 4096, warm-start) ->
+#   ship the double-trained net to box B (free by then) for the full ceiling test (abs MCTS-800/3200
 #   + sims-sweep incl 6400): does a BETTER evaluator raise the 2839 search ceiling?
 set -u
 cd "$HOME/chess-scaling" || exit 1
@@ -17,7 +17,7 @@ while ! grep -q "ALL DONE" runs/2xfull.log 2>/dev/null; do sleep 120; done
 say "epoch-1 fully done. model: $(ls -la $E1/model.npz 2>/dev/null | awk '{print $5}') bytes"
 [ ! -f "$E1/model.npz" ] && { say "ERROR: no epoch-1 model; abort"; exit 1; }
 
-# ---- llm1: epoch-2 DOUBLE TRAINING (batch 4096, LR scaled, stall watchdog) ----
+# ---- box A: epoch-2 DOUBLE TRAINING (batch 4096, LR scaled, stall watchdog) ----
 mkdir -p "$RUN"
 say "epoch-2 START (double training, batch 4096, warm-start)"
 extra="--init $E1/model.npz"; cum=0; restart=0; TARGET=90000   # ~1 epoch at batch 4096 (~394M/4096)
@@ -46,12 +46,12 @@ while true; do
 done
 say "epoch-2 COMPLETE (double-trained 2x net)"
 
-# ---- ship to llm2 (free by now) for the full ceiling test ----
-say "waiting for llm2 to be free (its 6400-current eval to finish)..."
-while ssh -o ConnectTimeout=10 llm2 'pgrep -f "eval_search.py|sims_sweep.py" >/dev/null' 2>/dev/null; do sleep 120; done
-say "llm2 free. rsync epoch-2 net -> llm2, launch ceiling test"
-rsync -az "$RUN/model.npz" "$RUN/config.json" llm2:chess-scaling/runs/conv_2x_e2/ >>"$L" 2>&1
-ssh llm2 'cd chess-scaling
+# ---- ship to box B (free by now) for the full ceiling test ----
+say "waiting for box B to be free (its 6400-current eval to finish)..."
+while ssh -o ConnectTimeout=10 box B 'pgrep -f "eval_search.py|sims_sweep.py" >/dev/null' 2>/dev/null; do sleep 120; done
+say "box B free. rsync epoch-2 net -> box B, launch ceiling test"
+rsync -az "$RUN/model.npz" "$RUN/config.json" box B:chess-scaling/runs/conv_2x_e2/ >>"$L" 2>&1
+ssh box B 'cd chess-scaling
   nohup caffeinate -i bash -c '"'"'
     L=runs/2x_e2_ceiling.log; : > "$L"
     for S in 800 3200; do
@@ -65,4 +65,4 @@ ssh llm2 'cd chess-scaling
     echo "ALL DONE" >> "$L"
   '"'"' > /dev/null 2>&1 &
   echo launched' >>"$L" 2>&1
-say "ALL DONE on llm1 side; llm2 running epoch-2 ceiling test (log: runs/2x_e2_ceiling.log)"
+say "ALL DONE on box A side; box B running epoch-2 ceiling test (log: runs/2x_e2_ceiling.log)"

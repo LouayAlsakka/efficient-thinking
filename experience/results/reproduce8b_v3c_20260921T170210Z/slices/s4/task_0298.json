@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0298",
+ "family": "v3",
+ "bug_class": "early_return",
+ "bug_region": "gather",
+ "program": "# region: intake\ndef intake(raw):\n    return [len(tok.strip()) for tok in raw if tok.strip()]\n\n# region: render\ndef render(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: gather\ndef gather(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n        return out\n    return out\n\n# region: digest\ndef digest(xs):\n    return {'n': len(xs), 'total': sum(xs)}\n\n# region: fold\ndef fold(summary, name='alpha'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return fold(digest(gather(render(intake(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'total': 10, 'label': 'ALPHA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 4, 'total': 30, 'label': 'ALPHA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'total': 13, 'label': 'ALPHA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 3, 'total': 30, 'label': 'ALPHA'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'total': 19, 'label': 'ALPHA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 1, 'total': 1, 'label': 'ALPHA'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'total': 20, 'label': 'ALPHA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 3, 'total': 23, 'label': 'ALPHA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                         ^            +",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "intake",
+  "render",
+  "gather",
+  "digest",
+  "fold"
+ ],
+ "seed": 470616060,
+ "_signature": "841fc2f31d23",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "render"
+ ],
+ "_shape": {
+  "parser": "parse_lengths",
+  "mappers": [
+   "running",
+   "running"
+  ],
+  "agg": "total",
+  "fmt": "label"
+ }
+}

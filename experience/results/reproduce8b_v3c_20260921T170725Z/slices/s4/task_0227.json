@@ -1,0 +1,33 @@
+{
+ "task_id": "task_0227",
+ "family": "v3",
+ "bug_class": "comparator",
+ "bug_region": "intake",
+ "program": "# region: render\ndef render(raw):\n    out = []\n    for tok in raw:\n        try:\n            out.append(float(tok))\n        except ValueError:\n            pass\n    return out\n\n# region: emit\ndef emit(xs, limit=12):\n    return [v if v <= limit else limit for v in xs]\n\n# region: intake\ndef intake(xs, floor_=6):\n    return [v for v in xs if v > floor_]\n\n# region: gather\ndef gather(xs):\n    d = {}\n    for v in xs:\n        d[v % 3] = d.get(v % 3, 0) + 1\n    return {'n': len(xs), 'tally': sorted(d.items())}\n\n# region: digest\ndef digest(summary, bar=3):\n    out = dict(summary)\n    n = summary.get('n', 0)\n    out['ratio'] = round(n / bar, 3) if bar else 0.0\n    return out\n\n# region: run\ndef run(raw):\n    return digest(gather(intake(emit(render(raw)))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 0, 'tally': [], 'ratio': 0.0})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 2, 'tally': [(1.0, 2)], 'ratio': 0.667})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 1, 'tally': [(2.0, 1)], 'ratio': 0.333})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'tally': [], 'ratio': 0.0})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 2, 'tally': [(0.0, 2)], 'ratio': 0.667})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'tally': [], 'ratio': 0.0})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'tally': [(0.0, 4)], 'ratio': 1.333})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 1, 'tally': [(0, 1)], 'ratio': 0.333})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?       ^           ^ ^^^            ++++++++",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "render",
+  "emit",
+  "intake",
+  "gather",
+  "digest"
+ ],
+ "seed": 915039618,
+ "_signature": "367996b59d60",
+ "_test_identity": "test_case_06",
+ "_p1_sibling_regions": [
+  "render"
+ ],
+ "_shape": {
+  "parser": "parse_floats",
+  "mappers": [
+   "clamp",
+   "drop_small"
+  ],
+  "agg": "tally",
+  "fmt": "ratio"
+ }
+}

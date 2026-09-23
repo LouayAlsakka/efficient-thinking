@@ -7,7 +7,7 @@ and report the cascade's score, the implied Elo difference, and a 95% confidence
 head-to-head is far more sensitive to a strength *difference* than each side's absolute ladder rating
 (which carried +-89). Incremental-save so partial runs are usable.
 
-  PYTHONPATH=. python scripts/cascade_headtohead.py --run-dir runs/conv_value_llm1 --casc-N 10 \
+  PYTHONPATH=. python scripts/cascade_headtohead.py --run-dir runs/conv_value_boxA --casc-N 10 \
       --sims 800 --games 400
 """
 from __future__ import annotations
@@ -40,7 +40,7 @@ def play_game(white_p, black_p, opening, extra_plies=300):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--run-dir", default="runs/conv_value_llm1")
+    ap.add_argument("--run-dir", default="runs/conv_value_boxA")
     ap.add_argument("--casc-N", type=int, default=10, help="cascade stage count (flat = 1)")
     ap.add_argument("--sims", type=int, default=800, help="cascade total budget")
     ap.add_argument("--flat-sims", type=int, default=None,

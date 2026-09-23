@@ -1,7 +1,7 @@
 {
  "measurement": "ET-8 tangyin step 2 — the form verifier's acceptance test",
  "run_sha_at_build": "da945143193e4cfa13cae6462e2850c42912fe36",
- "run_host": "llm1",
+ "run_host": "box A",
  "date": "2026-09-14",
  "README_bar": "real Tang Yin 七絕 must pass >= 90%; list the ones that do not",
  "result": "NOT MET on 唐寅 七絕: 79.5% (31/39). MET on the control poet's larger 七絕 sample: 91.8% (146/159).",

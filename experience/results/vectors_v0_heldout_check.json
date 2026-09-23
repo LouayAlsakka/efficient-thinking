@@ -24,7 +24,7 @@
   "18": 0.531,
   "27": 0.481
  },
- "finding": "Direction, not evidence: at n=16 held-out prompts the mid-depth vector (layer 18, 50% depth) separates productive from wasted first hypotheses best (d' 1.13, 81% at the midpoint threshold), the early vector (layer 9) less (0.79), and the late vector (layer 27, 75% depth) INVERTS (-0.78, 19%) - the sign flips out of sample, so the build-set direction at layer 27 was noise. This is the ordering P3 predicts (mid > early > late) and it is recorded as a direction to test at n >= 500 prompts from the llm1 traces, where the vectors will also be rebuilt from per-step productive labels rather than the first hypothesis alone. Nothing here is scored.",
+ "finding": "Direction, not evidence: at n=16 held-out prompts the mid-depth vector (layer 18, 50% depth) separates productive from wasted first hypotheses best (d' 1.13, 81% at the midpoint threshold), the early vector (layer 9) less (0.79), and the late vector (layer 27, 75% depth) INVERTS (-0.78, 19%) - the sign flips out of sample, so the build-set direction at layer 27 was noise. This is the ordering P3 predicts (mid > early > late) and it is recorded as a direction to test at n >= 500 prompts from the box A traces, where the vectors will also be rebuilt from per-step productive labels rather than the first hypothesis alone. Nothing here is scored.",
  "date": "2026-09-05T20:06Z",
  "machine": "Louay's Mac (MLX)",
  "N_WARNING": {

@@ -9,8 +9,8 @@ that would test baseline-beating is registered future work."* **B3 is that run.*
 
 `reason_finetune_sweep.py --base --model mlx-community/Qwen2.5-3B-bf16 --sizes 0,64,256,1024,4096,7000
 --epochs 3 --batch 4 --eval 150 --seed 0` — bf16 base (4-bit base was noted unstable in §7), plain
-prompt/completion, cleaned targets, greedy eval on the same 150 held-out GSM8K. Run on llm2, 2026-07-24.
-Baseline to beat = the **3B-instruct zero-shot floor, 75.3%** (same 150 held-out, computed on llm1).
+prompt/completion, cleaned targets, greedy eval on the same 150 held-out GSM8K. Run on box B, 2026-07-24.
+Baseline to beat = the **3B-instruct zero-shot floor, 75.3%** (same 150 held-out, computed on box A).
 
 ## Result
 
@@ -50,7 +50,7 @@ data adds no new capability — yet it still lands 12–20 pts under the instruc
 something this LoRA cannot reach. That is ET-VII's **elicitation gap Δ appearing uninvited in a Paper II
 experiment** — Δ made visible as the shape of a fine-tuning curve.
 
-**Cheap registered follow-up for the E-E batch (not run here; llm1-only for now):** probe the *un-tuned* 3B
+**Cheap registered follow-up for the E-E batch (not run here; box A-only for now):** probe the *un-tuned* 3B
 base's hidden states on GSM8K. If probe accuracy lands near 63% (the 64-example ceiling), the elicitation
 reading is confirmed — the capability is present pre-tuning and the LoRA only surfaced it — and B3's miss
 becomes a two-paper bridge (Paper II §7 ↔ ET-VII E-E). If probe accuracy is far below 63%, the fine-tune

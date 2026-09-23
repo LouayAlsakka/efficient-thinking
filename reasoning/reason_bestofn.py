@@ -10,9 +10,9 @@ spending those N samples —
 If Kimi-best-of-N > self-consistency and approaches oracle, then 'more search' pays only when a better
 evaluator spends it — the thesis, operationalised. Two stages (generate on GPU, score on Bedrock):
 
-  # llm2 (mlx): sample N full answers/problem
+  # box B (mlx): sample N full answers/problem
   python reason_bestofn.py generate --model mlx-community/Qwen2.5-1.5B-Instruct-4bit --problems 60 --nmax 8
-  # llm1 (boto3): the evaluator spends the samples
+  # box A (boto3): the evaluator spends the samples
   python3 reason_bestofn.py score --data reasoning/bestofn_samples.json
 """
 import argparse, json, random, re
@@ -22,7 +22,7 @@ _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "..",
 import api_rater as _AR   # the ONE place this repo names its AWS principal (the record)
 
 
-def extract(text):                                       # GSM8K answer extraction (mlx-free, for llm1)
+def extract(text):                                       # GSM8K answer extraction (mlx-free, for box A)
     m = re.findall(r"####\s*(-?[0-9][0-9,]*)", text or "")
     if m:
         return m[-1].replace(",", "")

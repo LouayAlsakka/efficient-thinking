@@ -8,7 +8,7 @@ same batch), so the only thing that varies is how much *unique* data the evaluat
 accuracy on a held-out test set vs data size — the reasoning analog of Connect-4's open-loop-ceiling-vs-
 labels curve, and of Paper I's chess data-fraction study.
 
-Runs entirely on llm2 (mlx_lm). Fixed compute per point isolates data from optimization:
+Runs entirely on box B (mlx_lm). Fixed compute per point isolates data from optimization:
   ./.venv/bin/python reasoning/reason_finetune_sweep.py --sizes 0,64,256,1024,4096 --iters 400 --eval 150
 """
 import argparse, json, os, re, subprocess, sys, urllib.request

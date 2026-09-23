@@ -1,5 +1,5 @@
 {
- "pair": "ET-8b SECOND INDEPENDENT 300 (seed 47, llm2): gen2 vs base",
+ "pair": "ET-8b SECOND INDEPENDENT 300 (seed 47, box B): gen2 vs base",
  "n": 300,
  "base_success_pct": 21.0,
  "G_success_pct": 36.7,

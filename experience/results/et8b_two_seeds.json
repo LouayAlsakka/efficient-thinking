@@ -1,8 +1,8 @@
 {
  "document": "ET-8b — the two independent 300s, per seed",
  "seeds": {
-  "73": "llm1, experience/tasks/v3c",
-  "47": "llm2, experience/tasks/v3rep"
+  "73": "box A, experience/tasks/v3c",
+  "47": "box B, experience/tasks/v3rep"
  },
  "heads": "identical across boxes; all six npz md5-matched before the runs",
  "rule": "per-seed numbers are the result. Pooling is secondary and only when the intervals overlap; disagreeing seeds are a finding, not something to average.",

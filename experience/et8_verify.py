@@ -15,7 +15,7 @@ Register the REJECTION RATE (P0): the fraction of candidate lessons this gate re
 Usage:
   python experience/et8_verify.py --lessons experience/lessons/v0/lessons.json --tasks experience/tasks/v1 \
       --model Qwen/Qwen2.5-3B-Instruct --n 20 --out experience/lessons/v0/verified.json
-Cost: per lesson, 2 conditions x 2 arms x n episodes. Run on llm1 (Sautee); a Studio can do 1-2 lessons for a smoke.
+Cost: per lesson, 2 conditions x 2 arms x n episodes. Run on box A (Sautee); a Studio can do 1-2 lessons for a smoke.
 """
 from __future__ import annotations
 import argparse, glob, json, os, random, sys, uuid, time

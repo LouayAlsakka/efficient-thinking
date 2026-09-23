@@ -69,7 +69,7 @@
  },
  "bounds": [
   "40 decisions from one run (v3g300L seed 21), not 300. The token counts are prompt lengths and vary little across decisions; the identity check is over the first 20 candidate states.",
-  "seconds_per_decision (old 0.146, new 0.007) is wall clock on llm1's GPU with both paths in one process and is NOT the pre-registered quantity -- the bar is in tokens. It is printed because a 20x wall-clock gap is worth knowing even when the token bar fails.",
+  "seconds_per_decision (old 0.146, new 0.007) is wall clock on box A's GPU with both paths in one process and is NOT the pre-registered quantity -- the bar is in tokens. It is printed because a 20x wall-clock gap is worth knowing even when the token bar fails.",
   "the identity check compares the cached path to hidden_at, the function that produced every number in the package. It does not independently verify hidden_at."
  ],
  "signed": "Sautee (sha-ta)"

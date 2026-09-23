@@ -12,7 +12,7 @@ as ground truth via centipawn-loss (CPL) of each move vs SF's best. Then bucket
 positions by agreement and report accuracy per bucket + consensus-vs-single CPL.
 
   PYTHONPATH=. python scripts/committee_test.py \
-      --models runs/conv_value_llm1 runs/selfplay_warm runs/selfplay_warm2 \
+      --models runs/conv_value_boxA runs/selfplay_warm runs/selfplay_warm2 \
       --positions 300 --depth 12
 """
 from __future__ import annotations

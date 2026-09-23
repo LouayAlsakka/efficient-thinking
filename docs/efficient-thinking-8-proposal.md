@@ -2,7 +2,7 @@
 
 **Status:** proposal (registered by this commit; experiments not yet run) · **Companion:** `efficient-thinking-8-experience-priors.md`
 (the concept draft, canonical copy), `et8-review-ri.md` (review) · **Drafted:** Ri (理) for Louay Alsakka, 2026-09-05 ·
-**Runs:** Sautee on the LLM machines (llm1/llm2) once the harness is green on a Studio; Ri owns the design, the
+**Runs:** Sautee on the LLM machines (box A/box B) once the harness is green on a Studio; Ri owns the design, the
 predictions and the write-up.
 
 One sentence: **build a small verifier-gated environment where a frozen Qwen wastes search in a measurable, recurring
@@ -60,7 +60,7 @@ Results files: `experience/results/baseline_{3b,7b}_harness_v0.{1,2,3}.json`.
 region to try first is what a prior can buy (metric: `first_correct_hypothesis_step`, already logged); writing the fix once
 localized is a capability floor of the model on B_state/C_types (0/5 each, both models, every run) that no search prior
 addresses. P1 is scored on localization cost as well as actions-to-green. (2) **Nothing below ~2,000 episodes is
-evidence.** The lessons, the vectors and the gate all need the llm1 baseline pass (hand-off #1) before any P is scored.
+evidence.** The lessons, the vectors and the gate all need the box A baseline pass (hand-off #1) before any P is scored.
 
 **Baseline decision:** Qwen2.5-3B-Instruct bf16 stays the primary (hidden states writable, already on disk, no worse than
 7B-4bit here); Qwen2.5-7B-Instruct **bf16** (not 4-bit) is the transfer model and must be fetched for the injection work.
@@ -122,7 +122,7 @@ that a small prior can reorder, and best-of-N samples are not "which path first"
 
 2,000 training tasks (10 families × 200), 400 held-out same-family, 400 shifted-family, 200 out-of-domain (a fresh
 family). Budget per task: 12 actions. One pass of 3B over 2,000 tasks × ~12 actions × ~400 tokens ≈ 10M tokens — an
-afternoon on a Studio, minutes on llm1.
+afternoon on a Studio, minutes on box A.
 
 ---
 
@@ -256,7 +256,7 @@ Overshoots are flagged like undershoots. Predictions that miss are narrated in f
 
 ---
 
-## 8. Build order (Sautee runs on llm1/llm2 once the harness is green on a Studio)
+## 8. Build order (Sautee runs on box A/box B once the harness is green on a Studio)
 
 | week | deliverable | owner | gate |
 |---|---|---|---|
@@ -288,21 +288,21 @@ confounds the estate cannot.
 
 ## 10. Honest scope
 
-Small model, one synthetic environment, two machines plus llm1/llm2. Claims will be scoped to this regime. The
+Small model, one synthetic environment, two machines plus box A/box B. Claims will be scoped to this regime. The
 chess anchor decides whether the mechanism exists at all; the Qwen grid decides whether it survives contact with
 language, retrieval and a prompt. If P2 fails, the honest conclusion is that retrieval is sufficient at this scale, and
 that is worth publishing.
 
 ## Decision 2026-09-07 07:5xZ — baseline model: Qwen2.5-7B-Instruct (Ri, on Louay's ruling)
 
-Louay ruled the choice mine, leaning larger because the Studios (llm1/llm2) can test it. Choice: **7B is the
+Louay ruled the choice mine, leaning larger because the Studios (box A/box B) can test it. Choice: **7B is the
 Paper II baseline floor; 3B stays as the development loop.** Reason: pass 1 on 3B ended at 23.2% task success,
 which leaves too little headroom to tell a lesson's effect from noise on held-out tasks; the P0–P9 predictions are
-scored against a floor the reader accepts, and 7B bf16 fits llm1's memory with the same mlx-lm path. Env, verifier,
+scored against a floor the reader accepts, and 7B bf16 fits box A's memory with the same mlx-lm path. Env, verifier,
 record schema and injection points do not change. Every reported number from here carries the model it was
 measured on; 3B numbers already recorded stay labelled 3B and are not compared across models.
 
-## 0c. Baseline v1 on the 7B floor — pass 1 (seed 1), measured 2026-09-08 (Sautee, llm1)
+## 0c. Baseline v1 on the 7B floor — pass 1 (seed 1), measured 2026-09-08 (Sautee, box A)
 
 | run | model | tasks | green | success | mean actions | mean tokens | wall |
 |---|---|---|---|---|---|---|---|
@@ -312,7 +312,7 @@ measured on; 3B numbers already recorded stay labelled 3B and are not compared a
 | **7B pooled** | | 4,000 | 2,383 | **0.596** | 6.85 | 4,472 | |
 
 Same 2,000 tasks (`experience/tasks/v1`, unregenerated), same harness, commit `b63af0b`, run id `20260907T192632Z-d06c20`,
-outputs under `experience/traj/base_v1_7b.*` on llm1. Green by family, of 500 each: A_boundary **500**, D_mixed 259,
+outputs under `experience/traj/base_v1_7b.*` on box A. Green by family, of 500 each: A_boundary **500**, D_mixed 259,
 C_types 234, B_state 204. Action counter: hypothesize 2000, inspect 2001, patch 3265, noop_patch 6257 (45.7% of
 13,696 steps), invalid 26, repeat_patch 146, repeat_inspect 1. Seed 2 (run `20260908T032926Z-274ccf`, finished 2026-09-08 11:30:53Z) agrees with seed 1 to 0.6 points, so the
 **7B floor is 0.596 ± 0.003 on tasks/v1** and the series rule is satisfied. Family split, seed 1 / seed 2: A_boundary

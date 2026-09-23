@@ -1,0 +1,25 @@
+{
+ "pair": "reproduction (v3c): gen0 vs base",
+ "n": 300,
+ "base_success_pct": 24.7,
+ "G_success_pct": 35.0,
+ "success_delta_points": 10.3,
+ "success_95CI": [
+  4.7,
+  16.3
+ ],
+ "base_actions": 8.12,
+ "G_actions": 7.74,
+ "actions_delta": -0.38,
+ "actions_95CI": [
+  -0.6,
+  -0.17
+ ],
+ "McNemar": {
+  "base_only_solved": 25,
+  "G_only_solved": 56,
+  "discordant": 81,
+  "exact_two_sided_p": 0.0007521
+ },
+ "method": "paired per-problem bootstrap, 10000 resamples; exact two-sided binomial on the discordant pairs"
+}

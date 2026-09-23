@@ -1,7 +1,7 @@
 {
  "measurement": "P0 seed sensitivity — is 32.0% a number or a coincidence?",
  "date": "2026-09-14",
- "rig": "llm1",
+ "rig": "box A",
  "model": "Qwen/Qwen2.5-7B-Instruct bf16",
  "temp": 0.7,
  "seeds": [

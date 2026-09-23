@@ -16,7 +16,7 @@
 # REQUIREMENTS   Apple silicon · python3.9+ with mlx-lm (tested 0.29.1 / mlx 0.29.3) · this repo ·
 #                ~16 GB free RAM · the model below, pulled automatically on first use (~15 GB)
 # MODEL          Qwen/Qwen2.5-7B-Instruct   (bf16; NOT a 4-bit quant — the numbers are bf16's)
-# WALL CLOCK     measured on llm1 (M-series, nothing else on the GPU):
+# WALL CLOCK     measured on box A (M-series, nothing else on the GPU):
 #                  base@16 300 episodes  ~3.5 h      G@12 300 episodes  ~3.0 h
 #                  states + fit           not re-run here; the fitted head ships with the repo
 #                TOTAL ~6.5-7 h. Run it overnight; it prints progress per slice.

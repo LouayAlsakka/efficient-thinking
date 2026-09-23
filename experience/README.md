@@ -30,7 +30,7 @@ Design: `../docs/efficient-thinking-8-proposal.md` (registered) · concept: `../
 
 ## Hand-off #1 to Sautee — the frozen baseline pass (proposal §3.1 / §8 week 2)
 
-Target measured 2026-09-05 19:27Z (read-only): **llm1 = Apple M3 Ultra, 256 GB, Darwin arm64, load ~1.6, user `lab`; python3
+Target measured 2026-09-05 19:27Z (read-only): **box A = Apple M3 Ultra, 256 GB, Darwin arm64, load ~1.6, user `lab`; python3
 3.9.6, no mlx-lm, no brew/uv/conda, no clone.** So mlx-lm runs as-is once installed; no HF backend swap needed.
 
 Step 0 (environment, Sautee): `git clone https://github.com/LouayAlsakka/efficient-thinking.git && cd efficient-thinking &&
@@ -42,7 +42,7 @@ python experience/et8_env.py selftest                       # expect: clean=PASS
 python experience/et8_env.py gen --n 2000 --seed 1 --out experience/tasks/v1
                                                             # expect: _stats.json with n=2000, red_herring ≈ 35–45%
 python experience/et8_agent.py --tasks experience/tasks/v1 --out experience/traj/base_v1_3b \
-    --model Qwen/Qwen2.5-3B-Instruct --budget 12           # 9.8 s/task measured on llm1 (M3 Ultra, 32-episode steady state) → 5.4 h per 2,000-task pass; prints a summary JSON at the end
+    --model Qwen/Qwen2.5-3B-Instruct --budget 12           # 9.8 s/task measured on box A (M3 Ultra, 32-episode steady state) → 5.4 h per 2,000-task pass; prints a summary JSON at the end
 python experience/et8_agent.py --tasks experience/tasks/v1 --out experience/traj/base_v1_3b_s2 \
     --model Qwen/Qwen2.5-3B-Instruct --budget 12           # second seed of the SAME tasks (sampling differs after waste)
 ```
@@ -55,7 +55,7 @@ first error. Design questions to Ri in channels/direct/ri+sautee.
 ## Who runs what
 
 - **Ri (理):** design, predictions, environment, injection code, write-up.
-- **Sautee (沙汰):** all long runs on llm1/llm2 once a step is green on a Studio — baseline pass, sweeps, rounds.
+- **Sautee (沙汰):** all long runs on box A/box B once a step is green on a Studio — baseline pass, sweeps, rounds.
   Hand-off unit: a command line, its expected output, and the JSON it must produce.
 - **Louay:** voice pass, publication, the calls the proposal marks as his.
 
@@ -72,7 +72,7 @@ delta is believed until it survives a low-variance re-measurement (two seeds min
 - Slices, not seeds, under greedy decoding.
 
 ## Ruling, 2026-09-16 17:5xZ (理, on Sautee — the §4.3 gate's shape
-- n=20 × 2 conditions × 2 arms × all 12 v1_7b lessons (~5 h llm1 GPU, overnight), after F(a)'s four slices land.
+- n=20 × 2 conditions × 2 arms × all 12 v1_7b lessons (~5 h box A GPU, overnight), after F(a)'s four slices land.
   No confidence-chosen subset: P0 is a rate over the candidates, and a subset's rate is not that rate.
 - Report per lesson admit/reject with the paired delta and SE; headline = rejection rate over 12.
 - Pre-registered before the first episode (both sentences in RESULTS.md): P0 holds = the gate rejects ≥ 20% of
@@ -98,7 +98,7 @@ Spec (paper §20b carries the pre-registration; this is the build order):
    "G holds success, actions flat: decodable but not actionable through choice"; "G loses success: the head chooses
    wrong regions — the signal is not a decision signal".
 7. Order: gate run (tonight) → G steps 1–6 → then a C strength sweep only if G fails on choice rather than on signal.
-Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 starts.
+Owner: Sautee (box A). 理 reads the task-conditioned probe result before step 2 starts.
 
 ## Rule, 2026-09-16 23:1xZ (理, after two losses in one day)
 - NO working-tree moves under a running writer: not `stash -u` (理 lost 91 judge rows), not `pull --rebase` (沙汰's gtriv_s1
@@ -114,11 +114,11 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
 - Every run persists the trajectories a later question could need — state AND action (FEN + UCI for chess; the task
   file for the env) — or its downstream claims are marked UNAUDITABLE. Third loss this week: tasks/v0, et6 games, a
   number that lived only in a paragraph.
-- P8 is measured on `runs/conv_value_llm1` (supervised, 3.45M) by name; confirm `eval_search.py` loads the same run dir
+- P8 is measured on `runs/conv_value_boxA` (supervised, 3.45M) by name; confirm `eval_search.py` loads the same run dir
   before any Elo rung is quoted. G-trivial / G-trivial′ re-run on v2 as v2's own controls; the v1 pair is v1-internal.
 
 ## P8 pre-registration, 2026-09-17 00:5xZ (理; 沙汰/10915)
-- Evaluator: `runs/conv_value_llm1` (supervised 3.45M; the repo's own `sims_sweep.py` example names it). Ladder
+- Evaluator: `runs/conv_value_boxA` (supervised 3.45M; the repo's own `sims_sweep.py` example names it). Ladder
   (`eval_search.py`) loads any run dir via `load_run`; rungs are Stockfish `UCI_Elo` levels, net-independent.
 - Headline metric: head-to-head (`sims_sweep.py`) — "simulations to equal strength". The ladder runs once, no prior,
   at baseline sims, 60 games, only to name the rung. Not a pass criterion.

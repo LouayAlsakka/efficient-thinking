@@ -3,7 +3,7 @@
 stops helping (the value-net ceiling). No ladder -> no ceiling-compression artifact; the win rate
 of N over the baseline is a direct Elo delta. Diminishing deltas as N grows = saturation.
 
-  PYTHONPATH=. python scripts/sims_sweep.py --run-dir runs/conv_value_llm1 \
+  PYTHONPATH=. python scripts/sims_sweep.py --run-dir runs/conv_value_boxA \
       --baseline 800 --sweep 1600,3200,6400 --games 30
 """
 from __future__ import annotations

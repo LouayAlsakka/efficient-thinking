@@ -1,7 +1,7 @@
 {
  "measurement": "P2 — mechanism E (LoRA) against the baseline, on the form verifier",
  "date": "2026-09-14",
- "rig": "llm1",
+ "rig": "box A",
  "base": "Qwen/Qwen2.5-7B-Instruct bf16",
  "temp": 0.7,
  "lora": {

@@ -1,7 +1,7 @@
 {
  "measurement": "理's item 1 — the form-preserving arm (voice corpus + self-distilled form anchor)",
  "date": "2026-09-15",
- "rig": "llm1",
+ "rig": "box A",
  "design": "The anchor is the base model's OWN generations that PASSED verify_form.py across three baseline seeds, drawn EVENLY across the four forms. 119 examples (63 poems + 56 anchor), ONE epoch, rank 8, lr 1e-5, 16 layers, seed 7 — every hyperparameter identical to the plain arm so the anchor data is the only variable.",
  "training_signal": {
   "plain 3-epoch": "val loss 1.388 at iter 60, RISING to 1.590 by 189",

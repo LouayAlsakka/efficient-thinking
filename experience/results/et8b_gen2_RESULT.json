@@ -2,10 +2,10 @@
  "document": "ET-8b gen2 — accumulation does NOT continue. The result falls BETWEEN two pre-registered rows and I am not choosing between them.",
 
  "THE_LIMB": {
-  "seed_73_llm1": {"gen1_pct": 40.0, "gen2_pct": 38.0, "delta": -2.0, "CI95": [-6.3, 2.3],
+  "seed_73_box A": {"gen1_pct": 40.0, "gen2_pct": 38.0, "delta": -2.0, "CI95": [-6.3, 2.3],
                    "McNemar_p": 0.4408, "discordant": "gen1-only 24 · gen2-only 18",
                    "row_it_fires": "§7 'gen2 ≈ gen1 (interval contains zero)' — PLATEAU"},
-  "seed_47_llm2": {"gen1_pct": 43.7, "gen2_pct": 36.7, "delta": -7.0, "CI95": [-11.0, -3.0],
+  "seed_47_box B": {"gen1_pct": 43.7, "gen2_pct": 36.7, "delta": -7.0, "CI95": [-11.0, -3.0],
                    "McNemar_p": 0.00145, "discordant": "gen1-only 31 · gen2-only 10",
                    "row_it_fires": "§7 'gen2 < gen1, interval excluding zero' — CONSUMPTION"},
   "🔴_NEITHER_ROW_FIRES_ON_BOTH_SEEDS": "§7 requires plateau on BOTH or consumption with the interval excluding zero. Seed 73 gives the first, seed 47 the second.",

@@ -1,6 +1,6 @@
 {
  "document": "ET-IV E2 — the Pareto collapse rate, measured on real candidates BEFORE any spend (the number I owed 理)",
- "candidates": "poetry/cache/e1_7B.jsonl — mlx-community/Qwen2.5-7B-Instruct-4bit, 300 briefs x 16 samples, temp 0.8, max_tokens 96, generated on llm1. No API spend.",
+ "candidates": "poetry/cache/e1_7B.jsonl — mlx-community/Qwen2.5-7B-Instruct-4bit, 300 briefs x 16 samples, temp 0.8, max_tokens 96, generated on box A. No API spend.",
 
  "the_number": {
   "briefs": 300, "candidates_per_brief": 16,

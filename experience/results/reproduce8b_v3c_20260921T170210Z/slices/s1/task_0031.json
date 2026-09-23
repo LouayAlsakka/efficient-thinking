@@ -1,0 +1,35 @@
+{
+ "task_id": "task_0031",
+ "family": "v3",
+ "bug_class": "boundary",
+ "bug_region": "emit",
+ "program": "# region: shape\ndef shape(raw):\n    out = []\n    for tok in raw:\n        s = tok.strip()\n        if s.lstrip('-').isdigit():\n            out.append(int(s))\n    return out\n\n# region: emit\ndef emit(xs):\n    acc = 0\n    out = []\n    for v in xs[:-1]:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: sift\ndef sift(xs):\n    acc = 0\n    out = []\n    for v in xs:\n        acc = acc + v\n        out.append(acc)\n    return out\n\n# region: gather\ndef gather(xs, floor_=3):\n    return [v for v in xs if v >= floor_]\n\n# region: digest\ndef digest(xs):\n    return {'n': len(xs), 'min': min(xs) if xs else 0, 'span': (max(xs) - min(xs)) if xs else 0}\n\n# region: render\ndef render(summary, name='beta'):\n    out = dict(summary)\n    out['label'] = name.upper() if summary.get('n', 0) else 'EMPTY'\n    return out\n\n# region: run\ndef run(raw):\n    return render(digest(gather(sift(emit(shape(raw))))))\n",
+ "tests": "import unittest\nfrom program import run\n\nclass T(unittest.TestCase):\n    def test_case_00(self):\n        self.assertEqual(run(['3', '1', '2']), {'n': 3, 'min': 3, 'span': 10, 'label': 'BETA'})\n    def test_case_01(self):\n        self.assertEqual(run(['10', '0', '7', 'x']), {'n': 3, 'min': 10, 'span': 27, 'label': 'BETA'})\n    def test_case_02(self):\n        self.assertEqual(run([' 5 ', '-2', '8']), {'n': 3, 'min': 5, 'span': 14, 'label': 'BETA'})\n    def test_case_03(self):\n        self.assertEqual(run(['4:2', '9:1', 'bad']), {'n': 0, 'min': 0, 'span': 0, 'label': 'EMPTY'})\n    def test_case_04(self):\n        self.assertEqual(run(['12', '12', '1']), {'n': 3, 'min': 12, 'span': 49, 'label': 'BETA'})\n    def test_case_05(self):\n        self.assertEqual(run(['0']), {'n': 0, 'min': 0, 'span': 0, 'label': 'EMPTY'})\n    def test_case_06(self):\n        self.assertEqual(run(['6', '6', '6', '6']), {'n': 4, 'min': 6, 'span': 54, 'label': 'BETA'})\n    def test_case_07(self):\n        self.assertEqual(run(['2', 'hello', '40']), {'n': 1, 'min': 44, 'span': 0, 'label': 'BETA'})\n\nif __name__ == '__main__':\n    unittest.main()\n",
+ "symptom": "FAIL: ?                                  ^          ^^",
+ "symptom_region": null,
+ "dead_paths": [],
+ "regions": [
+  "shape",
+  "emit",
+  "sift",
+  "gather",
+  "digest",
+  "render"
+ ],
+ "seed": 234298762,
+ "_signature": "8ba71e8e10db",
+ "_test_identity": "test_case_00",
+ "_p1_sibling_regions": [
+  "shape"
+ ],
+ "_shape": {
+  "parser": "parse_ints",
+  "mappers": [
+   "running",
+   "running",
+   "drop_small"
+  ],
+  "agg": "minspan",
+  "fmt": "label"
+ }
+}

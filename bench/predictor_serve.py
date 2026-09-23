@@ -171,7 +171,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=8899)
     # DEFAULTS TO LOOPBACK ON PURPOSE. 形 could not reach /area from their checkout because this
-    # bound 127.0.0.1 on llm1 and I said "the endpoint is there" without saying WHOSE loopback
+    # bound 127.0.0.1 on box A and I said "the endpoint is there" without saying WHOSE loopback
     # . --host 0.0.0.0 puts it on the estate LAN; it is not a public route and there
     # is none to this box. The $10 WO-318 cap is enforced in AreaV0 against its own ledger file, so
     # a second caller shares the ceiling rather than raising it — that is the point of a meter in

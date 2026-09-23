@@ -19,7 +19,7 @@ also log the score vs a random older champion, to catch cycling (beating the new
 while regressing vs an older one).
 
   PYTHONPATH=. python scripts/selfplay_league.py --run-dir runs/league1 \
-      --init runs/conv_value_llm1/model.npz --arch-from runs/conv_value_llm1 \
+      --init runs/conv_value_boxA/model.npz --arch-from runs/conv_value_boxA \
       --sims 64 --games 128 --workers 16 --gate-every 3 --gate-games 40 \
       --promote-elo 200 --elo0 2000 --iters 400
 """

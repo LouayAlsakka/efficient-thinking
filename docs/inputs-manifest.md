@@ -8,8 +8,8 @@ on that reading.
 
 **The data stays untracked. This file is committed.** It is the checklist that was missing.
 
-⚠️ **A path here is a claim about ONE BOX.** Every row below was verified on **llm1** on 2026-09-19.
-A row does not mean the file exists anywhere else, and llm1's `/var/tmp` is not durable (none of
+⚠️ **A path here is a claim about ONE BOX.** Every row below was verified on **box A** on 2026-09-19.
+A row does not mean the file exists anywhere else, and box A's `/var/tmp` is not durable (none of
 these are under it). Replication status is in §Replication.
 
 
@@ -49,16 +49,16 @@ inputs exactly; if III's rows above are good, VII E-E is unblocked.
 
 ## Replication
 
-| file set | llm1 | llm2 | verified |
+| file set | box A | box B | verified |
 |---|---|---|---|
 | III data (2 files, 1.2 MB) | ✅ `~/chess-scaling/reasoning/data/` | ✅ `~/et_inputs/reasoning/data/` | md5 both ends, 2026-09-19 |
 | III caches (8 files, 104 MB) | ✅ `~/chess-scaling/reasoning/cache/` | ✅ `~/et_inputs/reasoning/cache/` | md5 both ends, 2026-09-19 |
 
-✅ **"Exists only on llm1" is no longer true for III.** All ten files were copied to llm2 and
+✅ **"Exists only on box A" is no longer true for III.** All ten files were copied to box B and
 **every one verified by md5 on BOTH ends** — a copy that completes is not a copy that is correct,
 and `scp` exiting 0 is not evidence. The originals were read only.
 
-⚠️ **IV's three files are still single-box (llm1, in the repo's own untracked `poetry/data/`).**
+⚠️ **IV's three files are still single-box (box A, in the repo's own untracked `poetry/data/`).**
 Not replicated: IV is parked pending a rater, so nothing is scheduled against them — but the row
 stays here so it is not forgotten when it unparks.
 

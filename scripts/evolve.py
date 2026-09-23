@@ -14,7 +14,7 @@ champion (run_dir/model.npz), regenerates its assigned mutant DETERMINISTICALLY 
 main process regenerates the winning mutant from the same seed to crown it -> no weights shipped.
 
   PYTHONPATH=. python scripts/evolve.py --run-dir runs/evolve1 \
-      --init runs/conv_value_from_llm1/model.npz --arch-from runs/conv_value_from_llm1 \
+      --init runs/conv_value_from_boxA/model.npz --arch-from runs/conv_value_from_boxA \
       --lam 16 --workers 16 --games 60 --sigma 0.03 --promote 0.55 --gens 300
 """
 from __future__ import annotations

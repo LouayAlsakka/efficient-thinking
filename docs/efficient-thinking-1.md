@@ -1056,7 +1056,7 @@ method's ingenuity.
   MCTS/PUCT, quiescence, the wide→narrow cascade (`MultiStageMCTSPlayer`).
   `chessnet/committee.py` — ensemble inference + agreement signal.
   `chessnet/train.py` — soft/hard + value training. `scripts/selfplay.py` — self-play iteration.
-- **Best model:** `runs/conv_value_llm1` (conv-96×8 + value, 3.45M params).
+- **Best model:** `runs/conv_value_boxA` (conv-96×8 + value, 3.45M params).
 - **Key hyperparameters:** conv width 96, depth 8; lr 5e-4 (train) / 1e-4 (self-play); gradient
   clip 1.0; MCTS c_puct 1.5; Dirichlet α 0.3; replay buffer 120K–300K.
 

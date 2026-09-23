@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""ET-IV — the acceptance check to run THE MOMENT a scoped Bedrock principal lands on llm1.
+"""ET-IV — the acceptance check to run THE MOMENT a scoped Bedrock principal lands on box A.
 
 Written before the credential exists so the first thing that touches it is reviewed rather than
 improvised. It answers, in order, the four things that have to be true before an arm runs:
@@ -32,14 +32,14 @@ def main():
     ap.add_argument("--region", default=os.environ.get("AWS_REGION", "us-east-1"))
     ap.add_argument("--profile", default=os.environ.get("AWS_PROFILE", "et-bedrock-rater"),
                     help="AWS profile to run as. Defaults to the SCOPED principal, never [default], "
-                         "which on llm1 is still the root key. Pass '' to inherit the environment.")
+                         "which on box A is still the root key. Pass '' to inherit the environment.")
     ap.add_argument("--ledger", default=os.path.join(HERE, "data", "iv_spend_ledger.json"))
     ap.add_argument("--out", default=os.path.join(HERE, "bedrock_acceptance.json"))
     a = ap.parse_args()
     import boto3
     from botocore.exceptions import ClientError
 
-    # NAME THE PRINCIPAL, DO NOT INHERIT IT. llm1's [default] AWS profile is still the ROOT key, so
+    # NAME THE PRINCIPAL, DO NOT INHERIT IT. box A's [default] AWS profile is still the ROOT key, so
     # running this check without AWS_PROFILE set makes it refuse at [1] — correctly, but for a
     # reason that reads like "the scoped principal was never created". It was: [et-bedrock-rater],
     # verified arn ...:user/et-bedrock-rater, is_root false, with iam:ListUsers and s3:ListBuckets
