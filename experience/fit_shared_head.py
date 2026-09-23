@@ -5,7 +5,7 @@ WHY THIS FILE EXISTS, AND WHY IT IS NOT A FLAG ON fit_gen_heads.py.
 §13b asks whether a generation's gain survives when the EXPERIENCE COMES FROM ANOTHER TASK FAMILY
 at the same amount. The SQL side of that comparison (R7) was a SINGLE-DECISION experiment: its
 states carry no `decision` field at all, so the three per-decision heads fit_gen_heads.py builds
-cannot be built from them (`KeyError: 'decision'`). 理 12436 ruled the form: BOTH sides of the
+cannot be built from them (`KeyError: 'decision'`). 理 ruled the form: BOTH sides of the
 §13b pair are fitted here as one shared head over all rows -- gen1' on the 1,437 SQL rows, and
 gen1-matched on 1,437 gen1 rows subsampled at a fixed seed -- so the pair holds AMOUNT fixed and
 FORM fixed and varies ORIGIN alone. `et8b_loop --head` consumes exactly this artifact; the flag
@@ -25,7 +25,7 @@ THE EMPTY-MASK REFUSAL IS INHERITED AND IS THE POINT. An empty held-out mask is 
 the training tasks -- accuracy AND all three controls computed inside the CV loop -- or a hard
 refusal. It never writes a zero that reads as a failed head with passing controls.
 
-Probe accuracy here is descriptive. The bar is problems solved on a paired run (理 11068).
+Probe accuracy here is descriptive. The bar is problems solved on a paired run (理).
 """
 import argparse, collections, json, os, sys
 import numpy as np
@@ -155,7 +155,7 @@ def main():
         print("  ⚠️ a control matched or beat the full head — read the controls note before using this")
 
     json.dump({
-        "document": "ET-8b §13b %s — ONE SHARED head (理 12436, option (i))" % a.name,
+        "document": "ET-8b §13b %s — ONE SHARED head (理, option (i))" % a.name,
         "arm": a.name,
         "head_form": "shared: one head for every decision point",
         "⚠️_form_vs_published_gen1": (a.form_note or
@@ -165,7 +165,7 @@ def main():
             "gen1' vs gen1-matched, both fitted here, both one shared head, both 1,437 rows."),
         "why_shared": (
             "R7's SQL states carry no `decision` field — that experiment was single-decision — so "
-            "three per-decision heads cannot be fitted from them. 理 12436 ruled both sides of the "
+            "three per-decision heads cannot be fitted from them. 理 ruled both sides of the "
             "pair to this form rather than spend 3 h of GPU regenerating SQL loop states."),
         "evaluation_mode": ("%d-fold CV over training tasks" % a.cv_folds) if CV else "held out",
         "fit_on": "task_id < %d" % a.cut,
@@ -181,7 +181,7 @@ def main():
         "how_to_read_the_controls": (
             "permuted must collapse to chance. If PCA-8 or the row subsample matches the full head, "
             "the signal needs neither dimensions nor examples and is a key being copied."),
-        "the_bar": "problems solved on a paired run (理 11068). Probe accuracy is a sanity check.",
+        "the_bar": "problems solved on a paired run (理). Probe accuracy is a sanity check.",
         "signed": "Sautee (sha-ta)"},
         open(a.json, "w"), indent=1, ensure_ascii=False)
     print("  wrote %s" % a.json)

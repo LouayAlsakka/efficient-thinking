@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ET-8 task set v3 — MANY DIFFERENT PROGRAMS, gated on having problems in it (理 11002/11009).
+"""ET-8 task set v3 — MANY DIFFERENT PROGRAMS, gated on having problems in it (理 ).
 
     python3 et8_env_v3.py gate --n 300 --seed 21 --out /tmp/v3_probe     # measure, emit nothing
     python3 et8_env_v3.py gen  --n 300 --seed 21 --out experience/tasks/v3
@@ -228,7 +228,7 @@ def make_task(idx, rng, keep_signatures):
         if sig in keep_signatures:
             continue                                  # never emit the same problem twice
         keep_signatures.add(sig)
-        # P1' (理 11068): the failing-test set must be reachable from >= 2 of THIS PROGRAM'S regions.
+        # P1' (理): the failing-test set must be reachable from >= 2 of THIS PROGRAM'S regions.
         # v2's P1 counted test identities ACROSS programs, which is meaningless once every program is
         # its own problem. Here it is answered per program, by actually trying the other regions.
         want = {f["test"] for f in f2}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ET-8b §13a — is the next generation's experience a RE-SAMPLE of the last one's corner?
 
-Louay's hypothesis (理 12342): gen1's rows come from the gen0-steered agent walking the same
+Louay's hypothesis (理): gen1's rows come from the gen0-steered agent walking the same
 problems, so they are correlated with gen0's, and accumulation is limited by the INDEPENDENCE of the
 experience rather than by its amount. §11 found the decomposition unresolved at n=300; this asks a
 different question of the data already on disk, and costs no GPU.
@@ -114,7 +114,7 @@ def main():
     samekey = sum(1 for r in Ml if keyf(r) in ekeys)
 
     out = {
-        "document": "ET-8b §13a — generation redundancy", "prereg": "gates §13a (理 12342)",
+        "document": "ET-8b §13a — generation redundancy", "prereg": "gates §13a (理)",
         "comparison": a.label,
         "earlier_dirs": a.earlier, "later_dir": a.later,
         "n_earlier_rows": int(len(Xe)), "n_later_rows": int(len(Xl)),

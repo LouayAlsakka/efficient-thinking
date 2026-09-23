@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""R5-C: the quality-cost FRONTIER as a curve — one table, both arms (理 11395/11397).
+"""R5-C: the quality-cost FRONTIER as a curve — one table, both arms (理 ).
 
 WHY A CURVE AND NOT R5-E's POINT. R5-E showed the base at ~9.2k tokens does not reach G at ~9.2k.
 That is ONE point, and its own bound said so. A curve says over WHAT RANGE the frontier is moved,
 and where — if anywhere — compute substitutes for the prior.
 
-THE READINGS WERE WRITTEN BEFORE THE RUNS (理 11395):
+THE READINGS WERE WRITTEN BEFORE THE RUNS (理):
   head curve ABOVE base curve across the range   -> the frontier is moved over a RANGE, not a point
   curves CROSS at low budget                     -> the head helps only where it has room to act
                                                     (§7.5's bound, restated in cost terms)
@@ -96,7 +96,7 @@ for hb, hv in sorted(head.items()):
                                           / hv["all_in_tokens"], 2),
                  "paired_head_minus_base": st})
 
-out = {"document": "R5-C — the quality-cost frontier as a CURVE (理 11395/11397)",
+out = {"document": "R5-C — the quality-cost frontier as a CURVE (理 )",
        "controller_cost_added_to_every_head_point": CTRL,
        "base_curve": base, "head_curve": head,
        "EXCLUDED_as_incomplete": {k: v for k, v in incomplete.items() if v},

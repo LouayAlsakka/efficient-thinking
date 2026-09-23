@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""R2c (理 11300): the head reads its state from the pass the AGENT MAKES ANYWAY.
+"""R2c (理): the head reads its state from the pass the AGENT MAKES ANYWAY.
 
 PRE-REGISTERED IN results/r2c_prereg.json, BEFORE THIS FILE EXISTED. Bar 502 tokens/episode,
 unchanged. Accounting rule, which is the whole substance of R2c: charge ONLY tokens the agent would
@@ -187,7 +187,7 @@ def main():
     wall = time.time() - t0
 
     n = len(use)
-    res = {"document": "R2c RESULT — the head over the agent's own prefill (理 11300)",
+    res = {"document": "R2c RESULT — the head over the agent's own prefill (理)",
            "prereg": "results/r2c_prereg.json — bar 502, accounting rule written before the build",
            "decisions": n, "mean_candidates": round(k / n, 2),
            "CHARGED tokens/episode": round(marg / n, 1),

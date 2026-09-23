@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Paired per-problem bootstrap + exact McNemar for any base-vs-G pair (理 11217's method, R1).
+"""Paired per-problem bootstrap + exact McNemar for any base-vs-G pair (理's method, R1).
 
 GENERIC ON PURPOSE. r1_bootstrap.py hard-codes the 7B's pairs and produced numbers already in the
 package; editing it to take new arms would silently re-define the thing already reported. This is

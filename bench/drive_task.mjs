@@ -1,4 +1,4 @@
-// SELECTOR CONTRACT (理 12247 adds a frame to every STATIC screen: venue name, step title,
+// SELECTOR CONTRACT (理 adds a frame to every STATIC screen: venue name, step title,
 // a 'so far' summary like 'Haircut · Marcus · Tue 10:00', a back control and the AskBar).
 // EVERY click below is exact-match on the chip's own text node, so the summary line cannot
 // be hit by accident: 'Haircut' substring-matches the summary, 'Haircut' exact does not.
@@ -6,7 +6,7 @@
 // mode violation) rather than silently clicking the wrong thing — which is the behaviour I want.
 // WO-312 — drive ONE task from the scripted list all the way to submit, through the real STATIC
 // head, with 鉋's logger running. This is the first end-to-end check that the three pieces meet:
-// my task list's arg shapes, 形's reducer, and 鉋's replay log. 形 (12117) and 鉋 (12093) both
+// my task list's arg shapes, 形's reducer, and 鉋's replay log. 形 and 鉋 both
 // asked to see a REAL tap rather than a synthetic one.
 import { chromium } from 'playwright';
 import fs from 'node:fs';
@@ -40,7 +40,7 @@ await tap(`day ${task.target.date}`, () => p.getByText(task.target.date, { exact
 await tap(`slot ${task.target.slot}`, () => p.getByText(task.target.slot, { exact: true }).first().click());
 
 // form-fill is typing, NOT taps — the prereg says one submission is one tap and typing is not taps
-// BY PLACEHOLDER, NOT BY POSITION. 理 12247's frame put the AskBar ABOVE the form, so
+// BY PLACEHOLDER, NOT BY POSITION. 理's frame put the AskBar ABOVE the form, so
 // inputs.nth(0) silently became the chat bar: a run typed the NAME into ask.draft and the PHONE
 // into form.book.name, left the phone empty — and still scored 5 taps, hit@N 1.0 and a reached
 // submit screen. None of the five measurements can see a wrongly-filled form, so a positional

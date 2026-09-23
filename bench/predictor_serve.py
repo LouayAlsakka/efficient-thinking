@@ -46,7 +46,7 @@ def _section(prompt, header, end):
 def fake_transport_factory():
     """A stand-in that ANSWERS FROM THE STATE, so different turns give different heads.
 
-    It reads the REAL UiState shape 形 sent (record 12065) — selection.offer_ids / .staff / .day /
+    It reads the REAL UiState shape 形 sent (the record) — selection.offer_ids / .staff / .day /
     .slot and sheet — not the invented {service, stylist, slot} the first draft keyed on, which the
     reducer never produces, and it names ids out of the VENUE block so its args resolve.
     """
@@ -140,7 +140,7 @@ class Handler(BaseHTTPRequestHandler):
                          "turn": Handler.predictor.turns, "mode": Handler.mode})
 
     def _area(self):
-        """WO-318 §4 — utterance -> typed area. 理 12409's demo endpoint.
+        """WO-318 §4 — utterance -> typed area. 理's demo endpoint.
 
         Takes an utterance and a venue and NOTHING ELSE. No state, no prior turn, no identity, no
         session history: there is no field here through which any of them could arrive, which is
@@ -172,7 +172,7 @@ def main():
     ap.add_argument("--port", type=int, default=8899)
     # DEFAULTS TO LOOPBACK ON PURPOSE. 形 could not reach /area from their checkout because this
     # bound 127.0.0.1 on llm1 and I said "the endpoint is there" without saying WHOSE loopback
-    # (12410/12439). --host 0.0.0.0 puts it on the estate LAN; it is not a public route and there
+    # . --host 0.0.0.0 puts it on the estate LAN; it is not a public route and there
     # is none to this box. The $10 WO-318 cap is enforced in AreaV0 against its own ledger file, so
     # a second caller shares the ceiling rather than raising it — that is the point of a meter in
     # code rather than a watched number.

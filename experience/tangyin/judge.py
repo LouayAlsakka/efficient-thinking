@@ -48,7 +48,7 @@ class Judge:
             if provider == "bedrock":
                 import sys as _s, os as _o
                 _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "..", "..", "poetry"))
-                import api_rater as _AR; self.client = _AR.bedrock_client()   # named principal, record 12305
+                import api_rater as _AR; self.client = _AR.bedrock_client   # named principal, the record
             elif provider == "anthropic":
                 import anthropic; self.client = anthropic.Anthropic()
             else: raise SystemExit(f"unknown provider {provider}")

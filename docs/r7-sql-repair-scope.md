@@ -1,6 +1,6 @@
 # R7 — SQL query repair as a second search structure: SCOPE, before a line of generator
 
-**理 11398:** *"Scope it in writing before a line of generator, cost estimate first, one day to
+**理:** *"Scope it in writing before a line of generator, cost estimate first, one day to
 build and gate."* This is that document. **No generator code exists yet and none should until this
 is ruled.**
 

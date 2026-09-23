@@ -11,7 +11,7 @@
                        and g1-matched is one shared head on 1,437, so that difference varies FORM
                        and AMOUNT at once. This file refuses to print it even if asked.
 
-§14 (理 12368) IS TWO CONDITIONS AND BOTH ARE CHECKED SEPARATELY, because a pairing can pass the
+§14 (理) IS TWO CONDITIONS AND BOTH ARE CHECKED SEPARATELY, because a pairing can pass the
 first and fail the second and the difference is the whole point:
     (a) the 95% interval excludes zero
     (b) its LOWER BOUND exceeds the largest within-head-arm draw of this session
@@ -39,7 +39,7 @@ ALIASES = {("b", "1"): "b1x", ("g0", "1"): "g0x", ("g1", "1"): "g1x",
 ARM_LABEL = {"b": "base", "g0": "gen0 head", "g1": "gen1 head (published, 3 per-decision, 2824 rows)",
              "g1p": "gen1' (SQL, one shared head, 1437 rows)",
              "g1m": "gen1-matched (gen1 subsampled to 1437, one shared head)"}
-FORBIDDEN = {("g1", "g1m")}   # 理 12436: confounded, dropped, not reported
+FORBIDDEN = {("g1", "g1m")}   # 理: confounded, dropped, not reported
 
 
 def green_rate(path):
@@ -147,7 +147,7 @@ def main():
                               "prediction: gen1' > gen1-matched, both intervals excluding zero and "
                               "clearing the largest within-head-arm draw."),
             "within_arm_sd": "the head stabilises the run",
-            "g1_minus_g1m": "DROPPED (理 12436) — confounds form with amount. Not computed here."},
+            "g1_minus_g1m": "DROPPED (理) — confounds form with amount. Not computed here."},
         "§14": {"a": "the 95% interval excludes zero",
                 "b": "its lower bound exceeds the largest within-head-arm draw of this session",
                 "bar_points": largest_head_draw,

@@ -2,10 +2,10 @@
 """WO-318 — the N-replicate runner for the area classifier. Pre-registered: docs/area-classifier-prereg.md
 
 Deliberately SHAPE-INDEPENDENT. The one thing not yet decided is what an `area` IS — a typed object
-or a statement in the search DSL (理 12377, my 12378) — and the disagreement comparison depends on
+or a statement in the search DSL (理, my 12378) — and the disagreement comparison depends on
 that answer. So the comparator is INJECTED, not assumed, and this file never parses an area.
 
-形 12392's discipline, applied here: build the part whose shape is known, wait for the rest. What is
+形's discipline, applied here: build the part whose shape is known, wait for the rest. What is
 known is the protocol — N independent calls per utterance, the reported number being the
 disagreement ACROSS replicates, latency as median and p90, and a refusal to report a rate computed
 over a set with any unparsed reply.
@@ -22,7 +22,7 @@ def run_set(utterances, classify, n=5, comparator=None, label=""):
     """
     if comparator is None:
         sys.exit("refusing to run: no comparator supplied. The area's representation is not settled "
-                 "(理 12377) and a default comparison would measure formatting, not meaning.")
+                 "(理) and a default comparison would measure formatting, not meaning.")
     rows, lat, unparsed = [], [], 0
     for u in utterances:
         reps, times = [], []

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""R6 — the strongest SIMPLE baselines at G's own compute (理 11398). Pre-registered readings below.
+"""R6 — the strongest SIMPLE baselines at G's own compute (理). Pre-registered readings below.
 
 THE QUESTION. G is a logistic head fitted on VERIFIED history. Two cheaper things could explain its
 gain without any learned readout:
@@ -8,7 +8,7 @@ gain without any learned readout:
   (b) MAJORITY VOTE over 5 sampled hypotheses at that decision. Charged 5 short passes.
   (c) base + 35% ordinary search = R5-E's budget-16 arm, ALREADY MEASURED at 22.3%.
 
-READINGS WRITTEN BEFORE THE RUN (理 11398):
+READINGS WRITTEN BEFORE THE RUN (理):
   (a) or (b) ~= G          -> the learned readout adds nothing over the model's own preference
   both below G by > CI     -> EXPERIENCE (a head trained on verified history) is responsible,
                               not merely extra inference at the decision

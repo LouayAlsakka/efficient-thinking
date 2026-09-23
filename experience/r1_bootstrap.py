@@ -1,4 +1,4 @@
-"""R1 (理 11217): paired per-problem bootstrap with 95% CI on success AND actions, plus McNemar on
+"""R1 (理): paired per-problem bootstrap with 95% CI on success AND actions, plus McNemar on
 success, for every G-vs-base pair. Replaces the point deltas in the transfer table.
 
 PAIRED, because every pair is the SAME problems run twice -- the arms differ only in whether the

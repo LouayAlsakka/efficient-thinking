@@ -22,7 +22,7 @@ hard refusal. It never writes a zero.
 
 THE ARCHITECTURE IS NOT RE-CHOSEN HERE. gen0 applied the spec's rule (docs/et8b-loop-gates.md §3)
 before any loop ran and selected per-decision; every later generation inherits it. Probe accuracy is
-reported descriptively and nothing is selected on it. And per 理 11068 the bar is problems solved on
+reported descriptively and nothing is selected on it. And per 理 the bar is problems solved on
 a paired run — probe accuracy is a sanity check, not the result.
 """
 import argparse, collections, json, os, sys
@@ -182,7 +182,7 @@ def main():
         "architecture_not_rechosen": (
             "gen0 applied docs/et8b-loop-gates.md §3 before any loop ran and selected per-decision; "
             "this generation inherits it. Nothing here is selected on the evaluation."),
-        "the_bar": "problems solved on a paired run (理 11068). Probe accuracy is a sanity check.",
+        "the_bar": "problems solved on a paired run (理). Probe accuracy is a sanity check.",
         "source_states": os.path.abspath(a.states), "layer": a.layer, "heads": res,
         "how_to_read_the_controls": (
             "permuted must collapse to chance. If PCA-8 or the row subsample matches the full head, "

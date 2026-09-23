@@ -25,7 +25,7 @@ THE CONTROLS ARE NOT OPTIONAL AND THEY RUN IN THE SAME COMMAND:
 A 100% held-out result that PASSES its permutation control is what v1 produced, and it was the
 label sitting in the prompt. Those three together are what caught it; all three are printed.
 
-THE BAR (理 11068): problems solved and cost. NOT localisation -- the arm that localised better and
+THE BAR (理): problems solved and cost. NOT localisation -- the arm that localised better and
 solved half as many would have passed a localisation bar, twice, on two different task sets.
 """
 from __future__ import annotations
@@ -130,7 +130,7 @@ def hidden_at(model, tok, messages, layers, prefix=""):
 def logistic_fit(X, y, l2=1e-3, **_):
     """Binary scorer: is THIS candidate the bug region? Linear, on purpose.
 
-    FIT BY L-BFGS (scipy), NOT BY HAND-TUNED GRADIENT DESCENT (理 11152, and then a defect of mine
+    FIT BY L-BFGS (scipy), NOT BY HAND-TUNED GRADIENT DESCENT (理, and then a defect of mine
     that ruling exposed). The first version ran a fixed 400 iterations with the gradient averaged
     over the pool, so a larger pool took smaller effective steps. Told to fix it, I switched to a
     loss-change criterion -- which hit a 40,000-iteration cap without converging -- and then raised
@@ -249,7 +249,7 @@ def cmd_fit(a):
         "label-in-the-prompt was found. All three are printed, always.")
     out["the_bar"] = ("problems solved and cost on a paired run. Head accuracy is NOT the bar: the "
                       "arm that localised better and solved half as many would have passed a "
-                      "localisation bar twice, on two different task sets (理 11068).")
+                      "localisation bar twice, on two different task sets (理).")
     json.dump(out, open(a.out, "w"), indent=1)
     print(json.dumps(out, indent=1))
 

@@ -194,7 +194,7 @@ def main():
                      "reproduces": all(abs(x - y) < 0.0005 for x, y in zip(got, want))}
         print("  probe reproduction: %s  %s vs %s" % (assertion["reproduces"], got, want), file=sys.stderr)
 
-    # ---- tie split, from THESE fold predictions (§3b, 理 12092) -----------------------------
+    # ---- tie split, from THESE fold predictions (§3b, 理) -----------------------------
     tie = [i for i in idx if meta[i]["judge_pick"] == "TIE"]
     com = [i for i in idx if meta[i]["judge_pick"] != "TIE"]
     def frac(ii, key):
@@ -242,7 +242,7 @@ def main():
                                "an UPPER bound: that token also begins other words). The forced pick never "
                                "touches it: the pick is logit(A) vs logit(B) alone.")},
         "prompt_inspection": {
-            "asked_by": "理 12095 — 66% ties on decisive pairs is high; say whether the prompt or the template invites TIE",
+            "asked_by": "理 — 66% ties on decisive pairs is high; say whether the prompt or the template invites TIE",
             "chat_template": ("Qwen2.5's template contributes NO system text of its own once a system message is "
                               "supplied, and adds no tie language: the rendered prompt is exactly "
                               "<|im_start|>system\\n<our system><|im_end|>\\n<|im_start|>user\\n<our user><|im_end|>"
@@ -256,7 +256,7 @@ def main():
             "but_it_is_not_the_whole_cause": ("the same prompt produces a 98.5% tie rate at 1.5B and 26% at 14B, so "
                                               "the rate is prompt AND capability; the prompt sets the floor on how "
                                               "cheap abstaining is, and §3b's F2 removes exactly that."),
-            "not_changed_for_F1": "per 理 12095 the three-way prompt is read verbatim as the check arm; only F2 differs.",
+            "not_changed_for_F1": "per 理 the three-way prompt is read verbatim as the check arm; only F2 differs.",
         },
         "probe_reproduction_assertion": assertion,
         "per_fold": fold_out,

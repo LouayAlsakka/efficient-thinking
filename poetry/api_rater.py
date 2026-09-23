@@ -38,9 +38,9 @@ def load_prices(path=COST_ARTIFACT):
     with open(path) as f:
         doc = json.load(f)
     # Both tables are loaded: the direct-API one for the record of what was planned against, and
-    # the Bedrock one the meter actually bills through (理 11747). They are keyed differently —
+    # the Bedrock one the meter actually bills through (理). They are keyed differently —
     # Bedrock ids are INFERENCE PROFILE ids (us.anthropic.…), because these models are
-    # INFERENCE_PROFILE-only and the bare foundation-model id will not invoke (雲 11749, confirmed
+    # INFERENCE_PROFILE-only and the bare foundation-model id will not invoke (雲, confirmed
     # by experience/tangyin/judge.py having run us.anthropic.claude-opus-4-7).
     prices = {}
     for block in ("prices_read_2026-09-20", "bedrock_prices_2026-09-21"):
@@ -138,7 +138,7 @@ def bedrock_client(region=None, service="bedrock-runtime"):
 
     llm1's [default] profile was the account ROOT key until 2026-09-23, and ten call sites across
     this repo built a client with `boto3.client(...)` bare — so each of them authenticated as
-    whatever happened to sit in [default] (鉄, record 12305). One definition, not ten copies that
+    whatever happened to sit in [default] (鉄, the record). One definition, not ten copies that
     drift: AWS_PROFILE overrides, NIRA_AWS_PROFILE='' restores the implicit session deliberately,
     and the default is the SCOPED rater principal.
     """
@@ -151,7 +151,7 @@ def bedrock_client(region=None, service="bedrock-runtime"):
 def bedrock_transport(req, client=None, region=None, **_):
     """AWS Bedrock, via the SAME client shape experience/tangyin/judge.py already uses.
 
-    理 11747: Paper IV's judge runs on Bedrock, not a direct Anthropic key. judge.py has run Opus 4.7
+    理: Paper IV's judge runs on Bedrock, not a direct Anthropic key. judge.py has run Opus 4.7
     this way, so this is that path re-used rather than a second one invented.
 
     Two details carried over from judge.py rather than rediscovered:

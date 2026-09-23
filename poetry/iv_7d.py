@@ -16,7 +16,7 @@ replaces that judge with the frontier model — so stage 2 rates the picks PAIRW
 field: random-vs-checker, random-vs-canon, checker-vs-canon), which is also what the cost line
 budgets ("100 fields -> 3 pairs each").
 
-⚠️ THIS IS A NEW MEASUREMENT, NOT A REPRODUCTION. 理 11768 §3: selection_7d.json records its scores
+⚠️ THIS IS A NEW MEASUREMENT, NOT A REPRODUCTION. 理 §3: selection_7d.json records its scores
 and not its instrument — no adapter hash — so identity with the run that produced canon 7.62 cannot
 be established. The adapter used here is hashed into the output.
 
@@ -120,7 +120,7 @@ def main():
 
     json.dump({"document": "ET-IV 7d stage 1 — the three selectors' picks, local, $0.00",
                "⚠️_new_measurement_not_a_reproduction":
-                   "selection_7d.json records its scores and not its instrument (理 11768 §3), so "
+                   "selection_7d.json records its scores and not its instrument (理 §3), so "
                    "identity with the run that produced canon 7.62 cannot be established.",
                "prototype_bound": "the 7b canon judge is a noise-level prototype (n=34 corpus); "
                                   "this measures the PIPELINE, not G2p (selection_7d.py's own header)",

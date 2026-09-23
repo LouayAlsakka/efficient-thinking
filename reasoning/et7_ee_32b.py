@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""ET-VII E-E — the 32B arm, in ONE run and ONE artefact (理 12125).
+"""ET-VII E-E — the 32B arm, in ONE run and ONE artefact (理).
 
 Everything the other judges needed three passes to produce, from one walk over the 137 primary cells:
   · the TIE-SCORED A      — the three-way prompt, generated, 4 tokens (§2's original definition)
@@ -258,7 +258,7 @@ def main():
             picks["%s_%s" % (form, o)] = {"n": len(meta), "picked_A": n_a,
                                           "frac_A": round(n_a / len(meta), 4)}
 
-    out = {"document": "ET-VII E-E — the 32B arm, one run (理 12125)",
+    out = {"document": "ET-VII E-E — the 32B arm, one run (理)",
            "prereg": "docs/et7-ee-prereg.md §3b + §3c + §3d",
            "prereg_sha": os.environ.get("PREREG_SHA", ""),
            "judge": a.judge, "n_blocks": meta[0]["n_blocks"], "n_cells": len(meta),

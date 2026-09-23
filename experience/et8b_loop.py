@@ -221,7 +221,7 @@ def main():
     ap.add_argument("--budget", type=int, default=BUDGET)
     ap.add_argument("--decisions", type=int, default=DECISIONS,
                     help="head decisions allowed per episode. Default %d is the loop as published; "
-                         "1 restricts it to a single head decision (理 12436's variance arm)." % DECISIONS)
+                         "1 restricts it to a single head decision (理's variance arm)." % DECISIONS)
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
     head = None

@@ -203,7 +203,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
         # WHICH region is the AGENT'S OWN greedy choice, not the symptom region and not forced: the
         # inspect step stays the model's, and the head does not act there (a head at THAT step would
         # be the same six-row table). G acts at the first hypothesis AFTER the inspect.
-        # G: the READ-ONLY HEAD (理 11110). At the first hypothesis AFTER an inspect -- the only
+        # G: the READ-ONLY HEAD (理). At the first hypothesis AFTER an inspect -- the only
         # decision point in this programme whose prompts are distinct (gate 1.000 on v3, 0.005-0.088
         # everywhere else) -- score one teacher-forced candidate per region and take the argmax. The
         # head never writes: it chooses among actions the model itself would emit, and the

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""R4b floor check — pre-registered, run BEFORE any probe is fit (r4_prereg.json, 理 11300).
+"""R4b floor check — pre-registered, run BEFORE any probe is fit (r4_prereg.json, 理).
 
 REFUSES to report on fewer than 300 episodes. The first R4 run reported 262 and 262 is not 300:
 a rate over a partial set is a rate over an unknown population.
@@ -23,7 +23,7 @@ ad = collections.Counter(s.get("action") for s in steps)
 tot = sum(ad.values())
 res = {
  "measurement": "R4b FLOOR CHECK — Meta-Llama-3.1-8B-Instruct-4bit on v3 seed 21's 300, inspect-first, budget 12.",
- "prereg": "results/r4_prereg.json (the floor) + 理 11300 (this model, one more and then stop)",
+ "prereg": "results/r4_prereg.json (the floor) + 理 (this model, one more and then stop)",
  "episodes": n,
  "base": "%d/%d = %.1f%%, %.2f mean actions" % (green, n, 100.0 * green / n, acts),
  "comparators_on_the_SAME_300": {
@@ -32,7 +32,7 @@ res = {
  "pre-registered floor": "5%",
  "VERDICT": ("ABOVE THE FLOOR — R4 is answerable on this model and the probe is fit next."
              if green / n >= FLOOR else
-             "BELOW THE FLOOR — v3 is out of this model's range. R4 = (c) per 理 11300: 8a says v3 "
+             "BELOW THE FLOOR — v3 is out of this model's range. R4 = (c) per 理: 8a says v3 "
              "is calibrated to the 7B and out of range for a 4-bit 3B and for Llama-3.1-8B-4bit, "
              "and the generality question is handed to 8c/8d by name. NO THIRD MODEL."),
  "action_distribution_because_a_floor_must_be_shown_not_to_be_a_FORMAT_failure": {

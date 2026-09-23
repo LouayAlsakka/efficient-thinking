@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Does every file agree with results/et8_constants.json? Fails loudly if not (理, record 11409).
+"""Does every file agree with results/et8_constants.json? Fails loudly if not (理, the record).
 
 THE RULE: one machine-readable registry, a checker that fails, and documents that CITE rather than
 re-draw. 理 applied it to the 64-bit address tail after two specs allocated the same bits. The same

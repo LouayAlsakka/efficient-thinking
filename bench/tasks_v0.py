@@ -74,7 +74,7 @@ def main():
     days = open_days(hours, start, a.open_days)
 
     # THE PATH IS READ FROM THE TRANSACTION BLOCK, NOT ASSUMED. Every offer in a venue shares that
-    # block, which is why three offers do not change the depth (理 12184, on the schema at a2a
+    # block, which is why three offers do not change the depth (理, on the schema at a2a
     # ed97c406): `resource.kind: "none"` or `select: "auto"` removes the staff step, and
     # granularity decides whether a day and a time are chosen at all. A generator that hardcodes
     # offer -> staff -> day -> slot -> submit measures v0 and nothing else, and the WO's own

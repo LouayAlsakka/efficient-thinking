@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P0 (理 11002): count the DISTINCT PROBLEMS in a task set before counting anything else.
+"""P0 (理): count the DISTINCT PROBLEMS in a task set before counting anything else.
 
     python3 et8_task_gate.py --tasks experience/tasks/v2
 

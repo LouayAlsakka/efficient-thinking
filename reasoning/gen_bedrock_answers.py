@@ -8,7 +8,7 @@ so a frontier model can sit on the pairwise reasoning-GELO ladder as the high an
 import argparse, json, boto3
 import os as _o, sys as _s
 _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "..", "poetry"))
-import api_rater as _AR   # the ONE place this repo names its AWS principal (record 12305)
+import api_rater as _AR   # the ONE place this repo names its AWS principal (the record)
 
 
 def main():
@@ -23,7 +23,7 @@ def main():
     args = ap.parse_args()
 
     d = json.load(open(args.answers))
-    rt = _AR.bedrock_client(args.region)   # named principal, record 12305
+    rt = _AR.bedrock_client(args.region)   # named principal, the record
     outs = []
     for i, q in enumerate(d["questions"]):
         body = {"messages": [{"role": "user", "content": q["problem"] + "\nSolve step by step, then state your final answer."}],

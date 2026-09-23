@@ -12,9 +12,9 @@ two JSON blobs measures FORMATTING. A replicate rate is the one number the word 
 on, and a comparator that quietly works is worse than one that fails, because it inflates or hides
 the thing it is there to count.
 
-⚠️ THE SHAPE IS CONTESTED AND THIS FILE DOES NOT PICK A SIDE. 形 12440 showed doc 239 and the
+⚠️ THE SHAPE IS CONTESTED AND THIS FILE DOES NOT PICK A SIDE. 形 showed doc 239 and the
 design of record disagree on what `intent` and `commit` ARE: 239 has `intent ∈ {ask, commit}` with
-`commit ::= tag_id | null`; the walkthrough, schema.py's `_INTENTS`, 理 12408 and my own live
+`commit ::= tag_id | null`; the walkthrough, schema.py's `_INTENTS`, 理 and my own live
 `/area` all have `intent` one of eight and `commit` a boolean. Those are different axes wearing the
 same field name, and under 239's shape `area.intent in node.required_by` can only ever fire for the
 literal "ask".
@@ -104,7 +104,7 @@ def make_comparator(parents=None, taxonomy=None):
         sa, sb = shape_of(a), shape_of(b)
         if sa != sb or sa == "unknown":
             raise ShapeMismatch(
-                "refusing to compare a %r area with a %r one (形 12440: the two shapes disagree on "
+                "refusing to compare a %r area with a %r one (形: the two shapes disagree on "
                 "what `intent` and `commit` ARE). Coercing them would make an open design question "
                 "into a number nobody can interpret." % (sa, sb))
         return canonical(a, parents) == canonical(b, parents)

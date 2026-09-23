@@ -24,23 +24,23 @@ That gap is not theoretical. On 2026-09-22 this lane measured a system everyone 
 Same model, same week, same estate. **A consistency claim nobody had measured was wrong by five
 points**, and 100K venues multiplies a classifier's spread by 100,000.
 
-## 0. Amended 2026-09-23 on 理 12380/12381/12382
+## 0. Amended 2026-09-23 on 理
 
 - **Two classifiers are measured, not one.** A local 7B (MLX, on llm2, scheduled around VIII-b) and
   Bedrock. **The choice between them is made on disagreement rate and phone latency, not on cost**
-  (理 12380 §2) — so latency is a measured quantity here, below, and not a footnote.
+  (理 §2) — so latency is a measured quantity here, below, and not a footnote.
 - **Cap: $10 total Bedrock spend for WO-318**, enforced in the same meter as IV's $40, which is
   enforced in code with a running meter. Local compute is uncapped and scheduled around VIII-b.
 - **Tagging is NOT in this document.** 庭 hand-tags the ten venues from their compiled offer sheets
-  (理 12381, on Louay's word); the hand-tagged ten are the gold set, and the first measurement of
+  (理, on Louay's word); the hand-tagged ten are the gold set, and the first measurement of
   any future automatic tagger is agreement with them. Nothing here measures tagging.
-- **The gold sets (理 12382 §8) close the gap §4 of this document opens.** Gold utterances carry
+- **The gold sets (理 §8) close the gap §4 of this document opens.** Gold utterances carry
   `intent, tags, commit, expected visible_ids` per sentence, human-authored and second-person
   reviewed. **That is the labelled set §4 says correctness needs**, so correctness moves from "a
   separate measurement" to a measurement this document can name. I review 案内's utterances; a
   reviewer who also owns the measurement is a conflict, so my review is recorded as a review and
   the authorship stays 案内's.
-- **Dependency, raised to 案内 (12378):** if `area` is a DSL statement rather than a typed object,
+- **Dependency, raised to 案内:** if `area` is a DSL statement rather than a typed object,
   **the disagreement rate needs a canonical form or it measures formatting instead of meaning.**
   If the grammar admits one and the validator emits it, disagreement is exact equality on the
   canonical statement. If it does not, a normalisation step is added here and named.
@@ -59,7 +59,7 @@ That is the chess-match rule 理 registered for the loop (12243), applied one le
 2. **Tag-set disagreement rate** — per utterance, the mean pairwise Jaccard distance between the N
    replicates' `tags`. Reported with the fraction of utterances that are unanimous.
 3. **Unresolved-tag rate** — tags the classifier emitted that do not exist in that venue's tag set.
-   ⚠️ **This is a measurement of the TAXONOMY's coverage, not an error path** (理 12311 §1a, on this
+   ⚠️ **This is a measurement of the TAXONOMY's coverage, not an error path** (理 §1a, on this
    lane's own rule at `wo312-measurement-prereg.md` §6). A venue or utterance set where dropping is
    common is a finding about the registry. If it is only ever swallowed as an error, the registry's
    gaps are invisible: they look like users asking for things that do not exist.
@@ -100,9 +100,9 @@ single-value `commit`; closed-enum `intent`. Two areas are equal iff their canon
 structurally equal. Implemented once, in `bench/area_equal.py`, and used by the replicate
 measurement and by 鉋's replay tool — one property, reused, not reinvented per consumer.
 
-⚠️ **The comparator REFUSES across shapes rather than coercing.** 形 12440 showed doc 239 and the
+⚠️ **The comparator REFUSES across shapes rather than coercing.** 形 showed doc 239 and the
 design of record disagree on what `intent` and `commit` ARE — 239 has `intent ∈ {ask, commit}` with
-`commit ::= tag_id | null`; the walkthrough, `schema.py`'s `_INTENTS`, 理 12408 and the live `/area`
+`commit ::= tag_id | null`; the walkthrough, `schema.py`'s `_INTENTS`, 理 and the live `/area`
 all have eight intents and a boolean commit. A comparator that silently accepted both would turn an
 open design question into a number nobody could interpret. The shape is sniffed on `commit`, never
 on `intent`, because `"ask"` is legal in both vocabularies and is the most common value.
@@ -130,7 +130,7 @@ reason: a filter that silently broadens what the user asked for is a glitch the 
 numbers score as perfect.
 
 ⏳ **Offered, not registered:** a *filter surprise rate* — nodes that leave the screen without the
-utterance naming them (12373, supporting 女将 12372). It needs no new instrumentation, since the log
+utterance naming them (12373, supporting 女将). It needs no new instrumentation, since the log
 row already carries `visible_ids`, `folded_ids` and `walked_up`. It enters this document only if 理
 or 匠 asks for it.
 
@@ -147,7 +147,7 @@ or 匠 asks for it.
 ## 4. What this cannot show
 
 It measures **self-consistency, not correctness.** A classifier that maps every utterance to the
-same wrong area scores perfectly here. **The gold utterances of 理 12382 §8 are the labelled set
+same wrong area scores perfectly here. **The gold utterances of 理 §8 are the labelled set
 that closes this**, and correctness is scored against them by version — but the two numbers are
 reported side by side and neither substitutes for the other: **this one is a floor, and a system
 that fails it cannot be fixed by a better label set.** Registered so that a good number here is

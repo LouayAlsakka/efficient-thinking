@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""R2b (理 11244): score all k candidates from ONE cached prefix, and measure the overhead.
+"""R2b (理): score all k candidates from ONE cached prefix, and measure the overhead.
 
 THE BAR, FIXED BEFORE THIS FILE EXISTED: <= 502 tokens/episode (r2b_prereg.json). 502 = 0.71 actions
 saved x 707 tokens per marginal action, measured by an OLS fit of tokens on actions over the base's

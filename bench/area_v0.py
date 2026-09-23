@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-318 — utterance -> `area`, for the two-venue demo (理 12409).
+"""WO-318 — utterance -> `area`, for the two-venue demo (理).
 
   classify(utterance, venue) -> Area
       .area        {intent, tags, commit, taxonomy}   — tags exist in THIS venue's set, always
@@ -8,7 +8,7 @@
       .cost_usd    metered
       .error       set when nothing parsed; the caller leaves `area` UNCHANGED (§3's rule)
 
-THE MODEL COMPILES, IT NEVER EXECUTES (理 12377). This returns a typed value; `visible()` does the
+THE MODEL COMPILES, IT NEVER EXECUTES (理). This returns a typed value; `visible` does the
 work, deterministically, from the compiled tree. Nothing here renders, ranks or decides.
 
 WHAT IS SENT: the utterance and the venue's tag ids. **No state, no prior turn, no identity, no

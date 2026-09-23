@@ -168,7 +168,7 @@ Policy-identity probe as in §3a.
 | any §3b control fires | that judge's Δ_forced is withdrawn before anything is said |
 
 **Additional statistic, registered.** Probe accuracy restricted to the cells where the three-way judge tied, and to
-the cells where it committed, from the same fold predictions (requested 2026-09-22, 理 12092). It is descriptive: it
+the cells where it committed, from the same fold predictions (requested 2026-09-22, 理). It is descriptive: it
 tells what the tie-scored gap was made of; it does not license a claim on its own.
 
 **What §3b does not change.** The tie-scored A stays in the paper as a secondary reading ("as a selector the judge is

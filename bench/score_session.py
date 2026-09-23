@@ -78,7 +78,7 @@ def main():
     final = rows[-1]["state_after"] if rows else {}
     submitted = bool(final.get("submit_key"))
 
-    # WHAT THE FIVE MEASUREMENTS CANNOT SEE. 理 12247's frame put the AskBar above the identity
+    # WHAT THE FIVE MEASUREMENTS CANNOT SEE. 理's frame put the AskBar above the identity
     # form; a driver selecting inputs by POSITION then typed the name into ask.draft and the phone
     # into form.book.name, leaving the phone empty — and scored 5 taps, hit@N 1.0, submit reached,
     # identical to a correct run on every registered measurement. Completion is screen-only and

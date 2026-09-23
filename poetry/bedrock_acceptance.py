@@ -4,13 +4,13 @@
 Written before the credential exists so the first thing that touches it is reviewed rather than
 improvised. It answers, in order, the four things that have to be true before an arm runs:
 
-  1  THE PRINCIPAL IS NOT ROOT. 理 11747 and 鉄 11759 (WO-265 S1): a scoped principal with
+  1  THE PRINCIPAL IS NOT ROOT. 理 and 鉄 (WO-265 S1): a scoped principal with
      bedrock:InvokeModel only. If get_caller_identity still says :root, this REFUSES and stops —
      it does not "work anyway", because working anyway is how root keys stay in place.
   2  THE PRINCIPAL IS ACTUALLY SCOPED. It must NOT be able to read IAM or list buckets. A key that
      can invoke Bedrock AND do everything else is the root key with a new name.
   3  THE MODEL ID INVOKES. `us.anthropic.claude-fable-5-1` — the INFERENCE PROFILE id. The bare
-     `anthropic.claude-fable-5-1` is INFERENCE_PROFILE-only and will fail (雲 11749); this checks
+     `anthropic.claude-fable-5-1` is INFERENCE_PROFILE-only and will fail (雲); this checks
      the bare id fails and the profile id succeeds, so the distinction is proven, not assumed.
   4  THE METER SEES REAL USAGE. One minimal call, max_tokens=1, through the same CostMeter the arms
      use, against the $40 cap. Costs a small fraction of a cent and proves the accounting path
@@ -69,7 +69,7 @@ def main():
     if arn.endswith(":root"):
         res["verdict"] = "REFUSED — still the root key"
         json.dump(res, open(a.out, "w"), indent=1)
-        sys.exit("STOP: this is the ROOT principal. 理 11747 forbids running IV on it, and a check "
+        sys.exit("STOP: this is the ROOT principal. 理 forbids running IV on it, and a check "
                  "that proceeds anyway is how a root key stays in place. Nothing was invoked.")
 
     # 2 — actually scoped: it must NOT be able to do unrelated things

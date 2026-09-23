@@ -142,7 +142,7 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   probe on post-inspect states → head → G. Comparability bent for v2, recorded; +1 action per episode printed, not barred.
   Bar re-based on v2-i; symptom-only table (51.2%) stays the FLOOR on localisation.
 
-## Rules + rulings, 2026-09-17 05:2xZ (理, on 沙汰 11005/11007/11008)
+## Rules + rulings, 2026-09-17 05:2xZ (理, on 沙汰 )
 - GATE ORDER: (0) task gate — distinct problems as the agent sees them, excluding id/seed, ≥ 0.9 × files; (1) prompt gate at
   the decision point ≥ 0.9 × episodes; (2) permutation control. Count problems before anything else.
 - LOCALISATION IS NEVER A BAR. Bars are problems solved and cost. (An oracle on region+class that localised better solved
@@ -151,9 +151,9 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   run makes P4 bite. INSPECT-FIRST is v3's default loop; a re-hypothesis rule is scoped with v3, not built before it.
 - n = 11 is exact for greedy arms and a near-bound for exploring arms (EXPLORE_TEMP).
 - 2026-09-17 05:3xZ: a counting function must handle the case its own caveat names — aggregate the outcome SET per
-  signature or assert |set| == 1 and fail loudly. (沙汰 11025: "costs two problems" withdrawn; same four, less reliably.)
+  signature or assert |set| == 1 and fail loudly. (沙汰: "costs two problems" withdrawn; same four, less reliably.)
 
-## Rulings, 2026-09-17 15:5xZ (理, on 沙汰 11060–11065) — v3 gates and order
+## Rulings, 2026-09-17 15:5xZ (理, on 沙汰–11065) — v3 gates and order
 - P2 RETIRED for v3, replaced (not lowered) by P2′: assertion detail on 100% of tasks AND symptom distinctness ≥ 0.5.
   Entropy printed beside every v3 table (0.861 at 300, n-dependent), never a bar. No coarsening is picked by anyone.
 - P1′: per program, the failing-test set reachable from ≥ 2 of ITS regions; singletons named. (1 at 300 = pass.)
@@ -165,12 +165,12 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
 - Order on v3: emit 300 → inspect-first base → prompt gate (post-inspect) → probe + permutation → head → G (bar: problems
   solved + cost, re-based; four readings rewritten). G REOPENS on v3. Nothing else on v3 until G reads.
 - P8 rung: MCTS-256 1983 ± 73, raw 1802; search +182 vs prior +20 ± 55. Fully closed.
-- 2026-09-17 22:1xZ (理, on 沙汰 11161): a probe accuracy that moves with the optimizer's step size is not a measurement of
+- 2026-09-17 22:1xZ (理, on 沙汰): a probe accuracy that moves with the optimizer's step size is not a measurement of
   the state (56 → 59 → 24% across step sizes); heads are fit by L-BFGS, no free parameter. A subsample control is ≥ 5 draws,
   all printed, never one (two draws: 33.3 vs 46.7). G re-runs with the converged head before P9; both heads' wired numbers
   are printed side by side.
 
-## Ruling, 2026-09-18 00:0xZ (理, on 沙汰 11181/11187) — P9 on this harness
+## Ruling, 2026-09-18 00:0xZ (理, on 沙汰 ) — P9 on this harness
 - STRUCTURAL: at a decision point whose inputs are fixed before the prior acts, generations differ only in TARGET (G1's
   states == G0's, byte for byte). "Learns from a better agent's episodes" is vacuous there.
 - (a)-inspect gated out (step-1 symptom distinctness 0.62–0.67 < 0.9). (a)-loop = the re-hypothesis loop = the accumulation
@@ -179,7 +179,7 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   base; PASS ≥ G0 at no higher cost / STRONG > 1 SE / FAIL < G0; expectation NULL; print fraction of argmax changes.
 - Transfer: four cross-run +11.3…+14.7 carried; same-run +21.4 never averaged. Fit quality buys nothing, both directions.
 
-## Rules + rulings, 2026-09-18 06:2xZ (理, on 沙汰 11278/11297)
+## Rules + rulings, 2026-09-18 06:2xZ (理, on 沙汰 )
 - A malformed action is an INVALID action, scored by the loop — never a crash of the run. Every chain refuses to continue on
   a short slice (episode-count guard). A second model surfacing a latent harness bug is a result and is reported.
 - A caveat written in prose and not in code is decoration — third instance (r2b note said "different positions"; the low

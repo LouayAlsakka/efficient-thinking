@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""ET-8b §11 — two arms that separate ORIGIN of training data from AMOUNT of it (理 12057).
+"""ET-8b §11 — two arms that separate ORIGIN of training data from AMOUNT of it (理).
 
 ARM 1  COMBINED: one head on the UNION of gen0's and gen1's training trajectories, applied once.
        If combined ≈ gen1, VIII-b's sentence becomes "a steered agent generates better training

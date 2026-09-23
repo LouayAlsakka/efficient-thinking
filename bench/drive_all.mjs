@@ -1,4 +1,4 @@
-// SELECTOR CONTRACT (理 12247 adds a frame to every STATIC screen: venue name, step title,
+// SELECTOR CONTRACT (理 adds a frame to every STATIC screen: venue name, step title,
 // a 'so far' summary like 'Haircut · Marcus · Tue 10:00', a back control and the AskBar).
 // EVERY click below is exact-match on the chip's own text node, so the summary line cannot
 // be hit by accident: 'Haircut' substring-matches the summary, 'Haircut' exact does not.
@@ -37,7 +37,7 @@ for (const task of tasks) {
     await click(() => p.getByText(task.target.staff, { exact: true }).first().click());
     await click(() => p.getByText(task.target.date, { exact: true }).first().click());
     await click(() => p.getByText(task.target.slot, { exact: true }).first().click());
-    // BY PLACEHOLDER, NOT BY POSITION. 理 12247's frame put the AskBar ABOVE the form, so
+    // BY PLACEHOLDER, NOT BY POSITION. 理's frame put the AskBar ABOVE the form, so
     // inputs.nth(0) silently became the chat bar: a run typed the NAME into ask.draft and the PHONE
     // into form.book.name, left the phone empty — and still scored 5 taps, hit@N 1.0 and a reached
     // submit screen. None of the five measurements can see a wrongly-filled form, so a positional

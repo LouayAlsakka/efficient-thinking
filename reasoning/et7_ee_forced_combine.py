@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ET-VII E-E — assemble the per-judge forced artefacts into the registered file.
 
-理 12095 asked for `experience/results/et7_ee_forced.json`. The run writes one file per judge so an
+理 asked for `experience/results/et7_ee_forced.json`. The run writes one file per judge so an
 arm can be reported the moment it lands; this joins them, applies §3b's readings mechanically rather
 than by choosing them, and builds the cross-judge table §3b's third reading needs.
 

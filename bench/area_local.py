@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """WO-318 — the LOCAL arm of `/area`. Same class, same prompt, same parser; a different model.
 
-WHY THIS ARM EXISTS. 理 12418 §2(c), ruled again by 令 R464 §7: the classifier choice gains a third
+WHY THIS ARM EXISTS. 理 §2(c), ruled again by 令 R464 §7: the classifier choice gains a third
 criterion beside disagreement rate and latency — **whether the user's sentence leaves the estate**.
 The local model sends nothing anywhere. Bedrock on live traffic makes every routed utterance a
 permanently unerasable record of something a person typed, and that is a price somebody who is not

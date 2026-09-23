@@ -2,11 +2,11 @@
 """ET-8b §12 — read the replicate match. Written BEFORE the match finishes, so the analysis is not
 chosen after seeing the numbers.
 
-Louay's framing (理 12243): "like a chess game... you get an average of multiple games... run
+Louay's framing (理): "like a chess game... you get an average of multiple games... run
 multiple times, track statistical bias, make sure we are ahead of noise, not as clear winner but
 acceptable if we do the right discipline."
 
-THE TEST IS NOT McNEMAR. 理 12243 ruled it a within-run descriptive only on loop rows: four of six
+THE TEST IS NOT McNEMAR. 理 ruled it a within-run descriptive only on loop rows: four of six
 NULL draws reached p < 0.06, so it measures the pairing and not the effect. **The reported
 uncertainty is the spread across replicates.**
 

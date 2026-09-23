@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""R2d — the gate R2c's failure earned, pre-registered by 理 (11343) before this file existed.
+"""R2d — the gate R2c's failure earned, pre-registered by 理 before this file existed.
 
 R2c FAILED and STAYS FAILED. Its gate was raw-text identity between the shared-cache path and an
 uncached generate; it read 33/40 and is NOT relaxed after the fact. `results/r2c_held.json` says
@@ -86,7 +86,7 @@ def main():
                   file=sys.stderr)
 
     n = len(use)
-    res = {"document": "R2d (i) calibration + (ii) parsed-action identity — 理 11343, pre-registered",
+    res = {"document": "R2d (i) calibration + (ii) parsed-action identity — 理, pre-registered",
            "R2c_stays_failed": "results/r2c_held.json is VOID and is not reopened. R2d is a new gate.",
            "model": a.model, "max_tokens": a.max_tokens,
            "(i) CALIBRATION uncached vs uncached": calib,

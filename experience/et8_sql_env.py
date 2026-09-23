@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""R7 — SQL query repair: a SECOND SEARCH STRUCTURE for the same harness (理 11398/11552).
+"""R7 — SQL query repair: a SECOND SEARCH STRUCTURE for the same harness (理 ).
 
 SCOPE COMMITTED FIRST: docs/r7-sql-repair-scope.md (7d8456b), before a line of this existed.
 

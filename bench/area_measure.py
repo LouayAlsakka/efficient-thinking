@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """WO-318 — the local-vs-Bedrock `/area` measurement. Pre-registered: docs/area-classifier-prereg.md
 
-WHAT IT DECIDES, AND WHY THERE ARE THREE CRITERIA AND NOT TWO (理 12418 §2(c), 令 R464 §7):
+WHAT IT DECIDES, AND WHY THERE ARE THREE CRITERIA AND NOT TWO (理 §2(c), 令 R464 §7):
 
     1. replicate disagreement  — is the classifier PREDICTABLE, arm by arm
     2. latency                 — median AND p90, never a mean
@@ -13,7 +13,7 @@ Criterion 3 is not measured here because it is not a measurement: it is a proper
 it is printed in the artifact beside the numbers so the decision is never made from the numbers
 alone.
 
-⛔ THIS WRITES NOTHING TO THE NARROWING LOG (鉋 12429, 理: "a measurement never writes to the thing
+⛔ THIS WRITES NOTHING TO THE NARROWING LOG (鉋, 理: "a measurement never writes to the thing
 it measures"). Its calls are the instrument; the narrowing log is the record of the bench. If these
 few hundred calls landed in that store, every later count over it would be a count of my instrument
 plus the bench with nothing in the row to separate them. Own artifact, own ledger, nothing else.
@@ -260,7 +260,7 @@ def main():
            "prereg": "docs/area-classifier-prereg.md (§2c amended 2026-09-23)",
            "utterances": os.path.abspath(a.utterances), "n": len(rows),
            "replicates": a.replicates,
-           "third_criterion": ("whether the user's sentence leaves the estate — 理 12418 §2(c), "
+           "third_criterion": ("whether the user's sentence leaves the estate — 理 §2(c), "
                                "令 R464 §7. The local arm sends nothing anywhere. A Bedrock arm on "
                                "live traffic makes each utterance permanently unerasable, and that "
                                "needs a plain notice and Louay's acceptance per utterance, neither "

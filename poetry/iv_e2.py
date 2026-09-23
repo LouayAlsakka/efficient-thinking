@@ -57,7 +57,7 @@ def load_candidates(cache_path, prompts_path, limit=0):
     return out
 
 
-# 理 11741: "the checker's composite `score` is dropped from E2's selection ... Selection =
+# 理: "the checker's composite `score` is dropped from E2's selection ... Selection =
 # valid ∧ meter, then Pareto on the rest."
 #
 # `score` is e1_score's n_meter + rhyme_ok + mean(iamb)/10 — a COMPOSITE of what `valid` and
@@ -197,7 +197,7 @@ def main():
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--selection", choices=("pareto", "two-stage"), default="pareto",
-                    help="how 理 11741's 'valid AND meter, then Pareto on the rest' is applied; "
+                    help="how 理's 'valid AND meter, then Pareto on the rest' is applied; "
                          "the choice is recorded in the result file")
     ap.add_argument("--dry", action="store_true", help="fake transport, $0.00, exercises the arm")
     ap.add_argument("--dry-bedrock", action="store_true",
@@ -304,7 +304,7 @@ def main():
                          "with itself %s of the time cannot agree with anything else more often."
                          % (sc if sc is not None else "<unmeasured>"),
         "selection_rule": {"mode": a.selection, "dims": DIMS,
-            "ruling": "理 11741 — the composite `score` is dropped from E2's selection",
+            "ruling": "理 — the composite `score` is dropped from E2's selection",
             "note": "two readable forms; this run used %r. Measured difference at the 7B: "
                     "pareto n=190 vs two-stage n=149." % a.selection},
         "pair_construction": "the verifier's top pick against another PARETO-SURVIVING candidate — "

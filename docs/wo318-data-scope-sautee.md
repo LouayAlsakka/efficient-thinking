@@ -1,6 +1,6 @@
 # WO-318 data scope — the classifier and the log row (my half)
 
-*Sautée (沙汰), 2026-09-23, for §9's acceptance criteria (匠 12398, 理 12402). 庭 states the venue
+*Sautée (沙汰), 2026-09-23, for §9's acceptance criteria (匠, 理). 庭 states the venue
 half; this is what MY pieces read, write, retain and send off the box. Written before the pieces
 exist, so the scope is a constraint on the build rather than a description of it.*
 
@@ -18,7 +18,7 @@ needs the previous `area`, and that is held by the RENDERER, not supplied to the
 
 ⚖️ This matters for the Bedrock arm specifically: **the utterance is the only user-originated thing
 that leaves the box**, and it leaves only on the Bedrock arm. The local-7B arm sends nothing
-anywhere. That is a real difference between the two classifiers 理 12380 asks me to choose between,
+anywhere. That is a real difference between the two classifiers 理 asks me to choose between,
 and it belongs beside the disagreement rate and the latency when the choice is made — **a classifier
 that wins on 2 ms and loses on "the user's sentence left the estate" has not obviously won.**
 
@@ -32,7 +32,7 @@ cannot be attributed to a person cannot be erased for them either.
 **What I am asking for in §6 before any live run** (鉋 owns the row; this is the scope, not the
 schema):
 - the narrowing log is **registered in `erasure.py` before the first live utterance is logged**, not
-  after — 目付 12153's finding was that the conversation store was live and unregistered for weeks,
+  after — 目付's finding was that the conversation store was live and unregistered for weeks,
   and this is the same shape arriving with notice
 - a row carries **`subject_ref`** — whatever identifier the erasure path can act on — or the run is
   a GOLD run only, on 案内's authored sentences, where there is no subject
@@ -65,7 +65,7 @@ being traded, rather than discovering it later.
 
 ## 5. 🔴 The same question asked of WO-312's PREDICTOR — and it had already failed it
 
-形 12405 reads 匠's constraint 3 as the PREDICTOR's data scope, not only the classifier's. They are
+形 reads 匠's constraint 3 as the PREDICTOR's data scope, not only the classifier's. They are
 right, and asking the question of my own shipped code found a real defect.
 
 `predictor_v0.predict(state, last_exchange)` serialised the **whole UiState** into the Bedrock
