@@ -491,3 +491,12 @@ within the family is what extends accumulation; gen1″ ≈ gen1-matched → sam
 count and the §13a redundancy is a description, not the mechanism. gen1″'s duplicate fraction against gen0 is measured
 by the §13a instrument before its head is scored (expected near 0 for disjoint problems). E names which disjoint
 same-family trajectories exist on disk; if none, one gen0-steered collection run on a disjoint 300 (~1 h) precedes it.
+**§13c form and source, fixed 2026-09-23 17:0xZ before the head exists:** gen1″ is fitted as ONE SHARED head by
+`fit_shared_head.py`, same layer, same fitter, same CV as g1-matched — three per-decision heads would reintroduce the
+form confound that made the §13b bonus row undrawable. Source: a fresh same-family draw (v3 generator, seed 47,
+n = 300), verified disjoint BY CONTENT (program + symptom hash, never task id) from gen1's fitting problems (∩ v3 = 0)
+and from the evaluation set (∩ ind73 = 0); gen0's own heads steer the collection; states at layer 18 by the same
+extractor; rows subsampled to exactly 1,437 at a fixed seed with kept indices recorded, the identical procedure
+g1-matched went through. The on-disk alternative (894 disjoint rows of r8b_gen1states) was rejected because it breaks
+the matched amount. Collection started 16:59Z on llm1 (E, decide-do-inform); §13c's three games run on llm1 in their
+own session as soon as the head and its §13a duplicate check exist — they do not wait for §13b on llm2.
