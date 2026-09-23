@@ -107,10 +107,27 @@ def main():
                         "is what a single run was sampling from blind; if it spans zero, no one-shot "
                         "paired comparison could have settled this question either way.")}
 
-    print("\n  3. 理'S REGISTERED RULE (§12) — null draws %s, largest %+.1f" % (a.nulls, max(a.nulls)))
+    # THE MATCH'S OWN BASE ARMS ARE THREE MORE NULL DRAWS, and they were run inside this session on
+    # this instrument — so they belong in the null set the rule is read against. Added BEFORE the
+    # match finished, so the null set is not widened or narrowed after seeing where the effect fell.
+    own = []
+    for A, B in itertools.combinations(arms["b"], 2):
+        d, n = paired_delta(rows[A], rows[B])
+        own.append(d)
+    print("\n  2b. THE MATCH'S OWN BASE-vs-BASE DRAWS (three more nulls, same session)")
+    for (A, B), d in zip(itertools.combinations(arms["b"], 2), own):
+        print("      %-4s vs %-4s  %+6.2f" % (B, A, d))
+    allnulls = list(a.nulls) + own
+    print("      null set now %d draws, range %+.2f to %+.2f  (was %+.2f to %+.2f)"
+          % (len(allnulls), min(allnulls), max(allnulls), min(a.nulls), max(a.nulls)))
+    out["match_own_null_draws"] = [round(d, 3) for d in own]
+    out["null_set_used"] = [round(d, 3) for d in allnulls]
+
+    print("\n  3. 理'S REGISTERED RULE (§12) — null draws %s, largest %+.1f" % (
+        [round(x, 1) for x in allnulls], max(allnulls)))
     d = out["comparisons"]["g0_to_g1"]
-    inside = min(a.nulls) <= d["delta_of_means"] <= max(a.nulls)
-    passes = (not inside) and d["CI95_welch"][0] > max(a.nulls)
+    inside = min(allnulls) <= d["delta_of_means"] <= max(allnulls)
+    passes = (not inside) and d["CI95_welch"][0] > max(allnulls)
     verdict = ("ACCUMULATION IS A FINDING — the mean difference lies outside the null range and its "
                "lower bound clears the largest null draw"
                if passes else
