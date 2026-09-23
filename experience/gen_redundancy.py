@@ -65,6 +65,12 @@ def main():
     ap.add_argument("--earlier", nargs="+", required=True, help="state dir(s) of the EARLIER generation")
     ap.add_argument("--later", required=True, help="state dir of the LATER generation")
     ap.add_argument("--label", required=True, help="e.g. 'gen1 vs gen0'")
+    ap.add_argument("--different-task-family", action="store_true",
+                    help="set when the two sets come from DIFFERENT task sets. task_ids are "
+                         "task_0001.. in every family, so the id namespaces COLLIDE and the "
+                         "problem-overlap number is meaningless across families — it reported a "
+                         "confident 100%% for the R7 SQL set against gen0's v3 set, two sets with "
+                         "zero rows in common. Declared, not guessed.")
     ap.add_argument("--out", default="")
     a = ap.parse_args()
 
@@ -81,7 +87,7 @@ def main():
 
     e_tasks = {r["task_id"] for r in Me}
     seen = sum(1 for r in Ml if r["task_id"] in e_tasks)
-    overlap = seen / len(Ml)
+    overlap = None if a.different_task_family else seen / len(Ml)
 
     med, _ = self_nn_median(E)
     d_l = nn_dist(L, E)
@@ -96,8 +102,16 @@ def main():
     L32 = np.load(os.path.join(a.later, "X_layer18.npy"))
     eset = {r.tobytes() for r in E32}
     exact = sum(1 for r in L32 if r.tobytes() in eset)
-    ekeys = {(r["task_id"], r["decision"], r["candidate"]) for r in Me}
-    samekey = sum(1 for r in Ml if (r["task_id"], r["decision"], r["candidate"]) in ekeys)
+    # `decision` exists only on multi-decision (loop) states; the single-decision R7 sets have no
+    # such field. Key on what both carry, and record which key was used rather than silently
+    # comparing two different things.
+    keyf = (lambda r: (r["task_id"], r.get("decision"), r["candidate"]))
+    key_name = "(task_id, decision, candidate)"
+    if not all("decision" in r for r in Me) or not all("decision" in r for r in Ml):
+        keyf = (lambda r: (r["task_id"], r["candidate"]))
+        key_name = "(task_id, candidate) — one side has no `decision` field"
+    ekeys = {keyf(r) for r in Me}
+    samekey = sum(1 for r in Ml if keyf(r) in ekeys)
 
     out = {
         "document": "ET-8b §13a — generation redundancy", "prereg": "gates §13a (理 12342)",
@@ -105,10 +119,13 @@ def main():
         "earlier_dirs": a.earlier, "later_dir": a.later,
         "n_earlier_rows": int(len(Xe)), "n_later_rows": int(len(Xl)),
         "n_earlier_problems": len(e_tasks), "n_later_problems": len({r["task_id"] for r in Ml}),
-        "problem_overlap_fraction": round(overlap, 4),
+        "problem_overlap_fraction": (None if overlap is None else round(overlap, 4)),
         "problem_overlap_definition": ("fraction of LATER rows whose task_id also appears in the "
                                        "EARLIER rows — SEEN-BY, not solved-by; see the module "
-                                       "docstring for why solved-by is circular here"),
+                                       "docstring for why solved-by is circular here. NOT COMPUTED "
+                                       "across task families: every family numbers its tasks "
+                                       "task_0001.., so the id namespaces collide and the number "
+                                       "would be a confident 100% between sets with nothing in common."),
         "earlier_self_median_nn_distance": round(med, 5),
         "neighbour_redundancy_fraction": round(redundant, 4),
         "neighbour_redundancy_definition": ("fraction of LATER rows whose nearest EARLIER row is "
@@ -121,14 +138,17 @@ def main():
                                        "hidden state means an identical history prefix: the steered "
                                        "agent was in exactly the situation the earlier agent was in."),
         "same_decision_key_fraction": round(samekey / len(Ml), 4),
-        "same_decision_key_definition": "later rows sharing (task_id, decision, candidate) with an earlier row",
+        "same_decision_key_definition": "later rows sharing %s with an earlier row" % key_name,
         "later_nn_distance_quartiles": [round(float(q), 5) for q in np.percentile(d_l, [25, 50, 75])],
         "signed": "Sautee (sha-ta)",
     }
     print("  %s" % a.label)
     print("    rows      earlier %5d   later %5d" % (len(Xe), len(Xl)))
     print("    problems  earlier %5d   later %5d" % (len(e_tasks), out["n_later_problems"]))
-    print("    PROBLEM OVERLAP        %.1f%%  of later rows are on problems the earlier set saw" % (100 * overlap))
+    if overlap is None:
+        print("    PROBLEM OVERLAP        n/a   — different task families, the id namespaces collide")
+    else:
+        print("    PROBLEM OVERLAP        %.1f%%  of later rows are on problems the earlier set saw" % (100 * overlap))
     print("    NEIGHBOUR REDUNDANCY   %.1f%%  of later rows sit closer to the old corner than it sits to itself"
           % (100 * redundant))
     print("    EXACT DUPLICATES       %.1f%%  of later rows are BYTE-IDENTICAL to an earlier row" % (100 * exact / len(L32)))
