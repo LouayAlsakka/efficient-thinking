@@ -444,3 +444,20 @@ within-arm sd for every arm including g1′, which tests the second new claim �
 raises its mean** — stated here as a hypothesis, scored in 13b as: head-arm within-sd < base within-sd in that session,
 for all three head arms. gen1′'s duplicate fraction against gen0 is measured by the §13a instrument before its head is
 scored. Order: separation arms (running) → 13b. No other VIII-b run.
+
+**§13b form ruling (2026-09-23 13:0xZ, before any gen1′ head is fitted):** R7's SQL states are single-decision and
+carry no `decision` field; the loop consumes three per-decision heads, so gen1′ cannot take gen1's form from what
+exists. Ruled: **option (i)** — gen1′ is ONE shared head (`--head`) fitted on all 1,437 SQL rows, and gen1-matched is
+ALSO one shared head fitted on 1,437 gen1 rows (fixed-seed subsample, ids recorded, `--cv-folds` as the original gen1
+fit). g1′ vs g1-matched is then like-for-like: amount fixed, form fixed, origin varied — the §13b question. **The bonus
+row g1 − g1-matched is DROPPED**, not reported: it would confound three-heads-vs-one-head with 2,824-vs-1,437 and is
+uninterpretable. The form difference between gen1′ and the published gen1 is printed in the artefact and the paper,
+so nobody later quotes a form effect as the origin effect. Option (ii), regenerating SQL states from a loop run, is
+not spent: it keeps a row that was never the point. **Boxes:** the box effect is zero within 0.17 on the tight
+instrument (llm1 35/37 inside llm2's 35–37) — measured because a cross-box result had already been shipped assuming
+it; NOT measured under the loop, and not extrapolated. §13b stays on llm2 in one session, because interleaving in one
+session was the design. **llm1, idle, gets a separate registered arm — the one-decision-loop test of the variance
+mechanism:** `et8b_loop` restricted to ONE head decision per episode, two base arms and two gen0-head arms on seed
+73's 300; reading fixed: within-arm sd near the tight instrument's 0.4 → the variance is the number of decisions (a
+design property, reducible); near 2.6 → it is the loop's machinery regardless of decisions. Independent of §13b;
+touches nothing published.
