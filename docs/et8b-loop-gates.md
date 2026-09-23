@@ -539,3 +539,8 @@ domain-shift conclusion — a head from another task family does not steer this 
 without a re-cut; no further box time is spent on §13b's g1′ pair. §13b's confirmatory g1 − g0 replication and the
 stabilisation test use intact heads and are unaffected. Open question for E: were §11's gen0matched and combined
 heads cut by row? If so, §11's "not established" reading stands but carries the same confound and says so.
+**§11 is clean (E, 18:39Z):** its gen0-at-gen1-rows arm sampled BY TASK, keeping every decision's candidates together
+and the held-out range whole; its artefact states the exact failure mode §13b's row cut fell into. No caveat, no
+re-cut; §11's numbers stand. Recorded for the reason E gave: the constraint existed as a comment inside one script
+three weeks ago and did not travel to the neighbouring arm — `subsample_by_decision.py` is now the shared file, which
+is the only form that travels. ETAs measured: §13c ~21:10Z, §13b games 2–3 ~22:55Z.
