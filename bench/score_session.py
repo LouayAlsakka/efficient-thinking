@@ -78,6 +78,23 @@ def main():
     final = rows[-1]["state_after"] if rows else {}
     submitted = bool(final.get("submit_key"))
 
+    # WHAT THE FIVE MEASUREMENTS CANNOT SEE. 理 12247's frame put the AskBar above the identity
+    # form; a driver selecting inputs by POSITION then typed the name into ask.draft and the phone
+    # into form.book.name, leaving the phone empty — and scored 5 taps, hit@N 1.0, submit reached,
+    # identical to a correct run on every registered measurement. Completion is screen-only and
+    # nothing else inspects content, so a wrongly-filled form is invisible to §2's five. This
+    # checks the end state instead of trusting the tap count.
+    book = (final.get("form") or {}).get("book") or {}
+    draft = ((final.get("ask") or {}).get("draft") or "")
+    form_ok = bool(book.get("name")) and bool(book.get("phone"))
+    integrity = {
+        "form_name_filled": bool(book.get("name")), "form_phone_filled": bool(book.get("phone")),
+        "ask_draft_at_end": draft,
+        "typed_into_the_bar_instead_of_the_form": bool(draft) and not form_ok,
+        "verdict": ("ok" if form_ok else
+                    "🔴 SUBMITTED WITH AN INCOMPLETE FORM — not visible in taps, hit@N or completion"),
+    }
+
     out = {
         "document": "WO-312 — one scored session",
         "prereg": "docs/wo312-measurement-prereg.md",
@@ -91,6 +108,7 @@ def main():
         "hit_at_N_unparsed_turns": unparsed,
         "per_turn": per_turn,
         "submit_fired": submitted,
+        "end_state_integrity": integrity,
         "task_completion": None,
         "task_completion_note": ("UNMEASURABLE TODAY, and not reported as a failure: the bench makes "
                                  "no engine call on submit ('Request sent to the engine call this "
@@ -113,6 +131,8 @@ def main():
     print("  taps %d (optimal %d, over %+d) · typed %d · hit@N %s (unparsed %d) · submit_fired %s"
           % (out["taps_to_goal"], out["optimal_taps"], out["taps_over_optimal"], out["typed_events"],
              out["hit_at_N"], unparsed, submitted))
+    print("  end state: %s  (name=%s phone=%s bar=%r)" % (integrity["verdict"],
+          integrity["form_name_filled"], integrity["form_phone_filled"], integrity["ask_draft_at_end"][:20]))
     print("  replay chain intact: %s%s" % (out["replay_chain_intact"],
                                            "" if out["replay_chain_intact"] else " %s" % chain_breaks))
     print("  completion: NULL — no engine call exists to answer it")
