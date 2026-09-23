@@ -329,3 +329,14 @@ the reported uncertainty, and VIII-b prints McNemar only as a within-run descrip
 treat the loop like a chess match — many games, average, track bias, report "ahead of noise by X over k games", never
 "clear winner". Author also approved the 8× §11 arm ("8x. yes"); sequenced AFTER the replicate match and only if the
 accumulation row is ahead of noise there, since a decomposition of an effect not yet established measures nothing.
+
+**§12 — the tight instrument's null, four base arms (2026-09-23 04:24Z):** `et8_agent` on v3 300: 11.7 · 11.7 · 12.3
+· 11.7 (mean 11.83, sd 0.33, range 0.7); six draws −0.7 … +0.7, every p > 0.68. Against the loop's five base arms on
+seed 73 (20.7 / 22.0 / 25.7 / 27.0 / 27.7; sd ≈ 3.0, range 7.0). §10 carrier rows now read against a null range of
+±0.7: A_memory at its edge, naive_symptom inside, F one of the null arms — the carriers do not move the set, bound
+under one point; the limiting factor on those rows is their own paired interval at n = 300, not the instrument.
+**Attribution NOT established:** the two comparisons differ in task set (v3 vs ind73) as well as harness, so "the loop
+is the noisy instrument" is a two-points-at-different-settings reading. E is running the tight harness on the loop's
+task set (`et8_agent` on ind73, two arms) to separate them; registered reading: spread near 0.7 → the task set is
+innocent and the loop's head decisions carry the variance (a design property, reducible); spread toward 7 → the task
+set carries it and no loop redesign helps. Either answer conditions how the match's result is read.
