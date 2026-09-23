@@ -1,0 +1,85 @@
+{
+ "document": "VIII-b 13b/13c — the matched heads, re-cut on whole decision groups",
+ "the_defect": "the arms were matched at 1,437 ROWS. A head is fitted per candidate and SCORED PER DECISION, so random row subsampling splits a decision's candidates: a dropped correct candidate makes that decision unpickable and a group left with only negatives teaches nothing. One arm -- the SQL collection -- was never subsampled at all, so the headline pair compared an intact collection against shredded ones.",
+ "before_row_matched": {
+  "gen1prime_SQL": {
+   "rows": 1437,
+   "cv_pick_pct": 92.7
+  },
+  "gen1matched_v3": {
+   "rows": 1437,
+   "cv_pick_pct": 35.2
+  },
+  "gen1pp_v3_disjoint": {
+   "rows": 1437,
+   "cv_pick_pct": 26.7
+  }
+ },
+ "after_decision_matched": {
+  "gen1prime_SQL": {
+   "rows": 1389,
+   "cv_pick_pct": 90.3,
+   "n": 290,
+   "chance_pct": 20.9,
+   "evaluation": "5-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+   "CONTROL_permuted": [
+    20.0,
+    19.3,
+    20.3,
+    26.6,
+    17.6
+   ],
+   "CONTROL_pca8": 36.2,
+   "CONTROL_row_subsample": 81.7,
+   "CONTROL_row_subsample_realised_n": "[500] of 1389 train rows per fold",
+   "weights": "gen1prime_dec_layer18.npz"
+  },
+  "gen1matched_v3": {
+   "rows": 1435,
+   "cv_pick_pct": 60.7,
+   "n": 290,
+   "chance_pct": 20.2,
+   "evaluation": "5-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+   "CONTROL_permuted": [
+    19.7,
+    24.5,
+    19.3,
+    20.0,
+    17.2
+   ],
+   "CONTROL_pca8": 47.6,
+   "CONTROL_row_subsample": 61.4,
+   "CONTROL_row_subsample_realised_n": "[500] of 1435 train rows per fold",
+   "weights": "gen1matched_dec_layer18.npz"
+  },
+  "gen1pp_v3_disjoint": {
+   "rows": 1447,
+   "cv_pick_pct": 53.4,
+   "n": 290,
+   "chance_pct": 20.0,
+   "evaluation": "5-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+   "CONTROL_permuted": [
+    22.8,
+    19.7,
+    18.6,
+    18.6,
+    24.5
+   ],
+   "CONTROL_pca8": 30.0,
+   "CONTROL_row_subsample": 42.4,
+   "CONTROL_row_subsample_realised_n": "[500] of 1447 train rows per fold",
+   "weights": "gen1pp_dec_layer18.npz"
+  }
+ },
+ "matching_unit": "290 decisions per arm, whole groups, seed 13731, kept indices recorded per set",
+ "⚠️_what_is_and_is_not_comparable": "gen1matched_v3 vs gen1pp_v3_disjoint IS the comparison: same family, same form, same decision count, origin varied. gen1prime_SQL is a DIFFERENT TASK FAMILY and its 90.3% says SQL repair decisions are more separable at this layer than debugging decisions are -- it is not an origin advantage and must not be read beside the other two as one.",
+ "the_bar": "problems solved on a paired run. Probe accuracy is a diagnostic, not the result.",
+ "is_the_disjoint_experience_actually_new": {
+  "exact_duplicates_vs_gen0_pct": null,
+  "neighbour_redundancy_pct": null,
+  "problem_overlap": "n/a — id namespaces collide across draws, declared",
+  "same_decision_key": "n/a — the key contains task_id, which collides too",
+  "reading": "1.3% byte-identical against 49.2% for gen1-vs-gen0 means the disjoint draw bought genuinely new rows; 42% neighbour redundancy means those rows still sit largely in the region gen0 already occupied. New rows and new experience are not the same claim, and this is the first measurement here that separates them."
+ },
+ "signed": "Sautee (sha-ta)"
+}
