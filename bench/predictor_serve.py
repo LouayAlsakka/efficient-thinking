@@ -85,6 +85,15 @@ def fake_transport_factory():
 
 class Handler(BaseHTTPRequestHandler):
     predictor = None
+    area = None
+    area_mode = "not configured"
+    mode = "not configured"
+    # /area and /predict need DIFFERENT interpreters on this box: the local classifier needs
+    # mlx_lm (the mlx venv) and the paid predictor needs boto3 (the system python), and neither
+    # venv has the other package. Installing into the shared mlx venv while experiments run on it
+    # is not worth a convenience. So whichever backend cannot be built here says so in plain words
+    # at 503 rather than failing inside a request with an import error nobody can read.
+    predict_unavailable = ""
 
     def _send(self, code, obj):
         b = json.dumps(obj).encode()
@@ -101,7 +110,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path.startswith("/health"):
-            self._send(200, {"ok": True, "mode": Handler.mode, "turns": Handler.predictor.turns,
+            self._send(200, {"ok": True, "mode": Handler.mode,
+                             "area_backend": Handler.area_mode,
+                             "turns": Handler.predictor.turns if Handler.predictor else None,
+                             "predict_available": Handler.predictor is not None,
                              "kinds": list(DEFAULT_KINDS)})
         else:
             self._send(404, {"error": "POST /predict"})
@@ -116,6 +128,10 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(n) or b"{}")
         except Exception as e:
             return self._send(400, {"error": "bad json: %s" % e})
+        if Handler.predictor is None:
+            return self._send(503, {"error": Handler.predict_unavailable,
+                                    "actions": [], "cost_usd": 0.0, "dropped": [],
+                                    "unresolved": [], "turn": 0})
         p = Handler.predictor.predict(body.get("state") or {},
                                       body.get("last_exchange", ""),
                                       int(body.get("n", 5)))
@@ -144,7 +160,7 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(400, {"error": str(e)})
         return self._send(200, {"area": r.area or None, "unresolved": r.unresolved,
                                 "cost_usd": round(r.cost_usd, 6), "error": r.error,
-                                "turn": Handler.area.turns, "mode": Handler.mode,
+                                "turn": Handler.area.turns, "mode": Handler.area_mode,
                                 "area_unchanged": bool(r.error)})
 
     def log_message(self, *a):
@@ -166,24 +182,58 @@ def main():
     ap.add_argument("--model", default="us.anthropic.claude-opus-4-7")
     ap.add_argument("--ledger", default=os.path.join(HERE, "bench_spend_ledger.json"))
     ap.add_argument("--taxonomy", default="", help="taxonomy json for /area (default: the demo one)")
+    # /area IS LOCAL-ONLY BY DEFAULT, on Louay's rule relayed by 理: the classifier runs on a local
+    # model for everything — the demo, the fixtures, the page and live traffic — and the paid path
+    # is not on the classifier route at all. The remote backend stays reachable behind a flag that
+    # defaults OFF so the code path does not rot, never as a fallback: a fallback is how "local
+    # only" becomes "local unless something goes wrong", which is the opposite of the rule.
+    ap.add_argument("--area-backend", choices=("local", "remote"), default="local")
+    ap.add_argument("--area-local-model", default="",
+                    help="MLX model id for the local classifier (default: area_local's)")
+    ap.add_argument("--area-local-temperature", type=float, default=0.0,
+                    help="0 serves the same answer for the same sentence, which is what a screen "
+                         "wants. NOTE that it also makes a replicate-disagreement number 0 by "
+                         "construction — measure stability at the temperature you SERVE at.")
     ap.add_argument("--space", default="", help="compiled venue json (niwa's fixture). Without it "
                                                 "the predictor names ids nothing can render.")
     a = ap.parse_args()
     world = world_from_space(json.load(open(a.space))) if a.space else None
-    if a.fake:
-        fb = fake_transport_factory()
-        Handler.predictor = PredictorV0(model=a.model, transport=fb,
-                                        ledger=a.ledger + ".FAKE", world=world)
-        Handler.mode = "FAKE — no network, no spend"
-    else:
-        Handler.predictor = PredictorV0(model=a.model, ledger=a.ledger, world=world)
-        Handler.mode = "LIVE Bedrock: %s" % a.model
+    fb = fake_transport_factory() if a.fake else None
+    try:
+        if a.fake:
+            Handler.predictor = PredictorV0(model=a.model, transport=fb,
+                                            ledger=a.ledger + ".FAKE", world=world)
+            Handler.mode = "FAKE — no network, no spend"
+        else:
+            Handler.predictor = PredictorV0(model=a.model, ledger=a.ledger, world=world)
+            Handler.mode = "LIVE Bedrock: %s" % a.model
+    except Exception as e:
+        Handler.predictor = None
+        Handler.predict_unavailable = (
+            "/predict is not available in this process: %s: %s. It needs boto3, which this "
+            "interpreter does not have. /area is unaffected and is local-only by default."
+            % (type(e).__name__, str(e)[:160]))
+        Handler.mode = "PREDICT UNAVAILABLE — /area only"
+        print("  ⚠️ %s" % Handler.predict_unavailable)
     print("  venue: %s" % ("%s — %d offer(s), %d staff" % (world["handle"], len(world["offers"]),
           len(world["staff"])) if world else "NONE (--space not given; args will not resolve)"))
     print("  predictor v0 on http://%s:%d   mode: %s" % (a.host, a.port, Handler.mode))
-    Handler.area = AreaV0(load_taxonomy(a.taxonomy or None), model=a.model,
-                          transport=(fb if a.fake else None),
-                          ledger=os.path.join(HERE, "wo318_spend_ledger.json") + (".FAKE" if a.fake else ""))
+    tax = load_taxonomy(a.taxonomy or None)
+    if a.area_backend == "local" and not a.fake:
+        import area_local as AL
+        model_id = a.area_local_model or AL.DEFAULT_LOCAL_MODEL
+        Handler.area = AL.local_area(tax, model_id=model_id,
+                                     ledger=os.path.join(HERE, "wo318_local_ledger.json"),
+                                     temperature=a.area_local_temperature)
+        Handler.area_mode = "LOCAL %s @T%g — nothing leaves the estate, $0" % (
+            model_id, a.area_local_temperature)
+    else:
+        Handler.area = AreaV0(tax, model=a.model, transport=(fb if a.fake else None),
+                              ledger=os.path.join(HERE, "wo318_spend_ledger.json")
+                              + (".FAKE" if a.fake else ""))
+        Handler.area_mode = ("FAKE — no network, no spend" if a.fake
+                             else "REMOTE %s — PAID, and the sentence leaves the estate" % a.model)
+    print("  /area backend: %s" % Handler.area_mode)
     print("  POST /predict {state, last_exchange, n}   POST /area {utterance, venue}   GET /health")
     print("  /area venues: %s" % ", ".join(sorted(Handler.area.tax["venues"])))
     HTTPServer((a.host, a.port), Handler).serve_forever()
