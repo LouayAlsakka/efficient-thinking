@@ -138,7 +138,7 @@ def bedrock_client(region=None, service="bedrock-runtime"):
 
     llm1's [default] profile was the account ROOT key until 2026-09-23, and ten call sites across
     this repo built a client with `boto3.client(...)` bare — so each of them authenticated as
-    whatever happened to sit in [default] (鉄, nirai 12305). One definition, not ten copies that
+    whatever happened to sit in [default] (鉄, record 12305). One definition, not ten copies that
     drift: AWS_PROFILE overrides, NIRA_AWS_PROFILE='' restores the implicit session deliberately,
     and the default is the SCOPED rater principal.
     """

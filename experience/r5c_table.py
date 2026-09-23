@@ -107,7 +107,7 @@ out = {"document": "R5-C — the quality-cost frontier as a CURVE (理 11395/113
        "SCOPE_SENTENCE_that_every_conclusion_must_carry": (
            "This curve covers base budgets %s and head budgets %s, on v3 seed 21's 300 problems, "
            "Qwen2.5-7B-Instruct. %s No conclusion drawn from it may be stated more broadly than "
-           "that -- 理's rule (nirai 11399): a stated exclusion in a measurement becomes a silent "
+           "that -- 理's rule (record 11399): a stated exclusion in a measurement becomes a silent "
            "omission in the conclusion built on it, so the exclusion is restated INSIDE the "
            "conclusion or the conclusion is scoped to the measurement."
            % (sorted(base) or "none", sorted(head) or "none",

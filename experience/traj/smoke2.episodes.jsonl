@@ -1,0 +1,3 @@
+{"run_id": "20260905T185204Z-e598c4", "task_id": "task_0001", "family": "A_boundary", "bug_class": "early_return", "green": false, "actions": 12, "tokens_in": 6188, "tokens_out": 362, "first_correct_hypothesis_step": 1, "memory": false, "seconds": 10.4}
+{"run_id": "20260905T185204Z-e598c4", "task_id": "task_0002", "family": "B_state", "bug_class": "swallowed_exception", "green": false, "actions": 12, "tokens_in": 5384, "tokens_out": 399, "first_correct_hypothesis_step": 1, "memory": false, "seconds": 10.9}
+{"run_id": "20260905T185204Z-e598c4", "task_id": "task_0003", "family": "C_types", "bug_class": "int_division", "green": false, "actions": 12, "tokens_in": 6546, "tokens_out": 332, "first_correct_hypothesis_step": 1, "memory": false, "seconds": 10.2}

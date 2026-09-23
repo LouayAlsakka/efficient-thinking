@@ -1,5 +1,5 @@
 {
- "document": "ET-8 measured constants — THE ONLY PLACE THEY ARE ALLOCATED (理's rule, nirai 11409)",
+ "document": "ET-8 measured constants — THE ONLY PLACE THEY ARE ALLOCATED (理's rule, record 11409)",
  "the_rule": "a bit, a port, a route, a table — anything two documents could both allocate — has ONE machine-readable registry and a checker that fails; a document CITES, it never re-draws. 理 applied it to the address tail; this applies it to the numbers this package re-uses across artifacts.",
  "why_here": "the controller cost appears in 4 files and the R2b bar in 2. Each was typed independently. If one is ever re-measured and the others are not, the package disagrees with itself silently — and a cost number is exactly the kind of thing a reviewer recomputes.",
  "constants": {

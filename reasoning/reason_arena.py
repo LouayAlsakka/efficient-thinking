@@ -54,7 +54,7 @@ def generate(args):
 # ---------------- stage 2: master judge + Bradley-Terry Elo ------------------------------------------
 def make_bedrock_client(region="us-east-1"):
     # NAMED PRINCIPAL, keeping this call site's own timeout/retry Config. llm1's [default] profile
-    # was the account ROOT key until 2026-09-23 (鉄, nirai 12305); a bare boto3.client() here
+    # was the account ROOT key until 2026-09-23 (鉄, record 12305); a bare boto3.client() here
     # authenticated as whatever sat in it.
     import boto3, os
     from botocore.config import Config

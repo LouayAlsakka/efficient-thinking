@@ -45,7 +45,7 @@
  "⚠️_STATUS_CORRECTION_2026-09-21": {
   "what_happened": "This file was written while the independent 300 was still unruled, and called seed 89 'the' independent 300. 理 11715 §1 then ruled: seed 47 or 73, whichever passes the gates. The run uses SEED 73 (= experience/tasks/v3c).",
   "seed_89_status": "GENERATED, GATED, DISJOINTNESS-CHECKED, AND UNUSED. Kept as a virgin set — no arm has ever run on it, which seeds 47 and 73 cannot say.",
-  "what_理_should_know_about_the_named_seeds": "both seed 47 (tasks/v3rep) and seed 73 (tasks/v3c) already carry full base+G arms from 8a's R3 (commit 1c1c8f0, results/r3_complete.json): +14.0 [+8.3,+19.7] and +13.3 [+8.0,+18.7] for the single-decision head. That does NOT contaminate 8b — every 8b head was fitted on v3 (seed 21) and signature-disjointness from v3c is measured at 0 — and it buys a direct comparison on identical problems. It does mean the set accumulates reuse across papers. Raised in nirai 11729; 理 proceeded.",
+  "what_理_should_know_about_the_named_seeds": "both seed 47 (tasks/v3rep) and seed 73 (tasks/v3c) already carry full base+G arms from 8a's R3 (commit 1c1c8f0, results/r3_complete.json): +14.0 [+8.3,+19.7] and +13.3 [+8.0,+18.7] for the single-decision head. That does NOT contaminate 8b — every 8b head was fitted on v3 (seed 21) and signature-disjointness from v3c is measured at 0 — and it buys a direct comparison on identical problems. It does mean the set accumulates reuse across papers. Raised in record 11729; 理 proceeded.",
   "if_a_virgin_set_is_wanted_later": "tasks/v3ind89 is ready and its gates and cross-set leakage numbers are in this file."
  }
 }

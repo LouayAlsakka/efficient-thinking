@@ -19,7 +19,7 @@ import argparse, json, random, re
 from collections import Counter
 import os as _o, sys as _s
 _s.path.insert(0, _o.path.join(_o.path.dirname(_o.path.abspath(__file__)), "..", "poetry"))
-import api_rater as _AR   # the ONE place this repo names its AWS principal (nirai 12305)
+import api_rater as _AR   # the ONE place this repo names its AWS principal (record 12305)
 
 
 def extract(text):                                       # GSM8K answer extraction (mlx-free, for llm1)
@@ -72,7 +72,7 @@ def kimi_pick(rt, problem, cands):
 def score(args):
     import boto3
     d = json.load(open(args.data)); items = d["items"]
-    rt = _AR.bedrock_client("us-east-1")   # named principal, nirai 12305
+    rt = _AR.bedrock_client("us-east-1")   # named principal, record 12305
     Ns = [n for n in (2, 4, 8, 16) if n <= len(items[0]["samples"])]
     print(f"[bestofn] {d['model']} | {len(items)} problems | selectors: self-consistency / Kimi-best-of-N / oracle", flush=True)
     curve = []

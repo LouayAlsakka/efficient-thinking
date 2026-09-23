@@ -46,7 +46,7 @@ def _section(prompt, header, end):
 def fake_transport_factory():
     """A stand-in that ANSWERS FROM THE STATE, so different turns give different heads.
 
-    It reads the REAL UiState shape 形 sent (nirai 12065) — selection.offer_ids / .staff / .day /
+    It reads the REAL UiState shape 形 sent (record 12065) — selection.offer_ids / .staff / .day /
     .slot and sheet — not the invented {service, stylist, slot} the first draft keyed on, which the
     reducer never produces, and it names ids out of the VENUE block so its args resolve.
     """

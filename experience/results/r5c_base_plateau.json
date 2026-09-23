@@ -23,6 +23,6 @@
   "reading": "51% more compute bought the base +3.3 points, and the CI's lower bound is +0.0 with McNemar p = 0.087 — NOT significant at conventional levels. Stated as 'not established', NOT as 'proven to be zero'."
  },
  "what_this_does_for_the_frontier_claim": "the head at 5,979 ALL-IN tokens scores 24.0% — above EVERY base point measured (18.7 / 20.3 / 22.3 / 22.0 at 6,854 -> 10,339 tokens), while spending 12.8% LESS than the cheapest of them. The base does not reach the head's cheapest point by spending 51% more.",
- "scope": "base budgets 12/14/16/18 and head budgets 6/8/10/12, v3 seed 21's 300, Qwen2.5-7B-Instruct. Budget 24 is still running and could change the top of the base curve; this reading is stated over the budgets measured and must not be generalised past them (理's rule, nirai 11399).",
+ "scope": "base budgets 12/14/16/18 and head budgets 6/8/10/12, v3 seed 21's 300, Qwen2.5-7B-Instruct. Budget 24 is still running and could change the top of the base curve; this reading is stated over the budgets measured and must not be generalised past them (理's rule, record 11399).",
  "signed": "Sautee (sha-ta)"
 }
