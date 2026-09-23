@@ -159,6 +159,7 @@ class Handler(BaseHTTPRequestHandler):
         except KeyError as e:
             return self._send(400, {"error": str(e)})
         return self._send(200, {"area": r.area or None, "unresolved": r.unresolved,
+                                "resolves_to_nothing": bool(r.resolves_to_nothing),
                                 "cost_usd": round(r.cost_usd, 6), "error": r.error,
                                 "turn": Handler.area.turns, "mode": Handler.area_mode,
                                 "area_unchanged": bool(r.error)})

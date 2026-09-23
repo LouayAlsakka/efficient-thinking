@@ -52,6 +52,7 @@ class Area:
     raw: str = ""
     cost_usd: float = 0.0
     error: str = ""
+    resolves_to_nothing: bool = False
 
 
 def load_taxonomy(path=None):
@@ -133,7 +134,15 @@ class AreaV0:
             (kept if str(t) in tags else dropped).append(str(t))
         return Area(area={"intent": intent, "tags": kept, "commit": bool(got.get("commit", False)),
                           "taxonomy": self.tax["taxonomy"]},
-                    unresolved=dropped, raw=text, cost_usd=cost)
+                    unresolved=dropped, raw=text, cost_usd=cost,
+                    # THE CLASSIFIER KNOWS THIS AND THE RENDERER WAS INFERRING IT. An empty tag set
+                    # after the venue filter means nothing on this venue's sheet was named -- which
+                    # is NOT a parse failure and NOT `area_unchanged`. A renderer that read
+                    # "unresolved" for this question wiped a live commit on an off-menu follow-up.
+                    # ⚠️ It reports the FACT, never the CAUSE: "correctly off-menu" and "the
+                    # taxonomy is too coarse to say what they meant" both land here, and only gold's
+                    # own off-menu label separates them (prereg §2c).
+                    resolves_to_nothing=not kept)
 
 
 def _selftest():
