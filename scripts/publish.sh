@@ -45,7 +45,24 @@ if [ "${NA:-0}" -gt 0 ]; then
   [ "$NA" -gt 60 ] && echo "   … and $((NA-60)) more"
 fi
 
-# ---- 4. the shape check, on the new files only ------------------------------------------------
+# ---- 4. do the SUBJECTS signpost what the change removed? --------------------------------------
+# A scrub commit whose subject names what it removed is a map: it announces that sensitive text
+# exists and identifies the commit that still contains it, because removal-by-commit is not removal
+# in a published repository. Verified anonymously: raw.githubusercontent at the parent sha returns
+# the removed passage with no credentials at all.
+#
+# This does not rewrite anything and does not block. It asks, before the subject is public, whether
+# it says WHAT was removed rather than WHICH FILES changed.
+SIGNPOST=$(git log --format='%h %s' "$RANGE" | grep -iE 'disclos|deficienc|leak|secret|credential|accident|unintended|privacy|scrub' || true)
+if [ -n "$SIGNPOST" ]; then
+  echo "== SUBJECTS THAT NAME A SENSITIVITY — these become public as written:"
+  printf '%s\n' "$SIGNPOST" | sed 's/^/   /'
+  echo "   A subject should say what CHANGED, not what was WRONG. 'remove internal references from"
+  echo "   docs/x' publishes nothing; 'the passages describing our own deficiencies are gone' is a"
+  echo "   signpost to the parent commit, which still has them."
+fi
+
+# ---- 5. the shape check, on the new files only ------------------------------------------------
 if [ "${NA:-0}" -gt 0 ]; then
   echo "== estate-reference shapes in the newly public files"
   python3 scripts/public_repo_check.py --files $ADDED --summary || true
