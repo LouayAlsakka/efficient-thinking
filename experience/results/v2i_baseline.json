@@ -1,5 +1,5 @@
 {
- "measurement": "v2-i BASELINE — the inspect-first loop (理 10941 (a))",
+ "measurement": "v2-i BASELINE — the inspect-first loop (理 (a))",
  "HOW_TO_READ_THIS": "n = 11 distinct problems, not 80 episodes. Identical tasks give identical outcomes under greedy, so the honest statement is a count of PROBLEMS SOLVED and the percentages are those counts weighted by how often each signature appeared.",
  "headline": {
   "v2 blind": "2 of 11 problems solved",

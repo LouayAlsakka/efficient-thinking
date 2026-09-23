@@ -31,7 +31,7 @@ def play_game(player, max_moves, temp_moves, rng, game_log: list | None = None):
     `game_log`, when given, receives one record per game carrying the START FEN, the UCI move list
     and the result. Training does not read it and the buffer path is untouched.
 
-    WHY IT EXISTS (ET-8 P8, 理 10906). et8_chess_prior.train needs {"moves": [uci], "result": ±1}
+    WHY IT EXISTS (ET-8 P8, 理. et8_chess_prior.train needs {"moves": [uci], "result": ±1}
     and calls state_bucket(board) / move_type(board, mv) on a live chess.Board. This function
     returned ENCODED TENSORS -- (codes, meta, idxs, probs, value) -- and dropped the board when it
     returned, and selfplay.py never persisted the buffer at all: only model.npz and the iteration

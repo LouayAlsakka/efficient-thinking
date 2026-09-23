@@ -1,9 +1,9 @@
 {
- "measurement": "理 10859 — the poet study reported as a CARRIER study: cost C and capability Q",
+ "measurement": "理 — the poet study reported as a CARRIER study: cost C and capability Q",
  "date": "2026-09-16",
  "note": "no new run. Both numbers are joins over artifacts already on disk.",
  "cost_C_attempts_per_form_passing_poem": {
-  "definition": "理 10859: attempts per form-passing 七絕. The search reading — composing a line is a search over characters under the form rules, and C is how many draws it costs.",
+  "definition": "理: attempts per form-passing 七絕. The search reading — composing a line is a search over characters under the form rules, and C is how many draws it costs.",
   "arms": {
    "baseline": {
     "attempts": 150,
@@ -53,7 +53,7 @@
    }
   },
   "reading": "On ORIGINAL poems the two LoRA arms are indistinguishable — 92.2% and 91.7%, a 0.5pt gap. e3's apparent voice edge lives entirely in its 19 COPIED pairs at 63.2%. This reproduces 理's join from a separate implementation.",
-  "corroboration": "理 10851 reported e3 original 0.947 and iter60 0.931 pooled over three seeds; I get 91.7 and 92.2 with my own copy filter. The ORDER of the two arms differs between our two implementations and the gap is under 1.5pt either way — so the honest statement is that the arms are indistinguishable on originals, NOT that one leads. Neither of us should quote a winner from a difference smaller than the disagreement between our filters."
+  "corroboration": "理 reported e3 original 0.947 and iter60 0.931 pooled over three seeds; I get 91.7 and 92.2 with my own copy filter. The ORDER of the two arms differs between our two implementations and the gap is under 1.5pt either way — so the honest statement is that the arms are indistinguishable on originals, NOT that one leads. Neither of us should quote a winner from a difference smaller than the disagreement between our filters."
  },
  "the_carrier_verdict": "Cost UP in every arm, capability FLAT once copying is removed. No carrier tested in this field lowers C with Q held — which is the same verdict the debugging field reached for A, C and F, arrived at in a domain with no shared code.",
  "bounds": [

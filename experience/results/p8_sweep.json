@@ -1,5 +1,5 @@
 {
- "design": "理 10916, pre-registered",
+ "design": "理, pre-registered",
  "run_dir": "runs/conv_value_llm1",
  "prior": "experience/chess_prior/v0.json",
  "beta": 0.5,

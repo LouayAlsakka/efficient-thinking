@@ -1,5 +1,5 @@
 {
- "measurement": "G-TRIVIAL — the negative control (理 10891 (a))",
+ "measurement": "G-TRIVIAL — the negative control (理 (a))",
  "date": "2026-09-16",
  "rule": "always hypothesize(symptom_region) at the one decision point. No model call for that step, no head, no activations.",
  "prediction_registered_before_the_run": "it LOSES ground — it destroys the symptom!=bug group (baseline 100% on the 2,000-run) to fix part of the 239 misses.",

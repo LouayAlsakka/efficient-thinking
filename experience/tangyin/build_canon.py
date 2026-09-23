@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the CANON reference for the borrowed-line check (理 10866).
+"""Build the CANON reference for the borrowed-line check (理.
 
     python3 build_canon.py --repo <clone of chinese-poetry> --out experience/tangyin/canon_7char.json
 

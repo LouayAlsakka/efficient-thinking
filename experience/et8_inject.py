@@ -80,7 +80,7 @@ def first_decision_states(steps: list[dict], tasks_dir: str):
 
 
 def all_decision_states(steps: list[dict], tasks_dir: str):
-    """EVERY hypothesis step of every episode, with the history that preceded it (理 10878, G step 1).
+    """EVERY hypothesis step of every episode, with the history that preceded it (理, G step 1).
 
     first_decision_states() returns ONE decision per episode, so no task ever carries both labels
     and a within-task contrast is not computable from it — that is what made G's gate return

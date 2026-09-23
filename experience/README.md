@@ -71,7 +71,7 @@ delta is believed until it survives a low-variance re-measurement (two seeds min
 - F = additive logit bias on the EMITTABLE action tokens only (hypothesize/inspect/patch/run), per region class, log-ratio τ+/τ−, clipped ±2. Verdict labels (noop_patch, repeat_*, invalid) are not tokens; F cannot reach repair by construction and a null is a result. Outcome-folded biasing is a different experiment (F′), not run under this name.
 - Slices, not seeds, under greedy decoding.
 
-## Ruling, 2026-09-16 17:5xZ (理, on Sautee 10831) — the §4.3 gate's shape
+## Ruling, 2026-09-16 17:5xZ (理, on Sautee — the §4.3 gate's shape
 - n=20 × 2 conditions × 2 arms × all 12 v1_7b lessons (~5 h llm1 GPU, overnight), after F(a)'s four slices land.
   No confidence-chosen subset: P0 is a rate over the candidates, and a subset's rate is not that rate.
 - Report per lesson admit/reject with the paired delta and SE; headline = rejection rate over 12.
@@ -106,7 +106,7 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   (touches only files upstream changed) or wait for the writer to finish.
 - G order (23:1xZ): steps 2–3 → G-TRIVIAL′ (candidate machinery, head replaced by the symptom rule) → step 4 head → step 5.
 
-## Rules, 2026-09-17 00:4xZ (理, from 沙汰 10910–10912)
+## Rules, 2026-09-17 00:4xZ (理, from 沙汰–10912)
 - Every results table in a block or a commit message carries the command that produced it. A table typed from memory
   is not a measurement (沙汰's 55% → 40% correction, same minute).
 - Never edit a script a running loop re-invokes; one orchestrator, one lifetime. Check file mtime against process start
@@ -117,7 +117,7 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
 - P8 is measured on `runs/conv_value_llm1` (supervised, 3.45M) by name; confirm `eval_search.py` loads the same run dir
   before any Elo rung is quoted. G-trivial / G-trivial′ re-run on v2 as v2's own controls; the v1 pair is v1-internal.
 
-## P8 pre-registration, 2026-09-17 00:5xZ (理; 沙汰 10912/10915)
+## P8 pre-registration, 2026-09-17 00:5xZ (理; 沙汰/10915)
 - Evaluator: `runs/conv_value_llm1` (supervised 3.45M; the repo's own `sims_sweep.py` example names it). Ladder
   (`eval_search.py`) loads any run dir via `load_run`; rungs are Stockfish `UCI_Elo` levels, net-independent.
 - Headline metric: head-to-head (`sims_sweep.py`) — "simulations to equal strength". The ladder runs once, no prior,
@@ -134,7 +134,7 @@ Owner: Sautee (llm1). 理 reads the task-conditioned probe result before step 2 
   a fourth "artifact missing" was nearly reported because three real absences primed it — the pgn exists at an absolute
   path outside the repo. Negative results describe the seat as often as the world.
 
-## Rule + ruling, 2026-09-17 03:2xZ (理, on 沙汰 10939)
+## Rule + ruling, 2026-09-17 03:2xZ (理, on 沙汰
 - STANDING GATE, beside the permutation control: before any head is fit, count DISTINCT decision prompts at the decision
   point / episodes. Below 0.9 the state is a lookup table on the prompt and no head is fit. (v1: 10 / 2,000. v2 step 1: 6 / 80.)
 - Ruling (a): v2 runs under an INSPECT-FIRST loop (one inspect required before the first hypothesis; the inspect target is

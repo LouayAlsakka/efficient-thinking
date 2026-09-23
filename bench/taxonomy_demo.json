@@ -1,6 +1,6 @@
 {
  "taxonomy": "demo-v0",
- "note": "HAND-WRITTEN for the two demo fixtures only, per ri 12409. NOT annai's registry and not a seed for it: taxonomy v1 is their design, due 22:00Z today. This exists so Louay can touch the narrowing tonight; it is replaced, not extended.",
+ "note": "HAND-WRITTEN for the two demo fixtures only, per ri. NOT annai's registry and not a seed for it: taxonomy v1 is their design, due 22:00Z today. This exists so Louay can touch the narrowing tonight; it is replaced, not extended.",
  "leaves": [
   "svc.hair.cut",
   "svc.hair.beard",

@@ -188,13 +188,13 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             state += (f"You already suspect {r}. Do not repeat the hypothesis: "
                       f"{'inspect it' if r not in inspected else 'PATCH it now (patch runs the tests)'}.\n")
         state += f"Actions left: {budget - step + 1}. Next action (one JSON object):"
-        # G-TRIVIAL (理 10888): the control G must beat. On the FIRST hypothesis only, substitute the
+        # G-TRIVIAL (理: the control G must beat. On the FIRST hypothesis only, substitute the
         # one-line rule the agent's own history implies — "start where the symptom points". No model
         # call is made for that step, which is the point: it costs nothing and it reaches the ceiling.
         # Every miss in the 2,000-run is an episode where the bug WAS in the symptom region and the
         # agent looked elsewhere (239 of 239), so this rule cannot lose ground it had.
         cand_meta = None
-        # INSPECT-FIRST (理 10941 (a)). A controller head at an observation-free decision point is a
+        # INSPECT-FIRST (理 (a)). A controller head at an observation-free decision point is a
         # lookup table on the prompt: at step 1 the prompt carries only the symptom and the region
         # names, so 80 v2 episodes produced SIX distinct prompts and any head on that state is a
         # six-row dict. This requires ONE inspect before the first hypothesis so the decision the
@@ -251,7 +251,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
             text = json.dumps({"action": "hypothesize", "region": task["symptom_region"],
                                "bug_class": task.get("bug_class", ""), "why": "symptom region (G-trivial)"})
             n_in = n_out = 0
-        # G-TRIVIAL-PRIME (理 10895): the control that separates WHERE from HOW. G-trivial replaced
+        # G-TRIVIAL-PRIME (理: the control that separates WHERE from HOW. G-trivial replaced
         # the model's hypothesis STEP with a canned string, so it changed how the hypothesis was
         # expressed as well as where it pointed -- and the patch that follows may depend on the
         # model's own reasoning at that step. This variant changes ONLY the where: it enumerates k
@@ -261,7 +261,7 @@ def run_episode(model, tok, task: dict, budget: int, memory: str | None, run_id:
         # recovers the 45, G-trivial's loss was the canned TEXT, not the choice.
         elif candidate_select and not any(h.startswith("hypothesize ") for h in history):
             msgs = messages + [{"role": "user", "content": state}]
-            # STRUCTURAL candidate set (理 10909), not a sampled one. One candidate per region
+            # STRUCTURAL candidate set (理, not a sampled one. One candidate per region
             # VISIBLE AT THIS DECISION POINT, each built by teacher-forcing the opening fields and
             # letting the model write the rest -- so every region is a candidate BY CONSTRUCTION.
             #
@@ -370,11 +370,11 @@ def main():
     ap.add_argument("--logit-bias", help="directory from et8_logit_bias.py build (mechanism F): "
                                          "additive bias on the EMITTABLE action tokens only")
     ap.add_argument("--trivial-symptom", action="store_true",
-                    help="G-TRIVIAL (理 10888): force the first hypothesis to the SYMPTOM region. "
+                    help="G-TRIVIAL (理: force the first hypothesis to the SYMPTOM region. "
                          "A one-line rule learned from the agent's own history and the control G "
                          "must beat — it needs no model, no head and no activations.")
     ap.add_argument("--candidate-select", default="", choices=["", "symptom"],
-                    help="G-TRIVIAL-PRIME (理 10895, candidate set structural per 10909): build one "
+                    help="G-TRIVIAL-PRIME (理, candidate set structural per 10909): build one "
                          "candidate per visible region by teacher-forcing the opening fields, then "
                          "pick the candidate whose region is the symptom region. Separates WHERE "
                          "from HOW: unlike --trivial-symptom the hypothesis TEXT is still the "
@@ -389,7 +389,7 @@ def main():
     ap.add_argument("--head", help="npz from et8_head_v3.py fit (w, b, mu, sd) -- mechanism G")
     ap.add_argument("--head-layer", type=int, default=18)
     ap.add_argument("--inspect-first", action="store_true",
-                    help="require ONE inspect before the first hypothesis (理 10941). The region is "
+                    help="require ONE inspect before the first hypothesis (理. The region is "
                          "the model's own greedy choice, not the symptom region; the point is that "
                          "the hypothesis the head reads is made with something OBSERVED in the "
                          "prompt. Costs one action per episode by construction -- printed, not "

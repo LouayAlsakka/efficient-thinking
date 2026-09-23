@@ -13,7 +13,7 @@ built by teacher-forcing the opening fields of a hypothesis naming that region -
 argmax. Variable region counts and names fall out for free, and the head never sees a name it must
 have been trained on.
 
-WHERE IT READS. The FIRST HYPOTHESIS AFTER AN INSPECT, under the inspect-first loop (理 10941). At
+WHERE IT READS. The FIRST HYPOTHESIS AFTER AN INSPECT, under the inspect-first loop (理. At
 that point the prompt carries the symptom AND the inspected region's source, and the prompt gate
 reads 1.000 on v3 (75 distinct prompts from 75 episodes) against 0.005-0.088 on every earlier
 decision point in this programme. This is the first place a head can be fit at all.

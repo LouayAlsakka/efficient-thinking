@@ -1,5 +1,5 @@
 {
- "measurement": "G's CEILING, pre-registered before the run (理 10882)",
+ "measurement": "G's CEILING, pre-registered before the run (理",
  "date": "2026-09-16",
  "source": "experience/traj/base_v1_7b — 2,000 episodes, the run G's head is trained on",
  "method": "split the 2,000 episodes by the label of their ONE hypothesis. A controller that chose PERFECTLY at that single decision point would turn every episode into a productive-labelled one, so the productive group's numbers are the arithmetic ceiling on G.",

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ET-8 P8: does an experience prior buy SEARCH? Head-to-head, pre-registered by 理 (10916).
+"""ET-8 P8: does an experience prior buy SEARCH? Head-to-head, pre-registered by 理.
 
     # 0. the instrument check -- ALWAYS run this before spending the GPU
     python3 experience/et8_chess_p8.py selftest --run-dir runs/conv_value_llm1 --prior <prior.json>
@@ -8,7 +8,7 @@
     python3 experience/et8_chess_p8.py sweep --run-dir runs/conv_value_llm1 --prior <prior.json> \
         --pgn /Users/lab/chess-scaling/data/lichess/2013-01.pgn --games 80 --out <out.json>
 
-THE DESIGN, 理 10916, written here because a pre-registration that lives only in a channel is not
+THE DESIGN, 理, written here because a pre-registration that lives only in a channel is not
 one:
 
     headline    HEAD-TO-HEAD, not the ladder: "simulations to equal strength". The ladder runs
@@ -169,7 +169,7 @@ def cmd_sweep(a):
 
     def wr(kind, sims):
         return next((r["win_rate"] for r in rows if r["arm"] == kind and r["sims"] == sims), None)
-    out = {"design": "理 10916, pre-registered", "run_dir": a.run_dir, "prior": a.prior,
+    out = {"design": "理, pre-registered", "run_dir": a.run_dir, "prior": a.prior,
            "beta": a.beta, "rows": rows,
            "constraint_with_256_ge_45pct": (wr("with", a.baseline) or 0) >= 0.45,
            "objective_with_128_ge_45_and_without_128_lt_45":

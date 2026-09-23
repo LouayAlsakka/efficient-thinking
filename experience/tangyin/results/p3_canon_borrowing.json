@@ -1,5 +1,5 @@
 {
- "measurement": "理 10866 (b) — the CANON reference, reported separately from the training split",
+ "measurement": "理 (b) — the CANON reference, reported separately from the training split",
  "date": "2026-09-16",
  "canon": {
   "source": "github.com/chinese-poetry/chinese-poetry (MIT, git clone — no scrape)",

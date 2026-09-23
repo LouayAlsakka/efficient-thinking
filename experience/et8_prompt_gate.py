@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""THE STANDING GATE (理 10941): count distinct decision prompts before fitting any head.
+"""THE STANDING GATE (理: count distinct decision prompts before fitting any head.
 
     python3 et8_prompt_gate.py --runs <run> --tasks experience/tasks/v2 --out <gate.json>
 

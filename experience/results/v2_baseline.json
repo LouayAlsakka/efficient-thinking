@@ -36,7 +36,7 @@
  "and_an_uncomfortable_comparison": "v2 baseline (20.0%, 10.20 actions) is almost exactly REDACTED v1 (21.2%, 10.29 actions) -- but for a different reason. Redacted v1 left 79% of tasks with no symptom at all; v2 carries an assertion detail on 100%. Same outcome, opposite cause. It raises a question the gate did not ask: whether the model can USE a behavioural symptom at all. The agent's 31.2% first-hypothesis accuracy on v2 is BELOW the 50.6% a held-out lookup table on the symptom string scores, so it is not extracting even the signal the set concedes.",
  "bounds": [
   "80 episodes, four slices, one model, greedy, budget 12.",
-  "v2 numbers are NOT comparable to v1's in one table (理 10914): different task set, different symptom. The contrast above is context, not a comparison.",
+  "v2 numbers are NOT comparable to v1's in one table (理: different task set, different symptom. The contrast above is context, not a comparison.",
   "n=25 for the 64% cell. The claim is the CONTRAST between 64% and 0%, not the 64%."
  ],
  "THE_BAR_FOR_G_apples_to_apples_on_the_SAME_80_EVAL_TASKS": {

@@ -1,5 +1,5 @@
 {
- "measurement": "G-TRIVIAL-PRIME, structural candidate set (理 10895 + 10909)",
+ "measurement": "G-TRIVIAL-PRIME, structural candidate set (理 + 10909)",
  "question": "G-trivial replaced the model's hypothesis STEP with a canned string. Was its -36.2 the canned TEXT, or the CHOICE of region? G-trivial' forces the same region but the hypothesis is the MODEL'S OWN, selected from a structural candidate set (one teacher-forced candidate per visible region, greedy always included).",
  "result": {
   "per_slice_green": {

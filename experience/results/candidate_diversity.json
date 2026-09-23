@@ -1616,7 +1616,7 @@
   }
  },
  "reading": {
-  "what_it_measures": "the SAMPLER's own proposal entropy at the one decision point -- NOT G's candidate set, which is structural (理 10909). Reported beside G so the two are not confused.",
+  "what_it_measures": "the SAMPLER's own proposal entropy at the one decision point -- NOT G's candidate set, which is structural (理. Reported beside G so the two are not confused.",
   "the_result": "the sampler is CONCENTRATED and temperature does not fix it. 1.77 distinct regions per task at temp 0.8 and 1.96 at temp 1.2 -- 36 of 80 tasks offer ONE region across EIGHT draws at 0.8, still 33 of 80 at 1.2. Raising temperature by half bought 0.19 of a region.",
   "and_it_is_not_a_validity_tradeoff": "3 invalid draws of 640 at temp 0.8, 4 of 640 at 1.2. The temperature is not being paid for in malformed actions; the model simply proposes the same region again.",
   "the_ceiling_this_puts_on_a_SAMPLED_candidate_set": "the TRUE bug region appears among the draws 93.8% of the time at 0.8 and 96.2% at 1.2. So a PERFECT ranker over sampled candidates tops out near 94-96%, against an agent that already picks correctly 88.05% of the time unaided. Six to eight points of headroom, in a set where half the tasks offer nothing to choose between.",

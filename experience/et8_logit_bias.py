@@ -93,7 +93,7 @@ EMITTABLE = ("hypothesize", "inspect", "patch", "run")
 
 
 def install_logit_bias(model, tok, bias_row: dict, clip: float = CLIP):
-    """Mechanism F (a), 理 10824: bias ONLY the tokens the model can actually emit.
+    """Mechanism F (a), 理: bias ONLY the tokens the model can actually emit.
 
     noop_patch / repeat_* / invalid are the harness's VERDICTS on an action, not words the model
     writes, so they have no token to attach to and are dropped here rather than silently mapped

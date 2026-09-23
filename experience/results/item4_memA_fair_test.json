@@ -4,7 +4,7 @@
  "rig": "llm1",
  "model": "Qwen/Qwen2.5-7B-Instruct bf16",
  "budget": 12,
- "design": "理 10824: 'lessons/v1_7b from the 7B's OWN 1,197 green episodes — the first fair test of A'. v0 lessons were distilled from 40 episodes at 37.5% green and fed to a model scoring 59.9%; v1_7b is distilled from that model's own 2,000 episodes at 59.9%. Same carrier, same prompt slot, same four disjoint 20-task slices. The ONLY variable is the artifact's provenance.",
+ "design": "理: 'lessons/v1_7b from the 7B's OWN 1,197 green episodes — the first fair test of A'. v0 lessons were distilled from 40 episodes at 37.5% green and fed to a model scoring 59.9%; v1_7b is distilled from that model's own 2,000 episodes at 59.9%. Same carrier, same prompt slot, same four disjoint 20-task slices. The ONLY variable is the artifact's provenance.",
  "result": {
   "baseline": {
    "green_per_slice": [
