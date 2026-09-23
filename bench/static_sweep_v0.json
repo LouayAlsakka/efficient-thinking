@@ -1,7 +1,7 @@
 {
  "document": "WO-312 — scripted sweep on STATIC, the sanity gate (prereg §4 / §2b)",
  "arm": "static",
- "tasks_file": "/Users/lab/github/efficient-thinking/bench/tasks_v0.json",
+ "tasks_file": "<repo>/bench/tasks_v0.json",
  "n": 100,
  "reached_submit_screen": 100,
  "completion_rate_SCREEN_ONLY": 1,

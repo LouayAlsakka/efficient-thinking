@@ -222,7 +222,7 @@ REAL_STATE = {
 }
 
 # niwa's compiled fixture, reduced to the keys world_from_space reads (source of truth:
-# the estate repo reports/niwa/wo312-bench-fixture-2026-09-22/quick-cuts-barbershop_space.json).
+# an internal report path wo312-bench-fixture-2026-09-22/quick-cuts-barbershop_space.json).
 REAL_SPACE = {
     "space": {"handle": "quick-cuts.chelsea", "name": "Quick Cuts Barbershop",
               "hours": {"tue": "09:00-18:00", "wed": "09:00-18:00", "thu": "09:00-18:00",

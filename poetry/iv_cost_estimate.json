@@ -93,7 +93,7 @@
   "us.anthropic.claude-opus-4-7": {
    "in_per_M": 5.5,
    "out_per_M": 27.5,
-   "source": "雲's wo/kumo/bedrock-billed-rates.md — THIS ACCOUNT'S OWN INVOICING for Opus 4.8 over 2026-08-14..09-13 (input $49.4531 / 9M tokens). Used for 4.7 as the nearest measured neighbour; it is 10% above the claude.com direct rate ($5.00/$25.00), which is why the direct table could not be reused.",
+   "source": "the account's own billed-rate note — THIS ACCOUNT'S OWN INVOICING for Opus 4.8 over 2026-08-14..09-13 (input $49.4531 / 9M tokens). Used for 4.7 as the nearest measured neighbour; it is 10% above the claude.com direct rate ($5.00/$25.00), which is why the direct table could not be reused.",
    "confidence": "measured on this account, but for 4.8 not 4.7"
   },
   "us.anthropic.claude-fable-5-1": {

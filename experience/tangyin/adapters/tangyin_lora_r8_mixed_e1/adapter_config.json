@@ -1,9 +1,9 @@
 {
-    "adapter_path": "/Users/lab/github/efficient-thinking/experience/tangyin/adapters/tangyin_lora_r8_mixed_e1",
+    "adapter_path": "<repo>/experience/tangyin/adapters/tangyin_lora_r8_mixed_e1",
     "batch_size": 1,
     "clear_cache_threshold": 0,
     "config": null,
-    "data": "/Users/lab/github/efficient-thinking/experience/tangyin/lora_data_mixed",
+    "data": "<repo>/experience/tangyin/lora_data_mixed",
     "fine_tune_type": "lora",
     "grad_accumulation_steps": 1,
     "grad_checkpoint": false,

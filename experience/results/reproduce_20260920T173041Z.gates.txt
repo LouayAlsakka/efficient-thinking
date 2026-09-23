@@ -1,5 +1,5 @@
 {
- "tasks": "/Users/lab/github/efficient-thinking/experience/tasks/v3",
+ "tasks": "<repo>/experience/tasks/v3",
  "task_files": 300,
  "distinct_signatures": 300,
  "ratio": 1.0,

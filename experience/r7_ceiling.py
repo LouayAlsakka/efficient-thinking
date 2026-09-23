@@ -11,7 +11,7 @@ localisation required. This BOUNDS the ceiling from above — the agent loop can
 model that is simply told everything.
 """
 import glob, json, sqlite3, sys
-sys.path.insert(0, "/Users/lab/github/efficient-thinking/experience")
+sys.path.insert(0, "<repo>/experience")
 import et8_sql_env as E
 
 def norm(rows):
@@ -22,7 +22,7 @@ def norm(rows):
 
 
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 60
-files = sorted(glob.glob("/Users/lab/github/efficient-thinking/experience/tasks/sql/task_*.json"))[:N]
+files = sorted(glob.glob("<repo>/experience/tasks/sql/task_*.json"))[:N]
 from mlx_lm import load, generate as gen
 from mlx_lm.sample_utils import make_sampler
 model, tok = load("Qwen/Qwen2.5-7B-Instruct")

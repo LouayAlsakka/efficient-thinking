@@ -5,7 +5,7 @@
  "instrument": {
   "canon_model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
   "canon_adapter_md5": "312d7cccc54607b396421e8f0cc1a8ec",
-  "candidate_cache": "/Users/lab/github/efficient-thinking/poetry/cache/e1_7B.jsonl",
+  "candidate_cache": "<repo>/poetry/cache/e1_7B.jsonl",
   "task": "sonnet",
   "n_per_field": 4,
   "seed": 0
