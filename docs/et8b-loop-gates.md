@@ -299,3 +299,22 @@ reported beside the 09-21 row; (iv) a between-generation row is a finding only i
 all within-session null draws (base_a vs base_b here, null73b vs null73) and its lower bound exceeds their largest
 point; (v) the cross-date step, if null73c confirms it, is reported as a property of the harness — comparisons are
 made within a session or not at all — and every VIII-b table names the session of each arm.
+
+**§12 — fourth draw (null73c, read by R from E's scratchpad 2026-09-23 00:5xZ, read-only; E to commit the artefact):**
+null73c 22.0%. Four base arms on the same 300: **20.7 · 25.7 · 27.0 · 22.0**. Pairwise: null73c vs null73b (41 min
+apart) **−5.0 [p = 0.020, McNemar 26/11]**; null73c vs null73 −3.7 (p = 0.052). So the within-session reading of
+23:46Z does not hold either: two runs 41 minutes apart differ by five points with p = 0.02. **The story is "wide
+distribution", not "step between dates."** The loop's run-to-run spread on seed 73 at n = 300 reaches ±5 points in
+either direction, within an hour. Registered rule (iv) applied: the accumulation row +5.7 [+0.7, +10.7] lies inside
+the range of the null draws (−5.0 … +6.3) and its lower bound does not exceed their largest point → **NOT A FINDING
+on seed 73.** Every between-generation row is within run-to-run variance. Head-over-base rows (+13 … +22) remain far
+outside the range and stand. **The one-continuous-session plan registered at 23:5xZ is WITHDRAWN as insufficient
+(one more draw of a wide thing) and replaced, before it runs, by a replicate design:** three replicates each of base,
+gen0 and gen1, interleaved in one session (`b1 g0a g1a b2 g0b g1b b3 g0c g1c`, 2,700 episodes, ~4.5 h, seed-73
+300). Readings fixed: the accumulation effect is the mean of the three gen1-minus-gen0 paired differences, its
+interval from the three replicates (t, df 2) and from the pooled per-task pairing; the null is the three base
+replicates' pairwise spread; the row is a finding only if the replicate-mean interval excludes zero AND exceeds the
+largest base-vs-base draw. If it is not a finding, VIII-b's accumulation claim is reported as not established at this
+n on this harness, and the paper's subject becomes what it has actually measured: the loop's noise floor, the
+unbuildable matched-compute arm, the constant bridge arm, the MLP head, the null carriers — the negative space around
+VIII's positive result.
