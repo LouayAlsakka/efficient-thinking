@@ -203,10 +203,15 @@ def main():
         if a.fake:
             Handler.predictor = PredictorV0(model=a.model, transport=fb,
                                             ledger=a.ledger + ".FAKE", world=world)
-            Handler.mode = "FAKE — no network, no spend"
+            Handler.mode = "/predict: FAKE — no network, no spend"
         else:
             Handler.predictor = PredictorV0(model=a.model, ledger=a.ledger, world=world)
-            Handler.mode = "LIVE Bedrock: %s" % a.model
+            # PREFIXED WITH THE ENDPOINT IT DESCRIBES, on purpose. /health used to answer
+        # "mode": "LIVE Bedrock: ..." while the CLASSIFIER was local — a reader glancing at that
+        # would reasonably conclude the user's sentence leaves the estate, which is the one thing
+        # the rule forbids and the one thing this service does not do. The value says which
+        # endpoint it is about; "area_backend" says what the classifier actually is.
+        Handler.mode = "/predict: LIVE Bedrock: %s" % a.model
     except Exception as e:
         Handler.predictor = None
         Handler.predict_unavailable = (
