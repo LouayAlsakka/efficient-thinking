@@ -1,5 +1,5 @@
 {
- "document": "v3 SCOPE AND COST, written BEFORE a line of generator (理 11002)",
+ "document": "v3 SCOPE AND COST, written BEFORE a line of generator (理",
  "the_gates_v3_must_pass_before_it_emits_anything": {
   "P0 (new, runs first)": "distinct task signatures as the AGENT sees them >= 0.9 x tasks. v1 = 0.0060, v2 = 0.0055. This is the gate the other two are downstream of.",
   "P1": "every failing-test identity reachable from >= 2 bug regions (v2 passes).",

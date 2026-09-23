@@ -1,5 +1,5 @@
 {
- "document": "R7 PROBE — the head re-fitted from the SQL environment's own base episodes (理 11552/11568)",
+ "document": "R7 PROBE — the head re-fitted from the SQL environment's own base episodes (理/11568)",
  "layers": {
   "18": {
    "weights": "head_layer18.npz in the states dir (w, b, mu, sd, train_task_max)",
@@ -72,7 +72,7 @@
  "bounds": [
   "One seed (21), 300 decisions, 1,437 candidate states, held out by task (225/75).",
   "Chance is PER TASK here (k = 4 or 5); the reported 20.9% is the mean over held-out decisions.",
-  "A probe is not the bar. 理 11068: problems solved and cost on a paired run."
+  "A probe is not the bar. 理: problems solved and cost on a paired run."
  ],
  "signed": "Sautee (sha-ta)"
 }

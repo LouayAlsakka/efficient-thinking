@@ -1,5 +1,5 @@
 {
- "document": "ET-8b — THE ARTEFACT TABLE. Every arm, every seed, every interval, every instrument hash, one file. 理 11853.",
+ "document": "ET-8b — THE ARTEFACT TABLE. Every arm, every seed, every interval, every instrument hash, one file. 理.",
  "the_sentence_this_table_supports": "The frontier moved twice and stopped. A second generation improves on the first on both independent 300s at no extra cost; a third does not improve on the second, and on one seed is significantly worse. The best head is generation 1.",
  "how_to_read_it": "Seed by seed, never pooled. Two independent 300s (v3c/seed 73 on llm1, v3rep/seed 47 on llm2), disjoint from the heads' training set by MEASURED signature overlap of zero.",
  "1_ARMS": {
@@ -277,11 +277,11 @@
    "seed_73": "-2.0 [-6.3, +2.3] p=0.4408",
    "seed_47": "-7.0 [-11.0, -3.0] p=0.00145",
    "cost": "model tokens -0.2% and +0.4%",
-   "reading": "理 11853: BOTH §7 rows reported as they fired — PLATEAU on seed 73, CONSUMPTION on seed 47. The seeds do NOT disagree in direction (both negative; intervals overlap on [-6.3,-3.0])."
+   "reading": "理: BOTH §7 rows reported as they fired — PLATEAU on seed 73, CONSUMPTION on seed 47. The seeds do NOT disagree in direction (both negative; intervals overlap on [-6.3,-3.0])."
   }
  },
  "4_INSTRUMENT_BY_HASH": {
-  "rule": "理 11768 §3 — a result artefact names its instrument by hash or its downstream claims are marked unauditable",
+  "rule": "理 §3 — a result artefact names its instrument by hash or its downstream claims are marked unauditable",
   "model": "Qwen/Qwen2.5-7B-Instruct (bf16)",
   "head_md5": {
    "gen0_head_d1_layer18.npz": "461d5b1ebfe1cd204c5918e3026ab2e2",

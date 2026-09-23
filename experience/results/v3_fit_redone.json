@@ -1,5 +1,5 @@
 {
- "document": "THE FIT, RE-DONE — and what the ruling to fix it exposed (理 11152)",
+ "document": "THE FIT, RE-DONE — and what the ruling to fix it exposed (理",
  "what_理_ruled": "the n=100 control scoring ABOVE the full head on one fit is an optimizer defect, and P9 compares heads trained on pools of DIFFERENT SIZE, so leaving it would measure the optimizer and call it accumulation. Fix the fit, re-fit both heads, re-run all three controls, and only then start P9.",
  "what_fixing_it_exposed": {
   "fixed 400 iterations, lr 0.5": "seed-21 head 56.0%",

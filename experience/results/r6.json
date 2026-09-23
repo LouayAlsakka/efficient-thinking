@@ -1,5 +1,5 @@
 {
- "document": "R6 RESULT — the strongest simple baselines at G's own compute (理 11398)",
+ "document": "R6 RESULT — the strongest simple baselines at G's own compute (理",
  "prereg": "experience/et8_r6_baselines.py, readings written before the run",
  "arms": {
   "base@12": {

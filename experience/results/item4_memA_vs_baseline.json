@@ -71,7 +71,7 @@
  ],
  "N_WARNING": {
   "n_distinct_problems": "THE EFFECTIVE n OF EVERY RATE IN THIS FILE IS THE NUMBER OF DISTINCT TASK SIGNATURES IT RESTS ON, NOT THE EPISODE COUNT. v1 has 12 distinct problems across its 2,000 files; v2 has 11. Identical tasks give identical outcomes under greedy decoding, so a '2,000-episode' or '80-episode' rate is 11 or 12 deterministic outcomes weighted by how often each signature appeared. See experience/results/eleven_problems.json.",
-  "what_this_stamp_withdraws": "every MAGNITUDE and every PER-SLICE ORDERING in this file, including any claim that 'no slice reverses' — four slices are four weightings of one 11- or 12-element vector, not four replicates. DIRECTIONS stand where the effect holds across all signatures. Standard errors quoted over 80 or 2,000 are struck (理 11002).",
+  "what_this_stamp_withdraws": "every MAGNITUDE and every PER-SLICE ORDERING in this file, including any claim that 'no slice reverses' — four slices are four weightings of one 11- or 12-element vector, not four replicates. DIRECTIONS stand where the effect holds across all signatures. Standard errors quoted over 80 or 2,000 are struck (理.",
   "stamped": "2026-09-17 by sautee, after the defect was found; not present when the file was written"
  }
 }

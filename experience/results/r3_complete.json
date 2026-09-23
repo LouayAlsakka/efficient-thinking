@@ -1,5 +1,5 @@
 {
- "measurement": "R3 COMPLETE (理 11217) — 600 independent problems no head had seen, one head (seed-21 L-BFGS), two disjoint 300-problem sets.",
+ "measurement": "R3 COMPLETE (理 — 600 independent problems no head had seen, one head (seed-21 L-BFGS), two disjoint 300-problem sets.",
  "results": {
   "seed 47 (300)": {
    "base": "16.7% / 10.86 actions",

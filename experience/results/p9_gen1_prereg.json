@@ -1,12 +1,12 @@
 {
- "document": "P9 GENERATION 1 — PRE-REGISTERED BEFORE THE HEAD IS REFIT (理 11127)",
+ "document": "P9 GENERATION 1 — PRE-REGISTERED BEFORE THE HEAD IS REFIT (理",
  "written_at": "2026-09-17, while the cost limb was still running. G1 does not exist and no refit has been computed. Nothing here was chosen after seeing a G1 number.",
  "what_P9_asks": "does the prior ACCUMULATE? A second generation learns from a better agent's episodes. If each generation must be trained from the base agent's play, the method is a one-shot improvement; if generations compound, it is the thing the paper exists for.",
  "the_design": {
   "G0": "the head fit on seed 47's 300 post-inspect states, run on seed 21's full 300. This IS the cost-limb run -- G0 is not a separate experiment.",
   "G1": "a head refit on G0's OWN post-inspect states and outcomes from that run. The second generation learns from the episodes a better agent produced.",
   "evaluation": "on seed 47's 75, against G0-on-47 (29.3%, 9.81 actions) and the base (17.3%, 10.68). Same 75 problems, paired.",
-  "THE_LABELS": "come from the VERIFIER -- whether the region a candidate names is the true bug_region -- and NEVER from the head's own picks. A head trained on its own choices learns to agree with itself, which would produce a rising number that means nothing. 理 11127, and it is the single most important line in this file."
+  "THE_LABELS": "come from the VERIFIER -- whether the region a candidate names is the true bug_region -- and NEVER from the head's own picks. A head trained on its own choices learns to agree with itself, which would produce a rising number that means nothing. 理, and it is the single most important line in this file."
  },
  "THE_THREE_READINGS": {
   "PASS": "G1 >= G0 on seed 47 at no higher cost. Accumulation does not degrade -- a second generation can be trained on a better agent's play without losing what the first had.",
@@ -21,7 +21,7 @@
   "One model, one layer, one grammar. Two seeds."
  ],
  "POOL_STATISTICS_TO_PRINT_BESIDE_THE_READING": {
-  "why": "理 11130: 'a smaller and easier pool' is my READING of why I expect PASS rather than STRONG. It has to be a NUMBER beside the result, or the reading explains whatever happens.",
+  "why": "理: 'a smaller and easier pool' is my READING of why I expect PASS rather than STRONG. It has to be a NUMBER beside the result, or the reading explains whatever happens.",
   "measured for BOTH training pools": [
    "decisions available",
    "fraction drawn from episodes that FAILED",
@@ -47,7 +47,7 @@
    "true_region_among_candidates_pct": 100.0,
    "distinct_programs": 300
   },
-  "AND_HALF_MY_STATED_REASON_IS_ALREADY_WRONG": "I predicted PASS-not-STRONG because G1 would train on 'a smaller and easier pool'. It is NOT SMALLER -- both pools are 300 decisions over 300 distinct programs, because every episode contributes exactly one post-inspect decision whether it succeeds or fails. It IS easier: 68.3% of G1's decisions come from failed episodes against 83.3% of G0's. So the mechanism I named is half right, and the half that is wrong was a guess about size that one count refuted. This is why 理 11130 asked for the numbers rather than the reading.",
+  "AND_HALF_MY_STATED_REASON_IS_ALREADY_WRONG": "I predicted PASS-not-STRONG because G1 would train on 'a smaller and easier pool'. It is NOT SMALLER -- both pools are 300 decisions over 300 distinct programs, because every episode contributes exactly one post-inspect decision whether it succeeds or fails. It IS easier: 68.3% of G1's decisions come from failed episodes against 83.3% of G0's. So the mechanism I named is half right, and the half that is wrong was a guess about size that one count refuted. This is why 理 asked for the numbers rather than the reading.",
   "what_it_does_to_the_reading": "a PASS now reads as 'accumulation survives a 15-point shift toward successes in the training pool', and a FAIL reads as 'that shift was enough to cost it'. Neither reads as 'the pool ran out of data'."
  }
 }

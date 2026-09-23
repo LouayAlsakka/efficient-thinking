@@ -35,7 +35,7 @@
   }
  },
  "how_to_read_the_controls": "permuted must collapse to chance; if PCA-8 or n=100 match the full head, the signal needs neither dimensions nor examples and is a key being copied, not a readout. v1 scored 100% held out, PASSED its permutation control, and survived both of those -- which is how the label-in-the-prompt was found. All three are printed, always.",
- "the_bar": "problems solved and cost on a paired run. Head accuracy is NOT the bar: the arm that localised better and solved half as many would have passed a localisation bar twice, on two different task sets (理 11068).",
+ "the_bar": "problems solved and cost on a paired run. Head accuracy is NOT the bar: the arm that localised better and solved half as many would have passed a localisation bar twice, on two different task sets (理.",
  "READING": {
   "headline": "THE FIRST PROBE IN THIS PROGRAMME THAT BEATS THE AGENT AND SURVIVES ALL THREE CONTROLS.",
   "the_numbers": "layer 18: head 56.0% · agent 33.3% · chance 20.4%, on 75 held-out decisions (the last 25% of tasks, no task shared with training). Layer 27: 54.7%.",

@@ -1,6 +1,6 @@
 {
  "document": "ET-IV 7d stage 1 — the three selectors' picks, local, $0.00",
- "⚠️_new_measurement_not_a_reproduction": "selection_7d.json records its scores and not its instrument (理 11768 §3), so identity with the run that produced canon 7.62 cannot be established.",
+ "⚠️_new_measurement_not_a_reproduction": "selection_7d.json records its scores and not its instrument (理 §3), so identity with the run that produced canon 7.62 cannot be established.",
  "prototype_bound": "the 7b canon judge is a noise-level prototype (n=34 corpus); this measures the PIPELINE, not G2p (selection_7d.py's own header)",
  "instrument": {
   "canon_model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",

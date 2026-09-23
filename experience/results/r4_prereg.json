@@ -1,5 +1,5 @@
 {
- "document": "R4 PRE-REGISTRATION — a second frozen model, written before it runs (理 11217)",
+ "document": "R4 PRE-REGISTRATION — a second frozen model, written before it runs (理",
  "design": "Llama-3.2-3B-Instruct-4bit (see the correction below), the same environment (v3 seed 21's 300), the same inspect-first harness, the same budget 12, the same gates. Base on 300 → probe on its OWN post-inspect states with all three controls → G on the held-out quarter and then on a disjoint set.",
  "why_a_second_model": "everything measured so far is one frozen 7B. If the head is reading something general about a debugging state, a different frozen model should support one too. If it is reading something particular to this model's representations, it will not.",
  "THE_TWO_READINGS_WRITTEN_FIRST": {

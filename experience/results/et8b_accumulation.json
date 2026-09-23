@@ -3,7 +3,7 @@
  "the_§4_cell_this_lands_in": "docs/et8b-loop-gates.md §4 row 1: 'gen1 > gen0, interval excludes zero, at <= gen0's cost' -> ACCUMULATION — the frontier moved twice; 8b's claim.",
 
  "INSTRUMENT_NAMED_BY_HASH": {
-  "rule": "理 11768 §3: a result artefact names its instrument by hash — model id, adapter md5, task-set signature — or its downstream claims are marked unauditable. Applied here to this result first.",
+  "rule": "理 §3: a result artefact names its instrument by hash — model id, adapter md5, task-set signature — or its downstream claims are marked unauditable. Applied here to this result first.",
   "model": "Qwen/Qwen2.5-7B-Instruct (bf16)",
   "task_set_signatures_sha256_16": {
    "v3 (seed 21) — the heads' TRAINING set, never evaluated on here": "d28f98f1308008b6",
@@ -22,7 +22,7 @@
   "seed_73_llm1": {"gen0_pct": 34.3, "gen1_pct": 40.0, "delta": 5.7, "CI95": [0.7, 10.7], "McNemar_p": 0.03962, "discordant": "gen0-only 22 · gen1-only 39"},
   "seed_47_llm2": {"gen0_pct": 34.0, "gen1_pct": 43.7, "delta": 9.7, "CI95": [4.7, 15.0], "McNemar_p": 0.0004221, "discordant": "gen0-only 18 · gen1-only 47"},
   "both_exclude_zero": true, "intervals_overlap": true, "n_each": 300,
-  "reported_seed_by_seed": "NOT POOLED. 理 11741: reported seed by seed, never pooled without a sentence saying so. These are two independent replications, not one 600."
+  "reported_seed_by_seed": "NOT POOLED. 理: reported seed by seed, never pooled without a sentence saying so. These are two independent replications, not one 600."
  },
 
  "THE_COST_LIMB_because_§4_requires_at_or_below_gen0s_cost": {

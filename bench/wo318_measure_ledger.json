@@ -1,6 +1,6 @@
 {
- "spent_usd": 0.07429199999999998,
- "calls": 30,
+ "spent_usd": 0.14872149999999987,
+ "calls": 60,
  "entries": [
   {
    "id": 0,
@@ -299,6 +299,306 @@
    "actual_usd": 0.002673,
    "note": "wo318 /area",
    "ts": 1790169858.959237,
+   "input_tokens": 296,
+   "output_tokens": 38
+  },
+  {
+   "id": 30,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004273,
+   "actual_usd": 0.002354,
+   "note": "wo318 /area",
+   "ts": 1790170188.434091,
+   "input_tokens": 273,
+   "output_tokens": 31
+  },
+  {
+   "id": 31,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004273,
+   "actual_usd": 0.002354,
+   "note": "wo318 /area",
+   "ts": 1790170191.256629,
+   "input_tokens": 273,
+   "output_tokens": 31
+  },
+  {
+   "id": 32,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004273,
+   "actual_usd": 0.002354,
+   "note": "wo318 /area",
+   "ts": 1790170192.882665,
+   "input_tokens": 273,
+   "output_tokens": 31
+  },
+  {
+   "id": 33,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004295,
+   "actual_usd": 0.002651,
+   "note": "wo318 /area",
+   "ts": 1790170194.643774,
+   "input_tokens": 282,
+   "output_tokens": 40
+  },
+  {
+   "id": 34,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004295,
+   "actual_usd": 0.002651,
+   "note": "wo318 /area",
+   "ts": 1790170200.614599,
+   "input_tokens": 282,
+   "output_tokens": 40
+  },
+  {
+   "id": 35,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004295,
+   "actual_usd": 0.002651,
+   "note": "wo318 /area",
+   "ts": 1790170202.681632,
+   "input_tokens": 282,
+   "output_tokens": 40
+  },
+  {
+   "id": 36,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.00429,
+   "actual_usd": 0.002354,
+   "note": "wo318 /area",
+   "ts": 1790170204.884717,
+   "input_tokens": 278,
+   "output_tokens": 30
+  },
+  {
+   "id": 37,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.00429,
+   "actual_usd": 0.002354,
+   "note": "wo318 /area",
+   "ts": 1790170206.8877811,
+   "input_tokens": 278,
+   "output_tokens": 30
+  },
+  {
+   "id": 38,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.00429,
+   "actual_usd": 0.002354,
+   "note": "wo318 /area",
+   "ts": 1790170208.355579,
+   "input_tokens": 278,
+   "output_tokens": 30
+  },
+  {
+   "id": 39,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004279,
+   "actual_usd": 0.002178,
+   "note": "wo318 /area",
+   "ts": 1790170210.816649,
+   "input_tokens": 276,
+   "output_tokens": 24
+  },
+  {
+   "id": 40,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004279,
+   "actual_usd": 0.002178,
+   "note": "wo318 /area",
+   "ts": 1790170212.356011,
+   "input_tokens": 276,
+   "output_tokens": 24
+  },
+  {
+   "id": 41,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004279,
+   "actual_usd": 0.002205,
+   "note": "wo318 /area",
+   "ts": 1790170213.916529,
+   "input_tokens": 276,
+   "output_tokens": 25
+  },
+  {
+   "id": 42,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004273,
+   "actual_usd": 0.002172,
+   "note": "wo318 /area",
+   "ts": 1790170215.454612,
+   "input_tokens": 275,
+   "output_tokens": 24
+  },
+  {
+   "id": 43,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004273,
+   "actual_usd": 0.002172,
+   "note": "wo318 /area",
+   "ts": 1790170218.752519,
+   "input_tokens": 275,
+   "output_tokens": 24
+  },
+  {
+   "id": 44,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004273,
+   "actual_usd": 0.002172,
+   "note": "wo318 /area",
+   "ts": 1790170220.459559,
+   "input_tokens": 275,
+   "output_tokens": 24
+  },
+  {
+   "id": 45,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002822,
+   "note": "wo318 /area",
+   "ts": 1790170229.3978271,
+   "input_tokens": 298,
+   "output_tokens": 43
+  },
+  {
+   "id": 46,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002822,
+   "note": "wo318 /area",
+   "ts": 1790170231.706655,
+   "input_tokens": 298,
+   "output_tokens": 43
+  },
+  {
+   "id": 47,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002822,
+   "note": "wo318 /area",
+   "ts": 1790170233.6460779,
+   "input_tokens": 298,
+   "output_tokens": 43
+  },
+  {
+   "id": 48,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004367,
+   "actual_usd": 0.002673,
+   "note": "wo318 /area",
+   "ts": 1790170235.340655,
+   "input_tokens": 306,
+   "output_tokens": 36
+  },
+  {
+   "id": 49,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004367,
+   "actual_usd": 0.002673,
+   "note": "wo318 /area",
+   "ts": 1790170236.877921,
+   "input_tokens": 306,
+   "output_tokens": 36
+  },
+  {
+   "id": 50,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004367,
+   "actual_usd": 0.002618,
+   "note": "wo318 /area",
+   "ts": 1790170238.5040169,
+   "input_tokens": 306,
+   "output_tokens": 34
+  },
+  {
+   "id": 51,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002618,
+   "note": "wo318 /area",
+   "ts": 1790170240.140204,
+   "input_tokens": 296,
+   "output_tokens": 36
+  },
+  {
+   "id": 52,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002618,
+   "note": "wo318 /area",
+   "ts": 1790170241.691703,
+   "input_tokens": 296,
+   "output_tokens": 36
+  },
+  {
+   "id": 53,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002618,
+   "note": "wo318 /area",
+   "ts": 1790170245.407209,
+   "input_tokens": 296,
+   "output_tokens": 36
+  },
+  {
+   "id": 54,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004334,
+   "actual_usd": 0.002321,
+   "note": "wo318 /area",
+   "ts": 1790170247.213585,
+   "input_tokens": 297,
+   "output_tokens": 25
+  },
+  {
+   "id": 55,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004334,
+   "actual_usd": 0.002321,
+   "note": "wo318 /area",
+   "ts": 1790170250.705546,
+   "input_tokens": 297,
+   "output_tokens": 25
+  },
+  {
+   "id": 56,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004334,
+   "actual_usd": 0.002321,
+   "note": "wo318 /area",
+   "ts": 1790170254.080738,
+   "input_tokens": 297,
+   "output_tokens": 25
+  },
+  {
+   "id": 57,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002673,
+   "note": "wo318 /area",
+   "ts": 1790170256.067339,
+   "input_tokens": 296,
+   "output_tokens": 38
+  },
+  {
+   "id": 58,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002673,
+   "note": "wo318 /area",
+   "ts": 1790170257.597375,
+   "input_tokens": 296,
+   "output_tokens": 38
+  },
+  {
+   "id": 59,
+   "model": "us.anthropic.claude-opus-4-7",
+   "reserved_usd": 0.004339,
+   "actual_usd": 0.002673,
+   "note": "wo318 /area",
+   "ts": 1790170259.0312588,
    "input_tokens": 296,
    "output_tokens": 38
   }

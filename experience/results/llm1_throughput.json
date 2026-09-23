@@ -1,5 +1,5 @@
 {
- "document": "Measured episode throughput on llm1 — for 8b budgeting (理 11433, idle slice)",
+ "document": "Measured episode throughput on llm1 — for 8b budgeting (理, idle slice)",
  "method": "read off the chains' OWN slice-completion timestamps from today's real arms. A line counts ONLY if it ends in 'episodes=<n>' — a '300/300' completion banner is not a slice, and counting it inflated the first version of this artifact by 30-50%.",
  "rates": {
   "R6 self-rerank + vote, budget 12": {

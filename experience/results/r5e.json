@@ -1,5 +1,5 @@
 {
- "document": "R5-E RESULT — the compute-matched baseline (理 11364). THE FRONTIER MOVED.",
+ "document": "R5-E RESULT — the compute-matched baseline (理. THE FRONTIER MOVED.",
  "the_question_R2_could_not_answer": "R2 reported G at +34% compute and called it a premium. That compared TWO POINTS AT DIFFERENT COMPUTE and so said nothing about the frontier. R5-E gives the BASE G's whole budget, by raising its action budget, and asks what it buys.",
  "COMPUTE_MATCH": {
   "base budget 16": "9,234.2 tokens/episode",
@@ -16,7 +16,7 @@
   "McNemar": "base-only 25 · G-only 53 · exact two-sided p = 0.002031",
   "actions": "13.75 -> 9.85, -3.90 [-4.36, -3.43]"
  },
- "THE_PRE_WRITTEN_READING_APPLIES": "理 11364: 'Q_base(≈9,170) below Q_G by more than the paired CI → the frontier moved.' Q_base is 9.3 points below Q_G and the CI [+3.7, +15.0] excludes zero. THE FRONTIER MOVED. G is not buying success with compute; at equal compute it wins.",
+ "THE_PRE_WRITTEN_READING_APPLIES": "理: 'Q_base(≈9,170) below Q_G by more than the paired CI → the frontier moved.' Q_base is 9.3 points below Q_G and the CI [+3.7, +15.0] excludes zero. THE FRONTIER MOVED. G is not buying success with compute; at equal compute it wins.",
  "AND_理S_EXPECTATION_WRITTEN_FIRST_HELD": {
   "predicted": "from the 80-problem probe: more budget buys the base ~+3.7 points; the head buys +11-14 for ~+34% compute.",
   "observed at 300": "budget 12->16 bought the base +3.6 points (18.7 -> 22.3) for +35% compute; the head bought +13.0 points (18.7 -> 31.7) for +34%.",

@@ -1,5 +1,5 @@
 {
- "document": "R2d (i) calibration + (ii) parsed-action identity — 理 11343, pre-registered",
+ "document": "R2d (i) calibration + (ii) parsed-action identity — 理, pre-registered",
  "R2c_stays_failed": "results/r2c_held.json is VOID and is not reopened. R2d is a new gate.",
  "model": "Qwen/Qwen2.5-7B-Instruct",
  "max_tokens": 400,
@@ -92,6 +92,6 @@
   "note": "all 5 mismatches differ ONLY in bug_class; the region is the same in every one (gather/gather x3, fold/fold, shape/shape). The region is what the head picks and what the localisation metric scores; bug_class is the agent's own downstream choice.",
   "⛔ THIS DOES NOT RESCUE THE GATE": "理 set (ii) as parsed-action identity including bug_class. It reads 295/300 and it FAILS. This is recorded as the SHAPE of the failure, not as an argument for reading it differently -- that argument would be the same after-the-fact relaxation R2c was already refused for."
  },
- "VERDICT_FINAL": "R2d FAILS at (ii). Per 理 11343 'FAIL any -> premium stands, and the paper says the cache changes the agent.' (iii) is NOT run: it is moot. 8a's cost sentence is unchanged from R2, R2b and R2c -- G buys success at a compute premium.",
+ "VERDICT_FINAL": "R2d FAILS at (ii). Per 理 'FAIL any -> premium stands, and the paper says the cache changes the agent.' (iii) is NOT run: it is moot. 8a's cost sentence is unchanged from R2, R2b and R2c -- G buys success at a compute premium.",
  "WHAT_THE_CALIBRATION_SETTLES": "(i) read 40/40 = 100%. Raw-text identity IS achievable on this hardware with identical inputs, so the divergence is NOT greedy decoding being nondeterministic -- it is the shared cache. The control was pre-registered to let the old gate off if it could never have passed; it did the opposite, and that is reported as readily as the other reading would have been."
 }

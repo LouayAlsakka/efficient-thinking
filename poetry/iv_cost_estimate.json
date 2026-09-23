@@ -85,10 +85,10 @@
   "cap_enforced_in_code": 40,
   "verdict": "GO"
  },
- "G5p": "rides on 7d's data — NO extra calls (理 11669)",
+ "G5p": "rides on 7d's data — NO extra calls (理",
  "per_form_rule": "213 tokens is a QUATRAIN pairwise call and 150 is a 七絕 naming call. Any 14-line or 七律 form is re-estimated BEFORE it runs — 理's rule, and the 40% gap between these two measured forms is why it is a rule and not a courtesy.",
  "bedrock_prices_2026-09-21": {
-  "⚠️_STATUS": "NO PUBLISHED BEDROCK PRICE EXISTS FOR EITHER MODEL. aws.amazon.com/bedrock/pricing lists only Claude 3.5 Sonnet variants; the Bedrock user guide moved model detail to model-cards and carries no pricing. 雲 11749: this account has no billing history for fable-5-1 either (StartOfLifeTime 2026-08-31). So these are BOUNDS, deliberately high, not rates.",
+  "⚠️_STATUS": "NO PUBLISHED BEDROCK PRICE EXISTS FOR EITHER MODEL. aws.amazon.com/bedrock/pricing lists only Claude 3.5 Sonnet variants; the Bedrock user guide moved model detail to model-cards and carries no pricing. 雲: this account has no billing history for fable-5-1 either (StartOfLifeTime 2026-08-31). So these are BOUNDS, deliberately high, not rates.",
   "why_a_high_bound_is_the_safe_direction": "the meter reserves the WORST CASE before each call and refuses when the reservation will not fit. Over-pricing makes the $40 cap bind EARLIER; under-pricing lets real spend past it. A bound that is too high costs at most an arm stopping short and asking; a bound that is too low is the failure the cap exists to prevent.",
   "us.anthropic.claude-opus-4-7": {
    "in_per_M": 5.5,
@@ -104,14 +104,14 @@
   },
   "reconciliation_rule": "the number reported in the paper's reproducibility section is the BILLED spend from Cost Explorer (雲's instrument), NOT this meter's total. The meter's job is to STOP the run; billing's job is to say what it cost. They are different questions and the paper needs the second."
  },
- "⚠️_the_direct_api_prices_above_are_NOT_what_IV_will_pay": "prices_read_2026-09-20 is claude.com's direct API. 理 11747 moved the judge to Bedrock, where this account is billed 10% higher on Opus. The direct table is kept for the record of what was planned against, and is no longer the table the meter uses.",
+ "⚠️_the_direct_api_prices_above_are_NOT_what_IV_will_pay": "prices_read_2026-09-20 is claude.com's direct API. 理 moved the judge to Bedrock, where this account is billed 10% higher on Opus. The direct table is kept for the record of what was planned against, and is no longer the table the meter uses.",
  "resized_2026-09-21_bedrock_and_measured_n": {
   "total_usd": 9.92,
   "calls": 1915,
   "against": "the direct-API plan 理 approved: $9.34 at 1,978 calls",
   "what_moved": [
    "prices are Bedrock BOUNDS now, ~10% above the direct table (and fable is a 2x bound with no published rate at all)",
-   "E2 is re-scoped from 300 pairs to 190 by its MEASURED Pareto collapse under 理 11741's ruling, plus a 47-pair re-rate"
+   "E2 is re-scoped from 300 pairs to 190 by its MEASURED Pareto collapse under 理's ruling, plus a 47-pair re-rate"
   ],
   "gate": "GO if planned <= $20.00 — this is 50% of the gate; hard stop in code at $40.00",
   "verdict": "GO"

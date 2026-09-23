@@ -1,5 +1,5 @@
 {
- "measurement": "R1 (理 11217) — paired per-problem bootstrap, 95% CI on the DIFFERENCE, plus exact McNemar on success. Replaces every point delta in the transfer table.",
+ "measurement": "R1 (理 — paired per-problem bootstrap, 95% CI on the DIFFERENCE, plus exact McNemar on success. Replaces every point delta in the transfer table.",
  "why_paired": "each pair is the SAME problems run twice; the arms differ only in whether the head acts at the post-inspect decision. An unpaired interval ignores that and is wider than the data warrants. McNemar uses only the DISCORDANT pairs, which is where the whole effect lives -- the agreement group moves -1 of 121.",
  "pairs": [
   {

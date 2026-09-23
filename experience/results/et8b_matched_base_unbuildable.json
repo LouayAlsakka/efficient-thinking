@@ -1,6 +1,6 @@
 {
- "document": "ET-8b — the compute-matched base arm is UNBUILDABLE. The flat ladder is the evidence (理 11887).",
- "why_it_was_cut": "gen0/gen1 spend ~3,800 model tokens per episode against the base's ~2,935 (+30%). The accumulation limb (gen1 vs gen0) is equal-cost by construction, but the loop's gain OVER BASE is at different compute and a reader will ask. 理 11871 ordered R5-E's rule: a ladder of base action budgets, pick the one nearest 3,800 by absolute distance, run it on 300.",
+ "document": "ET-8b — the compute-matched base arm is UNBUILDABLE. The flat ladder is the evidence (理.",
+ "why_it_was_cut": "gen0/gen1 spend ~3,800 model tokens per episode against the base's ~2,935 (+30%). The accumulation limb (gen1 vs gen0) is equal-cost by construction, but the loop's gain OVER BASE is at different compute and a reader will ask. 理 ordered R5-E's rule: a ladder of base action budgets, pick the one nearest 3,800 by absolute distance, run it on 300.",
  "THE_LADDER": {
   "seed_73": {
    "14": {

@@ -14,7 +14,7 @@
   "decision 3's state depends on decision 2's pick. gen1's source trajectories were steered by GEN0's d2 head; gen2's by GEN1's d2 head, and those differ — so the d3 states differ and only the d3 head moves."
  ],
  "🔴_WHAT_IT_MEANS_FOR_THE_READING": "gen2 vs gen1 isolates the DECISION-3 HEAD. Any difference the paired result shows is attributable to that one head and nothing else — which makes it a cleaner comparison than gen1 vs gen0 was, and also a much smaller surface on which to move.",
- "🔵_AND_IT_BOUNDS_THE_SERIES": "each generation can only change one decision further down the loop, and the loop has three. gen1 moved d2 and d3; gen2 moves d3; a gen3 would have nothing left to move at this budget. 理 11800 closed VIII-b's package after gen2 on other grounds; this is an independent structural reason the same line falls there.",
+ "🔵_AND_IT_BOUNDS_THE_SERIES": "each generation can only change one decision further down the loop, and the loop has three. gen1 moved d2 and d3; gen2 moves d3; a gen3 would have nothing left to move at this budget. 理 closed VIII-b's package after gen2 on other grounds; this is an independent structural reason the same line falls there.",
  "⚠️_what_I_am_NOT_claiming": "that gen0's and gen1's d1 heads are byte-identical. They are not, but their npz differ in FORMAT — gen0's predates the train_ranges field — so md5 cannot settle it and I did not compare the weights themselves.",
  "signed": "Sautee (sha-ta)"
 }

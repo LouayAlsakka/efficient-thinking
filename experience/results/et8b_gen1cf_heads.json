@@ -3,7 +3,7 @@
  "evaluation_mode": "3-fold CV over training tasks",
  "⚠️_why_CV_here": "the cross-fitted source runs cover tasks 1-225 only, so a head fitted on task_id < 226 has an empty held-out mask. The parent fitter writes 0.0%% with every control at 0.0 in that case, which reads as a failed head with PASSING controls when nothing was measured at all. Accuracy and all three controls are computed inside the CV loop here.",
  "architecture_not_rechosen": "gen0 applied docs/et8b-loop-gates.md §3 before any loop ran and selected per-decision; this generation inherits it. Nothing here is selected on the evaluation.",
- "the_bar": "problems solved on a paired run (理 11068). Probe accuracy is a sanity check.",
+ "the_bar": "problems solved on a paired run (理. Probe accuracy is a sanity check.",
  "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_gen1cf_states",
  "layer": 18,
  "heads": {

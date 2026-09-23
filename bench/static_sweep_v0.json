@@ -1039,6 +1039,6 @@
  "RUN_CLOCK": {
   "local_time_of_run": "2026-09-22 15:40 PDT (22:40Z)",
   "why_it_is_recorded": "localSlots.nextDays() derived each day's DATE in UTC and its WEEKDAY in local time, so west of UTC after 17:00 local they disagree by one and the strip offers the closed Monday while hiding the open Tuesday. THIS SWEEP RAN BEFORE THAT BOUNDARY and is valid. A re-run after 17:00 local would fail tasks, and §4 reads a scripted-user failure as 'the world or the engine is broken... the measurement is void' — so a timezone bug would have been read as a broken world. Any future sweep must record which side of the boundary it was taken on, until the fix lands.",
-  "reported": "record 12248"
+  "reported": "the record"
  }
 }

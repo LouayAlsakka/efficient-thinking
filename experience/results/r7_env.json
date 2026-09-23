@@ -1,5 +1,5 @@
 {
- "document": "R7 environment gates + ceiling check (理 11552)",
+ "document": "R7 environment gates + ceiling check (理",
  "scope": "docs/r7-sql-repair-scope.md (7d8456b), committed before a line of the generator",
  "P0_distinct_signatures": "300/300 = 1.000 (gate >= 0.9)",
  "P1_prime": "every task has >= 1 SIBLING region — the symptom never pins its own region; tasks failing this are REJECTED at generation",

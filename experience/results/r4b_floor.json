@@ -1,6 +1,6 @@
 {
  "measurement": "R4b FLOOR CHECK — Meta-Llama-3.1-8B-Instruct-4bit on v3 seed 21's 300, inspect-first, budget 12.",
- "prereg": "results/r4_prereg.json (the floor) + 理 11300 (this model, one more and then stop)",
+ "prereg": "results/r4_prereg.json (the floor) + 理 (this model, one more and then stop)",
  "episodes": 300,
  "base": "41/300 = 13.7%, 11.24 mean actions",
  "comparators_on_the_SAME_300": {

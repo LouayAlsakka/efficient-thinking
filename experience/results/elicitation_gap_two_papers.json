@@ -1,5 +1,5 @@
 {
- "document": "ONE PHENOMENON, TWO PAPERS — the elicitation gap in VIII's debugging agent and VII's math judge (理 12058).",
+ "document": "ONE PHENOMENON, TWO PAPERS — the elicitation gap in VIII's debugging agent and VII's math judge (理.",
  "the_shape": "a model's EXPRESSED preference carries little; a read-only probe on the SAME model's state, at the same moment, carries a great deal. Two papers measured it in different domains with different instruments and did not connect it until now.",
  "VIII_the_debugging_agent": {
   "expressed_preference": "SELF-RERANK by the model's own mean log-prob per token over its candidates — 20.3% success against base's 18.7%, +1.7 points [-1.7, +5.3], interval containing zero (results/r6.json, n=300, pre-registered)",

@@ -1,5 +1,5 @@
 {
- "measurement": "P4 — the inspect-first baseline on a PROVISIONAL v3 80 (理 11002's post-hoc check)",
+ "measurement": "P4 — the inspect-first baseline on a PROVISIONAL v3 80 (理's post-hoc check)",
  "status": "PROVISIONAL. Nothing was emitted to experience/tasks; the 80 live in the scratchpad, each stamped _PROVISIONAL, and `gen` still refuses while P1/P2 are unruled.",
  "the_P4_question": "are the programs behaviourally DISTINCT, or superficially different and behaviourally identical? A set of the second kind passes P0 and P3 and is v2 again with more strings. No gate on the tasks can see it.",
  "the_answer": {

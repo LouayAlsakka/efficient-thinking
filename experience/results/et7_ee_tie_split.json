@@ -1,5 +1,5 @@
 {
- "document": "ET-VII E-E — probe accuracy SPLIT BY WHETHER THE JUDGE TIED (理 12092)",
+ "document": "ET-VII E-E — probe accuracy SPLIT BY WHETHER THE JUDGE TIED (理",
  "why": "'probe 73.0% over all ~ judge 73.9% when committing' is an equality of AGGREGATES. It does not show the probe reads the cells the judge ABSTAINED on. This splits the SAME fold predictions by the judge's own behaviour — no new inference, no new fit.",
  "method": "the identical 5-fold-over-problems predictions used for A*; each held-out cell's prediction is bucketed by whether that cell's judge_pick was TIE",
  "judges": {

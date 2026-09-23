@@ -1,5 +1,5 @@
 {
- "document": "R5-C — the quality-cost frontier as a CURVE (理 11395/11397)",
+ "document": "R5-C — the quality-cost frontier as a CURVE (理/11397)",
  "controller_cost_added_to_every_head_point": 2487.9,
  "base_curve": {
   "8": {
@@ -147,7 +147,7 @@
    }
   }
  ],
- "SCOPE_SENTENCE_that_every_conclusion_must_carry": "This curve covers base budgets [8, 12, 14, 16, 18, 24] and head budgets [6, 8, 10, 12], on v3 seed 21's 300 problems, Qwen2.5-7B-Instruct.  No conclusion drawn from it may be stated more broadly than that -- 理's rule (record 11399): a stated exclusion in a measurement becomes a silent omission in the conclusion built on it, so the exclusion is restated INSIDE the conclusion or the conclusion is scoped to the measurement.",
+ "SCOPE_SENTENCE_that_every_conclusion_must_carry": "This curve covers base budgets [8, 12, 14, 16, 18, 24] and head budgets [6, 8, 10, 12], on v3 seed 21's 300 problems, Qwen2.5-7B-Instruct.  No conclusion drawn from it may be stated more broadly than that -- 理's rule (the record): a stated exclusion in a measurement becomes a silent omission in the conclusion built on it, so the exclusion is restated INSIDE the conclusion or the conclusion is scoped to the measurement.",
  "readings_written_before_the_runs": {
   "above across the range": "the frontier is moved over THE RANGE MEASURED (named in SCOPE_SENTENCE), not a point and not 'in general'",
   "cross at low budget": "the head helps only where it has room to act (§7.5's bound in cost terms)",

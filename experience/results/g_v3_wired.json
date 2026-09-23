@@ -23,7 +23,7 @@
   "head/agent agreement": "20 of 75 decisions = 26.7%. G changed the pick on 55.",
   "on the 55 DISAGREEMENTS": "base 5 green -> G 19 green  (+14)",
   "on the 20 agreements": "base 8 green -> G 10 green  (+2)",
-  "reading": "the effect is concentrated exactly where the head changed the choice, which is what 理 11110 asked to be printed and is the strongest internal evidence that it is the head doing the work."
+  "reading": "the effect is concentrated exactly where the head changed the choice, which is what 理 asked to be printed and is the strongest internal evidence that it is the head doing the work."
  },
  "AN_INSTRUMENT_CHECK_THAT_DID_NOT_COME_OUT_CLEAN": {
   "expected": "where the head AGREED, both arms emit the same greedy text, so the episode should be identical.",
@@ -36,6 +36,6 @@
   "n = 75, SE 4.4 and 5.6. The gap is ~3.4 SE of the difference.",
   "ONE task set, ONE model, ONE layer (18), ONE head. Seed 47 is running.",
   "The head was trained on tasks < 226 of the same generator; seed 47 shares zero signatures with it and is the real independence test.",
-  "NOT A CLAIM until seed 47 lands. 理 11068: anything clearing the objective confirms on the second set before it is a claim."
+  "NOT A CLAIM until seed 47 lands. 理: anything clearing the objective confirms on the second set before it is a claim."
  ]
 }

@@ -1,5 +1,5 @@
 {
- "document": "R2b BAR — pre-registered before the batched scorer is built (理 11244)",
+ "document": "R2b BAR — pre-registered before the batched scorer is built (理",
  "the_bar": "the controller's token overhead must be <= 502 tokens/episode.",
  "how_it_was_derived": "a saving of 0.71 actions is worth 0.71 x what ONE MORE action costs. That is the MARGINAL cost, and only one of the three available bases measures it: an OLS fit of tokens on actions over the base's 300 episodes gives 707 tokens/action, intercept -660.",
  "the_three_bases_all_printed": {

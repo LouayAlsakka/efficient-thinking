@@ -1,5 +1,5 @@
 {
- "document": "ET-VII E-E — the 32B arm, one run (理 12125)",
+ "document": "ET-VII E-E — the 32B arm, one run (理",
  "prereg": "docs/et7-ee-prereg.md §3b + §3c + §3d",
  "prereg_sha": "5afdf0132629fc6bd2286f4cb4f73dd3e573549c",
  "judge": "mlx-community/Qwen2.5-32B-Instruct-4bit",

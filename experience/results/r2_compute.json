@@ -1,5 +1,5 @@
 {
- "measurement": "R2 (理 11217) — COMPUTE ACCOUNTING with the controller's own inference counted. seed 21's 300, base vs G (L-BFGS head).",
+ "measurement": "R2 (理 — COMPUTE ACCOUNTING with the controller's own inference counted. seed 21's 300, base vs G (L-BFGS head).",
  "THE_HEADLINE": "THE COST LIMB FAILS ON TOKENS. G is cheaper in ACTIONS and 34% MORE EXPENSIVE in total model compute, because the head's candidate passes are inference that the action count does not see.",
  "table": {
   "base": {
