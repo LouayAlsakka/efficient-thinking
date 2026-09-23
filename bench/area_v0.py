@@ -75,12 +75,27 @@ class AreaV0:
         self.transport = transport or (lambda req, **kw: AR.bedrock_transport(req))
         self.turns = 0
 
+    def resolve_venue(self, venue):
+        """A fixture id, or an alias for one. Returns the canonical id.
+
+        ADDED AHEAD OF THE FIXTURE-ID RENAME so the rename is a data change and not a code change
+        on the day. The taxonomy may carry an `aliases` map from an old id to its canonical one;
+        during the overlap BOTH resolve, so the renderer and the compiled fixtures can move when
+        they choose rather than in one synchronised step. Inert while `aliases` is absent.
+        """
+        venues = self.tax["venues"]
+        if venue in venues:
+            return venue
+        alias = (self.tax.get("aliases") or {}).get(venue)
+        if alias in venues:
+            return alias
+        raise KeyError("no taxonomy for venue %r — this fixture set covers %s%s"
+                       % (venue, sorted(venues),
+                          (" (aliases: %s)" % sorted(self.tax["aliases"]))
+                          if self.tax.get("aliases") else ""))
+
     def venue_tags(self, venue):
-        v = self.tax["venues"].get(venue)
-        if v is None:
-            raise KeyError("no taxonomy for venue %r — the demo covers %s"
-                           % (venue, sorted(self.tax["venues"])))
-        return list(v["tags"])
+        return list(self.tax["venues"][self.resolve_venue(venue)]["tags"])
 
     def classify(self, utterance, venue) -> Area:
         tags = self.venue_tags(venue)
