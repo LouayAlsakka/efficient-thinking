@@ -60,11 +60,18 @@ def load_taxonomy(path=None):
 
 class AreaV0:
     def __init__(self, taxonomy=None, model="us.anthropic.claude-opus-4-7",
-                 transport=None, ledger=None, max_tokens=120, cap=None):
+                 transport=None, ledger=None, max_tokens=120, cap=None, meter=None):
         self.tax = taxonomy or load_taxonomy()
         self.model, self.max_tokens = model, max_tokens
-        self.meter = AR.CostMeter(ledger=ledger or os.path.join(HERE, "wo318_spend_ledger.json"),
-                                  **({"cap": cap} if cap else {}))
+        # `meter` exists so the LOCAL arm of the replicate measurement runs through THIS class and
+        # not a copy of it. A local 7B costs nothing and has no entry in the price card, so it needs
+        # a meter that reserves and settles zero -- but it must share every other line of
+        # classify(): the same prompt, the same json extraction, the same enum check, the same
+        # kept/dropped split. A disagreement rate measured across two parsers is a measurement of
+        # the parsers. See bench/area_local.py.
+        self.meter = meter or AR.CostMeter(
+            ledger=ledger or os.path.join(HERE, "wo318_spend_ledger.json"),
+            **({"cap": cap} if cap else {}))
         self.transport = transport or (lambda req, **kw: AR.bedrock_transport(req))
         self.turns = 0
 

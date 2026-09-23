@@ -1,0 +1,10 @@
+{"utterance": "what time do you close", "venue": "quick-cuts.chelsea", "kind": "plain ask", "off_menu": false}
+{"utterance": "book me a haircut with Priya on Friday", "venue": "quick-cuts.chelsea", "kind": "plain commit", "off_menu": false}
+{"utterance": "actually make it Marcus instead", "venue": "quick-cuts.chelsea", "kind": "re-select", "off_menu": false}
+{"utterance": "can you resole my shoes", "venue": "quick-cuts.chelsea", "kind": "off-menu", "off_menu": true}
+{"utterance": "something for tomorrow", "venue": "quick-cuts.chelsea", "kind": "ambiguous", "off_menu": false}
+{"utterance": "how much is dry cleaning", "venue": "fresh-fold-laundry.lower-east-side", "kind": "plain ask", "off_menu": false}
+{"utterance": "drop off a bag of wash and fold this afternoon", "venue": "fresh-fold-laundry.lower-east-side", "kind": "plain commit", "off_menu": false}
+{"utterance": "no, alterations instead", "venue": "fresh-fold-laundry.lower-east-side", "kind": "re-select", "off_menu": false}
+{"utterance": "do you sell suitcases", "venue": "fresh-fold-laundry.lower-east-side", "kind": "off-menu", "off_menu": true}
+{"utterance": "i need something cleaned", "venue": "fresh-fold-laundry.lower-east-side", "kind": "ambiguous", "off_menu": false}
