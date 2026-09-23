@@ -1,0 +1,63 @@
+{
+ "document": "VIII-b — the one-decision loop, and where the loop's variance actually enters",
+ "question": "the loop's within-arm sd is 2.6 points; the single-decision instrument reads 0.43 on the same family. Registered reading: sd near 0.4 -> the variance is the NUMBER OF DECISIONS; near 2.6 -> the loop regardless.",
+ "answer": "NEITHER NUMBER. The one-decision loop is BIT-IDENTICAL between runs, so its sd is 0 by determinism, not 0.4 from a tight instrument. An sd of 0 from a deterministic decoder is the decoder reported in the shape of a finding.",
+ "arms_300_each": {
+  "base_green_pct": [
+   10.0,
+   10.0,
+   10.0,
+   10.0
+  ],
+  "gen0_head_green_pct": [
+   16.666666666666668,
+   16.666666666666668,
+   16.666666666666668,
+   16.666666666666668
+  ],
+  "base_sd": 0.0,
+  "head_sd": 0.0
+ },
+ "identity_checks_PER_TASK": {
+  "od_b1 vs od_b2": {
+   "n": 300,
+   "same_green": 300,
+   "same_actions": 300,
+   "same_tokens_out": 300
+  },
+  "od_b1 vs od_b4": {
+   "n": 300,
+   "same_green": 300,
+   "same_actions": 300,
+   "same_tokens_out": 300
+  },
+  "od_g01 vs od_g02": {
+   "n": 300,
+   "same_green": 300,
+   "same_actions": 300,
+   "same_tokens_out": 300
+  },
+  "od_g01 vs od_g04": {
+   "n": 300,
+   "same_green": 300,
+   "same_actions": 300,
+   "same_tokens_out": 300
+  }
+ },
+ "why_per_task": "two arms agreeing in TOTAL is the shape of agreement I have published and been wrong about. tokens_out is the field an outcome does not quantise into, so it is the one that distinguishes determinism from a tight distribution.",
+ "same_box_three_decision_control": {
+  "arms": "two 3-decision base arms, one slice (75), one box, back to back",
+  "greens": [
+   18,
+   18
+  ],
+  "n": 75,
+  "same_green": 67,
+  "same_actions": 70,
+  "same_tokens_out": 10,
+  "verdict": "NON-DETERMINISTIC on one box. Only 10 of 75 episodes generate identical text, so the divergence enters with decisions 2 and 3 — it is NOT the sampler, which is the same sampler at decision 1, and it is NOT the second box."
+ },
+ "why_this_control_exists": "the first three-decision comparison available was CROSS-BOX, and two boxes can differ numerically without the loop being non-deterministic. One slice, not four: determinism does not need n.",
+ "bound": "the MECHANISM is not measured. Decision 1 is bit-identical, so the state entering decision 2 is identical too; that longer contexts then diverge is consistent with context-length-dependent numerical non-determinism, but nothing here tests that.",
+ "signed": "Sautee (sha-ta)"
+}
