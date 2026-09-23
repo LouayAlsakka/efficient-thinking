@@ -51,7 +51,13 @@ def prompt_key(state_text):
     return hashlib.sha1(state_text.encode()).hexdigest()
 
 
-def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget=BUDGET):
+def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget=BUDGET,
+                decisions=DECISIONS):
+    # `decisions` defaults to DECISIONS so every existing caller is byte-unchanged. It is a
+    # parameter because §13b needed the loop restricted to ONE head decision per episode (理
+    # 12436): the loop arms read sd 2.6 where the single-decision instrument reads 0.43, and
+    # the only way to tell "the variance is the number of decisions" from "the variance is the
+    # loop regardless" is to run the loop with one decision and read its within-arm sd.
     program = task["program"]
     regions = [r for r in task["regions"] if r != "run"]
     tests = task["tests"]
@@ -72,7 +78,7 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
             s.append("So far: " + " | ".join(history[-8:]))
         return "\n".join(s)
 
-    for d in range(1, DECISIONS + 1):
+    for d in range(1, decisions + 1):
         if actions >= budget or green:
             break
         # ---- inspect before every decision (the loop's own rule; decision 1 mirrors 8a's inspect-first)
@@ -178,6 +184,10 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
 
     return {"run_id": run_id, "task_id": task["task_id"], "family": task.get("family", "v3"),
             "green": green, "actions": actions, "decisions": decisions_made,
+            # how many were ALLOWED, beside how many were made: an episode that stopped at 1 because
+            # it went green and one that stopped at 1 because the arm was capped there are the same
+            # row without this field, and §13b's one-decision arm is exactly that comparison.
+            "decisions_allowed": decisions,
             "tokens_in": total_in, "tokens_out": total_out,
             "first_correct_decision": first_correct,
             # `agent_claims_pass` USED TO BE bool(green) -- the VERIFIER's verdict under another
@@ -209,6 +219,9 @@ def main():
                          "--head remains for the shared alternative the rule did not select.")
     ap.add_argument("--head-layer", type=int, default=18)
     ap.add_argument("--budget", type=int, default=BUDGET)
+    ap.add_argument("--decisions", type=int, default=DECISIONS,
+                    help="head decisions allowed per episode. Default %d is the loop as published; "
+                         "1 restricts it to a single head decision (理 12436's variance arm)." % DECISIONS)
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
     head = None
@@ -238,7 +251,8 @@ def main():
     ep = open(a.out + ".episodes.jsonl", "w"); st = open(a.out + ".steps.jsonl", "w")
     for i, f in enumerate(files, 1):
         t = json.load(open(f))
-        r = run_episode(model, tok, t, run_id, st, a.model, head_state=head, budget=a.budget)
+        r = run_episode(model, tok, t, run_id, st, a.model, head_state=head, budget=a.budget,
+                        decisions=a.decisions)
         ep.write(json.dumps(r) + "\n"); ep.flush(); st.flush()
         print("[%d/%d] %s green=%s decisions=%d actions=%d"
               % (i, len(files), t["task_id"], r["green"], r["decisions"], r["actions"]), file=sys.stderr)

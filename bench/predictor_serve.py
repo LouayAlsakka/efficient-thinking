@@ -154,6 +154,14 @@ class Handler(BaseHTTPRequestHandler):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=8899)
+    # DEFAULTS TO LOOPBACK ON PURPOSE. 形 could not reach /area from their checkout because this
+    # bound 127.0.0.1 on llm1 and I said "the endpoint is there" without saying WHOSE loopback
+    # (12410/12439). --host 0.0.0.0 puts it on the estate LAN; it is not a public route and there
+    # is none to this box. The $10 WO-318 cap is enforced in AreaV0 against its own ledger file, so
+    # a second caller shares the ceiling rather than raising it — that is the point of a meter in
+    # code rather than a watched number.
+    ap.add_argument("--host", default="127.0.0.1",
+                    help="0.0.0.0 to serve the estate LAN. Default is this box's loopback only.")
     ap.add_argument("--fake", action="store_true", help="no credentials, no network, no spend")
     ap.add_argument("--model", default="us.anthropic.claude-opus-4-7")
     ap.add_argument("--ledger", default=os.path.join(HERE, "bench_spend_ledger.json"))
@@ -172,13 +180,13 @@ def main():
         Handler.mode = "LIVE Bedrock: %s" % a.model
     print("  venue: %s" % ("%s — %d offer(s), %d staff" % (world["handle"], len(world["offers"]),
           len(world["staff"])) if world else "NONE (--space not given; args will not resolve)"))
-    print("  predictor v0 on http://127.0.0.1:%d   mode: %s" % (a.port, Handler.mode))
+    print("  predictor v0 on http://%s:%d   mode: %s" % (a.host, a.port, Handler.mode))
     Handler.area = AreaV0(load_taxonomy(a.taxonomy or None), model=a.model,
                           transport=(fb if a.fake else None),
                           ledger=os.path.join(HERE, "wo318_spend_ledger.json") + (".FAKE" if a.fake else ""))
     print("  POST /predict {state, last_exchange, n}   POST /area {utterance, venue}   GET /health")
     print("  /area venues: %s" % ", ".join(sorted(Handler.area.tax["venues"])))
-    HTTPServer(("127.0.0.1", a.port), Handler).serve_forever()
+    HTTPServer((a.host, a.port), Handler).serve_forever()
 
 
 if __name__ == "__main__":
