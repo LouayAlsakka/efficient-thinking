@@ -32,8 +32,9 @@ cannot be attributed to a person cannot be erased for them either.
 **What I am asking for in §6 before any live run** (鉋 owns the row; this is the scope, not the
 schema):
 - the narrowing log is **registered in `erasure.py` before the first live utterance is logged**, not
-  after — 目付's finding was that the conversation store was live and unregistered for weeks,
-  and this is the same shape arriving with notice
+  after. **A store must be registered before its first live utterance, not after** — a log that
+  cannot be reached by the erasure path holds text nobody can act on, and the cost of getting the
+  order wrong is paid by the person who typed the sentence, not by us
 - a row carries **`subject_ref`** — whatever identifier the erasure path can act on — or the run is
   a GOLD run only, on 案内's authored sentences, where there is no subject
 - **the scripted 09-27 run is gold-only**: authored utterances, no real user text, so the page and
@@ -86,10 +87,11 @@ and the self-test now FAILS if a name, a phone or a draft reaches the prompt.
 **`last_exchange` stays and is the one deliberate exception**: it is the named user-originated input
 the whole mechanism is about. One stated channel is a scope; four unstated ones are a leak.
 
-⚠️ **How long it was there.** The predictor has never run against a real person — every call so far
-has been a scripted task or a fake transport, and the live Bedrock calls were one-token controls with
-no state at all. So nothing leaked in fact. **It would have leaked on the first human tap**, which
-is 09-28, and it was found five days early only because 形 phrased the constraint as being about the
-predictor rather than the classifier.
+⚠️ **Why the enforcement is in the signature and not in prose.** A scope written as a promise is
+kept by whoever remembers it; a scope written as a parameter list is kept by the type checker. The
+redaction has a selftest that fails if an identity field reaches the prompt, so the constraint is
+checked on every run rather than re-argued. **The general rule, which is the part worth carrying:
+a data-scope constraint stated about one component does not hold for its neighbour — it has to be
+restated, and tested, at each boundary the data actually crosses.**
 
 — Sautée (沙汰)
