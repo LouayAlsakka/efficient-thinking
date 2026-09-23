@@ -94,6 +94,37 @@ def _resolvable(world):
             "days": {str(x).lower() for x in world.get("days", [])}}
 
 
+
+# WHAT MUST NEVER LEAVE THE BOX. The predictor serialises the UiState into the prompt, and the real
+# UiState carries `form.book.name`, `form.book.phone`, `form.book.sms_opt_in` and `ask.draft`.
+# Measured on the real mid-flow state: all four reached the Bedrock prompt verbatim. The predictor
+# needs the SHAPE of the state — is the form filled, which offer/staff/day/slot are chosen — and
+# never the identity itself. `last_exchange` stays: it is the deliberate, named user-originated
+# input the whole mechanism is about, and it is stated as such in docs/wo318-data-scope-sautee.md.
+REDACTED = "<redacted>"
+_IDENTITY_FIELDS = ("name", "phone", "email", "sms_opt_in", "note")
+
+
+def redact_state(state):
+    """Return a copy with identity VALUES replaced by a filled/empty marker. Shape is preserved so
+    the model can still tell a filled form from an empty one."""
+    import copy
+    s = copy.deepcopy(state) if isinstance(state, dict) else state
+    if not isinstance(s, dict):
+        return s
+    form = s.get("form")
+    if isinstance(form, dict):
+        for sheet, fields in list(form.items()):
+            if isinstance(fields, dict):
+                form[sheet] = {k: (REDACTED if (k in _IDENTITY_FIELDS and v not in (None, "", False))
+                                   else ("" if k in _IDENTITY_FIELDS else v))
+                               for k, v in fields.items()}
+    ask = s.get("ask")
+    if isinstance(ask, dict) and ask.get("draft"):
+        ask["draft"] = REDACTED
+    return s
+
+
 @dataclass
 class Prediction:
     actions: list = field(default_factory=list)
@@ -154,7 +185,7 @@ class PredictorV0:
     def predict(self, state, last_exchange="", n=5) -> Prediction:
         prompt = PROMPT.format(world=(json.dumps(self.world, ensure_ascii=False)[:2000]
                                       if self.world else NO_WORLD),
-                               state=json.dumps(state, ensure_ascii=False)[:4000],
+                               state=json.dumps(redact_state(state), ensure_ascii=False)[:4000],
                                last=str(last_exchange)[:1000],
                                kinds=", ".join(self.kinds), n=n)
         est_in = max(1, len(prompt) // 4)
@@ -267,12 +298,30 @@ def _selftest():
                      ledger="/tmp/_bench_t7.json").predict(state)
     assert len(p7.actions) == 3 and not p7.unresolved
     print("  [8] no world supplied -> no id check, 3 shown (unchanged behaviour)")
-    for i in range(1, 8):
+    # 9 — THE IDENTITY NEVER REACHES THE PROMPT. This failed before the redaction existed: name,
+    #     phone, sms_opt_in and the typed draft all went to Bedrock verbatim.
+    filled = {**REAL_STATE,
+              "selection": {**REAL_STATE["selection"], "offer_ids": ["haircut"], "staff": "Marcus",
+                            "day": "2026-09-23", "slot": "14:30"},
+              "sheet": "book",
+              "form": {"book": {"name": "Jane Doe", "phone": "5551234567", "sms_opt_in": True}},
+              "ask": {**REAL_STATE["ask"], "draft": "can you fit me in earlier"}}
+    sent = {}
+    def _capture(req, **kw):
+        sent["prompt"] = req["messages"][0]["content"]
+        return AR.bedrock_transport(req, client=AR.FakeBedrock([good]))
+    PredictorV0(transport=_capture, ledger="/tmp/_bench_t9.json", world=w).predict(filled, "user: hi")
+    leaked = [n for n in ("Jane Doe", "5551234567", "can you fit me in earlier") if n in sent["prompt"]]
+    assert not leaked, "IDENTITY LEAKED TO THE PROMPT: %s" % leaked
+    assert '"staff": "Marcus"' in sent["prompt"] and '"slot": "14:30"' in sent["prompt"], "shape lost"
+    assert REDACTED in sent["prompt"], "the filled/empty marker is gone — the model cannot tell"
+    print("  [9] identity redacted: name/phone/draft absent, selection shape intact, marker present")
+    for i in range(1, 10):
         for s in ("", ".tmp"):
             f = "/tmp/_bench_t%d.json%s" % (i, s)
             if os.path.exists(f):
                 os.remove(f)
-    print("\n  SELFTEST PASSED — 8 checks, $0.00, no network.")
+    print("\n  SELFTEST PASSED — 9 checks, $0.00, no network.")
 
 
 if __name__ == "__main__":

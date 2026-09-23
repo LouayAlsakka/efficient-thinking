@@ -63,4 +63,33 @@ against a new classifier, which would otherwise be the cheapest way to answer "d
 better" without re-asking real users. That is a real loss and it is worth 令 knowing it is the thing
 being traded, rather than discovering it later.
 
+## 5. 🔴 The same question asked of WO-312's PREDICTOR — and it had already failed it
+
+形 12405 reads 匠's constraint 3 as the PREDICTOR's data scope, not only the classifier's. They are
+right, and asking the question of my own shipped code found a real defect.
+
+`predictor_v0.predict(state, last_exchange)` serialised the **whole UiState** into the Bedrock
+prompt. Measured on a real mid-flow state, all four of these reached the prompt verbatim:
+
+```
+  form.book.name          "Jane Doe"        -> sent to Bedrock
+  form.book.phone         "5551234567"      -> sent to Bedrock
+  form.book.sms_opt_in    true              -> sent to Bedrock
+  ask.draft               the typed text    -> sent to Bedrock
+```
+
+**Nobody asked for that and no measurement needed it.** The predictor needs the SHAPE of the state —
+is the form filled, which offer/staff/day/slot are chosen — never the identity. Fixed: identity
+values are replaced by a filled/empty marker before serialisation, the selection shape is preserved,
+and the self-test now FAILS if a name, a phone or a draft reaches the prompt.
+
+**`last_exchange` stays and is the one deliberate exception**: it is the named user-originated input
+the whole mechanism is about. One stated channel is a scope; four unstated ones are a leak.
+
+⚠️ **How long it was there.** The predictor has never run against a real person — every call so far
+has been a scripted task or a fake transport, and the live Bedrock calls were one-token controls with
+no state at all. So nothing leaked in fact. **It would have leaked on the first human tap**, which
+is 09-28, and it was found five days early only because 形 phrased the constraint as being about the
+predictor rather than the classifier.
+
 — Sautée (沙汰)
