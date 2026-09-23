@@ -91,6 +91,30 @@ def arm_run(rows, classifier, n, parents, label, cost_is_zero):
     scored = [r for r in per if all(x["area"] is not None for x in r["replicates"])]
     unparsed = len(per) - len(scored)
     rate = None if unparsed else round(1 - sum(r["unanimous"] for r in scored) / len(scored), 4)
+
+    # PER FIELD, because the prereg registered them separately (§2 measurements 1 and 2) and
+    # because the combined rate cannot say WHICH field moved. The rehearsal's two disagreements
+    # were on `intent` alone, on the two kinds gold calls hardest, with tags and commit unanimous
+    # in all thirty replies — a fact the single number hides completely.
+    def field_rate(fn):
+        if unparsed:
+            return None
+        moved = 0
+        for r in scored:
+            vals = {fn(x["area"]) for x in r["replicates"]}
+            moved += len(vals) > 1
+        return round(moved / len(scored), 4)
+
+    per_field = {
+        "intent": field_rate(lambda A: A.get("intent")),
+        "tags": field_rate(lambda A: tuple(sorted(str(t) for t in (A.get("tags") or [])))),
+        "tags_canonical": field_rate(
+            lambda A: tuple(__import__("area_equal").canonical_tags(A.get("tags"), parents))),
+        "commit": field_rate(lambda A: repr(A.get("commit"))),
+        "note": ("each is the fraction of utterances where that field alone was not identical "
+                 "across all N replicates. `tags` is the raw set; `tags_canonical` applies 案内's "
+                 "subsumption reduce first, so the difference between them is formatting."),
+    }
     lat_sorted = sorted(lat)
 
     firsts = [r["replicates"][0]["area"] for r in per]
@@ -105,6 +129,7 @@ def arm_run(rows, classifier, n, parents, label, cost_is_zero):
         "utterance_leaves_the_estate": not cost_is_zero,
         "n_utterances": len(per), "n_replicates": n,
         "disagreement_rate": rate,
+        "disagreement_by_field": per_field,
         "unparsed_utterances": unparsed,
         "disagreement_note": (None if rate is not None else
                               "NOT REPORTED: %d utterance(s) had a replicate that did not parse. "

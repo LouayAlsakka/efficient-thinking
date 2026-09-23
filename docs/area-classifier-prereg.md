@@ -92,6 +92,35 @@ another venue's set, which is a different failure and worth seeing — but it is
 coverage number, and registering it as one without first checking what a constrained prompt does to
 it was my error.
 
+## 2d. REGISTERED 2026-09-23, after a rehearsal and BEFORE the gold run — the comparator, and per-field reporting
+
+**The comparator is 案内's canonical form, not mine** (doc 239, 12438; asked for in my 12378):
+sort, and a tag collapses into an **already-present ancestor** while siblings never reduce;
+single-value `commit`; closed-enum `intent`. Two areas are equal iff their canonical forms are
+structurally equal. Implemented once, in `bench/area_equal.py`, and used by the replicate
+measurement and by 鉋's replay tool — one property, reused, not reinvented per consumer.
+
+⚠️ **The comparator REFUSES across shapes rather than coercing.** 形 12440 showed doc 239 and the
+design of record disagree on what `intent` and `commit` ARE — 239 has `intent ∈ {ask, commit}` with
+`commit ::= tag_id | null`; the walkthrough, `schema.py`'s `_INTENTS`, 理 12408 and the live `/area`
+all have eight intents and a boolean commit. A comparator that silently accepted both would turn an
+open design question into a number nobody could interpret. The shape is sniffed on `commit`, never
+on `intent`, because `"ask"` is legal in both vocabularies and is the most common value.
+
+**Per-field disagreement is reported beside the combined rate**, because §2 registered intent and
+tags as separate measurements and because the combined number cannot say which field moved:
+`intent`, `tags` (raw set), `tags_canonical`, `commit`.
+
+📌 **A rehearsal ran before this section was written, and it is the reason the section exists.** Ten
+of our own sentences (not gold), three replicates, live Bedrock, `$0.0743`: combined disagreement
+**0.20**, and per field **intent 0.20, tags 0.00, tags_canonical 0.00, commit 0.00**. Both
+disagreements were on `intent` alone and on exactly the two kinds gold calls hardest — off-menu
+(*"can you resole my shoes"*: `ask` twice, `order` once) and ambiguous (*"i need something cleaned"*:
+`order` twice, `ask` once). ⚠️ **That rehearsal is not a result and is not quotable as one: I wrote
+both the sentences and their off-menu labels, so the coverage number on it is a measurement of my
+own answer key.** It is registered here as what was seen before the readings were fixed, so nobody
+later has to take on trust that the per-field split was not chosen after seeing gold.
+
 ## 2b. `walked_up`, registered on my own default (12354, no objection by the stated time)
 
 The rate at which `never_empty` walks UP the taxonomy, per venue. **Above 5% on a conformant venue
