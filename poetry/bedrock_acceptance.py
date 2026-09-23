@@ -30,12 +30,25 @@ BARE_ID = "anthropic.claude-fable-5-1"
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--region", default=os.environ.get("AWS_REGION", "us-east-1"))
+    ap.add_argument("--profile", default=os.environ.get("AWS_PROFILE", "et-bedrock-rater"),
+                    help="AWS profile to run as. Defaults to the SCOPED principal, never [default], "
+                         "which on llm1 is still the root key. Pass '' to inherit the environment.")
     ap.add_argument("--ledger", default=os.path.join(HERE, "data", "iv_spend_ledger.json"))
     ap.add_argument("--out", default=os.path.join(HERE, "bedrock_acceptance.json"))
     a = ap.parse_args()
     import boto3
     from botocore.exceptions import ClientError
-    res = {"document": "ET-IV — Bedrock acceptance check", "region": a.region}
+
+    # NAME THE PRINCIPAL, DO NOT INHERIT IT. llm1's [default] AWS profile is still the ROOT key, so
+    # running this check without AWS_PROFILE set makes it refuse at [1] — correctly, but for a
+    # reason that reads like "the scoped principal was never created". It was: [et-bedrock-rater],
+    # verified arn ...:user/et-bedrock-rater, is_root false, with iam:ListUsers and s3:ListBuckets
+    # both denied. Defaulting the profile here makes the check run against the right principal by
+    # construction rather than by whoever remembers the environment variable.
+    if a.profile:
+        boto3.setup_default_session(profile_name=a.profile)
+    res = {"document": "ET-IV — Bedrock acceptance check", "region": a.region,
+           "profile": a.profile or "(inherited from the environment)"}
 
     # WRITE WHAT WE KNOW, EVEN IF A LATER CHECK THROWS. Checks 1-3 passed against the real scoped
     # principal on 09-22 and check [4] raised before the final dump, so the artefact on disk stayed
