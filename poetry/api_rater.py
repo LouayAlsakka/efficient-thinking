@@ -149,8 +149,15 @@ def bedrock_transport(req, client=None, region=None, **_):
     """
     if client is None:
         import boto3
-        client = boto3.client("bedrock-runtime",
-                              region_name=region or os.environ.get("AWS_REGION", "us-east-1"))
+        # NAME THE PRINCIPAL. llm1's [default] AWS profile was the ROOT key until tonight, and an
+        # implicit default session resolves to whatever happens to be there — which is how a
+        # metered paper run ends up on a credential nobody chose for it. Defaults to the scoped
+        # rater principal; AWS_PROFILE still overrides, and NIRA_AWS_PROFILE='' restores the old
+        # implicit behaviour for anyone who needs it deliberately rather than by accident.
+        prof = os.environ.get("AWS_PROFILE", os.environ.get("NIRA_AWS_PROFILE", "et-bedrock-rater"))
+        sess = boto3.Session(profile_name=prof) if prof else boto3.Session()
+        client = sess.client("bedrock-runtime",
+                             region_name=region or os.environ.get("AWS_REGION", "us-east-1"))
     prompt = req["messages"][0]["content"]
     r = client.converse(modelId=req["model"],
                         messages=[{"role": "user", "content": [{"text": prompt}]}],
