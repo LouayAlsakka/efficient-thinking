@@ -563,3 +563,10 @@ paired games would make a +3 effect clear §14 (interval lower bound > 2.33)? Th
 ETAs measured: §13b game 3 ~23:30Z; §13c ~04:41Z (head arm 57 min on box A). Ledgers: per-run, no venue/customer/
 subject fields (R468 weight stays low). Exposure window of the public history: outer bound the repo's creation
 (2026-07-09); the API has no visibility history.
+
+**§13c game 1 (2026-09-23 23:26Z), heads cut on whole decision groups:** base 77 · gen0 107 (+10.0 [+3.7, +16.3]) ·
+gen1-matched (same problems) 106 (+9.7 [+4.0, +15.3]) · gen1″ (disjoint problems) 103 (+8.7 [+3.0, +14.3]);
+gen1″ − gen1-matched = −1.0 [−7.3, +5.3], §14(a) not separated; (b) not evaluable on one game. All three heads beat
+base by nine to ten points and are indistinguishable from each other on one game. The probe gap (60.7 vs 53.4, seven
+points in favour of same-problem experience) did not convert to episodes — the fourth time in the programme a probe
+improvement failed to convert, and the reason the bar is problems solved on a paired run. Games 2–3 ~04:40Z.
