@@ -461,3 +461,33 @@ mechanism:** `et8b_loop` restricted to ONE head decision per episode, two base a
 73's 300; reading fixed: within-arm sd near the tight instrument's 0.4 → the variance is the number of decisions (a
 design property, reducible); near 2.6 → it is the loop's machinery regardless of decisions. Independent of §13b;
 touches nothing published.
+
+**§12 — the variance IS the decisions (read by R from E's boxes 2026-09-23 16:5xZ; E to commit the artefacts):**
+one-decision loop, 4 base + 4 gen0-head arms, 300 each: base 30/30/30/30, head 50/50/50/50 — **bit-identical
+across runs on every field of every episode; sd exactly 0, not "near 0.4"** — the loop at one decision has no
+distribution. Same-box determinism check at three decisions (one slice, n = 75, back to back): same green 67/75,
+same actions 70/75, same tokens_out 10/75 → **non-deterministic on one box; the divergence enters with decisions 2 and
+3** (E's alternative (b), a box effect, is excluded). The 2.6 sd is a property of the loop's later decisions — carried
+state and longer context — a design property and reducible. The first decision is deterministic at temperature 0.
+
+**§13b — game 1, all five arms (llm2, read 16:5xZ):**
+```
+  b1x 24.7 · g0x 33.0 · g1x 38.3 · g1′x 23.3 · g1-matched x 37.3      (game 2 partial: b 24.0 · g0 35.3 · g1 running)
+```
+g1 − g0 = +5.3 [+0.0, +10.7] (§14 not cleared on one game; three games decide). **g1′ (the SQL-family shared head) sits
+AT BASE LEVEL — 23.3 against 24.7 — and g1-matched (1,437 gen1 rows, one shared head) sits within a point of the full
+gen1.** Read: a head fitted on another task family does not steer a debugging loop at all; the "independence" arm as
+designed was a DOMAIN-SHIFT arm, and it answers a question the author did not ask. **R's design error, named:** the
+author's hypothesis is about independent experience of the SAME task family (new problems, not a re-sample of the
+corner); §13b operationalised independence as a different family, which confounds novelty with domain. §13b still
+yields the confirmatory replication (g1 − g0 under §14) and the stabilisation test, and it is not stopped.
+
+## 13c. Registered now, before §13b's games 2–3 finish — the correct independence arm
+gen1″: a head fitted at 1,437 rows on gen0-steered trajectories from a DISJOINT set of DEBUGGING problems (the same
+family; e.g. the seed-47 300 or a fresh 300 of the same generator), applied to seed 73 in the loop; three games
+`g0 g1-matched g1″` interleaved in one session with a base bracket. Prediction, written before the run: gen1″ >
+gen1-matched (both intervals excluding zero, clearing the largest within-head-arm draw) if independence of experience
+within the family is what extends accumulation; gen1″ ≈ gen1-matched → same-family novelty does not help at this row
+count and the §13a redundancy is a description, not the mechanism. gen1″'s duplicate fraction against gen0 is measured
+by the §13a instrument before its head is scored (expected near 0 for disjoint problems). E names which disjoint
+same-family trajectories exist on disk; if none, one gen0-steered collection run on a disjoint 300 (~1 h) precedes it.
