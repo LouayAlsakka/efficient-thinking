@@ -185,6 +185,12 @@ def main():
     ap.add_argument("--replicates", type=int, default=5)
     ap.add_argument("--taxonomy", default="")
     ap.add_argument("--local-model", default="")
+    # THE ARMS CANNOT BE TEMPERATURE-MATCHED AND THAT IS A FACT, NOT AN OVERSIGHT: opus-4-7 on
+    # Bedrock REJECTS `temperature` (poetry/api_rater.py:158, carried over from judge.py), so the
+    # paid arm cannot be pinned at all. The local arm can. A local 0.0 against an unpinnable
+    # Bedrock is therefore not a model comparison — it is a comparison of samplers — so the local
+    # arm is run at 0.0 AND at a non-zero setting, and the artifact names which is which.
+    ap.add_argument("--local-temperature", type=float, default=0.0)
     ap.add_argument("--bedrock-model", default="us.anthropic.claude-opus-4-7")
     ap.add_argument("--local-ledger", default=os.path.join(HERE, "wo318_local_ledger.json"))
     # A SEPARATE ledger from the live /area service's, on purpose, and a SUB-BUDGET rather than the
@@ -198,7 +204,17 @@ def main():
     ap.add_argument("--arms", default="local,bedrock")
     ap.add_argument("--out", default="")
     ap.add_argument("--selftest", action="store_true")
+    # THE TWO ARMS CANNOT SHARE AN INTERPRETER ON THIS BOX and that is a fact about the estate, not
+    # a design choice: the local arm needs mlx_lm (the mlx venv, py3.9) and the Bedrock arm needs
+    # boto3 (/usr/bin/python3), and neither venv has the other package. Installing into the shared
+    # mlx venv while experiments are running on it is the class of move that has cost this lane a
+    # day before. So each arm runs where it can run, writes its own artifact, and --merge joins
+    # them offline. It also means a rerun of one arm never re-spends the other.
+    ap.add_argument("--merge", nargs="+", metavar="ARM.json",
+                    help="join per-arm artifacts and compute the cross-arm comparison offline")
     a = ap.parse_args()
+    if a.merge:
+        return _merge(a)
     if a.selftest:
         return _selftest()
     if not a.utterances:
@@ -214,12 +230,25 @@ def main():
     for arm in arms:
         if arm == "local":
             cl = AL.local_area(tax, model_id=a.local_model or AL.DEFAULT_LOCAL_MODEL,
-                               ledger=a.local_ledger)
-            reports["local"] = arm_run(rows, cl, a.replicates, parents, "local", True)
+                               ledger=a.local_ledger, temperature=a.local_temperature)
+            name = "local@T%g" % a.local_temperature
+            reports[name] = arm_run(rows, cl, a.replicates, parents, name, True)
+            reports[name]["sampler"] = {
+                "temperature": a.local_temperature,
+                "pinnable": True,
+                "note": ("at temperature 0 a replicate disagreement of 0 is BY CONSTRUCTION and is "
+                         "not evidence the model is more decisive than the paid arm — it is "
+                         "evidence the sampler is pinned, which the paid arm cannot be.")}
+            arm = name
         elif arm == "bedrock":
             cl = AreaV0(tax, model=a.bedrock_model, ledger=a.bedrock_ledger,
                         cap=a.bedrock_cap)
             reports["bedrock"] = arm_run(rows, cl, a.replicates, parents, "bedrock", False)
+            reports["bedrock"]["sampler"] = {
+                "temperature": None, "pinnable": False,
+                "note": ("opus-4-7 on Bedrock REJECTS temperature, so this arm's sampling cannot "
+                         "be fixed. Its replicate disagreement has a floor nobody can lower by "
+                         "configuration; the local arm's does not.")}
         else:
             sys.exit("unknown arm %r" % arm)
         r = reports[arm]
@@ -240,9 +269,56 @@ def main():
            "spend": _spend_rollup(a),
            "arms": reports}
     if len(reports) == 2:
-        out["cross_arm"] = cross_arm(reports[arms[0]], reports[arms[1]], parents)
+        k = list(reports)
+        out["cross_arm"] = cross_arm(reports[k[0]], reports[k[1]], parents)
         print("  cross-arm agreement: %s (n=%d)"
               % (out["cross_arm"]["agreement"], out["cross_arm"]["n_compared"]))
+    path = a.out or os.path.join(HERE, "area_measure.json")
+    json.dump(out, open(path, "w"), indent=1, ensure_ascii=False)
+    print("  wrote %s" % path)
+
+
+def _merge(a):
+    from area_v0 import load_taxonomy
+    tax = load_taxonomy(a.taxonomy or None)
+    parents = load_parents(tax)
+    arms, names = {}, []
+    for path in a.merge:
+        d = json.load(open(path))
+        one = d["arms"] if "arms" in d else {d["arm"]: d}
+        for k, v in one.items():
+            if k in arms:
+                sys.exit("STOP: two artifacts both carry arm %r — merging them would compare an "
+                         "arm with itself" % k)
+            arms[k] = v; names.append(k)
+    sets = {tuple(r["utterance"] for r in v["per_utterance"]) for v in arms.values()}
+    if len(sets) != 1:
+        sys.exit("STOP: the arms did not run the same utterances, in the same order. A cross-arm "
+                 "agreement over two different sets is not an agreement.")
+    stale = [k for k, v in arms.items() if "disagreement_by_field" not in v or "sampler" not in v]
+    if stale:
+        sys.exit("STOP: arm(s) %s were written by an older instrument — they carry no "
+                 "`disagreement_by_field` or no `sampler` block. Merging them would put a number "
+                 "measured under one set of readings beside numbers measured under another, with "
+                 "nothing in the artifact saying so. Re-run those arms." % ", ".join(sorted(stale)))
+    ns = {v["n_replicates"] for v in arms.values()}
+    out = {"document": "WO-318 — /area classifier measurement, arms merged",
+           "prereg": "docs/area-classifier-prereg.md (§2c, §2d)",
+           "merged_from": [os.path.abspath(p) for p in a.merge],
+           "n": len(next(iter(sets))), "replicates": sorted(ns),
+           "⚠️_replicate_counts": ("EQUAL" if len(ns) == 1 else
+                                   "DIFFER across arms — the disagreement rates are not comparable"),
+           "writes_to_the_narrowing_log": False,
+           "spend": _spend_rollup(a), "arms": arms}
+    if len(names) == 2:
+        out["cross_arm"] = cross_arm(arms[names[0]], arms[names[1]], parents)
+        print("  cross-arm agreement: %s (n=%d)"
+              % (out["cross_arm"]["agreement"], out["cross_arm"]["n_compared"]))
+    for k, v in arms.items():
+        print("  %-8s disagreement %s  by-field %s  median %.2fs  $%.4f  leaves-estate %s"
+              % (k, v["disagreement_rate"],
+                 {f: v["disagreement_by_field"][f] for f in ("intent", "tags", "commit")},
+                 v["latency_median_s"], v["cost_usd_total"], v["utterance_leaves_the_estate"]))
     path = a.out or os.path.join(HERE, "area_measure.json")
     json.dump(out, open(path, "w"), indent=1, ensure_ascii=False)
     print("  wrote %s" % path)

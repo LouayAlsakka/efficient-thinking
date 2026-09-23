@@ -1,0 +1,1675 @@
+{
+ "document": "WO-318 — /area classifier measurement, arms merged",
+ "prereg": "docs/area-classifier-prereg.md (§2c, §2d)",
+ "merged_from": [
+  "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/area_local_T0.0.json",
+  "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/area_local_T1.0.json",
+  "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/area_bedrock.json"
+ ],
+ "n": 10,
+ "replicates": [
+  3
+ ],
+ "⚠️_replicate_counts": "EQUAL",
+ "writes_to_the_narrowing_log": false,
+ "spend": {
+  "instrument_ledger": "wo318_measure_ledger.json",
+  "instrument_usd": 0.148721,
+  "instrument_sub_budget_usd": 2.0,
+  "service_ledger": "wo318_spend_ledger.json",
+  "service_usd": 0.016799,
+  "combined_usd": 0.165521,
+  "wo318_cap_usd": 10.0,
+  "why_two_ledgers": "the live /area service holds its ledger open for 形's renderer; two processes read-modify-writing one json lose entries, and a lost entry is a cap that under-counts. Both totals are printed."
+ },
+ "arms": {
+  "local@T0": {
+   "arm": "local@T0",
+   "utterance_leaves_the_estate": false,
+   "n_utterances": 10,
+   "n_replicates": 3,
+   "disagreement_rate": 0.0,
+   "disagreement_by_field": {
+    "intent": 0.0,
+    "tags": 0.0,
+    "tags_canonical": 0.0,
+    "commit": 0.0,
+    "note": "each is the fraction of utterances where that field alone was not identical across all N replicates. `tags` is the raw set; `tags_canonical` applies 案内's subsumption reduce first, so the difference between them is formatting."
+   },
+   "unparsed_utterances": 0,
+   "disagreement_note": null,
+   "latency_median_s": 1.2525,
+   "latency_p90_s": 1.432,
+   "cost_usd_total": 0.0,
+   "cost_usd_per_call": 0.0,
+   "pick_distribution_intent": {
+    "hours": 1,
+    "book": 1,
+    "ask": 7,
+    "order": 1
+   },
+   "pick_distribution_commit": {
+    "False": 8,
+    "True": 2
+   },
+   "coverage_empty_tags_on_menu": 0.25,
+   "coverage_denominator": 8,
+   "coverage_note": "the empty-tags rate on utterances gold does NOT mark off-menu (prereg §2c). None when the set carries no off-menu labels — without them this number conflates a coarse taxonomy with a correct refusal.",
+   "unresolved_tags_total": 0,
+   "unresolved_note": "kept as a counter, NOT as the coverage measurement: a constrained prompt shows the model only this venue's tags, so it rarely names one the venue lacks",
+   "errors": {},
+   "per_utterance": [
+    {
+     "utterance": "what time do you close",
+     "replicates": [
+      {
+       "area": {
+        "intent": "hours",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"hours\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "hours",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"hours\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "hours",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"hours\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.3811,
+      1.0442,
+      1.4693
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "plain ask",
+     "off_menu": false,
+     "ms": [
+      1381,
+      1044,
+      1469
+     ]
+    },
+    {
+     "utterance": "book me a haircut with Priya on Friday",
+     "replicates": [
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.3677,
+      1.3404,
+      1.2436
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "plain commit",
+     "off_menu": false,
+     "ms": [
+      1368,
+      1340,
+      1244
+     ]
+    },
+    {
+     "utterance": "actually make it Marcus instead",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.0812,
+      0.9543,
+      1.1285
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "re-select",
+     "off_menu": false,
+     "ms": [
+      1081,
+      954,
+      1128
+     ]
+    },
+    {
+     "utterance": "can you resole my shoes",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.137,
+      1.0335,
+      0.9048
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "off-menu",
+     "off_menu": true,
+     "ms": [
+      1137,
+      1034,
+      905
+     ]
+    },
+    {
+     "utterance": "something for tomorrow",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.0357,
+      1.0625,
+      0.9528
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "ambiguous",
+     "off_menu": false,
+     "ms": [
+      1036,
+      1063,
+      953
+     ]
+    },
+    {
+     "utterance": "how much is dry cleaning",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.price",
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.price\", \"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.price",
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.price\", \"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.price",
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.price\", \"svc.laundry.dryclean\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.5162,
+      1.5261,
+      1.4145
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "plain ask",
+     "off_menu": false,
+     "ms": [
+      1516,
+      1526,
+      1414
+     ]
+    },
+    {
+     "utterance": "drop off a bag of wash and fold this afternoon",
+     "replicates": [
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.washfold\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.washfold\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.washfold\"], \"commit\": true}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.3314,
+      1.2613,
+      1.432
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "plain commit",
+     "off_menu": false,
+     "ms": [
+      1331,
+      1261,
+      1432
+     ]
+    },
+    {
+     "utterance": "no, alterations instead",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.3655,
+      1.2246,
+      1.3299
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "re-select",
+     "off_menu": false,
+     "ms": [
+      1365,
+      1225,
+      1330
+     ]
+    },
+    {
+     "utterance": "do you sell suitcases",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.0701,
+      0.9586,
+      1.0035
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "off-menu",
+     "off_menu": true,
+     "ms": [
+      1070,
+      959,
+      1004
+     ]
+    },
+    {
+     "utterance": "i need something cleaned",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.4258,
+      1.2746,
+      1.263
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "ambiguous",
+     "off_menu": false,
+     "ms": [
+      1426,
+      1275,
+      1263
+     ]
+    }
+   ],
+   "sampler": {
+    "temperature": 0.0,
+    "pinnable": true,
+    "note": "at temperature 0 a replicate disagreement of 0 is BY CONSTRUCTION and is not evidence the model is more decisive than the paid arm — it is evidence the sampler is pinned, which the paid arm cannot be."
+   }
+  },
+  "local@T1": {
+   "arm": "local@T1",
+   "utterance_leaves_the_estate": false,
+   "n_utterances": 10,
+   "n_replicates": 3,
+   "disagreement_rate": 0.3,
+   "disagreement_by_field": {
+    "intent": 0.2,
+    "tags": 0.2,
+    "tags_canonical": 0.2,
+    "commit": 0.0,
+    "note": "each is the fraction of utterances where that field alone was not identical across all N replicates. `tags` is the raw set; `tags_canonical` applies 案内's subsumption reduce first, so the difference between them is formatting."
+   },
+   "unparsed_utterances": 0,
+   "disagreement_note": null,
+   "latency_median_s": 1.2723,
+   "latency_p90_s": 1.4626,
+   "cost_usd_total": 0.0,
+   "cost_usd_per_call": 0.0,
+   "pick_distribution_intent": {
+    "ask": 8,
+    "book": 1,
+    "order": 1
+   },
+   "pick_distribution_commit": {
+    "False": 8,
+    "True": 2
+   },
+   "coverage_empty_tags_on_menu": 0.25,
+   "coverage_denominator": 8,
+   "coverage_note": "the empty-tags rate on utterances gold does NOT mark off-menu (prereg §2c). None when the set carries no off-menu labels — without them this number conflates a coarse taxonomy with a correct refusal.",
+   "unresolved_tags_total": 0,
+   "unresolved_note": "kept as a counter, NOT as the coverage measurement: a constrained prompt shows the model only this venue's tags, so it rarely names one the venue lacks",
+   "errors": {},
+   "per_utterance": [
+    {
+     "utterance": "what time do you close",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "hours",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"hours\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "hours",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"hours\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": false,
+     "seconds": [
+      1.4027,
+      1.0563,
+      1.1087
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "plain ask",
+     "off_menu": false,
+     "ms": [
+      1403,
+      1056,
+      1109
+     ]
+    },
+    {
+     "utterance": "book me a haircut with Priya on Friday",
+     "replicates": [
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.3723,
+      1.2941,
+      1.4114
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "plain commit",
+     "off_menu": false,
+     "ms": [
+      1372,
+      1294,
+      1411
+     ]
+    },
+    {
+     "utterance": "actually make it Marcus instead",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "contact",
+        "tags": [
+         "info.contact"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"contact\", \"tags\": [\"info.contact\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.contact"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.contact\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": false,
+     "seconds": [
+      1.2192,
+      1.1669,
+      1.0836
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "re-select",
+     "off_menu": false,
+     "ms": [
+      1219,
+      1167,
+      1084
+     ]
+    },
+    {
+     "utterance": "can you resole my shoes",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      0.9506,
+      1.0923,
+      0.9489
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "off-menu",
+     "off_menu": true,
+     "ms": [
+      951,
+      1092,
+      949
+     ]
+    },
+    {
+     "utterance": "something for tomorrow",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": false,
+     "seconds": [
+      1.184,
+      1.1747,
+      0.959
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "ambiguous",
+     "off_menu": false,
+     "ms": [
+      1184,
+      1175,
+      959
+     ]
+    },
+    {
+     "utterance": "how much is dry cleaning",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.price",
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.price\", \"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.price",
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.price\", \"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "info.price",
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"info.price\", \"svc.laundry.dryclean\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.4617,
+      1.5242,
+      1.5444
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "plain ask",
+     "off_menu": false,
+     "ms": [
+      1462,
+      1524,
+      1544
+     ]
+    },
+    {
+     "utterance": "drop off a bag of wash and fold this afternoon",
+     "replicates": [
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.washfold\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.washfold\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.washfold\"], \"commit\": true}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.5439,
+      1.261,
+      1.3383
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "plain commit",
+     "off_menu": false,
+     "ms": [
+      1544,
+      1261,
+      1338
+     ]
+    },
+    {
+     "utterance": "no, alterations instead",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.2837,
+      1.4563,
+      1.4626
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "re-select",
+     "off_menu": false,
+     "ms": [
+      1284,
+      1456,
+      1463
+     ]
+    },
+    {
+     "utterance": "do you sell suitcases",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      0.9574,
+      1.0146,
+      0.9235
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "off-menu",
+     "off_menu": true,
+     "ms": [
+      957,
+      1015,
+      924
+     ]
+    },
+    {
+     "utterance": "i need something cleaned",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.3419,
+      1.3844,
+      1.3616
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "ambiguous",
+     "off_menu": false,
+     "ms": [
+      1342,
+      1384,
+      1362
+     ]
+    }
+   ],
+   "sampler": {
+    "temperature": 1.0,
+    "pinnable": true,
+    "note": "at temperature 0 a replicate disagreement of 0 is BY CONSTRUCTION and is not evidence the model is more decisive than the paid arm — it is evidence the sampler is pinned, which the paid arm cannot be."
+   }
+  },
+  "bedrock": {
+   "arm": "bedrock",
+   "utterance_leaves_the_estate": true,
+   "n_utterances": 10,
+   "n_replicates": 3,
+   "disagreement_rate": 0.1,
+   "disagreement_by_field": {
+    "intent": 0.1,
+    "tags": 0.0,
+    "tags_canonical": 0.0,
+    "commit": 0.0,
+    "note": "each is the fraction of utterances where that field alone was not identical across all N replicates. `tags` is the raw set; `tags_canonical` applies 案内's subsumption reduce first, so the difference between them is formatting."
+   },
+   "unparsed_utterances": 0,
+   "disagreement_note": null,
+   "latency_median_s": 1.7837,
+   "latency_p90_s": 3.492,
+   "cost_usd_total": 0.074421,
+   "cost_usd_per_call": 0.002481,
+   "pick_distribution_intent": {
+    "hours": 1,
+    "book": 3,
+    "order": 3,
+    "ask": 3
+   },
+   "pick_distribution_commit": {
+    "False": 6,
+    "True": 4
+   },
+   "coverage_empty_tags_on_menu": 0.125,
+   "coverage_denominator": 8,
+   "coverage_note": "the empty-tags rate on utterances gold does NOT mark off-menu (prereg §2c). None when the set carries no off-menu labels — without them this number conflates a coarse taxonomy with a correct refusal.",
+   "unresolved_tags_total": 0,
+   "unresolved_note": "kept as a counter, NOT as the coverage measurement: a constrained prompt shows the model only this venue's tags, so it rarely names one the venue lacks",
+   "errors": {},
+   "per_utterance": [
+    {
+     "utterance": "what time do you close",
+     "replicates": [
+      {
+       "area": {
+        "intent": "hours",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"hours\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "hours",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"hours\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "hours",
+        "tags": [
+         "info.hours"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"hours\", \"tags\": [\"info.hours\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      2.8225,
+      1.626,
+      1.7611
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "plain ask",
+     "off_menu": false,
+     "ms": [
+      2823,
+      1626,
+      1761
+     ]
+    },
+    {
+     "utterance": "book me a haircut with Priya on Friday",
+     "replicates": [
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "svc.hair.cut",
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"svc.hair.cut\", \"info.staff\"], \"commit\": true}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      5.9708,
+      2.067,
+      2.203
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "plain commit",
+     "off_menu": false,
+     "ms": [
+      5971,
+      2067,
+      2203
+     ]
+    },
+    {
+     "utterance": "actually make it Marcus instead",
+     "replicates": [
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"info.staff\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"info.staff\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [
+         "info.staff"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [\"info.staff\"], \"commit\": true}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      2.0031,
+      1.4678,
+      2.461
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "re-select",
+     "off_menu": false,
+     "ms": [
+      2003,
+      1468,
+      2461
+     ]
+    },
+    {
+     "utterance": "can you resole my shoes",
+     "replicates": [
+      {
+       "area": {
+        "intent": "order",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": false,
+     "seconds": [
+      1.5394,
+      1.5605,
+      1.538
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "off-menu",
+     "off_menu": true,
+     "ms": [
+      1539,
+      1561,
+      1538
+     ]
+    },
+    {
+     "utterance": "something for tomorrow",
+     "replicates": [
+      {
+       "area": {
+        "intent": "book",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "book",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"book\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      3.2979,
+      1.707,
+      8.9382
+     ],
+     "venue": "quick-cuts.chelsea",
+     "kind": "ambiguous",
+     "off_menu": false,
+     "ms": [
+      3298,
+      1707,
+      8938
+     ]
+    },
+    {
+     "utterance": "how much is dry cleaning",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean",
+         "info.price"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\", \"info.price\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean",
+         "info.price"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\", \"info.price\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean",
+         "info.price"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\", \"info.price\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      2.3088,
+      1.9394,
+      1.6945
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "plain ask",
+     "off_menu": false,
+     "ms": [
+      2309,
+      1939,
+      1695
+     ]
+    },
+    {
+     "utterance": "drop off a bag of wash and fold this afternoon",
+     "replicates": [
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.washfold\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.washfold\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.washfold"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\":\"order\",\"tags\":[\"svc.laundry.washfold\"],\"commit\":true}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.5373,
+      1.6261,
+      1.6361
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "plain commit",
+     "off_menu": false,
+     "ms": [
+      1537,
+      1626,
+      1636
+     ]
+    },
+    {
+     "utterance": "no, alterations instead",
+     "replicates": [
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": true}"
+      },
+      {
+       "area": {
+        "intent": "order",
+        "tags": [
+         "svc.laundry.alterations"
+        ],
+        "commit": true,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"order\", \"tags\": [\"svc.laundry.alterations\"], \"commit\": true}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.5515,
+      3.7155,
+      1.8063
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "re-select",
+     "off_menu": false,
+     "ms": [
+      1551,
+      3716,
+      1806
+     ]
+    },
+    {
+     "utterance": "do you sell suitcases",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      3.492,
+      3.3752,
+      1.9866
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "off-menu",
+     "off_menu": true,
+     "ms": [
+      3492,
+      3375,
+      1987
+     ]
+    },
+    {
+     "utterance": "i need something cleaned",
+     "replicates": [
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      },
+      {
+       "area": {
+        "intent": "ask",
+        "tags": [
+         "svc.laundry.dryclean"
+        ],
+        "commit": false,
+        "taxonomy": "demo-v0"
+       },
+       "raw": "{\"intent\": \"ask\", \"tags\": [\"svc.laundry.dryclean\"], \"commit\": false}"
+      }
+     ],
+     "unanimous": true,
+     "seconds": [
+      1.53,
+      1.4339,
+      1.6531
+     ],
+     "venue": "fresh-fold-laundry.lower-east-side",
+     "kind": "ambiguous",
+     "off_menu": false,
+     "ms": [
+      1530,
+      1434,
+      1653
+     ]
+    }
+   ],
+   "sampler": {
+    "temperature": null,
+    "pinnable": false,
+    "note": "opus-4-7 on Bedrock REJECTS temperature, so this arm's sampling cannot be fixed. Its replicate disagreement has a floor nobody can lower by configuration; the local arm's does not."
+   }
+  }
+ },
+ "⚠️_THIS_IS_A_REHEARSAL_NOT_A_RESULT": "Ten sentences I wrote myself, with off-menu labels I also wrote — the coverage number on this set measures my own answer key. n=10 gives the disagreement rate a RESOLUTION of 0.1: one utterance flipping moves it a whole tenth. The Bedrock arm read 0.2 and then 0.1 on two runs of the same ten sentences twenty minutes apart, which is the resolution talking, not the model. Separating 0.10 from 0.20 at 80%% power needs n=199 utterances per arm; 0.10 from 0.15 needs 686. Nothing here is quotable as a classifier comparison.",
+ "why_three_arms": "opus-4-7 on Bedrock REJECTS temperature, so the paid arm cannot be pinned. The local arm is therefore run at BOTH 0.0 and 1.0: at 0.0 its replicate disagreement is 0 BY CONSTRUCTION, and comparing that to an unpinnable arm would be a comparison of samplers."
+}
