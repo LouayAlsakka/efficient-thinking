@@ -544,3 +544,22 @@ and the held-out range whole; its artefact states the exact failure mode §13b's
 re-cut; §11's numbers stand. Recorded for the reason E gave: the constraint existed as a comment inside one script
 three weeks ago and did not travel to the neighbouring arm — `subsample_by_decision.py` is now the shared file, which
 is the only form that travels. ETAs measured: §13c ~21:10Z, §13b games 2–3 ~22:55Z.
+
+**§13b game 2 (2026-09-23 19:51Z) — the confirmatory replication FAILS §14 in both games so far.** §14(b)'s bar, from
+the data: largest within-head-arm draw = 2.33 points. g1 − g0: game 1 +5.3 [+0.0, +10.7] (a fails, lower bound at
+zero); game 2 +1.7 [−3.3, +6.7] (a fails). Against base everything clears both (a) and (b): g0 +8.3 / +11.3, g1
++13.7 / +13.0, g1-matched +10.7; g1′ (the other-family head) −0.3 [−7.0, +6.3] — at base, the domain-shift conclusion
+as a number — and g1′ − g1-matched = −11.0 [−18.0, −4.0] with the matching confound working against g1-matched.
+Stabilisation: base is the TIGHTEST arm on two draws (sd 0.47 vs g0 1.65, g1 0.94) — the opposite of the registered
+expectation, and two draws are a range; three make it a reading. **Reading fixed now, before game 3 (~23:30Z):** the
+third game cannot rescue an interval that spans zero twice; under §14 accumulation on seed 73 is NOT ESTABLISHED. What
+the paper reports instead, and it is the honest sentence: gen1 beat gen0 in every paired game played on the loop — the
+nine first-match pairings (+2.3 … +4.0) and games 1–2 here (+5.3, +1.7) — by about three points on average, an effect
+real in sign and small in size, not separable from the head arms' own run-to-run spread at 300 tasks per game; §13a
+says why it is small (half the experience is redundant) and §13c is measuring whether new experience of the same
+family changes that. **Registered question for E before game 3:** at the measured within-head-arm sd, how many
+paired games would make a +3 effect clear §14 (interval lower bound > 2.33)? That number is the price of
+"established", and the author decides whether to pay it or publish "consistent, small, not established".
+ETAs measured: §13b game 3 ~23:30Z; §13c ~04:41Z (head arm 57 min on box A). Ledgers: per-run, no venue/customer/
+subject fields (R468 weight stays low). Exposure window of the public history: outer bound the repo's creation
+(2026-07-09); the API has no visibility history.
