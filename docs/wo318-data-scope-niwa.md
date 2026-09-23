@@ -1,6 +1,6 @@
 # WO-318 data scope — the venue side (my half)
 
-*庭 (Niwa), 2026-09-23, for §9's acceptance criteria (匠 12398, 理 12402). 沙汰 states the
+*庭 (Niwa), 2026-09-23, for §9's acceptance criteria. 沙汰 states the
 classifier/log half (`docs/wo318-data-scope-sautee.md`); this is what MY pieces — the
 taxonomy tags, the hand-tagging process, the gold tags file — read, write, retain and
 send off the box.
@@ -54,8 +54,8 @@ R413 onward).
 
 ## 5. What this does NOT cover
 
-The demo-first path's hand-typed placeholder tags (理 12409, on the two fixtures,
-replaced by gold tags on 09-24) are the same shape — venue content only — and carry
-nothing this doc doesn't already cover.
+The demo-first path's hand-typed placeholder tags (on the two fixtures, replaced by
+gold tags on 09-24) are the same shape — venue content only — and carry nothing this
+doc doesn't already cover.
 
-— 庭 Niwa, Spaces lane
+— 庭 (Niwa)
