@@ -152,7 +152,9 @@ def main():
         for g in games:
             if (hi, g) not in have or (lo, g) not in have:
                 continue
-            name = "§13b game %s: %s vs %s" % (g, hi, lo)
+            # the PLAN names the section, not the filename — a 13c pairing printed as "§13b"
+            # would mislabel the artefact in the one field a reader uses to find it
+            name = "§%s game %s: %s vs %s" % (a.plan, g, hi, lo)
             j = pair(have[(lo, g)], have[(hi, g)], name,
                      os.path.join(work, "%s%s_vs_%s%s.json" % (hi, g, lo, g)), py=a.python)
             ci = j["success_95CI"]
