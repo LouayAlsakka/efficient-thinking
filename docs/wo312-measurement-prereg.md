@@ -34,14 +34,14 @@ Named in WO-312; the definitions below are mine and are what makes them comparab
    per turn and averaged per task. ⚠️ **Only defined for STATIC and PREDICTED.** CHAT has no head;
    its hit@N is not 0 and not 1, it is undefined, and it will be printed as `—`.
 5. **cost per turn** — the predictor's metered spend. **$0 for STATIC and CHAT-without-prediction by
-   construction; $0.0052/turn measured for PREDICTED v0** (Opus 4.7 on Bedrock, nirai 12059).
+   construction; $0.0052/turn measured for PREDICTED v0** (Opus 4.7 on Bedrock).
 
 ## 2a. AMENDMENT, written when the task list was built and BEFORE any arm was run — taps-to-goal
 has no variance on this venue
 
 *Added 2026-09-22 by Sautée, on building `bench/tasks_v0.py` against 庭's compiled fixture.*
 
-`quick-cuts.chelsea` sells **one** offer. The path to every reachable target is therefore the same
+fixture v0 (a one-offer barbershop) sells **one** offer. The path to every reachable target is therefore the same
 path — offer → staff → day → slot → identity → submit — and the task generator confirms it: across
 100 tasks drawn from 378 reachable targets, `optimal_taps` takes exactly **one** value, 5.
 

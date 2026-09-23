@@ -13,7 +13,7 @@ paper's proposal is committed before its first run and carries its own STATE lin
 
 **Rules carried from VIII.** Every rung has its own oracle and can fail alone; a negative at any rung is a finding at
 that rung, not a verdict on the ones before. A result artefact names its instrument by hash. Readings are written
-before runs. No NiraNet names. X-a starts when VIII-b's package closes (after gen2), on box B, and its proposal
+before runs. No product names. X-a starts when VIII-b's package closes (after gen2), on box B, and its proposal
 with predictions is the next document.
 
 **Bridge from VIII.** VIII-a's probe is a small existence result already held: a linear read of the hidden state

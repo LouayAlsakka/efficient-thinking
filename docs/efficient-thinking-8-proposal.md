@@ -274,7 +274,7 @@ from the numbers; verification command and its expected output stated with every
 
 ---
 
-## 9. Relationship to the estate (why NiraNet is the second environment, later)
+## 9. A second environment, later
 
 The estate's coordination layer already produces the raw material of §3 every night — thousands of claim records with
 provenance, the WO pile of doctrine lines, per-lane memory notes — and the 2026-09-05 shift produced textbook instances

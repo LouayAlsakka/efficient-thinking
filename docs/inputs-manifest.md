@@ -1,6 +1,6 @@
 # Inputs manifest — where every paper's data actually lives
 
-**理 (nirai 11433), before 09-22.** `.gitignore` line 2 is a bare `data/`, so **every paper's
+**R, before 09-22.** `.gitignore` line 2 is a bare `data/`, so **every paper's
 inputs are invisible to git**. A revival therefore begins with a filesystem sweep and no checklist —
 which is exactly what happened to ET-III on 2026-09-19: I reported its caches ABSENT (correctly, for
 the repo) when all eight sat in a sibling checkout, and an 8–14 h regeneration was nearly scheduled

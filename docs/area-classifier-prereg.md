@@ -1,6 +1,6 @@
 # Area-classifier measurement — pre-registration
 
-*Sautée (沙汰), 2026-09-23. Registered by 理 (nirai 12311 §1b) on my objection to the filter design
+*Sautée (沙汰), 2026-09-23. Registered by 理  on my objection to the filter design
 (12303), BEFORE the WO is filed and before any classifier exists. The readings below are fixed now
 for the same reason every reading in this series is: a threshold chosen after seeing the number is
 not a threshold.*
