@@ -25,6 +25,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "poetry"))
 import api_rater as AR
 from predictor_v0 import PredictorV0, DEFAULT_KINDS, world_from_space
+from area_v0 import AreaV0, load_taxonomy
 
 
 def _section(prompt, header, end):
@@ -106,8 +107,10 @@ class Handler(BaseHTTPRequestHandler):
             self._send(404, {"error": "POST /predict"})
 
     def do_POST(self):
+        if self.path.startswith("/area"):
+            return self._area()
         if not self.path.startswith("/predict"):
-            return self._send(404, {"error": "POST /predict"})
+            return self._send(404, {"error": "POST /predict or POST /area"})
         try:
             n = int(self.headers.get("Content-Length", 0))
             body = json.loads(self.rfile.read(n) or b"{}")
@@ -120,6 +123,30 @@ class Handler(BaseHTTPRequestHandler):
                          "dropped": p.dropped, "unresolved": p.unresolved, "error": p.error,
                          "turn": Handler.predictor.turns, "mode": Handler.mode})
 
+    def _area(self):
+        """WO-318 §4 — utterance -> typed area. 理 12409's demo endpoint.
+
+        Takes an utterance and a venue and NOTHING ELSE. No state, no prior turn, no identity, no
+        session history: there is no field here through which any of them could arrive, which is
+        `docs/wo318-data-scope-sautee.md` §1 enforced by the signature rather than promised.
+        """
+        try:
+            n = int(self.headers.get("Content-Length", 0))
+            body = json.loads(self.rfile.read(n) or b"{}")
+        except Exception as e:
+            return self._send(400, {"error": "bad json: %s" % e})
+        u, venue = body.get("utterance"), body.get("venue")
+        if not u or not venue:
+            return self._send(400, {"error": "utterance and venue are both required"})
+        try:
+            r = Handler.area.classify(u, venue)
+        except KeyError as e:
+            return self._send(400, {"error": str(e)})
+        return self._send(200, {"area": r.area or None, "unresolved": r.unresolved,
+                                "cost_usd": round(r.cost_usd, 6), "error": r.error,
+                                "turn": Handler.area.turns, "mode": Handler.mode,
+                                "area_unchanged": bool(r.error)})
+
     def log_message(self, *a):
         pass
 
@@ -130,6 +157,7 @@ def main():
     ap.add_argument("--fake", action="store_true", help="no credentials, no network, no spend")
     ap.add_argument("--model", default="us.anthropic.claude-opus-4-7")
     ap.add_argument("--ledger", default=os.path.join(HERE, "bench_spend_ledger.json"))
+    ap.add_argument("--taxonomy", default="", help="taxonomy json for /area (default: the demo one)")
     ap.add_argument("--space", default="", help="compiled venue json (niwa's fixture). Without it "
                                                 "the predictor names ids nothing can render.")
     a = ap.parse_args()
@@ -145,7 +173,11 @@ def main():
     print("  venue: %s" % ("%s — %d offer(s), %d staff" % (world["handle"], len(world["offers"]),
           len(world["staff"])) if world else "NONE (--space not given; args will not resolve)"))
     print("  predictor v0 on http://127.0.0.1:%d   mode: %s" % (a.port, Handler.mode))
-    print("  POST /predict {state, last_exchange, n}   GET /health")
+    Handler.area = AreaV0(load_taxonomy(a.taxonomy or None), model=a.model,
+                          transport=(fb if a.fake else None),
+                          ledger=os.path.join(HERE, "wo318_spend_ledger.json") + (".FAKE" if a.fake else ""))
+    print("  POST /predict {state, last_exchange, n}   POST /area {utterance, venue}   GET /health")
+    print("  /area venues: %s" % ", ".join(sorted(Handler.area.tax["venues"])))
     HTTPServer(("127.0.0.1", a.port), Handler).serve_forever()
 
 
