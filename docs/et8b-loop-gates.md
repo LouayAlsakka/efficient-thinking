@@ -500,3 +500,20 @@ extractor; rows subsampled to exactly 1,437 at a fixed seed with kept indices re
 g1-matched went through. The on-disk alternative (894 disjoint rows of r8b_gen1states) was rejected because it breaks
 the matched amount. Collection started 16:59Z on box A (E, decide-do-inform); §13c's three games run on box A in their
 own session as soon as the head and its §13a duplicate check exist — they do not wait for §13b on box B.
+
+**§13c — head fitted, games running (2026-09-23 18:27Z), two numbers recorded BEFORE any game result:** (1) the
+precondition holds — gen1″'s rows are 1.3% byte-identical to gen0's (against 49.2% for gen1), so disjoint problems
+bought new rows; but 42.0% sit closer to gen0's corner than gen0's rows sit to each other — new rows, largely the same
+region of state space: the first measurement that separates "new rows" from "new experience". (2) the head is weak:
+CV 26.7% (chance 20.1) against gen1-matched's 35.2%, and its 500-row subsample control reads 27.3 — a head that is not
+using the examples it was given (permutation collapses, PCA-8 sits below; not leakage). **Reading of a null, fixed
+now:** g1″ − g1-matched ≈ 0 is NOT read as "independent experience does not transfer"; it is read as NOT SEPARABLE
+between (a) independence not transferring and (b) 1,437 rows of this experience not fitting a head. The artefact and
+the paper carry the 26.7/27.3 line beside the game result. A positive g1″ − g1-matched is read as (a) refuted in the
+favourable direction only if the fold interval clears §14. The games run regardless: what a weak head does in the
+loop is itself a row. Diagnostic registered before the games finish (read-only, E): label base rate (green fraction)
+and rows per decision for the gen1″ collection against the gen1 collection — if the disjoint problems were solved
+far less often under gen0's heads, the head has fewer positive labels and (b) has a cause. **§13d, contingent:** if
+(b) is the cause, a second disjoint collection (~1 h) to fit gen1″ at gen1's full row count against a shared-head
+gen1 at the same count — amount matched at the higher level — run only after the diagnostic, not before. Timings:
+§13c games ~21:05Z; §13b games 2–3 ~22:50Z.
