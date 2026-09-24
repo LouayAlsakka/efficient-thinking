@@ -749,3 +749,22 @@ fires only if the interval excludes zero. The original 25% criterion is kept in 
 This is a tightening of a registered gate after it passed, never a relaxation after a failure; the 23 and the 67.6%
 travel only beside the churn figure. (iii)'s own result stands: the correction moved the vocabulary, not the difficulty
 (26.7% vs 22.7%, inside two standard errors at n=300), and the 0→12% no-region shift was the task set, not the line.
+
+**16a (xi), 2026-09-24 18:3xZ — (viii) landed; (x) computed; the normalisation is fixed.**
+(viii) same-agent churn: 7B corrected prompt, run 2 (different process, mlx RNG unseeded): 60/300; against run 1
+(68/300) both 56, run-1-only 12, run-2-only 4 = 6.7% of run 2's solved set; decision-1 picks identical 298 of 298.
+So pure sampling churn is 4 tasks; the 25 of (x)'s stale/corrected pair was the prompt line, not the sampler — one
+added line in every state text moved the outcome six times more than re-sampling did, while leaving the greedy first
+decision untouched. Recorded as a property of the instrument.
+Reading (x), paired bootstrap over the 300 tasks, 20 000 resamples: over all tasks B-only 7.67% − churn-only 1.33% =
++6.33 pp, 95% CI [+3.00, +9.67]; over each arm's own solved set 67.6% − 6.7% = +61.0 pp, [+43.9, +77.3]. Both exclude
+zero. THE reading is the all-tasks normalisation: the denominator is the same object for both arms and does not move
+with how much each agent happened to solve; the own-set form is reported beside it. The original (i) criterion also
+survives (churn 6.7% < 25%); it stays in the record as fired, no longer marked uninformative.
+(vii) first 102 no-region cells at decision 1: parsed_action = inspect in 102 of 102, zero parse failures. Agent B's
+69% no-region at decision 1 is a policy (look before hypothesising), not junk. The 300-cell decision-1 measure §16
+registered is therefore recoverable on the ACTION (hypothesise-vs-inspect, and region where both hypothesise) once
+(vii) completes; it is computed then, not on the partial run.
+Conclusion as of this entry: on the registered readings and on the tightened (x), the plateau of §13 is the policy's,
+not the task's — a different agent of the same family reaches problems the first agent does not, beyond churn, with
+an interval that excludes zero. The head arms of §16 may now be fitted, after (vii) completes.
