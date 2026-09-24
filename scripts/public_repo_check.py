@@ -57,7 +57,16 @@ RULES = [
     # and the line above it was not. A rule is what stops that being a matter of remembering.
     ("internal-wo-id", r'\bWO-\d{2,4}\b',
      "a work-order id is an internal reference and says how we number our own work"),
-    ("credential-shaped", r'\b(?:AKIA|ASIA)[0-9A-Z]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY',
+    # The PEM arm tolerates SEAMS between its words. A second reader showed that the three rules
+    # carrying a literal space are defeated by an inline tag or a line break -- and measured the
+    # surface as essentially zero in this corpus, so this is not a live hole. I hardened only this
+    # one, on the asymmetry they named: a PEM header is the one string nobody hard-wraps, so its
+    # seam risk is the lowest of the three while the cost of a miss is the highest. The other two
+    # keep their literal space on purpose; letting arbitrary noise sit between `box` and `A1`
+    # buys a rare true positive and a steady supply of false ones.
+    ("credential-shaped",
+     r'\b(?:AKIA|ASIA)[0-9A-Z]{8,}'
+     r'|-----BEGIN[^A-Za-z]{0,40}(?:[A-Z]+[^A-Za-z]{0,40}){0,3}PRIVATE[^A-Za-z]{0,40}KEY',
      "a credential must never be here at all"),
 ]
 SKIP_EXT = (".npz", ".npy", ".png", ".jpg", ".pdf", ".ico", ".woff", ".woff2", ".zip", ".gz",
