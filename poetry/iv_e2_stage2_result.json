@@ -1,0 +1,38 @@
+{
+ "document": "IV stage 2 — the frontier judge on Bedrock, under amendment 2's registered budget",
+ "run": {
+  "start": "2026-09-24T02:22:06Z",
+  "end": "2026-09-24T02:51:40Z",
+  "calls": 435,
+  "run_cost_usd": 8.018,
+  "ledger_total_usd": 9.0157,
+  "cap_usd": 40.0,
+  "model": "us.anthropic.claude-fable-5-1",
+  "region": "us-east-1",
+  "principal": "the scoped invoke-only principal",
+  "judge_max_tokens": 1024
+ },
+ "results": {
+  "rated_pairs": 166,
+  "unparsed_dropped": 24,
+  "parse_rate": 0.874,
+  "self_consistency": 0.974,
+  "self_consistency_n": 38,
+  "q_checker_full": 0.693,
+  "q_checker_score_only": 0.693,
+  "q_meter_only": 0.693,
+  "q_random_floor": 0.512,
+  "pareto_collapsed_to_one": 110,
+  "pareto_briefs": 300
+ },
+ "🔴_the_finding_is_the_checkers": "all three checker variants read IDENTICALLY at 0.693 — the same at n=50 (0.60) and at 166 rated pairs. The judge separates the checker from chance (+0.18) and does not separate the checker's variants from each other at all. With 110 of 300 briefs collapsing to a single candidate before the judge was asked, that is one thing said twice: the checker's dimensions do not separate these samples. It caps what this arm can say about selection.",
+ "⚠️_the_subset_over-estimated": "the 50-brief subset parsed 92.1% and cleared the ≥90% gate that authorised this run; the full 300 parsed 87.4%. The gate worked and the run is usable, but fifty items predicted three hundred and predicted them HIGH — the same shape as the budget error that preceded it.",
+ "⚠️_a_failed_run_precedes_this_one": "an earlier full attempt at a 128-token budget rated 23 of 300 and was REFUSED by the arm itself: 167 of 190 calls returned an empty text block having spent the whole budget on reasoning. $1.6478. The budget had been sized on six toy pairs rather than on real briefs.",
+ "instrument": {
+  "self_consistency_at_128": 0.0,
+  "self_consistency_at_1024": 0.974,
+  "reading": "the budget fixed the judge, not only the parsing — a judge that cannot finish its sentence cannot agree with itself either",
+  "reasoning_cost": "AGGREGATE for this run: median ~476 of 1024 output tokens on the real-brief probe, the reasoning being most of it. Per-call reasoning_tokens_est and stop_reason begin with the next run; the transport computed them and the meter did not store them, and a value returned and never stored is not a record."
+ },
+ "signed": "Sautee (sha-ta)"
+}
