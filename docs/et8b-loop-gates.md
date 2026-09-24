@@ -735,3 +735,17 @@ clear: the quantity that supports (i) is B-only minus same-agent-churn-only, wit
 has run, the 23 is "different agent plus run-to-run churn" and is quoted only in that form.
 (ix) The stale-prompt control of (iii) is unchanged and serves its own purpose only; it is not the churn control.
 Order: (iii) running → (viii) → (vii) → readings recomputed → only then the §16 head arms.
+
+**16a (x), 2026-09-24 18:1xZ — the stale-prompt control (iii) landed; reading (i)'s bar is tightened, not relaxed.**
+Control (iii): 7B on v3c with the stale prompt — 80/300 green (26.7%), on-menu 89.0%, no-region 11.0%, stale names
+used 0 of 812 steps. Against the corrected-prompt 7B (68/300): both 55, corrected-only 13, stale-only 25 = 31.3% of
+the stale run's solved set. Decision-1 picks differ 0 of 298 (the divergence measure reads zero when the policy is
+the same and 41.6% when the agent changes — a positive control the programme did not have). Consequence: two runs of
+the SAME agent, differing only in a line the agent ignores, clear the registered 25% bar. The bar therefore does not
+separate "a different agent reaches different problems" from "this task set is noisy at n=300". Registered now, before
+(viii) reports: reading (i) is RE-STATED as a difference — B-only rate (B-only / B's solved set) MINUS the same-agent
+churn rate from (viii) (run-2-only / run 2's solved set), with a paired bootstrap interval over the 300 tasks; it
+fires only if the interval excludes zero. The original 25% criterion is kept in the record as fired-but-uninformative.
+This is a tightening of a registered gate after it passed, never a relaxation after a failure; the 23 and the 67.6%
+travel only beside the churn figure. (iii)'s own result stands: the correction moved the vocabulary, not the difficulty
+(26.7% vs 22.7%, inside two standard errors at n=300), and the 0→12% no-region shift was the task set, not the line.
