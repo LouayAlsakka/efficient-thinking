@@ -649,12 +649,16 @@ its OWN policy (no head), three decisions, box B. States extracted at the layer 
 head is fitted: the §13a instrument against gen0's rows — exact-duplicate fraction (expected ~0: different model,
 different activations, so exact duplication is uninformative here and is printed only for the record) and the
 neighbour-redundancy fraction in the 7B's state space is NOT computable across models; instead the operative
-measure is BEHAVIOURAL: the fraction of (task, decision) cells where agent B's chosen candidate differs from gen0's
-agent's at the same cell, and the fraction of tasks agent B solves that gen0's agent did not (and vice versa). Those
+measure is BEHAVIOURAL, at DECISION 1 only (E, 07:00Z: cells align exactly at d1 — same task, same empty state, same
+candidates — and diverge by construction after it, so a rate over all cells would count different states as
+different choices): the 300-cell disagreement rate between B's first pick and gen0's agent's first pick, and the
+fraction of tasks agent B solves that gen0's agent did not (and vice versa). Those
 two numbers are the "different region" measurement and are printed before the head.
-**Heads.** B's experience is cut to 290 decisions (whole groups, fixed seed) and fitted as one shared head FOR THE 7B
-(the head reads the 7B's state; B's experience supplies which candidates were verified good — the label, not the
-state) — and, as the second arm, a shared head on the UNION of B's and gen1-matched's decisions at 290 total
+**Heads.** (Corrected by E before the run, 07:00Z: the labels are GROUND TRUTH from the verifier — `bug_region` — for every
+agent; no agent supplies labels. Arm 1 is therefore the 7B's states AT THE PLACES B's POLICY WENT, labelled by the
+verifier: the escape is in which states get visited, the supervision never changes. `et8b_states --runs <B's steps>
+--model <the 7B>` already separates whose trajectory from whose states.) B's decisions cut to 290 (whole groups, fixed
+seed) and fitted as one shared head on the 7B's states at B's visited places — and, as the second arm, a shared head on the UNION of B's and gen1-matched's decisions at 290 total
 (experience exchange). Both against g1-matched (same form, same count) and gen0, three games interleaved in one
 session with a base bracket, §15 bar (pooled within-head-arm sd).
 **Readings, fixed now.** (i) B solves a substantially different subset (≥ 25% of its solved tasks unsolved by gen0's
