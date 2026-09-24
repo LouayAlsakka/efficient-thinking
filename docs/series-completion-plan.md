@@ -106,3 +106,10 @@ The work is published where it is made. No conference, no journal, no endorsemen
 Owner of 2–3: 理. Owner of 1's DOI and 4's posts: the author, on his word.
 
 **2026-09-24 (reviewer on VIII-b v0.2, adopted):** VII + VIII + VIII-b read together — the series' question stated from the inside: how the useful internal states of a fixed intelligence are exposed, navigated and accumulated. X's angle is set by VIII-b §8: escaping the region the steering policy returns to (different policy / agent / family / novelty-seeking exploration), not a third generation.
+
+**2026-09-24 06:5xZ — Paper X's question and its first two arms (author's reading of VIII-b: a plateau from internal saturation — one generation reaches what the policy can reach; more of the same is diminishing return):** *How does a fixed intelligence escape the experience region its own policy returns to?* Ordered by cost and by what a null teaches:
+1. **Different agent, same family** (first arm; mostly exists — VIII's Llama-3.1-8B on the disjoint 300): a second model family collects experience on the same problems; its redundancy against gen0 by the §13a instrument BEFORE any head is fitted; head at matched decisions, three-game match under §15. Different region + gain extends → the region is the policy's; same region → the region is the task's and no policy escapes it. Either is a finding. **Multiple agents exchanging experience** = the same arm with the head on the union, free.
+2. **Exploration optimised for state-space novelty**: collect under a policy rewarded for distance from gen0's region (the distance §13a already computes); the diagnostic becomes the lever; the only arm that could show compounding for a mechanistic reason.
+3. **Teacher/student**: a stronger model steers, the head is fitted for the 7B — confounded with the teacher's competence; third.
+- **Different task family**: measured (VIII-b §6, at base) — the boundary, not a route. **Gen3/4/5**: not run.
+Registrations, not runs, until WO-318's demo and the week's estate work are done.
