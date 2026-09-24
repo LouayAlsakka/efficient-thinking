@@ -58,15 +58,15 @@ PLANS = {
     # VIII-c arm 1. Registered BEFORE the arms finished collecting, which is the whole point of
     # writing it here rather than after: the pairings and the note are fixed while the numbers do
     # not exist yet, so the reading cannot be shaped by what came out.
-    "viiic": {"arms": ("v_b", "v_g0", "v_g1m", "v_B"),
+    "viiic": {"arms": ("v_b", "v_g0", "v_g1m", "v_vb"),
               "labels": {"v_b": "base",
                          "v_g0": "gen0 head (per-decision -- the form gen0's own rule selected)",
                          "v_g1m": "gen1-matched, SHARED head, 290 decisions, seed 13731",
-                         "v_B": "agent B's visited places, SHARED head, 290 decisions, seed 13731"},
+                         "v_vb": "agent B's visited places, SHARED head, 290 decisions, seed 13731"},
               "aliases": {},
-              "wanted": [("v_g0", "v_b"), ("v_g1m", "v_b"), ("v_B", "v_b"), ("v_B", "v_g1m")],
+              "wanted": [("v_g0", "v_b"), ("v_g1m", "v_b"), ("v_vb", "v_b"), ("v_vb", "v_g1m")],
               "forbidden": set(),
-              "note": ("v_B - v_g1m IS the arm: both are the SHARED form at the same decision "
+              "note": ("v_vb - v_g1m IS the arm: both are the SHARED form at the same decision "
                        "count and the same seed, and they differ in WHOSE TRAJECTORY the 7B's "
                        "states were taken at. The labels are the verifier's ground truth in both, "
                        "so no agent supplies supervision and the escape is in which states get "
