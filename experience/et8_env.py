@@ -188,8 +188,17 @@ def run_tests(program_src: str, tests_src: str = TESTS, timeout: int = 20) -> tu
     with tempfile.TemporaryDirectory() as d:
         open(os.path.join(d, "program.py"), "w").write(program_src)
         open(os.path.join(d, "test_program.py"), "w").write(tests_src)
-        p = subprocess.run([sys.executable, "-m", "unittest", "test_program", "-v"], cwd=d,
-                           capture_output=True, text=True, timeout=timeout)
+        try:
+            p = subprocess.run([sys.executable, "-m", "unittest", "test_program", "-v"], cwd=d,
+                               capture_output=True, text=True, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            # A patch that makes the tests hang is RED, not a crash of the harness. This went
+            # uncaught until an agent whose patches differ from the 7B's wrote a non-terminating
+            # one: the exception unwound through run_episode and killed a 300-episode collection
+            # at episode 4. The verdict is the only one available — the verifier did not go
+            # green within the budget — and it is attributed to no region, the same convention
+            # the import failure below already uses.
+            return False, [{"test": "timeout", "region": "module", "kind": "TIMEOUT"}]
     out = p.stdout + p.stderr
     failures = []
     for line in out.splitlines():
