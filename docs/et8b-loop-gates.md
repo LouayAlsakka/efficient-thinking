@@ -667,3 +667,32 @@ clearing §15 → different-agent experience extends the gain: the escape route 
 head beats both → exchange compounds; (iv) B's subset overlaps gen0's (< 10% different) → the region is the task's
 and no policy escapes it — a finding that closes the route. Any control fires → that arm withdrawn. **Not run until
 WO-318's demo has reached the owner; then it is the only VIII-c run.**
+
+## 16a. Amendment, registered 2026-09-24 13:5xZ, after arm 1 was stopped at 33 episodes and before any reading
+
+**What was found.** The harness's system prompt carries a hardcoded region menu from the v1/v2 task families
+(`producer, transform, aggregate, consumer`). The v3 family's regions are different (`shape, emit, fold, intake,
+digest, render, gather, sift`) and `state_text()` never lists a task's own candidates, so that stale line is the only
+menu any agent is shown. The 7B ignores it (v3 run `v3rep/repbase`, 75 hypothesize steps: 100% on-menu, zero stale
+names — it reads the region names from the `# region:` headers). Llama-3.1-8B obeys it (33 episodes, 98 hypothesize
+steps: 66% stale names, 27% unparsed, 7% on-menu, 1 of 33 green). Arm 1 as registered would therefore have measured
+which agent follows a wrong instruction, not which region of state space its policy visits. E stopped the run; the
+partial collection is kept as `results/viiic_arm1_llama8b_STOPPED_INVALID_PROMPT.*` and is not an arm.
+
+**Withdrawn.** E's earlier design check that "the candidate set is safe: the task's `regions` are offered to any agent
+at any decision" — the candidates are used by the loop to pick inspect targets and to score head candidates; they are
+never shown to the agent. That check read the loop's code, not the served prompt.
+
+**Correction to the instrument, before any further collection.** `state_text()` lists the task's own `regions`, read
+from the task record at run time; the hardcoded line is removed and no second fixed list replaces it. This is a defect
+in the instrument found before any §16 reading existed; §16's readings, bar and gates are unchanged.
+
+**Consequence for comparability.** Every prior v3 collection — gen0's base, §13b, §13c — was served the stale line by
+an agent that ignored it, so those results are internally consistent and stand as recorded. They are not comparable
+to a corrected-prompt collection without a corrected-prompt control, so arm 1 now consists of: (1) one fresh 7B base
+on the corrected prompt (seed 73's 300, three decisions, box B, ~85 min at ~17 s/episode); (2) agent B's collection
+on the corrected prompt; (3) the §16 readings computed between (1) and (2) only, never against the stale-line runs.
+The paper states in one sentence, wherever the harness is described, that the 7B's v3 results were obtained under a
+prompt that misdescribed the task's regions and that the 7B did not follow it.
+
+**Order.** This section resolves on origin before (1) starts.
