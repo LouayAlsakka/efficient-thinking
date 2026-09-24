@@ -106,8 +106,14 @@ class CostMeter:
         self._flush()
         return rid
 
-    def settle(self, rid, input_tokens, output_tokens):
-        """Replace the reservation with the actual cost."""
+    def settle(self, rid, input_tokens, output_tokens, extra=None):
+        """Replace the reservation with the actual cost.
+
+        `extra` carries anything the transport learned that the price does not depend on but a
+        reader of the ledger needs -- reasoning tokens and the stop reason, for a judge that thinks
+        before it answers. Without them an EMPTY reply that burned its whole budget is recorded as
+        an ordinary call, and the cost of the thinking is invisible inside one output figure.
+        """
         e = self.state["entries"][rid]
         if e["actual_usd"] is not None:
             raise RuntimeError("entry %d already settled" % rid)
@@ -115,6 +121,8 @@ class CostMeter:
         self.state["spent_usd"] = self.spent - e["reserved_usd"] + actual
         e["actual_usd"] = round(actual, 6)
         e["input_tokens"], e["output_tokens"] = input_tokens, output_tokens
+        if extra:
+            e.update({k: v for k, v in extra.items() if v not in (None, "")})
         self._flush()
         return actual
 
@@ -251,7 +259,13 @@ class ApiRater:
         resp = self.transport({"model": self.model, "max_tokens": self.max_tokens,
                                "messages": [{"role": "user", "content": prompt}]})
         u = resp.get("usage", {})
-        self.meter.settle(rid, u.get("input_tokens", est_in), u.get("output_tokens", self.max_tokens))
+        self.meter.settle(rid, u.get("input_tokens", est_in), u.get("output_tokens", self.max_tokens),
+                          # ⚠️ I reported "the transport reports reasoning separately" as if that
+                          # made it visible. It made it visible to the CALLER and nothing carried
+                          # it to the ledger, which is where a reader looks. A value returned and
+                          # never stored is not a record.
+                          extra={"reasoning_tokens_est": u.get("reasoning_tokens_est"),
+                                 "stop_reason": u.get("stop_reason")})
         text = "".join(c.get("text", "") for c in resp.get("content", [])).strip()
         return self.parse(text)
 

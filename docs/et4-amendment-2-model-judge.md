@@ -51,9 +51,23 @@ comparison carries that difference as a stated caveat** — a judge that may rea
 and a judge given sixteen tokens and no room to are not the same instrument, and no reading may
 treat them as one.
 
-Reasoning tokens and output tokens are recorded per call, so the cost of the reasoning is visible
-rather than folded into a single output figure. The hard cap is unchanged and now binds against the
-raised per-call reserve.
+**The budget fixed the judge, not only the parsing.** On eight pairs re-rated with the candidates
+exchanged, self-consistency reads **1.0 at 1024 and 0.0 at 128** — a judge that cannot finish its
+sentence cannot agree with itself either. The parse rate was the symptom; this is the instrument.
+
+⚠️ **The reasoning cost for THIS run is reported in aggregate, not per call.** The transport computed
+reasoning tokens and the meter did not store them, so the value was returned and dropped — a value
+returned and never stored is not a record. From the real-brief probe: **median ~476 of 1024 output
+tokens, the reasoning being most of it.** The per-call `reasoning_tokens_est` and `stop_reason`
+fields are in the meter now and begin with the next run; `stop_reason` is what separates "answered
+in 480 tokens" from "burned 1024 and said nothing", which is the failure this budget exists to
+prevent. The hard cap is unchanged and now binds against the raised per-call reserve.
+
+**A limit on n that belongs to the checker, not the judge**: on the first full attempt, 110 of 300
+briefs had a Pareto set that collapsed to a single candidate — nothing to compare before the judge
+was asked. On a 50-brief subset the figure was 12 of 50. A Pareto set collapses when the checker's
+dimensions do not separate the samples, so this caps how many briefs the arm can rate however good
+the judge is, and it is reported as the checker's property.
 
 This is a change to a registered instrument. It is written here before the run rather than
 described afterwards, which is the only thing that separates a correction from a result chosen to
