@@ -45,6 +45,13 @@ commit  true if the customer is CHOOSING something and the screen should narrow 
         false if they are ASKING and the screen should not move."""
 
 
+# Intents that NAME A SERVICE. An empty tag list means something different for the others: a
+# question about opening times names no service and never could, so there is nothing a second look
+# could find and firing one costs a second for an answer that is already correct. Caught by driving
+# "are you open sunday" through the two-pass and watching it take 2973 ms.
+SERVICE_INTENTS = ("browse", "ask", "book", "order")
+
+
 @dataclass
 class Area:
     area: dict = field(default_factory=dict)
@@ -53,10 +60,46 @@ class Area:
     cost_usd: float = 0.0
     error: str = ""
     resolves_to_nothing: bool = False
+    off_menu: bool = None          # None = not determined (no second pass was run)
 
 
 def load_taxonomy(path=None):
     return json.load(open(path or os.path.join(HERE, "taxonomy_demo.json")))
+
+
+def classify_with_off_menu(cl, utterance, venue, estate_tags):
+    """Two passes of the SAME prompt, to tell "asks about everything" from "asks about something
+    this venue does not sell".
+
+    The constrained prompt shows a venue's own tags, so a service the venue lacks never gets a
+    candidate to drop and `unresolved` can never fire for it — which is why an off-menu question
+    and a whole-set question arrive identical. Showing the ESTATE's vocabulary on a second pass
+    gives the model the candidate it was never offered.
+
+    ⚠️ The prompt is UNCHANGED. Only the tag list differs, so the registered instrument and the
+    replicate measurement it was measured with both stand.
+
+    ⚠️ And the bound: this can only call a sentence off-menu if SOME venue in the estate sells the
+    thing. A service nobody has ever tagged anywhere still reads as a whole-set question.
+    """
+    r = cl.classify(utterance, venue)
+    if not r.area or r.area.get("tags"):
+        r.off_menu = False if r.area else None
+        return r
+    if r.area.get("intent") not in SERVICE_INTENTS:
+        r.off_menu = False              # hours/directions/contact/cancel: empty is the right answer
+        return r
+    saved = cl.tax["venues"].get("__ESTATE__")
+    cl.tax["venues"]["__ESTATE__"] = {"tags": list(estate_tags), "offer_tags": {}}
+    try:
+        second = cl.classify(utterance, "__ESTATE__")
+    finally:
+        if saved is None:
+            cl.tax["venues"].pop("__ESTATE__", None)
+        else:
+            cl.tax["venues"]["__ESTATE__"] = saved
+    r.off_menu = bool(second.area and second.area.get("tags"))
+    return r
 
 
 class AreaV0:
