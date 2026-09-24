@@ -1,0 +1,34 @@
+{
+ "document": "ET-8b §13b gen1pp_dec — ONE SHARED head (理, option (i))",
+ "arm": "gen1pp_dec",
+ "head_form": "shared: one head for every decision point",
+ "⚠️_form_vs_published_gen1": "the published gen1 is THREE per-decision heads on 2,824 rows. This arm is one shared head. A difference between this arm and published gen1 is a FORM difference as much as anything else and must never be quoted as an origin effect. The §13b pair is gen1' vs gen1-matched, both fitted here, both one shared head, both 1,437 rows.",
+ "why_shared": "R7's SQL states carry no `decision` field — that experiment was single-decision — so three per-decision heads cannot be fitted from them. 理 ruled both sides of the pair to this form rather than spend 3 h of GPU regenerating SQL loop states.",
+ "evaluation_mode": "5-fold CV over training tasks",
+ "fit_on": "task_id < 400",
+ "rows": 1447,
+ "train_rows": 1447,
+ "source_has_decision_field": true,
+ "layer": 18,
+ "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/g1pp_dec",
+ "head": {
+  "cv_pick_pct": 53.4,
+  "n": 290,
+  "chance_pct": 20.0,
+  "evaluation": "5-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+  "CONTROL_permuted": [
+   22.8,
+   19.7,
+   18.6,
+   18.6,
+   24.5
+  ],
+  "CONTROL_pca8": 30.0,
+  "CONTROL_row_subsample": 42.4,
+  "CONTROL_row_subsample_realised_n": "[500] of 1447 train rows per fold",
+  "weights": "gen1pp_dec_layer18.npz"
+ },
+ "how_to_read_the_controls": "permuted must collapse to chance. If PCA-8 or the row subsample matches the full head, the signal needs neither dimensions nor examples and is a key being copied.",
+ "the_bar": "problems solved on a paired run (理). Probe accuracy is a sanity check.",
+ "signed": "Sautee (sha-ta)"
+}
