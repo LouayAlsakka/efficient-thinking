@@ -172,9 +172,20 @@ def bedrock_transport(req, client=None, region=None, **_):
     if "toolUse" in json.dumps(r["output"]):
         raise RuntimeError("tool use in a judge response — refusing to score it")
     u = r.get("usage", {})
+    # REASONING TOKENS ARE REPORTED SEPARATELY because a reasoning model spends most of a small
+    # budget before it says anything: at 16 tokens this judge returned an EMPTY text block with
+    # output_tokens 16 — a paid call with no answer in it. Folding that into one output figure
+    # hides the cost of the thinking and makes an empty reply look like a cheap one.
+    reasoning = 0
+    for c in out:
+        rc = c.get("reasoningContent")
+        if rc:
+            reasoning += len((rc.get("reasoningText") or {}).get("text", "")) // 4
     return {"content": [{"type": "text", "text": "".join(c.get("text", "") for c in out)}],
             "usage": {"input_tokens": u.get("inputTokens", 0),
-                      "output_tokens": u.get("outputTokens", 0)}}
+                      "output_tokens": u.get("outputTokens", 0),
+                      "reasoning_tokens_est": reasoning,
+                      "stop_reason": r.get("stopReason", "")}}
 
 
 class FakeBedrock:

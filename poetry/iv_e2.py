@@ -206,14 +206,26 @@ def main():
                          "actually spend — converse() shape, usage mapping, tool-use refusal — at "
                          "full scale, for $0.00.")
     ap.add_argument("--live", action="store_true", help="real calls; needs ANTHROPIC_API_KEY")
+    # THE JUDGE RUNS ON BEDROCK, NOT ON A DIRECT KEY — that was ruled for this paper and is why
+    # bedrock_transport exists. The arm had only --dry-bedrock (real transport, FAKE boto client),
+    # so the path it proved could not be taken. This is the same transport with a real client.
+    ap.add_argument("--live-bedrock", action="store_true",
+                    help="real calls through Bedrock under the scoped principal; no API key")
+    # REGISTERED IN AMENDMENT 2 BEFORE THIS RUN. A reasoning judge spends its budget thinking
+    # before it answers: at 16 tokens this rater returned EMPTY text with output_tokens 16, a paid
+    # call with no answer in it. 128 is the smallest budget tested that parses 6 of 6. The Opus
+    # voice judge beside it answered at 16, and that difference is a caveat on the comparison, not
+    # a detail — the two are not the same instrument.
+    ap.add_argument("--judge-max-tokens", type=int, default=16)
     a = ap.parse_args()
     SELECTION[0] = a.selection
     if a.selftest:
         _selftest(); return
     if a.dry_bedrock:
         a.dry = True
-    if not (a.dry or a.live):
-        raise SystemExit("STOP: pass --dry (fake transport, $0) or --live (real calls).")
+    if not (a.dry or a.live or a.live_bedrock):
+        raise SystemExit("STOP: pass --dry (fake transport, $0), --dry-bedrock, "
+                         "--live (API key) or --live-bedrock (scoped principal).")
 
     # the GO gate is checked before the first call, every run, from the artifact 理 approved
     planned = float(json.load(open(AR.COST_ARTIFACT))["total"]["cost_usd"])
@@ -227,28 +239,43 @@ def main():
     # handful of dry runs the ledger said $2.16 of $40 spent with zero calls ever sent, and --live
     # would eventually refuse with a message about a budget nothing had used. The cap must be hard
     # against real spend and blind to rehearsals.
-    ledger = a.ledger if a.live else (os.path.splitext(a.ledger)[0] + ".DRY.json")
-    if not a.live and os.path.exists(ledger):
+    # 🔴 THE LIVE LEDGER APPLIES TO EVERY PATH THAT SPENDS. Keyed on `a.live` alone, --live-bedrock
+    # would have made REAL calls and billed them to the .DRY store — the mirror of the older bug
+    # where a rehearsal billed the real one, and worse, because the $40 cap would not have seen it.
+    spends = a.live or a.live_bedrock
+    ledger = a.ledger if spends else (os.path.splitext(a.ledger)[0] + ".DRY.json")
+    # 🔴 AND THE SAME KEY HERE, WHICH IS THE DANGEROUS ONE: this TRUNCATES the ledger it is given.
+    # Keyed on `a.live`, --live-bedrock would have DELETED the live $40 ledger before spending
+    # against it — the cap's entire record, removed by a flag that was added to use the cap.
+    if not spends and os.path.exists(ledger):
         # A DRY LEDGER THAT ACCUMULATES ACROSS REHEARSALS ANSWERS THE WRONG QUESTION. The point of a
         # dry run is "what would THIS arm cost", and a carried-over total reads as this arm's cost
         # while being the sum of every rehearsal. Truncated per run; the live ledger never is.
         os.remove(ledger)
     meter = AR.CostMeter(ledger=ledger)
-    if not a.live:
+    if not spends:
         print("  dry run: metering to a FRESH %s, NOT the live ledger"
               % os.path.basename(ledger))
+    else:
+        print("  LIVE: metering to %s against the hard cap" % os.path.basename(ledger))
     if a.live:
         key = os.environ.get("ANTHROPIC_API_KEY")
         if not key:
             raise SystemExit("STOP: --live but ANTHROPIC_API_KEY is not set. Nothing was sent.")
         transport = lambda req, **kw: AR.http_transport(req, api_key=key)
+    elif a.live_bedrock:
+        # One client, made once and reused: a client per call would re-resolve credentials 245
+        # times and turn a transport question into a credential question mid-run.
+        _bc = AR.bedrock_client()
+        transport = lambda req, **kw: AR.bedrock_transport(req, client=_bc)
+        print("  LIVE through Bedrock, scoped principal, region %s" % _bc.meta.region_name)
     elif a.dry_bedrock:
         fb = AR.FakeBedrock(["A", "B"])
         transport = lambda req, **kw: AR.bedrock_transport(req, client=fb)
         print("  dry run through the REAL bedrock transport (fake boto client)")
     else:
         transport = AR.FakeTransport(["A", "B"])
-    rater = AR.ApiRater(meter, transport, model=a.model)
+    rater = AR.ApiRater(meter, transport, model=a.model, max_tokens=a.judge_max_tokens)
 
     brief_of = {}
     log, selector, collapsed = run(items, rater, rng, brief_of)
@@ -273,7 +300,7 @@ def main():
     # self-consistency: same pairs, order swapped and a different seed -- the ceiling q is read against
     sub = HS.rerate_subset([r["_pair"] for r in log], a.rerate_frac, random.Random(a.seed + 1)) if log else []
     rr = []
-    rater2 = AR.ApiRater(meter, transport, model=a.model)
+    rater2 = AR.ApiRater(meter, transport, model=a.model, max_tokens=a.judge_max_tokens)
     for i, p in enumerate(sub):
         swapped = {"pair_id": p["pair_id"], "A": p["B"], "B": p["A"]}
         w = rater2(swapped, brief=brief_of.get(p["pair_id"], ""))
@@ -287,8 +314,11 @@ def main():
     json.dump({
         "document": "ET-IV E2 — blind A/B, one pair per brief, rated by the frontier judge",
         "mode": ("LIVE" if a.live else
+                 "LIVE via Bedrock under the scoped principal" if a.live_bedrock else
                  "DRY-BEDROCK (real transport, fake boto client, $0.00 — not a result)"
-                 if a.dry_bedrock else "DRY (fake transport, $0.00 — not a result)"),
+                 if a.dry_bedrock else
+                 "LIVE via Bedrock under the scoped principal" if a.live_bedrock else
+                 "DRY (fake transport, $0.00 — not a result)"),
         "judge": a.model, "briefs": len(items), "pairs_rated": len(log),
         "unparsed_dropped": rater.unparsed + rater2.unparsed,
         "q_verifier_vs_judge": q,

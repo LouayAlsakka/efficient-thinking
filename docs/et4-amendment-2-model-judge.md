@@ -37,3 +37,24 @@ call all stand. No result from this amendment enters any other paper.
 The rating budget is estimated by the executor from the item counts before the first call and approved by the
 author on the day; the estimate, the approval and the metered spend are printed in the paper's reproducibility
 section. A measurement does not run on production inference paths.
+
+## 4. The rater's budget, registered 2026-09-24 BEFORE the run it applies to
+
+**The Fable rater reasons before answering.** Its response carries a reasoning block ahead of its
+text, and at the arm's original 16-token budget the reasoning consumed the whole allowance and the
+text came back EMPTY — a paid call returning nothing. Measured over six pairs: 2 of 6 parsed at 16,
+3 of 6 at 48, **6 of 6 at 128**.
+
+**Its budget is therefore 128 tokens, the smallest tested that parses 6 of 6.** The Opus 4.7 voice
+judge it is reported beside answered at 16. **The two budgets are printed together, and the G6p
+comparison carries that difference as a stated caveat** — a judge that may reason before answering
+and a judge given sixteen tokens and no room to are not the same instrument, and no reading may
+treat them as one.
+
+Reasoning tokens and output tokens are recorded per call, so the cost of the reasoning is visible
+rather than folded into a single output figure. The hard cap is unchanged and now binds against the
+raised per-call reserve.
+
+This is a change to a registered instrument. It is written here before the run rather than
+described afterwards, which is the only thing that separates a correction from a result chosen to
+fit.
