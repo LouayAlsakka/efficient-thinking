@@ -120,7 +120,9 @@ each other: new rows, largely the same corner of state space, the first measurem
 "new experience". Prediction, written before the games: if novelty binds, the disjoint-problem head beats the
 same-problem head. Game 1 of 3: base 25.7 · gen0 35.7 · same-problem 35.3 · disjoint 34.3; disjoint − same-problem
 = −1.0 [−7.3, +5.3]. All three heads beat base by nine to ten points and are indistinguishable from each other on one
-game; game 2 is in progress (base 25.7, gen0 36.7 so far) and game 3 follows (~04:40Z). The probe favoured the same-problem head by seven points (60.7 vs 53.4) and that did not convert to episodes —
+game. Game 2: base 25.7 · gen0 36.7 · same-problem 36.3 · disjoint 32.7; disjoint − same-problem = −3.7 [−9.7, +2.3].
+Two games, not separated twice, every head +7 to +11 over base; the base arm on this box landed at 77, 77 and 76 of
+300 across three games. Game 3 follows (~04:45Z). The probe favoured the same-problem head by seven points (60.7 vs 53.4) and that did not convert to episodes —
 the fourth time in this programme a probe gain failed to convert, and the reason the bar is problems solved.
 
 ## 8. What accumulation is, then

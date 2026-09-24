@@ -608,3 +608,13 @@ first match are reported under the rules that governed them, with §15 stated as
 **Ruling on spending those games: not now.** The author's arc for VIII-b does not need "established": it reports the
 small consistent gain exactly, the redundancy that explains it, and what new experience does (§13c, ~04:40Z). If §13c
 shows same-family novelty extends the gain, the nine-game test is the one worth paying for, on that head.
+
+**§13c games 1–2 (E, 02:11Z):** base 77 / 77 · gen0 107 / 110 · g1-matched 106 / 109 · gen1″ 103 / 98 (of 300).
+gen1″ − g1-matched = −1.0 [−7.3, +5.3] and −3.7 [−9.7, +2.3] — not separated, twice; every head beats base by
++7 to +11 and clears both conditions in both games. The registered prediction (gen1″ > g1-matched if novelty binds)
+is NOT supported on two games: the point estimates lean the other way and both intervals span zero. The probe pointed
+the other way again (60.7 vs 53.4) — the fourth non-conversion. Base on box A: 77, 77, 76 — range 1.0 at three
+decisions, "very tight, not identical" (E declines to call it determinism). **§14(b)'s property, arriving as two bars
+in one night:** this session's largest within-head-arm draw is 1.67 against box B's 4.67 — the same rule, the same
+instrument, a bar three times tighter because a maximum over draws depends on which draws happened. §15's statistic
+bar is the answer for future data. Game 3 ~04:45Z; the three games score together.
