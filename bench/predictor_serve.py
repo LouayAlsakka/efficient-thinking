@@ -94,6 +94,9 @@ class Handler(BaseHTTPRequestHandler):
     # is not worth a convenience. So whichever backend cannot be built here says so in plain words
     # at 503 rather than failing inside a request with an import error nobody can read.
     predict_unavailable = ""
+    # The estate's whole vocabulary, for the second pass. Empty = the two-pass is OFF and the
+    # endpoint behaves exactly as before, which is how it ships when a taxonomy has no such list.
+    estate_tags = ()
 
     def _send(self, code, obj):
         b = json.dumps(obj).encode()
@@ -155,11 +158,19 @@ class Handler(BaseHTTPRequestHandler):
         if not u or not venue:
             return self._send(400, {"error": "utterance and venue are both required"})
         try:
-            r = Handler.area.classify(u, venue)
+            # TWO PASSES when the first resolves to nothing and the intent names a service: the
+            # venue's own tag list cannot offer a candidate for something the venue does not sell,
+            # so an off-menu question and a whole-set question arrive identical without it.
+            if Handler.estate_tags:
+                from area_v0 import classify_with_off_menu
+                r = classify_with_off_menu(Handler.area, u, venue, Handler.estate_tags)
+            else:
+                r = Handler.area.classify(u, venue)
         except KeyError as e:
             return self._send(400, {"error": str(e)})
         return self._send(200, {"area": r.area or None, "unresolved": r.unresolved,
                                 "resolves_to_nothing": bool(r.resolves_to_nothing),
+                                "off_menu": r.off_menu,
                                 "cost_usd": round(r.cost_usd, 6), "error": r.error,
                                 "turn": Handler.area.turns, "mode": Handler.area_mode,
                                 "area_unchanged": bool(r.error)})
@@ -239,7 +250,11 @@ def main():
                               + (".FAKE" if a.fake else ""))
         Handler.area_mode = ("FAKE — no network, no spend" if a.fake
                              else "REMOTE %s — PAID, and the sentence leaves the estate" % a.model)
+    Handler.estate_tags = tuple(tax.get("estate_vocabulary") or ())
     print("  /area backend: %s" % Handler.area_mode)
+    print("  two-pass off-menu: %s"
+          % ("ON, %d estate tags" % len(Handler.estate_tags) if Handler.estate_tags
+             else "OFF (taxonomy carries no estate_vocabulary)"))
     print("  POST /predict {state, last_exchange, n}   POST /area {utterance, venue}   GET /health")
     print("  /area venues: %s" % ", ".join(sorted(Handler.area.tax["venues"])))
     HTTPServer((a.host, a.port), Handler).serve_forever()
