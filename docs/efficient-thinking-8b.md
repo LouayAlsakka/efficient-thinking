@@ -1,8 +1,8 @@
 # Efficient Thinking VIII-b: Does Experience Accumulate?
 ## The second generation, its small gain, the redundancy that explains it, and what new experience does
-> **STATE 2026-09-24: DRAFT v0.1, written backward from what is measured; ONE arm still running.** The gain of a second generation of experience over the first is measured (twelve paired games, all positive, small, not established against the loop's own variance); the reason is measured (half of the second generation's experience is byte-identical to the first's); the test of the reason — new experience of the same task family on problems the head has never seen — is one game in with two running (§7, ~04:40Z). §8's last line is the only sentence in this draft the data has not yet spoken on. Everything else is on disk under `experience/results/` with its command and its pre-registration (`docs/et8b-loop-gates.md`, §§1–15, every rule dated before the run it governs).
+> **STATE 2026-09-24: DRAFT v0.2, written backward from what is measured; every registered arm has run.** The gain of a second generation of experience over the first is measured (twelve paired games, all positive, small, not established against the loop's own variance); the reason is measured (half of the second generation's experience is byte-identical to the first's); the test of the reason — new experience of the same task family on problems the head has never seen — is measured across three games and does not extend the gain (§7). Everything else is on disk under `experience/results/` with its command and its pre-registration (`docs/et8b-loop-gates.md`, §§1–15, every rule dated before the run it governs).
 
-**Louay Alsakka** · September 24, 2026 · *draft v0.1*
+**Louay Alsakka** · September 24, 2026 · *draft v0.2*
 
 ## Abstract
 
@@ -16,9 +16,8 @@ is the reason: 49% of the second generation's training rows are byte-identical t
 generation's are identical to what came before. A steered agent stands where the previous agent stood and produces
 the same state. Accumulation stops because the experience stops being new. The third answer tests that reason by
 prediction: experience collected on a disjoint set of problems of the same family is only 1.3% duplicated, and if
-novelty is what binds, its head should beat a same-problem head at matched decisions. One game of three is in and
-the two heads are indistinguishable, both nine to ten points over base; the remaining games decide whether new
-problems are new experience or only new rows. Beside these, the paper establishes three things about the instrument
+novelty is what binds, its head should beat a same-problem head at matched decisions. Across three games the two heads are
+indistinguishable, both ten points over base: new problems were new rows, not new experience. Beside these, the paper establishes three things about the instrument
 that any accumulation claim needs: the loop's variance comes from its second and third decisions and is zero at one;
 a head over no head is +8 to +14 in every game ever played; and a head fitted on another task family sits at base.
 
@@ -32,7 +31,7 @@ a head over no head is +8 to +14 in every game ever played; and a head fitted on
 | combining generations | gen0 ∪ gen1 head ≈ gen1 (+2.7 [−2.3, +7.7]); amount vs origin not separable at 300 | §5 |
 | the instrument | one-decision loop bit-identical across runs; the same-box three-decision control diverges on 65 of 75 episodes; the variance is decisions 2–3 | §6 |
 | other-family experience | a head from SQL-repair experience sits at base on debugging (−0.3, −5.0); 11–13 below the same-family head | §6 |
-| same-family novel experience | 1.3% duplicated; game 1: disjoint-problem head ≈ same-problem head (+8.7 vs +9.7 over base); games 2–3 running | §7 |
+| same-family novel experience | 1.3% duplicated, 42% in gen0's region; three games: disjoint-problem head ≈ same-problem head (−1.0 [−7.6, +5.6]); both ≈ gen0's head; all +9 to +10 over base | §7 |
 | stabilisation | NOT supported: base sd 1.95 sits between the heads' 1.26 and 2.40 | §6 |
 
 ## 1. The question
@@ -121,17 +120,20 @@ each other: new rows, largely the same corner of state space, the first measurem
 same-problem head. Game 1 of 3: base 25.7 · gen0 35.7 · same-problem 35.3 · disjoint 34.3; disjoint − same-problem
 = −1.0 [−7.3, +5.3]. All three heads beat base by nine to ten points and are indistinguishable from each other on one
 game. Game 2: base 25.7 · gen0 36.7 · same-problem 36.3 · disjoint 32.7; disjoint − same-problem = −3.7 [−9.7, +2.3].
-Two games, not separated twice, every head +7 to +11 over base; the base arm on this box landed at 77, 77 and 76 of
-300 across three games. Game 3 follows (~04:45Z). The probe favoured the same-problem head by seven points (60.7 vs 53.4) and that did not convert to episodes —
+Game 3: base 25.3 · gen0 35.7 · same-problem 35.0 · disjoint 36.7; disjoint − same-problem = +1.7. Three games: mean
+−1.0 [−7.6, +5.6]; the prediction is not supported. Every head sits ten points over base and the three heads are
+indistinguishable from each other (same-problem − gen0: −0.4 [−0.9, +0.0], descriptive, since the forms differ). The
+base arm on this box repeated to within one problem across three games. The probe favoured the same-problem head by seven points (60.7 vs 53.4) and that did not convert to episodes —
 the fourth time in this programme a probe gain failed to convert, and the reason the bar is problems solved.
 
 ## 8. What accumulation is, then
 
 A second generation of self-generated experience buys a small, consistent gain that is not separable from the loop's
 own variance at this size, because most of it is the first generation's experience again. Genuinely new rows from
-disjoint problems of the same family are, on one game, worth the same as the old ones — which, if it holds, says the
-limit is not the problems but the region of state space the agent's own policy keeps returning to. *[The last line is
-written after games 2–3 of §7 land.]*
+disjoint problems of the same family are worth the same as the old ones, across three games: the limit is not which
+problems the agent saw but the region of state space its own policy keeps returning to, and that region is set by the
+head that steered the collection. Experience that extends accumulation would have to come from a different policy, a
+different family, or a different agent — which is where the next paper starts.
 
 ## Reproducibility
 

@@ -618,3 +618,25 @@ decisions, "very tight, not identical" (E declines to call it determinism). **§
 in one night:** this session's largest within-head-arm draw is 1.67 against box B's 4.67 — the same rule, the same
 instrument, a bar three times tighter because a maximum over draws depends on which draws happened. §15's statistic
 bar is the answer for future data. Game 3 ~04:45Z; the three games score together.
+
+**§13c — THREE GAMES COMPLETE (box A, ~05:4xZ; scored by R from the episode counts, E's block to confirm):**
+```
+  game     b     g0    g1-matched  gen1″(disjoint)
+    1    25.7   35.7     35.3        34.3
+    2    25.7   36.7     36.3        32.7
+    3    25.3   35.7     35.0        36.7
+  gen1″ − g1-matched   −1.0 / −3.7 / +1.7   mean −1.00 [−7.62, +5.62]   prediction NOT supported
+  g1-matched − g0      −0.3 / −0.3 / −0.7   mean −0.44 [−0.92, +0.03]   the gen1 shared head at 290
+                                                                          decisions equals gen0
+  gen1″ − g0                                mean −1.44 [−7.66, +4.77]
+  g0 − b +10.44 [+9.18, +11.71] · g1-matched − b +10.00 [+8.57, +11.43] · gen1″ − b +9.00 [+3.57, +14.43]
+  within-arm sd: b 0.19 · g0 0.58 · g1m 0.69 · gen1″ 2.01;  pooled head sd 1.27;  largest within-head draw 4.00
+```
+**Reading, under the registered rule:** the prediction that disjoint-problem experience beats same-problem experience
+at matched decisions is not supported — the two are indistinguishable across three games, both about ten points over
+base, and both equal to gen0's head. Same-family novelty did not extend the accumulation. The §13a numbers say why:
+the disjoint rows were 1.3% duplicated but 42% sat in gen0's region of state space — new problems, largely the same
+experience. Caveat carried: g1-matched vs g0 compares one shared head at 290 decisions against gen0's three
+per-decision heads, so "gen1 ≈ gen0 at matched decisions" is descriptive, not a form-controlled comparison. The base
+arm on this box repeated to within one problem across three games (sd 0.19), and the disjoint head was the most
+variable arm (sd 2.01), the opposite of the registered stabilisation expectation. E's block confirms or corrects.
