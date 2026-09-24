@@ -768,3 +768,14 @@ registered is therefore recoverable on the ACTION (hypothesise-vs-inspect, and r
 Conclusion as of this entry: on the registered readings and on the tightened (x), the plateau of §13 is the policy's,
 not the task's — a different agent of the same family reaches problems the first agent does not, beyond churn, with
 an interval that excludes zero. The head arms of §16 may now be fitted, after (vii) completes.
+
+**16a (xii), 2026-09-24 19:2xZ — (vii) complete; every reading recomputed on the complete collection.**
+No-region cells across all decisions: 224, of which inspect 223 (99.6%) and invalid 1; `parse_action` returns
+"invalid" on unparseable text and never defaults to inspect. Unconditional decision-1 measure on all 300 tasks:
+7B hypothesises first in 298/300 (99.3%); B inspects first in 209 (69.7%), hypothesises in 90, invalid 1. B's first
+decision is greedy and reproduced exactly across the two independent collections (divergence 37 of 89 both times),
+so the conditional region rate is a property of B's policy, not of a draw. Reading (x) on (vii)'s collection: over
+all tasks +7.33 pp, 95% CI [+4.00, +11.00] (B-only 8.67% − churn 1.33%); over own solved set +65.6 pp [+49.3, +80.5];
+solved 7B 68, B 36, both 10, B-only 26. Head of record: on-menu 7B 87.9%, B 74.3%, B off-menu 0.0%; same-policy
+decision-1 divergence 0/298; same-agent churn 4 tasks (6.7%). The states pass and the §16 head arms proceed in the
+registered order against the §15 bar; (vii)'s collection is the B collection of record.
