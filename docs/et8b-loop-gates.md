@@ -570,3 +570,27 @@ gen1″ − gen1-matched = −1.0 [−7.3, +5.3], §14(a) not separated; (b) not
 base by nine to ten points and are indistinguishable from each other on one game. The probe gap (60.7 vs 53.4, seven
 points in favour of same-problem experience) did not convert to episodes — the fourth time in the programme a probe
 improvement failed to convert, and the reason the bar is problems solved on a paired run. Games 2–3 ~04:40Z.
+
+**§13b — THREE GAMES COMPLETE (box B, 23:54Z; scored by R from the episode counts, E's block to confirm):**
+```
+  game     b     g0     g1    g1-matched  g1′(SQL)
+    1    24.7   33.0   38.3     37.3       23.3
+    2    24.0   35.3   37.0     34.7       23.7
+    3    27.7   33.3   41.7     35.7       22.7
+  g1 − g0   +5.3  +1.7  +8.3    mean +5.11  [−3.18, +13.41]   (t, df 2)    §14(a) FAILS
+  g0 − b                        mean +8.44  [+1.40, +15.49]   §14(a) ✅
+  g1 − b                        mean +13.56 [+12.29, +14.82]  §14(a) ✅ (b) ✅
+  g1-matched − b                mean +10.44 [+4.63, +16.26]   ✅
+  g1′ − b                       mean −2.22  [−8.33, +3.88]    at base
+  g1′ − g1-matched              mean −12.67 [−16.46, −8.87]   other-family head loses, cleanly
+  within-arm sd: b 1.95 · g0 1.26 · g1 2.40 · g1m 1.35 · g1′ 0.51;  largest within-head-arm draw 4.67
+```
+**Verdict, under the rule fixed before any game ran: accumulation on seed 73 is NOT ESTABLISHED.** Three games, all
+positive, mean +5.1, interval spanning zero. The stabilisation hypothesis (head arms tighter than base) is NOT
+supported: base sd 1.95 sits between the head arms' 1.26 and 2.40. What is established: the head over base
+(+8 to +14, every arm, every game); the other-family head at base level (−2.2), and 12.7 points below the same-family
+head at matched rows — the domain-shift result, conservative because the matching confound worked against
+g1-matched. **The paper's sentence:** across the two matches, gen1 beat gen0 in every one of twelve paired games
+(+1.7 … +8.3, pooled mean about +4); the effect is real in sign, small, and not separable from run-to-run variance at
+300 tasks per game; §13a says why it is small; §13c is measuring whether same-family novelty changes it. The power
+computation (games needed for +4 to clear the within-head-arm bar) is E's to supply with the block.
