@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Efficient Thinking VIII-b: Does Experience Accumulate?</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
+  @page { size: A4; margin: 20mm 18mm; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
+         line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
+         font-size: 15px; }
+  h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
+       padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
+  h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
+       margin-top: 34px; }
+  h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
+  p, li { font-size: 15px; }
+  strong { color: #111; }
+  code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
+         padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
+  pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
+        overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
+  pre code { background: none; color: #24292e; padding: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
+  th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+  th { background: #2c3e50; color: #fff; }
+  tr:nth-child(even) td { background: #f6f8fa; }
+  td[align="right"], th[align="right"] { text-align: right; }
+  hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
+  blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
+               color: #333; background: #f6f8fa; font-style: italic; }
+  a { color: #0969da; }
+  img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+  </style></head><body><h1>Efficient Thinking: Measuring What Capability Costs</h1>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Efficient Thinking VIII-b: Does Experience
+Accumulate?</h1>
+</header>
+<h1 id="efficient-thinking-viii-b-does-experience-accumulate">Efficient
+Thinking VIII-b: Does Experience Accumulate?</h1>
+<h2
+id="the-second-generation-its-small-gain-the-redundancy-that-explains-it-and-what-new-experience-does">The
+second generation, its small gain, the redundancy that explains it, and
+what new experience does</h2>
+<blockquote>
+<p><strong>STATE 2026-09-24: DRAFT v0.2, written backward from what is
+measured; every registered arm has run.</strong> The gain of a second
+generation of experience over the first is measured (twelve paired
+games, all positive, small, not established against the loop’s own
+variance); the reason is measured (half of the second generation’s
+experience is byte-identical to the first’s); the test of the reason —
+new experience of the same task family on problems the head has never
+seen — is measured across three games and does not extend the gain (§7).
+Everything else is on disk under <code>experience/results/</code> with
+its command and its pre-registration
+(<code>docs/et8b-loop-gates.md</code>, §§1–15, every rule dated before
+the run it governs).</p>
+</blockquote>
+<p><strong>Louay Alsakka</strong> · September 24, 2026 · <em>draft
+v0.2</em></p>
+<h2 id="abstract">Abstract</h2>
+<p>Paper VIII showed that a frozen model with a read-only head fitted on
+its own verified history moves the quality–compute frontier. This paper
+asks whether the improvement compounds: does experience collected by an
+agent that is already steered by one head make a better head, and does
+that continue? The first answer is small and consistent: across two
+matches of three games each, the second generation’s head beat the
+first’s in all six paired games on the same 300 problems, and in all
+nine single pairings within the first match, by about four points, an
+effect real in sign that does not separate from the loop harness’s own
+run-to-run variance at 300 tasks per game. The second answer is the
+reason: 49% of the second generation’s training rows are byte-identical
+to the first’s, and 86% of a third generation’s are identical to what
+came before. A steered agent stands where the previous agent stood and
+produces the same state. Accumulation stops because the experience stops
+being new. The third answer tests that reason by prediction: experience
+collected on a disjoint set of problems of the same family is only 1.3%
+duplicated, and if novelty is what binds, its head should beat a
+same-problem head at matched decisions. Across three games the two heads
+are indistinguishable, both ten points over base: new problems were new
+rows, not new experience. Beside these, the paper establishes three
+things about the instrument that any accumulation claim needs: the
+loop’s variance comes from its second and third decisions and is zero at
+one; a head over no head is +8 to +14 in every game ever played; and a
+head fitted on another task family sits at base.</p>
+<h2 id="results-at-a-glance">Results at a glance</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>finding</th>
+<th>measurement</th>
+<th>where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gen1 over gen0</td>
+<td>6 of 6 paired games positive (+1.7 … +8.3) and 9 of 9 single
+pairings within match 1; match 1 mean +3.0 [+1.8, +4.2]; match 2 mean
++5.1 [−3.2, +13.4]; not established against the within-head-arm spread
+under the rule fixed before each match</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>head over base</td>
+<td>+8 to +14 in every arm of every game; all six games clear every
+bar</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>why the gain is small</td>
+<td>49.2% of gen1’s rows byte-identical to gen0’s; 85.9% of gen2’s to
+gen0 ∪ gen1; neighbour redundancy 67% / 90%; gains fall as redundancy
+rises (+5.7 → −2.0)</td>
+<td>§4</td>
+</tr>
+<tr>
+<td>combining generations</td>
+<td>gen0 ∪ gen1 head ≈ gen1 (+2.7 [−2.3, +7.7]); amount vs origin not
+separable at 300</td>
+<td>§5</td>
+</tr>
+<tr>
+<td>the instrument</td>
+<td>one-decision loop bit-identical across runs; the same-box
+three-decision control diverges on 65 of 75 episodes; the variance is
+decisions 2–3</td>
+<td>§6</td>
+</tr>
+<tr>
+<td>other-family experience</td>
+<td>a head from SQL-repair experience sits at base on debugging (−0.3,
+−5.0); 11–13 below the same-family head</td>
+<td>§6</td>
+</tr>
+<tr>
+<td>same-family novel experience</td>
+<td>1.3% duplicated, 42% in gen0’s region; three games: disjoint-problem
+head ≈ same-problem head (−1.0 [−7.6, +5.6]); both ≈ gen0’s head; all +9
+to +10 over base</td>
+<td>§7</td>
+</tr>
+<tr>
+<td>stabilisation</td>
+<td>NOT supported: base sd 1.95 sits between the heads’ 1.26 and
+2.40</td>
+<td>§6</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-question">1. The question</h2>
+<p>VIII closed with one generation: verified history, a head, a frontier
+moved. The obvious next step is the loop — let the steered agent
+generate experience, fit the next head on it, repeat — and the obvious
+hope is that each turn buys what the first did. This paper measures the
+second turn and asks what it is made of.</p>
+<h2 id="instruments-and-the-discipline-that-the-result-forced">2.
+Instruments, and the discipline that the result forced</h2>
+<p>Everything runs on the loop harness of VIII (<code>et8b_loop</code>,
+budget 12, up to three head decisions per episode), the same frozen 7B
+model, on an independent 300-problem set (seed 73) disjoint by content
+from every training problem. Two things were learned about the
+instrument before any accumulation number could be read, and they are
+results:</p>
+<ul>
+<li><strong>Run-to-run variance.</strong> Five identical base runs on
+the same 300 spread 20.7–27.7 (sd 3.10, across two boxes). Two runs of
+the same thing differed by five points with p = 0.02 under McNemar,
+which treats that variance as zero; McNemar p-values on loop rows are
+therefore within-run descriptives and nothing more. The source was
+located: a loop restricted to one head decision per episode is
+bit-identical between runs on every field of every episode; at three
+decisions on the same box it is not. The variance is a property of
+decisions two and three — carried state and longer context — and a
+design property, not the box (box effect 0.17 on the single-decision
+harness).</li>
+<li><strong>The chess-match rule.</strong> A stochastic comparison is
+scored like a match: arms interleaved in one session, k games each, the
+effect as the mean of paired differences with its own interval, read
+against the arms’ own within-session spread. A gain is “ahead of noise”,
+never “a clear winner”. Two matches were played (§3).</li>
+</ul>
+<p>Heads are cut on whole decision groups, never rows: a head is fitted
+per candidate but scored per decision, and a row cut can leave a
+decision with no correct candidate — a defect found in this work, fixed,
+and recorded (§7).</p>
+<h2 id="the-gain-consistent-small-not-established">3. The gain:
+consistent, small, not established</h2>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>game</th>
+<th style="text-align: right;">base</th>
+<th style="text-align: right;">gen0 head</th>
+<th style="text-align: right;">gen1 head</th>
+<th style="text-align: right;">gen1 − gen0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>match 1 (interleaved, one session)</td>
+<td>1 · 2 · 3</td>
+<td style="text-align: right;">27.7 · 25.7 · 25.0</td>
+<td style="text-align: right;">37.0 · 36.7 · 36.3</td>
+<td style="text-align: right;">39.3 · 40.3 · 39.3</td>
+<td style="text-align: right;">+2.3 · +3.7 · +3.0</td>
+</tr>
+<tr>
+<td>match 2 (interleaved, one session)</td>
+<td>1 · 2 · 3</td>
+<td style="text-align: right;">24.7 · 24.0 · 27.7</td>
+<td style="text-align: right;">33.0 · 35.3 · 33.3</td>
+<td style="text-align: right;">38.3 · 37.0 · 41.7</td>
+<td style="text-align: right;">+5.3 · +1.7 · +8.3</td>
+</tr>
+</tbody>
+</table>
+<p>Match 1: mean +3.00 [+1.78, +4.22]; every one of the nine single
+pairings positive (+2.3 … +4.0); every gen1 run above every gen0 run.
+Match 2: mean +5.11 [−3.18, +13.41]. Under the rule fixed before each
+match (the replicate-mean interval must exclude zero and its lower bound
+must exceed the largest within-head-arm draw of the session — 2.33 in
+match 1, 4.67 in match 2) the gain is <strong>not established</strong>
+in either. The rule’s bar is a maximum over draws and grows with the
+number of games, which makes a +4 effect unclearable at any n; that is
+recorded, and a statistic bar (the pooled within-head-arm sd, 1.62) is
+registered for any future games, not applied to these. What is
+established without any rule: six of six paired games positive and nine
+of nine single pairings within match 1, and the head over base at +8 to
++14 in every arm of every game. The published single-run figure of +5.7
+[+0.7, +10.7] is inside this picture and is not a claim.</p>
+<h2 id="why-it-is-small-the-experience-stops-being-new">4. Why it is
+small: the experience stops being new</h2>
+<p>Measured on the recorded training rows, no model, no GPU:</p>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 36%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">gen1 vs gen0</th>
+<th style="text-align: right;">gen2 vs gen0 ∪ gen1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rows byte-identical to a prior row</td>
+<td style="text-align: right;">49.2%</td>
+<td style="text-align: right;">85.9%</td>
+</tr>
+<tr>
+<td>rows closer to the prior set than its own median self-distance</td>
+<td style="text-align: right;">67.2%</td>
+<td style="text-align: right;">90.1%</td>
+</tr>
+<tr>
+<td>gain that generation bought (single run)</td>
+<td style="text-align: right;">+5.7</td>
+<td style="text-align: right;">−2.0</td>
+</tr>
+</tbody>
+</table>
+<p>An identical hidden state is an identical history prefix: the steered
+agent was in exactly the situation the previous agent was in and
+produced the same activation. Redundancy rises with generation and the
+gain falls with it. This is the paper’s diagnosis, and it was the
+author’s hypothesis before it was measured: the marginal value of a row
+is its novelty, as with training data, and self-generated experience on
+the same problems runs out of novelty after one generation.</p>
+<h2 id="combining-generations-does-not-help">5. Combining generations
+does not help</h2>
+<p>A head fitted on the union of gen0’s and gen1’s rows scores +2.7
+[−2.3, +7.7] over gen1 alone — the union is barely larger in unique
+content than gen0. Whether gen1’s edge is about which rows or how many
+cannot be told at 300 problems (gen0’s rows at gen1’s count land between
+the two, compatible with both); resolving it would take about 2,500
+problems and is not spent.</p>
+<h2 id="what-the-instrument-established-on-the-way">6. What the
+instrument established on the way</h2>
+<p>The loop’s variance is its second and third decisions (§2): a
+one-decision loop is bit-identical across runs, and the same-box
+three-decision control diverges on 65 of 75 episodes. The published +5.7
+was a single run; every acceptance rule this paper applies was fixed
+before the arms that tested it ran, which is why the gain is “not
+established” rather than “refuted”, and that ordering is the paper’s
+real instrument. A head fitted on another task family (SQL repair, 1,437
+rows, one shared head) sits at base on debugging — −0.3 and −5.0 over
+base in two games, 11 and 13 points under the same-family head at
+matched rows — so experience does not transfer across families through
+the head. And the registered hypothesis that the head stabilises the run
+is not supported: on three draws the base arm’s spread sits between the
+two head arms’.</p>
+<h2 id="is-new-experience-of-the-same-family-new-running">7. Is new
+experience of the same family new? (running)</h2>
+<p>The test the diagnosis demands: experience collected by gen0’s own
+heads on 300 disjoint problems of the same family (content-hashed
+disjoint from every training and evaluation problem), fitted as one
+shared head at 290 decisions, against gen1’s own experience cut to the
+same 290 decisions. The precondition holds — 1.3% of the new rows are
+byte-identical to gen0’s, against 49% for gen1 — but 42% still sit
+closer to gen0’s region than gen0’s rows sit to each other: new rows,
+largely the same corner of state space, the first measurement that
+separates “new rows” from “new experience”. Prediction, written before
+the games: if novelty binds, the disjoint-problem head beats the
+same-problem head. Game 1 of 3: base 25.7 · gen0 35.7 · same-problem
+35.3 · disjoint 34.3; disjoint − same-problem = −1.0 [−7.3, +5.3]. All
+three heads beat base by nine to ten points and are indistinguishable
+from each other on one game. Game 2: base 25.7 · gen0 36.7 ·
+same-problem 36.3 · disjoint 32.7; disjoint − same-problem = −3.7 [−9.7,
++2.3]. Game 3: base 25.3 · gen0 35.7 · same-problem 35.0 · disjoint
+36.7; disjoint − same-problem = +1.7. Three games: mean −1.0 [−7.6,
++5.6]; the prediction is not supported. Every head sits ten points over
+base and the three heads are indistinguishable from each other
+(same-problem − gen0: −0.4 [−0.9, +0.0], descriptive, since the forms
+differ). The base arm on this box repeated to within one problem across
+three games. The probe favoured the same-problem head by seven points
+(60.7 vs 53.4) and that did not convert to episodes — the fourth time in
+this programme a probe gain failed to convert, and the reason the bar is
+problems solved.</p>
+<h2 id="what-accumulation-is-then">8. What accumulation is, then</h2>
+<p>A second generation of self-generated experience buys a small,
+consistent gain that is not separable from the loop’s own variance at
+this size, because most of it is the first generation’s experience
+again. Genuinely new rows from disjoint problems of the same family are
+worth the same as the old ones, across three games: the limit is not
+which problems the agent saw but the region of state space its own
+policy keeps returning to, and that region is set by the head that
+steered the collection. Experience that extends accumulation would have
+to come from a different policy, a different family, or a different
+agent — which is where the next paper starts.</p>
+<h2 id="reproducibility">Reproducibility</h2>
+<p><code>docs/et8b-loop-gates.md</code> (every registered rule and
+reading, dated), <code>experience/reproduce_8b_accumulation.sh</code>,
+artefacts under <code>experience/results/</code> (<code>et8b_*</code>,
+<code>match_*</code>, <code>s11_*</code>, <code>null73*</code>,
+<code>c_*</code>), <code>experience/gen_redundancy.py</code>,
+<code>experience/subsample_by_decision.py</code>,
+<code>experience/match_analysis.py</code> (committed before the match’s
+numbers existed). Every table names its arms, its session and its
+cut.</p>
+<h2 id="appendix-a.-how-this-was-found">Appendix A. How This Was
+Found</h2>
+<p>Dates are 2026; one experimenter (E) and one reviewer (R),
+pseudonymous. 1. <strong>09-20–21.</strong> Gen1 over gen0 on two 300s
+(+5.7, +9.7), reproduced (+5.0, +7.3). Gen2 ≈ gen1. Written up as
+accumulation. 2. <strong>09-22.</strong> A null replicate — two runs of
+the identical base — was registered as an afterthought and fired at +5.0
+[+1.7, +8.3]. Four base runs spread seven points; four of six null draws
+“significant” under McNemar. The accumulation row was inside the noise.
+<em>Rule: run the null before the claim, on any harness with sampling
+inside the loop.</em> 3. <strong>09-22, night.</strong> The author:
+“like a chess game — many games, average, be ahead of noise.” The match
+design was registered; the first match’s nine games were all positive
+and did not clear the base-null bar; the match itself measured that head
+arms are less variable than base arms, so the bar was re-registered for
+new data only and the first match never re-scored. <em>Rule: a yardstick
+found after a rule fires applies to data not yet collected.</em> 4.
+<strong>09-23.</strong> The author’s hypothesis — the experience is not
+independent — measured: 49% / 86% duplicate rows. The independence arm
+was first built as a different task family (a domain shift, R’s design
+error, kept as §6’s result), then as disjoint problems of the same
+family. A weak head turned out to be a row-cut artefact (E), fixed by
+cutting on decisions; the constraint had existed as a comment in a
+neighbouring script for three weeks and had not travelled. <em>Rule: the
+unit of amount is the decision; a constraint lives in a shared file, not
+a comment.</em> The one-decision loop was bit-identical across runs; the
+three-decision loop was not, on one box: the variance is the decisions.
+5. <strong>09-23–24.</strong> Second match: three games, all positive,
+not established; the bar’s own defect (a maximum grows with n) recorded
+and replaced for the future. E’s own count corrected itself twice in one
+evening in opposite directions. The author’s arc for the paper: state
+the small gain exactly, show what explains it, show what new experience
+does.</p>
+</body>
+</html>

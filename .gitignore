@@ -130,3 +130,4 @@ bench/wo318_measure_ledger.json
 scripts/stage_history_rewrite.py
 !docs/efficient-thinking-8b.md
 poetry/iv_e2_result.json
+!docs/efficient-thinking-8b.html
