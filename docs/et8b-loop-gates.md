@@ -717,3 +717,21 @@ version before any further family runs, and the paper's one-sentence harness not
 `TimeoutExpired` uncaught out of `run_tests` and unwound the collection at episode 4. Now a verifier that does not go
 green within its budget is RED with a TIMEOUT record and no region — the convention the import-failure path already
 used. Step (1) contained no such event and is unaffected; agent B restarted from episode 1 on the fixed loop.
+
+**16a, second addendum, 2026-09-24 16:0xZ — reading (i) computed; two controls registered before anything is fitted.**
+(vi) Reading (i): 7B (corrected prompt) 68/300; agent B (Llama-3.1-8B, corrected prompt) 34/300; both 11; B-only 23
+= 67.6% of B's solved set (bar ≥ 25%): FIRES. Reading (iv) does not fire. Fallback control run before this was read:
+in all 23 B-only solves B named the region itself (22 of 23 correctly); none is the loop's `regions[0]` fallback.
+Region distribution where B names one is concentrated (gather 31, sift 19, digest 18, fold 11, shape 5, intake 4,
+emit 2, render 0) against the 7B's near-uniform spread. The registered 300-cell decision-1 disagreement rate is NOT
+deliverable as registered: B names no region at decision 1 in 209 of 300 tasks, so the rate rests on 89 cells
+(37 differ, 41.6%) and is recorded as CONDITIONAL, not as the registered reading.
+(vii) Registered: the steps log gains one column, the parsed `action` beside `region` (nothing served or done
+changes); agent B is re-collected so the 209 no-region cells split into "chose to inspect" and "unparseable".
+Decision 1 is greedy and reproduces exactly; decisions 2–3 are sampled and will differ.
+(viii) Registered: a SAME-AGENT CHURN control — a second run of the 7B on the corrected prompt, identical settings,
+different sampling seed at decisions 2–3. Its "solved by run 2 and not run 1" count is the baseline that B-only must
+clear: the quantity that supports (i) is B-only minus same-agent-churn-only, with both counts printed. Until (viii)
+has run, the 23 is "different agent plus run-to-run churn" and is quoted only in that form.
+(ix) The stale-prompt control of (iii) is unchanged and serves its own purpose only; it is not the churn control.
+Order: (iii) running → (viii) → (vii) → readings recomputed → only then the §16 head arms.
