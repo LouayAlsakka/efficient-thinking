@@ -101,6 +101,36 @@ def scan(files, rev=None, self_path=None):
     return hits
 
 
+def derived_staleness(files):
+    """Derived artefacts that are OLDER than the source they were built from.
+
+    This exists because a scrub fixed a markdown file and its HTML and did not rebuild the PDF,
+    so the published artefact stayed a pre-scrub copy for three days and served a host name to
+    anyone who fetched it. No pattern here could have caught it: the shape was expressible and
+    the file was one this checker skips by extension, so the guard's zero was true of everything
+    it opened and silent about the one surface that mattered.
+
+    A date comparison catches that class WITHOUT reading the binary at all, and it keeps working
+    for any artefact kind -- which a text extractor would not. It is deliberately the weaker,
+    duller test: it cannot say what is inside, only that the inside is older than the outside.
+    """
+    import collections
+    srcs = {f[:-3]: f for f in files if f.endswith(".md")}
+    out = []
+    for f in files:
+        stem = f[:-4] if f.endswith((".pdf", ".htm")) else (f[:-5] if f.endswith(".html") else None)
+        if stem is None or stem not in srcs:
+            continue
+        def when(path):
+            r = subprocess.run(["git", "log", "-1", "--format=%at", "--", path],
+                               capture_output=True, text=True)
+            return int(r.stdout.strip() or 0)
+        a, b = when(f), when(srcs[stem])
+        if a and b and a < b:
+            out.append((f, srcs[stem], a, b))
+    return out
+
+
 def completeness_statement(files):
     """What this searched for, printed WITH the result. A zero from an unstated needle set licenses
     "the needle fired and these are its hits" and never a total -- the completeness claim belongs to
@@ -138,7 +168,22 @@ def main():
             print("%s:%d  [%s] %r\n    %s\n    -> %s" % (f, i, name, tok, line, why))
         print("\n%d line(s) for a person to read, over %d files." % (len(hits), len(files)))
     print(completeness_statement(files))
-    if hits and a.strict:
+
+    # WHAT WAS NOT OPENED, said as a number rather than left to the prose above. A guard that
+    # skips a surface silently reports a zero that is true of everything it read and says
+    # nothing about the rest; naming the count is what stops that zero from travelling.
+    skipped = [f for f in files if f.endswith(SKIP_EXT)]
+    if skipped:
+        print("\n  NOT OPENED (binary by extension): %d file(s). Their PATHS were checked above;\n"
+              "  their CONTENTS were not read by anything here." % len(skipped))
+    stale = derived_staleness(files)
+    if stale:
+        print("\n  DERIVED ARTEFACT OLDER THAN ITS SOURCE -- rebuild before trusting a clean scan:")
+        for f, src, _, _ in stale:
+            print("    %s  is older than  %s" % (f, src))
+    elif not a.files:
+        print("  Every derived artefact with a markdown source post-dates it.")
+    if (hits or stale) and a.strict:
         sys.exit(1)
 
 
