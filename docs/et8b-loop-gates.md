@@ -594,3 +594,17 @@ g1-matched. **The paper's sentence:** across the two matches, gen1 beat gen0 in 
 (+1.7 … +8.3, pooled mean about +4); the effect is real in sign, small, and not separable from run-to-run variance at
 300 tasks per game; §13a says why it is small; §13c is measuring whether same-family novelty changes it. The power
 computation (games needed for +4 to clear the within-head-arm bar) is E's to supply with the block.
+
+**E's block confirms R's scoring (00:35Z, `e10f423`); verdict stands. §14(b)'s defect, recorded (E, 00:40Z):** the bar
+is a MAXIMUM over within-head-arm draws (4.67 here), so it grows as games are added and a +4 effect cannot clear it at
+any n; +6 clears at n = 6, +8 at n = 2. The rule did what it was written for tonight — it stopped game 3's +8.3 from
+being read as a replication when the session's own spread reached 4.67 — and the verdict under it is not revisited.
+
+## 15. Registered for FUTURE data only — the bar becomes a statistic
+For any between-generation comparison scored after this entry: (a) the replicate-mean interval (t, df = games − 1)
+excludes zero; (b) its lower bound exceeds the POOLED within-head-arm sd of that session (1.62 on §13b's ten draws),
+not the largest draw. At that bar a +4 effect clears at about nine games (~16 box-hours). §13b (three games) and the
+first match are reported under the rules that governed them, with §15 stated as the rule any further games would use.
+**Ruling on spending those games: not now.** The author's arc for VIII-b does not need "established": it reports the
+small consistent gain exactly, the redundancy that explains it, and what new experience does (§13c, ~04:40Z). If §13c
+shows same-family novelty extends the gain, the nine-game test is the one worth paying for, on that head.
