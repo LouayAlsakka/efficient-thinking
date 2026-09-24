@@ -9,8 +9,8 @@
 Paper VIII showed that a frozen model with a read-only head fitted on its own verified history moves the
 quality–compute frontier. This paper asks whether the improvement compounds: does experience collected by an agent
 that is already steered by one head make a better head, and does that continue? The first answer is small and
-consistent: across two matches of three games each and nine single pairings, the second generation's head beat the
-first's in every one of twelve paired comparisons on the same 300 problems, by about four points, an effect real in
+consistent: across two matches of three games each, the second generation's head beat the first's in all six paired games
+on the same 300 problems, and in all nine single pairings within the first match, by about four points, an effect real in
 sign that does not separate from the loop harness's own run-to-run variance at 300 tasks per game. The second answer
 is the reason: 49% of the second generation's training rows are byte-identical to the first's, and 86% of a third
 generation's are identical to what came before. A steered agent stands where the previous agent stood and produces
@@ -26,11 +26,11 @@ a head over no head is +8 to +14 in every game ever played; and a head fitted on
 
 | finding | measurement | where |
 |---|---|---|
-| gen1 over gen0 | 12 of 12 paired games positive (+1.7 … +8.3); match 1 mean +3.0 [+1.8, +4.2]; match 2 mean +5.1 [−3.2, +13.4]; not established against the within-head-arm spread under the rule fixed before each match | §3 |
-| head over base | +8 to +14 in every arm of every game; 12 of 12 clear every bar | §3 |
+| gen1 over gen0 | 6 of 6 paired games positive (+1.7 … +8.3) and 9 of 9 single pairings within match 1; match 1 mean +3.0 [+1.8, +4.2]; match 2 mean +5.1 [−3.2, +13.4]; not established against the within-head-arm spread under the rule fixed before each match | §3 |
+| head over base | +8 to +14 in every arm of every game; all six games clear every bar | §3 |
 | why the gain is small | 49.2% of gen1's rows byte-identical to gen0's; 85.9% of gen2's to gen0 ∪ gen1; neighbour redundancy 67% / 90%; gains fall as redundancy rises (+5.7 → −2.0) | §4 |
 | combining generations | gen0 ∪ gen1 head ≈ gen1 (+2.7 [−2.3, +7.7]); amount vs origin not separable at 300 | §5 |
-| the instrument | one-decision loop bit-identical across runs (sd 0); three-decision loop sd ≈ 2.6 on the same box; the variance is decisions 2–3 | §6 |
+| the instrument | one-decision loop bit-identical across runs; the same-box three-decision control diverges on 65 of 75 episodes; the variance is decisions 2–3 | §6 |
 | other-family experience | a head from SQL-repair experience sits at base on debugging (−0.3, −5.0); 11–13 below the same-family head | §6 |
 | same-family novel experience | 1.3% duplicated; game 1: disjoint-problem head ≈ same-problem head (+8.7 vs +9.7 over base); games 2–3 running | §7 |
 | stabilisation | NOT supported: base sd 1.95 sits between the heads' 1.26 and 2.40 | §6 |
@@ -47,7 +47,7 @@ Everything runs on the loop harness of VIII (`et8b_loop`, budget 12, up to three
 same frozen 7B model, on an independent 300-problem set (seed 73) disjoint by content from every training problem.
 Two things were learned about the instrument before any accumulation number could be read, and they are results:
 
-- **Run-to-run variance.** Four identical base runs on the same 300 spread 20.7–27.7 (sd ≈ 3). Two runs of the
+- **Run-to-run variance.** Five identical base runs on the same 300 spread 20.7–27.7 (sd 3.10, across two boxes). Two runs of the
   same thing differed by five points with p = 0.02 under McNemar, which treats that variance as zero; McNemar
   p-values on loop rows are therefore within-run descriptives and nothing more. The source was located: a loop
   restricted to one head decision per episode is bit-identical between runs on every field of every episode; at
@@ -73,7 +73,7 @@ replicate-mean interval must exclude zero and its lower bound must exceed the la
 session — 2.33 in match 1, 4.67 in match 2) the gain is **not established** in either. The rule's bar is a maximum
 over draws and grows with the number of games, which makes a +4 effect unclearable at any n; that is recorded, and a
 statistic bar (the pooled within-head-arm sd, 1.62) is registered for any future games, not applied to these. What is
-established without any rule: twelve of twelve paired games positive, and the head over base at +8 to +14 in every
+established without any rule: six of six paired games positive and nine of nine single pairings within match 1, and the head over base at +8 to +14 in every
 arm of every game. The published single-run figure of +5.7 [+0.7, +10.7] is inside this picture and is not a claim.
 
 ## 4. Why it is small: the experience stops being new
@@ -101,7 +101,10 @@ problems (gen0's rows at gen1's count land between the two, compatible with both
 
 ## 6. What the instrument established on the way
 
-The loop's variance is its second and third decisions (§2). A head fitted on another task family (SQL repair, 1,437
+The loop's variance is its second and third decisions (§2): a one-decision loop is bit-identical across runs, and
+the same-box three-decision control diverges on 65 of 75 episodes. The published +5.7 was a single run; every
+acceptance rule this paper applies was fixed before the arms that tested it ran, which is why the gain is "not
+established" rather than "refuted", and that ordering is the paper's real instrument. A head fitted on another task family (SQL repair, 1,437
 rows, one shared head) sits at base on debugging — −0.3 and −5.0 over base in two games, 11 and 13 points under the
 same-family head at matched rows — so experience does not transfer across families through the head. And the
 registered hypothesis that the head stabilises the run is not supported: on three draws the base arm's spread sits
@@ -117,7 +120,7 @@ each other: new rows, largely the same corner of state space, the first measurem
 "new experience". Prediction, written before the games: if novelty binds, the disjoint-problem head beats the
 same-problem head. Game 1 of 3: base 25.7 · gen0 35.7 · same-problem 35.3 · disjoint 34.3; disjoint − same-problem
 = −1.0 [−7.3, +5.3]. All three heads beat base by nine to ten points and are indistinguishable from each other on one
-game. The probe favoured the same-problem head by seven points (60.7 vs 53.4) and that did not convert to episodes —
+game; game 2 is in progress (base 25.7, gen0 36.7 so far) and game 3 follows (~04:40Z). The probe favoured the same-problem head by seven points (60.7 vs 53.4) and that did not convert to episodes —
 the fourth time in this programme a probe gain failed to convert, and the reason the bar is problems solved.
 
 ## 8. What accumulation is, then
@@ -126,7 +129,7 @@ A second generation of self-generated experience buys a small, consistent gain t
 own variance at this size, because most of it is the first generation's experience again. Genuinely new rows from
 disjoint problems of the same family are, on one game, worth the same as the old ones — which, if it holds, says the
 limit is not the problems but the region of state space the agent's own policy keeps returning to. *[The last line is
-written after games 2–3 of §7.]*
+written after games 2–3 of §7 land.]*
 
 ## Reproducibility
 
