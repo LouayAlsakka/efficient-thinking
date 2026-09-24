@@ -779,3 +779,12 @@ all tasks +7.33 pp, 95% CI [+4.00, +11.00] (B-only 8.67% − churn 1.33%); over 
 solved 7B 68, B 36, both 10, B-only 26. Head of record: on-menu 7B 87.9%, B 74.3%, B off-menu 0.0%; same-policy
 decision-1 divergence 0/298; same-agent churn 4 tasks (6.7%). The states pass and the §16 head arms proceed in the
 registered order against the §15 bar; (vii)'s collection is the B collection of record.
+
+**16a (xiii), 2026-09-24 22:3xZ — game 1's B arm never ran; caught by the clock, fixed at the class.** Arm names `v_b`
+(base) and `v_B` (agent B's head) collide on a case-insensitive filesystem; the loop skips a slice whose episode
+count is already 75, so `v_B1` resolved to `v_b1`'s files and reported "COMPLETE 300/300 green=69" — the base arm's
+own number, relabelled, in the same second as the previous arm finished. The B arm is renamed `v_vb`; the runner
+refuses to start if any two arm names are equal under case folding; the scoring plan is renamed in the same
+commit. Genuine so far, game 1: base 69, gen0 48, g1-matched 71; `v_vb` collecting. Nothing is read until three
+games are on disk and the §15 bar is computed. Same failure class as the `min(200, n_train)` control: an artefact
+that looks like a result, given away by arithmetic, not by its value.
