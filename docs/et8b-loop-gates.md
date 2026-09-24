@@ -696,3 +696,24 @@ The paper states in one sentence, wherever the harness is described, that the 7B
 prompt that misdescribed the task's regions and that the 7B did not follow it.
 
 **Order.** This section resolves on origin before (1) starts.
+
+**16a addendum, 2026-09-24 14:5xZ, after step (1) completed and before agent B's collection finished.**
+(i) Step (1) result: corrected-prompt 7B base on seed 73's 300 — 68/300 green (22.7%), mean 8.18 actions, 818
+hypothesize steps 87.9% on-menu, 0.0% off-menu, 12.1% no-region; the stale-line seed-73 base read 20.7%/8.19, a
+difference inside one standard error at n=300. The correction moved the vocabulary, not the difficulty. Agent B on
+the corrected prompt: off-menu 66.3% → 0.0% (first 38 steps), so the correction is shown to have taken.
+(ii) The column earlier called "unparsed" is renamed NO-REGION: `region` is None both when a parse fails and when the
+model chose inspect/patch/run at that step; the steps log keeps no raw text, so the two are not separable.
+(iii) One CONTROL collection is registered, run after agent B finishes and not before: the 7B on the same v3c tasks with
+the STALE prompt (same model, same tasks, only the served line differs, ~33 min). Its sole purpose is to attribute the
+no-region change between the stale `v3rep/repbase` run and (i) to the prompt line rather than the task set, which moved
+together in that comparison. It enters no §16 reading; §16's readings are computed between (i) and agent B only.
+(iv) A second stale vocabulary in the same system prompt: the bug-class list is v1's (12 names) while v3c's tasks use
+10 classes, overlap 2. The model's `bug_class` is never scored — it appears only as a prefix in the head-scoring
+string and nothing reads it back — so it misdescribes the task without touching a reading. Recorded as KNOWN AND
+UNSCORED; not corrected now, because a prompt change costs another base. It is corrected in the next instrument
+version before any further family runs, and the paper's one-sentence harness note covers both stale lists.
+(v) Harness fix during agent B's collection, after step (1) had completed: a patch that makes the verifier hang raised
+`TimeoutExpired` uncaught out of `run_tests` and unwound the collection at episode 4. Now a verifier that does not go
+green within its budget is RED with a TIMEOUT record and no region — the convention the import-failure path already
+used. Step (1) contained no such event and is unaffected; agent B restarted from episode 1 on the fixed loop.
