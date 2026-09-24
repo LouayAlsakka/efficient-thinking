@@ -72,3 +72,20 @@ the judge is, and it is reported as the checker's property.
 This is a change to a registered instrument. It is written here before the run rather than
 described afterwards, which is the only thing that separates a correction from a result chosen to
 fit.
+
+## Stage 2 run — record (2026-09-24 02:52Z, E's end line)
+Rater: Fable on Bedrock, `us-east-1`, under the account's `provider_data_share` retention mode for the window
+00:51:32Z–(closing on the owner's next root login); our own generated poems only. **The rater reasons before it
+answers: budget 1024 output tokens** (128 returned empty answers on real briefs: 0/6 parsed; 1024: 6/6);
+**self-consistency 0.974 on 38 order-swapped pairs at 1024 against 0.0 at 128 — the budget fixed the judge, not
+only the parsing.** The Opus voice judge it is reported beside (G6p) answered at 16 tokens; the two budgets are
+printed together and G6p carries that difference as a stated caveat. Reasoning cost for this run is reported in
+aggregate (real-brief probe: median ~476 of 1024 output tokens, most of it reasoning); per-call
+`reasoning_tokens_est` and `stop_reason` are ledgered from the next run. Run: 435 calls, rated 166 pairs, 24
+unparsed (87.4%; the 50-brief subset had read 92.1% — a gate met on the smaller number, and the next gate of this
+kind states its expected tolerance), $8.02; ledger total $9.02 of $40 including $1.65 spent on the failed 128-token
+run. **Result:** q(checker_full) = q(checker_score_only) = q(meter_only) = 0.693 against a random floor of 0.512;
+110 of 300 briefs collapse to a single Pareto candidate (36.7%). The judge distinguishes the checker from chance
+(+0.18) and does not distinguish the checker's variants from each other at all: **the checker's dimensions do not
+separate these samples** — a result about the checker that caps what this arm can say about selection, and the
+paper's first sentence for E5.
