@@ -55,6 +55,25 @@ PLANS = {
                      "collection and g1m was cut to a row budget, which shreds decision groups. "
                      "理 ruled it printed as confounded rather than re-run, because the confound "
                      "worked AGAINST g1m and it still won -- so the conclusion is conservative.")},
+    # VIII-c arm 1. Registered BEFORE the arms finished collecting, which is the whole point of
+    # writing it here rather than after: the pairings and the note are fixed while the numbers do
+    # not exist yet, so the reading cannot be shaped by what came out.
+    "viiic": {"arms": ("v_b", "v_g0", "v_g1m", "v_B"),
+              "labels": {"v_b": "base",
+                         "v_g0": "gen0 head (per-decision -- the form gen0's own rule selected)",
+                         "v_g1m": "gen1-matched, SHARED head, 290 decisions, seed 13731",
+                         "v_B": "agent B's visited places, SHARED head, 290 decisions, seed 13731"},
+              "aliases": {},
+              "wanted": [("v_g0", "v_b"), ("v_g1m", "v_b"), ("v_B", "v_b"), ("v_B", "v_g1m")],
+              "forbidden": set(),
+              "note": ("v_B - v_g1m IS the arm: both are the SHARED form at the same decision "
+                       "count and the same seed, and they differ in WHOSE TRAJECTORY the 7B's "
+                       "states were taken at. The labels are the verifier's ground truth in both, "
+                       "so no agent supplies supervision and the escape is in which states get "
+                       "visited. v_g0 is per-decision because that is its own rule's form and it "
+                       "is the published comparison, not a second knob. Read beside the probe "
+                       "line (B 57.9%% CV, chance 20.4, permutation at chance, PCA-8 37.6) and "
+                       "REMEMBER the probe has failed to convert four times in this programme.")},
     "13c": {"arms": ("c_b", "c_g0", "c_g1m", "c_g1pp"),
             "labels": {"c_b": "base", "c_g0": "gen0 head",
                        "c_g1m": "gen1-matched (290 decisions, whole groups)",
