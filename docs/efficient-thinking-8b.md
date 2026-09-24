@@ -140,7 +140,7 @@ policy rather than by the data: different problems, the same policy, similar int
 agent is not exhausting its intelligence; it is exhausting the novel experience its current policy can generate. New
 rows are not new experience. On this reading, experience that extends accumulation has to come from outside the
 region the steering policy returns to — a different policy, a different agent, a different family, or exploration
-aimed at state-space novelty — and that, not a third generation, is the next paper's variable. Read with VII (what a
+aimed at state-space novelty — and that, not a third generation, is the next paper on this line's variable (VIII-c). Read with VII (what a
 fixed model's state holds that its output does not say) and VIII (a head that reads that state moves the frontier),
 the series' question can be stated from the inside: how the useful internal states of a fixed intelligence are
 exposed, navigated and accumulated.
