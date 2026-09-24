@@ -18,6 +18,8 @@
    "mode_during": "provider_data_share",
    "mode_before_and_after": "none",
    "other_regions": "us-west-2 and us-east-2 never left `inherit`, so Fable refused there throughout",
+   "contents": "what was inside the window, because the window alone does not say: 300 briefs we authored (poetry/data/e1_prompts.jsonl -- task, topic, scheme, meter, and the instruction text) and the candidate poems our own local 7B generated from them (poetry/cache/e1_7B.jsonl, 16 samples each). No customer data, no third-party corpus, no text from anyone outside this project. Those two files are the ONLY inputs the rater reads (poetry/iv_e2.py:39,41), so this is checkable rather than asserted.",
+   "contents_added": "2026-09-24, after a second reader noted that the qualifier lived in the document and not in the artefact a stranger fetches. This field records provenance and changes no measurement in this file.",
    "note": "the rater's data-sharing condition, recorded as a window rather than as a property: every call in this run fell inside it, and no call of ours can fall inside it again without another root session."
   }
  },
