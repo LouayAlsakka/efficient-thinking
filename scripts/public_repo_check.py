@@ -36,7 +36,13 @@ RULES = [
      r'(?:[理令匠形案内女将庭鉳目付鎖巳紗鍵雲鉄文沙汰]{1,2}|\b(?:ri|rei|takumi|katachi|annai|okami|niwa|kanna|metsuke|kusari|'
      r'misa|kagi|kumo|tetsu|fumi|sautee)\b)[\s,(]*(?!19\d\d|20\d\d)\d{4,5}\b',
      "a 4-5 digit number beside a name reads as an internal decision id"),
-    ("host-shaped-token", r'\b(?:llm\d|mini\d|box[-_ ]?[A-Z]\d)\b',
+    # Every arm here USED to require a trailing digit, and the coordination host's name has
+    # none -- so the one machine that is the git server and the message store was the single
+    # host shape this guard could not express, and it returned a clean zero on a corpus that
+    # names it twice. Found by a second reader, validated on the whole corpus rather than on
+    # chosen cases: 2 hits, both true, and none of the 109 `mlx-lm` lines. The lookarounds are
+    # the file's own idiom -- `fixture-slug` already carries them for the same reason.
+    ("host-shaped-token", r'\b(?:llm\d|mini\d|box[-_ ]?[A-Z]\d)\b|(?<![-\w])lm(?![-\w])',
      "a machine name is estate topology: how many boxes there are and what they do"),
     ("internal-path-fragment", r'(?:reports|wo)/[a-z]+/|/Users/[a-z]+/(?:github|claude)/',
      "an internal path names a private tree and often a person"),
@@ -71,8 +77,20 @@ def read(path, rev=None):
 def scan(files, rev=None, self_path=None):
     hits = []
     for f in files:
-        if f.endswith(SKIP_EXT) or f == self_path:
+        if f == self_path:
             continue           # this file QUOTES the shapes it looks for; scanning it is noise
+        # THE PATH IS PUBLISHED TEXT. This guard read only the inside of files, so a file NAMED
+        # after a host was invisible to it by construction -- and a skipped binary's path was
+        # doubly invisible, since the extension skip took the name out with the bytes. A name
+        # is listed by every clone, every tarball and every web view of the tree. Reported at
+        # line 0 so a path hit can never be mistaken for a line of content.
+        for name, pat, why in RULES:
+            m = re.search(pat, f, re.I)
+            if m:
+                hits.append((f, 0, name, why + " (in the FILE PATH)", m.group(0)[:40], f))
+                break
+        if f.endswith(SKIP_EXT):
+            continue
         body = read(f, rev)
         for i, line in enumerate(body.split("\n"), 1):
             for name, pat, why in RULES:
