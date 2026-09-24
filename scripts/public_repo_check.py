@@ -75,9 +75,34 @@ SKIP_EXT = (".npz", ".npy", ".png", ".jpg", ".pdf", ".ico", ".woff", ".woff2", "
 # is a reading list must not fill it with tensors nobody can read.
 
 
+_ROOT = None
+
+
+def repo_root():
+    """The toplevel, so every path in this file means the same thing wherever it is invoked.
+
+    `git ls-files` lists the CURRENT DIRECTORY's subtree, not the repository. Run from
+    `scripts/` this checker scanned 31 of 8,434 files and printed `TOTAL 0` -- a confident clean
+    bill over 0.4% of the tree, because that subtree happens to contain nothing it detects. The
+    same cwd assumption reaches the self-exclusion below: `relpath(__file__, getcwd())` matches
+    the listing only from the root, so from a subdirectory the checker would also stop excluding
+    itself and report its own example patterns as hits.
+    """
+    global _ROOT
+    if _ROOT is None:
+        # Cached because read() calls this once per file: the first version spawned a git
+        # subprocess 8,434 times and the checker stopped finishing. A helper that is correct
+        # and unusable is not a fix.
+        r = subprocess.run(["git", "rev-parse", "--show-toplevel"],
+                           capture_output=True, text=True)
+        _ROOT = r.stdout.strip() or os.getcwd()
+    return _ROOT
+
+
 def tracked(rev=None):
     cmd = ["git", "ls-tree", "-r", "--name-only", rev] if rev else ["git", "ls-files"]
-    return subprocess.run(cmd, capture_output=True, text=True).stdout.split()
+    return subprocess.run(cmd, capture_output=True, text=True,
+                          cwd=repo_root()).stdout.split()
 
 
 def read(path, rev=None):
@@ -85,7 +110,8 @@ def read(path, rev=None):
         p = subprocess.run(["git", "show", "%s:%s" % (rev, path)], capture_output=True)
         return p.stdout.decode("utf8", "replace") if p.returncode == 0 else ""
     try:
-        return open(path, encoding="utf8", errors="replace").read()
+        return open(os.path.join(repo_root(), path),
+                    encoding="utf8", errors="replace").read()
     except Exception:
         return ""
 
@@ -171,7 +197,7 @@ def main():
     a = ap.parse_args()
     rev = a.rev or None
     files = a.files or tracked(rev)
-    me = os.path.relpath(os.path.abspath(__file__), os.getcwd())
+    me = os.path.relpath(os.path.abspath(__file__), repo_root())
     hits = scan(files, rev, self_path=me)
     if a.summary:
         import collections
