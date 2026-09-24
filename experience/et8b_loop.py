@@ -152,6 +152,14 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
         history.append("hypothesize %s" % (region or "?"))
         log.write(json.dumps({"run_id": run_id, "task_id": task["task_id"], "model": model_id,
                               "decision": d, "action": "hypothesize", "region": region,
+                              # WHAT THE AGENT ACTUALLY EMITTED, beside the region the loop kept.
+                              # `region` is None whenever the parsed action was not a hypothesize,
+                              # which conflates two opposite things: an agent that chose to inspect
+                              # before hypothesising, and an agent whose generation did not parse.
+                              # Without this column a no-region cell cannot be read, and one agent
+                              # produced 69% of them at the only decision where the cells align.
+                              # Records; changes nothing served and nothing done.
+                              "parsed_action": act.get("action"),
                               "region_hit": bool(hit), "step": actions,
                               "decision_state": pkey, "trajectory_key": dkey, "candidates": meta,
                               "tokens_in": total_in, "tokens_out": total_out}) + "\n")
