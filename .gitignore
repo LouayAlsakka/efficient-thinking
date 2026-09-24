@@ -128,3 +128,4 @@ bench/wo318_local_ledger.json
 bench/wo318_spend_ledger.json
 bench/wo318_measure_ledger.json
 scripts/stage_history_rewrite.py
+!docs/efficient-thinking-8b.md
