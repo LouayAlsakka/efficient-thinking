@@ -640,3 +640,26 @@ experience. Caveat carried: g1-matched vs g0 compares one shared head at 290 dec
 per-decision heads, so "gen1 ≈ gen0 at matched decisions" is descriptive, not a form-controlled comparison. The base
 arm on this box repeated to within one problem across three games (sd 0.19), and the disjoint head was the most
 variable arm (sd 2.01), the opposite of the registered stabilisation expectation. E's block confirms or corrects.
+
+## 16. VIII-c arm 1, registered 2026-09-24 07:1xZ before any collection — a different agent on the same problems
+**Question.** Does experience collected by a DIFFERENT fixed agent, on the same task family, land outside the region
+gen0's policy returns to, and does a head fitted on it extend the gain that gen1 could not?
+**Design.** Agent B = Llama-3.1-8B (VIII's second family; harness and fitter exist) collects on seed 73's 300 under
+its OWN policy (no head), three decisions, box B. States extracted at the layer VIII used for that model. Before any
+head is fitted: the §13a instrument against gen0's rows — exact-duplicate fraction (expected ~0: different model,
+different activations, so exact duplication is uninformative here and is printed only for the record) and the
+neighbour-redundancy fraction in the 7B's state space is NOT computable across models; instead the operative
+measure is BEHAVIOURAL: the fraction of (task, decision) cells where agent B's chosen candidate differs from gen0's
+agent's at the same cell, and the fraction of tasks agent B solves that gen0's agent did not (and vice versa). Those
+two numbers are the "different region" measurement and are printed before the head.
+**Heads.** B's experience is cut to 290 decisions (whole groups, fixed seed) and fitted as one shared head FOR THE 7B
+(the head reads the 7B's state; B's experience supplies which candidates were verified good — the label, not the
+state) — and, as the second arm, a shared head on the UNION of B's and gen1-matched's decisions at 290 total
+(experience exchange). Both against g1-matched (same form, same count) and gen0, three games interleaved in one
+session with a base bracket, §15 bar (pooled within-head-arm sd).
+**Readings, fixed now.** (i) B solves a substantially different subset (≥ 25% of its solved tasks unsolved by gen0's
+agent) → the region is the policy's, not the task's; (ii) the B-experience head beats g1-matched with the interval
+clearing §15 → different-agent experience extends the gain: the escape route exists and it is cheap; (iii) the union
+head beats both → exchange compounds; (iv) B's subset overlaps gen0's (< 10% different) → the region is the task's
+and no policy escapes it — a finding that closes the route. Any control fires → that arm withdrawn. **Not run until
+WO-318's demo has reached the owner; then it is the only VIII-c run.**
