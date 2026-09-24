@@ -84,6 +84,36 @@ def main():
     tax["leaves"] = sorted(set(tax.get("leaves", [])) | set(tags))
     tax["parents"] = {**tax.get("parents", {}), **parents}
     tax.setdefault("venues", {})[handle] = {"tags": tags, "offer_tags": {}}
+
+    # SHORT-SLUG ALIASES, DERIVED — not typed per venue.
+    #
+    # A renderer links a venue by the short form of its id, while the compiled fixture id carries
+    # a locality suffix. Until now the two were bridged by a hand-written `aliases` map, so a
+    # venue whose short link appeared later than its fixture simply had no alias and /area
+    # refused it — one venue hit exactly that while the two typed in by hand worked, which is the
+    # shape of a per-instance bridge. Deriving the alias closes the class instead of the instance.
+    #
+    # Derived only where it cannot be wrong: a first segment that is itself a canonical id would
+    # shadow that venue, and one claimed by two venues is ambiguous. Both are SKIPPED and named
+    # on stdout rather than resolved by a rule invented here. A hand-written alias always wins:
+    # some short forms are respellings rather than prefixes, and no rule derives those.
+    aliases = tax.setdefault("aliases", {})
+    canonical = set(tax["venues"])
+    first = {}
+    for vid in canonical:
+        if "." in vid:
+            first.setdefault(vid.split(".")[0], []).append(vid)
+    for short, owners in sorted(first.items()):
+        if short in canonical:
+            print("  alias SKIPPED %r — it is itself a venue id" % short)
+        elif len(owners) > 1:
+            print("  alias SKIPPED %r — claimed by %s" % (short, sorted(owners)))
+        elif short in aliases:
+            if aliases[short] != owners[0]:
+                print("  alias KEPT %r -> %r (hand-written; derived would be %r)"
+                      % (short, aliases[short], owners[0]))
+        else:
+            aliases[short] = owners[0]
     json.dump(tax, open(a.out, "w", encoding="utf8"), indent=1, ensure_ascii=False)
     print("  wrote %s — %d venue(s), %d leaves" % (a.out, len(tax["venues"]), len(tax["leaves"])))
 
