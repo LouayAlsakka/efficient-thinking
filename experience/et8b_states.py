@@ -36,7 +36,10 @@ def decisions_from(steps, tasks_dir):
                 inspected[s["region"]] = A.region_source(program, s["region"]) or ""
                 history.append("inspect %s" % s["region"])
             elif act == "hypothesize":
-                lines = ["SYMPTOM: %s" % task["symptom"]]
+                # §16a: byte-identical to et8b_loop.state_text(). A replay that rebuilds a
+                # DIFFERENT prompt computes hidden states at a position the agent was never in.
+                lines = ["SYMPTOM: %s" % task["symptom"],
+                         "Regions: %s" % ", ".join(regions)]
                 for r, v in inspected.items():
                     lines.append("# region: %s\n%s" % (r, v))
                 if history:

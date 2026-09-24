@@ -71,7 +71,12 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
     first_correct = None
 
     def state_text():
-        s = ["SYMPTOM: %s" % task["symptom"]]
+        # §16a: the task's OWN regions, from the task record. et8_agent's state text has
+        # carried this line since v1 (`et8_agent.py:171`); the v3 loop dropped it, which left
+        # the SYSTEM prompt's hardcoded v1/v2 menu as the only list any agent was shown. A
+        # model that obeyed that menu named regions no v3 task has. No fixed list replaces it.
+        s = ["SYMPTOM: %s" % task["symptom"],
+             "Regions: %s" % ", ".join(regions)]
         for r, v in inspected.items():
             s.append("# region: %s\n%s" % (r, v))
         if history:

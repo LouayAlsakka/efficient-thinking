@@ -34,7 +34,6 @@ regions, and any regions you have inspected. Act in small steps. Reply with EXAC
 {"action":"inspect","region":"<region>"}
 {"action":"patch","region":"<region>","source":"<the full corrected source of that region, as a JSON string>"}
 {"action":"run"}
-Regions: producer, transform, aggregate, consumer (consumer calls the others: producer -> transform -> aggregate).
 Bug classes: %s.
 A failing test in one region may be caused by a bug UPSTREAM of it. You have %d actions in total. Rules: inspecting a
 region you have already seen is wasted (it is shown to you already); every patch runs the tests automatically and
