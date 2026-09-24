@@ -115,7 +115,13 @@ class Handler(BaseHTTPRequestHandler):
         if self.path.startswith("/health"):
             self._send(200, {"ok": True, "mode": Handler.mode,
                              "area_backend": Handler.area_mode,
-                             "turns": Handler.predictor.turns if Handler.predictor else None,
+                             # NAMED, because an unlabelled "turns" on a service with two
+                             # endpoints is read as whichever the reader cares about. I used this
+                             # field as evidence that the CLASSIFIER had served nothing; it counts
+                             # the PREDICTOR, and the classifier had a counter of its own that I
+                             # never looked at.
+                             "predict_turns": Handler.predictor.turns if Handler.predictor else None,
+                             "area_turns": getattr(Handler.area, "turns", None),
                              "predict_available": Handler.predictor is not None,
                              "kinds": list(DEFAULT_KINDS)})
         else:
