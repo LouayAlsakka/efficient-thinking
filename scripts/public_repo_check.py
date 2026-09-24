@@ -50,6 +50,13 @@ RULES = [
      "the product and the estate repos are not part of the method"),
     ("fixture-slug", r'\b[a-z]+-[a-z]+\.[a-z-]{4,}\b(?<!\.json)(?<!\.jsonl)',
      "a dotted lowercase slug is usually a venue id"),
+    # An internal work-order id discloses that we number work orders and roughly how many there
+    # are. The class was ruled worth scrubbing (a 09-23 commit says so in its own subject) and
+    # twelve instances survived that pass -- including three in the TITLES of the very pointers
+    # whose bodies were rewritten to drop a lane name, a path and an incident. The body was read
+    # and the line above it was not. A rule is what stops that being a matter of remembering.
+    ("internal-wo-id", r'\bWO-\d{2,4}\b',
+     "a work-order id is an internal reference and says how we number our own work"),
     ("credential-shaped", r'\b(?:AKIA|ASIA)[0-9A-Z]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY',
      "a credential must never be here at all"),
 ]
