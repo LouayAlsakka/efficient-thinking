@@ -1,0 +1,587 @@
+{
+ "document": "VIII-b §13b and §13c — independence of experience, as measured",
+ "the_bar": "problems solved on a paired run. Probe accuracy is a diagnostic and decides nothing.",
+ "§14": {
+  "a": "the 95% interval excludes zero",
+  "b": "its lower bound exceeds the largest within-head-arm draw of this session",
+  "bar_points": 4.67,
+  "why_both": "a pairing can pass (a) and fail (b); an effect smaller than the loop's own arm-to-arm spread is a draw from that spread"
+ },
+ "§13b": {
+  "games": {
+   "b1": {
+    "green": 74,
+    "n": 300
+   },
+   "g01": {
+    "green": 99,
+    "n": 300
+   },
+   "g11": {
+    "green": 115,
+    "n": 300
+   },
+   "b2": {
+    "green": 72,
+    "n": 300
+   },
+   "g02": {
+    "green": 106,
+    "n": 300
+   },
+   "g12": {
+    "green": 111,
+    "n": 300
+   },
+   "g1p2": {
+    "green": 71,
+    "n": 300
+   },
+   "g1m2": {
+    "green": 104,
+    "n": 300
+   },
+   "b3": {
+    "green": 83,
+    "n": 300
+   },
+   "g03": {
+    "green": 100,
+    "n": 300
+   },
+   "g13": {
+    "green": 125,
+    "n": 300
+   },
+   "g1p3": {
+    "green": 68,
+    "n": 300
+   },
+   "g1m3": {
+    "green": 107,
+    "n": 300
+   }
+  },
+  "within_arm": {
+   "b": {
+    "draws": [
+     24.67,
+     24.0,
+     27.67
+    ],
+    "mean": 25.44,
+    "sd": 1.953,
+    "range": 3.67
+   },
+   "g0": {
+    "draws": [
+     33.0,
+     35.33,
+     33.33
+    ],
+    "mean": 33.89,
+    "sd": 1.262,
+    "range": 2.33
+   },
+   "g1": {
+    "draws": [
+     38.33,
+     37.0,
+     41.67
+    ],
+    "mean": 39.0,
+    "sd": 2.404,
+    "range": 4.67
+   },
+   "g1p": {
+    "draws": [
+     23.67,
+     22.67
+    ],
+    "mean": 23.17,
+    "sd": 0.707,
+    "range": 1.0
+   },
+   "g1m": {
+    "draws": [
+     34.67,
+     35.67
+    ],
+    "mean": 35.17,
+    "sd": 0.707,
+    "range": 1.0
+   }
+  },
+  "pairings": {
+   "g0_vs_b_game1": {
+    "delta_points": 8.3,
+    "ci": [
+     3.0,
+     14.0
+    ],
+    "base_pct": 24.7,
+    "g_pct": 33.0,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 23,
+     "G_only_solved": 48,
+     "discordant": 71,
+     "exact_two_sided_p": 0.004065
+    }
+   },
+   "g0_vs_b_game2": {
+    "delta_points": 11.3,
+    "ci": [
+     5.3,
+     17.3
+    ],
+    "base_pct": 24.0,
+    "g_pct": 35.3,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 26,
+     "G_only_solved": 60,
+     "discordant": 86,
+     "exact_two_sided_p": 0.000317
+    }
+   },
+   "g0_vs_b_game3": {
+    "delta_points": 5.7,
+    "ci": [
+     0.0,
+     11.3
+    ],
+    "base_pct": 27.7,
+    "g_pct": 33.3,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 31,
+     "G_only_solved": 48,
+     "discordant": 79,
+     "exact_two_sided_p": 0.07116
+    }
+   },
+   "g1_vs_b_game1": {
+    "delta_points": 13.7,
+    "ci": [
+     8.3,
+     19.0
+    ],
+    "base_pct": 24.7,
+    "g_pct": 38.3,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 17,
+     "G_only_solved": 58,
+     "discordant": 75,
+     "exact_two_sided_p": 2.182e-06
+    }
+   },
+   "g1_vs_b_game2": {
+    "delta_points": 13.0,
+    "ci": [
+     7.0,
+     19.0
+    ],
+    "base_pct": 24.0,
+    "g_pct": 37.0,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 23,
+     "G_only_solved": 62,
+     "discordant": 85,
+     "exact_two_sided_p": 2.771e-05
+    }
+   },
+   "g1_vs_b_game3": {
+    "delta_points": 14.0,
+    "ci": [
+     8.0,
+     20.0
+    ],
+    "base_pct": 27.7,
+    "g_pct": 41.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 28,
+     "G_only_solved": 70,
+     "discordant": 98,
+     "exact_two_sided_p": 2.64e-05
+    }
+   },
+   "g1p_vs_b_game2": {
+    "delta_points": -0.3,
+    "ci": [
+     -7.0,
+     6.3
+    ],
+    "base_pct": 24.0,
+    "g_pct": 23.7,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 51,
+     "G_only_solved": 50,
+     "discordant": 101,
+     "exact_two_sided_p": 1.0
+    }
+   },
+   "g1p_vs_b_game3": {
+    "delta_points": -5.0,
+    "ci": [
+     -11.3,
+     1.3
+    ],
+    "base_pct": 27.7,
+    "g_pct": 22.7,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 57,
+     "G_only_solved": 42,
+     "discordant": 99,
+     "exact_two_sided_p": 0.1591
+    }
+   },
+   "g1m_vs_b_game2": {
+    "delta_points": 10.7,
+    "ci": [
+     5.7,
+     16.0
+    ],
+    "base_pct": 24.0,
+    "g_pct": 34.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 17,
+     "G_only_solved": 49,
+     "discordant": 66,
+     "exact_two_sided_p": 0.0001015
+    }
+   },
+   "g1m_vs_b_game3": {
+    "delta_points": 8.0,
+    "ci": [
+     2.3,
+     13.7
+    ],
+    "base_pct": 27.7,
+    "g_pct": 35.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 27,
+     "G_only_solved": 51,
+     "discordant": 78,
+     "exact_two_sided_p": 0.008772
+    }
+   },
+   "g1_vs_g0_game1": {
+    "delta_points": 5.3,
+    "ci": [
+     0.0,
+     10.7
+    ],
+    "base_pct": 33.0,
+    "g_pct": 38.3,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 25,
+     "G_only_solved": 41,
+     "discordant": 66,
+     "exact_two_sided_p": 0.06402
+    }
+   },
+   "g1_vs_g0_game2": {
+    "delta_points": 1.7,
+    "ci": [
+     -3.3,
+     6.7
+    ],
+    "base_pct": 35.3,
+    "g_pct": 37.0,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 27,
+     "G_only_solved": 32,
+     "discordant": 59,
+     "exact_two_sided_p": 0.6029
+    }
+   },
+   "g1_vs_g0_game3": {
+    "delta_points": 8.3,
+    "ci": [
+     3.3,
+     13.3
+    ],
+    "base_pct": 33.3,
+    "g_pct": 41.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 19,
+     "G_only_solved": 44,
+     "discordant": 63,
+     "exact_two_sided_p": 0.002228
+    }
+   },
+   "g1p_vs_g1m_game2": {
+    "delta_points": -11.0,
+    "ci": [
+     -18.0,
+     -4.0
+    ],
+    "base_pct": 34.7,
+    "g_pct": 23.7,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 74,
+     "G_only_solved": 41,
+     "discordant": 115,
+     "exact_two_sided_p": 0.002686
+    }
+   },
+   "g1p_vs_g1m_game3": {
+    "delta_points": -13.0,
+    "ci": [
+     -19.7,
+     -6.3
+    ],
+    "base_pct": 35.7,
+    "g_pct": 22.7,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 4.67,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 75,
+     "G_only_solved": 36,
+     "discordant": 111,
+     "exact_two_sided_p": 0.0002718
+    }
+   }
+  },
+  "⚠️_the_g1prime_pair_is_confounded": "g1' is an INTACT collection that happens to be 1,437 rows; g1-matched was cut to a row budget, which splits decision groups and leaves 46% of them with no positive label. Not read as origin. Reported because the confound worked AGAINST g1-matched and g1-matched still won — the domain-shift conclusion is therefore conservative.",
+  "⚠️_game_1_is_asymmetric_in_time": "game 1's b/g0/g1 ran before 理's form ruling and its g1p/g1m about three hours later; games 2 and 3 have all five arms adjacent. A game-1-only effect is confounded with that gap."
+ },
+ "§13c": {
+  "games": {
+   "c_b1": {
+    "green": 77,
+    "n": 300
+   },
+   "c_g01": {
+    "green": 107,
+    "n": 300
+   },
+   "c_g1m1": {
+    "green": 106,
+    "n": 300
+   },
+   "c_g1pp1": {
+    "green": 103,
+    "n": 300
+   }
+  },
+  "within_arm": {},
+  "pairings": {
+   "c_g0_vs_c_b_game1": {
+    "delta_points": 10.0,
+    "ci": [
+     3.7,
+     16.3
+    ],
+    "base_pct": 25.7,
+    "g_pct": 35.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": "not evaluable — needs two games of a head arm",
+    "§14b_bar_points": null,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 33,
+     "G_only_solved": 63,
+     "discordant": 96,
+     "exact_two_sided_p": 0.002879
+    }
+   },
+   "c_g1m_vs_c_b_game1": {
+    "delta_points": 9.7,
+    "ci": [
+     4.0,
+     15.3
+    ],
+    "base_pct": 25.7,
+    "g_pct": 35.3,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": "not evaluable — needs two games of a head arm",
+    "§14b_bar_points": null,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 24,
+     "G_only_solved": 53,
+     "discordant": 77,
+     "exact_two_sided_p": 0.001263
+    }
+   },
+   "c_g1pp_vs_c_b_game1": {
+    "delta_points": 8.7,
+    "ci": [
+     3.0,
+     14.3
+    ],
+    "base_pct": 25.7,
+    "g_pct": 34.3,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": "not evaluable — needs two games of a head arm",
+    "§14b_bar_points": null,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 24,
+     "G_only_solved": 50,
+     "discordant": 74,
+     "exact_two_sided_p": 0.003372
+    }
+   },
+   "c_g1pp_vs_c_g1m_game1": {
+    "delta_points": -1.0,
+    "ci": [
+     -7.3,
+     5.3
+    ],
+    "base_pct": 35.3,
+    "g_pct": 34.3,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": "not evaluable — needs two games of a head arm",
+    "§14b_bar_points": null,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 48,
+     "G_only_solved": 45,
+     "discordant": 93,
+     "exact_two_sided_p": 0.8358
+    }
+   }
+  },
+  "plan_note": "c_g1pp - c_g1m is the arm: same family, same form, same DECISION count, origin varied. Both heads were cut on whole decision groups, so neither is shredded. Read beside the probe line (60.7 vs 53.4) and beside the fact that the disjoint rows are 1.3% byte-identical to gen0's but 42% neighbour-redundant with them."
+ },
+ "head_fits": {
+  "decision_matched": {
+   "document": "ET-8b §13b gen1matched_dec — ONE SHARED head (理, option (i))",
+   "arm": "gen1matched_dec",
+   "head_form": "shared: one head for every decision point",
+   "⚠️_form_vs_published_gen1": "the published gen1 is THREE per-decision heads on 2,824 rows. This arm is one shared head. A difference between this arm and published gen1 is a FORM difference as much as anything else and must never be quoted as an origin effect. The §13b pair is gen1' vs gen1-matched, both fitted here, both one shared head, both 1,437 rows.",
+   "why_shared": "R7's SQL states carry no `decision` field — that experiment was single-decision — so three per-decision heads cannot be fitted from them. 理 ruled both sides of the pair to this form rather than spend 3 h of GPU regenerating SQL loop states.",
+   "evaluation_mode": "5-fold CV over training tasks",
+   "fit_on": "task_id < 400",
+   "rows": 1435,
+   "train_rows": 1435,
+   "source_has_decision_field": true,
+   "layer": 18,
+   "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/g1m_dec",
+   "head": {
+    "cv_pick_pct": 60.7,
+    "n": 290,
+    "chance_pct": 20.2,
+    "evaluation": "5-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+    "CONTROL_permuted": [
+     19.7,
+     24.5,
+     19.3,
+     20.0,
+     17.2
+    ],
+    "CONTROL_pca8": 47.6,
+    "CONTROL_row_subsample": 61.4,
+    "CONTROL_row_subsample_realised_n": "[500] of 1435 train rows per fold",
+    "weights": "gen1matched_dec_layer18.npz"
+   },
+   "how_to_read_the_controls": "permuted must collapse to chance. If PCA-8 or the row subsample matches the full head, the signal needs neither dimensions nor examples and is a key being copied.",
+   "the_bar": "problems solved on a paired run (理). Probe accuracy is a sanity check.",
+   "signed": "Sautee (sha-ta)"
+  },
+  "row_matched_SUPERSEDED": {
+   "document": "ET-8b §13b gen1matched — ONE SHARED head (理 12436, option (i))",
+   "arm": "gen1matched",
+   "head_form": "shared: one head for every decision point",
+   "⚠️_form_vs_published_gen1": "the published gen1 is THREE per-decision heads on 2,824 rows. This arm is one shared head. A difference between this arm and published gen1 is a FORM difference as much as anything else and must never be quoted as an origin effect. The §13b pair is gen1' vs gen1-matched, both fitted here, both one shared head, both 1,437 rows.",
+   "why_shared": "R7's SQL states carry no `decision` field — that experiment was single-decision — so three per-decision heads cannot be fitted from them. 理 12436 ruled both sides of the pair to this form rather than spend 3 h of GPU regenerating SQL loop states.",
+   "evaluation_mode": "5-fold CV over training tasks",
+   "fit_on": "task_id < 400",
+   "rows": 1437,
+   "train_rows": 1437,
+   "source_has_decision_field": true,
+   "layer": 18,
+   "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/g1matched_states",
+   "head": {
+    "cv_pick_pct": 35.2,
+    "n": 542,
+    "chance_pct": 20.2,
+    "evaluation": "5-fold CV over the TRAINING tasks (descriptive; the deployed head is fitted on all of them)",
+    "CONTROL_permuted": [
+     18.1,
+     23.2,
+     20.3,
+     19.0,
+     21.2
+    ],
+    "CONTROL_pca8": 26.4,
+    "CONTROL_row_subsample": 31.5,
+    "CONTROL_row_subsample_realised_n": "[500] of 1437 train rows per fold",
+    "weights": "gen1matched_shared_layer18.npz"
+   },
+   "how_to_read_the_controls": "permuted must collapse to chance. If PCA-8 or the row subsample matches the full head, the signal needs neither dimensions nor examples and is a key being copied.",
+   "the_bar": "problems solved on a paired run (理 11068). Probe accuracy is a sanity check.",
+   "signed": "Sautee (sha-ta)"
+  },
+  "why_both_are_here": "the row-matched fits are kept beside the decision-matched ones because the after-number alone would be one nobody could audit. More than half of what looked like a family effect was the row cut: 57 points between the SQL head and g1-matched became 30 once both were cut on whole decision groups."
+ },
+ "is_the_disjoint_experience_new": {
+  "document": "ET-8b §13a — generation redundancy",
+  "prereg": "gates §13a (理)",
+  "comparison": "13c disjoint-draw rows vs gen0",
+  "earlier_dirs": [
+   "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_states"
+  ],
+  "later_dir": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/g13c_matched_states",
+  "n_earlier_rows": 4052,
+  "n_later_rows": 1437,
+  "n_earlier_problems": 300,
+  "n_later_problems": 294,
+  "problem_overlap_fraction": null,
+  "problem_overlap_definition": "fraction of LATER rows whose task_id also appears in the EARLIER rows — SEEN-BY, not solved-by; see the module docstring for why solved-by is circular here. NOT COMPUTED across task families: every family numbers its tasks task_0001.., so the id namespaces collide and the number would be a confident 100% between sets with nothing in common.",
+  "earlier_self_median_nn_distance": 0.08296,
+  "neighbour_redundancy_fraction": 0.4196,
+  "neighbour_redundancy_definition": "fraction of LATER rows whose nearest EARLIER row is closer than the EARLIER set's own median nearest-neighbour distance — closer to the old corner than the old corner is to itself",
+  "exact_duplicate_rows": 18,
+  "exact_duplicate_fraction": 0.0125,
+  "exact_duplicate_definition": "later rows byte-identical to an earlier row. An identical hidden state means an identical history prefix: the steered agent was in exactly the situation the earlier agent was in.",
+  "same_decision_key_fraction": null,
+  "same_decision_key_definition": "later rows sharing (task_id, decision, candidate) with an earlier row",
+  "later_nn_distance_quartiles": [
+   0.03075,
+   0.12112,
+   0.21995
+  ],
+  "signed": "Sautee (sha-ta)"
+ },
+ "signed": "Sautee (sha-ta)"
+}
