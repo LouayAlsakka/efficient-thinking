@@ -212,7 +212,7 @@ id="the-second-generation-its-small-gain-the-redundancy-that-explains-it-and-wha
 second generation, its small gain, the redundancy that explains it, and
 what new experience does</h2>
 <blockquote>
-<p><strong>STATE 2026-09-24: DRAFT v0.2, written backward from what is
+<p><strong>STATE 2026-09-24: DRAFT v0.3, written backward from what is
 measured; every registered arm has run.</strong> The gain of a second
 generation of experience over the first is measured (twelve paired
 games, all positive, small, not established against the loop’s own
@@ -226,7 +226,7 @@ its command and its pre-registration
 the run it governs).</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 24, 2026 · <em>draft
-v0.2</em></p>
+v0.3</em></p>
 <h2 id="abstract">Abstract</h2>
 <p>Paper VIII showed that a frozen model with a read-only head fitted on
 its own verified history moves the quality–compute frontier. This paper
@@ -237,21 +237,21 @@ matches of three games each, the second generation’s head beat the
 first’s in all six paired games on the same 300 problems, and in all
 nine single pairings within the first match, by about four points, an
 effect real in sign that does not separate from the loop harness’s own
-run-to-run variance at 300 tasks per game. The second answer is the
-reason: 49% of the second generation’s training rows are byte-identical
-to the first’s, and 86% of a third generation’s are identical to what
-came before. A steered agent stands where the previous agent stood and
-produces the same state. Accumulation stops because the experience stops
-being new. The third answer tests that reason by prediction: experience
-collected on a disjoint set of problems of the same family is only 1.3%
-duplicated, and if novelty is what binds, its head should beat a
-same-problem head at matched decisions. Across three games the two heads
-are indistinguishable, both ten points over base: new problems were new
-rows, not new experience. Beside these, the paper establishes three
-things about the instrument that any accumulation claim needs: the
-loop’s variance comes from its second and third decisions and is zero at
-one; a head over no head is +8 to +14 in every game ever played; and a
-head fitted on another task family sits at base.</p>
+run-to-run variance at 300 tasks per game. The second answer is a
+diagnosis: 49% of the second generation’s training rows are
+byte-identical to the first’s, and 86% of a third generation’s are
+identical to what came before; a steered agent stands where the previous
+agent stood and produces the same state. The third answer tests that
+reason by prediction: experience collected on a disjoint set of problems
+of the same family is only 1.3% duplicated, and if novelty is what
+binds, its head should beat a same-problem head at matched decisions.
+Across three games the two heads are indistinguishable, both ten points
+over base: new problems were new rows, not new experience. Beside these,
+the paper establishes three things about the instrument that any
+accumulation claim needs: the loop’s variance comes from its second and
+third decisions and is zero at one; a head over no head is +8 to +14 in
+every game ever played; and a head fitted on another task family sits at
+base.</p>
 <h2 id="results-at-a-glance">Results at a glance</h2>
 <table>
 <colgroup>
@@ -347,7 +347,9 @@ bit-identical between runs on every field of every episode; at three
 decisions on the same box it is not. The variance is a property of
 decisions two and three — carried state and longer context — and a
 design property, not the box (box effect 0.17 on the single-decision
-harness).</li>
+harness). The practical warning is the reason this section exists: a
+controller at 31% against a base at 26% with p &lt; .05 on one run each
+is publishable and is inside this harness’s own variation.</li>
 <li><strong>The chess-match rule.</strong> A stochastic comparison is
 scored like a match: arms interleaved in one session, k games each, the
 effect as the mean of paired differences with its own interval, read
@@ -506,14 +508,26 @@ problems solved.</p>
 <h2 id="what-accumulation-is-then">8. What accumulation is, then</h2>
 <p>A second generation of self-generated experience buys a small,
 consistent gain that is not separable from the loop’s own variance at
-this size, because most of it is the first generation’s experience
-again. Genuinely new rows from disjoint problems of the same family are
-worth the same as the old ones, across three games: the limit is not
-which problems the agent saw but the region of state space its own
-policy keeps returning to, and that region is set by the head that
-steered the collection. Experience that extends accumulation would have
-to come from a different policy, a different family, or a different
-agent — which is where the next paper starts.</p>
+this size. Exact duplication revealed the saturation: half of the second
+generation’s rows were the first generation’s rows again, and the gain
+fell as the duplication rose. Disjoint-problem experience then showed
+that duplication was not the cause: rows that were 1.3% duplicated
+produced no additional gain either. What the disjoint rows shared with
+the old ones was not the problems but the region of state space — 42%
+sat closer to the first generation’s region than its own rows sit to
+each other — which is consistent with a saturation set by the policy
+rather than by the data: different problems, the same policy, similar
+internal states, similar experience. The agent is not exhausting its
+intelligence; it is exhausting the novel experience its current policy
+can generate. New rows are not new experience. On this reading,
+experience that extends accumulation has to come from outside the region
+the steering policy returns to — a different policy, a different agent,
+a different family, or exploration aimed at state-space novelty — and
+that, not a third generation, is the next paper’s variable. Read with
+VII (what a fixed model’s state holds that its output does not say) and
+VIII (a head that reads that state moves the frontier), the series’
+question can be stated from the inside: how the useful internal states
+of a fixed intelligence are exposed, navigated and accumulated.</p>
 <h2 id="reproducibility">Reproducibility</h2>
 <p><code>docs/et8b-loop-gates.md</code> (every registered rule and
 reading, dated), <code>experience/reproduce_8b_accumulation.sh</code>,

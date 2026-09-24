@@ -104,3 +104,5 @@ The work is published where it is made. No conference, no journal, no endorsemen
    engineer from outside the field working with AI assistance.
 
 Owner of 2–3: 理. Owner of 1's DOI and 4's posts: the author, on his word.
+
+**2026-09-24 (reviewer on VIII-b v0.2, adopted):** VII + VIII + VIII-b read together — the series' question stated from the inside: how the useful internal states of a fixed intelligence are exposed, navigated and accumulated. X's angle is set by VIII-b §8: escaping the region the steering policy returns to (different policy / agent / family / novelty-seeking exploration), not a third generation.
