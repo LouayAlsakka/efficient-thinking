@@ -10,7 +10,16 @@
   "model": "us.anthropic.claude-fable-5-1",
   "region": "us-east-1",
   "principal": "the scoped invoke-only principal",
-  "judge_max_tokens": 1024
+  "judge_max_tokens": 1024,
+  "data_share_window": {
+   "opened": "2026-09-24T00:51:32Z",
+   "closed": "2026-09-24T06:19:37Z",
+   "region": "us-east-1",
+   "mode_during": "provider_data_share",
+   "mode_before_and_after": "none",
+   "other_regions": "us-west-2 and us-east-2 never left `inherit`, so Fable refused there throughout",
+   "note": "the rater's data-sharing condition, recorded as a window rather than as a property: every call in this run fell inside it, and no call of ours can fall inside it again without another root session."
+  }
  },
  "results": {
   "rated_pairs": 166,
