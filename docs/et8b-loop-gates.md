@@ -803,3 +803,22 @@ the v3c bracket already collected (base 69, gen0 48, g1-matched 71, base run 2 6
 not used in the §16 readings. (2) The COLLECTION set of an experience arm and the SCORING set of its games are two
 separate registrations; §16 fixed only the first. From here every head arm states both, and a head is never scored
 on a set it was fitted on, in whole or in part. (3) The three games run interleaved as before, §15 bar, ~11 h.
+
+**16a (xv), 2026-09-25 12:0xZ — mechanism hypothesis and test, registered BEFORE game 3 of the seed-89 games lands and
+before `g13b_score.py --plan viiic` is run.** Games 1–2 on v3ind89 (unread against the bar): base 66/67, gen0 58/60,
+g1-matched 77/83, B-experience head 102/104. Contamination checks run before reading: shared programs between v3c
+(B's fitting set) and v3ind89 = 0 of 300; shared symptom strings 70, of which same `bug_region` 5 (ceiling of any
+symptom→region carry-over, against a gap of ~36); heads distinct (cosine 0.084, distinct md5). HYPOTHESIS: all heads
+carry ground-truth labels; they differ only in the STATES they were fitted on. The 7B hypothesises at decision 1 on
+298/300 tasks with the code unread, so its own trajectories supply states in which the evidence is not yet in the
+prompt (a head fitted there learns weakly or via symptom shortcuts; consistent with gen0 < base and with §13's
+saturation). B inspects first on 209/300, so its visited places are states in which the program has been read; the
+7B's hidden state at those places carries the evidence, and a head fitted there learns evidence→region. At game time
+the head can only help by changing what the 7B does; the candidate mechanism is that the head prefers `inspect` at
+decision 1 (inspecting preceded success in its fitting states), i.e. what transfers is a HABIT (look before
+committing), not task facts. PREDICTIONS, fixed now: (P1) the 7B under the B-experience head inspects at decision 1
+on far more than 1% of tasks, toward B's 70%; under g1-matched its decision-1 action distribution is unchanged. (P2)
+the B-head's extra solves concentrate on tasks where it inspected first (paired, per task, over the three games).
+(P3) mean actions per episode under the B head rise (an inspect precedes the hypothesis). If P1 fails and the gain
+holds, the mechanism is not the habit and the states-are-more-informative reading stands alone; both are reported.
+Computed from the games' own steps logs; nothing re-run. The union head (arm 2) follows the registered order.
