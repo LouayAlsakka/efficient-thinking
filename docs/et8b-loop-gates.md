@@ -844,3 +844,11 @@ ACQUISITION (which states the acting policy causes the model to encounter). §13
 while the model's own acquisition saturates ("a self-experience blind spot": it could not acquire experience from
 states it did not visit). VIII-c tests whether changing the acquisition policy restores useful learning with the
 intelligence held fixed. Order: after `g13b_score.py --plan viiic` and (xv) are posted; box B is not shared.
+
+**16a (xv), amendment 2026-09-25 14:5xZ, before the score is read.** P1 as written cannot be read at game time: the
+loop forces a hypothesis at decision 1 under every head, so the agent's free decision-1 action is identical across
+head arms (300 of 300). P1 is replaced by P1′, from the game logs: the B-experience head's gain by decision (d1, d2,
+d3), paired per task over the three games. If the head learned evidence→region from read-code states, its edge should
+concentrate where the prompt holds evidence (d2–d3) and be small at d1. P2 and P3 stand. For (xvi), the forced
+decision is charged one action (measured: 9 actions per episode either way) and the d1 patch fires on `regions[0]`
+as for a native inspect, so the control reproduces B's own episode shape.
