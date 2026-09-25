@@ -788,3 +788,18 @@ refuses to start if any two arm names are equal under case folding; the scoring 
 commit. Genuine so far, game 1: base 69, gen0 48, g1-matched 71; `v_vb` collecting. Nothing is read until three
 games are on disk and the §15 bar is computed. Same failure class as the `min(200, n_train)` control: an artefact
 that looks like a result, given away by arithmetic, not by its value.
+
+**16a (xiv), 2026-09-25 00:5xZ — game 1's B arm was contaminated; withdrawn before any reading; the games move to
+a set no head has seen.** The B-experience head was fitted on the 7B's states at B's visited places on seed 73's
+300 (`tasks/v3c`), labelled by the verifier's `bug_region`, with every task in the fit; the games were scored on
+the same 300. The arm returned 134/300 green against a base of 69 and a g1-matched head of 71 — a head recalling
+the answer key for the programs it was asked about, not transfer. The comparison head (g1-matched, fitted on seed
+21) was disjoint from the games, so the two arms were not even contaminated equally. The number is withdrawn, not
+adjusted, and nothing computed against it exists. The tell was proportion, not sign: an effect an order of
+magnitude larger than anything this instrument has produced is a reason to audit the instrument.
+Registered now: (1) the games for every arm — base, gen0, g1-matched, B-experience — run on `tasks/v3ind89`
+(seed 89, n = 300, sha 6d182631), a set no head in the comparison was fitted on; every existing head is untouched;
+the v3c bracket already collected (base 69, gen0 48, g1-matched 71, base run 2 60) stands as a v3c record and is
+not used in the §16 readings. (2) The COLLECTION set of an experience arm and the SCORING set of its games are two
+separate registrations; §16 fixed only the first. From here every head arm states both, and a head is never scored
+on a set it was fitted on, in whole or in part. (3) The three games run interleaved as before, §15 bar, ~11 h.
