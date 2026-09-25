@@ -822,3 +822,25 @@ the B-head's extra solves concentrate on tasks where it inspected first (paired,
 (P3) mean actions per episode under the B head rise (an inspect precedes the hypothesis). If P1 fails and the gain
 holds, the mechanism is not the habit and the states-are-more-informative reading stands alone; both are reported.
 Computed from the games' own steps logs; nothing re-run. The union head (arm 2) follows the registered order.
+
+**16a (xvi), 2026-09-25 12:1xZ — VIII-c arm 3 registered before game 3 lands: the forced-inspection control (the
+owner's design, 12:0xZ).** If (xv)'s P1–P3 hold, the mechanism can be tested without agent B at all. COLLECTION: the
+7B on seed 73's 300 (`tasks/v3c`, the same set B collected on), with ONE change during collection only: at decision 1
+the action is forced to `inspect` (target chosen by the loop's existing rule for inspect targets; nothing else in the
+prompt, temperature, fallback or verifier changes), decisions 2–3 under the 7B's native policy. HEAD: the 7B's states
+at the places that policy visited, verifier labels, cut to 290 whole decision groups at the same seed, SHARED form —
+identical in form and count to the B-experience head. GAMES: three, on `tasks/v3ind89`, interleaved with the existing
+base bracket; the base, g1-matched and B-head games already collected on v3ind89 are the comparison and are not
+re-run. READINGS, fixed now: (i) forced-inspect head within the §15 bar of the B-experience head → the mechanism is
+isolated: B supplied an exploration policy that exposed the 7B to informative states its native policy rarely
+visits, and nothing else about B is needed; (ii) forced-inspect head below the B head by more than the bar → B does
+something richer than "look first" (different regions reached, trajectory lengths, or which evidence becomes
+available), and the trajectory differences are the next object; (iii) forced-inspect head at or below g1-matched →
+visiting informative states is not sufficient and the states B visits are special beyond inspection. Also recorded
+per task: decision-1 action under each head at game time, so (xv)'s P1 is read for this head too. FRAME under test,
+stated before the number (owner, 12:0xZ): three things usually bundled as "learning" are being separated — the
+frozen model's intelligence (unchanged throughout), experience UTILISATION (the head; shown in VIII), and experience
+ACQUISITION (which states the acting policy causes the model to encounter). §13 read as: utilisation stays available
+while the model's own acquisition saturates ("a self-experience blind spot": it could not acquire experience from
+states it did not visit). VIII-c tests whether changing the acquisition policy restores useful learning with the
+intelligence held fixed. Order: after `g13b_score.py --plan viiic` and (xv) are posted; box B is not shared.
