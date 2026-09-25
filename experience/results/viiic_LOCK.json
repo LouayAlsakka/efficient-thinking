@@ -1,0 +1,1744 @@
+{
+ "document": "ET-8b VIII-c arm 1 — the lock. Every artefact of the seed-89 games and the three heads, by sha256 over the file. Fixed by Ri before the result was known (nirai 12980); the result cannot have shaped it.",
+ "claim_under_test": "A frozen agent can use verified experience selected by another agent to exceed the plateau reached from its own experience.",
+ "where_the_bytes_are": "the studio lane's results directory in the estate; not in this repository, and named here by basename and hash only",
+ "trees": {
+  "collection": "95414d1",
+  "scoring": "ba526fa",
+  "note": "two shas, not one: the tree was brought current between the collection and the scoring, so a single 'the run was at' line would be false"
+ },
+ "task_sets": {
+  "v3c_seed73": {
+   "seed": 73,
+   "n": 300,
+   "sha256_of_tasks_in_order": "686d1c1147b88e420d7f7a8cfbbae09a2f222d8e32e60b4e64c088398e008cad",
+   "regenerate": "python3 et8_env_v3.py gen --n 300 --seed 73 --out <dir>"
+  },
+  "v3ind89_seed89": {
+   "seed": 89,
+   "n": 300,
+   "sha256_of_tasks_in_order": "6d182631e078cad6dd212c6983863c46b3b1cdc3b147b4a32fa0f1824f4a108c",
+   "regenerate": "python3 et8_env_v3.py gen --n 300 --seed 89 --out <dir>"
+  },
+  "v3_seed21": {
+   "seed": 21,
+   "n": 300,
+   "sha256_of_tasks_in_order": "9a7cd27bafc9ee3a2b45c6b8f4e6ea5cba8a2f8e6681c50811002eb400d015d4",
+   "regenerate": "python3 et8_env_v3.py gen --n 300 --seed 21 --out <dir>"
+  }
+ },
+ "heads": {
+  "viiic_B_shared_layer18.npz": {
+   "file": "viiic_B_shared_layer18.npz",
+   "bytes": 87526,
+   "sha256": "d568e6394252b29641000281bf4fae236fa86fa8b56ca8ec195be5e54a453247",
+   "mtime_utc": "2026-09-24T19:13:48Z",
+   "produced_by": "fit_shared_head.py",
+   "script_git_sha": "95414d1",
+   "invocation": "fit_shared_head.py --states <B states> --layer 18 --cut 400 --cv-folds 5 (states: et8b_states.py --runs <agent B's steps> --tasks v3c --model Qwen/Qwen2.5-7B-Instruct --layers 18; cut: subsample_by_decision.py --decisions 290 --seed 13731)"
+  },
+  "gen1matched_shared_layer18.npz": {
+   "file": "gen1matched_shared_layer18.npz",
+   "bytes": 87526,
+   "sha256": "768716d746395b74cd6fb1969ae7b854036fe8ee0d29e464986026c51490d958",
+   "mtime_utc": "2026-09-23T13:10:57Z",
+   "produced_by": "fit_shared_head.py",
+   "script_git_sha": "95414d1",
+   "invocation": "the section 13b/c comparison head, 290 decisions, seed 13731, fitted on seed-21 states"
+  }
+ },
+ "games": {
+  "v_b1": [
+   {
+    "file": "v_b1.episodes.jsonl",
+    "bytes": 97549,
+    "sha256": "0e6ea838f7cc19f9747e57b3616e14e01994bb6798444fa62d1fd78a7faa27bc",
+    "mtime_utc": "2026-09-25T03:10:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b1_s1.episodes.jsonl",
+    "bytes": 24405,
+    "sha256": "298cac00423e7b1221bcf169afd39a7e2ac50d0b4412dfa5a09c1d46dd17a4ca",
+    "mtime_utc": "2026-09-25T02:45:05Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b1_s1.steps.jsonl",
+    "bytes": 190443,
+    "sha256": "595333714fe6743e4e27a63c60e2531dd12b003e777816a2466db8140b9f3591",
+    "mtime_utc": "2026-09-25T02:45:05Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b1_s2.episodes.jsonl",
+    "bytes": 24394,
+    "sha256": "8c4edec65d786900a37ff1d1caa329214820d2f1cf5ed055242bcac46c8fb13b",
+    "mtime_utc": "2026-09-25T02:53:39Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b1_s2.steps.jsonl",
+    "bytes": 194097,
+    "sha256": "2ccfa18f5de70c8429be0ce6ca5f0395149a98bd2d5324b2db2e2099fed00421",
+    "mtime_utc": "2026-09-25T02:53:39Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b1_s3.episodes.jsonl",
+    "bytes": 24372,
+    "sha256": "863d18649e5d26ba42af08583586935db511d3094beba94033460d8232c97b2b",
+    "mtime_utc": "2026-09-25T03:01:59Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b1_s3.steps.jsonl",
+    "bytes": 185848,
+    "sha256": "edea9fed329140d31f40c3eb95ae7688f7b140cff18b603452d5becb521f4cc6",
+    "mtime_utc": "2026-09-25T03:01:59Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b1_s4.episodes.jsonl",
+    "bytes": 24378,
+    "sha256": "f4ee899132f5d106b1633ea3eed726ca24ebf18a3adae14fcc9264c4e7d3081b",
+    "mtime_utc": "2026-09-25T03:10:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b1_s4.steps.jsonl",
+    "bytes": 184038,
+    "sha256": "871427cf3f6622ffdaa83f442859b4b4b57ae2c15aad5645dc2113285d805df2",
+    "mtime_utc": "2026-09-25T03:10:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_b2": [
+   {
+    "file": "v_b2.episodes.jsonl",
+    "bytes": 97548,
+    "sha256": "64acadd1ae752ad28b1cddb89a0770aa348003e536061baf6f6bef5548102d38",
+    "mtime_utc": "2026-09-25T06:36:39Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b2_s1.episodes.jsonl",
+    "bytes": 24410,
+    "sha256": "bd5b475c8e734232032f7c740979df5f8a5b1fc2d546ce19b407678123fc7b2c",
+    "mtime_utc": "2026-09-25T06:11:41Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b2_s1.steps.jsonl",
+    "bytes": 192292,
+    "sha256": "2529a357f76af261ff37ed7ed891a6fd980a3f4cfd5d1cdf3403c97d82a45690",
+    "mtime_utc": "2026-09-25T06:11:41Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b2_s2.episodes.jsonl",
+    "bytes": 24393,
+    "sha256": "1a015308edbcbd21668ae61eba381120821adc49b78e67a00799105d5711079f",
+    "mtime_utc": "2026-09-25T06:20:20Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b2_s2.steps.jsonl",
+    "bytes": 195061,
+    "sha256": "15ffba03008a5e54b9ed806bb12b63d5e23575ce765970b7814e85e75b389ce8",
+    "mtime_utc": "2026-09-25T06:20:20Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b2_s3.episodes.jsonl",
+    "bytes": 24379,
+    "sha256": "ece6918bf9ae2b45a256888469e2532933eeacd471794787ecd71bc7a6afa5aa",
+    "mtime_utc": "2026-09-25T06:28:40Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b2_s3.steps.jsonl",
+    "bytes": 188621,
+    "sha256": "e08818581dc20e607670c9fefe8f4abcecc0e430079fa81648ae0b04ddb8d955",
+    "mtime_utc": "2026-09-25T06:28:40Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b2_s4.episodes.jsonl",
+    "bytes": 24366,
+    "sha256": "6fe622aa97165dcc6d560105d84e56e69234fc89f7e532e40492d42a37da3f3b",
+    "mtime_utc": "2026-09-25T06:36:39Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b2_s4.steps.jsonl",
+    "bytes": 180327,
+    "sha256": "ee7a41d729e73d416b060c8e417cdf46559d503e4c95e6af2a42c5e4d7fddd20",
+    "mtime_utc": "2026-09-25T06:36:39Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_b3": [
+   {
+    "file": "v_b3.episodes.jsonl",
+    "bytes": 97544,
+    "sha256": "102d955f978218c7add23456004e121ccaa1bcf78c58943f93f22b93f52fc5fb",
+    "mtime_utc": "2026-09-25T10:03:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b3_s1.episodes.jsonl",
+    "bytes": 24408,
+    "sha256": "ed0f3ecd66441b1bb26929b06985188ae428abddd7375feec22042a050d0ae9b",
+    "mtime_utc": "2026-09-25T09:38:11Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b3_s1.steps.jsonl",
+    "bytes": 191328,
+    "sha256": "f34befee225a6d8f6d4c39dfdc07b31284f356635c307628ccc4d1cc99849824",
+    "mtime_utc": "2026-09-25T09:38:11Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b3_s2.episodes.jsonl",
+    "bytes": 24391,
+    "sha256": "dbd77a1a229c7732b7bcc05f6870246bc3cf19ae20affc23834d0abdea231b70",
+    "mtime_utc": "2026-09-25T09:46:53Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b3_s2.steps.jsonl",
+    "bytes": 195890,
+    "sha256": "a8d9f8e00fd10b05b27bc438928d30fb0b1707f0b87dcbd9eecc6a652cd43e60",
+    "mtime_utc": "2026-09-25T09:46:53Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b3_s3.episodes.jsonl",
+    "bytes": 24384,
+    "sha256": "f128694978e76a29100dbf08045f526e31476b617e47014ffd18c317deb7383c",
+    "mtime_utc": "2026-09-25T09:55:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b3_s3.steps.jsonl",
+    "bytes": 186785,
+    "sha256": "bcd5914a1c6ad1873b3b6550a0e9dc0ddf447ea3ae62049279cb937839b63e1f",
+    "mtime_utc": "2026-09-25T09:55:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b3_s4.episodes.jsonl",
+    "bytes": 24361,
+    "sha256": "54bfa379b33bb8a56cf03d08d6f71c13457ad79df83363888d11b6a3af3828e0",
+    "mtime_utc": "2026-09-25T10:03:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_b3_s4.steps.jsonl",
+    "bytes": 182138,
+    "sha256": "3009efa17f6a838865744533946a208d5259575952371d774ed011d54c55da8d",
+    "mtime_utc": "2026-09-25T10:03:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_g01": [
+   {
+    "file": "v_g01.episodes.jsonl",
+    "bytes": 97697,
+    "sha256": "b9f319a81193027b75c4c8058a8e777278ee24d0c48024a6fb369a2f181a41a1",
+    "mtime_utc": "2026-09-25T04:12:08Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g01_s1.episodes.jsonl",
+    "bytes": 24443,
+    "sha256": "61ec185d0756d1312e5ae8bc8abf3462f57facce2a5b0bdf28a7051b0c9b554c",
+    "mtime_utc": "2026-09-25T03:26:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g01_s1.steps.jsonl",
+    "bytes": 212497,
+    "sha256": "2909f784e7209fb733a2392e4cb094381f60edf3ff658a95f82f5572f2a1dfe2",
+    "mtime_utc": "2026-09-25T03:26:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g01_s2.episodes.jsonl",
+    "bytes": 24415,
+    "sha256": "5e4508961736484998802064c453730419cf6e286a15db0890a861a08e006ee7",
+    "mtime_utc": "2026-09-25T03:41:08Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g01_s2.steps.jsonl",
+    "bytes": 195046,
+    "sha256": "0f78edd77f6d854c1b9511e029ab9d7fdba4f87d21190c053f79342209a44175",
+    "mtime_utc": "2026-09-25T03:41:08Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g01_s3.episodes.jsonl",
+    "bytes": 24411,
+    "sha256": "79d519a7e69a8c5b1299fda59641a88a6ad28f6810a225b86813464ee9af5b31",
+    "mtime_utc": "2026-09-25T03:56:39Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g01_s3.steps.jsonl",
+    "bytes": 200921,
+    "sha256": "311f2452ece7505a03ffd8f05aa9b4c6ad8855255bf7f57c4cb8bd45bc0035be",
+    "mtime_utc": "2026-09-25T03:56:39Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g01_s4.episodes.jsonl",
+    "bytes": 24428,
+    "sha256": "1dbcca19a7bda84c9c52614ce4a3f43c25f54f5f420d6395ef6846bde174746e",
+    "mtime_utc": "2026-09-25T04:12:08Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g01_s4.steps.jsonl",
+    "bytes": 201570,
+    "sha256": "b3ea56fe323402cb088eca5b4f4fb75ae54963cbeed5d62edd2cad2c25e8a59f",
+    "mtime_utc": "2026-09-25T04:12:08Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_g02": [
+   {
+    "file": "v_g02.episodes.jsonl",
+    "bytes": 97701,
+    "sha256": "5587fd9d5787363a202c9cf2d48e645bb44c464010862097391b4d340190a944",
+    "mtime_utc": "2026-09-25T07:38:31Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g02_s1.episodes.jsonl",
+    "bytes": 24441,
+    "sha256": "e4cd6fb9bfe68f0beae04f58a7285abd06366ed8301bd40bd76cc5afbeb39c06",
+    "mtime_utc": "2026-09-25T06:52:43Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g02_s1.steps.jsonl",
+    "bytes": 211532,
+    "sha256": "2ab40038ae4c42edf203aad202006abe178ef6fe89e85f468b446706aa218021",
+    "mtime_utc": "2026-09-25T06:52:43Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g02_s2.episodes.jsonl",
+    "bytes": 24414,
+    "sha256": "6246ff36c1cbd533a1f71c8e0347b64d23f7abc3fba81184afb3e03e600d0de0",
+    "mtime_utc": "2026-09-25T07:07:26Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g02_s2.steps.jsonl",
+    "bytes": 194052,
+    "sha256": "3e66646190e0cb24f044a63de4805f5208424273f7c8651fea37d615e6615631",
+    "mtime_utc": "2026-09-25T07:07:26Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g02_s3.episodes.jsonl",
+    "bytes": 24417,
+    "sha256": "f5860aa5475d8920798f17a4389046b7698a318b740fd98bbc3e630805b8ebf6",
+    "mtime_utc": "2026-09-25T07:22:59Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g02_s3.steps.jsonl",
+    "bytes": 200894,
+    "sha256": "37e29cffdc9f05d1259e365a9f7d5478dab164cdf73c51be1dcc5415fe72ca98",
+    "mtime_utc": "2026-09-25T07:22:59Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g02_s4.episodes.jsonl",
+    "bytes": 24429,
+    "sha256": "9638c27bf4c571853c05e7559b5135d77e6c93615ab64f06a9ae543c7e464baf",
+    "mtime_utc": "2026-09-25T07:38:31Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g02_s4.steps.jsonl",
+    "bytes": 200535,
+    "sha256": "f447c8a803085f86d39f90286ffd211d90cf271e45ecf757efa0c20cb3c0e8da",
+    "mtime_utc": "2026-09-25T07:38:31Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_g03": [
+   {
+    "file": "v_g03.episodes.jsonl",
+    "bytes": 97701,
+    "sha256": "c4cc24bcb93b80e04efb904eea4eb4e3015b6f0299d81bb927768d390d76e42e",
+    "mtime_utc": "2026-09-25T11:05:25Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g03_s1.episodes.jsonl",
+    "bytes": 24447,
+    "sha256": "33b1657ae095576a2f8fbe32a5c006cdb95a225af44e85fec4b52576ac6d6758",
+    "mtime_utc": "2026-09-25T10:19:26Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g03_s1.steps.jsonl",
+    "bytes": 211545,
+    "sha256": "68ac9f0d66b6d5b083bda86b88dc62793046b75f54268c34db7e249dff0fff08",
+    "mtime_utc": "2026-09-25T10:19:26Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g03_s2.episodes.jsonl",
+    "bytes": 24420,
+    "sha256": "7851762ce1310d3661e2c7f41fc2647a1bcbee513163bd769f06c5bc49215998",
+    "mtime_utc": "2026-09-25T10:34:21Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g03_s2.steps.jsonl",
+    "bytes": 195972,
+    "sha256": "372ace9b1e1808ef6994df312ea32ea7b092a7d19961475dd992e7a8a9463df8",
+    "mtime_utc": "2026-09-25T10:34:21Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g03_s3.episodes.jsonl",
+    "bytes": 24406,
+    "sha256": "d4fa00f0d6ed5d35907bdd286bd038c37c3c21adb5ad56575a0bc01e41ecd922",
+    "mtime_utc": "2026-09-25T10:49:52Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g03_s3.steps.jsonl",
+    "bytes": 200874,
+    "sha256": "750933c0e1326f5fec4e1a5dc48a7abc5eb8626356832a0594e43ae4770e3e7f",
+    "mtime_utc": "2026-09-25T10:49:52Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g03_s4.episodes.jsonl",
+    "bytes": 24428,
+    "sha256": "08fe700e3ca12eecd376565980dec89ceb51b17a39e18af450292e6a334b5a16",
+    "mtime_utc": "2026-09-25T11:05:25Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g03_s4.steps.jsonl",
+    "bytes": 200590,
+    "sha256": "3c97425942d6748935ae4fd0010196dc0fcf4ebb29ac6a81758a4217b32dadcb",
+    "mtime_utc": "2026-09-25T11:05:25Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_g1m1": [
+   {
+    "file": "v_g1m1.episodes.jsonl",
+    "bytes": 97582,
+    "sha256": "3e771e438aeac8d50b00d6932d14a526d2e5616eb84cf823f1c5e7bf036f07dd",
+    "mtime_utc": "2026-09-25T05:09:32Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m1_s1.episodes.jsonl",
+    "bytes": 24395,
+    "sha256": "c135739ae664c4a9b34ddf2faeb179b9655038935c2a221b670f83606450fe4a",
+    "mtime_utc": "2026-09-25T04:26:28Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m1_s1.steps.jsonl",
+    "bytes": 191803,
+    "sha256": "1124a8e849b0315b5643a504743afb15a6975fcd5629de8fb7b6615a2cbfaf6c",
+    "mtime_utc": "2026-09-25T04:26:28Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m1_s2.episodes.jsonl",
+    "bytes": 24398,
+    "sha256": "4de09a9053fd5bc2678c5ca8776d5cdc458a31103953301f924e390664790185",
+    "mtime_utc": "2026-09-25T04:41:03Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m1_s2.steps.jsonl",
+    "bytes": 194935,
+    "sha256": "69606db33f2879d70e89c4ea6741baeb3d82ad60fd8fc129d61101735b880999",
+    "mtime_utc": "2026-09-25T04:41:03Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m1_s3.episodes.jsonl",
+    "bytes": 24404,
+    "sha256": "ebc7816a1e633cae0212822398479a068fbf640dcbdb9ed77e8b00bb583dd995",
+    "mtime_utc": "2026-09-25T04:55:04Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m1_s3.steps.jsonl",
+    "bytes": 187177,
+    "sha256": "563e5af9b86164bdea555bfa8b47eed857aa5a178025a1f99a0c3882effb6480",
+    "mtime_utc": "2026-09-25T04:55:04Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m1_s4.episodes.jsonl",
+    "bytes": 24385,
+    "sha256": "a18b889328c3076193657b748811ce2a769bf3514b355121f94783030122d962",
+    "mtime_utc": "2026-09-25T05:09:32Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m1_s4.steps.jsonl",
+    "bytes": 193825,
+    "sha256": "2073d09fc75a6c87ac4f103d1e433df29736206b34d19d9df74170f3fedf345e",
+    "mtime_utc": "2026-09-25T05:09:32Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_g1m2": [
+   {
+    "file": "v_g1m2.episodes.jsonl",
+    "bytes": 97573,
+    "sha256": "a513b13805dcd56cf8a269815b8e99809e101a25c2b07c9165c638f85aef13dd",
+    "mtime_utc": "2026-09-25T08:35:57Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m2_s1.episodes.jsonl",
+    "bytes": 24394,
+    "sha256": "24d84fb3e96d29d7f516637295e4ad65279efa52977bd595d4c690650bb041a1",
+    "mtime_utc": "2026-09-25T07:52:46Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m2_s1.steps.jsonl",
+    "bytes": 189841,
+    "sha256": "5479295d530ceff38d7af4daf4d9bc21f85a83c17c5fbbcf7259538ca65dcf06",
+    "mtime_utc": "2026-09-25T07:52:46Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m2_s2.episodes.jsonl",
+    "bytes": 24395,
+    "sha256": "e03ed89af1dad3553d8fc47f224bab82efd693db3175f032dc5e0612d05cf8a1",
+    "mtime_utc": "2026-09-25T08:07:27Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m2_s2.steps.jsonl",
+    "bytes": 195919,
+    "sha256": "a5e2da898af4fde9bfd4cc2b3c5c22b7dc450bcce428d175c7bea70c01c9a755",
+    "mtime_utc": "2026-09-25T08:07:27Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m2_s3.episodes.jsonl",
+    "bytes": 24399,
+    "sha256": "5eece5801c17c31ff200a3a48360148ad3e6cb24d2cf19540f14000ec8ccca95",
+    "mtime_utc": "2026-09-25T08:21:20Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m2_s3.steps.jsonl",
+    "bytes": 186207,
+    "sha256": "b42f77dd61473d530b388b8ef53c5cc448f2a81bf18f4301b6258a561ea5a9bb",
+    "mtime_utc": "2026-09-25T08:21:20Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m2_s4.episodes.jsonl",
+    "bytes": 24385,
+    "sha256": "a694de5a0656d322cada21de74fb7a0bf7f77801e5aff2108ce2739a98cb8243",
+    "mtime_utc": "2026-09-25T08:35:57Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m2_s4.steps.jsonl",
+    "bytes": 195787,
+    "sha256": "367af98e0501a25c082eb820511bc991b5cf66bb9fc8a979b746783df54adbe6",
+    "mtime_utc": "2026-09-25T08:35:57Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_g1m3": [
+   {
+    "file": "v_g1m3.episodes.jsonl",
+    "bytes": 97575,
+    "sha256": "53012c97333eac808293b6c6ba8c597b4c38205d79aa8d1607a082563c80455c",
+    "mtime_utc": "2026-09-25T12:02:41Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m3_s1.episodes.jsonl",
+    "bytes": 24395,
+    "sha256": "f9379c13d59522aefed9346c03f991aa7db3e46d3dcb24687b156841f6c02e18",
+    "mtime_utc": "2026-09-25T11:19:42Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m3_s1.steps.jsonl",
+    "bytes": 190783,
+    "sha256": "ffda247f143db0195dbe2e0cd5c416f5b6990cabf5e4bb0c3e6cd5a19bdc1956",
+    "mtime_utc": "2026-09-25T11:19:42Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m3_s2.episodes.jsonl",
+    "bytes": 24397,
+    "sha256": "29e965fd55485877d6855ced05410c5f3a7cf68d106b5012801e22a7af9eae77",
+    "mtime_utc": "2026-09-25T11:34:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m3_s2.steps.jsonl",
+    "bytes": 195908,
+    "sha256": "a0d61a12feac2e8887fac54408305483d95227fba5baef0f0a0254f22844ee57",
+    "mtime_utc": "2026-09-25T11:34:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m3_s3.episodes.jsonl",
+    "bytes": 24400,
+    "sha256": "9555ff4f68c993846de1a3adbccfd5fe60e9f1b634f6dd4705bcf56e6476b051",
+    "mtime_utc": "2026-09-25T11:48:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m3_s3.steps.jsonl",
+    "bytes": 187190,
+    "sha256": "f1ae5a5cc0f2fc4f2e0997675235c917ab606cca6a75913d77301ffedfd1b2da",
+    "mtime_utc": "2026-09-25T11:48:22Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m3_s4.episodes.jsonl",
+    "bytes": 24383,
+    "sha256": "020c31fd2dbe38cb95619bbb6c9eadb14e267a92548501cea2ba98d648e09ab2",
+    "mtime_utc": "2026-09-25T12:02:41Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_g1m3_s4.steps.jsonl",
+    "bytes": 191894,
+    "sha256": "bdbcf665efc55ff80298f17cbbe301bb3bf07328d021cdbc6570b63373e4719b",
+    "mtime_utc": "2026-09-25T12:02:41Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_vb1": [
+   {
+    "file": "v_vb1.episodes.jsonl",
+    "bytes": 97285,
+    "sha256": "eb94b2c352f0ed392bb512bb508ce6a8d8494e4bec38dc525c2d34e6477324d4",
+    "mtime_utc": "2026-09-25T06:03:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb1_s1.episodes.jsonl",
+    "bytes": 24346,
+    "sha256": "e20c3693b0d48fd78f3008c6e34a4bc06e411b59d175d323c792c666cfe147e3",
+    "mtime_utc": "2026-09-25T05:23:06Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb1_s1.steps.jsonl",
+    "bytes": 186904,
+    "sha256": "33e966187caa2b3a445f2d65192706482ff164f0dcce772b0af232e8d81d6f55",
+    "mtime_utc": "2026-09-25T05:23:06Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb1_s2.episodes.jsonl",
+    "bytes": 24333,
+    "sha256": "94d81b0196b0b421503b43f4bd1f5903c291ec65fab7e909f3cafcbe96b42e65",
+    "mtime_utc": "2026-09-25T05:36:42Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb1_s2.steps.jsonl",
+    "bytes": 191845,
+    "sha256": "9c331ec6b5a87ba94ded7bf0c380a79033f1b832ce74e59f3440acb577792eae",
+    "mtime_utc": "2026-09-25T05:36:42Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb1_s3.episodes.jsonl",
+    "bytes": 24304,
+    "sha256": "b8805a6dfa62f1f5206443dd0062d74fc2b46e0475973e9328414d0b2565eedb",
+    "mtime_utc": "2026-09-25T05:49:44Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb1_s3.steps.jsonl",
+    "bytes": 183185,
+    "sha256": "b30aaf1759ec4bb3749701e63a6e84d0b5a858565eb8fa2d601e95baff50b89b",
+    "mtime_utc": "2026-09-25T05:49:44Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb1_s4.episodes.jsonl",
+    "bytes": 24302,
+    "sha256": "a6b379593380aff4ee0bc46e82749786ddf164169f1f88b63d2eb94ddb15bdc5",
+    "mtime_utc": "2026-09-25T06:03:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb1_s4.steps.jsonl",
+    "bytes": 181858,
+    "sha256": "05d0ba5f28125f73baceb355a6bb574a3202be31ffada4416f708879f0d0c949",
+    "mtime_utc": "2026-09-25T06:03:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_vb2": [
+   {
+    "file": "v_vb2.episodes.jsonl",
+    "bytes": 97289,
+    "sha256": "4eb4dde9c890ed697af5dc99dba4d4ce6e8afffe6781bc78bf828cb7d6c8b030",
+    "mtime_utc": "2026-09-25T09:29:43Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb2_s1.episodes.jsonl",
+    "bytes": 24339,
+    "sha256": "a63dfdb4f9d839659681436442217a900d908411763ef22ac5688202dc76a49d",
+    "mtime_utc": "2026-09-25T08:49:42Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb2_s1.steps.jsonl",
+    "bytes": 188866,
+    "sha256": "a071d645390b651e38cb174eeefb5283d2c968f93d63a008b6697aa505c7fb34",
+    "mtime_utc": "2026-09-25T08:49:42Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb2_s2.episodes.jsonl",
+    "bytes": 24333,
+    "sha256": "b617905b67da4077f883d73ae8343bc0ed47f9a93a1fd3663b4e5096206e1731",
+    "mtime_utc": "2026-09-25T09:03:18Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb2_s2.steps.jsonl",
+    "bytes": 190868,
+    "sha256": "c244bfc35f9fbfeffcee379df68114f055b41a95b3a0191eb385613818ef7446",
+    "mtime_utc": "2026-09-25T09:03:18Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb2_s3.episodes.jsonl",
+    "bytes": 24314,
+    "sha256": "3ff80ca0b02c38aa4128f8415df8084d9a3caf351bb242d6126c7fa996965f2a",
+    "mtime_utc": "2026-09-25T09:16:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb2_s3.steps.jsonl",
+    "bytes": 181229,
+    "sha256": "5d62deed3a8b731d5b75428aebd6d233f4b877b371365cfc8ce6fce63c6c3fcf",
+    "mtime_utc": "2026-09-25T09:16:13Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb2_s4.episodes.jsonl",
+    "bytes": 24303,
+    "sha256": "a7aceb03b087fe3378f8a3b51aec32655bf1d95d735e00ba24ee1ed2e3c087da",
+    "mtime_utc": "2026-09-25T09:29:43Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb2_s4.steps.jsonl",
+    "bytes": 182807,
+    "sha256": "655f452cf51935cb50687204a43ca9195005c073d37f73764b7f1b2320776855",
+    "mtime_utc": "2026-09-25T09:29:43Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ],
+  "v_vb3": [
+   {
+    "file": "v_vb3.episodes.jsonl",
+    "bytes": 97271,
+    "sha256": "23436ea40b1d138fde666169df87d887095ba155eb48fa7ddd2a2123b4935a9f",
+    "mtime_utc": "2026-09-25T12:56:17Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb3_s1.episodes.jsonl",
+    "bytes": 24338,
+    "sha256": "893bc1df16d4701e90fd4621e4af24429b533ea50d43b539782fe0d8209f7ad0",
+    "mtime_utc": "2026-09-25T12:16:28Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb3_s1.steps.jsonl",
+    "bytes": 188901,
+    "sha256": "fb43467877f9ccf2b9d713faf044430bab2dc83b4dd49e5ed8fbed32bc0d138f",
+    "mtime_utc": "2026-09-25T12:16:28Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb3_s2.episodes.jsonl",
+    "bytes": 24329,
+    "sha256": "f642b65db63cd42a90b7f171fc4242207e27af91f89a5b52515830e7d3e2b7c5",
+    "mtime_utc": "2026-09-25T12:30:02Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb3_s2.steps.jsonl",
+    "bytes": 190888,
+    "sha256": "5c49c35a35a1619f1a4de281775b9ef69bc12a1f6e352bb8487d7000333e3170",
+    "mtime_utc": "2026-09-25T12:30:02Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb3_s3.episodes.jsonl",
+    "bytes": 24306,
+    "sha256": "7bf06edae3f9f49d409b3ec4b53f62086d346e8d4416c3b22b55f45b95340cf4",
+    "mtime_utc": "2026-09-25T12:42:54Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb3_s3.steps.jsonl",
+    "bytes": 180211,
+    "sha256": "267396b1cb53fc8564b9c5922a0671ce5955e19f8fc6d04c196e72ce6356e220",
+    "mtime_utc": "2026-09-25T12:42:54Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb3_s4.episodes.jsonl",
+    "bytes": 24298,
+    "sha256": "055a68fa71928925a3afd9b97c99ae917ad65aa4229dbe848834fb9dcce9f920",
+    "mtime_utc": "2026-09-25T12:56:17Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   },
+   {
+    "file": "v_vb3_s4.steps.jsonl",
+    "bytes": 180841,
+    "sha256": "2b3007ccfab30b31ab19b0236fbbeb4539ca0cdbc4f0c3280b51c0a37c151a0a",
+    "mtime_utc": "2026-09-25T12:56:17Z",
+    "produced_by": "et8b_loop.py",
+    "script_git_sha": "95414d1",
+    "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+   }
+  ]
+ },
+ "withdrawn": {
+  "v_b1": {
+   "reason": "a real collection on the seed-73 set, kept as a seed-73 reading; not comparable with the seed-89 games and not mixed into them",
+   "files": [
+    {
+     "file": "v_b1.episodes.jsonl",
+     "bytes": 97542,
+     "sha256": "0c1a5e48f19d8caae823ecfc7fbbedad83346041688285150fe941270dbba484",
+     "mtime_utc": "2026-09-24T22:06:49Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_b1_s1.episodes.jsonl",
+     "bytes": 24398,
+     "sha256": "16a7caa0b8bcb358f2f8b501bf6502e627a82a7861d8fad072027bb949fc2d93",
+     "mtime_utc": "2026-09-24T19:23:49Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_b1_s1.steps.jsonl",
+     "bytes": 185892,
+     "sha256": "eb93e8ed9df3e2760334f026ae59ea2a75abb86a3ba22679d6852f9658e6c8b4",
+     "mtime_utc": "2026-09-24T19:23:49Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_b1_s2.episodes.jsonl",
+     "bytes": 24381,
+     "sha256": "6e012ccc5fd7849ce310967f8740dda56bb37a8a57c578c3d36b51ecc02bbfea",
+     "mtime_utc": "2026-09-24T19:32:10Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_b1_s2.steps.jsonl",
+     "bytes": 188591,
+     "sha256": "ad83b9862571a76eb3d0a0551e760bbcfac5a66a3e612adfdcc3362d7d64e252",
+     "mtime_utc": "2026-09-24T19:32:10Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_b1_s3.episodes.jsonl",
+     "bytes": 24388,
+     "sha256": "00d40afd130b72bad0589de41401e20716a36373b31165e990e89634a136928b",
+     "mtime_utc": "2026-09-24T19:40:45Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_b1_s3.steps.jsonl",
+     "bytes": 195108,
+     "sha256": "e522c18ecb2ef20ef6af0cc5d0d35805131a875e19d43e97ed8aa60ba6cebf46",
+     "mtime_utc": "2026-09-24T19:40:45Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_b1_s4.episodes.jsonl",
+     "bytes": 24375,
+     "sha256": "17be2f143d9daae32fcc4ca7840d2b682a16674a8082cac5565479da7fd8a658",
+     "mtime_utc": "2026-09-24T19:48:54Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_b1_s4.steps.jsonl",
+     "bytes": 185802,
+     "sha256": "91a2e988aa8e86eaff9a2119a86c7150b8054af79ec75e5053312c7fedff3b17",
+     "mtime_utc": "2026-09-24T19:48:54Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    }
+   ]
+  },
+  "v_g01": {
+   "reason": "a real collection on the seed-73 set, kept as a seed-73 reading; not comparable with the seed-89 games and not mixed into them",
+   "files": [
+    {
+     "file": "v_g01.episodes.jsonl",
+     "bytes": 97707,
+     "sha256": "5af5d2135bb7c1bc2d13b8b80b578694639e985575d1e33f3c0b2ac733b9225d",
+     "mtime_utc": "2026-09-24T22:06:49Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g01_s1.episodes.jsonl",
+     "bytes": 24416,
+     "sha256": "6152a80c6398dabf4a98d4287d98e99afa9b94b021fc7a0b96d1f04cfd1999f2",
+     "mtime_utc": "2026-09-24T20:04:50Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g01_s1.steps.jsonl",
+     "bytes": 206504,
+     "sha256": "bff26f6e481739b56ff2cba5dd0fcf2f468d04d7086fb9c49fa6c10e44793211",
+     "mtime_utc": "2026-09-24T20:04:50Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g01_s2.episodes.jsonl",
+     "bytes": 24426,
+     "sha256": "490ae2c1314e3f0b6fd2ef676db57db49e08adc53e3babb3fc207a03f7908665",
+     "mtime_utc": "2026-09-24T20:21:07Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g01_s2.steps.jsonl",
+     "bytes": 212546,
+     "sha256": "b87fbf24d121cbf4517d41cbf189ab198a0284e37cfa24d72e6940b4a45cd887",
+     "mtime_utc": "2026-09-24T20:21:07Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g01_s3.episodes.jsonl",
+     "bytes": 24437,
+     "sha256": "039cfbae5c5239a81fb08d3a2867f3580635926e060eee396002abe5531ee4d4",
+     "mtime_utc": "2026-09-24T20:36:58Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g01_s3.steps.jsonl",
+     "bytes": 206756,
+     "sha256": "6df4779b81801013f2b6a778647b41a2805408c4e598423f8c8aeb645fe40430",
+     "mtime_utc": "2026-09-24T20:36:58Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g01_s4.episodes.jsonl",
+     "bytes": 24428,
+     "sha256": "044709c2b4877bab85d45af5f5dce3fd2d6e4745099cb0b43adfbf9976b4251e",
+     "mtime_utc": "2026-09-24T20:53:03Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g01_s4.steps.jsonl",
+     "bytes": 208756,
+     "sha256": "f0d7a4b0f9d161b6e07d136ae9b7a2fc7099cad466b35698bd00004de989f7f5",
+     "mtime_utc": "2026-09-24T20:53:03Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    }
+   ]
+  },
+  "v_g1m1": {
+   "reason": "a real collection on the seed-73 set, kept as a seed-73 reading; not comparable with the seed-89 games and not mixed into them",
+   "files": [
+    {
+     "file": "v_g1m1.episodes.jsonl",
+     "bytes": 97620,
+     "sha256": "abae0c56a6ec4c6a883710014edd97b77a5ec23ed90a7350095a4412dfc7f39d",
+     "mtime_utc": "2026-09-24T22:06:49Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g1m1_s1.episodes.jsonl",
+     "bytes": 24386,
+     "sha256": "5e6bbd96118ef8574f0f28ca3111f1cb5dd319c2034ce6ef3772f7349832d358",
+     "mtime_utc": "2026-09-24T21:07:31Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g1m1_s1.steps.jsonl",
+     "bytes": 193904,
+     "sha256": "1195415b30ca0f738695ba1627af9743a10c4835c0c1f5adabd57bad000e765e",
+     "mtime_utc": "2026-09-24T21:07:31Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g1m1_s2.episodes.jsonl",
+     "bytes": 24394,
+     "sha256": "c8274bc03cbe72e01f0dc5996aeb91aa649d9bd293defede17d57ad4de06f9f2",
+     "mtime_utc": "2026-09-24T21:22:43Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g1m1_s2.steps.jsonl",
+     "bytes": 205235,
+     "sha256": "e67cce5a1b570a485430422ff68432946b026c296d0fd6b2fb6b555f0b402633",
+     "mtime_utc": "2026-09-24T21:22:43Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g1m1_s3.episodes.jsonl",
+     "bytes": 24434,
+     "sha256": "e791d95a829d53da11d01ee3acc3d62c4ecd8b34a2e687569c5a460e8d06d30a",
+     "mtime_utc": "2026-09-24T21:37:15Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g1m1_s3.steps.jsonl",
+     "bytes": 197042,
+     "sha256": "73f237ec98385af6e396f3aac44a67ff6b00c8e566e667d03a823ed11c461d10",
+     "mtime_utc": "2026-09-24T21:37:15Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g1m1_s4.episodes.jsonl",
+     "bytes": 24406,
+     "sha256": "8f6f76e2620ffc49ab1e09196e971a554dc379da3069e907a31848c646111dc4",
+     "mtime_utc": "2026-09-24T21:51:59Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_g1m1_s4.steps.jsonl",
+     "bytes": 195007,
+     "sha256": "455e31a113b5672e919f0aa3ad921a6d3c2e2f2019ce5181e0bcd21fd3f205c7",
+     "mtime_utc": "2026-09-24T21:51:59Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    }
+   ]
+  },
+  "v_vb1": {
+   "reason": "the seed-73 games. The B head was fitted on states from the SAME task set the games scored, so it had the verifier's answer for the exact programs it was asked about. v_vb1 read green 134 of 300 against a base of 69 and is withdrawn, not adjusted.",
+   "files": [
+    {
+     "file": "v_vb1.episodes.jsonl",
+     "bytes": 97139,
+     "sha256": "0286369a70d4c24b10642d7a5377a5c11bb4a15f84ad0a5fff575a7e5e68259c",
+     "mtime_utc": "2026-09-24T22:57:24Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_vb1_s1.episodes.jsonl",
+     "bytes": 24277,
+     "sha256": "39e54d52e5dabd7841cea0514e45a077af12a577f0ddb4185e131eb28410a1cd",
+     "mtime_utc": "2026-09-24T22:19:56Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_vb1_s1.steps.jsonl",
+     "bytes": 178152,
+     "sha256": "2e9163b96b0ac0325d67ad378e25655a6826697cf5edbc9e65632bb2df850e6a",
+     "mtime_utc": "2026-09-24T22:19:56Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_vb1_s2.episodes.jsonl",
+     "bytes": 24279,
+     "sha256": "d32449c43f64377803f3bcb67d5fb5f6b2bbf0e47e9d2ab02e37a8e007f2b4c2",
+     "mtime_utc": "2026-09-24T22:32:14Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_vb1_s2.steps.jsonl",
+     "bytes": 169422,
+     "sha256": "1b066a38f221ff188aece2184dcb74501d30d884923c0fc1304ca7cc58528552",
+     "mtime_utc": "2026-09-24T22:32:14Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_vb1_s3.episodes.jsonl",
+     "bytes": 24290,
+     "sha256": "cb518a1cd935c52b9210aa064e53688ba5acb5e1af88a85bc0c7a690148da0df",
+     "mtime_utc": "2026-09-24T22:45:02Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_vb1_s3.steps.jsonl",
+     "bytes": 175223,
+     "sha256": "8d041c816ec01b182367855f4922aa1f0a17fd0034a46fdf06321ff352699c59",
+     "mtime_utc": "2026-09-24T22:45:02Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_vb1_s4.episodes.jsonl",
+     "bytes": 24293,
+     "sha256": "6f1ee258f89ca9791757679dbe24d9ce97c2d7c747eaabeadb0d8d50c01df07e",
+     "mtime_utc": "2026-09-24T22:57:24Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    },
+    {
+     "file": "v_vb1_s4.steps.jsonl",
+     "bytes": 168462,
+     "sha256": "01dca1f0342767c12b5622adf81fa6239555fa95ca1a293eeaeb2e6189a142ff",
+     "mtime_utc": "2026-09-24T22:57:24Z",
+     "produced_by": "et8b_loop.py",
+     "script_git_sha": "95414d1",
+     "invocation": "et8b_loop.py --tasks <one of four 75-task slices of the seed-89 set> --out <arm> --budget 12 [--head <npz> | --heads <d1 d2 d3>]"
+    }
+   ]
+  },
+  "case_fold_collision": {
+   "what": "the B arm was named v_B and the base arm v_b; the collecting filesystem is case-insensitive, so the B arm's slice files resolved to the base arm's, every slice was skipped as already complete, and it reported the base arm's own green count without running an episode",
+   "tell": "two arms printed COMPLETE in the same second; 300 episodes take about 12 s each",
+   "fix": "c115312 — renamed to v_vb, and the collection script now refuses to start if any two arm names are equal under case folding"
+  }
+ },
+ "leakage_checks": {
+  "why": "the first attempt at this arm was withdrawn for contamination, so the repaired run's independence is measured rather than argued from the seeds being different",
+  "shared_programs": {
+   "between": [
+    "v3c_seed73",
+    "v3ind89_seed89"
+   ],
+   "identical_programs": 0,
+   "of": 300,
+   "method": "sha1 over each task's program text"
+  },
+  "shared_symptoms": {
+   "between": [
+    "v3c_seed73",
+    "v3ind89_seed89"
+   ],
+   "identical_symptom_strings": 70,
+   "of_those_same_bug_region": 5,
+   "comparison_v3_seed21_to_v3ind89": {
+    "identical": 71,
+    "same_bug_region": 1
+   },
+   "reading": "a symptom is the first thing the agent reads, so a head could in principle memorise symptom to region across disjoint programs. At most 5 of 300 tasks could transfer that way, against a gap of 13 points. The channel exists and is far too small to explain it."
+  },
+  "heads_are_distinct": {
+   "cosine_w": 0.0841,
+   "note": "near-orthogonal weight vectors, distinct md5s and norms; no file mix-up of the kind the case-fold collision made"
+  }
+ },
+ "readings": {
+  "registered_before_collection": {
+   "section": "16 and 16a of the gates document",
+   "i": "B solves a substantially different subset (>= 25% of its solved tasks unsolved by gen0's agent) -> the region is the policy's, not the task's",
+   "ii": "the B-experience head beats g1-matched with the interval clearing the bar",
+   "iii": "the union head beats both -> exchange compounds (NOT YET FITTED)",
+   "iv": "B's subset overlaps gen0's (< 10% different) -> the region is the task's",
+   "x": "reading (i) restated as B-only rate minus same-agent churn rate, paired bootstrap",
+   "xv_P1": "NOT MEASURABLE at game time: the loop forces a hypothesis at decision 1 under every head, and the agent's free pick is identical across head arms, 300 of 300",
+   "xv_P1prime": "the head's gain by decision. HOLDS in direction (+11.7 / +19.1 / +21.3 points over g1-matched at d1 / d2 / d3) and FAILS its 'small at d1' clause. The d1 comparison is the clean one -- identical states across arms -- and it is the smallest of the three.",
+   "xv_P2": "HOLDS: of 170 B-only solves over three games, B named the true region at decision 1 on 105 (62%) and g1-matched on 6 (4%)",
+   "xv_P3": "REFUTED, in the opposite direction: mean actions FALL under the B head (7.59 against a base of 8.21), because a correct first pick ends the episode sooner"
+  },
+  "verdict_on_the_arm": "vb minus g1m clears criterion (a) in 3 of 3 games and (b) in 2 of 3: game 2's lower bound is +1.0 against a 2.0-point bar. Reported as 2 of 3 rather than pooled until it passes.",
+  "also_on_record": "g1-matched fails criterion (a) against the base bracket in all three games, which reproduces the earlier plateau on a third task set: more of the same agent's experience does not clear the bar."
+ },
+ "scored": {
+  "per_game_green": {
+   "v_b": [
+    66,
+    67,
+    65
+   ],
+   "v_g0": [
+    58,
+    60,
+    60
+   ],
+   "v_g1m": [
+    77,
+    83,
+    81
+   ],
+   "v_vb": [
+    102,
+    104,
+    113
+   ],
+   "of": 300
+  },
+  "pairings": {
+   "v_g0_vs_v_b_game1": {
+    "delta_points": -2.7,
+    "ci": [
+     -9.0,
+     3.7
+    ],
+    "base_pct": 22.0,
+    "g_pct": 19.3,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 53,
+     "G_only_solved": 45,
+     "discordant": 98,
+     "exact_two_sided_p": 0.4797
+    }
+   },
+   "v_g0_vs_v_b_game2": {
+    "delta_points": -2.3,
+    "ci": [
+     -9.0,
+     4.3
+    ],
+    "base_pct": 22.3,
+    "g_pct": 20.0,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 56,
+     "G_only_solved": 49,
+     "discordant": 105,
+     "exact_two_sided_p": 0.5584
+    }
+   },
+   "v_g0_vs_v_b_game3": {
+    "delta_points": -1.7,
+    "ci": [
+     -8.3,
+     4.7
+    ],
+    "base_pct": 21.7,
+    "g_pct": 20.0,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 51,
+     "G_only_solved": 46,
+     "discordant": 97,
+     "exact_two_sided_p": 0.6849
+    }
+   },
+   "v_g1m_vs_v_b_game1": {
+    "delta_points": 3.7,
+    "ci": [
+     -1.7,
+     9.0
+    ],
+    "base_pct": 22.0,
+    "g_pct": 25.7,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 30,
+     "G_only_solved": 41,
+     "discordant": 71,
+     "exact_two_sided_p": 0.2351
+    }
+   },
+   "v_g1m_vs_v_b_game2": {
+    "delta_points": 5.3,
+    "ci": [
+     -1.0,
+     11.3
+    ],
+    "base_pct": 22.3,
+    "g_pct": 27.7,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 36,
+     "G_only_solved": 52,
+     "discordant": 88,
+     "exact_two_sided_p": 0.1093
+    }
+   },
+   "v_g1m_vs_v_b_game3": {
+    "delta_points": 5.3,
+    "ci": [
+     -0.7,
+     11.3
+    ],
+    "base_pct": 21.7,
+    "g_pct": 27.0,
+    "§14a_interval_excludes_zero": false,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 33,
+     "G_only_solved": 49,
+     "discordant": 82,
+     "exact_two_sided_p": 0.09703
+    }
+   },
+   "v_vb_vs_v_b_game1": {
+    "delta_points": 12.0,
+    "ci": [
+     7.0,
+     17.3
+    ],
+    "base_pct": 22.0,
+    "g_pct": 34.0,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 16,
+     "G_only_solved": 52,
+     "discordant": 68,
+     "exact_two_sided_p": 1.407e-05
+    }
+   },
+   "v_vb_vs_v_b_game2": {
+    "delta_points": 12.3,
+    "ci": [
+     7.0,
+     17.7
+    ],
+    "base_pct": 22.3,
+    "g_pct": 34.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 15,
+     "G_only_solved": 52,
+     "discordant": 67,
+     "exact_two_sided_p": 6.459e-06
+    }
+   },
+   "v_vb_vs_v_b_game3": {
+    "delta_points": 16.0,
+    "ci": [
+     10.7,
+     21.3
+    ],
+    "base_pct": 21.7,
+    "g_pct": 37.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 15,
+     "G_only_solved": 63,
+     "discordant": 78,
+     "exact_two_sided_p": 3.749e-08
+    }
+   },
+   "v_vb_vs_v_g1m_game1": {
+    "delta_points": 8.3,
+    "ci": [
+     2.7,
+     14.0
+    ],
+    "base_pct": 25.7,
+    "g_pct": 34.0,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 28,
+     "G_only_solved": 53,
+     "discordant": 81,
+     "exact_two_sided_p": 0.007276
+    }
+   },
+   "v_vb_vs_v_g1m_game2": {
+    "delta_points": 7.0,
+    "ci": [
+     1.0,
+     13.0
+    ],
+    "base_pct": 27.7,
+    "g_pct": 34.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": false,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 34,
+     "G_only_solved": 55,
+     "discordant": 89,
+     "exact_two_sided_p": 0.03342
+    }
+   },
+   "v_vb_vs_v_g1m_game3": {
+    "delta_points": 10.7,
+    "ci": [
+     4.7,
+     16.7
+    ],
+    "base_pct": 27.0,
+    "g_pct": 37.7,
+    "§14a_interval_excludes_zero": true,
+    "§14b_lower_bound_clears_largest_within_head_draw": true,
+    "§14b_bar_points": 2.0,
+    "mcnemar_DESCRIPTIVE_ONLY": {
+     "base_only_solved": 30,
+     "G_only_solved": 62,
+     "discordant": 92,
+     "exact_two_sided_p": 0.001111
+    }
+   }
+  },
+  "within_arm": {
+   "v_b": {
+    "draws": [
+     22.0,
+     22.33,
+     21.67
+    ],
+    "mean": 22.0,
+    "sd": 0.333,
+    "range": 0.67
+   },
+   "v_g0": {
+    "draws": [
+     19.33,
+     20.0,
+     20.0
+    ],
+    "mean": 19.78,
+    "sd": 0.385,
+    "range": 0.67
+   },
+   "v_g1m": {
+    "draws": [
+     25.67,
+     27.67,
+     27.0
+    ],
+    "mean": 26.78,
+    "sd": 1.018,
+    "range": 2.0
+   },
+   "v_vb": {
+    "draws": [
+     34.0,
+     34.67,
+     37.67
+    ],
+    "mean": 35.44,
+    "sd": 1.953,
+    "range": 3.67
+   }
+  },
+  "bar_points": 2.0,
+  "scorer": {
+   "script": "g13b_score.py",
+   "plan": "viiic",
+   "git_sha": "ba526fa",
+   "invocation": "g13b_score.py --dir <games> --plan viiic --out viiic_score.json"
+  },
+  "decision_1_pick_correct_pct": {
+   "v_b": 23.3,
+   "v_g0": 17.0,
+   "v_g1m": 30.7,
+   "v_vb": 42.3,
+   "note": "identical across the three games by construction: decision 1 runs at temperature 0 on an identical state, so a given head's first pick is deterministic"
+  }
+ },
+ "signed": "Sautee (sha-ta)"
+}
