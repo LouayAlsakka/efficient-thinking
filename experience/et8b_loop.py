@@ -52,12 +52,13 @@ def prompt_key(state_text):
 
 
 def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget=BUDGET,
-                decisions=DECISIONS):
+                decisions=DECISIONS, force_inspect=()):
     # `decisions` defaults to DECISIONS so every existing caller is byte-unchanged. It is a
     # parameter because §13b needed the loop restricted to ONE head decision per episode (理
     # 12436): the loop arms read sd 2.6 where the single-decision instrument reads 0.43, and
     # the only way to tell "the variance is the number of decisions" from "the variance is the
     # loop regardless" is to run the loop with one decision and read its within-arm sd.
+    FORCE_INSPECT = set(force_inspect)
     program = task["program"]
     regions = [r for r in task["regions"] if r != "run"]
     tests = task["tests"]
@@ -97,6 +98,55 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
                                   "step": actions}) + "\n")
         if actions >= budget:
             break
+
+        # FORCED INSPECTION (§16a (xvi), the causal control). At the named decisions the agent
+        # does not decide: the step is recorded as an inspect with no region, which is exactly
+        # the shape agent B produced on its own at 69% of first decisions. No model call is made
+        # for the decision itself, so this costs less than a native one rather than more.
+        #
+        # WHAT I COULD NOT READ OUT OF THE REGISTRATION, and have implemented the faithful way:
+        # the rest of the decision body still runs, so the patch fallback fires on regions[0]
+        # exactly as it does when a NATIVE agent emits an inspect. "Nothing else changed" reads
+        # that way to me, and it is what reproduces B's own episodes; the alternative (skip the
+        # patch too) would make this arm cheaper than B's in actions and not comparable on them.
+        if d in FORCE_INSPECT:
+            decisions_made += 1
+            # CHARGE THE ACTION even though no model call is made. A NATIVE agent that emits an
+            # inspect at this decision pays one action for the generation, and agent B paid it on
+            # 69% of its first decisions. Not charging it would hand this control a free action
+            # out of the budget of 12 and leave it more room at decisions 2-3 than B ever had --
+            # a control with an advantage the thing it controls for did not have. Measured before
+            # fixing: the uncharged version ran 8 actions per episode against the native 9.
+            actions += 1
+            history.append("inspect-forced")
+            log.write(json.dumps({"run_id": run_id, "task_id": task["task_id"], "model": model_id,
+                                  "decision": d, "action": "hypothesize", "region": None,
+                                  "region_hit": False, "step": actions,
+                                  "parsed_action": "inspect_forced",
+                                  "decision_state": prompt_key(state_text()),
+                                  "trajectory_key": decision_state_key(inspected, history, patched),
+                                  "candidates": {"decision": d, "forced": True},
+                                  "tokens_in": total_in, "tokens_out": total_out}) + "\n")
+            pr = regions[0]
+            if pr not in inspected:
+                inspected[pr] = A.region_source(cur_program, pr) or ""
+            cur2 = msgs + [{"role": "user", "content": state_text() +
+                            "\nNow patch region %s. Reply with the patch action only." % pr}]
+            ptext, ni, no = A.generate(model, tok, cur2, temp=0.0 if d == 1 else 0.7,
+                                       prefix='{"action": "patch", "region": "%s", "source": "' % pr)
+            total_in += ni; total_out += no; actions += 1
+            pa = A.parse_action(ptext)
+            src = pa.get("source") or ""
+            if src.strip() and src.strip() != (inspected.get(pr) or "").strip():
+                newprog = A.replace_region(cur_program, pr, src)
+                if newprog:
+                    cur_program = newprog
+            patched.append({"decision": d, "region": pr, "applied": True})
+            green, fails = E.run_tests(cur_program, tests)
+            history.append("patch %s -> %s" % (pr, "GREEN" if green else "still red"))
+            if green:
+                break
+            continue
 
         st_text = state_text()
         dkey = decision_state_key(inspected, history, patched)
@@ -235,6 +285,9 @@ def main():
     ap.add_argument("--decisions", type=int, default=DECISIONS,
                     help="head decisions allowed per episode. Default %d is the loop as published; "
                          "1 restricts it to a single head decision (理's variance arm)." % DECISIONS)
+    ap.add_argument("--force-inspect", type=int, nargs="*", default=[],
+                    help="decisions at which the agent does not decide and an inspect is "
+                         "recorded instead (§16a (xvi)'s causal control). Empty = unchanged.")
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
     head = None
@@ -265,7 +318,7 @@ def main():
     for i, f in enumerate(files, 1):
         t = json.load(open(f))
         r = run_episode(model, tok, t, run_id, st, a.model, head_state=head, budget=a.budget,
-                        decisions=a.decisions)
+                        decisions=a.decisions, force_inspect=a.force_inspect)
         ep.write(json.dumps(r) + "\n"); ep.flush(); st.flush()
         print("[%d/%d] %s green=%s decisions=%d actions=%d"
               % (i, len(files), t["task_id"], r["green"], r["decisions"], r["actions"]), file=sys.stderr)
