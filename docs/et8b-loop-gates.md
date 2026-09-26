@@ -862,12 +862,14 @@ Games on `tasks/v3ind89` (seed 89, n = 300, a set no head was fitted on), three 
   g1-matched   77       83       81        26.78 · 1.02 · 2.00
   B-experience 102      104      113        35.44 · 1.95 · 3.67
 ```
-§14 bar = 2.0 points (largest within-head-arm range of the session). Pairings, per game:
+§14 bar = 3.67 points (largest within-head-arm range of the session; the B-experience arm's own range). CORRECTED 2026-09-26 01:0xZ by the second reader (Metsuke) recomputing the bar from its definition: the scorer's suffix heuristic `not x.endswith("b")` had excluded `v_vb` — the arm under test, renamed to dodge the case-fold collision — from the bar, giving 2.0 from the two arms left. Scorer fixed at `94a4a8f`: each plan names its base arm; no suffix heuristic. Pairings, per game:
 gen0 − base −2.7/−2.3/−1.7, §14a false ×3. g1-matched − base +3.7/+5.3/+5.3, §14a FALSE ×3 — the §13 saturation
 result reproduced on a third task set: more of the same agent's experience does not clear the bar.
 B-experience − base +12.0/+12.3/+16.0, §14a true ×3, §14b true ×3.
-THE ARM, B-experience − g1-matched: +8.3/+7.0/+10.7, pooled +8.66 points; §14a true ×3; §14b true in games 1 and 3,
-FALSE in game 2 (lower bound +1.0 < 2.0). Reported as 2 of 3 on §14b, not pooled until it passes. On this evidence
+THE ARM, B-experience − g1-matched: +8.3 [+2.7…] / +7.0 [+1.0…] / +10.7 [+4.7…], pooled +8.66 points; §14a true ×3;
+§14b TRUE in game 3 only (lower bounds 2.7 and 1.0 < 3.67). Reported as 1 of 3 on §14b — first recorded as 2 of 3
+under the wrong bar, corrected the same night, never pooled. The against-base comparison is untouched (lower
+bounds 7.0 and above). On this evidence
 the arm's registered question answers YES: a different agent's experience extends the gain the first agent's own
 experience could not. The claim under test (owner, 09-25): "a frozen agent can use verified experience selected by
 another agent to exceed the plateau reached from its own experience" — supported on v3ind89 with this head; the
@@ -886,5 +888,5 @@ Provenance: games collected at box B tree `95414d1`; scorer at `ba526fa` (brough
 per artefact in `experience/results/viiic_LOCK.json` (`b6a758a`), 108 game files, two heads, three task sets, both
 withdrawn runs kept and named. A join error in the first P2 computation (dict keyed on a filename substring that
 differs between `.steps.jsonl` and `.episodes.jsonl`, returning 0 of 170 beside a game with 35 of 53) was caught by
-impossibility and re-keyed on the parsed slice id, 300 of 300 keys per game. Second reader on the lock: Metsuke.
+impossibility and re-keyed on the parsed slice id, 300 of 300 keys per game. Second reader on the lock: Metsuke — shas resolve, 16 of 16 statistics recompute from the lock's own table (internal consistency, not independent verification), §14a 3 of 3 confirmed from the intervals, the §14b bar discrepancy found; 0 of 108 hashes verified and P1′–P3 not independently computed because the bytes sit on the collecting box. Protocol gap ruled: game files are copied to a read-only directory on the coordination host before a lock is declared, so a second reader can hash and recompute from files.
 Order from here: (xvi) forced-inspection control → union head (arm 2) → paper.
