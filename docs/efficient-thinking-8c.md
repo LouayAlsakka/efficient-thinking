@@ -1,9 +1,9 @@
 # Efficient Thinking VIII-c: Where the Experience Is Acquired
 ## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
 
-> **STATE 2026-09-27: DRAFT v0.1, written backward from the record (`docs/et8b-loop-gates.md` §16–§16c).** Every registered arm has run and is scored against the pre-registered bars; one registered discriminator (§5) is collecting and its three readings are fixed. Numbers marked *pending* are the discriminator's. Nothing here is final until lock v3 is second-read.
+> **STATE 2026-09-27: DRAFT v0.1.1 (v0.1 corrected after the artefact read: three numbers, the bar definitions, two notes), written backward from the record (`docs/et8b-loop-gates.md` §16–§16c).** Every registered arm has run and is scored against the pre-registered bars; one registered discriminator (§5) is collecting and its three readings are fixed. Numbers marked *pending* are the discriminator's. Nothing here is final until lock v3 is second-read.
 
-**Louay Alsakka** · September 27, 2026 · *draft v0.1*
+**Louay Alsakka** · September 27, 2026 · *draft v0.1.1*
 
 ## Abstract
 
@@ -11,7 +11,7 @@ Paper VIII showed that a frozen model with a read-only head fitted on its own ve
 
 ## Results at a glance
 
-**Observations** — six arms, one session per game, three games on the same 300 problems (seed 89), percent of problems solved. Means and within-arm ranges; no comparison is implied by adjacency.
+**Observations** — six arms, three games on the same 300 problems (seed 89), percent of problems solved. The first four arms ran adjacent within each game in one session (09-25); the forced-look and mixture arms ran on 09-26 against that bracket (§7). Means and within-arm ranges; no comparison is implied by adjacency.
 
 | arm | what sits beside the frozen 7B | g1 | g2 | g3 | mean | range |
 |---|---|---|---|---|---|---|
@@ -24,14 +24,14 @@ Paper VIII showed that a frozen model with a read-only head fitted on its own ve
 
 **Supported comparisons** — paired per problem, three games, read against the registered bars (§2). Only these rows are claims.
 
-| comparison | mean difference (points) | point-estimate bar (3 of 3 games) | interval bar | where |
+| comparison | mean difference (points) | §14(a): 95% interval excludes zero (games of 3) | §14(b): lower bound clears the session's largest within-head-arm range (games of 3) | where |
 |---|---|---|---|---|
-| other-agent − self | +8.7 | clears | 1 of 3 | §3 |
-| other-agent − base | +13.4 | clears | 3 of 3 | §3 |
-| forced-look − self | +14.4 | clears | 3 of 3 | §3 |
-| forced-look − base | +19.2 | clears | 3 of 3 | §3 |
-| self − base | +4.8 | does not clear | 0 of 3 | §3 (VIII-b reproduced) |
-| mixture − forced-look | −2.7 | within noise | 0 of 3 | §5 |
+| other-agent − self | +8.7 | 3 of 3 | 1 of 3 | §3 |
+| other-agent − base | +13.4 | 3 of 3 | 3 of 3 | §3 |
+| forced-look − self | +14.4 | 3 of 3 | 3 of 3 | §3 |
+| forced-look − base | +19.2 | 3 of 3 | 3 of 3 | §3 |
+| self − base | +4.8 | 0 of 3 | 0 of 3 | §3 (VIII-b reproduced) |
+| mixture − forced-look | −2.7 | 0 of 3 | 0 of 3 | §5 — within noise |
 | forced-look − other-agent | +5.8 | 2 of 3 | 0 of 3 | §5 — **within noise; not a ranking** |
 
 Two comparisons a reader will want are deliberately absent from the second table: whether a forced look is *better* than another agent's places, and whether the mixture is better than either. Both are within this harness's noise and the text says so where it matters (§5).
@@ -48,9 +48,9 @@ Everything runs on the loop harness of VIII and VIII-b (`et8b_loop`, budget 12, 
 
 - **The head.** A read-only linear head over the frozen model's hidden state at layer 18, shared across decisions, fitted on 290 whole decision groups drawn at one seed. Every head in this paper has this form and this count. Its labels are the verifier's ground truth (`bug_region`) in every arm; no agent supplies a label.
 - **The states.** Every head is fitted on the *7B's* hidden states. When another agent's trajectory is used, that trajectory is replayed as a prompt to the 7B and the 7B's own state at each of the other agent's decision points is recorded. Nothing the other agent thought enters the head; only where it stood.
-- **The scoring set.** All games run on a 300-problem set (seed 89) that no head in the comparison was fitted on. The fitting sets (seed 73 for the other-agent and forced-look heads; seed 21 for the self head) share no program with it and at most five symptom strings that point to the same region, against effects of thirty-plus problems.
+- **The scoring set.** All games run on a 300-problem set (seed 89) that no head in the comparison was fitted on. The fitting sets (seed 73 for the other-agent and forced-look heads; seed 21 for the self head) share no program with it and, of 70 symptom strings the sets share, at most five that point to the same region (one of 71 for the self head's set), against effects of thirty-plus problems.
 
-The bars are those registered in VIII-b: a comparison clears the point-estimate bar when the paired mean difference exceeds the largest within-head-arm range of the session in each of three games; it clears the interval bar when the paired bootstrap interval's lower bound does. The session's largest range is the other-agent arm's, 3.67 points, and it did not move when the two later arms were added (they are the steadiest arms in the table).
+The bars are those registered in VIII-b (§14): a comparison clears §14(a) in a game when the paired bootstrap 95% interval of the per-problem difference excludes zero; it clears §14(b) when that interval's lower bound exceeds the largest within-head-arm range of the session. A row is a claim only where the table says how many of the three games clear each. The session's largest range is the other-agent arm's, 3.67 points, and it did not move when the two later arms were added (they are the steadiest arms in the table).
 
 Two properties of the instrument, established in VIII-b and confirmed here, frame every number: decision 1 is greedy on an identical state, so a head's first pick is deterministic and identical across games; all between-game variation lives at decisions 2 and 3.
 
@@ -58,7 +58,7 @@ Two properties of the instrument, established in VIII-b and confirmed here, fram
 
 **The self head reproduces the plateau.** On the new set, the matched second-generation head of VIII-b beats base by +3.7, +5.3 and +5.3 points and clears no bar. This is VIII-b's result on a third problem set, and it is the control the rest of the paper is read against.
 
-**The other-agent head clears it.** Agent B is a second frozen model of a different family (Llama-3.1-8B), the weaker of the two: alone it solves 36 of the 300 fitting problems where the 7B solves 68. Its policy differs in one measurable habit: it inspects the code before its first hypothesis on 70% of problems, where the 7B hypothesises first on 99%. A head fitted on the 7B's states at B's visited places, labelled by the verifier, beats base by +12.0, +12.3 and +16.0 and clears both bars in every game; it beats the self head by +8.3, +7.0 and +10.7, clearing the point-estimate bar in every game and the interval bar in one. Ability to use experience was not exhausted: the same head form, on states from elsewhere, more than doubled the gain.
+**The other-agent head clears it.** Agent B is a second frozen model of a different family (Llama-3.1-8B), the weaker of the two: across two collections it solves 34–36 of the 300 fitting problems where the 7B, across two runs, solves 60–68 (the head was fitted on the 36 run). Its policy differs in one measurable habit: it inspects the code before its first hypothesis on 70% of problems (209 of 300 on the run that fed the head), where the 7B rarely does. A head fitted on the 7B's states at B's visited places, labelled by the verifier, beats base by +12.0, +12.3 and +16.0 and clears both bars in every game; it beats the self head by +8.3, +7.0 and +10.7, clearing the point-estimate bar in every game and the interval bar in one. Ability to use experience was not exhausted: the same head form, on states from elsewhere, more than doubled the gain.
 
 **The other agent was not needed.** The forced-look head is fitted on the 7B's own trajectories with one change during collection only: at decision 1 the action is forced to be an inspection (charged as an action, target chosen by the loop's existing rule), with decisions 2 and 3 under the native policy. That head beats base by +18.7, +19.7 and +19.3 and the self head by +15.0, +14.3 and +14.0, clearing both bars in every game. Against the other-agent head it leads in every game but the difference is within the session's noise (§5). The registered reading is that the forced look is at least as good as the second agent's own trajectories: what mattered was where the model was standing when the experience was recorded, and a one-line rule can put it there.
 
@@ -84,7 +84,7 @@ Two comparisons are therefore stated as within noise and nothing else: forced-lo
 
 ## 6. What did not hold
 
-- **The cheap proxy ranked the heads backwards.** Held-out pick accuracy at fitting time ordered the three heads other-agent 57.9% > forced-look 54.8% > mixture 53.8%. In the loop, both by problems solved and by in-game hit rate, the order is forced-look > mixture > other-agent. This is the sixth time in the series that a probe has failed to predict a paired result and the second time it has pointed the wrong way. No mechanism is offered; the probe is retired as a diagnostic rather than rescued.
+- **The cheap proxy ranked the heads backwards.** Held-out pick accuracy at fitting time ordered the three heads other-agent 57.9% > forced-look 54.8% > mixture 53.8%. In the loop, both by problems solved and by in-game hit rate, the order is forced-look > mixture > other-agent. This is the sixth probe non-conversion in the series by the experimenter's count (VIII §7.6, VIII-b §13c and §4 of that paper, and the three heads here) and the second to point the wrong way; the count is recorded in the register, not derivable from one artefact. No mechanism is offered; the probe is retired as a diagnostic rather than rescued.
 - **"Above the other agent" did not fire.** After one game of the forced-look arm read twenty points above the other-agent head, a fourth reading was registered for that direction. The third game came in at +3.3 with an interval spanning zero and the reading did not fire. The one-game flag is in the appendix as the kind of number this harness produces.
 - **The first other-agent arm was contaminated and withdrawn.** Its head had been fitted on the very 300 problems its games scored and read 134 of 300 — a head recalling its answer key. The tell was proportion, not sign: an effect an order of magnitude larger than anything the instrument had produced. The games moved to a third set no head had seen, and every number above is from that set.
 
@@ -94,7 +94,7 @@ Learning is usually discussed as one thing. This series has been separating thre
 
 The technical form is that the value of experience is conditional on the state distribution induced by the acquisition policy. The intuitive form is that where you learn from matters, not just how much you collect. The question this opens, and does not pursue, is which states an agent should seek in order to acquire the most useful experience: the acquisition policy as an optimisation dimension in its own right.
 
-The claim is scoped to what was measured: one task family (debugging), one model pair, one head form, 300 problems per game. "Can arise" is the verb because a mechanism has been demonstrated in this experimental system, not a law of frozen agents. The two later arms ran a day after the bracket they are scored against, and the only evidence that session drift is small is the base's own within-day stability (66/67/65). The loop harness recorded no provenance of its own invocation at the time; the source set of the forced-look states was established from the data (candidate region names ⊆ each task's own regions: 300 of 300 against the fitting set, 15 of 300 against the scoring set) rather than from memory, and the harness now writes a config record beside every arm.
+The claim is scoped to what was measured: one task family (debugging), one model pair, one head form, 300 problems per game. "Can arise" is the verb because a mechanism has been demonstrated in this experimental system, not a law of frozen agents. The two later arms ran a day after the bracket they are scored against, and the only evidence that session drift is small is the base's own within-day stability (66/67/65). The loop harness recorded no provenance of its own invocation at the time; the source set of the forced-look states was established from the data (candidate region names ⊆ each task's own regions: 300 of 300 against the fitting set, 15 of 300 against the scoring set) rather than from memory; the harness's invocation record (resolved arguments, task-set and head hashes, script sha) is written and tested and is applied after the last running chain is off the file — it is not yet in the artefacts of this paper.
 
 ## Reproducibility
 
