@@ -51,11 +51,95 @@ def fmt(label, num, den, dropped, note=""):
                ", %d row(s) dropped for a missing field" % dropped if dropped else "", note))
 
 
+# ---------------------------------------------------------------------------------------------
+# 形's row shape, FINAL as of the night before the run (their fields, off the real /area response,
+# not this file's earlier guesses). One JSONL row per (venue, utterance):
+#
+#   {"venue","utterance",
+#    "draw1": {"area": {"intent","tags","commit","taxonomy"}, "unresolved", "off_menu",
+#              "area_unchanged", "classifier", "classify_ms", "t_send", "t_recv"},
+#    "draw2": {... identical shape, a second independent call ...},
+#    "resolved_ids": [...], "single_offer_id": null, "folded_ids_count": N}
+#
+# The projection below is the ONLY place that knows the driver's shape. Two things it does NOT do:
+# it does not invent a gold label (形 carries none; --gold joins one by (venue, utterance)), and it
+# does not hide that `unresolved` is COMPUTED here -- 形 deliberately shipped the two raw
+# ingredients rather than a bool, because a field they compute is still inferred by somebody. The
+# formula is printed beside the rate.
+UNRESOLVED_RULE = "off_menu OR (area.tags empty AND area.commit is false)"
+
+
+def _iso(t):
+    """ISO-8601 with a trailing Z -> epoch seconds. Returns None rather than raising."""
+    if not isinstance(t, str):
+        return None
+    try:
+        from datetime import datetime
+        return datetime.strptime(t.replace("Z", "+0000"), "%Y-%m-%dT%H:%M:%S.%f%z").timestamp()
+    except Exception:
+        try:
+            from datetime import datetime
+            return datetime.strptime(t.replace("Z", "+0000"), "%Y-%m-%dT%H:%M:%S%z").timestamp()
+        except Exception:
+            return None
+
+
+def project_katachi(r):
+    """One driver row -> the flat record the rates are computed over."""
+    d1 = r.get("draw1") or {}
+    d2 = r.get("draw2") or {}
+    a1 = d1.get("area") or {}
+    a2 = d2.get("area") or {}
+    tags1 = a1.get("tags") if isinstance(a1.get("tags"), list) else None
+    tags2 = a2.get("tags") if isinstance(a2.get("tags"), list) else None
+    out = {"venue": r.get("venue"), "utterance": r.get("utterance"),
+           "areas": tags1, "off_menu": d1.get("off_menu"),
+           "areas_replicate": tags2,
+           "intent": a1.get("intent"), "commit": a1.get("commit"),
+           "landed_subtree": (sorted(r["resolved_ids"]) if isinstance(r.get("resolved_ids"), list)
+                              else r.get("single_offer_id")),
+           "t_send": _iso(d1.get("t_send")), "t_recv": _iso(d1.get("t_recv")),
+           "in_flight": None}          # never asserted: verified from the timestamps instead
+    if tags1 is not None or d1.get("off_menu") is not None:
+        out["unresolved"] = bool(d1.get("off_menu")) or (not tags1 and a1.get("commit") is False)
+    return out
+
+
+def check_serial(rows):
+    """The driver DECLARED one call in flight at a time. Declared is not measured: two intervals
+    that overlap would mean the seconds on the page include a queue. Checked, not trusted."""
+    iv = sorted((r["t_send"], r["t_recv"]) for r in rows
+                if r.get("t_send") is not None and r.get("t_recv") is not None)
+    if len(iv) < 2:
+        return None, len(iv)
+    overlaps = sum(1 for i in range(1, len(iv)) if iv[i][0] < iv[i - 1][1])
+    return overlaps, len(iv)
+
+
+def load_gold(path):
+    """Gold rows keyed (venue, utterance). Authored by 案内; a reviewer who authors the gold set is
+    the conflict WO-318 §19's split exists to prevent, so this file only READS it."""
+    gold = {}
+    for line in open(path):
+        line = line.strip()
+        if not line:
+            continue
+        g = json.loads(line)
+        gold[(str(g.get("venue")), str(g.get("utterance")))] = g
+    return gold
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--log", required=True, help="jsonl, one object per (venue, utterance)")
     ap.add_argument("--map", action="append", default=[],
                     help="rename a field: --map areas=classified_areas (repeatable)")
+    ap.add_argument("--shape", choices=("katachi", "flat"), default="katachi",
+                    help="katachi: the driver's nested draw1/draw2 rows (the contract of the night "
+                         "before the run). flat: one object per utterance with the FIELDS names.")
+    ap.add_argument("--gold", default="",
+                    help="gold rows keyed (venue, utterance), authored by 案内. The driver carries "
+                         "no gold label; without this the ask and commit rates are NOT COMPUTED.")
     ap.add_argument("--gold-split", action="store_true",
                     help="declare that the gold field is the composite '<kind>:<area>' and may be "
                          "split on the first colon. Without it a composite gold is REFUSED for the "
@@ -90,10 +174,47 @@ def main():
         print("\n  ⛔ NO ROWS PARSED. No rate is printed. This is not 'everything passed' — it is an\n"
               "     unreadable run. Check the field map (--map) against the driver's own output.")
         return 2
+    if a.shape == "katachi":
+        raw = rows
+        rows = [project_katachi(r) for r in raw]
+        got = sum(1 for r in rows if r.get("areas") is not None)
+        print("  shape katachi: projected %d row(s); %d carried draw1.area.tags" % (len(rows), got))
+        if not got:
+            print("\n  ⛔ NOT ONE ROW carried draw1.area.tags. No rate is printed: this is a SHAPE\n"
+                  "     mismatch, not a clean run. Check the driver's output against --shape.")
+            return 2
+    gold = load_gold(a.gold) if a.gold else {}
+    if gold:
+        joined = 0
+        for r in rows:
+            g = gold.get((str(r.get("venue")), str(r.get("utterance"))))
+            if g:
+                joined += 1
+                if "gold_areas" not in r and g.get("tags") is not None:
+                    r["gold_areas"] = g["tags"]
+                if "gold" not in r and g.get("intent") is not None:
+                    r["gold"] = g["intent"]
+                for k in ("gold_subtree",):
+                    if g.get(k) is not None:
+                        r[k] = sorted(g[k]) if isinstance(g[k], list) else g[k]
+        print("  gold %s: %d of %d row(s) joined on (venue, utterance)"
+              % (os.path.basename(a.gold), joined, len(rows)))
+        if joined < len(rows):
+            print("     ⚠️ %d row(s) have NO gold row. They are dropped from the ask and commit\n"
+                  "     rates and counted as dropped, never scored as correct." % (len(rows) - joined))
+        gsha = __import__("hashlib").sha256(open(a.gold, "rb").read()).hexdigest()[:16]
+        print("     gold sha256 %s — stamped into the output so a placeholder-scored page cannot be\n"
+              "     mistaken for one scored against the authored set." % gsha)
+    elif a.shape == "katachi":
+        print("  ⚠️ NO --gold: the driver carries no gold label, so ask-classification and\n"
+              "     commit-subtree accuracy are NOT COMPUTED. Replicate disagreement, the\n"
+              "     unresolved rate and the latency check do not need one and are printed.")
+    # the absent-field list is computed on the rows the RATES read -- after any projection. On the
+    # raw driver rows it listed every flat field as missing, which is true and useless.
     present = collections.Counter(k for r in rows for k in r)
     missing = [n for n in F.values() if present[n] == 0]
     if missing:
-        print("  ⚠️ fields absent from EVERY row: %s" % ", ".join(sorted(missing)))
+        print("  ⚠️ fields absent from EVERY row the rates read: %s" % ", ".join(sorted(missing)))
     venues = sorted({str(r.get(F["venue"], "?")) for r in rows})
     print("  %d venue(s): %s" % (len(venues), ", ".join(venues)))
 
@@ -122,8 +243,12 @@ def main():
             got = r[F["areas"]]
             got = got if isinstance(got, list) else [got]
             want = want if isinstance(want, list) else [want]
-            gold_seen.append(",".join(sorted(map(str, want))))
-            ask_ok += int(all(w in got for w in want))
+            gold_seen.append(",".join(sorted(map(str, want))) or "(none expected)")
+            # AN EMPTY EXPECTATION IS NOT A FREE PASS. `all(w in got for w in [])` is True, so a
+            # gold row that expects NO area scored correct whatever the classifier returned -- the
+            # off-menu rows are exactly the ones that would have hidden a wrong answer. When
+            # nothing is expected, nothing may be returned.
+            ask_ok += int((not got) if not want else all(w in got for w in want))
         else:
             ask_drop += 1
         if str(gold).lower().startswith("commit"):
@@ -139,7 +264,10 @@ def main():
                                          else [r[F["areas_replicate"]]])))
         else:
             rep_drop += 1
-        if F["areas"] in r or F["off_menu"] in r:
+        if "unresolved" in r:
+            unres_n += 1
+            unres += int(bool(r["unresolved"]))
+        elif F["areas"] in r or F["off_menu"] in r:
             unres_n += 1
             empty = not r.get(F["areas"])
             unres += int(bool(r.get(F["off_menu"])) or empty)
@@ -167,6 +295,7 @@ def main():
     print(fmt("classifier replicate disagreement", rep_dis, rep_n, rep_drop,
               note="" if rep_n else " — the driver recorded ONE draw; disagreement needs two"))
     print(fmt("unresolved rate", unres, unres_n, 0))
+    print("    computed HERE, not carried: %s" % UNRESOLVED_RULE)
     if a.walkup_field:
         w_n = sum(1 for r in rows if a.walkup_field in r)
         w = sum(1 for r in rows if r.get(a.walkup_field))
@@ -190,8 +319,17 @@ def main():
         print("  n=%d  median %.2f s  p90 %.2f s  max %.2f s" %
               (len(lat), lat[len(lat) // 2], lat[int(0.9 * (len(lat) - 1))], lat[-1]))
         if conc is None:
-            print("  ⚠️ no in_flight field: whether these seconds are the model's or my queue's is NOT\n"
-                  "     established by this log. State it as unknown on the page.")
+            ov, n_iv = check_serial(rows)
+            if ov is None:
+                print("  ⚠️ fewer than two t_send/t_recv pairs: seriality not checkable.")
+            elif ov == 0:
+                print("  VERIFIED SERIAL from the timestamps: 0 overlapping call intervals of %d.\n"
+                      "  The driver declared serial; this is the check, not the declaration. These\n"
+                      "  seconds are the model's, not my queue's." % n_iv)
+            else:
+                print("  🔴 %d of %d call intervals OVERLAP: the run was NOT serial, whatever it was\n"
+                      "  declared to be, and these seconds include my own single-threaded queue.\n"
+                      "  Label them as such on the page." % (ov, n_iv))
         elif conc <= 1:
             print("  in_flight max %s -> strictly serial; these seconds are the model's." % conc)
         else:
