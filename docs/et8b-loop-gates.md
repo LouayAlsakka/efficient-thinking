@@ -862,7 +862,7 @@ Games on `tasks/v3ind89` (seed 89, n = 300, a set no head was fitted on), three 
   g1-matched   77       83       81        26.78 · 1.02 · 2.00
   B-experience 102      104      113        35.44 · 1.95 · 3.67
 ```
-§14 bar = 3.67 points (largest within-head-arm range of the session; the B-experience arm's own range). CORRECTED 2026-09-26 01:0xZ by the second reader (Metsuke) recomputing the bar from its definition: the scorer's suffix heuristic `not x.endswith("b")` had excluded `v_vb` — the arm under test, renamed to dodge the case-fold collision — from the bar, giving 2.0 from the two arms left. Scorer fixed at `94a4a8f`: each plan names its base arm; no suffix heuristic. Pairings, per game:
+§14 bar = 3.67 points (largest within-head-arm range of the session; the B-experience arm's own range). CORRECTED 2026-09-26 01:0xZ by the second reader recomputing the bar from its definition: the scorer's suffix heuristic `not x.endswith("b")` had excluded `v_vb` — the arm under test, renamed to dodge the case-fold collision — from the bar, giving 2.0 from the two arms left. Scorer fixed at `94a4a8f`: each plan names its base arm; no suffix heuristic. Pairings, per game:
 gen0 − base −2.7/−2.3/−1.7, §14a false ×3. g1-matched − base +3.7/+5.3/+5.3, §14a FALSE ×3 — the §13 saturation
 result reproduced on a third task set: more of the same agent's experience does not clear the bar.
 B-experience − base +12.0/+12.3/+16.0, §14a true ×3, §14b true ×3.
@@ -888,5 +888,17 @@ Provenance: games collected at box B tree `95414d1`; scorer at `ba526fa` (brough
 per artefact in `experience/results/viiic_LOCK.json` (`b6a758a`), 108 game files, two heads, three task sets, both
 withdrawn runs kept and named. A join error in the first P2 computation (dict keyed on a filename substring that
 differs between `.steps.jsonl` and `.episodes.jsonl`, returning 0 of 170 beside a game with 35 of 53) was caught by
-impossibility and re-keyed on the parsed slice id, 300 of 300 keys per game. Second reader on the lock: Metsuke — shas resolve, 16 of 16 statistics recompute from the lock's own table (internal consistency, not independent verification), §14a 3 of 3 confirmed from the intervals, the §14b bar discrepancy found; 0 of 108 hashes verified and P1′–P3 not independently computed because the bytes sit on the collecting box. Protocol gap ruled: game files are copied to a read-only directory on the coordination host before a lock is declared, so a second reader can hash and recompute from files.
+impossibility and re-keyed on the parsed slice id, 300 of 300 keys per game. Second reader on the lock — shas resolve, 16 of 16 statistics recompute from the lock's own table (internal consistency, not independent verification), §14a 3 of 3 confirmed from the intervals, the §14b bar discrepancy found; 0 of 108 hashes verified and P1′–P3 not independently computed because the bytes sit on the collecting box. Protocol gap ruled: game files are copied to a read-only directory on the coordination host before a lock is declared, so a second reader can hash and recompute from files.
 Order from here: (xvi) forced-inspection control → union head (arm 2) → paper.
+
+**16a (xvi), amendment 2026-09-26 16:0xZ — a fourth reading registered after game 1 of arm 3 and before its score.**
+Game 1 of the forced-inspection arm on v3ind89 read 122 beside the same game's base 66, gen0 58, g1-matched 77 and
+B-experience 102: ABOVE the B head, a direction the three registered readings do not cover. Registered now, one
+game in, so the reading is not chosen after the score: (iv) forced-inspection head above the B head by more than
+the §15 bar → the mechanism is not B's experience as such but visiting states after a forced look; a cruder
+exploration policy than the one an agent chose produced the more informative states. Then the question is whether
+B's trajectories add anything to a forced-inspection head or are redundant with it, which is the registered union
+arm asked with the forced-inspection head as one input. Recorded beside it: arm 3's head probes LOWER than the B
+head (CV 54.8% vs 57.9%); if the games hold, a head that probes worse plays better — the fifth time a probe has
+failed to predict a paired result in this programme. The bar for (iv) is §15 pooled sd over three games, as for
+(i)–(iii). Nothing is read until three games are on disk.
