@@ -74,6 +74,58 @@ PLANS = {
                        "is the published comparison, not a second knob. Read beside the probe "
                        "line (B 57.9%% CV, chance 20.4, permutation at chance, PCA-8 37.6) and "
                        "REMEMBER the probe has failed to convert four times in this programme.")},
+    # VIII-c, THE SIX-ARM TABLE. Registered while the union arm's game 3 is at 241 of 300 --
+    # before its last number exists, which is the only time a reading is worth writing down.
+    #
+    # WHAT IS NEW HERE AND NOTHING ELSE IS: two head arms join the four the lock already carries.
+    #   v_fi  the forced-inspection agent's trajectories, SHARED head, 290 decisions, seed 13731
+    #   v_un  B's and the forced agent's trajectories MERGED, then cut to 290 WHOLE groups,
+    #         seed 13731 -- 1,424 rows, drawn as B 158 groups / 773 rows + forced 132 / 651.
+    # Every head arm plays the games identically (--head, no forcing at play time), so v_vb, v_fi
+    # and v_un differ in WHOSE TRAJECTORY the 7B's states were taken at and in nothing else. The
+    # bracket (v_b, v_g0, v_g1m) is NOT re-run for them: re-running would give the late arms a
+    # fresh control the early ones never had and would mix two sessions in the within-arm ranges.
+    #
+    # THE BAR MOVES AND THAT IS NOT A BUG. §14(b) is "the largest within-head-arm draw OF THIS
+    # SESSION". The session now has five head arms instead of three, so the bar computed here can
+    # be LARGER than the four-arm table's 3.67. If a §14(b) verdict the lock recorded at 3.67
+    # fails at the wider bar, it is reported as FAILING -- the denominator is the loop's own
+    # instability and more arms measure more of it. The lock's own numbers are not edited; this
+    # plan's table is the wider reading and says so.
+    #
+    # THE DECISION RULE FOR v_un, written down before the head was fitted, not after the games:
+    #   above BOTH single-source arms by more than the bar  -> the two experiences compound
+    #   within the bar of the better single source          -> B adds nothing to a forced look
+    #   below both                                          -> mixing two acquisition policies is
+    #                                                          worse than either (no story for it)
+    # Read beside the probes, which disagree with the ordering to be tested: B 57.9% CV, forced
+    # 54.8%, union 53.8% (chance 20.4, every permutation at chance, PCA-8 above chance). This
+    # programme has five probe non-conversions and one that pointed the wrong way.
+    "viiic6": {"base": "v_b",
+               "arms": ("v_b", "v_g0", "v_g1m", "v_vb", "v_fi", "v_un"),
+               "labels": {"v_b": "base",
+                          "v_g0": "gen0 head (per-decision -- the form gen0's own rule selected)",
+                          "v_g1m": "gen1-matched, SHARED head, 290 decisions, seed 13731",
+                          "v_vb": "agent B's visited places, SHARED head, 290 decisions, seed 13731",
+                          "v_fi": "forced-inspection agent's places, SHARED head, 290 decisions, seed 13731",
+                          "v_un": "B + forced MERGED, groups kept apart, SHARED head, 290 whole groups, seed 13731"},
+               "aliases": {},
+               "wanted": [("v_g0", "v_b"), ("v_g1m", "v_b"), ("v_vb", "v_b"),
+                          ("v_fi", "v_b"), ("v_un", "v_b"),
+                          ("v_vb", "v_g1m"), ("v_fi", "v_vb"),
+                          ("v_un", "v_vb"), ("v_un", "v_fi")],
+               "forbidden": set(),
+               "note": ("v_un - v_fi and v_un - v_vb ARE the arm; v_fi - v_vb is the §16c "
+                        "question (is a cheap forced look worth as much as an agent's own "
+                        "selection) and v_un - v_b is only the anchor. The merge keyed decision "
+                        "groups on (SOURCE, task_id, decision): both sources ran the same 300 "
+                        "tasks, so an unprefixed concatenation would have collapsed two "
+                        "trajectories' decision 1 for one task into a single group and the cut "
+                        "would have drawn rows from both -- the §13c defect arriving through a "
+                        "merge instead of a subsample. Row counts differ a few percent across "
+                        "these heads (B 1,421 at 290 decisions, union 1,424) because groups vary "
+                        "in length; the match is on the unit the head is SCORED over, which is "
+                        "decisions, not rows.")},
     "13c": {"base": "c_b", "arms": ("c_b", "c_g0", "c_g1m", "c_g1pp"),
             "labels": {"c_b": "base", "c_g0": "gen0 head",
                        "c_g1m": "gen1-matched (290 decisions, whole groups)",
