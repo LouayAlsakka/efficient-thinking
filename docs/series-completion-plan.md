@@ -113,3 +113,11 @@ Owner of 2–3: 理. Owner of 1's DOI and 4's posts: the author, on his word.
 3. **Teacher/student**: a stronger model steers, the head is fitted for the 7B — confounded with the teacher's competence; third.
 - **Different task family**: measured (VIII-b §6, at base) — the boundary, not a route. **Gen3/4/5**: not run.
 Registrations, not runs, until WO-318's demo and the week's estate work are done.
+
+
+## Candidate series principle (owner, 2026-09-26) — a HYPOTHESIS, not a result
+Self-generated information is constrained by the process generating it. Instances already in the record: II
+(correlated sampling limits), VI (self-label limitations), VIII-b (self-experience saturation); VIII-c shows one way
+to alter the generating process. The project's first negative result (adaptive MCTS from its own experience) may be
+an instance; untested, and not claimed. Open question raised by VIII-c, not pursued in it: which states should an
+agent seek in order to acquire the most useful experience — the acquisition policy as an optimisation dimension.

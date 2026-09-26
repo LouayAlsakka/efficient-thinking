@@ -996,3 +996,21 @@ ability to use experience." The 09-25 sentence — a frozen agent can use verifi
 agent to exceed the plateau reached from its own experience — stands as the second finding beneath it (§16b), with
 §16c as the third (the selection did not need another agent) and §16c (ii) as the fourth (the two acquisitions do
 not compound). "Can arise" carries the scope: one task family, one model pair.
+
+**VIII-c writing constraints, fixed before the draft (owner, 2026-09-26 23:1xZ).** (1) No further experiment before
+the paper: the discriminator of §16c (ii) is the last collection; then freeze (lock v3) and write. (2) The numbers
+22 → 27 → 35 → 41 are NOT presented as a ladder: numerical observations and supported statistical comparisons are
+separate tables; union-vs-forced is within noise and says so prominently; 41 > 35 is not evidence that a forced
+look is superior to agent-B-selected experience, and the text says so. (3) Scope: one task family, one model pair —
+a mechanism demonstrated in this experimental system, not a law; "can arise" carries it. (4) Kept near-verbatim:
+"what mattered was where the model was standing when the experience was recorded"; technical form: experience value
+is conditional on the state distribution induced by the acquisition policy; intuitive form: where you learn from
+matters, not just how much experience you collect. (5) The probe's reversed ranking of the three heads is published
+as evidence that the cheap proxy does not capture the mechanism, and the probe is retired, not rescued. (6) Agent B
+is presented as the experiment that revealed the dissociation, not as the mechanism; the result requires neither B
+nor multiple agents. (7) Future work, stated as a question and not pursued here: which states should an agent seek
+in order to acquire the most useful experience — acquisition policy as an optimisation dimension. (8) A candidate
+series principle is recorded as a HYPOTHESIS for the series plan, not a claim of this paper: self-generated
+information is constrained by the process generating it (II: correlated sampling; VI: self-labels; VIII-b:
+self-experience saturation; VIII-c: one way to alter the generating process); the connection to the project's first
+negative result (adaptive MCTS from its own experience) is noted as untested.
