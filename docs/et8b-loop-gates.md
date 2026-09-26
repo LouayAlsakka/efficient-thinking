@@ -976,3 +976,16 @@ no invocation of its own; the forced-inspection states' source set was establish
 region names ⊆ the task's own regions: 300/300 against seed 73, 15/300 against seed 89) rather than from memory;
 the loop gains a `<out>.config.json` (resolved args, task-set sha, head sha, script sha) after the running chain is
 off the file. Lock v2 `1d22c99` (v1 untouched); results reader: 匠.
+
+**16c (iii), 2026-09-26 22:4xZ — the degeneracy alternative for arm 3 tested and refuted (descriptive; registers
+nothing; discriminator excluded until its three games are on disk).** Per-decision behaviour of each head over
+every decision where it was consulted: top-pick share (uniform over 8 regions = 12.5%): gen0 23.7, g1-matched 21.3,
+B 18.9, forced 17.6, union 15.5 — the forced and union heads are the FLATTEST of the six, and the most concentrated
+head (gen0) is the only one that loses to base; "force a look and the head learns the family's favourite region"
+did not happen. Selectivity: the forced head agrees with the agent's own pick less often than B's head (33.7% vs
+40.3%) and is right more often when it agrees (73.3% vs 60.6%) — a head built from states the agent was forced to
+visit is a more selective instrument than one built from states it chose; that is a mechanism for §16c, not a
+restatement. Bound: the in-game hit column is a decomposition of the games' ordering, not an independent
+measurement; the top-pick share is independent of outcome. The probe is inverted against BOTH outcome measures
+(probe B > forced > union; games and in-game hit forced > union > B): six non-conversions, two pointing the wrong
+way; no mechanism offered; the probe is not to be used as a diagnostic in this programme.
