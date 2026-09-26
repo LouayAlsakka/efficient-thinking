@@ -17,6 +17,7 @@ pre{padding:10px 12px;overflow-x:auto}.q{border-left:4px solid #c0392b;padding:8
 .arrow{align-self:center;color:#999;font-size:18px}
 img.author{float:left;width:96px;height:96px;border-radius:6px;margin:4px 16px 8px 0;border:1px solid #ccd}p.author-line{display:flow-root;min-height:112px}body{padding-bottom:48px}
 @media (max-width:640px){.arrow{display:none}.stage{flex-basis:45%}}
+.claim{border-left:4px solid #0a66c2;background:#eef5fc;padding:12px 16px;border-radius:6px;margin:18px 0}
 </style></head><body>
 <h1>Efficient Thinking</h1>
 <p class="lead">Can a fixed AI model become more capable without becoming larger?<br><span class="sub">Efficient Thinking measures how search, evaluation, feedback, experience, symmetry and representation change the useful capability obtained from a fixed model and a fixed compute budget.</span></p>
@@ -30,6 +31,7 @@ img.author{float:left;width:96px;height:96px;border-radius:6px;margin:4px 16px 8
 <div class="stage"><div class="n">X</div><div class="w">Representation</div></div>
 </div>
 
+<p class="claim"><strong>What the series claims.</strong> This series separates the intelligence of a frozen model from the experience it can use and the experience it can acquire, shows each is measurable on its own, and finds that a learning plateau can belong to acquisition alone. <span class="sub">The intelligence is held fixed by construction in every paper; experience is carried in a read-only channel outside the prompt; capability is verified externally and charged per unit of computation. The separation is demonstrated in one experimental system (VIII, VIII-b, VIII-c); whether it holds elsewhere is the question the reproduction route below exists to answer.</span></p>
 <p><strong>One question, from every angle:</strong> how much useful capability can a fixed intelligence get per unit of computation, and what moves that number? Each paper holds the model fixed, measures capability with an external verifier, and changes one thing: search, the evaluator, the judge, taste, feedback, labels, the internal ceiling, experience, symmetry, representation.</p>
 <p><strong>What each paper established, one sentence each:</strong></p>
 <ul>
