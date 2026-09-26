@@ -1,0 +1,195 @@
+{
+ "document": "VIII-c \u2014 what each head did in the games. DESCRIPTIVE, registers nothing.",
+ "arms": {
+  "v_b1": {
+   "n": 820,
+   "agree_pct": 0.0,
+   "hit_pct": 22.804878048780488,
+   "hit_given_agree": null,
+   "hit_given_differ": null,
+   "top_pick_share_pct": null,
+   "distinct_picks": 0
+  },
+  "v_b2": {
+   "n": 822,
+   "agree_pct": 0.0,
+   "hit_pct": 22.26277372262774,
+   "hit_given_agree": null,
+   "hit_given_differ": null,
+   "top_pick_share_pct": null,
+   "distinct_picks": 0
+  },
+  "v_b3": {
+   "n": 822,
+   "agree_pct": 0.0,
+   "hit_pct": 22.871046228710462,
+   "hit_given_agree": null,
+   "hit_given_differ": null,
+   "top_pick_share_pct": null,
+   "distinct_picks": 0
+  },
+  "v_g01": {
+   "n": 827,
+   "agree_pct": 29.141475211608224,
+   "hit_pct": 18.37968561064087,
+   "hit_given_agree": 23.651452282157678,
+   "hit_given_differ": 16.21160409556314,
+   "top_pick_share_pct": 23.458282950423218,
+   "distinct_picks": 8
+  },
+  "v_g02": {
+   "n": 824,
+   "agree_pct": 27.9126213592233,
+   "hit_pct": 17.961165048543688,
+   "hit_given_agree": 21.304347826086957,
+   "hit_given_differ": 16.666666666666668,
+   "top_pick_share_pct": 23.78640776699029,
+   "distinct_picks": 8
+  },
+  "v_g03": {
+   "n": 826,
+   "agree_pct": 28.45036319612591,
+   "hit_pct": 18.159806295399516,
+   "hit_given_agree": 22.127659574468087,
+   "hit_given_differ": 16.58206429780034,
+   "top_pick_share_pct": 23.849878934624698,
+   "distinct_picks": 8
+  },
+  "v_g1m1": {
+   "n": 784,
+   "agree_pct": 38.13775510204081,
+   "hit_pct": 28.06122448979592,
+   "hit_given_agree": 34.78260869565217,
+   "hit_given_differ": 23.917525773195877,
+   "top_pick_share_pct": 20.918367346938776,
+   "distinct_picks": 8
+  },
+  "v_g1m2": {
+   "n": 784,
+   "agree_pct": 37.755102040816325,
+   "hit_pct": 28.698979591836736,
+   "hit_given_agree": 34.45945945945946,
+   "hit_given_differ": 25.204918032786885,
+   "top_pick_share_pct": 21.428571428571427,
+   "distinct_picks": 8
+  },
+  "v_g1m3": {
+   "n": 782,
+   "agree_pct": 38.23529411764706,
+   "hit_pct": 27.877237851662404,
+   "hit_given_agree": 33.779264214046826,
+   "hit_given_differ": 24.22360248447205,
+   "top_pick_share_pct": 21.483375959079282,
+   "distinct_picks": 8
+  },
+  "v_vb1": {
+   "n": 760,
+   "agree_pct": 40.26315789473684,
+   "hit_pct": 45.13157894736842,
+   "hit_given_agree": 60.78431372549019,
+   "hit_given_differ": 34.581497797356825,
+   "top_pick_share_pct": 19.07894736842105,
+   "distinct_picks": 8
+  },
+  "v_vb2": {
+   "n": 760,
+   "agree_pct": 40.13157894736842,
+   "hit_pct": 44.473684210526315,
+   "hit_given_agree": 60.32786885245902,
+   "hit_given_differ": 33.84615384615385,
+   "top_pick_share_pct": 18.81578947368421,
+   "distinct_picks": 8
+  },
+  "v_vb3": {
+   "n": 757,
+   "agree_pct": 40.422721268163805,
+   "hit_pct": 45.70673712021136,
+   "hit_given_agree": 60.78431372549019,
+   "hit_given_differ": 35.47671840354767,
+   "top_pick_share_pct": 18.758256274768826,
+   "distinct_picks": 8
+  },
+  "v_fi1": {
+   "n": 718,
+   "agree_pct": 33.56545961002786,
+   "hit_pct": 49.721448467966574,
+   "hit_given_agree": 73.44398340248962,
+   "hit_given_differ": 37.735849056603776,
+   "top_pick_share_pct": 17.54874651810585,
+   "distinct_picks": 8
+  },
+  "v_fi2": {
+   "n": 719,
+   "agree_pct": 34.21418636995828,
+   "hit_pct": 50.06954102920723,
+   "hit_given_agree": 73.57723577235772,
+   "hit_given_differ": 37.84355179704017,
+   "top_pick_share_pct": 17.663421418636997,
+   "distinct_picks": 8
+  },
+  "v_fi3": {
+   "n": 723,
+   "agree_pct": 33.333333333333336,
+   "hit_pct": 49.79253112033195,
+   "hit_given_agree": 73.02904564315352,
+   "hit_given_differ": 38.17427385892116,
+   "top_pick_share_pct": 17.56569847856155,
+   "distinct_picks": 8
+  },
+  "v_un1": {
+   "n": 745,
+   "agree_pct": 38.12080536912752,
+   "hit_pct": 48.18791946308725,
+   "hit_given_agree": 69.71830985915493,
+   "hit_given_differ": 34.92407809110629,
+   "top_pick_share_pct": 15.033557046979865,
+   "distinct_picks": 8
+  },
+  "v_un2": {
+   "n": 746,
+   "agree_pct": 37.533512064343164,
+   "hit_pct": 48.525469168900806,
+   "hit_given_agree": 70.71428571428571,
+   "hit_given_differ": 35.1931330472103,
+   "top_pick_share_pct": 15.549597855227882,
+   "distinct_picks": 8
+  },
+  "v_un3": {
+   "n": 739,
+   "agree_pct": 38.56562922868741,
+   "hit_pct": 48.57916102841678,
+   "hit_given_agree": 70.17543859649123,
+   "hit_given_differ": 35.02202643171806,
+   "top_pick_share_pct": 15.967523680649526,
+   "distinct_picks": 8
+  },
+  "v_f1321": {
+   "n": 764,
+   "agree_pct": 30.23560209424084,
+   "hit_pct": 41.230366492146594,
+   "hit_given_agree": 67.0995670995671,
+   "hit_given_differ": 30.0187617260788,
+   "top_pick_share_pct": 23.036649214659686,
+   "distinct_picks": 8
+  },
+  "v_f1322": {
+   "n": 760,
+   "agree_pct": 30.0,
+   "hit_pct": 41.31578947368421,
+   "hit_given_agree": 67.98245614035088,
+   "hit_given_differ": 29.887218045112782,
+   "top_pick_share_pct": 22.5,
+   "distinct_picks": 8
+  },
+  "v_f1323": {
+   "n": 765,
+   "agree_pct": 29.934640522875817,
+   "hit_pct": 41.69934640522876,
+   "hit_given_agree": 67.24890829694323,
+   "hit_given_differ": 30.78358208955224,
+   "top_pick_share_pct": 23.529411764705884,
+   "distinct_picks": 8
+  }
+ },
+ "signed": "Sautee (sha-ta)"
+}
