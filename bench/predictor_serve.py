@@ -225,11 +225,18 @@ def main():
         else:
             Handler.predictor = PredictorV0(model=a.model, ledger=a.ledger, world=world)
             # PREFIXED WITH THE ENDPOINT IT DESCRIBES, on purpose. /health used to answer
-        # "mode": "LIVE Bedrock: ..." while the CLASSIFIER was local — a reader glancing at that
-        # would reasonably conclude the user's sentence leaves the estate, which is the one thing
-        # the rule forbids and the one thing this service does not do. The value says which
-        # endpoint it is about; "area_backend" says what the classifier actually is.
-        Handler.mode = "/predict: LIVE Bedrock: %s" % a.model
+            # "mode": "LIVE Bedrock: ..." while the CLASSIFIER was local — a reader glancing at
+            # that would reasonably conclude the user's sentence leaves the estate, which is the
+            # one thing the rule forbids and the one thing this service does not do. The value
+            # says which endpoint it is about; "area_backend" says what the classifier is.
+            #
+            # ⚠️ AND THIS LINE USED TO SIT AT THE if/else LEVEL, so it ran in BOTH branches and
+            # overwrote the FAKE label: `--fake` served a fake transport and a .FAKE ledger while
+            # /health and every /predict reply said "LIVE Bedrock". No spend was ever at risk —
+            # the transport and the store were both the fake ones — but a mode field that reads
+            # the same in both modes cannot tell a reader which mode a number came from, and the
+            # dangerous direction is the other one: a rehearsal's numbers published as live.
+            Handler.mode = "/predict: LIVE Bedrock: %s" % a.model
     except Exception as e:
         Handler.predictor = None
         Handler.predict_unavailable = (
