@@ -852,3 +852,39 @@ d3), paired per task over the three games. If the head learned evidence→region
 concentrate where the prompt holds evidence (d2–d3) and be small at d1. P2 and P3 stand. For (xvi), the forced
 decision is charged one action (measured: 9 actions per episode either way) and the d1 patch fires on `regions[0]`
 as for a native inspect, so the control reproduces B's own episode shape.
+
+## 16b. VIII-c arm 1 — RESULT, scored under the pre-registered plan (2026-09-25 14:58Z; recorded 00:5xZ 09-26)
+Games on `tasks/v3ind89` (seed 89, n = 300, a set no head was fitted on), three games interleaved with the base bracket:
+```
+            game 1   game 2   game 3     mean(points) · within-arm sd · range
+  base         66       67       65        22.00 · 0.33 · 0.67
+  gen0         58       60       60        19.78 · 0.39 · 0.67
+  g1-matched   77       83       81        26.78 · 1.02 · 2.00
+  B-experience 102      104      113        35.44 · 1.95 · 3.67
+```
+§14 bar = 2.0 points (largest within-head-arm range of the session). Pairings, per game:
+gen0 − base −2.7/−2.3/−1.7, §14a false ×3. g1-matched − base +3.7/+5.3/+5.3, §14a FALSE ×3 — the §13 saturation
+result reproduced on a third task set: more of the same agent's experience does not clear the bar.
+B-experience − base +12.0/+12.3/+16.0, §14a true ×3, §14b true ×3.
+THE ARM, B-experience − g1-matched: +8.3/+7.0/+10.7, pooled +8.66 points; §14a true ×3; §14b true in games 1 and 3,
+FALSE in game 2 (lower bound +1.0 < 2.0). Reported as 2 of 3 on §14b, not pooled until it passes. On this evidence
+the arm's registered question answers YES: a different agent's experience extends the gain the first agent's own
+experience could not. The claim under test (owner, 09-25): "a frozen agent can use verified experience selected by
+another agent to exceed the plateau reached from its own experience" — supported on v3ind89 with this head; the
+size (+8.7 over matched, +13 over base) is this set's and this head's, not a general figure.
+Mechanism predictions (xv, as amended): P1 substitute — head pick equals the true region at decision 1: base 23.3%,
+gen0 17.0%, g1m 30.7%, B 42.3% (decision 1 is at temp 0 on an identical state, so this is the head's function alone on
+the same input; identical across games by construction). P1′ by decision, B − g1m: d1 +11.7, d2 +19.1, d3 +21.3 —
+direction holds, the "small at d1" clause FAILS; and E's caution stands: d2–d3 mix a better head with better states
+reached by having been right earlier, so the clean number is the smallest one. P2 HOLDS sharply: of 170 B-only
+solves, B named the region at d1 on 105 (62%) vs g1m on 6 (4%). P3 REFUTED: mean actions fall (7.59 vs 8.21 base,
+7.83 g1m) — a correct first pick ends the episode sooner. Reading: the head fitted on the 7B's states at B's visited
+places is a better evidence→region function even on the identical decision-1 state; the habit-transfer reading is
+not available at game time (loop forces a hypothesis at d1) and is not needed for the result. Whether "B supplied an
+exploration policy" is the whole of it is (xvi)'s question, which now runs.
+Provenance: games collected at box B tree `95414d1`; scorer at `ba526fa` (brought current mid-flight); both recorded
+per artefact in `experience/results/viiic_LOCK.json` (`b6a758a`), 108 game files, two heads, three task sets, both
+withdrawn runs kept and named. A join error in the first P2 computation (dict keyed on a filename substring that
+differs between `.steps.jsonl` and `.episodes.jsonl`, returning 0 of 170 beside a game with 35 of 53) was caught by
+impossibility and re-keyed on the parsed slice id, 300 of 300 keys per game. Second reader on the lock: Metsuke.
+Order from here: (xvi) forced-inspection control → union head (arm 2) → paper.
