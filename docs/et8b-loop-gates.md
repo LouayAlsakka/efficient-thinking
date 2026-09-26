@@ -902,3 +902,32 @@ arm asked with the forced-inspection head as one input. Recorded beside it: arm 
 head (CV 54.8% vs 57.9%); if the games hold, a head that probes worse plays better — the fifth time a probe has
 failed to predict a paired result in this programme. The bar for (iv) is §15 pooled sd over three games, as for
 (i)–(iii). Nothing is read until three games are on disk.
+
+## 16c. VIII-c arm 3 — the forced-inspection control, scored (2026-09-26 17:10Z; recorded 18:1xZ)
+Same seed-89 games, same session, one new arm beside the four of §16b:
+```
+  arm                       g1    g2    g3     mean%    sd     range
+  base                      66    67    65     22.00   0.333   0.67
+  gen0                      58    60    60     19.78   0.385   0.67
+  g1-matched                77    83    81     26.78   1.018   2.00
+  B-experience             102   104   113     35.44   1.953   3.67   <- sets the §14 bar
+  forced inspection        122   126   123     41.22   0.694   1.33
+```
+Bar 3.67. forced − base +18.67/+19.67/+19.33, §14a 3/3, §14b 3/3. forced − g1-matched +15.00/+14.33/+14.00, §14a 3/3,
+§14b 3/3. forced − B-experience +6.67 [+1.00…] / +7.33 [+1.67…] / +3.33 [−2.33…], §14a 2/3, §14b 0/3.
+READING (i) FIRES: the forced-inspection head is within the bar of the B-experience head. Reading (iv), registered
+one game in, does NOT fire (§14b 0 of 3 above); E's own early flag did not survive the third game and is recorded
+as such. The honest sentence: a forced look at decision 1 is at least as good as B's own trajectories, and the
+difference is not distinguishable from within-arm variation; the lean is positive in all three games.
+Consequence for the claim under test: arm 1 supports "a frozen agent can use verified experience selected by
+another agent to exceed the plateau reached from its own experience"; arm 3 says the SELECTION did not need another
+agent — forcing the 7B to look before committing, during collection only, reaches the same place. What mattered was
+which states got visited, and a one-line rule visits them. Three cautions recorded beside it: the bar is set by the
+B arm's own instability (range 3.67 against 1.33), so the more stable arm cannot clear a comparison against a noisy
+comparator; arm 3's head probed WORSE (CV 54.8% vs 57.9%) and played at least as well — the fifth probe
+non-conversion in this programme; two heads, one task family, one model pair — "force a look" beat one alternative
+on one family and is not a general recipe. Frame as it now stands: intelligence fixed; utilisation (the head) shown
+in VIII; ACQUISITION is what saturated in §13, and it is unblocked by changing where the acting policy stands before
+it decides, whether by a second agent or by a rule. Next, as registered: the union head — B's and the forced arm's
+decisions at 290 total — now asking whether B's trajectories add anything to a forced-inspection head or are
+redundant with it. Then the paper.
