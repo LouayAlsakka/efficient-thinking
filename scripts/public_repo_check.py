@@ -218,6 +218,25 @@ def main():
     if skipped:
         print("\n  NOT OPENED (binary by extension): %d file(s). Their PATHS were checked above;\n"
               "  their CONTENTS were not read by anything here." % len(skipped))
+    # WHAT IS NOT IN THE SET AT ALL, for the same reason. The default file list is `git ls-files`,
+    # so a file that is written but not yet committed is invisible here -- and that is exactly the
+    # file somebody is about to push. I read a clean TOTAL over a new scorer this evening and the
+    # zero was true only because the file was untracked. The count is printed so that zero cannot
+    # travel again; --files scans them on demand, before the commit rather than after it.
+    if not a.files and not rev:
+        others = subprocess.run(["git", "ls-files", "--others", "--exclude-standard"],
+                                capture_output=True, text=True, cwd=repo_root()).stdout.split()
+        if others:
+            print("\n  NOT IN THIS SCAN (present, untracked): %d file(s) -- a clean result above says\n"
+                  "  NOTHING about them, and an uncommitted file is the one about to be pushed:"
+                  % len(others))
+            for f in others[:12]:
+                print("    %s" % f)
+            if len(others) > 12:
+                print("    ... and %d more" % (len(others) - 12))
+            print("    scan them before committing:  %s --files %s"
+                  % (os.path.relpath(os.path.abspath(__file__), repo_root()), " ".join(others[:3])
+                     + (" ..." if len(others) > 3 else "")))
     stale = derived_staleness(files)
     if stale:
         print("\n  DERIVED ARTEFACT OLDER THAN ITS SOURCE -- rebuild before trusting a clean scan:")
