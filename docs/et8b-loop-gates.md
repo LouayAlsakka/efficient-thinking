@@ -989,3 +989,10 @@ restatement. Bound: the in-game hit column is a decomposition of the games' orde
 measurement; the top-pick share is independent of outcome. The probe is inverted against BOTH outcome measures
 (probe B > forced > union; games and in-game hit forced > union > B): six non-conversions, two pointing the wrong
 way; no mechanism offered; the probe is not to be used as a diagnostic in this programme.
+
+**VIII-c claim of record (owner, 2026-09-26 23:0xZ), replacing the 09-25 cross-agent sentence as the headline:**
+"A frozen agent's experience plateau can arise from how it acquires experience, rather than from exhaustion of its
+ability to use experience." The 09-25 sentence — a frozen agent can use verified experience selected by another
+agent to exceed the plateau reached from its own experience — stands as the second finding beneath it (§16b), with
+§16c as the third (the selection did not need another agent) and §16c (ii) as the fourth (the two acquisitions do
+not compound). "Can arise" carries the scope: one task family, one model pair.
