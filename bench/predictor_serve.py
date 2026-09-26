@@ -236,7 +236,7 @@ def main():
             # keeps serving, so a restart of this process cannot take the demo down over a flag.
             raise RuntimeError(
                 "no --cap given. /predict is a PAID endpoint (%s) and will not serve uncapped; "
-                "pass --cap <usd>. /area is unaffected and is local-only by default." % a.model)
+                "pass --cap <usd>." % a.model)   # the handler adds the /area sentence; not twice
         else:
             Handler.predictor = PredictorV0(model=a.model, ledger=a.ledger, world=world, cap=a.cap)
             # PREFIXED WITH THE ENDPOINT IT DESCRIBES, on purpose. /health used to answer
