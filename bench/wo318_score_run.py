@@ -20,7 +20,7 @@ pick", "the user is told to walk in") have three different denominators, and the
 to give. Pass --walkup-field to name the boolean field that IS the definition; without it this
 prints NOT COMPUTED and says why. Guessing it would be a number nobody asked for.
 """
-import argparse, collections, json, os, sys
+import argparse, collections, glob, json, os, sys
 
 # field name -> what it must contain. Override any of them with --map name=other_name.
 FIELDS = {
@@ -116,16 +116,27 @@ def check_serial(rows):
     return overlaps, len(iv)
 
 
-def load_gold(path):
+def load_gold(paths):
     """Gold rows keyed (venue, utterance). Authored by 案内; a reviewer who authors the gold set is
-    the conflict WO-318 §19's split exists to prevent, so this file only READS it."""
+    the conflict WO-318 §19's split exists to prevent, so this file only READS it.
+
+    THE ROW SHAPE IS THE LANDED ONE, not the one this file first guessed: each row is
+    {"utterance", "kind", "area": {"intent", "tags", "commit", "taxonomy"}} and the VENUE is the
+    FILENAME (gold/utterances-v1/<venue>.jsonl), not a field. Pass one file per venue or a glob.
+    """
     gold = {}
-    for line in open(path):
-        line = line.strip()
-        if not line:
-            continue
-        g = json.loads(line)
-        gold[(str(g.get("venue")), str(g.get("utterance")))] = g
+    for path in paths:
+        venue = os.path.basename(path)
+        for suf in (".jsonl", ".json"):
+            if venue.endswith(suf):
+                venue = venue[: -len(suf)]
+        for line in open(path):
+            line = line.strip()
+            if not line:
+                continue
+            g = json.loads(line)
+            v = str(g.get("venue") or venue)     # a venue field wins if the author ever adds one
+            gold[(v, str(g.get("utterance")))] = g
     return gold
 
 
@@ -137,9 +148,19 @@ def main():
     ap.add_argument("--shape", choices=("katachi", "flat"), default="katachi",
                     help="katachi: the driver's nested draw1/draw2 rows (the contract of the night "
                          "before the run). flat: one object per utterance with the FIELDS names.")
-    ap.add_argument("--gold", default="",
-                    help="gold rows keyed (venue, utterance), authored by 案内. The driver carries "
-                         "no gold label; without this the ask and commit rates are NOT COMPUTED.")
+    ap.add_argument("--gold", nargs="*", default=[],
+                    help="gold utterance files, one per venue (the venue is the FILENAME). Authored "
+                         "by 案内; the driver carries no gold label, and without these the ask and "
+                         "commit rates are NOT COMPUTED.")
+    ap.add_argument("--venue-tags", default="",
+                    help="directory of gold/tags-v1/<venue>.json ({offers: {offer_id: [tags]}}). The "
+                         "gold utterance rows carry expected TAGS but no expected offer ids, so "
+                         "commit-subtree accuracy is DERIVED from these when given — and the "
+                         "derivation encodes a semantics choice, so both readings are printed.")
+    ap.add_argument("--served-taxonomy", default="",
+                    help="the taxonomy json the classifier was actually SERVING. Every gold tag "
+                         "absent from it is a row the classifier cannot answer by construction, and "
+                         "that is counted and named BEFORE any rate is printed.")
     ap.add_argument("--gold-split", action="store_true",
                     help="declare that the gold field is the composite '<kind>:<area>' and may be "
                          "split on the first colon. Without it a composite gold is REFUSED for the "
@@ -174,8 +195,8 @@ def main():
         print("\n  ⛔ NO ROWS PARSED. No rate is printed. This is not 'everything passed' — it is an\n"
               "     unreadable run. Check the field map (--map) against the driver's own output.")
         return 2
+    raw = rows
     if a.shape == "katachi":
-        raw = rows
         rows = [project_katachi(r) for r in raw]
         got = sum(1 for r in rows if r.get("areas") is not None)
         print("  shape katachi: projected %d row(s); %d carried draw1.area.tags" % (len(rows), got))
@@ -183,6 +204,16 @@ def main():
             print("\n  ⛔ NOT ONE ROW carried draw1.area.tags. No rate is printed: this is a SHAPE\n"
                   "     mismatch, not a clean run. Check the driver's output against --shape.")
             return 2
+    venue_offers = {}
+    if a.venue_tags:
+        for _p in sorted(glob.glob(os.path.join(a.venue_tags, "*.json"))):
+            _v = os.path.basename(_p)[:-5]
+            try:
+                venue_offers[_v] = json.load(open(_p)).get("offers") or {}
+            except Exception as _e:
+                print("  ⚠️ could not read %s: %s" % (os.path.basename(_p), _e))
+        print("  venue tag inventories: %d venue(s), %d offer(s)"
+              % (len(venue_offers), sum(len(v) for v in venue_offers.values())))
     gold = load_gold(a.gold) if a.gold else {}
     if gold:
         joined = 0
@@ -190,19 +221,28 @@ def main():
             g = gold.get((str(r.get("venue")), str(r.get("utterance"))))
             if g:
                 joined += 1
-                if "gold_areas" not in r and g.get("tags") is not None:
-                    r["gold_areas"] = g["tags"]
-                if "gold" not in r and g.get("intent") is not None:
-                    r["gold"] = g["intent"]
-                for k in ("gold_subtree",):
-                    if g.get(k) is not None:
-                        r[k] = sorted(g[k]) if isinstance(g[k], list) else g[k]
-        print("  gold %s: %d of %d row(s) joined on (venue, utterance)"
-              % (os.path.basename(a.gold), joined, len(rows)))
+                ga = g.get("area") or {}
+                if "gold_areas" not in r and ga.get("tags") is not None:
+                    r["gold_areas"] = ga["tags"]
+                if "gold" not in r and ga.get("intent") is not None:
+                    r["gold"] = ga["intent"]
+                r["gold_kind"] = g.get("kind")
+                r["gold_taxonomy"] = ga.get("taxonomy")
+                if ga.get("commit") is not None:
+                    r["gold_commit"] = ga["commit"]
+                if g.get("gold_subtree") is not None:
+                    r["gold_subtree"] = (sorted(g["gold_subtree"])
+                                         if isinstance(g["gold_subtree"], list) else g["gold_subtree"])
+        print("  gold %d file(s) (%s): %d of %d row(s) joined on (venue, utterance)"
+              % (len(a.gold), ", ".join(sorted(os.path.basename(x) for x in a.gold))[:70], joined,
+                 len(rows)))
         if joined < len(rows):
             print("     ⚠️ %d row(s) have NO gold row. They are dropped from the ask and commit\n"
                   "     rates and counted as dropped, never scored as correct." % (len(rows) - joined))
-        gsha = __import__("hashlib").sha256(open(a.gold, "rb").read()).hexdigest()[:16]
+        _h = __import__("hashlib").sha256()
+        for _p in sorted(a.gold):
+            _h.update(open(_p, "rb").read())
+        gsha = _h.hexdigest()[:16]
         print("     gold sha256 %s — stamped into the output so a placeholder-scored page cannot be\n"
               "     mistaken for one scored against the authored set." % gsha)
     elif a.shape == "katachi":
@@ -215,6 +255,52 @@ def main():
     missing = [n for n in F.values() if present[n] == 0]
     if missing:
         print("  ⚠️ fields absent from EVERY row the rates read: %s" % ", ".join(sorted(missing)))
+    # THE INSTRUMENT CHECK, BEFORE ANY RATE. A classifier cannot return a tag its taxonomy does not
+    # contain, so a gold row whose tags are absent from the SERVED taxonomy is a row that can only
+    # lose -- and a version stamp that differs between the gold and the reply is the tell. On
+    # 2026-09-26 the gold set stamped v1.4 while the live service served gold-v1.2, and 7 rows of
+    # 185 carried a tag the service could not emit. Found by comparing the two, not by reading a
+    # rate that looked low.
+    gtax = collections.Counter(str(r.get("gold_taxonomy")) for r in rows if r.get("gold_taxonomy"))
+    ltax = collections.Counter(str((r0.get("draw1") or {}).get("area", {}).get("taxonomy"))
+                               for r0 in (raw if a.shape == "katachi" else []))
+    if gtax or ltax:
+        print("  taxonomy STAMPS — gold: %s   served (from the log's own rows): %s"
+              % (dict(gtax) or "(none)", dict(ltax) or "(none)"))
+        print("     ⚠️ the stamps are NOT a check: three files in this measurement version the same\n"
+              "     concept in three vocabularies (the utterance rows say v1.4, the venue tag\n"
+              "     inventories say v1, the served taxonomy says gold-v1.2), so differing stamps are\n"
+              "     expected and prove nothing either way. The real check is the TAG SET comparison\n"
+              "     below, which needs --served-taxonomy.")
+    if not a.served_taxonomy:
+        print("     ⛔ --served-taxonomy NOT GIVEN: whether the classifier could even emit each gold\n"
+              "     tag is UNCHECKED. A gold tag absent from the served taxonomy is a guaranteed\n"
+              "     miss, and on 2026-09-26 seven rows of 185 were in that state.")
+    if a.served_taxonomy:
+        import re as _re
+        _dot = _re.compile(r"^[a-z][a-z0-9]*(?:\.[a-z0-9_]+)+$")
+        def _ids(o, out=None):
+            out = set() if out is None else out
+            if isinstance(o, dict):
+                for k, v in o.items():
+                    if isinstance(k, str) and _dot.match(k):
+                        out.add(k)
+                    _ids(v, out)
+            elif isinstance(o, list):
+                for v in o:
+                    _ids(v, out)
+            elif isinstance(o, str) and _dot.match(o):
+                out.add(o)
+            return out
+        served_ids = _ids(json.load(open(a.served_taxonomy)))
+        unreachable = [(r.get("venue"), r.get("utterance"),
+                        sorted(set(r["gold_areas"]) - served_ids))
+                       for r in rows if r.get("gold_areas") and set(r["gold_areas"]) - served_ids]
+        print("  served taxonomy %s: %d ids; %d gold row(s) carry a tag it CANNOT return%s"
+              % (os.path.basename(a.served_taxonomy), len(served_ids), len(unreachable),
+                 "  🔴 those rows can only lose" if unreachable else "  ✅"))
+        for v, u, miss in unreachable[:12]:
+            print("     %-32s %-36s absent: %s" % (str(v)[:32], str(u)[:36], miss))
     venues = sorted({str(r.get(F["venue"], "?")) for r in rows})
     print("  %d venue(s): %s" % (len(venues), ", ".join(venues)))
 
@@ -224,7 +310,8 @@ def main():
     # ---- 2. the rates, each over its own readable denominator ---------------------------------
     ask_n = ask_ok = ask_drop = 0
     gold_seen = []          # the EFFECTIVE expected areas, after --gold-split or the gold_areas field
-    com_n = com_ok = com_drop = 0
+    amb_n = amb_any = amb_all = 0
+    com_n = com_ok = com_drop = com_ovl = com_derived = 0
     rep_n = rep_dis = rep_drop = 0
     unres_n = unres = 0
     for r in rows:
@@ -248,13 +335,51 @@ def main():
             # gold row that expects NO area scored correct whatever the classifier returned -- the
             # off-menu rows are exactly the ones that would have hidden a wrong answer. When
             # nothing is expected, nothing may be returned.
-            ask_ok += int((not got) if not want else all(w in got for w in want))
+            #
+            # AND THE MATCH IS PER KIND, because the gold set carries two different meanings in one
+            # `tags` field and nothing in the row says which: a `plain_commit` like "a haircut and
+            # beard trim" lists tags CONJUNCTIVELY (both are wanted), while an `ambiguous` row like
+            # "something for my face" lists five tags DISJUNCTIVELY (any one is a defensible read).
+            # Scoring the ambiguous rows all-of demands a five-tag answer and would report ~0% on
+            # 12 rows that may be perfectly handled. Both readings are printed for the ambiguous
+            # subset below, so this choice is visible rather than load-bearing.
+            kind = str(r.get("gold_kind") or "")
+            if not want:
+                ok = not got
+            elif kind == "ambiguous":
+                ok = any(w in got for w in want)
+                amb_n += 1; amb_any += int(ok); amb_all += int(all(w in got for w in want))
+            else:
+                ok = all(w in got for w in want)
+            ask_ok += int(ok)
         else:
             ask_drop += 1
-        if str(gold).lower().startswith("commit"):
+        # THE COMMIT ROWS ARE SELECTED BY THE GOLD'S OWN FIELDS, not by the word "commit" in an
+        # intent. The landed gold set uses kind="plain_commit" with intent="book"/"order" -- keying
+        # this on `intent.startswith("commit")` selected NOTHING and the commit rate printed
+        # "NOT COMPUTED" over 33 perfectly good rows. An instrument keyed to the wrong field does
+        # nothing silently; the simulation against the real gold file is what showed it.
+        is_commit = (str(r.get("gold_kind") or "").endswith("commit")
+                     or bool((r.get("gold_commit") if "gold_commit" in r else None))
+                     or str(gold).lower().startswith("commit"))
+        if is_commit:
             if has(r, "gold_subtree", "landed_subtree"):
                 com_n += 1
                 com_ok += int(r[F["gold_subtree"]] == r[F["landed_subtree"]])
+            elif venue_offers and r.get("gold_areas") and has(r, "landed_subtree"):
+                # DERIVED, and both readings kept: which offers SHOULD a commit resolve to?
+                #   subset   every gold tag is on the offer   (the narrow reading)
+                #   overlap  the offer carries any gold tag   (the wide reading)
+                off = venue_offers.get(str(r.get("venue")), {})
+                want_t = set(r["gold_areas"])
+                sub = sorted(o for o, ts in off.items() if want_t <= set(ts))
+                ovl = sorted(o for o, ts in off.items() if want_t & set(ts))
+                landed = r[F["landed_subtree"]]
+                landed = sorted(landed) if isinstance(landed, list) else [landed]
+                com_n += 1
+                com_ok += int(landed == sub)
+                com_ovl += int(landed == ovl)
+                com_derived += 1
             else:
                 com_drop += 1
         if has(r, "areas", "areas_replicate"):
@@ -286,16 +411,39 @@ def main():
     def dist(vals):
         c = collections.Counter(vals)
         return ", ".join("%s=%d" % kv for kv in c.most_common(6)) or "(none)"
+    if amb_n:
+        print("    ambiguous rows (%d), BOTH readings so the choice is visible: any-of %.1f%%  "
+              "all-of %.1f%%" % (amb_n, 100.0 * amb_any / amb_n, 100.0 * amb_all / amb_n))
+        print("      the rate above uses ANY-OF for these; a 5-tag row scored all-of demands a "
+              "5-tag answer")
     print("    expected areas:   %s   [over the %d row(s) the rate used]" % (dist(gold_seen), ask_n))
     print("    returned areas:   %s" % dist(
         [",".join(sorted(map(str, r[F["areas"]]))) if isinstance(r.get(F["areas"]), list)
          else str(r.get(F["areas"])) for r in rows]))
     print(fmt("commit-subtree accuracy", com_ok, com_n, com_drop,
-              note="" if com_n else " (no row's gold began with 'commit')"))
+              note="" if com_n else
+              " — the gold rows carry expected TAGS but no expected offer ids; pass --venue-tags to"
+              " DERIVE them, or ask for a gold_subtree field"))
+    if com_derived:
+        print("    ⚠️ DERIVED on %d row(s) from the venue tag inventories, not carried by the gold "
+              "set." % com_derived)
+        print("    denominator composition: %s — a re-select carries commit=true in the gold set, so "
+              "it\n    is a commit for this rate; that is the gold set's own field, not my choice."
+              % dict(collections.Counter(str(r.get("gold_kind")) for r in rows
+                                         if r.get("gold_commit"))))
+        print("    both readings: subset (every gold tag on the offer) %.1f%%   overlap (any gold "
+              "tag) %.1f%%" % (100.0 * com_ok / com_n, 100.0 * com_ovl / com_n))
     print(fmt("classifier replicate disagreement", rep_dis, rep_n, rep_drop,
               note="" if rep_n else " — the driver recorded ONE draw; disagreement needs two"))
     print(fmt("unresolved rate", unres, unres_n, 0))
     print("    computed HERE, not carried: %s" % UNRESOLVED_RULE)
+    # AND ITS FLOOR. Some gold rows are SUPPOSED to come back unresolved -- every off_menu row and
+    # every ask whose gold tag list is empty. An unresolved rate read without that floor looks like
+    # a failure rate; it is not one until it exceeds the share the gold set asks for.
+    exp_un = [r for r in rows if r.get("gold_areas") is not None and not r["gold_areas"]]
+    if gold:
+        print("    the gold set's OWN unresolved share: %.1f%% (%d/%d) — the floor this rate is\n"
+              "    read against, not zero" % (100.0 * len(exp_un) / len(rows), len(exp_un), len(rows)))
     if a.walkup_field:
         w_n = sum(1 for r in rows if a.walkup_field in r)
         w = sum(1 for r in rows if r.get(a.walkup_field))
