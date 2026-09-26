@@ -47,7 +47,7 @@ ARM_LABEL = {"b": "base", "g0": "gen0 head", "g1": "gen1 head (published, 3 per-
 FORBIDDEN = {("g1", "g1m")}   # 理: confounded, dropped, not reported
 
 PLANS = {
-    "13b": {"arms": ARMS, "labels": None, "aliases": None,
+    "13b": {"base": "b", "arms": ARMS, "labels": None, "aliases": None,
             "wanted": [("g0", "b"), ("g1", "b"), ("g1p", "b"), ("g1m", "b"),
                        ("g1", "g0"), ("g1p", "g1m")],
             "forbidden": FORBIDDEN,
@@ -58,7 +58,7 @@ PLANS = {
     # VIII-c arm 1. Registered BEFORE the arms finished collecting, which is the whole point of
     # writing it here rather than after: the pairings and the note are fixed while the numbers do
     # not exist yet, so the reading cannot be shaped by what came out.
-    "viiic": {"arms": ("v_b", "v_g0", "v_g1m", "v_vb"),
+    "viiic": {"base": "v_b", "arms": ("v_b", "v_g0", "v_g1m", "v_vb"),
               "labels": {"v_b": "base",
                          "v_g0": "gen0 head (per-decision -- the form gen0's own rule selected)",
                          "v_g1m": "gen1-matched, SHARED head, 290 decisions, seed 13731",
@@ -74,7 +74,7 @@ PLANS = {
                        "is the published comparison, not a second knob. Read beside the probe "
                        "line (B 57.9%% CV, chance 20.4, permutation at chance, PCA-8 37.6) and "
                        "REMEMBER the probe has failed to convert four times in this programme.")},
-    "13c": {"arms": ("c_b", "c_g0", "c_g1m", "c_g1pp"),
+    "13c": {"base": "c_b", "arms": ("c_b", "c_g0", "c_g1m", "c_g1pp"),
             "labels": {"c_b": "base", "c_g0": "gen0 head",
                        "c_g1m": "gen1-matched (290 decisions, whole groups)",
                        "c_g1pp": "gen1'' — disjoint SAME-FAMILY problems (290 decisions)"},
@@ -155,7 +155,18 @@ def main():
                            "mean": round(statistics.mean(pts), 2),
                            "sd": round(statistics.stdev(pts), 3),
                            "range": round(max(pts) - min(pts), 2)}
-    head_arms = [x for x in arms_used if x in within and not x.endswith("b")]
+    # THE BASE ARM IS NAMED, NOT GUESSED FROM ITS SUFFIX. This line used to read
+    # `not x.endswith("b")`, which was true of the base arms of the two earlier plans ("b",
+    # "c_b") and silently ALSO excluded VIII-c's B-experience head, `v_vb` -- the one arm under
+    # test. The bar came out 2.0 (the largest range among the two arms left) instead of 3.67, and
+    # a recorded verdict moved on it. A second reader caught the arithmetic; the cause was that
+    # the arm had been renamed to dodge a case-insensitive filename collision and the new name
+    # ended in the letter the heuristic keyed on.
+    base_arm = plan.get("base")
+    if base_arm is None:
+        raise SystemExit("plan %r does not name its base arm; the §14b bar cannot be computed "
+                         "from a suffix guess" % a.plan)
+    head_arms = [x for x in arms_used if x in within and x != base_arm]
     largest_head_draw = max((within[x]["range"] for x in head_arms), default=None)
     if largest_head_draw is None:
         print("  ⚠️ §14(b) CANNOT BE EVALUATED YET: no head arm has two games on disk. The bar is "
