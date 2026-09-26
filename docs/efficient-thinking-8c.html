@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Efficient Thinking VIII-c: Where the Experience Is Acquired</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
+  @page { size: A4; margin: 20mm 18mm; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
+         line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
+         font-size: 15px; }
+  h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
+       padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
+  h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
+       margin-top: 34px; }
+  h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
+  p, li { font-size: 15px; }
+  strong { color: #111; }
+  code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
+         padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
+  pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
+        overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
+  pre code { background: none; color: #24292e; padding: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
+  th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+  th { background: #2c3e50; color: #fff; }
+  tr:nth-child(even) td { background: #f6f8fa; }
+  td[align="right"], th[align="right"] { text-align: right; }
+  hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
+  blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
+               color: #333; background: #f6f8fa; font-style: italic; }
+  a { color: #0969da; }
+  img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+  </style></head><body><h1>Efficient Thinking: Measuring What Capability Costs</h1>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Efficient Thinking VIII-c: Where the Experience Is
+Acquired</h1>
+</header>
+<h1
+id="efficient-thinking-viii-c-where-the-experience-is-acquired">Efficient
+Thinking VIII-c: Where the Experience Is Acquired</h1>
+<h2
+id="a-frozen-agents-plateau-another-agents-places-a-forced-look-and-what-the-difference-is-made-of">A
+frozen agent’s plateau, another agent’s places, a forced look, and what
+the difference is made of</h2>
+<blockquote>
+<p><strong>STATE 2026-09-27: DRAFT v0.1, written backward from the
+record (<code>docs/et8b-loop-gates.md</code> §16–§16c).</strong> Every
+registered arm has run and is scored against the pre-registered bars;
+one registered discriminator (§5) is collecting and its three readings
+are fixed. Numbers marked <em>pending</em> are the discriminator’s.
+Nothing here is final until lock v3 is second-read.</p>
+</blockquote>
+<p><strong>Louay Alsakka</strong> · September 27, 2026 · <em>draft
+v0.1</em></p>
+<h2 id="abstract">Abstract</h2>
+<p>Paper VIII showed that a frozen model with a read-only head fitted on
+its own verified history moves the quality–compute frontier. Paper
+VIII-b showed that the gain does not compound: a second generation of
+the agent’s own experience is largely a repeat of the first, and a head
+fitted on it is not separable from the first by the loop’s own noise.
+This paper asks what the plateau is made of, and finds that it can arise
+from how the agent acquires experience rather than from any exhaustion
+of its ability to use it. The evidence is three heads of identical form
+and size, fitted on the same frozen model’s hidden states with the same
+verifier labels, differing only in <em>which states</em> they were
+fitted on. On 300 problems no head had seen: a head fitted where the
+agent’s own policy stood solves 26.8% (base 22.0%); a head fitted where
+a second, weaker agent’s policy stood solves 35.4%; a head fitted where
+the agent was made to stand — the code read before any hypothesis, by a
+one-line rule during collection only — solves 41.2%. The second agent
+was the experiment that revealed the dissociation, not its mechanism:
+the effect needs neither another agent nor several. A head built from
+states the agent was made to visit is more selective than one built from
+states it chose — it agrees with the agent’s own pick less often, and is
+right more often when it does. Mixing the two acquired sets does not
+compound them. A cheap held-out proxy ranked the three heads in exactly
+the reverse of their behaviour in the loop and is retired. One task
+family, one model pair: a mechanism demonstrated in this system, not a
+law.</p>
+<h2 id="results-at-a-glance">Results at a glance</h2>
+<p><strong>Observations</strong> — six arms, one session per game, three
+games on the same 300 problems (seed 89), percent of problems solved.
+Means and within-arm ranges; no comparison is implied by adjacency.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>arm</th>
+<th>what sits beside the frozen 7B</th>
+<th>g1</th>
+<th>g2</th>
+<th>g3</th>
+<th>mean</th>
+<th>range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>base</td>
+<td>nothing</td>
+<td>66</td>
+<td>67</td>
+<td>65</td>
+<td>22.0</td>
+<td>0.67</td>
+</tr>
+<tr>
+<td>gen0</td>
+<td>the head of VIII (its earliest experience)</td>
+<td>58</td>
+<td>60</td>
+<td>60</td>
+<td>19.8</td>
+<td>0.67</td>
+</tr>
+<tr>
+<td>self</td>
+<td>the matched second-generation head of VIII-b (own experience)</td>
+<td>77</td>
+<td>83</td>
+<td>81</td>
+<td>26.8</td>
+<td>2.00</td>
+</tr>
+<tr>
+<td>other-agent</td>
+<td>head on the 7B’s states at the places agent B’s policy visited</td>
+<td>102</td>
+<td>104</td>
+<td>113</td>
+<td>35.4</td>
+<td>3.67</td>
+</tr>
+<tr>
+<td>forced-look</td>
+<td>head on the 7B’s states at the places a forced first inspection
+visited</td>
+<td>122</td>
+<td>126</td>
+<td>123</td>
+<td>41.2</td>
+<td>1.33</td>
+</tr>
+<tr>
+<td>mixture</td>
+<td>head on other-agent ∪ forced-look decisions, same size</td>
+<td>117</td>
+<td>113</td>
+<td>117</td>
+<td>38.6</td>
+<td>1.33</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Supported comparisons</strong> — paired per problem, three
+games, read against the registered bars (§2). Only these rows are
+claims.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>comparison</th>
+<th>mean difference (points)</th>
+<th>point-estimate bar (3 of 3 games)</th>
+<th>interval bar</th>
+<th>where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>other-agent − self</td>
+<td>+8.7</td>
+<td>clears</td>
+<td>1 of 3</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>other-agent − base</td>
+<td>+13.4</td>
+<td>clears</td>
+<td>3 of 3</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>forced-look − self</td>
+<td>+14.4</td>
+<td>clears</td>
+<td>3 of 3</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>forced-look − base</td>
+<td>+19.2</td>
+<td>clears</td>
+<td>3 of 3</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>self − base</td>
+<td>+4.8</td>
+<td>does not clear</td>
+<td>0 of 3</td>
+<td>§3 (VIII-b reproduced)</td>
+</tr>
+<tr>
+<td>mixture − forced-look</td>
+<td>−2.7</td>
+<td>within noise</td>
+<td>0 of 3</td>
+<td>§5</td>
+</tr>
+<tr>
+<td>forced-look − other-agent</td>
+<td>+5.8</td>
+<td>2 of 3</td>
+<td>0 of 3</td>
+<td>§5 — <strong>within noise; not a ranking</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Two comparisons a reader will want are deliberately absent from the
+second table: whether a forced look is <em>better</em> than another
+agent’s places, and whether the mixture is better than either. Both are
+within this harness’s noise and the text says so where it matters
+(§5).</p>
+<h2 id="the-question">1. The question</h2>
+<p>VIII-b ended on a diagnosis: a steered agent stands where the
+previous agent stood and produces the same state, so its experience
+stops being new. That leaves two readings of the plateau. Either the
+model has taken what it can from experience of this kind — its ability
+to <em>use</em> experience is exhausted at this size — or the model has
+stopped <em>acquiring</em> experience worth using, because its own
+policy keeps it in the same region. The two readings predict different
+things. If use is exhausted, no experience of this form helps further,
+whoever gathered it. If acquisition is the limit, experience gathered
+somewhere else, by any means, should help, and the head form need not
+change at all.</p>
+<p>The experiment that separates them is to hold everything fixed — the
+frozen model, the head’s form and size, the verifier’s labels, the
+scoring set — and vary only where the states come from.</p>
+<h2 id="instruments-and-what-is-fixed">2. Instruments, and what is
+fixed</h2>
+<p>Everything runs on the loop harness of VIII and VIII-b
+(<code>et8b_loop</code>, budget 12, up to three head decisions per
+episode) with the same frozen 7B model. Three things are fixed across
+every arm and are the reason the comparison is clean:</p>
+<ul>
+<li><strong>The head.</strong> A read-only linear head over the frozen
+model’s hidden state at layer 18, shared across decisions, fitted on 290
+whole decision groups drawn at one seed. Every head in this paper has
+this form and this count. Its labels are the verifier’s ground truth
+(<code>bug_region</code>) in every arm; no agent supplies a label.</li>
+<li><strong>The states.</strong> Every head is fitted on the
+<em>7B’s</em> hidden states. When another agent’s trajectory is used,
+that trajectory is replayed as a prompt to the 7B and the 7B’s own state
+at each of the other agent’s decision points is recorded. Nothing the
+other agent thought enters the head; only where it stood.</li>
+<li><strong>The scoring set.</strong> All games run on a 300-problem set
+(seed 89) that no head in the comparison was fitted on. The fitting sets
+(seed 73 for the other-agent and forced-look heads; seed 21 for the self
+head) share no program with it and at most five symptom strings that
+point to the same region, against effects of thirty-plus problems.</li>
+</ul>
+<p>The bars are those registered in VIII-b: a comparison clears the
+point-estimate bar when the paired mean difference exceeds the largest
+within-head-arm range of the session in each of three games; it clears
+the interval bar when the paired bootstrap interval’s lower bound does.
+The session’s largest range is the other-agent arm’s, 3.67 points, and
+it did not move when the two later arms were added (they are the
+steadiest arms in the table).</p>
+<p>Two properties of the instrument, established in VIII-b and confirmed
+here, frame every number: decision 1 is greedy on an identical state, so
+a head’s first pick is deterministic and identical across games; all
+between-game variation lives at decisions 2 and 3.</p>
+<h2 id="the-dissociation">3. The dissociation</h2>
+<p><strong>The self head reproduces the plateau.</strong> On the new
+set, the matched second-generation head of VIII-b beats base by +3.7,
++5.3 and +5.3 points and clears no bar. This is VIII-b’s result on a
+third problem set, and it is the control the rest of the paper is read
+against.</p>
+<p><strong>The other-agent head clears it.</strong> Agent B is a second
+frozen model of a different family (Llama-3.1-8B), the weaker of the
+two: alone it solves 36 of the 300 fitting problems where the 7B solves
+68. Its policy differs in one measurable habit: it inspects the code
+before its first hypothesis on 70% of problems, where the 7B
+hypothesises first on 99%. A head fitted on the 7B’s states at B’s
+visited places, labelled by the verifier, beats base by +12.0, +12.3 and
++16.0 and clears both bars in every game; it beats the self head by
++8.3, +7.0 and +10.7, clearing the point-estimate bar in every game and
+the interval bar in one. Ability to use experience was not exhausted:
+the same head form, on states from elsewhere, more than doubled the
+gain.</p>
+<p><strong>The other agent was not needed.</strong> The forced-look head
+is fitted on the 7B’s own trajectories with one change during collection
+only: at decision 1 the action is forced to be an inspection (charged as
+an action, target chosen by the loop’s existing rule), with decisions 2
+and 3 under the native policy. That head beats base by +18.7, +19.7 and
++19.3 and the self head by +15.0, +14.3 and +14.0, clearing both bars in
+every game. Against the other-agent head it leads in every game but the
+difference is within the session’s noise (§5). The registered reading is
+that the forced look is at least as good as the second agent’s own
+trajectories: what mattered was where the model was standing when the
+experience was recorded, and a one-line rule can put it there.</p>
+<p>So the plateau of VIII-b was acquisition. The agent’s own policy
+returned to the same region; a head fitted there was fitted where the
+evidence was not yet in the prompt.</p>
+<h2 id="what-the-difference-is-made-of">4. What the difference is made
+of</h2>
+<p>Three pre-registered predictions were read from the games’ own logs,
+and one alternative explanation was tested after the fact.</p>
+<p><strong>The head is a better function on the identical
+input.</strong> At decision 1 every arm sees the same state, so the
+share of first picks that name the true region is the head’s function
+alone: base 23.3%, gen0 17.0%, self 30.7%, other-agent 42.3%. Of the
+other-agent head’s 170 solves the self head did not reach, it had named
+the true region at decision 1 on 105 (62%); the self head had on 6 (4%).
+Its edge grows through decisions 2 and 3 (+11.7, +19.1, +21.3 points
+over the self head), but the later decisions are the dirtier comparison
+— by decision 2 the arms are in states their own first pick produced —
+so the clean number is the smallest one.</p>
+<p><strong>Episodes get shorter, not longer.</strong> The registered
+prediction that a better head would lengthen episodes (an inspection
+before the hypothesis) was refuted: mean actions fall, 7.59 under the
+other-agent head against 8.21 base, because a correct first pick ends
+the episode sooner. The habit itself does not transfer at game time —
+the loop forces a hypothesis at decision 1 under every head — and the
+result does not need it to.</p>
+<p><strong>The forced-look head is not degenerate; it is
+selective.</strong> The worry was that forcing every first move produces
+a head that always names this family’s favourite region. Measured over
+every decision at which each head was consulted, the forced-look head is
+the <em>flattest</em> of the six (top-pick share 17.6% against a uniform
+12.5%; the most concentrated head, gen0, is the only one that loses to
+base). What distinguishes it is selectivity: it agrees with the agent’s
+own pick less often than the other-agent head (33.7% against 40.3%) and
+is right more often when it agrees (73.3% against 60.6%). A head built
+from states the agent was made to visit disagrees with the policy that
+produced it more, and its agreement carries more information.</p>
+<h2 id="mixing-the-two-does-not-compound-them">5. Mixing the two does
+not compound them</h2>
+<p>The registered second arm fits one head on the union of the
+other-agent and forced-look decisions at the same size as either alone.
+It solves 38.6%: below the forced-look head in all three games (−1.7,
+−4.3, −2.0; every interval spanning zero) and above the other-agent head
+by margins that also span zero. The registered reading that fired is
+that the second agent’s places add nothing to a forced look.</p>
+<p>One reading the matched size cannot separate is recorded before its
+discriminator lands: at 290 groups the mixture is not “forced plus
+other-agent” but “forced with half replaced by other-agent” (the seed
+drew 158 and 132 groups). Either the other agent’s groups are dead
+weight, or forced-look experience saturates at half its size, in which
+case the mixture says nothing about the other agent in either direction.
+The discriminator — a head on the mixture’s own 132 forced-look groups
+alone, not a fresh draw — is <em>pending</em>; its three readings were
+fixed before it ran (≈41: saturation; ≈38.6: neutral; ≈35: the other
+agent’s half carried the mixture).</p>
+<p>Two comparisons are therefore stated as within noise and nothing
+else: forced-look against other-agent (+6.7, +7.3, +3.3; interval bar 0
+of 3) and mixture against forced-look. Nothing in this paper establishes
+that a forced look is <em>superior</em> to a second agent’s selection,
+or that the two experiences interfere.</p>
+<h2 id="what-did-not-hold">6. What did not hold</h2>
+<ul>
+<li><strong>The cheap proxy ranked the heads backwards.</strong>
+Held-out pick accuracy at fitting time ordered the three heads
+other-agent 57.9% &gt; forced-look 54.8% &gt; mixture 53.8%. In the
+loop, both by problems solved and by in-game hit rate, the order is
+forced-look &gt; mixture &gt; other-agent. This is the sixth time in the
+series that a probe has failed to predict a paired result and the second
+time it has pointed the wrong way. No mechanism is offered; the probe is
+retired as a diagnostic rather than rescued.</li>
+<li><strong>“Above the other agent” did not fire.</strong> After one
+game of the forced-look arm read twenty points above the other-agent
+head, a fourth reading was registered for that direction. The third game
+came in at +3.3 with an interval spanning zero and the reading did not
+fire. The one-game flag is in the appendix as the kind of number this
+harness produces.</li>
+<li><strong>The first other-agent arm was contaminated and
+withdrawn.</strong> Its head had been fitted on the very 300 problems
+its games scored and read 134 of 300 — a head recalling its answer key.
+The tell was proportion, not sign: an effect an order of magnitude
+larger than anything the instrument had produced. The games moved to a
+third set no head had seen, and every number above is from that
+set.</li>
+</ul>
+<h2 id="what-this-says-and-what-it-does-not">7. What this says, and what
+it does not</h2>
+<p>Learning is usually discussed as one thing. This series has been
+separating three: the intelligence, which is frozen throughout and never
+changed; the ability to <em>use</em> verified experience, which VIII
+showed and which every head here exercises through the same read-only
+form; and the ability to <em>acquire</em> experience worth using, which
+is what the acting policy determines by where it stands when a state is
+recorded. VIII-b found the plateau; this paper finds that, in this
+system, the plateau was in acquisition, and that changing where the
+agent stands before it decides — by borrowing another agent’s habit or
+by imposing one — restores gains of the size VIII first reported, with
+the intelligence held fixed.</p>
+<p>The technical form is that the value of experience is conditional on
+the state distribution induced by the acquisition policy. The intuitive
+form is that where you learn from matters, not just how much you
+collect. The question this opens, and does not pursue, is which states
+an agent should seek in order to acquire the most useful experience: the
+acquisition policy as an optimisation dimension in its own right.</p>
+<p>The claim is scoped to what was measured: one task family
+(debugging), one model pair, one head form, 300 problems per game. “Can
+arise” is the verb because a mechanism has been demonstrated in this
+experimental system, not a law of frozen agents. The two later arms ran
+a day after the bracket they are scored against, and the only evidence
+that session drift is small is the base’s own within-day stability
+(66/67/65). The loop harness recorded no provenance of its own
+invocation at the time; the source set of the forced-look states was
+established from the data (candidate region names ⊆ each task’s own
+regions: 300 of 300 against the fitting set, 15 of 300 against the
+scoring set) rather than from memory, and the harness now writes a
+config record beside every arm.</p>
+<h2 id="reproducibility">Reproducibility</h2>
+<p>Every game file, head, task set and score in this paper is named by
+sha256 in <code>experience/results/viiic_LOCK.json</code> (arms of §3)
+and <code>viiic_LOCK_v2.json</code> (arms of §4–§5), with the git sha of
+the script that produced each artefact and its exact invocation; the
+discriminator joins in v3. A second reader recomputed 16 of 16
+statistics from the lock’s table and 12 of 12 green counts from the
+files, verified 108 of 108 hashes, and found the one discrepancy that
+moved a recorded verdict (§6, the bar). Withdrawn runs are kept and
+named. The registrations, in the order they were written, are
+<code>docs/et8b-loop-gates.md</code> §16–§16c.</p>
+<h2 id="appendix-a.-how-this-was-found">Appendix A. How this was
+found</h2>
+<ol type="1">
+<li><strong>09-23.</strong> VIII-b’s saturation diagnosis; the question
+of escape posed as “a different agent, same family — the fastest
+route”.</li>
+<li><strong>09-24 07:1xZ.</strong> §16 registered: agent B collects on
+seed 73’s 300; the readings fixed before collection.</li>
+<li><strong>09-24.</strong> First collection stopped at 33 episodes: the
+harness prompt carried a stale region menu from an earlier task family;
+B obeyed it, the 7B ignored it. Corrected; a fresh 7B base run showed
+the correction moved vocabulary, not difficulty (22.7% vs 20.7%).</li>
+<li><strong>09-24.</strong> Reading (i) fired on the registered 25% bar;
+a same-agent churn control then showed two runs of the same agent differ
+by 4 problems (6.7%) — the bar was tightened to a difference against
+churn before any number travelled.</li>
+<li><strong>09-24 → 09-25.</strong> The first head games: a case-fold
+collision between arm names made one arm silently reuse another’s files
+(caught by an impossible timestamp); then the other-agent head read 134
+of 300 and was withdrawn as contaminated (fitted on the scoring set).
+Games moved to seed 89.</li>
+<li><strong>09-25.</strong> Arm 1 scored: the second reader recomputed
+the bar from its definition and found the scorer had excluded the arm
+under test; the interval count fell from 2 of 3 to 1 of 3.</li>
+<li><strong>09-25.</strong> The owner’s forced-look control registered
+before arm 1’s score; its charging of the forced action found and fixed
+before it ran.</li>
+<li><strong>09-26.</strong> Forced-look scored: within the bar of the
+other-agent head. A one-game “above” flag registered as a fourth
+reading; it did not fire.</li>
+<li><strong>09-26.</strong> Mixture scored: below forced-look in all
+three games; the matched-size ambiguity named and its discriminator
+started the same hour.</li>
+<li><strong>09-26.</strong> Degeneracy tested and refuted; the
+selectivity finding; the probe found inverted against both outcome
+measures.</li>
+<li><strong>09-26 23:0xZ.</strong> The claim of record fixed by the
+owner before the draft: the plateau can arise from acquisition, not from
+exhaustion of use.</li>
+</ol>
+<p>Credits: E ran every arm and found every instrument defect above
+before its number travelled; R (the results reader) found the one that
+moved a verdict. The owner designed the forced-look control and fixed
+the claim.</p>
+</body>
+</html>

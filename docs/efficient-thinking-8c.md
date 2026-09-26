@@ -1,0 +1,117 @@
+# Efficient Thinking VIII-c: Where the Experience Is Acquired
+## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
+
+> **STATE 2026-09-27: DRAFT v0.1, written backward from the record (`docs/et8b-loop-gates.md` §16–§16c).** Every registered arm has run and is scored against the pre-registered bars; one registered discriminator (§5) is collecting and its three readings are fixed. Numbers marked *pending* are the discriminator's. Nothing here is final until lock v3 is second-read.
+
+**Louay Alsakka** · September 27, 2026 · *draft v0.1*
+
+## Abstract
+
+Paper VIII showed that a frozen model with a read-only head fitted on its own verified history moves the quality–compute frontier. Paper VIII-b showed that the gain does not compound: a second generation of the agent's own experience is largely a repeat of the first, and a head fitted on it is not separable from the first by the loop's own noise. This paper asks what the plateau is made of, and finds that it can arise from how the agent acquires experience rather than from any exhaustion of its ability to use it. The evidence is three heads of identical form and size, fitted on the same frozen model's hidden states with the same verifier labels, differing only in *which states* they were fitted on. On 300 problems no head had seen: a head fitted where the agent's own policy stood solves 26.8% (base 22.0%); a head fitted where a second, weaker agent's policy stood solves 35.4%; a head fitted where the agent was made to stand — the code read before any hypothesis, by a one-line rule during collection only — solves 41.2%. The second agent was the experiment that revealed the dissociation, not its mechanism: the effect needs neither another agent nor several. A head built from states the agent was made to visit is more selective than one built from states it chose — it agrees with the agent's own pick less often, and is right more often when it does. Mixing the two acquired sets does not compound them. A cheap held-out proxy ranked the three heads in exactly the reverse of their behaviour in the loop and is retired. One task family, one model pair: a mechanism demonstrated in this system, not a law.
+
+## Results at a glance
+
+**Observations** — six arms, one session per game, three games on the same 300 problems (seed 89), percent of problems solved. Means and within-arm ranges; no comparison is implied by adjacency.
+
+| arm | what sits beside the frozen 7B | g1 | g2 | g3 | mean | range |
+|---|---|---|---|---|---|---|
+| base | nothing | 66 | 67 | 65 | 22.0 | 0.67 |
+| gen0 | the head of VIII (its earliest experience) | 58 | 60 | 60 | 19.8 | 0.67 |
+| self | the matched second-generation head of VIII-b (own experience) | 77 | 83 | 81 | 26.8 | 2.00 |
+| other-agent | head on the 7B's states at the places agent B's policy visited | 102 | 104 | 113 | 35.4 | 3.67 |
+| forced-look | head on the 7B's states at the places a forced first inspection visited | 122 | 126 | 123 | 41.2 | 1.33 |
+| mixture | head on other-agent ∪ forced-look decisions, same size | 117 | 113 | 117 | 38.6 | 1.33 |
+
+**Supported comparisons** — paired per problem, three games, read against the registered bars (§2). Only these rows are claims.
+
+| comparison | mean difference (points) | point-estimate bar (3 of 3 games) | interval bar | where |
+|---|---|---|---|---|
+| other-agent − self | +8.7 | clears | 1 of 3 | §3 |
+| other-agent − base | +13.4 | clears | 3 of 3 | §3 |
+| forced-look − self | +14.4 | clears | 3 of 3 | §3 |
+| forced-look − base | +19.2 | clears | 3 of 3 | §3 |
+| self − base | +4.8 | does not clear | 0 of 3 | §3 (VIII-b reproduced) |
+| mixture − forced-look | −2.7 | within noise | 0 of 3 | §5 |
+| forced-look − other-agent | +5.8 | 2 of 3 | 0 of 3 | §5 — **within noise; not a ranking** |
+
+Two comparisons a reader will want are deliberately absent from the second table: whether a forced look is *better* than another agent's places, and whether the mixture is better than either. Both are within this harness's noise and the text says so where it matters (§5).
+
+## 1. The question
+
+VIII-b ended on a diagnosis: a steered agent stands where the previous agent stood and produces the same state, so its experience stops being new. That leaves two readings of the plateau. Either the model has taken what it can from experience of this kind — its ability to *use* experience is exhausted at this size — or the model has stopped *acquiring* experience worth using, because its own policy keeps it in the same region. The two readings predict different things. If use is exhausted, no experience of this form helps further, whoever gathered it. If acquisition is the limit, experience gathered somewhere else, by any means, should help, and the head form need not change at all.
+
+The experiment that separates them is to hold everything fixed — the frozen model, the head's form and size, the verifier's labels, the scoring set — and vary only where the states come from.
+
+## 2. Instruments, and what is fixed
+
+Everything runs on the loop harness of VIII and VIII-b (`et8b_loop`, budget 12, up to three head decisions per episode) with the same frozen 7B model. Three things are fixed across every arm and are the reason the comparison is clean:
+
+- **The head.** A read-only linear head over the frozen model's hidden state at layer 18, shared across decisions, fitted on 290 whole decision groups drawn at one seed. Every head in this paper has this form and this count. Its labels are the verifier's ground truth (`bug_region`) in every arm; no agent supplies a label.
+- **The states.** Every head is fitted on the *7B's* hidden states. When another agent's trajectory is used, that trajectory is replayed as a prompt to the 7B and the 7B's own state at each of the other agent's decision points is recorded. Nothing the other agent thought enters the head; only where it stood.
+- **The scoring set.** All games run on a 300-problem set (seed 89) that no head in the comparison was fitted on. The fitting sets (seed 73 for the other-agent and forced-look heads; seed 21 for the self head) share no program with it and at most five symptom strings that point to the same region, against effects of thirty-plus problems.
+
+The bars are those registered in VIII-b: a comparison clears the point-estimate bar when the paired mean difference exceeds the largest within-head-arm range of the session in each of three games; it clears the interval bar when the paired bootstrap interval's lower bound does. The session's largest range is the other-agent arm's, 3.67 points, and it did not move when the two later arms were added (they are the steadiest arms in the table).
+
+Two properties of the instrument, established in VIII-b and confirmed here, frame every number: decision 1 is greedy on an identical state, so a head's first pick is deterministic and identical across games; all between-game variation lives at decisions 2 and 3.
+
+## 3. The dissociation
+
+**The self head reproduces the plateau.** On the new set, the matched second-generation head of VIII-b beats base by +3.7, +5.3 and +5.3 points and clears no bar. This is VIII-b's result on a third problem set, and it is the control the rest of the paper is read against.
+
+**The other-agent head clears it.** Agent B is a second frozen model of a different family (Llama-3.1-8B), the weaker of the two: alone it solves 36 of the 300 fitting problems where the 7B solves 68. Its policy differs in one measurable habit: it inspects the code before its first hypothesis on 70% of problems, where the 7B hypothesises first on 99%. A head fitted on the 7B's states at B's visited places, labelled by the verifier, beats base by +12.0, +12.3 and +16.0 and clears both bars in every game; it beats the self head by +8.3, +7.0 and +10.7, clearing the point-estimate bar in every game and the interval bar in one. Ability to use experience was not exhausted: the same head form, on states from elsewhere, more than doubled the gain.
+
+**The other agent was not needed.** The forced-look head is fitted on the 7B's own trajectories with one change during collection only: at decision 1 the action is forced to be an inspection (charged as an action, target chosen by the loop's existing rule), with decisions 2 and 3 under the native policy. That head beats base by +18.7, +19.7 and +19.3 and the self head by +15.0, +14.3 and +14.0, clearing both bars in every game. Against the other-agent head it leads in every game but the difference is within the session's noise (§5). The registered reading is that the forced look is at least as good as the second agent's own trajectories: what mattered was where the model was standing when the experience was recorded, and a one-line rule can put it there.
+
+So the plateau of VIII-b was acquisition. The agent's own policy returned to the same region; a head fitted there was fitted where the evidence was not yet in the prompt.
+
+## 4. What the difference is made of
+
+Three pre-registered predictions were read from the games' own logs, and one alternative explanation was tested after the fact.
+
+**The head is a better function on the identical input.** At decision 1 every arm sees the same state, so the share of first picks that name the true region is the head's function alone: base 23.3%, gen0 17.0%, self 30.7%, other-agent 42.3%. Of the other-agent head's 170 solves the self head did not reach, it had named the true region at decision 1 on 105 (62%); the self head had on 6 (4%). Its edge grows through decisions 2 and 3 (+11.7, +19.1, +21.3 points over the self head), but the later decisions are the dirtier comparison — by decision 2 the arms are in states their own first pick produced — so the clean number is the smallest one.
+
+**Episodes get shorter, not longer.** The registered prediction that a better head would lengthen episodes (an inspection before the hypothesis) was refuted: mean actions fall, 7.59 under the other-agent head against 8.21 base, because a correct first pick ends the episode sooner. The habit itself does not transfer at game time — the loop forces a hypothesis at decision 1 under every head — and the result does not need it to.
+
+**The forced-look head is not degenerate; it is selective.** The worry was that forcing every first move produces a head that always names this family's favourite region. Measured over every decision at which each head was consulted, the forced-look head is the *flattest* of the six (top-pick share 17.6% against a uniform 12.5%; the most concentrated head, gen0, is the only one that loses to base). What distinguishes it is selectivity: it agrees with the agent's own pick less often than the other-agent head (33.7% against 40.3%) and is right more often when it agrees (73.3% against 60.6%). A head built from states the agent was made to visit disagrees with the policy that produced it more, and its agreement carries more information.
+
+## 5. Mixing the two does not compound them
+
+The registered second arm fits one head on the union of the other-agent and forced-look decisions at the same size as either alone. It solves 38.6%: below the forced-look head in all three games (−1.7, −4.3, −2.0; every interval spanning zero) and above the other-agent head by margins that also span zero. The registered reading that fired is that the second agent's places add nothing to a forced look.
+
+One reading the matched size cannot separate is recorded before its discriminator lands: at 290 groups the mixture is not "forced plus other-agent" but "forced with half replaced by other-agent" (the seed drew 158 and 132 groups). Either the other agent's groups are dead weight, or forced-look experience saturates at half its size, in which case the mixture says nothing about the other agent in either direction. The discriminator — a head on the mixture's own 132 forced-look groups alone, not a fresh draw — is *pending*; its three readings were fixed before it ran (≈41: saturation; ≈38.6: neutral; ≈35: the other agent's half carried the mixture).
+
+Two comparisons are therefore stated as within noise and nothing else: forced-look against other-agent (+6.7, +7.3, +3.3; interval bar 0 of 3) and mixture against forced-look. Nothing in this paper establishes that a forced look is *superior* to a second agent's selection, or that the two experiences interfere.
+
+## 6. What did not hold
+
+- **The cheap proxy ranked the heads backwards.** Held-out pick accuracy at fitting time ordered the three heads other-agent 57.9% > forced-look 54.8% > mixture 53.8%. In the loop, both by problems solved and by in-game hit rate, the order is forced-look > mixture > other-agent. This is the sixth time in the series that a probe has failed to predict a paired result and the second time it has pointed the wrong way. No mechanism is offered; the probe is retired as a diagnostic rather than rescued.
+- **"Above the other agent" did not fire.** After one game of the forced-look arm read twenty points above the other-agent head, a fourth reading was registered for that direction. The third game came in at +3.3 with an interval spanning zero and the reading did not fire. The one-game flag is in the appendix as the kind of number this harness produces.
+- **The first other-agent arm was contaminated and withdrawn.** Its head had been fitted on the very 300 problems its games scored and read 134 of 300 — a head recalling its answer key. The tell was proportion, not sign: an effect an order of magnitude larger than anything the instrument had produced. The games moved to a third set no head had seen, and every number above is from that set.
+
+## 7. What this says, and what it does not
+
+Learning is usually discussed as one thing. This series has been separating three: the intelligence, which is frozen throughout and never changed; the ability to *use* verified experience, which VIII showed and which every head here exercises through the same read-only form; and the ability to *acquire* experience worth using, which is what the acting policy determines by where it stands when a state is recorded. VIII-b found the plateau; this paper finds that, in this system, the plateau was in acquisition, and that changing where the agent stands before it decides — by borrowing another agent's habit or by imposing one — restores gains of the size VIII first reported, with the intelligence held fixed.
+
+The technical form is that the value of experience is conditional on the state distribution induced by the acquisition policy. The intuitive form is that where you learn from matters, not just how much you collect. The question this opens, and does not pursue, is which states an agent should seek in order to acquire the most useful experience: the acquisition policy as an optimisation dimension in its own right.
+
+The claim is scoped to what was measured: one task family (debugging), one model pair, one head form, 300 problems per game. "Can arise" is the verb because a mechanism has been demonstrated in this experimental system, not a law of frozen agents. The two later arms ran a day after the bracket they are scored against, and the only evidence that session drift is small is the base's own within-day stability (66/67/65). The loop harness recorded no provenance of its own invocation at the time; the source set of the forced-look states was established from the data (candidate region names ⊆ each task's own regions: 300 of 300 against the fitting set, 15 of 300 against the scoring set) rather than from memory, and the harness now writes a config record beside every arm.
+
+## Reproducibility
+
+Every game file, head, task set and score in this paper is named by sha256 in `experience/results/viiic_LOCK.json` (arms of §3) and `viiic_LOCK_v2.json` (arms of §4–§5), with the git sha of the script that produced each artefact and its exact invocation; the discriminator joins in v3. A second reader recomputed 16 of 16 statistics from the lock's table and 12 of 12 green counts from the files, verified 108 of 108 hashes, and found the one discrepancy that moved a recorded verdict (§6, the bar). Withdrawn runs are kept and named. The registrations, in the order they were written, are `docs/et8b-loop-gates.md` §16–§16c.
+
+## Appendix A. How this was found
+
+1. **09-23.** VIII-b's saturation diagnosis; the question of escape posed as "a different agent, same family — the fastest route".
+2. **09-24 07:1xZ.** §16 registered: agent B collects on seed 73's 300; the readings fixed before collection.
+3. **09-24.** First collection stopped at 33 episodes: the harness prompt carried a stale region menu from an earlier task family; B obeyed it, the 7B ignored it. Corrected; a fresh 7B base run showed the correction moved vocabulary, not difficulty (22.7% vs 20.7%).
+4. **09-24.** Reading (i) fired on the registered 25% bar; a same-agent churn control then showed two runs of the same agent differ by 4 problems (6.7%) — the bar was tightened to a difference against churn before any number travelled.
+5. **09-24 → 09-25.** The first head games: a case-fold collision between arm names made one arm silently reuse another's files (caught by an impossible timestamp); then the other-agent head read 134 of 300 and was withdrawn as contaminated (fitted on the scoring set). Games moved to seed 89.
+6. **09-25.** Arm 1 scored: the second reader recomputed the bar from its definition and found the scorer had excluded the arm under test; the interval count fell from 2 of 3 to 1 of 3.
+7. **09-25.** The owner's forced-look control registered before arm 1's score; its charging of the forced action found and fixed before it ran.
+8. **09-26.** Forced-look scored: within the bar of the other-agent head. A one-game "above" flag registered as a fourth reading; it did not fire.
+9. **09-26.** Mixture scored: below forced-look in all three games; the matched-size ambiguity named and its discriminator started the same hour.
+10. **09-26.** Degeneracy tested and refuted; the selectivity finding; the probe found inverted against both outcome measures.
+11. **09-26 23:0xZ.** The claim of record fixed by the owner before the draft: the plateau can arise from acquisition, not from exhaustion of use.
+
+Credits: E ran every arm and found every instrument defect above before its number travelled; R (the results reader) found the one that moved a verdict. The owner designed the forced-look control and fixed the claim.
