@@ -126,6 +126,52 @@ PLANS = {
                         "these heads (B 1,421 at 290 decisions, union 1,424) because groups vary "
                         "in length; the match is on the unit the head is SCORED over, which is "
                         "decisions, not rows.")},
+    # VIII-c, THE SEVEN-ARM TABLE — the discriminator's plan, registered while arm 4 is at 149 of
+    # 900 episodes and none of its three games has a number.
+    #
+    # v_f132 is the union cut's OWN 132 forced decision groups, alone, no B: the same groups, not a
+    # re-draw at the same seed, so the only thing that differs from the union arm is the presence of
+    # B's 158 groups. Head fitted before the games: CV 45.5% (n=132, chance 20.3), permutations
+    # 18.2-25.8, PCA-8 30.3, sub 42.4 -- the lowest probe of the four heads, recorded here because a
+    # probe that predicted the ordering would be the first probe in this programme to do so.
+    #
+    # THE THREE OUTCOMES, FIXED BEFORE THE NUMBER EXISTS (they are a three-way comparison against
+    # arms already on disk, so no new bracket is run and the within-arm ranges stay one session):
+    #   v_f132 ~ v_fi   (41.22)  -> the forced arm SATURATES at 132 groups; the union arm cannot
+    #                              speak about B in either direction, and the six-arm reading
+    #                              "B adds nothing" is NOT supported by it
+    #   v_f132 ~ v_un   (38.56)  -> B's 158 groups neither add nor subtract: "B adds nothing" stands
+    #   v_f132 ~ v_vb   (35.44)  -> the B half CARRIED the union up from 132 forced groups; B
+    #                              contributes, and the six-arm reading is wrong
+    # A result between two of those anchors is reported as between them, not rounded to the nearer.
+    #
+    # THE BAR CAN MOVE AGAIN and the same rule applies as in viiic6: it is the largest within-HEAD-arm
+    # range of the session, now over six head arms. If v_f132's own range exceeds 3.67 the bar rises
+    # and every (b) verdict is re-read against the wider bar, including ones the lock records as
+    # passing. The denominator is the loop's instability and more arms measure more of it.
+    "viiic7": {"base": "v_b",
+               "arms": ("v_b", "v_g0", "v_g1m", "v_vb", "v_fi", "v_un", "v_f132"),
+               "labels": {"v_b": "base",
+                          "v_g0": "gen0 head (per-decision -- the form gen0's own rule selected)",
+                          "v_g1m": "gen1-matched, SHARED head, 290 decisions, seed 13731",
+                          "v_vb": "agent B's visited places, SHARED head, 290 decisions, seed 13731",
+                          "v_fi": "forced-inspection agent's places, SHARED head, 290 decisions, seed 13731",
+                          "v_un": "B + forced MERGED, groups kept apart, SHARED head, 290 whole groups, seed 13731",
+                          "v_f132": "the union cut's OWN 132 forced groups, alone -- the discriminator"},
+               "aliases": {},
+               "wanted": [("v_g1m", "v_b"), ("v_vb", "v_b"), ("v_fi", "v_b"), ("v_un", "v_b"),
+                          ("v_f132", "v_b"),
+                          ("v_fi", "v_f132"), ("v_un", "v_f132"), ("v_f132", "v_vb"),
+                          ("v_un", "v_fi"), ("v_un", "v_vb"), ("v_fi", "v_vb")],
+               "forbidden": set(),
+               "note": ("v_fi - v_f132 is THE pairing: same source, same form, same seed, 290 "
+                        "decisions against 132, and it is the only thing in this programme that can "
+                        "separate saturation of the forced arm from a contribution by the union's B "
+                        "half. v_un - v_f132 is the same question asked from the other side: it is "
+                        "exactly the 158 B groups, added to a fixed 132 forced ones, at a budget "
+                        "that is NOT matched -- which is the comparison the matched-budget union "
+                        "arm could not make. Read both beside the probe ordering, which is inverted "
+                        "against the games everywhere it has been checked in this table.")},
     "13c": {"base": "c_b", "arms": ("c_b", "c_g0", "c_g1m", "c_g1pp"),
             "labels": {"c_b": "base", "c_g0": "gen0 head",
                        "c_g1m": "gen1-matched (290 decisions, whole groups)",
