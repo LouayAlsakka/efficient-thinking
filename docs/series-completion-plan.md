@@ -121,3 +121,18 @@ Self-generated information is constrained by the process generating it. Instance
 to alter the generating process. The project's first negative result (adaptive MCTS from its own experience) may be
 an instance; untested, and not claimed. Open question raised by VIII-c, not pursued in it: which states should an
 agent seek in order to acquire the most useful experience — the acquisition policy as an optimisation dimension.
+
+
+## VIII-d — the acquisition policy as the object (agreed in principle 2026-09-26; NOT registered; not before VIII-c v0.2 is second-read)
+Question VIII-c opened and did not pursue: which states should an agent seek in order to acquire the most useful
+experience. Self-play in the only sense VIII-c supports: the agent's acquisition rule is what varies; the
+intelligence, the head form and size (shared, 290 groups, one seed), the verifier labels and the scoring set
+(seed 89) are frozen. Candidate arms, each a collection under one rule: native policy; forced look at decision 1
+(= VIII-c arm 3, the anchor); forced look at every decision; look at the region the current head is least certain
+of; the head's own choice. One prediction to register from VIII-c §16c (iii): selectivity (lower agreement with
+the policy, higher hit given agreement) predicts play — if a rule that raises disagreement raises solved problems,
+acquisition is optimisable by that quantity and the loop closes (acquire where the head disagrees, refit, repeat);
+if it saturates at "look first", the dimension is real but shallow in this family. Cost: ~85 min collection per
+rule, three games per arm; five arms ≈ two to three days of one box. The ET-1 / adaptive-MCTS connection is tested,
+if at all, as one arm inside this design (adaptive from own experience vs from a forced acquisition rule), never
+by touching the chess harness first.
