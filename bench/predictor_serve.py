@@ -197,6 +197,11 @@ def main():
     ap.add_argument("--host", default="127.0.0.1",
                     help="0.0.0.0 to serve the estate LAN. Default is this box's loopback only.")
     ap.add_argument("--fake", action="store_true", help="no credentials, no network, no spend")
+    ap.add_argument("--cap", type=float, default=0.0,
+                    help="HARD SPEND CAP in USD for /predict, enforced in PredictorV0 against its "
+                         "ledger before each call (it reserves, then refuses). Without it this "
+                         "server does NOT serve /predict live: an uncapped paid endpoint on a "
+                         "localhost port is how a loop spends a budget nobody set.")
     ap.add_argument("--model", default="us.anthropic.claude-opus-4-7")
     ap.add_argument("--ledger", default=os.path.join(HERE, "bench_spend_ledger.json"))
     ap.add_argument("--taxonomy", default="", help="taxonomy json for /area (default: the demo one)")
@@ -222,8 +227,18 @@ def main():
             Handler.predictor = PredictorV0(model=a.model, transport=fb,
                                             ledger=a.ledger + ".FAKE", world=world)
             Handler.mode = "/predict: FAKE — no network, no spend"
+        elif a.cap <= 0:
+            # ⛔ THE PAID ENDPOINT DOES NOT SERVE UNCAPPED. PredictorV0 has taken a `cap` since it
+            # was written and this server never passed one, so /predict was the one paid path in
+            # the bench with no ceiling — /area's $10 is enforced in AreaV0 against its own ledger
+            # (see below), and Paper IV's rule is a hard cap in code with a running meter, not a
+            # number in a work order. Refusing here rather than at startup is deliberate: /area
+            # keeps serving, so a restart of this process cannot take the demo down over a flag.
+            raise RuntimeError(
+                "no --cap given. /predict is a PAID endpoint (%s) and will not serve uncapped; "
+                "pass --cap <usd>. /area is unaffected and is local-only by default." % a.model)
         else:
-            Handler.predictor = PredictorV0(model=a.model, ledger=a.ledger, world=world)
+            Handler.predictor = PredictorV0(model=a.model, ledger=a.ledger, world=world, cap=a.cap)
             # PREFIXED WITH THE ENDPOINT IT DESCRIBES, on purpose. /health used to answer
             # "mode": "LIVE Bedrock: ..." while the CLASSIFIER was local — a reader glancing at
             # that would reasonably conclude the user's sentence leaves the estate, which is the
@@ -239,15 +254,22 @@ def main():
             Handler.mode = "/predict: LIVE Bedrock: %s" % a.model
     except Exception as e:
         Handler.predictor = None
+        # THE REASON MUST BE THE ACTUAL REASON. This line used to append "It needs boto3, which
+        # this interpreter does not have" to EVERY failure, so a deliberate refusal (no --cap) read
+        # as a missing dependency — a wrong cause is worse than no cause, because it sends the
+        # reader to fix the wrong thing.
+        _why = ("It needs boto3, which this interpreter does not have."
+                if isinstance(e, ImportError) else "")
         Handler.predict_unavailable = (
-            "/predict is not available in this process: %s: %s. It needs boto3, which this "
-            "interpreter does not have. /area is unaffected and is local-only by default."
-            % (type(e).__name__, str(e)[:160]))
+            "/predict is not available in this process: %s: %s %s /area is unaffected and is "
+            "local-only by default." % (type(e).__name__, str(e)[:400], _why))
         Handler.mode = "PREDICT UNAVAILABLE — /area only"
         print("  ⚠️ %s" % Handler.predict_unavailable)
     print("  venue: %s" % ("%s — %d offer(s), %d staff" % (world["handle"], len(world["offers"]),
           len(world["staff"])) if world else "NONE (--space not given; args will not resolve)"))
-    print("  predictor v0 on http://%s:%d   mode: %s" % (a.host, a.port, Handler.mode))
+    print("  predictor v0 on http://%s:%d   mode: %s   /predict cap: %s"
+          % (a.host, a.port, Handler.mode,
+             ("$%.2f" % a.cap) if a.cap > 0 else ("n/a (fake)" if a.fake else "NONE — /predict refused")))
     tax = load_taxonomy(a.taxonomy or None)
     if a.area_backend == "local" and not a.fake:
         import area_local as AL
