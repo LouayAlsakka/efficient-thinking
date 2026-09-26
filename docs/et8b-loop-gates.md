@@ -931,3 +931,15 @@ in VIII; ACQUISITION is what saturated in §13, and it is unblocked by changing 
 it decides, whether by a second agent or by a rule. Next, as registered: the union head — B's and the forced arm's
 decisions at 290 total — now asking whether B's trajectories add anything to a forced-inspection head or are
 redundant with it. Then the paper.
+
+**16c (i), 2026-09-26 19:2xZ — union head (arm 2) fitted; construction and readings recorded before its games land.**
+Sources: the B-experience decisions (4,322 rows, 300 tasks) and the forced-inspection decisions (4,049 rows, 300
+tasks), on the same 300 tasks. Construction rule, needed because `subsample_by_decision.groups()` keys on
+(task_id, decision): each source's task_id is prefixed at merge, so the union is 600 tasks × 3 decisions = 1,683
+groups and a cut group belongs to exactly one source (a naive concatenation would have merged two trajectories'
+rows into one group — the §13c unit error arriving through a merge). Cut 290 whole groups, seed 13731: 1,424 rows,
+drawn as B 158 groups / forced 132 (the seed's split, unforced). Shared head, layer 18, CV 53.8% (chance 20.4),
+permutation at chance, PCA-8 30.3 — the lowest probe of the three heads, recorded before the games. Readings, fixed:
+above both single-source heads by more than the §14 bar → the two experiences compound; within the bar of the
+better single source → B adds nothing to a forced look (the live hypothesis after §16c); below both → mixing two
+acquisition policies is worse than either. The bracket is not re-run; the union arm joins the five arms on disk.
