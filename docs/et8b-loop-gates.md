@@ -943,3 +943,36 @@ permutation at chance, PCA-8 30.3 — the lowest probe of the three heads, recor
 above both single-source heads by more than the §14 bar → the two experiences compound; within the bar of the
 better single source → B adds nothing to a forced look (the live hypothesis after §16c); below both → mixing two
 acquisition policies is worse than either. The bracket is not re-run; the union arm joins the five arms on disk.
+
+## 16c (ii). Union head scored; the six-arm table; discriminator registered (2026-09-26 21:05Z; recorded 21:3xZ)
+```
+  arm              g1    g2    g3    mean%   range   vs base   §14a  §14b
+  base             66    67    65    22.00   0.67      —
+  gen0             58    60    60    19.78   0.67    −2.2      0/3   0/3
+  g1-matched       77    83    81    26.78   2.00    +4.8      0/3   0/3
+  B-experience    102   104   113    35.44   3.67   +13.4      3/3   3/3
+  forced inspect  122   126   123    41.22   1.33   +19.2      3/3   3/3
+  union (B+forced)117   113   117    38.56   1.33   +16.6      3/3   3/3
+```
+The bar stays 3.67 (the B arm's range is still the largest; the two new arms are the steadiest at 1.33). union −
+forced −1.7 [−7.3,+4.0] / −4.3 [−9.3,+1.0] / −2.0 [−7.3,+3.3], §14a 0/3; union − B +5.0 / +3.0 / +1.3, all intervals
+spanning zero. Registered reading fired: within the bar of the better single source — B adds nothing to a forced
+look. Not the compound branch, not the below-both branch. The union is below the forced arm in all three games,
+same sign, indistinguishable from within-arm variation.
+One reading the matched budget cannot separate: the union was cut to 290 whole groups, drawn B 158 / forced 132,
+so at matched budget it is forced WITH HALF REPLACED BY B, not forced plus B. Two readings fit: (a) the 158 B groups
+are dead weight; (b) the forced arm saturates — 132 forced groups already buy what 290 do — in which case the union
+says nothing about B either way. DISCRIMINATOR, registered and running (llm2, ~2.9 h): a head on the union's own 132
+forced groups alone (not a fresh draw, to avoid confounding "B added nothing" with "a different forced set"); CV
+45.5% (n=132), permutations at chance. Readings fixed: forced@132 ≈ forced@290 (41.2) → saturation, the union
+cannot speak about B; forced@132 ≈ union (38.6) → the B groups neither add nor subtract; forced@132 ≈ B (35.4) →
+the B half carried the union up, B contributes.
+Probe inversion recorded: probe order B 57.9 > forced 54.8 > union 53.8; game order forced > union > B — exactly
+reversed. Sixth probe non-conversion; second pointing the wrong way. The probe is the thing that needs explaining.
+Bounds: the forced and union arms ran on 09-26 against a bracket run on 09-25 (the four original arms were adjacent
+within each game to control session drift; the two new arms are not); the only drift evidence is the base's
+within-day stability (66/67/65), a within-day fact carrying a between-day claim. Provenance: `et8b_loop.py` records
+no invocation of its own; the forced-inspection states' source set was established from the data (candidate
+region names ⊆ the task's own regions: 300/300 against seed 73, 15/300 against seed 89) rather than from memory;
+the loop gains a `<out>.config.json` (resolved args, task-set sha, head sha, script sha) after the running chain is
+off the file. Lock v2 `1d22c99` (v1 untouched); results reader: 匠.
