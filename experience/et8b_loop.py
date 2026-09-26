@@ -15,6 +15,7 @@ state against the head loop's decision-2 state on the SAME problem. That compari
 both arms log the state they were in, so `decision_state` is written by both.
 """
 from __future__ import annotations
+import hashlib
 import argparse, glob, hashlib, json, os, sys, time, uuid
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import et8_agent as A
@@ -101,7 +102,7 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
 
         # FORCED INSPECTION (§16a (xvi), the causal control). At the named decisions the agent
         # does not decide: the step is recorded as an inspect with no region, which is exactly
-        # the shape agent B produced on its own at 69% of first decisions. No model call is made
+        # the shape agent B produced on its own at 69.7% of first decisions (209 of 300). No model call is made
         # for the decision itself, so this costs less than a native one rather than more.
         #
         # WHAT I COULD NOT READ OUT OF THE REGISTRATION, and have implemented the faithful way:
@@ -113,7 +114,7 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
             decisions_made += 1
             # CHARGE THE ACTION even though no model call is made. A NATIVE agent that emits an
             # inspect at this decision pays one action for the generation, and agent B paid it on
-            # 69% of its first decisions. Not charging it would hand this control a free action
+            # 69.7% of its first decisions. Not charging it would hand this control a free action
             # out of the budget of 12 and leave it more room at decisions 2-3 than B ever had --
             # a control with an advantage the thing it controls for did not have. Measured before
             # fixing: the uncharged version ran 8 actions per episode against the native 9.
@@ -271,6 +272,68 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
             "agent_claims_pass_NOTE": "not measured here; see experience/et8b_selfassess.py"}
 
 
+def write_run_config(a, files, run_id, argv):
+    """Provenance beside the outputs: what this invocation actually ran on.
+
+    Written BEFORE the model loads, so a run that dies at load still says what it tried. Every
+    lookup that can fail is caught and recorded as a string rather than left to raise -- a
+    provenance record that can break the run it documents is worse than none.
+    """
+    def _sha(p):
+        try:
+            h = hashlib.sha256()
+            with open(p, "rb") as fh:
+                for b in iter(lambda: fh.read(1 << 20), b""):
+                    h.update(b)
+            return h.hexdigest()
+        except Exception as e:
+            return "unavailable: %s" % e
+
+    def _manifest(paths):
+        # one sha over "basename sha" lines: identifies the TASK SET, not just its directory name,
+        # so two dirs with the same name and different contents cannot be confused.
+        try:
+            h = hashlib.sha256()
+            for p in paths:
+                h.update(("%s %s\n" % (os.path.basename(p), _sha(p))).encode())
+            return h.hexdigest()
+        except Exception as e:
+            return "unavailable: %s" % e
+
+    try:
+        import subprocess as _sp
+        sha = _sp.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True,
+                      cwd=os.path.dirname(os.path.abspath(__file__))).stdout.strip() or "unavailable"
+    except Exception as e:
+        sha = "unavailable: %s" % e
+    cfg = {
+        "document": "et8b_loop invocation record -- what this arm ran on",
+        "run_id": run_id,
+        "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "argv": argv,
+        "out": a.out,
+        "model": a.model,
+        "budget": a.budget,
+        "decisions_allowed": a.decisions,
+        "force_inspect": sorted(a.force_inspect) if a.force_inspect else [],
+        "tasks_dir": os.path.abspath(a.tasks),
+        "n_tasks": len(files),
+        "tasks_manifest_sha256": _manifest(files),
+        "head": ({"form": "shared", "file": a.head, "sha256": _sha(a.head),
+                  "layer": a.head_layer} if a.head else
+                 {"form": "per-decision", "files": list(a.heads or []),
+                  "sha256": [_sha(p) for p in (a.heads or [])], "layer": a.head_layer}
+                 if a.heads else {"form": "none -- base arm"}),
+        "script_git_sha": sha,
+        "why_this_file_exists": ("the source task set of one arm had to be reconstructed from "
+                                 "candidate region names because no artefact recorded --tasks. "
+                                 "The manifest sha identifies the SET, not the path."),
+    }
+    with open(a.out + ".config.json", "w") as fh:
+        json.dump(cfg, fh, indent=1)
+    return cfg
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tasks", required=True); ap.add_argument("--out", required=True)
@@ -313,6 +376,7 @@ def main():
     if a.limit: files = files[:a.limit]
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     run_id = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()) + "-" + uuid.uuid4().hex[:6]
+    write_run_config(a, files, run_id, list(sys.argv))
     model, tok = A.load_model(a.model)
     ep = open(a.out + ".episodes.jsonl", "w"); st = open(a.out + ".steps.jsonl", "w")
     for i, f in enumerate(files, 1):
