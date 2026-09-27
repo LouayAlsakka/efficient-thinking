@@ -1014,3 +1014,22 @@ series principle is recorded as a HYPOTHESIS for the series plan, not a claim of
 information is constrained by the process generating it (II: correlated sampling; VI: self-labels; VIII-b:
 self-experience saturation; VIII-c: one way to alter the generating process); the connection to the project's first
 negative result (adaptive MCTS from its own experience) is noted as untested.
+
+## 16c (iv). The discriminator landed and reverses the mixture reading (2026-09-26 23:51Z; recorded 09-27 10:0xZ)
+Arm `f132`: a head on the mixture's own 132 forced-look groups alone — 95 / 101 / 97, mean 32.56, range 2.00. Against
+the three anchors registered before it ran (≈41.22 saturation · ≈38.56 neutral · ≈35.44 the other agent's half
+carried the mixture), the realised value sits nearest the third and below all three. SATURATION IS REFUTED:
+forced(290) − f132 = +9.0/+8.3/+8.7, §14(a) 3/3 (§14(b) 0/3: lower bounds 3.3/2.7/3.0 against 3.67). AND THE OTHER
+AGENT'S GROUPS CONTRIBUTED: mixture − f132 = +7.3/+4.0/+6.7, §14(a) 2/3 — adding the other agent's 158 groups to the
+same 132 forced groups moves 32.56 → 38.56. WITHDRAWN: §16c (ii)'s fired reading "B adds nothing to a forced look".
+At a matched 290 the other agent's experience displaced forced groups; it was not dead weight. Strict status: by the
+two-condition bar none of the three new pairwise comparisons clears both, so they carry the same status as
+forced − other-agent — a lean, not a ranking. Point estimates order forced(290F) 41.22 > mixture(132F+158B) 38.56 >
+other-agent(290B) 35.44 > f132(132F) 32.56 > self 26.78 > base 22.00, with every adjacent pair except (f132, base)
+inside the session's instability; an ordering is withdrawn, not claimed. Consistent-with, not established: f132 −
+other-agent is indistinguishable in all three games (−2.3/−1.0/−5.3), so 132 forced groups ≈ 290 other-agent groups,
+~2.2× per decision group — a magnitude for "where the model was standing", resting on an equality-within-noise.
+The probe becomes readable with four heads: within the same amount (290 groups) it ranks the heads in reverse of the
+games; across amounts (290 vs 132) it ranks f132 lowest, correctly. The held-out probe tracks HOW MUCH experience a
+head was fitted on, not WHERE it came from — the one variable this paper is about. Bar unchanged at 3.67; nothing in
+v1/v2 re-read. Lock v3 `6e13be6`. No further collection; freeze.
