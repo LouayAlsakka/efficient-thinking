@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Efficient Thinking VIII-c: Where the Experience Is Acquired</title>
+  <title>efficient-thinking-8c</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -337,10 +337,6 @@
     </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">Efficient Thinking VIII-c: Where the Experience Is
-Acquired</h1>
-</header>
 <h1
 id="efficient-thinking-viii-c-where-the-experience-is-acquired">Efficient
 Thinking VIII-c: Where the Experience Is Acquired</h1>
@@ -349,17 +345,19 @@ id="a-frozen-agents-plateau-another-agents-places-a-forced-look-and-what-the-dif
 frozen agent’s plateau, another agent’s places, a forced look, and what
 the difference is made of</h2>
 <blockquote>
-<p><strong>STATE 2026-09-27: v1.0.4, 2026-09-27 (v1.0 plus §6a related
-work, each sentence checked against the cited paper’s method section;
-withdrawn-run provenance stated precisely; no number changed).</strong>
-Content frozen at lock v3; every number second-read. The artefact read
-matched all 37 checkable numbers and the v3 delta to their artefacts;
-the results reader hashed every game file of locks v2 and v3 (162 of 162
-and 189 of 189, each against its own lock entry) and recomputed every
-green count from the raw episodes (39 of 39 arm-games), re-deriving the
-six- and seven-arm tables from files; the hygiene read found the needles
-clean. Nothing in the chain from raw episodes to the tables rests on a
-reported number. Versions before this are drafts and are superseded.</p>
+<p><strong>STATE 2026-09-27: v1.0.5, 2026-09-27 (v1.0 plus §6a related
+work, all thirteen citations content-checked — six against method
+sections, seven at abstract level — with four characterisations
+corrected; withdrawn-run provenance stated precisely; no number
+changed).</strong> Content frozen at lock v3; every number second-read.
+The artefact read matched all 37 checkable numbers and the v3 delta to
+their artefacts; the results reader hashed every game file of locks v2
+and v3 (162 of 162 and 189 of 189, each against its own lock entry) and
+recomputed every green count from the raw episodes (39 of 39 arm-games),
+re-deriving the six- and seven-arm tables from files; the hygiene read
+found the needles clean. Nothing in the chain from raw episodes to the
+tables rests on a reported number. Versions before this are drafts and
+are superseded.</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 27, 2026 ·
 <em>v1.0.4</em></p>
@@ -835,25 +833,46 @@ paper’s head assumes.</p>
 <p><strong>The plateau.</strong> A 2026 study of memory-based
 self-improving agents (arXiv 2608.00017) finds that without ground truth
 an agent re-uses its own most confident mistakes, an “echo gap” in the
-scoring signal; that mechanism is excluded here by the verifier’s
-labels, and VIII-b’s plateau is of a different kind — the states repeat,
-not the errors. Rise-and-collapse under self-training with weight
-updates (arXiv 2606.21090) and plateaus under a fixed data distribution
-(arXiv 2609.18642, 2606.04703) are the weight-update relatives of the
-same observation.</p>
+scoring signal; its agents learn without updating any weights, so it is
+a frozen-model result like this one, but its stated cause — the absence
+of ground truth forcing an LLM-assessed reward — does not obtain here,
+where labels come from a verifier, and VIII-b’s plateau is of a
+different kind: the states repeat, not the errors. Rise-and-collapse
+under self-training (arXiv 2606.21090, whose stated cause is
+over-optimisation on a fixed distribution) and non-compounding across
+iterations of experience learning (arXiv 2606.04703 — “progressive
+capability collapse rather than compounding improvement”, the
+weight-update analogue of VIII-b’s central negative result, that a
+second generation of the agent’s own experience is largely a repeat of
+the first) are the weight-update relatives; stagnation attributed to
+fixed task difficulty (arXiv 2609.18642) is the training-schedule
+relative. The paragraph groups these by symptom; at least two share a
+cause.</p>
 <p><strong>The lever.</strong> A 2026 paper decouples exploration from
-exploitation by having small “scout” models explore an environment
-before a language model is trained on their trajectories (arXiv
-2601.21754); it is the trained-model relative of this paper’s second
-agent, and does not separate acquisition from use. DORA (arXiv
-2604.17244) is a training-free, inference-time rule for more diverse
-actions, measured by task success rather than by the value of the
-experience acquired; it is a natural acquisition rule for the follow-up
-this paper opens. ExpeL (arXiv 2308.10144) and its successors carry
-experience in the prompt as retrieved trajectories and distilled
-insights with the model frozen; they are the baseline class a reader
-will ask this series to be compared against, and the generality
-programme names that comparison.</p>
+exploitation by having lightweight “scouts” — small MLPs, not language
+models — explore an environment before a language model is trained on
+their trajectories by supervised fine-tuning and then reinforcement
+learning (arXiv 2601.21754); it is the trained-model relative of this
+paper’s second agent, with an acquisition agent of a different kind
+where ours is the same frozen model under another agent’s policy, and
+because use is implemented by changing the model it cannot hold the
+consumer fixed while the source varies, which is the separation this
+paper makes. DORA (arXiv 2604.17244) is a training-free, inference-time
+rule for more diverse actions, measured by task success rather than by
+the value of the experience acquired; it is a natural acquisition rule
+for the follow-up this paper opens. ExpeL (arXiv 2308.10144) and its
+successors carry experience in the prompt as retrieved trajectories and
+distilled insights, a prompting method that leaves the model’s weights
+untouched; they are the baseline class a reader will ask this series to
+be compared against, and the generality programme names that comparison.
+Across the six papers above whose experience, states or labels are
+sourced — OLIVIA, ExpGraph, Multi-Head Latent Control, HSRM, SEAM and
+ExpeL — every one draws them from the model’s own behaviour, and none
+varies where the experience came from; the scout paper does introduce an
+outside explorer and changes the model’s weights to use what it finds. A
+fitted readout over frozen activations is therefore the field’s standard
+instrument; what is this paper’s is using it to vary the experience’s
+source with the model and the consuming mechanism both held fixed.</p>
 <h2 id="what-this-says-and-what-it-does-not">7. What this says, and what
 it does not</h2>
 <p>Learning is usually discussed as one thing. This series has been
