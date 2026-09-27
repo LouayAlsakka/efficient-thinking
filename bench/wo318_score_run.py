@@ -519,7 +519,19 @@ def main():
                    "log": os.path.basename(a.log), "rows_parsed": len(rows), "lines_unparsed": bad,
                    "venues": venues,
                    "ask_classification": {"ok": ask_ok, "n": ask_n, "dropped": ask_drop,
-                                          "pct": rate(ask_ok, ask_n)},
+                                          "pct": rate(ask_ok, ask_n),
+                                          # THE PER-KIND ROWS GO IN THE ARTEFACT, not only to the
+                                          # terminal. They are what the page prints, and a number on
+                                          # a page whose json cannot be checked against it is the
+                                          # thing this file exists to prevent — caught by running my
+                                          # own artefact-read discipline over my own output.
+                                          "by_gold_kind": {k: {"ok": v[0], "n": v[1],
+                                                               "pct": rate(v[0], v[1])}
+                                                           for k, v in sorted(per_kind.items())},
+                                          "ambiguous_both_readings": (
+                                              {"n": amb_n, "any_of_pct": rate(amb_any, amb_n),
+                                               "all_of_pct": rate(amb_all, amb_n)}
+                                              if amb_n else None)},
                    "commit_subtree": {"ok": com_ok, "n": com_n, "dropped": com_drop,
                                       "pct": rate(com_ok, com_n)},
                    "replicate_disagreement": {"disagreed": rep_dis, "n": rep_n, "dropped": rep_drop,
