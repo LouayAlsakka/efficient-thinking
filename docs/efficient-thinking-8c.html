@@ -366,8 +366,11 @@ the agent’s own experience is largely a repeat of the first, and a head
 fitted on it is not separable from the first by the loop’s own noise.
 This paper asks what the plateau is made of, and finds that it can arise
 from how the agent acquires experience rather than from any exhaustion
-of its ability to use it. The evidence is three heads of identical form
-and size, fitted on the same frozen model’s hidden states with the same
+of its ability to use it: different acquisition policies produce
+differently valuable experience, and acquisition is an optimisation
+dimension separable from the intelligence and from the mechanism that
+consumes experience. The evidence is three heads of identical form and
+size, fitted on the same frozen model’s hidden states with the same
 verifier labels, differing only in <em>which states</em> they were
 fitted on. On 300 problems no head had seen: a head fitted where the
 agent’s own policy stood solves 26.8% (base 22.0%); a head fitted where
@@ -781,9 +784,19 @@ the intelligence held fixed.</p>
 <p>The technical form is that the value of experience is conditional on
 the state distribution induced by the acquisition policy. The intuitive
 form is that where you learn from matters, not just how much you
-collect. The question this opens, and does not pursue, is which states
-an agent should seek in order to acquire the most useful experience: the
-acquisition policy as an optimisation dimension in its own right.</p>
+collect. Both dimensions are visible in the same table: quantity still
+matters (290 forced-look groups beat 132), and so does origin (two
+acquisition policies produced experience of different value per group,
+and each contributed). So not all experience of one form is equivalent,
+and the question this opens, and does not pursue, is the one the series
+began with, asked one level up: ET-I asked how to spend an inference
+budget; this paper ends by asking how to spend an experience-acquisition
+budget — given a fixed number of groups, which states should an agent
+seek in order to acquire the most useful experience? Experience
+acquisition is an optimisation dimension in its own right, separable
+from the intelligence and from the mechanism that consumes experience.
+That is the finding of record; the second agent, the forced look and the
+percentages are the path that led to it.</p>
 <p>The claim is scoped to what was measured: one task family
 (debugging), one model pair, one head form, 300 problems per game. “Can
 arise” is the verb because a mechanism has been demonstrated in this

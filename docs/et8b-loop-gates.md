@@ -1033,3 +1033,10 @@ The probe becomes readable with four heads: within the same amount (290 groups) 
 games; across amounts (290 vs 132) it ranks f132 lowest, correctly. The held-out probe tracks HOW MUCH experience a
 head was fitted on, not WHERE it came from — the one variable this paper is about. Bar unchanged at 3.67; nothing in
 v1/v2 re-read. Lock v3 `6e13be6`. No further collection; freeze.
+
+**VIII-c finding of record, restated by the owner after the discriminator (2026-09-27 10:3xZ):** experience
+acquisition is itself an optimisation dimension, separable from the intelligence and from the mechanism used to
+consume experience. Quantity still matters (290 forced groups > 132); origin matters (two acquisition policies,
+different value per group, both contributing); the "twice the value" is a hypothesis for another experiment, not
+a law; the proxy's blindness to origin is kept prominent as the negative that reinforces quantity ≠ value.
+Collection frozen; write and expose to outside scrutiny.
