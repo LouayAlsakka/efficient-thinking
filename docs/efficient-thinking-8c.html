@@ -170,35 +170,171 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
-  @page { size: A4; margin: 20mm 18mm; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
-         line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
-         font-size: 15px; }
-  h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
-       padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
-  h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
-       margin-top: 34px; }
-  h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
-  p, li { font-size: 15px; }
-  strong { color: #111; }
-  code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
-         padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
-  pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
-        overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
-  pre code { background: none; color: #24292e; padding: 0; }
-  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
-  th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
-  th { background: #2c3e50; color: #fff; }
-  tr:nth-child(even) td { background: #f6f8fa; }
-  td[align="right"], th[align="right"] { text-align: right; }
-  hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
-  blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
-               color: #333; background: #f6f8fa; font-style: italic; }
-  a { color: #0969da; }
-  img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
-  </style></head><body><h1>Efficient Thinking: Measuring What Capability Costs</h1>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+      /* Default styles provided by pandoc.
+      ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+      */
+      html {
+        color: #1a1a1a;
+        background-color: #fdfdfd;
+      }
+      body {
+        margin: 0 auto;
+        max-width: 36em;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        font-kerning: normal;
+      }
+      @media (max-width: 600px) {
+        body {
+          font-size: 0.9em;
+          padding: 12px;
+        }
+        h1 {
+          font-size: 1.8em;
+        }
+      }
+      @media print {
+        html {
+          background-color: white;
+        }
+        body {
+          background-color: transparent;
+          color: black;
+          font-size: 12pt;
+        }
+        p, h2, h3 {
+          orphans: 3;
+          widows: 3;
+        }
+        h2, h3, h4 {
+          page-break-after: avoid;
+        }
+      }
+      p {
+        margin: 1em 0;
+      }
+      a {
+        color: #1a1a1a;
+      }
+      a:visited {
+        color: #1a1a1a;
+      }
+      img {
+        max-width: 100%;
+      }
+      svg {
+        height: auto;
+        max-width: 100%;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        margin-top: 1.4em;
+      }
+      h5, h6 {
+        font-size: 1em;
+        font-style: italic;
+      }
+      h6 {
+        font-weight: normal;
+      }
+      ol, ul {
+        padding-left: 1.7em;
+        margin-top: 1em;
+      }
+      li > ol, li > ul {
+        margin-top: 0;
+      }
+      blockquote {
+        margin: 1em 0 1em 1.7em;
+        padding-left: 1em;
+        border-left: 2px solid #e6e6e6;
+        color: #606060;
+      }
+      code {
+        white-space: pre-wrap;
+        font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+        font-size: 85%;
+        margin: 0;
+        hyphens: manual;
+      }
+      pre {
+        margin: 1em 0;
+        overflow: auto;
+      }
+      pre code {
+        padding: 0;
+        overflow: visible;
+        overflow-wrap: normal;
+      }
+      .sourceCode {
+       background-color: transparent;
+       overflow: visible;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid #1a1a1a;
+        height: 1px;
+        margin: 1em 0;
+      }
+      table {
+        margin: 1em 0;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        font-variant-numeric: lining-nums tabular-nums;
+      }
+      table caption {
+        margin-bottom: 0.75em;
+      }
+      tbody {
+        margin-top: 0.5em;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+      }
+      th {
+        border-top: 1px solid #1a1a1a;
+        padding: 0.25em 0.5em 0.25em 0.5em;
+      }
+      td {
+        padding: 0.125em 0.5em 0.25em 0.5em;
+      }
+      header {
+        margin-bottom: 4em;
+        text-align: center;
+      }
+      #TOC li {
+        list-style: none;
+      }
+      #TOC ul {
+        padding-left: 1.3em;
+      }
+      #TOC > ul {
+        padding-left: 0;
+      }
+      #TOC a:not(:hover) {
+        text-decoration: none;
+      }
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      /* The extra [class] is a hack that increases specificity enough to
+         override a similar rule in reveal.js */
+      ul.task-list[class]{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        font-size: inherit;
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1.6em;
+        vertical-align: middle;
+      }
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    </style>
 </head>
 <body>
 <header id="title-block-header">
@@ -213,17 +349,15 @@ id="a-frozen-agents-plateau-another-agents-places-a-forced-look-and-what-the-dif
 frozen agent’s plateau, another agent’s places, a forced look, and what
 the difference is made of</h2>
 <blockquote>
-<p><strong>STATE 2026-09-27: DRAFT v0.1.1 (v0.1 corrected after the
-artefact read: three numbers, the bar definitions, two notes), written
-backward from the record (<code>docs/et8b-loop-gates.md</code>
-§16–§16c).</strong> Every registered arm has run and is scored against
-the pre-registered bars; one registered discriminator (§5) is collecting
-and its three readings are fixed. Numbers marked <em>pending</em> are
-the discriminator’s. Nothing here is final until lock v3 is
-second-read.</p>
+<p><strong>STATE 2026-09-27: DRAFT v0.2 (the discriminator landed 09-26
+23:51Z and reversed §5’s reading; §5 and §6 rewritten), written backward
+from the record (<code>docs/et8b-loop-gates.md</code> §16–§16c
+(iv)).</strong> Every registered arm has run and is scored against the
+pre-registered bars; collection is frozen at lock v3. Nothing here is
+final until lock v3 is second-read.</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 27, 2026 · <em>draft
-v0.1.1</em></p>
+v0.2</em></p>
 <h2 id="abstract">Abstract</h2>
 <p>Paper VIII showed that a frozen model with a read-only head fitted on
 its own verified history moves the quality–compute frontier. Paper
@@ -244,11 +378,14 @@ was the experiment that revealed the dissociation, not its mechanism:
 the effect needs neither another agent nor several. A head built from
 states the agent was made to visit is more selective than one built from
 states it chose — it agrees with the agent’s own pick less often, and is
-right more often when it does. Mixing the two acquired sets does not
-compound them. A cheap held-out proxy ranked the three heads in exactly
-the reverse of their behaviour in the loop and is retired. One task
-family, one model pair: a mechanism demonstrated in this system, not a
-law.</p>
+right more often when it does. Mixing the two acquired sets at a matched
+size does not beat the forced look alone, but the second agent’s groups
+are not dead weight: half the forced groups plus the second agent’s
+groups recover most of the gain, and 132 forced-look groups are
+indistinguishable from 290 of the second agent’s. A cheap held-out proxy
+tracks how much experience a head was fitted on and not where it came
+from, and ranked heads of equal size exactly backwards. One task family,
+one model pair: a mechanism demonstrated in this system, not a law.</p>
 <h2 id="results-at-a-glance">Results at a glance</h2>
 <p><strong>Observations</strong> — six arms, three games on the same 300
 problems (seed 89), percent of problems solved. The first four arms ran
@@ -325,12 +462,22 @@ visited</td>
 </tr>
 <tr>
 <td>mixture</td>
-<td>head on other-agent ∪ forced-look decisions, same size</td>
+<td>head on other-agent ∪ forced-look decisions, same size (drawn 158 +
+132)</td>
 <td>117</td>
 <td>113</td>
 <td>117</td>
 <td>38.6</td>
 <td>1.33</td>
+</tr>
+<tr>
+<td>forced-look, half</td>
+<td>head on the mixture’s own 132 forced-look groups alone</td>
+<td>95</td>
+<td>101</td>
+<td>97</td>
+<td>32.6</td>
+<td>2.00</td>
 </tr>
 </tbody>
 </table>
@@ -397,6 +544,27 @@ range (games of 3)</th>
 <td>0 of 3</td>
 <td>0 of 3</td>
 <td>§5 — within noise</td>
+</tr>
+<tr>
+<td>forced-look, half − base</td>
+<td>+10.6</td>
+<td>3 of 3</td>
+<td>3 of 3</td>
+<td>§5</td>
+</tr>
+<tr>
+<td>forced-look − forced-look, half</td>
+<td>+8.7</td>
+<td>3 of 3</td>
+<td>0 of 3</td>
+<td>§5 — no saturation at half size</td>
+</tr>
+<tr>
+<td>mixture − forced-look, half</td>
+<td>+6.0</td>
+<td>2 of 3</td>
+<td>0 of 3</td>
+<td>§5 — the second agent’s groups contribute</td>
 </tr>
 <tr>
 <td>forced-look − other-agent</td>
@@ -528,41 +696,59 @@ own pick less often than the other-agent head (33.7% against 40.3%) and
 is right more often when it agrees (73.3% against 60.6%). A head built
 from states the agent was made to visit disagrees with the policy that
 produced it more, and its agreement carries more information.</p>
-<h2 id="mixing-the-two-does-not-compound-them">5. Mixing the two does
-not compound them</h2>
+<h2 id="mixing-the-two-and-what-the-matched-size-hides">5. Mixing the
+two, and what the matched size hides</h2>
 <p>The registered second arm fits one head on the union of the
-other-agent and forced-look decisions at the same size as either alone.
-It solves 38.6%: below the forced-look head in all three games (−1.7,
-−4.3, −2.0; every interval spanning zero) and above the other-agent head
-by margins that also span zero. The registered reading that fired is
-that the second agent’s places add nothing to a forced look.</p>
-<p>One reading the matched size cannot separate is recorded before its
-discriminator lands: at 290 groups the mixture is not “forced plus
-other-agent” but “forced with half replaced by other-agent” (the seed
-drew 158 and 132 groups). Either the other agent’s groups are dead
-weight, or forced-look experience saturates at half its size, in which
-case the mixture says nothing about the other agent in either direction.
-The discriminator — a head on the mixture’s own 132 forced-look groups
-alone, not a fresh draw — is <em>pending</em>; its three readings were
-fixed before it ran (≈41: saturation; ≈38.6: neutral; ≈35: the other
-agent’s half carried the mixture).</p>
-<p>Two comparisons are therefore stated as within noise and nothing
-else: forced-look against other-agent (+6.7, +7.3, +3.3; interval bar 0
-of 3) and mixture against forced-look. Nothing in this paper establishes
-that a forced look is <em>superior</em> to a second agent’s selection,
-or that the two experiences interfere.</p>
+other-agent and forced-look decisions at the same size as either alone;
+the seed drew 158 of the second agent’s groups and 132 forced-look
+groups. It solves 38.6%: below the forced-look head in all three games
+(−1.7, −4.3, −2.0; every interval spanning zero) and above the
+other-agent head by margins that also span zero. The reading registered
+for that outcome — that the second agent’s places add nothing to a
+forced look — was written before the arm ran, and it is the reading this
+paper withdraws.</p>
+<p>It is withdrawn because a matched size cannot distinguish “the second
+agent’s groups are dead weight” from “forced-look experience saturates
+at half its size”, and the discriminator registered to separate them
+lands on the other side. A head on the mixture’s own 132 forced-look
+groups alone solves 32.6%. So the forced arm does not saturate: 290
+forced groups beat 132 by +9.0, +8.3 and +8.7 (interval excluding zero
+in every game; lower bounds 3.3, 2.7, 3.0 against the 3.67 bar). And the
+second agent’s groups contribute: adding its 158 groups to the same 132
+forced groups moves 32.6% to 38.6% (+7.3, +4.0, +6.7; interval excluding
+zero in two of three). At a matched 290 the second agent’s experience
+looked worthless because it was displacing forced-look groups, not
+because it carried nothing.</p>
+<p>The strict status of the three new pairs is the status this paper
+already gives the forced-look-versus-other-agent pair: none clears both
+bars, so each is a lean and not a ranking. The point estimates order the
+six heads forced 41.2 &gt; mixture 38.6 &gt; other-agent 35.4 &gt;
+forced-half 32.6 &gt; self 26.8 &gt; base 22.0, and every adjacent pair
+except the last two is inside the session’s own instability. No ordering
+is claimed here.</p>
+<p>One sentence the arm buys, stated as consistent-with rather than
+established, is a magnitude for the paper’s variable: 132 forced-look
+groups are indistinguishable from 290 of the second agent’s in all three
+games (−2.3, −1.0, −5.3), roughly 2.2× per decision group. Where the
+model was standing when the experience was recorded is worth, in this
+system, about twice the experience per group. That rests on an equality
+within noise and would be the first thing to test elsewhere.</p>
 <h2 id="what-did-not-hold">6. What did not hold</h2>
 <ul>
-<li><strong>The cheap proxy ranked the heads backwards.</strong>
-Held-out pick accuracy at fitting time ordered the three heads
-other-agent 57.9% &gt; forced-look 54.8% &gt; mixture 53.8%. In the
-loop, both by problems solved and by in-game hit rate, the order is
-forced-look &gt; mixture &gt; other-agent. This is the sixth probe
-non-conversion in the series by the experimenter’s count (VIII §7.6,
-VIII-b §13c and §4 of that paper, and the three heads here) and the
-second to point the wrong way; the count is recorded in the register,
-not derivable from one artefact. No mechanism is offered; the probe is
-retired as a diagnostic rather than rescued.</li>
+<li><strong>The cheap proxy measures the wrong variable.</strong>
+Held-out pick accuracy at fitting time ordered the three heads of equal
+size other-agent 57.9% &gt; forced-look 54.8% &gt; mixture 53.8%; in the
+loop, by problems solved and by in-game hit rate, the order is
+forced-look &gt; mixture &gt; other-agent, exactly reversed. With the
+fourth head the failure splits cleanly: across sizes (290 against 132
+groups) the probe ranks the half-size head lowest, correctly (45.5%).
+The held-out probe tracks how much experience a head was fitted on and
+not where it came from — the one variable this paper is about. This is
+the sixth probe non-conversion in the series by the experimenter’s count
+(VIII §7.6, VIII-b §13c and §4 of that paper, and the heads here),
+recorded in the register rather than derivable from one artefact. It is
+not used as a diagnostic of acquisition here, and the split is a
+testable claim rather than a retirement.</li>
 <li><strong>“Above the other agent” did not fire.</strong> After one
 game of the forced-look arm read twenty points above the other-agent
 head, a fourth reading was registered for that direction. The third game
@@ -612,15 +798,15 @@ and tested and is applied after the last running chain is off the file —
 it is not yet in the artefacts of this paper.</p>
 <h2 id="reproducibility">Reproducibility</h2>
 <p>Every game file, head, task set and score in this paper is named by
-sha256 in <code>experience/results/viiic_LOCK.json</code> (arms of §3)
-and <code>viiic_LOCK_v2.json</code> (arms of §4–§5), with the git sha of
-the script that produced each artefact and its exact invocation; the
-discriminator joins in v3. A second reader recomputed 16 of 16
-statistics from the lock’s table and 12 of 12 green counts from the
-files, verified 108 of 108 hashes, and found the one discrepancy that
-moved a recorded verdict (§6, the bar). Withdrawn runs are kept and
-named. The registrations, in the order they were written, are
-<code>docs/et8b-loop-gates.md</code> §16–§16c.</p>
+sha256 in <code>experience/results/viiic_LOCK.json</code> (arms of §3),
+<code>viiic_LOCK_v2.json</code> (the forced-look and mixture arms) and
+<code>viiic_LOCK_v3.json</code> (the half-size arm), with the git sha of
+the script that produced each artefact and its exact invocation. A
+second reader recomputed 16 of 16 statistics from the lock’s table and
+12 of 12 green counts from the files, verified 108 of 108 hashes, and
+found the one discrepancy that moved a recorded verdict (§6, the bar).
+Withdrawn runs are kept and named. The registrations, in the order they
+were written, are <code>docs/et8b-loop-gates.md</code> §16–§16c.</p>
 <h2 id="appendix-a.-how-this-was-found">Appendix A. How this was
 found</h2>
 <ol type="1">
@@ -660,6 +846,10 @@ measures.</li>
 <li><strong>09-26 23:0xZ.</strong> The claim of record fixed by the
 owner before the draft: the plateau can arise from acquisition, not from
 exhaustion of use.</li>
+<li><strong>09-26 23:51Z.</strong> The discriminator landed against the
+experimenter’s own six-arm reading: the forced arm does not saturate and
+the second agent’s groups contribute. The registered “adds nothing”
+reading withdrawn; §5 rewritten; collection frozen at lock v3.</li>
 </ol>
 <p>Credits: E ran every arm and found every instrument defect above
 before its number travelled; R (the results reader) found the one that
