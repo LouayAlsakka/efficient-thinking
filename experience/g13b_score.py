@@ -233,7 +233,12 @@ def main():
     aliases = plan["aliases"] if plan["aliases"] is not None else ALIASES
     labels = plan["labels"] or ARM_LABEL
     games = [g.strip() for g in a.games.split(",") if g.strip()]
-    work = a.work or os.path.join(a.dir, "_pairs")
+    # A MEASUREMENT MUST NOT WRITE INTO THE THING IT MEASURES. This defaulted to
+    # `<dir>/_pairs` -- INSIDE the published, hash-locked results directory -- so every reader who
+    # ran the one-command reproduction added 33 scratch files to the artefact they were verifying,
+    # and `git status` in a fresh clone showed untracked files inside it. The per-pair JSONs are
+    # scratch: nothing printed depends on them. Sibling, not child.
+    work = a.work or (a.dir.rstrip(os.sep) + "_pairs")
     os.makedirs(work, exist_ok=True)
 
     # ---- what is on disk, stated before anything is computed ------------------------------

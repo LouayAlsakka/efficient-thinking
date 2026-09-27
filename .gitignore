@@ -18,6 +18,13 @@ runs/conv_value_boxA/*
 
 # --- internal working notes: the white paper is the public document ---
 docs/*
+# g13b_score.py's per-pair scratch JSONs. Regenerable by the published command over the published
+# game files; kept OUT so the hash-locked results directory contains only what the lock describes.
+# The first pattern is the OLD default (inside the data dir) -- ignored so a reader who ran the
+# earlier version does not see untracked files inside the artefact they are verifying.
+experience/results/*/_pairs/
+experience/results/*_pairs/
+
 !docs/whitepaper.md
 !docs/whitepaper.html
 !docs/whitepaper.pdf
