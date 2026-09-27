@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Efficient Thinking VIII: Experience Priors</title>
+  <title>Efficient Thinking VIII</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -170,39 +170,175 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!doctype html><html><head><meta charset='utf-8'><title>Efficient Thinking — White Paper</title><style>
-  @page { size: A4; margin: 20mm 18mm; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a;
-         line-height: 1.5; max-width: 820px; margin: 32px auto; padding: 0 16px;
-         font-size: 15px; }
-  h1 { font-size: 26px; line-height: 1.25; border-bottom: 3px solid #2c3e50;
-       padding-bottom: 10px; color: #1a2a3a; margin-top: 0; }
-  h2 { font-size: 20px; color: #2c3e50; border-bottom: 1px solid #ccd; padding-bottom: 5px;
-       margin-top: 34px; }
-  h3 { font-size: 16px; color: #34495e; margin-top: 22px; }
-  p, li { font-size: 15px; }
-  strong { color: #111; }
-  code { font-family: 'SF Mono', Menlo, Consolas, monospace; background: #f4f5f7;
-         padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #b3005a; }
-  pre { background: #f7f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px 14px;
-        overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
-  pre code { background: none; color: #24292e; padding: 0; }
-  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13.5px; }
-  th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
-  th { background: #2c3e50; color: #fff; }
-  tr:nth-child(even) td { background: #f6f8fa; }
-  td[align="right"], th[align="right"] { text-align: right; }
-  hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
-  blockquote { border-left: 4px solid #2c3e50; margin: 14px 0; padding: 4px 16px;
-               color: #333; background: #f6f8fa; font-style: italic; }
-  a { color: #0969da; }
-  img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
-  </style></head><body><h1>Efficient Thinking: Measuring What Capability Costs</h1>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+      /* Default styles provided by pandoc.
+      ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+      */
+      html {
+        color: #1a1a1a;
+        background-color: #fdfdfd;
+      }
+      body {
+        margin: 0 auto;
+        max-width: 36em;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        font-kerning: normal;
+      }
+      @media (max-width: 600px) {
+        body {
+          font-size: 0.9em;
+          padding: 12px;
+        }
+        h1 {
+          font-size: 1.8em;
+        }
+      }
+      @media print {
+        html {
+          background-color: white;
+        }
+        body {
+          background-color: transparent;
+          color: black;
+          font-size: 12pt;
+        }
+        p, h2, h3 {
+          orphans: 3;
+          widows: 3;
+        }
+        h2, h3, h4 {
+          page-break-after: avoid;
+        }
+      }
+      p {
+        margin: 1em 0;
+      }
+      a {
+        color: #1a1a1a;
+      }
+      a:visited {
+        color: #1a1a1a;
+      }
+      img {
+        max-width: 100%;
+      }
+      svg {
+        height: auto;
+        max-width: 100%;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        margin-top: 1.4em;
+      }
+      h5, h6 {
+        font-size: 1em;
+        font-style: italic;
+      }
+      h6 {
+        font-weight: normal;
+      }
+      ol, ul {
+        padding-left: 1.7em;
+        margin-top: 1em;
+      }
+      li > ol, li > ul {
+        margin-top: 0;
+      }
+      blockquote {
+        margin: 1em 0 1em 1.7em;
+        padding-left: 1em;
+        border-left: 2px solid #e6e6e6;
+        color: #606060;
+      }
+      code {
+        white-space: pre-wrap;
+        font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+        font-size: 85%;
+        margin: 0;
+        hyphens: manual;
+      }
+      pre {
+        margin: 1em 0;
+        overflow: auto;
+      }
+      pre code {
+        padding: 0;
+        overflow: visible;
+        overflow-wrap: normal;
+      }
+      .sourceCode {
+       background-color: transparent;
+       overflow: visible;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid #1a1a1a;
+        height: 1px;
+        margin: 1em 0;
+      }
+      table {
+        margin: 1em 0;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        font-variant-numeric: lining-nums tabular-nums;
+      }
+      table caption {
+        margin-bottom: 0.75em;
+      }
+      tbody {
+        margin-top: 0.5em;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+      }
+      th {
+        border-top: 1px solid #1a1a1a;
+        padding: 0.25em 0.5em 0.25em 0.5em;
+      }
+      td {
+        padding: 0.125em 0.5em 0.25em 0.5em;
+      }
+      header {
+        margin-bottom: 4em;
+        text-align: center;
+      }
+      #TOC li {
+        list-style: none;
+      }
+      #TOC ul {
+        padding-left: 1.3em;
+      }
+      #TOC > ul {
+        padding-left: 0;
+      }
+      #TOC a:not(:hover) {
+        text-decoration: none;
+      }
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      /* The extra [class] is a hack that increases specificity enough to
+         override a similar rule in reveal.js */
+      ul.task-list[class]{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        font-size: inherit;
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1.6em;
+        vertical-align: middle;
+      }
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    </style>
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Efficient Thinking VIII: Experience Priors</h1>
+<h1 class="title">Efficient Thinking VIII</h1>
 </header>
 <h1 id="efficient-thinking-viii-experience-priors">Efficient Thinking
 VIII: Experience Priors</h1>
@@ -293,8 +429,7 @@ and that is the subject of Paper VIII-b.</p>
 <td>an experience prior is a constraint, and the constraint is one limb
 of a frontier</td>
 <td>cost down with capability held within a pre-registered ε, paired per
-slice; generally, <span
-class="math inline"><em>Q</em><sub><em>E</em></sub>(<em>C</em>) &gt; <em>Q</em><sub>0</sub>(<em>C</em>)</span></td>
+slice; generally, (Q_E(C) &gt; Q_0(C))</td>
 <td>§3</td>
 </tr>
 <tr>
@@ -406,43 +541,33 @@ candidate satisfies it, and reports what six candidates did under those
 instruments in two fields.</p>
 <h2 id="intelligence-and-experience-are-different-variables">2.
 Intelligence and Experience Are Different Variables</h2>
-<p>Let <span class="math inline"><em>π</em><sub>0</sub></span> be the
-search policy of a frozen model on a family of tasks, and let <span
-class="math inline"><em>Q</em>(<em>π</em>)</span> be the fraction of
-tasks it solves, judged by an external verifier — unit tests, a rule
-table, an engine — never by the training loss. Let <span
-class="math inline"><em>C</em>(<em>π</em>)</span> be the cost of the
-search: actions per episode, tokens, or simulations. Intelligence is
-<span class="math inline"><em>Q</em>(<em>π</em><sub>0</sub>)</span>.
-Experience is anything that lowers <span
-class="math inline"><em>C</em></span> without lowering <span
-class="math inline"><em>Q</em></span>. The two are separable in
-principle because search cost is dominated by choices the model makes
-before it has committed to an answer — where to look, which branch to
-try, when to stop — and those choices can be reordered without touching
-the machinery that produces the answer once the place is found.</p>
+<p>Let (_0) be the search policy of a frozen model on a family of tasks,
+and let (Q()) be the fraction of tasks it solves, judged by an external
+verifier — unit tests, a rule table, an engine — never by the training
+loss. Let (C()) be the cost of the search: actions per episode, tokens,
+or simulations. Intelligence is (Q(_0)). Experience is anything that
+lowers (C) without lowering (Q). The two are separable in principle
+because search cost is dominated by choices the model makes before it
+has committed to an answer — where to look, which branch to try, when to
+stop — and those choices can be reordered without touching the machinery
+that produces the answer once the place is found.</p>
 <h2 id="the-definition-an-experience-prior-is-a-constraint">3. The
 Definition: an Experience Prior Is a Constraint</h2>
 <p>An experience prior is not defined by its implementation but by what
-it is permitted to do to the frozen model. With <span
-class="math inline"><em>π</em><sub><em>ϕ</em></sub></span> the same
-model with the prior applied:</p>
-<p><span
-class="math display">min<sub><em>ϕ</em></sub> <em>C</em>(<em>π</em><sub><em>ϕ</em></sub>)  subject
-to  <em>Q</em>(<em>π</em><sub><em>ϕ</em></sub>) ≥ <em>Q</em>(<em>π</em><sub>0</sub>) − <em>ϵ</em></span></p>
+it is permitted to do to the frozen model. With (_) the same model with
+the prior applied:</p>
+<p>[ <em>; C(</em>) Q(_) Q(_0) - ]</p>
 <p>Three rules make this measurable rather than rhetorical, and every
 result below was read under them.</p>
 <ol type="1">
-<li><span class="math inline"><em>ϵ</em></span> is declared before the
-run, not chosen after it.</li>
-<li><span class="math inline"><em>C</em></span> and <span
-class="math inline"><em>Q</em></span> are measured on the same held-out
-tasks, paired per slice, and the constraint must hold on the slices, not
-on a pooled mean.</li>
+<li>() is declared before the run, not chosen after it.</li>
+<li>(C) and (Q) are measured on the same held-out tasks, paired per
+slice, and the constraint must hold on the slices, not on a pooled
+mean.</li>
 <li>The verifier ships with its reach: the fraction of positions or
 cases it could actually read. A verifier that silently skips what it
-cannot parse inflates <span class="math inline"><em>Q</em></span>.
-Verify the learner, and verify the verifier.</li>
+cannot parse inflates (Q). Verify the learner, and verify the
+verifier.</li>
 </ol>
 <p>The consequence is sharp. A mechanism that lowers cost by lowering
 capability is not a weaker prior; it is not a prior. Every failure in §7
@@ -457,12 +582,10 @@ ways: given the same hour, she solves a problem the novice cannot, or
 given the same problem, she solves it sooner. Both are one fact about
 the frontier of capability against cost. The general definition is
 therefore that an experience prior improves the frozen model’s
-quality–cost frontier, <span
-class="math inline"><em>Q</em><sub><em>E</em></sub>(<em>C</em>) &gt; <em>Q</em><sub>0</sub>(<em>C</em>)</span>
-over a meaningful range of <span class="math inline"><em>C</em></span>,
-with two manifestations:</p>
-<p><span
-class="math display">efficiency: <em>C</em><sub><em>E</em></sub>(<em>Q</em><sup>*</sup>) &lt; <em>C</em><sub>0</sub>(<em>Q</em><sup>*</sup>)      effectiveness: <em>Q</em><sub><em>E</em></sub>(<em>C</em><sup>*</sup>) &gt; <em>Q</em><sub>0</sub>(<em>C</em><sup>*</sup>)</span></p>
+quality–cost frontier, (Q_E(C) &gt; Q_0(C)) over a meaningful range of
+(C), with two manifestations:</p>
+<p>[ ; C_E(Q^<em>) &lt; C_0(Q^</em>) ; Q_E(C^<em>) &gt; Q_0(C^</em>)
+]</p>
 <p>Every experiment in this paper was pre-registered under the first
 limb and is reported exactly as it was run; the frontier definition is a
 revision of the theory made after those results, stated here so that
@@ -1655,26 +1778,23 @@ and the question this paper leaves is whether one can be learned that
 compounds.</p>
 <p>The series reads as one argument from here. Efficient Thinking I
 asked what happens when a fixed intelligence is given more thinking, and
-found that search substitutes for size: <span
-class="math inline"><em>I</em> + <em>C</em>  ↑  ⇒ <em>Q</em> ↑</span>.
-Papers II to VII found the limits of that substitution — the evaluator,
-the verifier, the supervision, and the information already in the
-system. This paper asks what happens after the intelligence has
-experience of how to think, and finds that historical computation can
-teach a frozen intelligence where to direct future computation: <span
-class="math inline"><em>Q</em><sub><em>E</em></sub>(<em>C</em>) &gt; <em>Q</em><sub>0</sub>(<em>C</em>)</span>
-over the measured compute range, on one task family, and not by the
-inference spent — the model’s own preference at the same decision does
-not reach it, and on a second search structure with the head re-fitted
-from that structure’s own history the same mechanism moves the frontier
-again (§7.7). Search moves a system along its frontier; experience moves
-the frontier, and it is a fact about experience-directed search rather
-than about one grammar. This paper stops there. Paper VIII-b asks
-whether it moves again — <span
-class="math inline"><em>Q</em><sub>2</sub>(<em>C</em>) &gt; <em>Q</em><sub>1</sub>(<em>C</em>) &gt; <em>Q</em><sub>0</sub>(<em>C</em>)</span>
-with the intelligence frozen throughout — which would close the loop
-this series opened: intelligence, search, outcome, verification,
-experience, better search.</p>
+found that search substitutes for size: (I + C!Q!). Papers II to VII
+found the limits of that substitution — the evaluator, the verifier, the
+supervision, and the information already in the system. This paper asks
+what happens after the intelligence has experience of how to think, and
+finds that historical computation can teach a frozen intelligence where
+to direct future computation: (Q_E(C) &gt; Q_0(C)) over the measured
+compute range, on one task family, and not by the inference spent — the
+model’s own preference at the same decision does not reach it, and on a
+second search structure with the head re-fitted from that structure’s
+own history the same mechanism moves the frontier again (§7.7). Search
+moves a system along its frontier; experience moves the frontier, and it
+is a fact about experience-directed search rather than about one
+grammar. This paper stops there. Paper VIII-b asks whether it moves
+again — (Q_2(C) &gt; Q_1(C) &gt; Q_0(C)) with the intelligence frozen
+throughout — which would close the loop this series opened:
+intelligence, search, outcome, verification, experience, better
+search.</p>
 <hr />
 <h2 id="reproducibility">Reproducibility</h2>
 <p>Every number in this paper is in the repository under
@@ -1691,8 +1811,15 @@ per run. The package’s measured constants live in one registry
 (<code>experience/results/et8_constants.json</code>) with a checker that
 fails on drift (<code>check_constants.py</code>); the inputs the
 repository does not track are listed with counts and checksums in
-<code>docs/inputs-manifest.md</code>. The chronology, including every
-withdrawn claim, is Appendix A.</p>
+<code>docs/inputs-manifest.md</code>. One command,
+<code>experience/reproduce_matched_compute.sh</code>, re-runs the
+matched-compute comparison of §7.6 from the shipped head file and
+refuses to print a table if any gate fails; on 2026-09-20 it was run on
+a second machine by a person who had not touched the work, and read base
+22.3% against head 30.3%, +8.0 [+3.0, +13.3], p 0.005, against the
+published +9.3 [+3.7, +15.0] — each estimate inside the other’s interval
+(<code>experience/results/reproduce_20260920T173041Z/</code>). The
+chronology, including every withdrawn claim, is Appendix A.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>Alain, G. &amp; Bengio, Y. (2016). <em>Understanding intermediate

@@ -1,9 +1,9 @@
 # Efficient Thinking VIII-c: Where the Experience Is Acquired
 ## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
 
-> **STATE 2026-09-27: DRAFT v0.2.1 (v0.2 after its delta read; the discriminator landed 09-26 23:51Z and reversed §5's reading; §5 and §6 rewritten), written backward from the record (`docs/et8b-loop-gates.md` §16–§16c (iv)).** Every registered arm has run and is scored against the pre-registered bars; collection is frozen at lock v3. Nothing here is final until lock v3 is second-read.
+> **STATE 2026-09-27: RELEASE CANDIDATE v0.3 — content frozen; numbers second-read (artefact read: all 37 + the v3 delta exact; results read: satisfied; hygiene read: clean).** Collection is frozen at lock v3. Locks v2 and v3 (351 of 459 named files) await the results reader's hash-and-recompute read; v1.0 is this text with that line replaced by its outcome.
 
-**Louay Alsakka** · September 27, 2026 · *draft v0.2.1*
+**Louay Alsakka** · September 27, 2026 · *release candidate v0.3*
 
 ## Abstract
 
@@ -104,7 +104,7 @@ The claim is scoped to what was measured: one task family (debugging), one model
 
 ## Reproducibility
 
-Every game file, head, task set and score in this paper is named by sha256 in `experience/results/viiic_LOCK.json` (arms of §3), `viiic_LOCK_v2.json` (the forced-look and mixture arms) and `viiic_LOCK_v3.json` (the half-size arm), with the git sha of the script that produced each artefact and its exact invocation. A second reader recomputed 16 of 16 statistics from the lock's table and 12 of 12 green counts from the files, verified 108 of 108 hashes, and found the one discrepancy that moved a recorded verdict (§6, the bar). Withdrawn runs are kept and named. The registrations, in the order they were written, are `docs/et8b-loop-gates.md` §16–§16c.
+Every game file, head, task set and score in this paper is named by sha256 in `experience/results/viiic_LOCK.json` (arms of §3), `viiic_LOCK_v2.json` (the forced-look and mixture arms) and `viiic_LOCK_v3.json` (the half-size arm), with the git sha of the script that produced each artefact and its exact invocation. A second reader verified the first lock — 108 of 108 hashes, 16 of 16 statistics from its table, 12 of 12 green counts from the files — and found the one discrepancy that moved a recorded verdict (§6, the bar). The second and third locks (the forced-look, mixture and half-size arms) are read by the results reader before this paper leaves draft; their status is stated in the state line at the top. Withdrawn runs are kept and named. The registrations, in the order they were written, are `docs/et8b-loop-gates.md` §16–§16c.
 
 ## Appendix A. How this was found
 
