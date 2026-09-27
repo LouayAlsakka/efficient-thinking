@@ -349,19 +349,20 @@ id="a-frozen-agents-plateau-another-agents-places-a-forced-look-and-what-the-dif
 frozen agent’s plateau, another agent’s places, a forced look, and what
 the difference is made of</h2>
 <blockquote>
-<p><strong>STATE 2026-09-27: v1.0.1, 2026-09-27 (v1.0 plus one
-related-work paragraph, §6a; no number changed).</strong> Content frozen
-at lock v3; every number second-read. The artefact read matched all 37
-checkable numbers and the v3 delta to their artefacts; the results
-reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of
-189, each against its own lock entry) and recomputed every green count
-from the raw episodes (39 of 39 arm-games), re-deriving the six- and
-seven-arm tables from files; the hygiene read found the needles clean.
-Nothing in the chain from raw episodes to the tables rests on a reported
-number. Versions before this are drafts and are superseded.</p>
+<p><strong>STATE 2026-09-27: v1.0.2, 2026-09-27 (v1.0 plus a
+related-work section, §6a, from a first-pass survey; no number
+changed).</strong> Content frozen at lock v3; every number second-read.
+The artefact read matched all 37 checkable numbers and the v3 delta to
+their artefacts; the results reader hashed every game file of locks v2
+and v3 (162 of 162 and 189 of 189, each against its own lock entry) and
+recomputed every green count from the raw episodes (39 of 39 arm-games),
+re-deriving the six- and seven-arm tables from files; the hygiene read
+found the needles clean. Nothing in the chain from raw episodes to the
+tables rests on a reported number. Versions before this are drafts and
+are superseded.</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 27, 2026 ·
-<em>v1.0.1</em></p>
+<em>v1.0.2</em></p>
 <h2 id="abstract">Abstract</h2>
 <p>Paper VIII showed that a frozen model with a read-only head fitted on
 its own verified history moves the quality–compute frontier. Paper
@@ -773,21 +774,59 @@ larger than anything the instrument had produced. The games moved to a
 third set no head had seen, and every number above is from that
 set.</li>
 </ul>
-<h2 id="a.-a-published-neighbour">6a. A published neighbour</h2>
-<p>A training-free steering vector over a frozen reasoning model’s deep
-hidden states, gated by the model’s own stepwise confidence (Li, Tu et
-al., <em>Efficient Reasoning with Balanced Thinking</em>, ICLR 2026,
-arXiv 2603.12372), is one published neighbour of this series — not
-claimed to be the closest, since no survey of the field was made — and
-it shares the series’ instrument and none of its claim: it spends
-reasoning tokens better at inference time, with no verifier and nothing
-carried between problems. Its result matters here for one reason. VIII
-tried a steering vector as an experience carrier — one fixed direction
-at layer 27, fixed strength — and it failed on capability. The same
-object succeeds in their hands with a controller that changes strength
-and sign by state. That is evidence the failure in VIII was the
-carrier’s form, not the hidden state’s content, which is what this
-paper’s head assumes and what the acquisition result rests on.</p>
+<h2 id="a.-related-work-as-found-by-the-author">6a. Related work, as
+found by the author</h2>
+<p>The author is outside the research community and made no systematic
+survey; what follows is a first pass over about twenty-five abstracts on
+2026-09-27, ranked by closeness to this paper’s claim, and it is offered
+so that a reader who knows closer work can say so. None of the papers
+below holds the intelligence fixed, carries experience in a read-only
+channel outside the prompt under verifier labels, and varies only where
+the experience was acquired; that dissociation is the claim of this
+paper and was not found elsewhere. The instrument, however, is not new,
+and the two closest objects are named first.</p>
+<p><strong>The instrument.</strong> OLIVIA (arXiv 2605.11169) models a
+frozen LLM’s action selection as a contextual linear bandit over
+candidate actions with the frozen hidden state as context, updating only
+that layer online from action-level feedback; it is the closest
+published object to VIII’s head, differing in being online and
+unlabelled by a verifier, and in measuring task performance rather than
+a quality–compute frontier. HSRM (arXiv 2608.30841) trains a small
+encoder over a frozen generator’s hidden states at step boundaries from
+self-generated trajectories with outcome labels, to rank candidate
+solutions in mathematics; it is the same shape as this series’ head used
+as a scorer. SEAM (arXiv 2602.02556) stores experience in a plug-in’s
+parameters and guides a frozen executor, trained by reinforcement
+learning on the executor’s rollouts. ReBalance (Li, Tu et al., ICLR
+2026, arXiv 2603.12372) fits a training-free steering vector over a
+frozen reasoning model’s deep hidden states and gates it by the model’s
+stepwise confidence, for reasoning economy; its result with a
+sign-changing controller is evidence that VIII’s failed steering arm —
+one fixed direction, fixed strength — failed on the carrier’s form and
+not on the hidden state’s content, which is what this paper’s head
+assumes.</p>
+<p><strong>The plateau.</strong> A 2026 study of memory-based
+self-improving agents (arXiv 2608.00017) finds that without ground truth
+an agent re-uses its own most confident mistakes, an “echo gap” in the
+scoring signal; that mechanism is excluded here by the verifier’s
+labels, and VIII-b’s plateau is of a different kind — the states repeat,
+not the errors. Rise-and-collapse under self-training with weight
+updates (arXiv 2606.21090) and plateaus under a fixed data distribution
+(arXiv 2609.18642, 2606.04703) are the weight-update relatives of the
+same observation.</p>
+<p><strong>The lever.</strong> A 2026 paper decouples exploration from
+exploitation by having small “scout” models explore an environment
+before a language model is trained on their trajectories (arXiv
+2601.21754); it is the trained-model relative of this paper’s second
+agent, and does not separate acquisition from use. DORA (arXiv
+2604.17244) is a training-free, inference-time rule for more diverse
+actions, measured by task success rather than by the value of the
+experience acquired; it is a natural acquisition rule for the follow-up
+this paper opens. ExpeL (arXiv 2308.10144) and its successors carry
+experience in the prompt as retrieved trajectories and distilled
+insights with the model frozen; they are the baseline class a reader
+will ask this series to be compared against, and the generality
+programme names that comparison.</p>
 <h2 id="what-this-says-and-what-it-does-not">7. What this says, and what
 it does not</h2>
 <p>Learning is usually discussed as one thing. This series has been
