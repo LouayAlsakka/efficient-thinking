@@ -136,3 +136,29 @@ if it saturates at "look first", the dimension is real but shallow in this famil
 rule, three games per arm; five arms ≈ two to three days of one box. The ET-1 / adaptive-MCTS connection is tested,
 if at all, as one arm inside this design (adaptive from own experience vs from a forced acquisition rule), never
 by touching the chess harness first.
+
+## What the series lacks against the field's standard (owner, 2026-09-27, after reading the nearest published neighbour) — the generality programme, VIII-e, planned beside VIII-d; nothing starts before VIII-c v1.0
+The nearest neighbour on mechanism (a training-free steering vector over deep hidden states of a frozen reasoning
+model, fitted once and held fixed across tasks) studies reasoning economy, not experience; it shares our instrument
+and none of our claim. What it has that we do not, and what we take from it:
+1. **Model breadth.** Ours: one pair (7B/8B). Theirs: four families, 0.5B–32B. Plan: the 8c protocol (self head vs
+   forced-look head, same form, same bars) on two more families at 7–14B, and one size ladder within one family.
+   The claim of record is tested per family; the paper reports where it holds and where it does not.
+2. **Task breadth with a verifier.** Ours: one synthetic family (pipeline debugging); a second in-house family
+   (SQL repair) already exists in the harness. Plan: the 8c protocol on SQL repair (owned), then on one public
+   verified family (unit-tested code generation or answer-checked math), where acquisition = where the agent
+   stands before it commits has a natural analogue (read the tests / run the example before answering).
+3. **Fit once, hold fixed.** Theirs: one offline fit transfers across benchmarks. Ours: one head per task family.
+   Plan: the cross-family head is already a negative in VIII-b (§6); the generality programme reports it per
+   family rather than assuming it, and tests whether the ACQUISITION RULE (not the head) transfers — the rule is
+   the thing the claim says is general.
+4. **Named baselines.** Theirs compare to the field's methods. Ours compare to the model's own preference,
+   majority vote and matched compute. Plan: add the two baselines a reviewer will ask for — retrieval of past
+   successes into the prompt, and a parameter-efficient fine-tune on the same verifier labels — so the head is
+   shown to be a channel, not merely a cheaper training.
+5. **Reporting.** Theirs report tokens and accuracy per benchmark; ours report the frontier with intervals and
+   within-arm noise. Keep ours; add theirs as columns so the two can be read side by side.
+6. **Release.** Code, one-command reproduction, DOI, challenge page — already the route; the neighbour's project
+   page is the bar for how a reader arrives at the result in one click.
+Order: VIII-c v1.0 → challenge page → VIII-d (acquisition policy) and VIII-e (generality) as one registered
+programme, families first because the claim of record is what a second family can falsify cheapest.
