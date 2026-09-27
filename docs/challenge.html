@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Efficient Thinking — the challenge</title>
+<style>
+body{max-width:900px;margin:0 auto;padding:28px 20px 80px;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#1c1c1e}
+h1{font-size:28px;margin:0 0 6px} h2{font-size:20px;margin:36px 0 10px;padding-top:12px;border-top:1px solid #e3e3e8} h3{font-size:16px;margin:20px 0 6px}
+.lead{font-size:20px;line-height:1.35;margin:14px 0 8px} .sub{font-size:15px;color:#444}
+.claim{border-left:4px solid #0a66c2;background:#eef5fc;padding:12px 16px;border-radius:6px;margin:18px 0}
+.warn{border-left:4px solid #b26a00;background:#fff7e8;padding:12px 16px;border-radius:6px;margin:18px 0}
+table{border-collapse:collapse;width:100%;margin:10px 0 14px;font-size:14px} th,td{text-align:left;padding:7px 9px;border-bottom:1px solid #e3e3e8;vertical-align:top} th{background:#f2f2f5}
+pre{background:#f4f4f7;padding:10px 12px;border-radius:6px;overflow-x:auto;font-size:13px} code{background:#f0f0f3;padding:1px 5px;border-radius:4px;font-size:13px}
+.small{font-size:13px;color:#666} img{max-width:100%;border:1px solid #e3e3e8;border-radius:6px} ol li,ul li{margin:5px 0}
+</style>
+</head>
+<body>
+<h1>The challenge</h1>
+<p class="lead">Three papers, one claim, one command each. The author thinks he is right and would rather be shown wrong than believed.</p>
+<p class="sub">This page is the review. There is no venue, no referee and no gate behind the Efficient Thinking series; there is a public record, a reproduction that fails loud, and this invitation. It is written by an engineer from outside the research community, working with AI assistance, and it says so on the <a href="./">front page</a>.</p>
+
+<div class="claim"><strong>The claim under attack.</strong> This series separates the intelligence of a frozen model from the experience it can use and the experience it can acquire, shows each is measurable on its own, and finds that a learning plateau can belong to acquisition alone. <span class="sub">Every number behind it comes from one experimental system — a frozen 7B model on synthetic pipeline-debugging problems with a verifier — and the papers say "can" for that reason. Whether it holds elsewhere is exactly what this page asks you to find out.</span></div>
+
+<h2>The three results, one sentence each</h2>
+<table>
+<tr><th style="width:9%">Paper</th><th>What it claims</th><th style="width:22%">Read</th></tr>
+<tr><td><strong>VIII</strong></td><td>A read-only linear head over a frozen model's own hidden state, fitted on its verified history, moves the quality–compute frontier: equal success at 2.3× less compute, +11 to +14 problems in 100 across four paired measurements of 300, and the model's own preference or a five-sample vote at the same decision do not reach it.</td><td><a href="efficient-thinking-8.html">paper</a></td></tr>
+<tr><td><strong>VIII-b</strong></td><td>Feeding the agent more of its own experience does not compound: the second generation's gain does not separate from the loop's run-to-run noise, because 49 to 86 percent of the new experience is byte-identical to the old — the policy returns to the same region.</td><td><a href="efficient-thinking-8b.html">paper</a></td></tr>
+<tr><td><strong>VIII-c</strong></td><td>That plateau was acquisition, not exhaustion: the same head form on states gathered where a second agent stood, or where the agent was made to look first, restores gains of VIII's size (35.4% and 41.2% against 26.8% from the agent's own experience and 22.0% alone) on 300 unseen problems. The second agent was the experiment, not the mechanism.</td><td><a href="efficient-thinking-8c.html">paper</a></td></tr>
+</table>
+
+<p><a href="figs/fig1_frontier.png"><img src="figs/fig1_frontier.png" alt="Figure 1 of Paper VIII: the quality–compute frontier, the paired effect everywhere it was measured, and the same-decision baselines"></a></p>
+<p class="small">Figure 1 of VIII, rebuilt from the repository's own result files by <code>scripts/fig1_frontier.py</code>.</p>
+
+<h2>What you need</h2>
+<p>An Apple-silicon Mac with about 16 GB of free memory, Python 3.9 or later with <code>mlx-lm</code> (tested at 0.29.1 on mlx 0.29.3), and the repository. The model is <code>Qwen/Qwen2.5-7B-Instruct</code> in bf16, pulled on first use, about 15 GB. Nothing leaves your machine.</p>
+<pre>git clone https://github.com/LouayAlsakka/efficient-thinking &amp;&amp; cd efficient-thinking</pre>
+
+<h2>The commands</h2>
+<p>Each script prints what it expects beside what it got, refuses to print a table if any of its gates fails, and exits non-zero if the published result is not reproduced. Read the header of each before running it; the cost is stated there rather than discovered at hour nine.</p>
+<table>
+<tr><th style="width:9%">Paper</th><th>Command</th><th style="width:18%">Wall clock</th></tr>
+<tr><td>VIII</td><td><code>bash experience/reproduce_matched_compute.sh</code> — the base given the head's compute against the head, n = 300, paired. An independent run on a second machine by someone who had not touched the work read +8.0 [+3.0, +13.3] against the published +9.3 [+3.7, +15.0].</td><td>hours; see header</td></tr>
+<tr><td>VIII-b</td><td><code>bash experience/reproduce_8b_accumulation.sh</code> — the second generation's rise and the third generation's stop, both checked; a reproduction that confirms only the rise has reproduced half a claim.</td><td>hours; see header</td></tr>
+<tr><td>VIII-c, our bytes</td><td><code>python experience/g13b_score.py --dir experience/results/viiic --plan viiic7 --out /tmp/viiic.json</code> — rescores all seven arms and 33 pairings from the 189 published episode files, named by hash in <code>experience/results/viiic_LOCK_v3.json</code>.</td><td>seconds</td></tr>
+<tr><td>VIII-c, your bytes</td><td><code>bash experience/reproduce_8c.sh</code> — regenerates both task sets from their seeds and proves them disjoint by program signature, collects the base and forced-look arms, fits the head, plays three games on 300 unseen problems, and prints your green counts beside ours against the session's own 3.67-point bar. A fresh head will not hash-match ours; the claim is the counts.</td><td>~9 h, measured</td></tr>
+</table>
+<div class="warn"><strong>State of the from-scratch VIII-c script.</strong> Committed on 2026-09-27; its gates have passed on the author's box and its first full run is in progress. Until that run is posted here with its six-row table, treat it as a script whose gates pass and whose collection has not yet been seen to finish. The rescoring command above does not depend on it.</div>
+
+<h2>Where to aim</h2>
+<p>The places the author thinks the results are weakest, stated by him so you do not have to guess. A finding that lands on one of these is expected; one that lands elsewhere is more valuable.</p>
+<h3>VIII</h3>
+<ol>
+<li>An alternative explanation for the matched-compute frontier shift that is not the head.</li>
+<li>Leakage in how the experience was constructed: any path by which a scored problem's answer reached the head.</li>
+<li>A flaw in the paired statistics, in particular the treatment of the loop's run-to-run variance.</li>
+<li>A reason the second search structure (SQL repair) does not establish that the mechanism transfers.</li>
+</ol>
+<h3>VIII-b</h3>
+<ol>
+<li>A reading of the second-generation gain that survives the harness's own null replicates.</li>
+<li>A duplication instrument under which the redundancy figures come out materially different.</li>
+<li>A same-family disjoint-problem arm that does show new experience helping, at the same decision count.</li>
+<li>Evidence that the plateau is the head form's, not the policy's.</li>
+</ol>
+<h3>VIII-c</h3>
+<ol>
+<li>The acquisition rule on a second task family: if "look before you commit" during collection does not move a head there, the claim is one family's.</li>
+<li>The exchange rate: 132 forced-look groups matched 290 of the second agent's within noise; a measured ratio, in either direction, would change the paper's §5.</li>
+<li>The probe: the paper claims the held-out proxy tracks the amount of experience and not its origin; a proxy that recovers the game ordering across the four heads falsifies that.</li>
+<li>The noise floor: every comparison is read against the largest within-arm range of the session at n = 300; a demonstration that this bar is too permissive, or that session drift between the 09-25 bracket and the 09-26 arms is larger than the base's within-day stability, moves the interval counts.</li>
+</ol>
+
+<h2>How review works here</h2>
+<ul>
+<li><strong>Channel.</strong> Findings are filed as <a href="https://github.com/LouayAlsakka/efficient-thinking/issues">issues on the repository</a>. Private correspondence goes to the address on the front page. The author answers, himself; no assistant replies in his name.</li>
+<li><strong>What a finding earns.</strong> A finding that breaks a claim is published on this page under the finder's name, dated, with the claim it breaks marked as withdrawn in the paper. The author runs any experiment the finder specifies, within the series' means, and publishes the result either way. Every accepted finding is thanked by name, with the finder's permission, in the paper it touches. No payment is offered, and none should be inferred.</li>
+<li><strong>Acknowledgement is not authorship.</strong> Authorship carries obligations that a web page cannot confer; nothing here makes anyone an author of these papers. An acknowledgement is also not an endorsement, in either direction: a finder's name beside a finding does not mean the finder endorses the series, and its presence here does not mean the series endorses the finder's other work.</li>
+<li><strong>Your words stay yours.</strong> Text you post as an issue is displayed there under the repository's terms; it is not assigned, and the author does not promise to incorporate anyone's words into a paper. What enters a paper is the finding, in the author's words, credited as above.</li>
+<li><strong>Nobody is named without permission.</strong> If you would rather be credited by handle, or not at all, say so in the issue.</li>
+</ul>
+
+<h2>Findings so far</h2>
+<p class="small">None filed from outside yet. The series' own withdrawals are on the papers' pages and in the register, dated: a contaminated arm read 134 of 300 and was withdrawn; a bar computed without the arm under test moved a verdict from 2 of 3 to 1 of 3; a proxy ranked three heads backwards and was retired as a diagnostic. They are left visible because a challenge whose author hides his own failures is not one.</p>
+
+<p class="small" style="margin-top:36px">Author: <span id="pr-mail">the address on the front page</span> · <a href="https://github.com/LouayAlsakka/efficient-thinking">github.com/LouayAlsakka/efficient-thinking</a> · <a href="./">Efficient Thinking</a></p>
+<script>(function(){var u="louayalsakka",d="gmail.com",e=document.getElementById("pr-mail");if(!e)return;var a=document.createElement("a");a.href="mailto:"+u+"@"+d+"?subject="+encodeURIComponent("Efficient Thinking challenge");a.textContent=u+"@"+d;e.replaceWith(a);})();</script>
+</body>
+</html>
