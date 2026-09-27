@@ -267,11 +267,15 @@ def main():
     if gtax or ltax:
         print("  taxonomy STAMPS — gold: %s   served (from the log's own rows): %s"
               % (dict(gtax) or "(none)", dict(ltax) or "(none)"))
-        print("     ⚠️ the stamps are NOT a check: three files in this measurement version the same\n"
-              "     concept in three vocabularies (the utterance rows say v1.4, the venue tag\n"
-              "     inventories say v1, the served taxonomy says gold-v1.2), so differing stamps are\n"
-              "     expected and prove nothing either way. The real check is the TAG SET comparison\n"
-              "     below, which needs --served-taxonomy.")
+        # The stamp line is INFORMATIONAL and says so generically. It used to name the versions in
+        # play on the night it was written ("the served taxonomy says gold-v1.2"), which went stale
+        # the moment the service was swapped to v1.4 — a guard that asserts yesterday's state is
+        # the thing this file exists to catch in other people's instruments.
+        print("     ⚠️ the stamps are NOT a check: the three files in this measurement (utterance\n"
+              "     rows, venue tag inventories, served taxonomy) version the same concept in\n"
+              "     independent vocabularies, so equal or differing stamps prove nothing either\n"
+              "     way. The real check is the TAG SET comparison below, which needs\n"
+              "     --served-taxonomy.")
     if not a.served_taxonomy:
         print("     ⛔ --served-taxonomy NOT GIVEN: whether the classifier could even emit each gold\n"
               "     tag is UNCHECKED. A gold tag absent from the served taxonomy is a guaranteed\n"
