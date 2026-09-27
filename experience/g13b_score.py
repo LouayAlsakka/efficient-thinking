@@ -27,6 +27,19 @@ and it decides nothing.
 """
 import argparse, itertools, json, math, os, statistics, subprocess, sys
 
+# THE ONE PREREQUISITE, CHECKED HERE SO A READER GETS A SENTENCE INSTEAD OF A TRACEBACK.
+# This is the command the challenge page advertises as "seconds, no model, no GPU" — and it shells
+# out to paired_stats.py, which needs numpy for the bootstrap. A stranger with a fresh clone and a
+# stock Python otherwise meets `ModuleNotFoundError: No module named 'numpy'` on their FIRST command,
+# which is a worse first impression than any result in the table. The page can state the
+# prerequisite too; this way it does not have to remember to.
+try:
+    import numpy as _numpy_probe          # noqa: F401  (imported for the check, used by paired_stats)
+except ImportError:                       # pragma: no cover - the reader-facing path
+    sys.exit("This scorer needs numpy (paired_stats.py uses it for the paired bootstrap).\n"
+             "    pip install numpy\n"
+             "Nothing else is required: no model, no GPU, no network.")
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 # TWO PLANS, ONE FILE. 13c has different arms from 13b and the same readings; a copy of this
 # script with four names changed is how two files drift into disagreeing about what §14 means.
