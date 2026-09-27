@@ -1,9 +1,9 @@
 # Efficient Thinking VIII-c: Where the Experience Is Acquired
 ## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
 
-> **STATE 2026-09-27: v1.0, 2026-09-27.** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
+> **STATE 2026-09-27: v1.0.1, 2026-09-27 (v1.0 plus one related-work paragraph, §6a; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
 
-**Louay Alsakka** · September 27, 2026 · *v1.0*
+**Louay Alsakka** · September 27, 2026 · *v1.0.1*
 
 ## Abstract
 
@@ -93,6 +93,10 @@ One sentence the arm buys, stated as consistent-with rather than established, is
 - **The cheap proxy measures the wrong variable.** Held-out pick accuracy at fitting time ordered the three heads of equal size other-agent 57.9% > forced-look 54.8% > mixture 53.8%; in the loop, by problems solved and by in-game hit rate, the order is forced-look > mixture > other-agent, exactly reversed. With the fourth head the failure splits cleanly: across sizes (290 against 132 groups) the probe ranks the half-size head lowest, correctly (45.5%). The held-out probe tracks how much experience a head was fitted on and not where it came from — the one variable this paper is about. This is the sixth probe non-conversion in the series by the experimenter's count (VIII §7.6, VIII-b §13c and §4 of that paper, and the heads here), recorded in the register rather than derivable from one artefact. It is not used as a diagnostic of acquisition here, and the split is a testable claim rather than a retirement.
 - **"Above the other agent" did not fire.** After one game of the forced-look arm read twenty points above the other-agent head, a fourth reading was registered for that direction. The third game came in at +3.3 with an interval spanning zero and the reading did not fire. The one-game flag is in the appendix as the kind of number this harness produces.
 - **The first other-agent arm was contaminated and withdrawn.** Its head had been fitted on the very 300 problems its games scored and read 134 of 300 — a head recalling its answer key. The tell was proportion, not sign: an effect an order of magnitude larger than anything the instrument had produced. The games moved to a third set no head had seen, and every number above is from that set.
+
+## 6a. The nearest published neighbour
+
+A training-free steering vector over a frozen reasoning model's deep hidden states, gated by the model's own stepwise confidence (Li, Tu et al., *Efficient Reasoning with Balanced Thinking*, ICLR 2026, arXiv 2603.12372), shares this series' instrument and none of its claim: it spends reasoning tokens better at inference time, with no verifier and nothing carried between problems. Its result matters here for one reason. VIII tried a steering vector as an experience carrier — one fixed direction at layer 27, fixed strength — and it failed on capability. The same object succeeds in their hands with a controller that changes strength and sign by state. That is evidence the failure in VIII was the carrier's form, not the hidden state's content, which is what this paper's head assumes and what the acquisition result rests on.
 
 ## 7. What this says, and what it does not
 

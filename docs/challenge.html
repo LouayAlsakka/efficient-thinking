@@ -33,6 +33,9 @@ pre{background:#f4f4f7;padding:10px 12px;border-radius:6px;overflow-x:auto;font-
 <p><a href="figs/fig1_frontier.png"><img src="figs/fig1_frontier.png" alt="Figure 1 of Paper VIII: the quality–compute frontier, the paired effect everywhere it was measured, and the same-decision baselines"></a></p>
 <p class="small">Figure 1 of VIII, rebuilt from the repository's own result files by <code>scripts/fig1_frontier.py</code>.</p>
 
+<h2>Nearest published neighbour</h2>
+<p>ReBalance (Li, Tu et al., ICLR 2026; <a href="https://arxiv.org/abs/2603.12372">arXiv 2603.12372</a>, <a href="https://rebalance-ai.github.io">project page</a>) fits a training-free steering vector over a frozen reasoning model's deep hidden states and gates it by the model's own confidence, to spend reasoning tokens better. It shares this series' instrument — a read-only object over a deep-layer state of a frozen model — and none of its claim: it studies reasoning economy at inference time, with no verifier and nothing carried between problems; this series studies experience. Its positive result with a sign-changing controller is the best evidence that VIII's failed steering arm (one fixed direction, fixed strength) failed on the carrier's form and not on the hidden state's content, and VIII-c cites it for that. If you know a closer neighbour, that is a finding too: file it.</p>
+
 <h2>What you need</h2>
 <p>An Apple-silicon Mac with about 16 GB of free memory, Python 3.9 or later with <code>mlx-lm</code> (tested at 0.29.1 on mlx 0.29.3), and the repository. The model is <code>Qwen/Qwen2.5-7B-Instruct</code> in bf16, pulled on first use, about 15 GB. Nothing leaves your machine.</p>
 <pre>git clone https://github.com/LouayAlsakka/efficient-thinking &amp;&amp; cd efficient-thinking</pre>
