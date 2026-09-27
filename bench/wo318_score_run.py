@@ -401,6 +401,26 @@ def main():
             empty = not r.get(F["areas"])
             unres += int(bool(r.get(F["off_menu"])) or empty)
 
+    # PER KIND, because the pooled ask rate hides four different failure modes: an off-menu row
+    # that comes back with a tag is a different defect from a plain ask that comes back empty, and
+    # WO-318 §19's single "ask-classification accuracy" cannot separate them. The pooled number
+    # stays the headline; these say where it came from.
+    per_kind = collections.defaultdict(lambda: [0, 0])
+    for r in rows:
+        want = r.get("gold_areas")
+        if want is None or F["areas"] not in r:
+            continue
+        got = r[F["areas"]] or []
+        kind = str(r.get("gold_kind") or "?")
+        if not want:
+            ok = not got
+        elif kind == "ambiguous":
+            ok = any(w in got for w in want)
+        else:
+            ok = all(w in got for w in want)
+        per_kind[kind][1] += 1
+        per_kind[kind][0] += int(ok)
+
     print("\n  RATES — each with its own denominator, not the run's row count")
     if not ask_n and present[F["gold"]] and not present[F["gold_areas"]]:
         ex = next((r[F["gold"]] for r in rows if isinstance(r.get(F["gold"]), str)), "")
@@ -420,6 +440,12 @@ def main():
               "all-of %.1f%%" % (amb_n, 100.0 * amb_any / amb_n, 100.0 * amb_all / amb_n))
         print("      the rate above uses ANY-OF for these; a 5-tag row scored all-of demands a "
               "5-tag answer")
+    if per_kind:
+        print("    by gold kind, since the pooled number hides four failure modes:")
+        for k in sorted(per_kind, key=lambda k: -per_kind[k][1]):
+            ok, n = per_kind[k]
+            print("      %-14s %5.1f%%  (%d/%d, resolution %.1f pp)"
+                  % (k, 100.0 * ok / n, ok, n, 100.0 / n))
     print("    expected areas:   %s   [over the %d row(s) the rate used]" % (dist(gold_seen), ask_n))
     print("    returned areas:   %s" % dist(
         [",".join(sorted(map(str, r[F["areas"]]))) if isinstance(r.get(F["areas"]), list)
