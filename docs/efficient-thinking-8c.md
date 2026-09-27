@@ -1,9 +1,9 @@
 # Efficient Thinking VIII-c: Where the Experience Is Acquired
 ## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
 
-> **STATE 2026-09-27: DRAFT v0.2 (the discriminator landed 09-26 23:51Z and reversed §5's reading; §5 and §6 rewritten), written backward from the record (`docs/et8b-loop-gates.md` §16–§16c (iv)).** Every registered arm has run and is scored against the pre-registered bars; collection is frozen at lock v3. Nothing here is final until lock v3 is second-read.
+> **STATE 2026-09-27: DRAFT v0.2.1 (v0.2 after its delta read; the discriminator landed 09-26 23:51Z and reversed §5's reading; §5 and §6 rewritten), written backward from the record (`docs/et8b-loop-gates.md` §16–§16c (iv)).** Every registered arm has run and is scored against the pre-registered bars; collection is frozen at lock v3. Nothing here is final until lock v3 is second-read.
 
-**Louay Alsakka** · September 27, 2026 · *draft v0.2*
+**Louay Alsakka** · September 27, 2026 · *draft v0.2.1*
 
 ## Abstract
 
@@ -11,7 +11,7 @@ Paper VIII showed that a frozen model with a read-only head fitted on its own ve
 
 ## Results at a glance
 
-**Observations** — six arms, three games on the same 300 problems (seed 89), percent of problems solved. The first four arms ran adjacent within each game in one session (09-25); the forced-look and mixture arms ran on 09-26 against that bracket (§7). Means and within-arm ranges; no comparison is implied by adjacency.
+**Observations** — seven arms, three games on the same 300 problems (seed 89), percent of problems solved. The first four arms ran adjacent within each game in one session (09-25); the forced-look and mixture arms ran on 09-26 against that bracket (§7). Means and within-arm ranges; no comparison is implied by adjacency.
 
 | arm | what sits beside the frozen 7B | g1 | g2 | g3 | mean | range |
 |---|---|---|---|---|---|---|
@@ -38,7 +38,7 @@ Paper VIII showed that a frozen model with a read-only head fitted on its own ve
 | mixture − forced-look, half | +6.0 | 2 of 3 | 0 of 3 | §5 — the second agent's groups contribute |
 | forced-look − other-agent | +5.8 | 2 of 3 | 0 of 3 | §5 — **within noise; not a ranking** |
 
-Two comparisons a reader will want are deliberately absent from the second table: whether a forced look is *better* than another agent's places, and whether the mixture is better than either. Both are within this harness's noise and the text says so where it matters (§5).
+Two rows a reader will be tempted to read as rankings are marked as within noise and are not claims: forced-look against other-agent, and mixture against forced-look. No comparison between the two acquisition sources is established here (§5).
 
 ## 1. The question
 
@@ -84,7 +84,7 @@ The registered second arm fits one head on the union of the other-agent and forc
 
 It is withdrawn because a matched size cannot distinguish "the second agent's groups are dead weight" from "forced-look experience saturates at half its size", and the discriminator registered to separate them lands on the other side. A head on the mixture's own 132 forced-look groups alone solves 32.6%. So the forced arm does not saturate: 290 forced groups beat 132 by +9.0, +8.3 and +8.7 (interval excluding zero in every game; lower bounds 3.3, 2.7, 3.0 against the 3.67 bar). And the second agent's groups contribute: adding its 158 groups to the same 132 forced groups moves 32.6% to 38.6% (+7.3, +4.0, +6.7; interval excluding zero in two of three). At a matched 290 the second agent's experience looked worthless because it was displacing forced-look groups, not because it carried nothing.
 
-The strict status of the three new pairs is the status this paper already gives the forced-look-versus-other-agent pair: none clears both bars, so each is a lean and not a ranking. The point estimates order the six heads forced 41.2 > mixture 38.6 > other-agent 35.4 > forced-half 32.6 > self 26.8 > base 22.0, and every adjacent pair except the last two is inside the session's own instability. No ordering is claimed here.
+The strict status of the three new pairs is the status this paper already gives the forced-look-versus-other-agent pair: none clears both bars, so each is a lean and not a ranking. The point estimates order the six heads forced 41.2 > mixture 38.6 > other-agent 35.4 > forced-half 32.6 > self 26.8 > base 22.0, and no adjacent step in that order is established: three are inside the session's instability, the self-versus-base step clears neither bar (§3), and forced-half versus self was not a registered pairing and has no interval. No ordering is claimed here.
 
 One sentence the arm buys, stated as consistent-with rather than established, is a magnitude for the paper's variable: 132 forced-look groups are indistinguishable from 290 of the second agent's in all three games (−2.3, −1.0, −5.3). That is consistent with a forced look being worth about twice a second agent's experience per decision group in this system; it is not a measured ratio, because an interval that contains zero difference cannot license one, and it would be the first thing to test elsewhere.
 

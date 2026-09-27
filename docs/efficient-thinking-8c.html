@@ -349,15 +349,16 @@ id="a-frozen-agents-plateau-another-agents-places-a-forced-look-and-what-the-dif
 frozen agent’s plateau, another agent’s places, a forced look, and what
 the difference is made of</h2>
 <blockquote>
-<p><strong>STATE 2026-09-27: DRAFT v0.2 (the discriminator landed 09-26
-23:51Z and reversed §5’s reading; §5 and §6 rewritten), written backward
-from the record (<code>docs/et8b-loop-gates.md</code> §16–§16c
-(iv)).</strong> Every registered arm has run and is scored against the
-pre-registered bars; collection is frozen at lock v3. Nothing here is
-final until lock v3 is second-read.</p>
+<p><strong>STATE 2026-09-27: DRAFT v0.2.1 (v0.2 after its delta read;
+the discriminator landed 09-26 23:51Z and reversed §5’s reading; §5 and
+§6 rewritten), written backward from the record
+(<code>docs/et8b-loop-gates.md</code> §16–§16c (iv)).</strong> Every
+registered arm has run and is scored against the pre-registered bars;
+collection is frozen at lock v3. Nothing here is final until lock v3 is
+second-read.</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 27, 2026 · <em>draft
-v0.2</em></p>
+v0.2.1</em></p>
 <h2 id="abstract">Abstract</h2>
 <p>Paper VIII showed that a frozen model with a read-only head fitted on
 its own verified history moves the quality–compute frontier. Paper
@@ -391,10 +392,10 @@ tracks how much experience a head was fitted on and not where it came
 from, and ranked heads of equal size exactly backwards. One task family,
 one model pair: a mechanism demonstrated in this system, not a law.</p>
 <h2 id="results-at-a-glance">Results at a glance</h2>
-<p><strong>Observations</strong> — six arms, three games on the same 300
-problems (seed 89), percent of problems solved. The first four arms ran
-adjacent within each game in one session (09-25); the forced-look and
-mixture arms ran on 09-26 against that bracket (§7). Means and
+<p><strong>Observations</strong> — seven arms, three games on the same
+300 problems (seed 89), percent of problems solved. The first four arms
+ran adjacent within each game in one session (09-25); the forced-look
+and mixture arms ran on 09-26 against that bracket (§7). Means and
 within-arm ranges; no comparison is implied by adjacency.</p>
 <table style="width:100%;">
 <colgroup>
@@ -579,11 +580,10 @@ range (games of 3)</th>
 </tr>
 </tbody>
 </table>
-<p>Two comparisons a reader will want are deliberately absent from the
-second table: whether a forced look is <em>better</em> than another
-agent’s places, and whether the mixture is better than either. Both are
-within this harness’s noise and the text says so where it matters
-(§5).</p>
+<p>Two rows a reader will be tempted to read as rankings are marked as
+within noise and are not claims: forced-look against other-agent, and
+mixture against forced-look. No comparison between the two acquisition
+sources is established here (§5).</p>
 <h2 id="the-question">1. The question</h2>
 <p>VIII-b ended on a diagnosis: a steered agent stands where the
 previous agent stood and produces the same state, so its experience
@@ -727,9 +727,11 @@ because it carried nothing.</p>
 already gives the forced-look-versus-other-agent pair: none clears both
 bars, so each is a lean and not a ranking. The point estimates order the
 six heads forced 41.2 &gt; mixture 38.6 &gt; other-agent 35.4 &gt;
-forced-half 32.6 &gt; self 26.8 &gt; base 22.0, and every adjacent pair
-except the last two is inside the session’s own instability. No ordering
-is claimed here.</p>
+forced-half 32.6 &gt; self 26.8 &gt; base 22.0, and no adjacent step in
+that order is established: three are inside the session’s instability,
+the self-versus-base step clears neither bar (§3), and forced-half
+versus self was not a registered pairing and has no interval. No
+ordering is claimed here.</p>
 <p>One sentence the arm buys, stated as consistent-with rather than
 established, is a magnitude for the paper’s variable: 132 forced-look
 groups are indistinguishable from 290 of the second agent’s in all three
