@@ -113,7 +113,10 @@ collect forced_seed73 "$OUT/tasks/seed73" --force-inspect 1
 
 # ---------------------------------------------------------------- 4. states, cut, fit
 say "4 — the 7B's states at the forced-look trajectory's decision points, cut to 290 groups, fitted"
-[ -d "$OUT/states" ] || "$PY" "$R/experience/et8b_states.py" --runs "$OUT/forced_seed73.steps.jsonl" \
+# --runs takes the run STEM and appends ".steps.jsonl" itself (et8b_states.py:73). Passing the full
+# path produced "...steps.jsonl.steps.jsonl" and the stage died — caught by RUNNING this script, not
+# by reading it, which is the whole reason the first full run had to happen before the page cited it.
+[ -d "$OUT/states" ] || "$PY" "$R/experience/et8b_states.py" --runs "$OUT/forced_seed73" \
     --tasks "$OUT/tasks/seed73" --model "$MODEL" --layers 18 --out "$OUT/states" \
     >> "$OUT/states.log" 2>&1 || { tail -20 "$OUT/states.log"; die "state pass"; }
 [ -d "$OUT/cut290" ] || "$PY" "$R/experience/subsample_by_decision.py" --states "$OUT/states" \
