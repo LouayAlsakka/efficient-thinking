@@ -1,0 +1,22 @@
+# reproduce_8c.sh stage-6 output, second machine, 2026-09-27. Verbatim except the final line, where a local output path is replaced by <run-dir>.
+=== 15:27:36Z 5 — four slices of seed 89, then three games per arm
+  4 slices of 75
+=== 16:00:59Z   base game 1: green 66 of 300
+=== 16:54:18Z   forced game 1: green 126 of 300
+=== 17:27:57Z   base game 2: green 70 of 300
+=== 18:21:13Z   forced game 2: green 121 of 300
+=== 18:54:50Z   base game 3: green 60 of 300
+=== 19:48:37Z   forced game 3: green 116 of 300
+=== 19:48:37Z   self arm SKIPPED — its head is a VIII-b artefact this repo does not publish
+=== 19:48:37Z 6 — your green counts beside ours
+
+  arm      your games          ours                mean%   ours%   |delta|  bar 3.67 pp
+  base     66 · 70 · 60       66 · 67 · 65        21.78   22.00     0.22
+  forced   126 · 121 · 116    122 · 126 · 123     40.33   41.22     0.89
+  self     SKIPPED (no SELF_HEAD)
+
+  ACCEPTANCE: each arm's mean within 3.67 points of ours — the largest within-head-arm
+  range of our own session, i.e. this harness's own spread. Equality is NOT the test:
+  decisions 2 and 3 are sampled, so two runs of the same arm differ by a few problems.
+  ALL ARMS WITHIN THE BAR
+=== 19:48:37Z done — outputs under <run-dir>
