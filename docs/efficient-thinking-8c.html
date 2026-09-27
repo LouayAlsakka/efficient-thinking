@@ -349,20 +349,21 @@ id="a-frozen-agents-plateau-another-agents-places-a-forced-look-and-what-the-dif
 frozen agent’s plateau, another agent’s places, a forced look, and what
 the difference is made of</h2>
 <blockquote>
-<p><strong>STATE 2026-09-27: v1.0.2, 2026-09-27 (v1.0 plus a
-related-work section, §6a, from a first-pass survey; no number
-changed).</strong> Content frozen at lock v3; every number second-read.
-The artefact read matched all 37 checkable numbers and the v3 delta to
-their artefacts; the results reader hashed every game file of locks v2
-and v3 (162 of 162 and 189 of 189, each against its own lock entry) and
-recomputed every green count from the raw episodes (39 of 39 arm-games),
-re-deriving the six- and seven-arm tables from files; the hygiene read
-found the needles clean. Nothing in the chain from raw episodes to the
-tables rests on a reported number. Versions before this are drafts and
-are superseded.</p>
+<p><strong>STATE 2026-09-27: v1.0.3, 2026-09-27 (v1.0 plus §6a related
+work, corrected against the OLIVIA paper’s method section and extended
+with two further leads; withdrawn-run provenance stated precisely; no
+number changed).</strong> Content frozen at lock v3; every number
+second-read. The artefact read matched all 37 checkable numbers and the
+v3 delta to their artefacts; the results reader hashed every game file
+of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock
+entry) and recomputed every green count from the raw episodes (39 of 39
+arm-games), re-deriving the six- and seven-arm tables from files; the
+hygiene read found the needles clean. Nothing in the chain from raw
+episodes to the tables rests on a reported number. Versions before this
+are drafts and are superseded.</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 27, 2026 ·
-<em>v1.0.2</em></p>
+<em>v1.0.3</em></p>
 <h2 id="abstract">Abstract</h2>
 <p>Paper VIII showed that a frozen model with a read-only head fitted on
 its own verified history moves the quality–compute frontier. Paper
@@ -787,24 +788,40 @@ paper and was not found elsewhere. The instrument, however, is not new,
 and the two closest objects are named first.</p>
 <p><strong>The instrument.</strong> OLIVIA (arXiv 2605.11169) models a
 frozen LLM’s action selection as a contextual linear bandit over
-candidate actions with the frozen hidden state as context, updating only
-that layer online from action-level feedback; it is the closest
-published object to VIII’s head, differing in being online and
-unlabelled by a verifier, and in measuring task performance rather than
-a quality–compute frontier. HSRM (arXiv 2608.30841) trains a small
-encoder over a frozen generator’s hidden states at step boundaries from
-self-generated trajectories with outcome labels, to rank candidate
-solutions in mathematics; it is the same shape as this series’ head used
-as a scorer. SEAM (arXiv 2602.02556) stores experience in a plug-in’s
-parameters and guides a frozen executor, trained by reinforcement
-learning on the executor’s rollouts. ReBalance (Li, Tu et al., ICLR
-2026, arXiv 2603.12372) fits a training-free steering vector over a
-frozen reasoning model’s deep hidden states and gates it by the model’s
-stepwise confidence, for reasoning economy; its result with a
-sign-changing controller is evidence that VIII’s failed steering arm —
-one fixed direction, fixed strength — failed on the carrier’s form and
-not on the hidden state’s content, which is what this paper’s head
-assumes.</p>
+candidate actions with the frozen last-layer hidden state as context;
+nothing in the model is updated — the learned quantities are per-action
+ridge statistics kept outside it, updated online from a per-step signal
+that is membership of the chosen action in the task’s reference
+solution. It is the closest published object to VIII’s head, differing
+in where and when its label arrives (a reference-solution membership
+revealed per step online, against a verifier’s region label computed per
+candidate offline before any head exists), in reading the last layer at
+the pre-action token rather than a mid layer, and in measuring task
+performance rather than a quality–compute frontier. Multi-Head Latent
+Control (arXiv 2607.14277) trains small heads on a frozen model’s latent
+traces to decide whether to proceed, defer to a larger model, call a
+tool or abstain, and reports the quality–cost trade-off of the resulting
+system; it is a control readout over frozen states in the same spirit as
+VIII’s frontier framing, without experience. ExpGraph (arXiv 2605.30712)
+keeps a frozen executor and improves it by reuse of an external
+experience graph whose retrieval is ranked by utility and trained by
+reinforcement learning; it is the closest published work to “selecting
+experience for a frozen agent”, carried as memory and retrieval rather
+than as a fitted head, and it selects which stored experience to reuse
+rather than asking where experience should be acquired. HSRM (arXiv
+2608.30841) trains a small encoder over a frozen generator’s hidden
+states at step boundaries from self-generated trajectories with outcome
+labels, to rank candidate solutions in mathematics; it is the same shape
+as this series’ head used as a scorer. SEAM (arXiv 2602.02556) stores
+experience in a plug-in’s parameters and guides a frozen executor,
+trained by reinforcement learning on the executor’s rollouts. ReBalance
+(Li, Tu et al., ICLR 2026, arXiv 2603.12372) fits a training-free
+steering vector over a frozen reasoning model’s deep hidden states and
+gates it by the model’s stepwise confidence, for reasoning economy; its
+result with a sign-changing controller is evidence that VIII’s failed
+steering arm — one fixed direction, fixed strength — failed on the
+carrier’s form and not on the hidden state’s content, which is what this
+paper’s head assumes.</p>
 <p><strong>The plateau.</strong> A 2026 study of memory-based
 self-improving agents (arXiv 2608.00017) finds that without ground truth
 an agent re-uses its own most confident mistakes, an “echo gap” in the
@@ -885,8 +902,12 @@ hashed against its lock entry (162 of 162, 189 of 189; zero missing,
 zero mismatched) and every green count recomputed from the raw episodes
 (39 of 39). The head files themselves are named by hash in the locks and
 were not re-hashed by the second reader; every episode those heads
-produced verifies. Withdrawn runs are kept and named. The registrations,
-in the order they were written, are <code>docs/et8b-loop-gates.md</code>
+produced verifies. Withdrawn runs are named by hash in the first lock
+(36 entries); their bytes were not part of the staged verification set
+and rest on the experimenter’s box, and a withdrawn entry can carry the
+same filename as a live one, differing only by hash, so a file is
+identified by its hash and never by its name. The registrations, in the
+order they were written, are <code>docs/et8b-loop-gates.md</code>
 §16–§16c.</p>
 <h2 id="appendix-a.-how-this-was-found">Appendix A. How this was
 found</h2>
