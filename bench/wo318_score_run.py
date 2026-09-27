@@ -165,6 +165,11 @@ def main():
                     help="declare that the gold field is the composite '<kind>:<area>' and may be "
                          "split on the first colon. Without it a composite gold is REFUSED for the "
                          "ask rate rather than split silently.")
+    ap.add_argument("--taxonomy-parents", default="",
+                    help="the allocating taxonomy registry ({tags: {id: {parent}}}). With it, WALK-UP "
+                         "is computed as 理 defined it (13178 §2): the rate at which the classifier "
+                         "returns an ANCESTOR of the gold tag instead of the tag. Without it the "
+                         "rate stays NOT COMPUTED rather than guessed from a string prefix.")
     ap.add_argument("--walkup-field", default="",
                     help="the boolean field that IS the walk-up definition (理's to give)")
     ap.add_argument("--out", default="", help="write the numbers as json")
@@ -474,12 +479,43 @@ def main():
     if gold:
         print("    the gold set's OWN unresolved share: %.1f%% (%d/%d) — the floor this rate is\n"
               "    read against, not zero" % (100.0 * len(exp_un) / len(rows), len(exp_un), len(rows)))
-    if a.walkup_field:
+    if a.taxonomy_parents:
+        # 理 13178 §2: walk-up = the classifier answered COARSER — every tag it returned is a
+        # proper ancestor of something the gold wanted. Computed from the registry's own `parent`
+        # chain, not from a dotted-string prefix: `svc.face.eyes` is not an ancestor of
+        # `svc.face.eyebrows` even though the strings share two segments, and a prefix test would
+        # call it one.
+        reg = json.load(open(a.taxonomy_parents))
+        par = {k: (v or {}).get("parent") for k, v in (reg.get("tags") or {}).items()}
+        def ancestors(t):
+            out, cur = set(), par.get(t)
+            while cur:
+                out.add(cur)
+                cur = par.get(cur)
+            return out
+        wu_n = wu = 0
+        for r in rows:
+            want = r.get("gold_areas")
+            if not want or F["areas"] not in r:
+                continue
+            got = r[F["areas"]] or []
+            kind = str(r.get("gold_kind") or "")
+            ok = (any(w in got for w in want) if kind == "ambiguous"
+                  else all(w in got for w in want))
+            wu_n += 1
+            if ok or not got:
+                continue
+            anc = set().union(*(ancestors(w) for w in want)) if want else set()
+            if all(g in anc for g in got):
+                wu += 1
+        print(fmt("walk-up rate (coarser than gold)", wu, wu_n, 0,
+                  note="  — an ancestor of a wanted tag, from the registry's parent chain"))
+    elif a.walkup_field:
         w_n = sum(1 for r in rows if a.walkup_field in r)
         w = sum(1 for r in rows if r.get(a.walkup_field))
         print(fmt("walk-up rate (%s)" % a.walkup_field, w, w_n, len(rows) - w_n))
     else:
-        print("  walk-up rate                       NOT COMPUTED — no definition given. Three readings\n"
+        print("  walk-up rate                       NOT COMPUTED — pass --taxonomy-parents. Three readings\n"
               "                                     with three different denominators; --walkup-field\n"
               "                                     names the boolean that settles it (理's to give).")
 
