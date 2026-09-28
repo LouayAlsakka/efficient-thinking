@@ -357,24 +357,34 @@ id="a-frozen-agents-plateau-another-agents-places-a-forced-look-and-what-the-dif
 frozen agent’s plateau, another agent’s places, a forced look, and what
 the difference is made of</h2>
 <blockquote>
-<p><strong>STATE 2026-09-28: v1.0.9, 2026-09-28 (v1.0 plus a plain-words summary and a reference
-list; one second-machine reproduction recorded under Reproducibility and
-the first lock’s head files hashed; §6a related work, all thirteen
-citations content-checked — six against method sections, seven at
-abstract level — with four characterisations corrected; withdrawn-run
-provenance stated precisely; no number changed).</strong> Content frozen
-at lock v3; every number second-read. The artefact read matched all 37
-checkable numbers and the v3 delta to their artefacts; the results
-reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of
-189, each against its own lock entry) and recomputed every green count
-from the raw episodes (39 of 39 arm-games), re-deriving the six- and
-seven-arm tables from files; the hygiene read found the needles clean.
-Nothing in the chain from raw episodes to the tables rests on a reported
-number. Versions before this are drafts and are superseded.</p>
+<p><strong>STATE 2026-09-28: v1.0.10, 2026-09-28 (v1.0 plus a
+plain-words summary, a reference list and a named open question on the
+forced-look mechanism; one second-machine reproduction recorded under
+Reproducibility and the first lock’s head files hashed; §6a related
+work, all thirteen citations content-checked — six against method
+sections, seven at abstract level — with four characterisations
+corrected; withdrawn-run provenance stated precisely; no number
+changed).</strong> Content frozen at lock v3; every number second-read.
+The artefact read matched all 37 checkable numbers and the v3 delta to
+their artefacts; the results reader hashed every game file of locks v2
+and v3 (162 of 162 and 189 of 189, each against its own lock entry) and
+recomputed every green count from the raw episodes (39 of 39 arm-games),
+re-deriving the six- and seven-arm tables from files; the hygiene read
+found the needles clean. Nothing in the chain from raw episodes to the
+tables rests on a reported number. Versions before this are drafts and
+are superseded.</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 28, 2026 ·
-<em>v1.0.9</em> · doi:<a href="https://doi.org/10.5281/zenodo.23005271">10.5281/zenodo.23005271</a></p>
-<blockquote><p><strong>In plain words.</strong> The plateau in VIII-b was not because the model had used up what it can learn. It was because of where its experience came from. Experience recorded from where another agent stood, or from a forced first look before guessing, restored gains as large as VIII first reported, with the same model and the same helper. Where you learn from matters, not just how much you collect.</p></blockquote>
+<em>v1.0.10</em> · doi:<a
+href="https://doi.org/10.5281/zenodo.23005271">10.5281/zenodo.23005271</a></p>
+<blockquote>
+<p><strong>In plain words.</strong> The plateau in VIII-b was not
+because the model had used up what it can learn. It was because of where
+its experience came from. Experience recorded from where another agent
+stood, or from a forced first look before guessing, restored gains as
+large as VIII first reported, with the same model and the same helper.
+Where you learn from matters, not just how much you collect.</p>
+</blockquote>
 <h2 id="abstract">Abstract</h2>
 <p>Paper VIII showed that a frozen model with a read-only head fitted on
 its own verified history moves the quality–compute frontier. Paper
@@ -914,8 +924,15 @@ budget — given a fixed number of groups, which states should an agent
 seek in order to acquire the most useful experience? Experience
 acquisition is an optimisation dimension in its own right, separable
 from the intelligence and from the mechanism that consumes experience.
-That is the finding of record; the second agent, the forced look and the
-percentages are the path that led to it.</p>
+Two mechanisms are consistent with the forced-look result and are not
+separated here: the forced look may give the head better coverage of the
+states the game later visits, or it may produce states in which the true
+region is more linearly readable, so the head learns cleaner directions.
+The two point to different follow-ups — seek more states, or seek more
+readable ones — and separating them is a registered question for VIII-d,
+not a claim of this paper. That is the finding of record; the second
+agent, the forced look and the percentages are the path that led to
+it.</p>
 <p>The claim is scoped to what was measured: one task family
 (debugging), one model pair, one head form, 300 problems per game. “Can
 arise” is the verb because a mechanism has been demonstrated in this

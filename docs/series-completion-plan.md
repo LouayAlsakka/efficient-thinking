@@ -165,3 +165,5 @@ programme, families first because the claim of record is what a second family ca
 
 
 **VIII-e, first arm (registered 2026-09-28):** the baseline comparison a reader of VIII asks for — on the same 300-problem sets, (a) a value function fitted on trajectory return over the same episodes, (b) ExpeL-style retrieval of past successes into the prompt — against the frozen head, at matched compute. Result published either way.
+
+**VIII-d, registered question (2026-09-28):** does the forced-look advantage come from coverage (the head sees more of the states the game later visits) or from readability (the true region is more linearly separable in post-inspection states, so the head learns cleaner directions)? Separable by fitting on matched state counts with and without the inspection, and by the head's held-out fit on each; the answer decides whether an acquisition policy should seek more states or more readable ones.
