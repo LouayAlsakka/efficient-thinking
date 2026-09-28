@@ -634,6 +634,8 @@ self-play [Silver et al. 2017] with a frozen evaluator, and the debugging enviro
 SWE-bench [Jimenez et al. 2023] is real, so that the verifier decides every bug and the gates can be enforced at
 generation.
 
+**Where this sits.** The question is old: Chollet (arXiv:1911.01547) proposes measuring intelligence as the efficiency with which a fixed system turns priors and experience into skill, which separates the system, its experience and its skill in the way this series does; Silver and Sutton (2025) argue the next gains come from agents learning from their own experience, of which this series tests one small, measurable piece. Frozen models improving from their own past without retraining is the crowded neighbourhood — Reflexion (arXiv:2303.11366), ExpeL (arXiv:2308.10144), Voyager (arXiv:2305.16291), Agent Workflow Memory (arXiv:2409.07429), and in 2025 Dynamic Cheatsheet (arXiv:2504.07952), ReasoningBank (arXiv:2509.25140) and Agentic Context Engineering (arXiv:2510.04618) — and every one of them carries experience into the prompt as text. This series keeps it outside the prompt, in a read-only head over the model's state, which is what makes the compute accounting clean. On the plateau side, curiosity-driven exploration (arXiv:1705.05363) and Go-Explore (arXiv:1901.10995) rest on the same premise that what is collected bounds what can be learned; STaR (arXiv:2203.14465) and rejection-sampling fine-tuning plateau because a model mostly generates data it could already produce; and Yue et al. (arXiv:2504.13837) find RL-trained models largely reshuffle what the base model could already do, a weight-update cousin of VIII-b's saturation. None of the individual pieces here is new. What the series adds is the separation of three things usually blended — the fixed intelligence, the use of experience, and the acquisition of experience worth using — measured in one controlled system with the controller's own compute charged.
+
 **Compared with value heads and learned verifiers.** The head is a linear readout over a frozen model's hidden states, which is the same object as a value head or a learned verifier: a small model fitted on the frozen model's own behaviour. What this paper measures differs from what those lines report — the head is fitted offline from a verifier's labels on the model's own verified past, read at one decision point, and measured on the quality–compute frontier at matched compute rather than on task score — but the objects are close enough that a reader will ask for the comparison on the same episodes: a value function fitted on trajectory return, and retrieval of past successes into the prompt in the manner of ExpeL. Neither is run here. Both are registered as the first arm of the generality programme (`series-completion-plan.md`, VIII-e), on the same 300-problem sets, and their result will be published either way.
 
 ## 10. Registered predictions, scored
@@ -719,19 +721,30 @@ constants live in one registry (`experience/results/et8_constants.json`) with a 
 - Alsakka, L. (2026). *Efficient Thinking III: Efficient Judging.* This series.
 - Brown, B. et al. (2024). *Large Language Monkeys: Scaling Inference Compute with Repeated Sampling.* arXiv:2407.21787.
 - Burns, C. et al. (2022). *Discovering Latent Knowledge in Language Models Without Supervision.* arXiv:2212.03827.
+- Chollet, F. (2019). *On the Measure of Intelligence.* arXiv:1911.01547.
 - Dettmers, T. et al. (2023). *QLoRA: Efficient Finetuning of Quantized LLMs.* arXiv:2305.14314.
+- Ecoffet, A. et al. (2019). *Go-Explore: a New Approach for Hard-Exploration Problems.* arXiv:1901.10995.
 - Hu, E. J. et al. (2021). *LoRA: Low-Rank Adaptation of Large Language Models.* arXiv:2106.09685.
 - Jimenez, C. E. et al. (2023). *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?* arXiv:2310.06770.
 - Kadavath, S. et al. (2022). *Language Models (Mostly) Know What They Know.* arXiv:2207.05221.
 - Li, K. et al. (2023). *Inference-Time Intervention: Eliciting Truthful Answers from a Language Model.* NeurIPS.
 - Lightman, H. et al. (2023). *Let's Verify Step by Step.* arXiv:2305.20050.
 - McNemar, Q. (1947). *Note on the sampling error of the difference between correlated proportions or percentages.* Psychometrika 12.
-- Shinn, N. et al. (2023). *Reflexion: Language Agents with Verbal Reinforcement Learning.* NeurIPS.
+- Ouyang, S. et al. (2025). *ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory.* arXiv:2509.25140.
+- Pathak, D. et al. (2017). *Curiosity-driven Exploration by Self-supervised Prediction.* arXiv:1705.05363.
+- Shinn, N. et al. (2023). *Reflexion: Language Agents with Verbal Reinforcement Learning.* arXiv:2303.11366.
+- Silver, D. & Sutton, R. S. (2025). *Welcome to the Era of Experience.* Preprint chapter.
 - Silver, D. et al. (2017). *Mastering the game of Go without human knowledge.* Nature 550.
 - Snell, C. et al. (2024). *Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters.* arXiv:2408.03314.
+- Suzgun, M. et al. (2025). *Dynamic Cheatsheet: Test-Time Learning with Adaptive Memory.* arXiv:2504.07952.
 - Turner, A. M. et al. (2023). *Activation Addition: Steering Language Models Without Optimization.* arXiv:2308.10248.
 - Wang, G. et al. (2023). *Voyager: An Open-Ended Embodied Agent with Large Language Models.* arXiv:2305.16291.
 - Wang, X. et al. (2022). *Self-Consistency Improves Chain of Thought Reasoning in Language Models.* arXiv:2203.11171.
+- Wang, Z. Z. et al. (2024). *Agent Workflow Memory.* arXiv:2409.07429.
+- Yue, Y. et al. (2025). *Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?* arXiv:2504.13837.
+- Zelikman, E. et al. (2022). *STaR: Bootstrapping Reasoning With Reasoning.* arXiv:2203.14465.
+- Zhang, Q. et al. (2025). *Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models.* arXiv:2510.04618.
+- Zhao, A. et al. (2023). *ExpeL: LLM Agents Are Experiential Learners.* arXiv:2308.10144.
 
 ## Appendix A. How This Was Found
 

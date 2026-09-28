@@ -162,3 +162,6 @@ and none of our claim. What it has that we do not, and what we take from it:
    page is the bar for how a reader arrives at the result in one click.
 Order: VIII-c v1.0 → challenge page → VIII-d (acquisition policy) and VIII-e (generality) as one registered
 programme, families first because the claim of record is what a second family can falsify cheapest.
+
+
+**VIII-e, first arm (registered 2026-09-28):** the baseline comparison a reader of VIII asks for — on the same 300-problem sets, (a) a value function fitted on trajectory return over the same episodes, (b) ExpeL-style retrieval of past successes into the prompt — against the frozen head, at matched compute. Result published either way.
