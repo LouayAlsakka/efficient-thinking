@@ -4,6 +4,8 @@
 
 **Louay Alsakka** · September 22, 2026 · *draft v0.4*
 
+> **In plain words.** This paper asked whether a model knows more than it says, by comparing what a probe reads from its internal state with what the model answers when forced to choose. Under the definition registered before the runs, the claim failed at every model size: as models grow, the forced answer catches up to the internal state. The first headline was a scoring error and is withdrawn.
+
 ## Abstract
 
 A fixed system — a model whose weights and inputs do not change — can improve its realised performance only toward the

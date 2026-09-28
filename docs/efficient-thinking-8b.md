@@ -4,6 +4,8 @@
 
 **Louay Alsakka** · September 24, 2026 · *draft v0.3*
 
+> **In plain words.** If the helper in VIII learns from the model's own past, does a second round of that past help again? Mostly not: the second round is largely a repeat of the first, because the model keeps returning to the same situations. The gain is small and does not separate from noise.
+
 ## Abstract
 
 Paper VIII showed that a frozen model with a read-only head fitted on its own verified history moves the

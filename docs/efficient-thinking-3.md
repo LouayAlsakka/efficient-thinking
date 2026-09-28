@@ -4,6 +4,8 @@
 
 **Louay Alsakka** · July 17, 2026 · *draft v0.1*
 
+> **In plain words.** Using a language model as a judge to choose among candidate answers costs computation of its own. This paper measures when that spend beats a plain majority vote: only when the candidates are weak and few. The judging budget is part of the capability, not free. (Reader's aid added 2026-09-28; the archived paper below is unchanged.)
+
 ## Abstract
 
 After a model samples N candidate answers, something must select one. Three selectors exist: a verifier, exact but available only in checkable domains; majority vote, free wherever answers can be counted; and an LLM judge, available everywhere and costing compute. Papers I–II of this series measured what search extracts and what evaluators bound; this paper prices the judge. We ran a 48-cell grid — six judge sizes (1.5B–72B) against four policy sizes (0.5B–7B), at N = 4 and N = 16 candidates over frozen GSM8K caches, 150 problems per cell — in two protocols (pick-best-from-list and pairwise tournament), with every claimed effect tested by exact paired McNemar.

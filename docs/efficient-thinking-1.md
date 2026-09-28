@@ -5,6 +5,8 @@
 
 **Louay Alsakka** · July 2026
 
+> **In plain words.** A small chess network, unchanged, plays far stronger when it is allowed to search before it moves. This paper measures how much stronger per unit of computation, and finds that most of what search adds was already in the evaluator: search extracts it, it does not create it. (Reader's aid added 2026-09-28; the archived paper below is unchanged.)
+
 **Code & trained model:** [github.com/louayalsakka/efficient-thinking](https://github.com/louayalsakka/efficient-thinking)
 
 ---

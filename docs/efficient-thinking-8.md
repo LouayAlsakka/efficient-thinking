@@ -1,8 +1,10 @@
 # Efficient Thinking VIII: Experience Priors
 ## The constraint and the carrier — how verified history moves a frozen model's quality–compute frontier
-> **STATE 2026-09-20: MEASURED, closed.** Every result below is on disk under `experience/results/` with its command; the pre-registered readings are scored in §10; the closing runs landed 2026-09-19 to 09-20 and nothing further enters this paper. First paper of the VIII line (working label 8a); VIII-b accumulation, VIII-c carrier studies and VIII-d instruments follow (`et8-series-plan.md`).
+> **STATE 2026-09-28: MEASURED, closed; v1.0.1 (plain-words summary and a related-work paragraph on value heads and learned verifiers; no number changed).** Every result below is on disk under `experience/results/` with its command; the pre-registered readings are scored in §10; the closing runs landed 2026-09-19 to 09-20 and nothing further enters this paper. First paper of the VIII line (working label 8a); VIII-b accumulation, VIII-c carrier studies and VIII-d instruments follow (`et8-series-plan.md`).
 
-**Louay Alsakka** · September 20, 2026 · *v1.0* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
+**Louay Alsakka** · September 28, 2026 · *v1.0.1* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
+
+> **In plain words.** A model that is never retrained can still improve. We keep a record of what it did before and whether it worked, verified by tests, and fit a small read-only helper that reads the model's internal state at each decision and points it toward what worked before. On the same budget the model solves more problems; at the same quality it spends less than half the computation. Nothing inside the model changes.
 
 ## Abstract
 
@@ -631,6 +633,8 @@ study, not as a baseline but as a case of what a weight update carries. The ches
 self-play [Silver et al. 2017] with a frozen evaluator, and the debugging environment is deliberately synthetic where
 SWE-bench [Jimenez et al. 2023] is real, so that the verifier decides every bug and the gates can be enforced at
 generation.
+
+**Compared with value heads and learned verifiers.** The head is a linear readout over a frozen model's hidden states, which is the same object as a value head or a learned verifier: a small model fitted on the frozen model's own behaviour. What this paper measures differs from what those lines report — the head is fitted offline from a verifier's labels on the model's own verified past, read at one decision point, and measured on the quality–compute frontier at matched compute rather than on task score — but the objects are close enough that a reader will ask for the comparison on the same episodes: a value function fitted on trajectory return, and retrieval of past successes into the prompt in the manner of ExpeL. Neither is run here. Both are registered as the first arm of the generality programme (`series-completion-plan.md`, VIII-e), on the same 300-problem sets, and their result will be published either way.
 
 ## 10. Registered predictions, scored
 

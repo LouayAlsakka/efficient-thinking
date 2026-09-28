@@ -5,6 +5,8 @@
 
 **Louay Alsakka** · July 17, 2026 · *v1.0.2*
 
+> **In plain words.** Asking a model for many answers and taking the most common one stops helping after a few samples, because the model's mistakes are correlated: it agrees with itself when it is wrong. Only a checker from outside the model raises that ceiling. This paper measures where sampling pays and where it cannot. (Reader's aid added 2026-09-28; the archived paper below is unchanged.)
+
 ## Abstract
 
 Efficient Thinking I proposed a working decomposition from chess: strength = evaluator × search. A single-pass evaluator sets a base level of capability, inference-time search multiplies that base and then saturates against the evaluator's ceiling, and self-improvement stalls because nothing inside a closed system raises the ceiling. This paper tests whether that decomposition is a chess artifact. We take it to three deliberately different settings: Connect-4, where a perfect solver makes every quantity exactly measurable; LLM mathematical reasoning, a non-game domain with a natural verifier; and a gridworld MDP, where value iteration supplies the exact optimal value function.
