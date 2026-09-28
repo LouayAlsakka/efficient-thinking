@@ -45,7 +45,13 @@ img.author{float:left;width:96px;height:96px;border-radius:6px;margin:4px 16px 8
 </ul>
 
 <h2>The key result — Paper VIII</h2>
-<p class="small"><strong>Paper VIII has become three.</strong> VIII: verified experience, read by a frozen head, moves the frontier (use). VIII-b: a second generation of the agent's own experience stops separating from noise (saturation). VIII-c: the plateau was in acquisition, and experience gathered from where another agent stood, or from a forced first look, restores the gain (acquisition). Intelligence, experience used, experience acquired — each held fixed while the others are measured.</p>
+<p class="small"><strong>VIII — Experience, in three papers.</strong></p>
+<ul class="small">
+<li><strong>VIII · Utilization</strong> — verified experience improves a frozen model.</li>
+<li><strong>VIII-b · Saturation</strong> — more experience gathered by the same policy stops producing separable gains.</li>
+<li><strong>VIII-c · Acquisition</strong> — the plateau can arise from where experience is acquired; changing the acquisition policy restores useful gains.</li>
+</ul>
+<p class="small">Together, VIII to VIII-c separate three things usually called learning: fixed intelligence, the ability to use experience, and the ability to acquire experience worth using. Paper I began by asking how to spend an inference budget; VIII-c ends by asking how to spend an experience-acquisition budget.</p>
 <p class="small">Papers I–VII establish the frontier and its limits: search moves a fixed model along its quality–compute frontier, and only external information raises the ceiling. Paper VIII is the first result that moves the frontier itself.</p>
 <div class="q"><strong>The result to try to break.</strong> A frozen 7B model, given a read-only linear head fitted on its own verified history, solves more problems at the same inference compute — and, at equal quality, spends 2.3× less. The mechanism transfers to a second search structure with the head re-fitted. Whether a second generation of experience beats the first is being measured against the loop's own run-to-run noise, replicate against replicate, and is not claimed here. <strong>The headline reproduces from one command in about three hours on an Apple-silicon Mac.</strong></p>
 <table class="facts">
