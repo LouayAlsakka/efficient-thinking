@@ -1,6 +1,8 @@
 # Efficient Thinking II: Where Search Pays and Where It Can't
 ## Testing the evaluator × search decomposition in a solved game, language reasoning, and sequential control
 
+> **STATE 2026-09-28: CLOSED.** Archived 2026-07-24 as part of *Efficient Thinking series 1-3*, DOI [10.5281/zenodo.21520992](https://doi.org/10.5281/zenodo.21520992); the archived PDF is the version of record and this page is not revised further.
+
 **Louay Alsakka** · July 17, 2026 · *v1.0.2*
 
 ## Abstract

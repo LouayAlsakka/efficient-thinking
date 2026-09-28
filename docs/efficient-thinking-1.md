@@ -1,6 +1,8 @@
 # Efficient Thinking: Measuring What Capability Costs
 ## Parameters, data, search, and latency in a small chess evaluator — and a diagnostic for finding which one binds
 
+> **STATE 2026-09-28: CLOSED.** Archived 2026-07-24 as part of *Efficient Thinking series 1-3*, DOI [10.5281/zenodo.21520992](https://doi.org/10.5281/zenodo.21520992); the archived PDF is the version of record and this page is not revised further.
+
 **Louay Alsakka** · July 2026
 
 **Code & trained model:** [github.com/louayalsakka/efficient-thinking](https://github.com/louayalsakka/efficient-thinking)
