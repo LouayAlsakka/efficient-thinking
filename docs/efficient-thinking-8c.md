@@ -1,9 +1,9 @@
 # Efficient Thinking VIII-c: Where the Experience Is Acquired
 ## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
 
-> **STATE 2026-09-27: v1.0.7, 2026-09-28 (v1.0 plus one second-machine reproduction recorded under Reproducibility and the first lock's head files hashed; §6a related work, all thirteen citations content-checked — six against method sections, seven at abstract level — with four characterisations corrected; withdrawn-run provenance stated precisely; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
+> **STATE 2026-09-28: v1.0.7, 2026-09-28 (v1.0 plus one second-machine reproduction recorded under Reproducibility and the first lock's head files hashed; §6a related work, all thirteen citations content-checked — six against method sections, seven at abstract level — with four characterisations corrected; withdrawn-run provenance stated precisely; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
 
-**Louay Alsakka** · September 27, 2026 · *v1.0.4*
+**Louay Alsakka** · September 28, 2026 · *v1.0.7*
 
 ## Abstract
 
