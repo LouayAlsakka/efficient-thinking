@@ -2,7 +2,7 @@
 ## The constraint and the carrier — how verified history moves a frozen model's quality–compute frontier
 > **STATE 2026-09-20: MEASURED, closed.** Every result below is on disk under `experience/results/` with its command; the pre-registered readings are scored in §10; the closing runs landed 2026-09-19 to 09-20 and nothing further enters this paper. First paper of the VIII line (working label 8a); VIII-b accumulation, VIII-c carrier studies and VIII-d instruments follow (`et8-series-plan.md`).
 
-**Louay Alsakka** · September 20, 2026 · *v1.0*
+**Louay Alsakka** · September 20, 2026 · *v1.0* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
 
 ## Abstract
 
