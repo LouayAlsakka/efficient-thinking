@@ -345,20 +345,20 @@ id="a-frozen-agents-plateau-another-agents-places-a-forced-look-and-what-the-dif
 frozen agent’s plateau, another agent’s places, a forced look, and what
 the difference is made of</h2>
 <blockquote>
-<p><strong>STATE 2026-09-27: v1.0.6, 2026-09-27 (v1.0 plus one
-second-machine reproduction recorded under Reproducibility; §6a related
-work, all thirteen citations content-checked — six against method
-sections, seven at abstract level — with four characterisations
-corrected; withdrawn-run provenance stated precisely; no number
-changed).</strong> Content frozen at lock v3; every number second-read.
-The artefact read matched all 37 checkable numbers and the v3 delta to
-their artefacts; the results reader hashed every game file of locks v2
-and v3 (162 of 162 and 189 of 189, each against its own lock entry) and
-recomputed every green count from the raw episodes (39 of 39 arm-games),
-re-deriving the six- and seven-arm tables from files; the hygiene read
-found the needles clean. Nothing in the chain from raw episodes to the
-tables rests on a reported number. Versions before this are drafts and
-are superseded.</p>
+<p><strong>STATE 2026-09-27: v1.0.7, 2026-09-28 (v1.0 plus one
+second-machine reproduction recorded under Reproducibility and the first
+lock’s head files hashed; §6a related work, all thirteen citations
+content-checked — six against method sections, seven at abstract level —
+with four characterisations corrected; withdrawn-run provenance stated
+precisely; no number changed).</strong> Content frozen at lock v3; every
+number second-read. The artefact read matched all 37 checkable numbers
+and the v3 delta to their artefacts; the results reader hashed every
+game file of locks v2 and v3 (162 of 162 and 189 of 189, each against
+its own lock entry) and recomputed every green count from the raw
+episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables
+from files; the hygiene read found the needles clean. Nothing in the
+chain from raw episodes to the tables rests on a reported number.
+Versions before this are drafts and are superseded.</p>
 </blockquote>
 <p><strong>Louay Alsakka</strong> · September 27, 2026 ·
 <em>v1.0.4</em></p>
@@ -930,15 +930,17 @@ The second and third locks (the forced-look, mixture and half-size arms)
 were read by the results reader from the staged files: every game file
 hashed against its lock entry (162 of 162, 189 of 189; zero missing,
 zero mismatched) and every green count recomputed from the raw episodes
-(39 of 39). The head files themselves are named by hash in the locks and
-were not re-hashed by the second reader; every episode those heads
-produced verifies. Withdrawn runs are named by hash in the first lock
-(36 entries); their bytes were not part of the staged verification set
-and rest on the experimenter’s box, and a withdrawn entry can carry the
-same filename as a live one, differing only by hash, so a file is
-identified by its hash and never by its name. The registrations, in the
-order they were written, are <code>docs/et8b-loop-gates.md</code>
-§16–§16c.</p>
+(39 of 39). The head files themselves are named by hash in the locks;
+they were not re-hashed by the second reader at the time of the lock
+reads, and have since been hashed against the first lock (2 of 2 exact),
+bringing that lock’s verifiable-from-staged total to 110 of 110; every
+episode those heads produced verifies. Withdrawn runs are named by hash
+in the first lock (36 entries); their bytes were not part of the staged
+verification set and rest on the experimenter’s box, and a withdrawn
+entry can carry the same filename as a live one, differing only by hash,
+so a file is identified by its hash and never by its name. The
+registrations, in the order they were written, are
+<code>docs/et8b-loop-gates.md</code> §16–§16c.</p>
 <p>On 2026-09-27 the from-scratch script
 <code>experience/reproduce_8c.sh</code> completed one full run on a
 second machine: both task sets regenerated from their seeds, states
