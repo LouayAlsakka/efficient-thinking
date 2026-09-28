@@ -113,4 +113,4 @@ MIT — see [LICENSE](LICENSE).
 
 ## Authorship of commits
 
-All work in this repository is the author's. Some commits carry the author name `sautee`, the pseudonymous experimenter credited in the papers' appendices, who works with the author. No GitHub account is associated with that name in this project; any GitHub user of the same or a similar name is unrelated to this work and did not contribute to it. From 2026-09-28 every commit is made under the author's own identity.
+All work in this repository is the author's. Some commits carry the author name `sautee`. That is a pseudonym for the experimenter credited in the papers' appendices, who works with the author; it is not a GitHub account. There is a GitHub user with the same name; that person is unrelated to this work and did not contribute to it. Some older commits carry an organisation email address in their metadata; it identifies no contributor. From 2026-09-28 every commit is made under the author's own identity.
