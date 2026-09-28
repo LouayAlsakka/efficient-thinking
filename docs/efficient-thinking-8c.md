@@ -1,9 +1,9 @@
 # Efficient Thinking VIII-c: Where the Experience Is Acquired
 ## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
 
-> **STATE 2026-09-28: v1.0.7, 2026-09-28 (v1.0 plus one second-machine reproduction recorded under Reproducibility and the first lock's head files hashed; §6a related work, all thirteen citations content-checked — six against method sections, seven at abstract level — with four characterisations corrected; withdrawn-run provenance stated precisely; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
+> **STATE 2026-09-28: v1.0.8, 2026-09-28 (v1.0 plus a reference list; one second-machine reproduction recorded under Reproducibility and the first lock's head files hashed; §6a related work, all thirteen citations content-checked — six against method sections, seven at abstract level — with four characterisations corrected; withdrawn-run provenance stated precisely; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
 
-**Louay Alsakka** · September 28, 2026 · *v1.0.7*
+**Louay Alsakka** · September 28, 2026 · *v1.0.8*
 
 ## Abstract
 
@@ -117,6 +117,25 @@ The claim is scoped to what was measured: one task family (debugging), one model
 Every game file, head, task set and score in this paper is named by sha256 in `experience/results/viiic_LOCK.json` (arms of §3), `viiic_LOCK_v2.json` (the forced-look and mixture arms) and `viiic_LOCK_v3.json` (the half-size arm), with the git sha of the script that produced each artefact and its exact invocation. A second reader verified the first lock — 108 of 108 hashes, 16 of 16 statistics from its table, 12 of 12 green counts from the files — and found the one discrepancy that moved a recorded verdict (§6, the bar). The second and third locks (the forced-look, mixture and half-size arms) were read by the results reader from the staged files: every game file hashed against its lock entry (162 of 162, 189 of 189; zero missing, zero mismatched) and every green count recomputed from the raw episodes (39 of 39). The head files themselves are named by hash in the locks; they were not re-hashed by the second reader at the time of the lock reads, and have since been hashed against the first lock (2 of 2 exact), bringing that lock's verifiable-from-staged total to 110 of 110; every episode those heads produced verifies. Withdrawn runs are named by hash in the first lock (36 entries); their bytes were not part of the staged verification set and rest on the experimenter's box, and a withdrawn entry can carry the same filename as a live one, differing only by hash, so a file is identified by its hash and never by its name. The registrations, in the order they were written, are `docs/et8b-loop-gates.md` §16–§16c.
 
 On 2026-09-27 the from-scratch script `experience/reproduce_8c.sh` completed one full run on a second machine: both task sets regenerated from their seeds, states re-collected, the forced-look head re-fitted from the run's own states, three games per arm. Base 66, 70, 60 of 300 against the lock's 66, 67, 65 (means 0.22 points apart); forced-look 126, 121, 116 against 122, 126, 123 (0.89 apart); the effect re-derives at +18.55 points against +19.22. Both arms are within the 3.67-point bar of §6, and the reproduced base arm's own three-game range (10 problems) is an independent measurement that a spread of that size belongs to the loop. The stage-6 output is at `experience/results/viiic_repro/2026-09-27_stage6_output.txt`; the self-experience arm is skipped by the script because its head is a VIII-b artefact not published here.
+
+## References
+
+- Alsakka, L. (2026). *Efficient Thinking I: Measuring What Capability Costs.* This series.
+- Alsakka, L. (2026). *Efficient Thinking VIII: Experience Priors.* This series.
+- Alsakka, L. (2026). *Efficient Thinking VIII-b: Does Experience Accumulate?* This series.
+- Asadolahi, M. et al. (2026). *Memory Reward Inflation in Self-Improving LLM Agents.* arXiv:2608.00017.
+- Chen, J. et al. (2026). *Rethinking Continual Experience Internalization for Self-Evolving LLM Agents.* arXiv:2606.04703.
+- Feng, T. et al. (2026). *ExpGraph: Model-Agnostic Experience Learning with Graph-Structured Memory for LLM Agents.* arXiv:2605.30712.
+- Ghasemabadi, A. et al. (2026). *Multi-Head Latent Control: A Unified Interface for LLM Agent Decision Making.* arXiv:2607.14277.
+- Gurjar, P. et al. (2026). *DORA Explorer: Improving the Exploration Ability of LLMs Without Training.* arXiv:2604.17244.
+- Li, X. et al. (2026). *Beyond Experience Retrieval: Learning to Generate Utility-Optimized Structured Experience for Frozen LLMs.* arXiv:2602.02556.
+- Li, X. et al. (2026). *HSRM: Hidden-State Reward Models for Test-Time Verification.* arXiv:2608.30841.
+- Li, Y. et al. (2026). *Efficient Reasoning with Balanced Thinking.* arXiv:2603.12372. ICLR 2026.
+- Lin, J. (2026). *Self-Improvement Can Self-Regress: The Rise-and-Collapse Failure Mode of LLM Self-Training.* arXiv:2606.21090.
+- Wang, H. et al. (2026). *Language-based Trial and Error Falls Behind in the Era of Experience.* arXiv:2601.21754.
+- Yu, S. et al. (2026). *OLIVIA: Online Learning via Inference-time Action Adaptation for Decision Making in LLM ReAct Agents.* arXiv:2605.11169.
+- Yu, Y. et al. (2026). *STRETCH the Boundaries: A Unified Self-Taught Framework for Progressive LLM Evolution.* arXiv:2609.18642.
+- Zhao, A. et al. (2023). *ExpeL: LLM Agents Are Experiential Learners.* arXiv:2308.10144.
 
 ## Appendix A. How this was found
 
