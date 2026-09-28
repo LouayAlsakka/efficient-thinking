@@ -1,9 +1,9 @@
 # Efficient Thinking VIII-c: Where the Experience Is Acquired
 ## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
 
-> **STATE 2026-09-28: v1.0.10, 2026-09-28 (v1.0 plus a plain-words summary, a reference list and a named open question on the forced-look mechanism; one second-machine reproduction recorded under Reproducibility and the first lock's head files hashed; §6a related work, all thirteen citations content-checked — six against method sections, seven at abstract level — with four characterisations corrected; withdrawn-run provenance stated precisely; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
+> **STATE 2026-09-28: v1.0.11, 2026-09-28 (v1.0 plus a plain-words summary, a reference list, a named open question on the forced-look mechanism and a note on the gen0 arm; one second-machine reproduction recorded under Reproducibility and the first lock's head files hashed; §6a related work, all thirteen citations content-checked — six against method sections, seven at abstract level — with four characterisations corrected; withdrawn-run provenance stated precisely; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
 
-**Louay Alsakka** · September 28, 2026 · *v1.0.10* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
+**Louay Alsakka** · September 28, 2026 · *v1.0.11* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
 
 > **In plain words.** The plateau in VIII-b was not because the model had used up what it can learn. It was because of where its experience came from. Experience recorded from where another agent stood, or from a forced first look before guessing, restored gains as large as VIII first reported, with the same model and the same helper. Where you learn from matters, not just how much you collect.
 
@@ -24,6 +24,8 @@ Paper VIII showed that a frozen model with a read-only head fitted on its own ve
 | forced-look | head on the 7B's states at the places a forced first inspection visited | 122 | 126 | 123 | 41.2 | 1.33 |
 | mixture | head on other-agent ∪ forced-look decisions, same size (drawn 158 + 132) | 117 | 113 | 117 | 38.6 | 1.33 |
 | forced-look, half | head on the mixture's own 132 forced-look groups alone | 95 | 101 | 97 | 32.6 | 2.00 |
+
+*On gen0, the only arm below base.* Its head was fitted on experience gathered under an earlier task family and that family's prompt vocabulary (Appendix A, step 3); on this family's corrected vocabulary its first picks name the true region less often than the base's own (17.0% against 23.3%, §4). It is carried here as the origin of the accumulation series, not as a re-measurement of VIII: on VIII's own sets the same head scores +9 to +10 points over base (VIII-b §7) and VIII's claim is measured and reproduced in its own harness at matched compute.
 
 **Supported comparisons** — paired per problem, three games, read against the registered bars (§2). Only these rows are claims.
 
