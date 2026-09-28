@@ -45,7 +45,15 @@ img.author{float:left;width:96px;height:96px;border-radius:6px;margin:4px 16px 8
 <li><strong>VIII-c</strong> — a frozen agent's experience plateau can arise from how it acquires experience, not from exhaustion of its ability to use it: the same head on states from where a second agent stood, or from a forced first look, restores gains the agent's own experience could not. <a href="efficient-thinking-8c.html">v1.0.9</a> · <a href="efficient-thinking-8c.md">md</a></li>
 </ul>
 
-<h2>The key result — Paper VIII</h2>
+<h2>The finding — Paper VIII-c</h2>
+<p class="small"><strong>VIII is the setup; VIII-c is the finding.</strong> Same frozen model, same read-only head, 300 unseen problems. The base solves 22.0%. A head fitted on the agent's own experience reaches 26.8%, and a second round of its own experience adds nothing separable (VIII-b). The same head fitted on experience recorded from where a second agent stood reaches 35.4%; fitted on experience from a forced first look before guessing, 41.2%. Nothing about the model or the head changed between those columns — only where the experience came from. That is the claim: a frozen agent's learning plateau can belong to acquisition alone.</p>
+<div class="q"><strong>Reproduce it.</strong> The published bytes rescore in minutes; the whole run regenerates from scratch in about four and a half hours on an Apple-silicon Mac, and did so on a second machine within the pre-registered bar (base 0.22 and forced-look 0.89 points from the published means, against a 3.67-point bar).</div>
+<pre>git clone https://github.com/LouayAlsakka/efficient-thinking && cd efficient-thinking
+python experience/g13b_score.py --dir experience/results/viiic --plan viiic7 --out /tmp/viiic.json   # our bytes, minutes (needs numpy)
+bash experience/reproduce_8c.sh                                                                      # your bytes, ~4.5 h</pre>
+<p class="small">Paper: <a href="efficient-thinking-8c.html">VIII-c</a> · <a href="efficient-thinking-8c.pdf">pdf</a> · how to attack it: <a href="challenge.html">the challenge page</a>.</p>
+
+<h2>The setup — Paper VIII</h2>
 <p class="small"><strong>VIII — Experience, in three papers.</strong></p>
 <ul class="small">
 <li><strong>VIII · Utilization</strong> — verified experience improves a frozen model.</li>
@@ -61,6 +69,7 @@ img.author{float:left;width:96px;height:96px;border-radius:6px;margin:4px 16px 8
 <tr><th>Capability</th><td>Problems solved, decided by the test suite, never by a model. Paired per problem; 95% intervals from a paired bootstrap; McNemar on the discordant pairs</td></tr>
 <tr><th>Compute</th><td>Total tokens per episode with the controller's own inference charged; the matched control gives the base the head's token budget</td></tr>
 <tr><th>"Verified history"</th><td>The frozen model's own earlier episodes on other problems, labelled by the test suite — not by the model, not by a person. Only successes teach; the head is fitted once and never updated during the run</td></tr>
+<tr><th>Second family</th><td>Llama-3.1-8B, weights never changed, its own head fitted from its own history: +20.0 points on the held-out slice, +14.3 [+7.7, +21.0] on a disjoint 300 (Paper VIII §7.4)</td></tr>
 <tr><th>Second structure</th><td>SQL query repair against a fixed schema; regions are clauses; the verifier is the result set. The head was re-fitted there from that environment's own history, so the mechanism transfers, not the weights</td></tr>
 </table>
 <pre>git clone https://github.com/LouayAlsakka/efficient-thinking && cd efficient-thinking
