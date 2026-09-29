@@ -102,7 +102,12 @@
    "source": "UPPER BOUND, not a rate. Bedrock Opus ($5.50/$27.50, measured) scaled by the ratio the DIRECT prices show between fable-5-1 and opus-4-7 ($10/$50 vs $5/$25 = 2.0x).",
    "confidence": "BOUND ONLY — no published and no billed price exists for this model on this account"
   },
-  "reconciliation_rule": "the number reported in the paper's reproducibility section is the BILLED spend from Cost Explorer (雲's instrument), NOT this meter's total. The meter's job is to STOP the run; billing's job is to say what it cost. They are different questions and the paper needs the second."
+  "reconciliation_rule": "the number reported in the paper's reproducibility section is the BILLED spend from Cost Explorer (雲's instrument), NOT this meter's total. The meter's job is to STOP the run; billing's job is to say what it cost. They are different questions and the paper needs the second.",
+  "moonshotai.kimi-k2.5": {
+   "in_per_M": 0.6,
+   "out_per_M": 3.0,
+   "note": "MEASURED from this account's own Cost Explorer billing for 2026-08-14 -> 09-13 ($256.9188 over 428,198 k-tok input; output is 5x input on the invoice), supplied by 雲. Unlike the two Claude entries in this block -- which the STATUS above calls deliberately high BOUNDS because no published Bedrock price existed -- this pair is a billed rate. No cache read/write columns: kimi silently ignores prompt-caching directives on Bedrock, so their absence is the real shape rather than a gap."
+  }
  },
  "⚠️_the_direct_api_prices_above_are_NOT_what_IV_will_pay": "prices_read_2026-09-20 is claude.com's direct API. 理 moved the judge to Bedrock, where this account is billed 10% higher on Opus. The direct table is kept for the record of what was planned against, and is no longer the table the meter uses.",
  "resized_2026-09-21_bedrock_and_measured_n": {
