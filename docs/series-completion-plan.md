@@ -167,3 +167,26 @@ programme, families first because the claim of record is what a second family ca
 **VIII-e, first arm (registered 2026-09-28):** the baseline comparison a reader of VIII asks for — on the same 300-problem sets, (a) a value function fitted on trajectory return over the same episodes, (b) ExpeL-style retrieval of past successes into the prompt — against the frozen head, at matched compute. Result published either way.
 
 **VIII-d, registered question (2026-09-28):** does the forced-look advantage come from coverage (the head sees more of the states the game later visits) or from readability (the true region is more linearly separable in post-inspection states, so the head learns cleaner directions)? Separable by fitting on matched state counts with and without the inspection, and by the head's held-out fit on each; the answer decides whether an acquisition policy should seek more states or more readable ones.
+
+
+## VIII-d and VIII-e — REGISTERED 2026-09-30 (readings fixed before any run; runs on the studio boxes, which are otherwise idle)
+
+Frozen throughout: the 7B model, the head form (shared linear readout, layer 18, one seed), the verifier labels, the scoring set (seed 89, 300 problems), the loop harness (`et8b_loop`, budget 12, up to three head decisions), and the bar (3.67 points, the session's largest within-head-arm range; a difference is a finding only when its 95% paired interval excludes zero in 3 of 3 games, as in VIII-c §14a). Every artefact is named by sha256 in a lock before it is scored; the second reader hashes the lock.
+
+### VIII-e, arm 1 — the baselines VIII owes (box: llm2; ~2 days)
+Question: does the frozen head's gain over base survive against the two objects a reviewer names first?
+Arms, all on VIII-c's own-experience states (290 groups, the g1-matched head's fitting set) so the comparison is like for like:
+- (a) VALUE FUNCTION: the same linear form fitted on trajectory RETURN (solved / not solved at episode end) instead of the verifier's per-candidate region label; read at the same decision.
+- (b) EXPEL-STYLE RETRIEVAL: the k nearest past successful episodes (by state embedding, k=3) inserted into the prompt as text; no head; compute charged including the retrieval tokens.
+- (c) the published frozen head (g1-matched, 26.8%) as the anchor; base (22.0%) re-run in the same session as the control.
+Readings, fixed now: R1 the head beats (a) by more than the bar → the LABEL (verifier region, not return) is what the head buys; R2 the head beats (b) at matched compute → the CHANNEL (outside the prompt) is what it buys; R3 (b) ≥ head → the series' mechanism is not distinctive on this family and VIII's "moves the frontier" is restated as "matches prompt retrieval at lower compute" or withdrawn, as the numbers say; R4 (a) ≥ head → the verifier label is not load-bearing. Three games per arm; published either way.
+
+### VIII-d, arm 1 — coverage or readability (box: llm1; ~1.5 days)
+Question (VIII-c §7, registered 09-28): does the forced-look advantage come from the head seeing more of the states the game later visits (coverage), or from post-inspection states being more linearly separable (readability)?
+Design: from the forced-look collection (VIII-c arm 3 states) draw two fitting sets of MATCHED size (132 groups, the half-size arm's count): S-cov = states sampled to maximise overlap with the states the scoring games visit (nearest-neighbour by embedding to a held-out game's states); S-read = states sampled to maximise the head's cross-validated fit on the fitting set itself. Fit one head on each; play three games each; report the CV fit and the game score of each beside the published half-size forced arm (32.6%).
+Readings, fixed now: R1 S-cov beats S-read by more than the bar → coverage; R2 S-read beats S-cov by more than the bar → readability; R3 neither separates → the two are confounded in this family and VIII-d's next arm must vary the acquisition RULE, not the sample; R4 either beats the published half-size arm by more than the bar → a selection rule over states is itself an acquisition policy, which is VIII-d's thesis.
+
+### VIII-d, arm 2 — the acquisition rule as the object (after arm 1; ~2–3 days of one box)
+The five collection rules named above (native; forced look at decision 1 — the anchor; forced look at every decision; look where the current head is least certain; the head's own choice), 290 groups each, one head each, three games each. Reading, fixed from VIII-c §16c (iii): if a rule that raises disagreement with the policy raises solved problems, acquisition is optimisable by selectivity and the loop closes; if it saturates at "look first", the dimension is real but shallow here.
+
+Order: VIII-e arm 1 and VIII-d arm 1 run in parallel (different boxes); VIII-d arm 2 after arm 1 reads. Owner of runs: Sautée; second reader of locks: Takumi; hygiene: Metsuke. Priority stands as Louay set it: product model work on the studio boxes pre-empts these; they fill the boxes when nothing else does.
