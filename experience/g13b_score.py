@@ -71,6 +71,60 @@ PLANS = {
     # VIII-c arm 1. Registered BEFORE the arms finished collecting, which is the whole point of
     # writing it here rather than after: the pairings and the note are fixed while the numbers do
     # not exist yet, so the reading cannot be shaped by what came out.
+    # ─── VIII-e arm 1 ────────────────────────────────────────────────────────────
+    # The baselines VIII owes: does the frozen head's gain survive against the two
+    # objects a reviewer names first -- a head fitted on what the agent ALREADY
+    # believed, and prompt retrieval with no head at all?
+    #
+    # REGISTERED BEFORE ITS ARMS FINISHED, as above. Disclosure of what had been
+    # seen when this was written: the two R1 heads' OFFLINE cross-validated fits
+    # (83.4% for the agent's-pick label against 60.4% for the verifier's, on
+    # identical rows) and two finished base games' green counts. No pairing and no
+    # arm of (b) existed. The offline gap is deliberately NOT a reading here -- see
+    # the note -- and a prediction about which way it converts was published before
+    # these games ran.
+    #
+    # R1 IS SCORED LIKE FOR LIKE on the 169 decision groups where the agent's-pick
+    # label VARIES within the group. It is all-zero in the other 121 of 290 because
+    # the agent's pick is recorded on only 58% of rows, and a group with no positive
+    # can never be got right under pick-one-per-group scoring -- so including them
+    # would depress the baseline for a reason unrelated to the agent's pick being a
+    # weak signal. Both R1 heads are fitted on those same 169 groups, the same 837
+    # rows in the same order, with the same 169 positives: the arms differ ONLY in
+    # which candidate the label marks. The 121 are reported unscoreable by count.
+    #
+    # The anchor arm is NOT re-run for this plan: anchor_f132 is the same head on the
+    # same task set in the same session as the coverage-or-readability arm, and its
+    # three games are byte-identical copies (sha256 verified) rather than a second
+    # collection. Re-running it would spend three games to produce a second copy of
+    # a number the session already has.
+    "viiie": {"base": "base_g",
+              "arms": ("base_g", "anchor_f132_g", "retr_g",
+                       "a169_verifier_g", "a169_agentpick_g"),
+              "labels": {
+                  "base_g": "base: no head, no retrieval",
+                  "anchor_f132_g": "the published half-size forced head, in-session",
+                  "retr_g": "(b) ExPEL-style prompt retrieval, k=1, ONCE PER DECISION, "
+                            "no head, retrieval tokens charged in the turn's own input count",
+                  "a169_verifier_g": "R1 reference: verifier-label head on the 169 groups",
+                  "a169_agentpick_g": "(a) the agent's own revealed pick, same 169 groups"},
+              "aliases": {},
+              "wanted": [("a169_verifier_g", "a169_agentpick_g"),
+                         ("anchor_f132_g", "retr_g"),
+                         ("retr_g", "base_g"),
+                         ("anchor_f132_g", "base_g"),
+                         ("a169_verifier_g", "base_g"),
+                         ("a169_agentpick_g", "base_g")],
+              "forbidden": set(),
+              "note": ("R1/R4 read off a169_verifier vs a169_agentpick -- like for like on the "
+                       "169 varying groups. R2/R3 read off anchor_f132 vs retr. The CV column "
+                       "is EXCLUDED for every arm, and for (a) that exclusion is load-bearing "
+                       "rather than procedural: its label is recoverable at 67.5% from EIGHT "
+                       "principal components against 33.7% for the verifier's, because the "
+                       "agent chose its pick FROM the state the head reads -- so its 83.4% "
+                       "offline fit is close to self-prediction and says nothing about in-loop "
+                       "value. This programme has six recorded probe non-conversions; reading "
+                       "the offline gap as a result would be the seventh.")},
     # ─── VIII-d arm 1 ────────────────────────────────────────────────────────────
     # COVERAGE or READABILITY: does the forced-look advantage come from the head
     # seeing more of the states the game later visits, or from post-inspection
