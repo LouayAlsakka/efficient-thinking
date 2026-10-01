@@ -53,7 +53,7 @@ def prompt_key(state_text):
 
 
 def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget=BUDGET,
-                decisions=DECISIONS, force_inspect=()):
+                decisions=DECISIONS, force_inspect=(), retrieve=None):
     # `decisions` defaults to DECISIONS so every existing caller is byte-unchanged. It is a
     # parameter because §13b needed the loop restricted to ONE head decision per episode (理
     # 12436): the loop arms read sd 2.6 where the single-decision instrument reads 0.43, and
@@ -154,6 +154,39 @@ def run_episode(model, tok, task, run_id, log, model_id, head_state=None, budget
         pkey = prompt_key(st_text)
         cur = msgs + [{"role": "user", "content": st_text}]
         meta = {"decision": d, "trajectory_key": dkey, "prompt_key": pkey}
+
+        # ── EXPEL-STYLE RETRIEVAL (理's ruling: k=1, ONCE PER DECISION) ─────────────
+        # Registered as "the k nearest past successful episodes (by state embedding)
+        # inserted into the prompt as text; no head; compute charged including the
+        # retrieval tokens."
+        #
+        # The QUERY is embedded on `cur` as built above -- WITHOUT the retrieved text
+        # -- because the bank was embedded on exactly this message shape ([system,
+        # user(state)]) and because embedding the state together with what was
+        # retrieved for it would be circular. The retrieved text is then inserted
+        # for GENERATION only.
+        #
+        # Charging is automatic rather than bolted on: A.generate recomputes
+        # n_in = len(tok.encode(prompt)) over the whole prompt, so the lesson tokens
+        # land in total_in at the rate they are actually paid -- once per decision.
+        if retrieve is not None:
+            import numpy as _rnp
+            _hs = retrieve["hidden"](model, tok, cur, [retrieve["layer"]])
+            _q = _rnp.array(_hs[retrieve["layer"]].astype(retrieve["mx"].float32),
+                            copy=False).astype(_rnp.float64)
+            _n = _rnp.linalg.norm(_q)
+            _q = _q / _n if _n else _q
+            _sim = retrieve["Xn"] @ _q
+            _top = list(_rnp.argsort(-_sim)[:retrieve["k"]])
+            _rows = [retrieve["rows"][int(j)] for j in _top]
+            _block = ("Past solved cases most similar to this one:\n"
+                      + "\n".join("- %s" % r["lesson"] for r in _rows))
+            cur = (msgs + [{"role": "system", "content": _block}]
+                   + [{"role": "user", "content": st_text}])
+            meta.update({"retrieved": [r["task_id"] for r in _rows],
+                         "retrieved_k": len(_rows),
+                         "retrieved_sim": [round(float(_sim[int(j)]), 4) for j in _top],
+                         "retrieved_regions": [r["bug_region"] for r in _rows]})
 
         # a dict keyed by decision number is the PER-DECISION form; anything else is the shared head.
         hs_d = head_state.get(d) if isinstance(head_state, dict) and d in head_state else head_state
@@ -351,6 +384,15 @@ def main():
     ap.add_argument("--force-inspect", type=int, nargs="*", default=[],
                     help="decisions at which the agent does not decide and an inspect is "
                          "recorded instead (§16a (xvi)'s causal control). Empty = unchanged.")
+    ap.add_argument("--retrieve", default="",
+                    help="ExPEL-style retrieval bank directory (bank_layer<L>.npy + "
+                         "bank.jsonl). Default off, so every existing arm is unchanged.")
+    ap.add_argument("--retrieve-k", type=int, default=0,
+                    help="how many lessons to insert. REQUIRED with --retrieve and has no "
+                         "default on purpose: 沙汰 measured top-1 transferring at 20.3%% "
+                         "against 12.4%% chance (p < 0.001) while the k=3 UNION sat at 36.0%% "
+                         "against 32.9%% (p = 0.139) -- at chance. A default would silently "
+                         "pick the setting that measures nothing.")
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
     head = None
@@ -377,12 +419,55 @@ def main():
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     run_id = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()) + "-" + uuid.uuid4().hex[:6]
     write_run_config(a, files, run_id, list(sys.argv))
+    retrieve = None
+    if a.retrieve:
+        if not a.retrieve_k:
+            sys.exit("--retrieve needs an explicit --retrieve-k (see its help; there is no "
+                     "default because k=3 measured at chance and k=1 did not)")
+        if a.head or a.heads:
+            # arm (b) is registered as "no head". Combining them would also feed the
+            # head's per-candidate embeddings a prompt carrying retrieved text, which
+            # is not the distribution it was fitted on.
+            sys.exit("--retrieve and --head/--heads are mutually exclusive: the retrieval "
+                     "arm is registered as having no head, and the retrieved text would "
+                     "change the prompt the head was fitted against")
+        import numpy as _rnp
+        _bx = os.path.join(a.retrieve, "bank_layer%d.npy" % a.head_layer)
+        _bj = os.path.join(a.retrieve, "bank.jsonl")
+        _X = _rnp.load(_bx).astype(_rnp.float64)
+        _rows = [json.loads(l) for l in open(_bj)]
+        if len(_rows) != _X.shape[0]:
+            sys.exit("bank mismatch: %d rows in bank.jsonl, %d vectors in %s"
+                     % (len(_rows), _X.shape[0], os.path.basename(_bx)))
+        if a.retrieve_k > len(_rows):
+            sys.exit("--retrieve-k %d exceeds the bank's %d entries" % (a.retrieve_k, len(_rows)))
+        import et8_head_v3 as _H2
+        import mlx.core as _mx2
+
+        def _sha256(path):
+            # write_run_config has its own nested _sha; this is a local one rather
+            # than reaching into another function's scope for it.
+            h = hashlib.sha256()
+            with open(path, "rb") as fh:
+                for b in iter(lambda: fh.read(1 << 20), b""):
+                    h.update(b)
+            return h.hexdigest()
+
+        retrieve = {"Xn": _X / _rnp.linalg.norm(_X, axis=1, keepdims=True),
+                    "rows": _rows, "layer": a.head_layer, "k": a.retrieve_k,
+                    "hidden": _H2.hidden_at, "mx": _mx2,
+                    "bank_sha256": _sha256(_bx), "bank_rows_sha256": _sha256(_bj)}
+        print("  retrieval: %d entries, k=%d, layer %d, bank %s"
+              % (len(_rows), a.retrieve_k, a.head_layer, retrieve["bank_sha256"][:12]),
+              file=sys.stderr)
+
     model, tok = A.load_model(a.model)
     ep = open(a.out + ".episodes.jsonl", "w"); st = open(a.out + ".steps.jsonl", "w")
     for i, f in enumerate(files, 1):
         t = json.load(open(f))
         r = run_episode(model, tok, t, run_id, st, a.model, head_state=head, budget=a.budget,
-                        decisions=a.decisions, force_inspect=a.force_inspect)
+                        decisions=a.decisions, force_inspect=a.force_inspect,
+                        retrieve=retrieve)
         ep.write(json.dumps(r) + "\n"); ep.flush(); st.flush()
         print("[%d/%d] %s green=%s decisions=%d actions=%d"
               % (i, len(files), t["task_id"], r["green"], r["decisions"], r["actions"]), file=sys.stderr)
