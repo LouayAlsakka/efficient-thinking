@@ -112,7 +112,7 @@ Owner of 2–3: 理. Owner of 1's DOI and 4's posts: the author, on his word.
 2. **Exploration optimised for state-space novelty**: collect under a policy rewarded for distance from gen0's region (the distance §13a already computes); the diagnostic becomes the lever; the only arm that could show compounding for a mechanistic reason.
 3. **Teacher/student**: a stronger model steers, the head is fitted for the 7B — confounded with the teacher's competence; third.
 - **Different task family**: measured (VIII-b §6, at base) — the boundary, not a route. **Gen3/4/5**: not run.
-Registrations, not runs, until WO-318's demo and the week's estate work are done.
+Registrations, not runs, until the demo work and the week's estate work are done.
 
 
 ## Candidate series principle (owner, 2026-09-26) — a HYPOTHESIS, not a result
@@ -173,15 +173,16 @@ programme, families first because the claim of record is what a second family ca
 
 Frozen throughout: the 7B model, the head form (shared linear readout, layer 18, one seed), the verifier labels, the scoring set (seed 89, 300 problems), the loop harness (`et8b_loop`, budget 12, up to three head decisions), and the bar (3.67 points, the session's largest within-head-arm range; a difference is a finding only when its 95% paired interval excludes zero in 3 of 3 games, as in VIII-c §14a). Every artefact is named by sha256 in a lock before it is scored; the second reader hashes the lock.
 
-### VIII-e, arm 1 — the baselines VIII owes (box: llm2; ~2 days)
+### VIII-e, arm 1 — the baselines VIII owes (~2 days)
 Question: does the frozen head's gain over base survive against the two objects a reviewer names first?
-Arms, all on VIII-c's own-experience states (290 groups, the g1-matched head's fitting set) so the comparison is like for like:
+Arms, all on the forced-look collection (the seed-89 290-group cut, `cut290`) so the comparison is like for like.
+Re-registered before any run, and the reason stated because it changes what the arm tests: the original form fitted every arm on the own-experience states the published g1-matched head was fitted on. Those states cannot be identified. The lock for the published comparison names exactly two artefacts by sha256 and both are heads; no states artefact is named by hash anywhere in it, and the g1-matched head's only record of its inputs is the free-text phrase "fitted on seed-21 states". Those bytes are also on neither research machine. So there is nothing to stage and nothing to hash against, and regenerating them would be a different collection. The arm therefore fits on an identified collection instead, which keeps every arm inside one collection.
 - (a) VALUE FUNCTION: the same linear form fitted on trajectory RETURN (solved / not solved at episode end) instead of the verifier's per-candidate region label; read at the same decision.
 - (b) EXPEL-STYLE RETRIEVAL: the k nearest past successful episodes (by state embedding, k=3) inserted into the prompt as text; no head; compute charged including the retrieval tokens.
-- (c) the published frozen head (g1-matched, 26.8%) as the anchor; base (22.0%) re-run in the same session as the control.
+- (c) ANCHOR: the published half-size forced arm (132 groups, 32.6%), whose head IS named by sha256 in the lock and is hash-verified on the research machine; base (22.0%) re-run in the same session as the control. This changes the arm's question: against the g1-matched arm it asked whether the head beats matched other-agent experience, and against the half-size forced arm it asks whether it beats a random half of the same collection. The second is the question the 3.67-point bar was constructed for, and it is the one answerable with identified bytes.
 Readings, fixed now: R1 the head beats (a) by more than the bar → the LABEL (verifier region, not return) is what the head buys; R2 the head beats (b) at matched compute → the CHANNEL (outside the prompt) is what it buys; R3 (b) ≥ head → the series' mechanism is not distinctive on this family and VIII's "moves the frontier" is restated as "matches prompt retrieval at lower compute" or withdrawn, as the numbers say; R4 (a) ≥ head → the verifier label is not load-bearing. Three games per arm; published either way.
 
-### VIII-d, arm 1 — coverage or readability (box: llm1; ~1.5 days)
+### VIII-d, arm 1 — coverage or readability (~1.5 days)
 Question (VIII-c §7, registered 09-28): does the forced-look advantage come from the head seeing more of the states the game later visits (coverage), or from post-inspection states being more linearly separable (readability)?
 Design: from the forced-look collection (VIII-c arm 3 states) draw two fitting sets of MATCHED size (132 groups, the half-size arm's count): S-cov = states sampled to maximise overlap with the states the scoring games visit (nearest-neighbour by embedding to a held-out game's states); S-read = states sampled to maximise the head's cross-validated fit on the fitting set itself. Fit one head on each; play three games each; report the CV fit and the game score of each beside the published half-size forced arm (32.6%).
 Readings, fixed now: R1 S-cov beats S-read by more than the bar → coverage; R2 S-read beats S-cov by more than the bar → readability; R3 neither separates → the two are confounded in this family and VIII-d's next arm must vary the acquisition RULE, not the sample; R4 either beats the published half-size arm by more than the bar → a selection rule over states is itself an acquisition policy, which is VIII-d's thesis.
