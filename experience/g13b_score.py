@@ -71,6 +71,62 @@ PLANS = {
     # VIII-c arm 1. Registered BEFORE the arms finished collecting, which is the whole point of
     # writing it here rather than after: the pairings and the note are fixed while the numbers do
     # not exist yet, so the reading cannot be shaped by what came out.
+    # ─── VIII-d arm 1 ────────────────────────────────────────────────────────────
+    # COVERAGE or READABILITY: does the forced-look advantage come from the head
+    # seeing more of the states the game later visits, or from post-inspection
+    # states being more linearly separable?
+    #
+    # REGISTERED BEFORE THE ARMS FINISHED COLLECTING, for the reason this file
+    # already gives above: the pairings are fixed while the numbers do not exist.
+    # DISCLOSURE, so a reader can judge that for themselves: when this entry was
+    # written, games 2-9 were still running and I had seen exactly one number from
+    # one finished game -- S_cov game 1's green rate. No pairing, no comparison and
+    # no other arm existed yet. That one rate is the whole of what could have
+    # shaped this, and it is named here rather than left for someone to wonder about.
+    #
+    # FOUR arms, and the fourth is the reason the other three can be read at all:
+    # the bar is "the session's largest within-head-arm range", a WITHIN-session
+    # quantity, while the registered anchor is a rate published in a DIFFERENT
+    # session. This file's own viiic7 note warns that doing so "would mix two
+    # sessions in the within-arm ranges". So the anchor's own head is RE-RUN here,
+    # three games, and the anchor and the bar then share one session.
+    #
+    # S_cov_mix is the control that makes the headline claim licit: S_cov and
+    # S_read are matched in SIZE but nearly mirrored in decision point (S_cov takes
+    # 57.3% of the pool's d1 groups and 25.7% of its d2; S_read 30.1% and 57.4%),
+    # so a difference between THEM is partly a decision-mix difference. S_cov_mix
+    # is the coverage objective constrained to S_read's exact per-decision counts,
+    # so S_cov_mix vs S_read differs in the OBJECTIVE and in nothing else. The
+    # coverage-versus-readability claim is read off THAT pair; S_cov vs S_read is
+    # reported beside it as the unconstrained comparison and is NOT the headline.
+    "viiid": {"base": "anchor_f132_g",
+              "arms": ("anchor_f132_g", "S_cov_g", "S_read_g", "S_cov_mix_g"),
+              "labels": {
+                  "anchor_f132_g": "anchor: the published half-size forced head, re-run in "
+                                   "THIS session so the anchor and the bar share one",
+                  "S_cov_g": "S-cov: 132 groups maximising CENTRED nearest-neighbour overlap "
+                             "with a fourth, never-scored game on a disjoint task set",
+                  "S_read_g": "S-read: the 132 groups with the widest CROSS-FITTED margin "
+                              "under the anchor head (cross-fitted because the anchor was "
+                              "fitted on an unknown third of the pool)",
+                  "S_cov_mix_g": "S-cov constrained to S-read's exact per-decision counts -- "
+                                 "differs from S-read in the objective alone"},
+              "aliases": {},
+              "wanted": [("S_cov_mix_g", "S_read_g"),
+                         ("S_cov_g", "S_read_g"),
+                         ("S_cov_g", "anchor_f132_g"),
+                         ("S_read_g", "anchor_f132_g"),
+                         ("S_cov_mix_g", "anchor_f132_g")],
+              # S_cov vs S_read is CONFOUNDED by decision mix but is informative and is
+              # reported with that said, which is this file's own convention for a
+              # confounded pair -- so `forbidden` is empty rather than hiding it.
+              "forbidden": set(),
+              "note": ("The HEADLINE pair is S_cov_mix vs S_read -- objective alone. S_cov vs "
+                       "S_read is the unconstrained comparison and is confounded by decision "
+                       "mix; it is reported, never used for the attribution. The CV column of "
+                       "every arm is EXCLUDED from the reading: S_read was selected for wide "
+                       "margins so its CV is inflated by construction. Game scores, which no "
+                       "selection touches, are the comparison.")},
     "viiic": {"base": "v_b", "arms": ("v_b", "v_g0", "v_g1m", "v_vb"),
               "labels": {"v_b": "base",
                          "v_g0": "gen0 head (per-decision -- the form gen0's own rule selected)",
