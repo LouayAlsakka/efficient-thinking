@@ -153,8 +153,37 @@ PLANS = {
     # so S_cov_mix vs S_read differs in the OBJECTIVE and in nothing else. The
     # coverage-versus-readability claim is read off THAT pair; S_cov vs S_read is
     # reported beside it as the unconstrained comparison and is NOT the headline.
+    # ── AMENDMENT 5/6's FIFTH ARM, added to this harness AFTER its games ran ──────
+    # Stated plainly because it is the one thing a reader should check here: the ARM
+    # and the three pairings below were added to this file after the three rand132
+    # games finished. The READING was not. It is registered verbatim in the series
+    # plan at `b44fee8` (amendment 6, before any rand132 game), which fixes it as
+    # amendment 5 wrote it before the draw:
+    #
+    #   "Reading R5: if any selected head beats `rand132` under both criteria,
+    #    selection by that rule buys something inside one pool; if none does, the
+    #    +3.3 to +8.0 above was the pool, not the selection."
+    #
+    # So the pairings are the three SELECTED heads against the random baseline, and
+    # nothing else: the anchor is a published forced-look head and not a selection
+    # rule, so anchor-vs-rand132 is NOT part of R5 and is not scored here. Adding it
+    # would be choosing a comparison after seeing the arms, which is the whole thing
+    # the registration exists to prevent.
+    #
+    # The arm played is the STRATIFIED draw (uniform within each decision point,
+    # proportional across them, 47/46/39). The seed-0 UNIFORM draw is retained in the
+    # lock with its z-scores and was deliberately not played -- it came out 2.68 sd
+    # low on decision-1 groups, which would have given the baseline one selected arm's
+    # decision mix and not the other's.
+    #
+    # NOTE A CONSEQUENCE, since §14b's bar is a WITHIN-SESSION quantity: a fifth arm
+    # can RAISE "the session's largest within-head-arm range" and so make a pairing
+    # that previously cleared §14b stop clearing it. That is correct behaviour and not
+    # a regression, but it means the four-arm numbers and the five-arm numbers are not
+    # interchangeable, and this file prints the bar it used.
     "viiid": {"base": "anchor_f132_g",
-              "arms": ("anchor_f132_g", "S_cov_g", "S_read_g", "S_cov_mix_g"),
+              "arms": ("anchor_f132_g", "S_cov_g", "S_read_g", "S_cov_mix_g",
+                       "rand132_strat_g"),
               "labels": {
                   "anchor_f132_g": "anchor: the published half-size forced head, re-run in "
                                    "THIS session so the anchor and the bar share one",
@@ -164,13 +193,22 @@ PLANS = {
                               "under the anchor head (cross-fitted because the anchor was "
                               "fitted on an unknown third of the pool)",
                   "S_cov_mix_g": "S-cov constrained to S-read's exact per-decision counts -- "
-                                 "differs from S-read in the objective alone"},
+                                 "differs from S-read in the objective alone",
+                  "rand132_strat_g": "rand132 STRATIFIED: 132 groups uniform WITHIN each "
+                                     "decision point and proportional across them (47/46/39), "
+                                     "from the same cut290 -- the random baseline R5 reads "
+                                     "selection against"},
               "aliases": {},
               "wanted": [("S_cov_mix_g", "S_read_g"),
                          ("S_cov_g", "S_read_g"),
                          ("S_cov_g", "anchor_f132_g"),
                          ("S_read_g", "anchor_f132_g"),
-                         ("S_cov_mix_g", "anchor_f132_g")],
+                         ("S_cov_mix_g", "anchor_f132_g"),
+                         # R5, as registered: each SELECTED head against the random
+                         # baseline drawn from the same pool. Three pairings, no more.
+                         ("S_cov_g", "rand132_strat_g"),
+                         ("S_read_g", "rand132_strat_g"),
+                         ("S_cov_mix_g", "rand132_strat_g")],
               # S_cov vs S_read is CONFOUNDED by decision mix but is informative and is
               # reported with that said, which is this file's own convention for a
               # confounded pair -- so `forbidden` is empty rather than hiding it.
