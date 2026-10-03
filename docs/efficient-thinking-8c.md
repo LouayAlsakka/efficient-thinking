@@ -1,9 +1,9 @@
 # Efficient Thinking VIII-c: Where the Experience Is Acquired
 ## A frozen agent's plateau, another agent's places, a forced look, and what the difference is made of
 
-> **STATE 2026-09-28: v1.0.12, 2026-09-28 (v1.0 plus a plain-words summary, a reference list, a named open question on the forced-look mechanism and a note on the gen0 arm, its wording checked against Appendix A; one second-machine reproduction recorded under Reproducibility and the first lock's head files hashed; §6a related work, all thirteen citations content-checked — six against method sections, seven at abstract level — with four characterisations corrected; withdrawn-run provenance stated precisely; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
+> **STATE 2026-10-02: v1.0.13, 2026-10-02 (two references added to the list after an exchange with the authors of the adaptive-steering work cited in §6a — Do et al. 2025, Zhao et al. 2026 — no other change; v1.0.12, 2026-09-28: v1.0 plus a plain-words summary, a reference list, a named open question on the forced-look mechanism and a note on the gen0 arm, its wording checked against Appendix A; one second-machine reproduction recorded under Reproducibility and the first lock's head files hashed; §6a related work, all thirteen citations content-checked — six against method sections, seven at abstract level — with four characterisations corrected; withdrawn-run provenance stated precisely; no number changed).** Content frozen at lock v3; every number second-read. The artefact read matched all 37 checkable numbers and the v3 delta to their artefacts; the results reader hashed every game file of locks v2 and v3 (162 of 162 and 189 of 189, each against its own lock entry) and recomputed every green count from the raw episodes (39 of 39 arm-games), re-deriving the six- and seven-arm tables from files; the hygiene read found the needles clean. Nothing in the chain from raw episodes to the tables rests on a reported number. Versions before this are drafts and are superseded.
 
-**Louay Alsakka** · September 28, 2026 · *v1.0.12* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
+**Louay Alsakka** · October 2, 2026 · *v1.0.13* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
 
 > **In plain words.** The plateau in VIII-b was not because the model had used up what it can learn. It was because of where its experience came from. Experience recorded from where another agent stood, or from a forced first look before guessing, restored gains as large as VIII first reported, with the same model and the same helper. Where you learn from matters, not just how much you collect.
 
@@ -129,6 +129,7 @@ On 2026-09-27 the from-scratch script `experience/reproduce_8c.sh` completed one
 - Alsakka, L. (2026). *Efficient Thinking VIII-b: Does Experience Accumulate?* This series.
 - Asadolahi, M. et al. (2026). *Memory Reward Inflation in Self-Improving LLM Agents.* arXiv:2608.00017.
 - Chen, J. et al. (2026). *Rethinking Continual Experience Internalization for Self-Evolving LLM Agents.* arXiv:2606.04703.
+- Do, V. D. et al. (2025). *Dynamic Steering with Episodic Memory for Large Language Models.* Findings of ACL 2025.
 - Feng, T. et al. (2026). *ExpGraph: Model-Agnostic Experience Learning with Graph-Structured Memory for LLM Agents.* arXiv:2605.30712.
 - Ghasemabadi, A. et al. (2026). *Multi-Head Latent Control: A Unified Interface for LLM Agent Decision Making.* arXiv:2607.14277.
 - Gurjar, P. et al. (2026). *DORA Explorer: Improving the Exploration Ability of LLMs Without Training.* arXiv:2604.17244.
@@ -138,6 +139,7 @@ On 2026-09-27 the from-scratch script `experience/reproduce_8c.sh` completed one
 - Lin, J. (2026). *Self-Improvement Can Self-Regress: The Rise-and-Collapse Failure Mode of LLM Self-Training.* arXiv:2606.21090.
 - Wang, H. et al. (2026). *Language-based Trial and Error Falls Behind in the Era of Experience.* arXiv:2601.21754.
 - Yu, S. et al. (2026). *OLIVIA: Online Learning via Inference-time Action Adaptation for Decision Making in LLM ReAct Agents.* arXiv:2605.11169.
+- Zhao, C. et al. (2026). *Neural Procedural Memory: Empowering LLM Agents with Implicit Activation Steering.* arXiv:2606.29824.
 - Yu, Y. et al. (2026). *STRETCH the Boundaries: A Unified Self-Taught Framework for Progressive LLM Evolution.* arXiv:2609.18642.
 - Zhao, A. et al. (2023). *ExpeL: LLM Agents Are Experiential Learners.* arXiv:2308.10144.
 
