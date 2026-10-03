@@ -1,8 +1,8 @@
 # Efficient Thinking VIII: Experience Priors
 ## The constraint and the carrier — how verified history moves a frozen model's quality–compute frontier
-> **STATE 2026-09-28: MEASURED, closed; v1.0.1 (plain-words summary and a related-work paragraph on value heads and learned verifiers; no number changed).** Every result below is on disk under `experience/results/` with its command; the pre-registered readings are scored in §10; the closing runs landed 2026-09-19 to 09-20 and nothing further enters this paper. First paper of the VIII line (working label 8a); VIII-b accumulation, VIII-c carrier studies and VIII-d instruments follow (`et8-series-plan.md`).
+> **STATE 2026-10-02: MEASURED, closed; v1.0.2 (three references and four sentences in §6a on how carrier C has since been constructed elsewhere, after an exchange with the authors of one of them; no number changed; v1.0.1: plain-words summary and a related-work paragraph on value heads and learned verifiers; no number changed).** Every result below is on disk under `experience/results/` with its command; the pre-registered readings are scored in §10; the closing runs landed 2026-09-19 to 09-20 and nothing further enters this paper. First paper of the VIII line (working label 8a); VIII-b accumulation, VIII-c carrier studies and VIII-d instruments follow (`et8-series-plan.md`).
 
-**Louay Alsakka** · September 28, 2026 · *v1.0.1* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
+**Louay Alsakka** · October 2, 2026 · *v1.0.2* · doi:[10.5281/zenodo.23005271](https://doi.org/10.5281/zenodo.23005271)
 
 > **In plain words.** A model that is never retrained can still improve. We keep a record of what it did before and whether it worked, verified by tests, and fit a small read-only helper that reads the model's internal state at each decision and points it toward what worked before. On the same budget the model solves more problems; at the same quality it spends less than half the computation. Nothing inside the model changes.
 
@@ -625,7 +625,7 @@ head here acts earlier, choosing where the search looks next, and §7.7 measures
 decision. Agent memories that store lessons as text [Shinn et al. 2023; Wang et al. 2023] are the carrier this paper
 calls A, and it is the one that fell furthest under the constraint. Activation steering [Turner et al. 2023; Li et
 al. 2023] is carrier C; the result that the hidden state carries the decision while an additive vector cannot act on
-it is the observation the read-only head was built from. Linear probes on hidden states [Alain & Bengio 2016;
+it is the observation the read-only head was built from. Carrier C has since been built more carefully than §7.3 built it: Neural Procedural Memory [Zhao et al. 2026] derives the direction from success-versus-failure trajectory contrasts, retrieves task-relevant contrasts at inference and bounds the strength by the divergence it causes; Dynamic Steering with Episodic Memory [Do et al. 2025] keeps steering vectors in a retrievable memory and applies them per token chunk; and Li et al. [2026] select the layer by how linearly decodable the target signal is and set the strength adaptively. §7.3's vector was none of these: its direction came from a productive-versus-wasted probe, its strength was fixed, and no signal characterised the desired state before the direction was built. Whether steering constructed their way passes the constraint where §7.3's failed is a registered question for a later paper, not a claim here. Linear probes on hidden states [Alain & Bengio 2016;
 Kadavath et al. 2022; Burns et al. 2022] are the instrument; what is new is their use as a controller under a cost
 constraint, with the three probe controls and the task and prompt gates that separate a readout from a lookup
 table. Low-rank adaptation [Hu et al. 2021; Dettmers et al. 2023] is the weight-update carrier studied in §8's poet
@@ -723,11 +723,13 @@ constants live in one registry (`experience/results/et8_constants.json`) with a 
 - Burns, C. et al. (2022). *Discovering Latent Knowledge in Language Models Without Supervision.* arXiv:2212.03827.
 - Chollet, F. (2019). *On the Measure of Intelligence.* arXiv:1911.01547.
 - Dettmers, T. et al. (2023). *QLoRA: Efficient Finetuning of Quantized LLMs.* arXiv:2305.14314.
+- Do, V. D. et al. (2025). *Dynamic Steering with Episodic Memory for Large Language Models.* Findings of ACL 2025.
 - Ecoffet, A. et al. (2019). *Go-Explore: a New Approach for Hard-Exploration Problems.* arXiv:1901.10995.
 - Hu, E. J. et al. (2021). *LoRA: Low-Rank Adaptation of Large Language Models.* arXiv:2106.09685.
 - Jimenez, C. E. et al. (2023). *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?* arXiv:2310.06770.
 - Kadavath, S. et al. (2022). *Language Models (Mostly) Know What They Know.* arXiv:2207.05221.
 - Li, K. et al. (2023). *Inference-Time Intervention: Eliciting Truthful Answers from a Language Model.* NeurIPS.
+- Li, Y. et al. (2026). *Efficient Reasoning with Balanced Thinking.* arXiv:2603.12372. ICLR 2026.
 - Lightman, H. et al. (2023). *Let's Verify Step by Step.* arXiv:2305.20050.
 - McNemar, Q. (1947). *Note on the sampling error of the difference between correlated proportions or percentages.* Psychometrika 12.
 - Ouyang, S. et al. (2025). *ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory.* arXiv:2509.25140.
@@ -746,6 +748,7 @@ constants live in one registry (`experience/results/et8_constants.json`) with a 
 - Zhang, Q. et al. (2025). *Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models.* arXiv:2510.04618.
 - Zhao, A. et al. (2023). *ExpeL: LLM Agents Are Experiential Learners.* arXiv:2308.10144.
 
+- Zhao, C. et al. (2026). *Neural Procedural Memory: Empowering LLM Agents with Implicit Activation Steering.* arXiv:2606.29824.
 ## Appendix A. How This Was Found
 
 The order in which the results above were reached, with what each error cost and the rule it earned. Dates are

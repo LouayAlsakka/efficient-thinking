@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Efficient Thinking VIII: Experience Priors</title>
+  <title>efficient-thinking-8</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -170,7 +170,7 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <style>
+    <style>
       /* Default styles provided by pandoc.
       ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
       */
@@ -335,23 +335,176 @@
       }
       .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     </style>
-<meta name="citation_title" content="Efficient Thinking VIII: Experience Priors">
-<meta name="citation_author" content="Alsakka, Louay">
-<meta name="citation_publication_date" content="2026/09/20">
-<meta name="citation_online_date" content="2026/09/20">
-<meta name="citation_doi" content="10.5281/zenodo.23005271">
-<meta name="citation_pdf_url" content="https://efficientthinking.ai/efficient-thinking-8.pdf">
-<meta name="citation_fulltext_html_url" content="https://efficientthinking.ai/efficient-thinking-8.html">
-<meta name="citation_language" content="en">
-<meta name="citation_publisher" content="Zenodo">
-<meta name="dc.identifier" content="doi:10.5281/zenodo.23005271">
-<meta name="dc.title" content="Efficient Thinking VIII: Experience Priors">
-<meta name="dc.creator" content="Louay Alsakka">
+    <style>
+        /* Default styles provided by pandoc.
+        ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+        */
+        html {
+          color: #1a1a1a;
+          background-color: #fdfdfd;
+        }
+        body {
+          margin: 0 auto;
+          max-width: 36em;
+          padding-left: 50px;
+          padding-right: 50px;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          hyphens: auto;
+          overflow-wrap: break-word;
+          text-rendering: optimizeLegibility;
+          font-kerning: normal;
+        }
+        @media (max-width: 600px) {
+          body {
+            font-size: 0.9em;
+            padding: 12px;
+          }
+          h1 {
+            font-size: 1.8em;
+          }
+        }
+        @media print {
+          html {
+            background-color: white;
+          }
+          body {
+            background-color: transparent;
+            color: black;
+            font-size: 12pt;
+          }
+          p, h2, h3 {
+            orphans: 3;
+            widows: 3;
+          }
+          h2, h3, h4 {
+            page-break-after: avoid;
+          }
+        }
+        p {
+          margin: 1em 0;
+        }
+        a {
+          color: #1a1a1a;
+        }
+        a:visited {
+          color: #1a1a1a;
+        }
+        img {
+          max-width: 100%;
+        }
+        svg {
+          height: auto;
+          max-width: 100%;
+        }
+        h1, h2, h3, h4, h5, h6 {
+          margin-top: 1.4em;
+        }
+        h5, h6 {
+          font-size: 1em;
+          font-style: italic;
+        }
+        h6 {
+          font-weight: normal;
+        }
+        ol, ul {
+          padding-left: 1.7em;
+          margin-top: 1em;
+        }
+        li > ol, li > ul {
+          margin-top: 0;
+        }
+        blockquote {
+          margin: 1em 0 1em 1.7em;
+          padding-left: 1em;
+          border-left: 2px solid #e6e6e6;
+          color: #606060;
+        }
+        code {
+          white-space: pre-wrap;
+          font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+          font-size: 85%;
+          margin: 0;
+          hyphens: manual;
+        }
+        pre {
+          margin: 1em 0;
+          overflow: auto;
+        }
+        pre code {
+          padding: 0;
+          overflow: visible;
+          overflow-wrap: normal;
+        }
+        .sourceCode {
+         background-color: transparent;
+         overflow: visible;
+        }
+        hr {
+          border: none;
+          border-top: 1px solid #1a1a1a;
+          height: 1px;
+          margin: 1em 0;
+        }
+        table {
+          margin: 1em 0;
+          border-collapse: collapse;
+          width: 100%;
+          overflow-x: auto;
+          display: block;
+          font-variant-numeric: lining-nums tabular-nums;
+        }
+        table caption {
+          margin-bottom: 0.75em;
+        }
+        tbody {
+          margin-top: 0.5em;
+          border-top: 1px solid #1a1a1a;
+          border-bottom: 1px solid #1a1a1a;
+        }
+        th {
+          border-top: 1px solid #1a1a1a;
+          padding: 0.25em 0.5em 0.25em 0.5em;
+        }
+        td {
+          padding: 0.125em 0.5em 0.25em 0.5em;
+        }
+        header {
+          margin-bottom: 4em;
+          text-align: center;
+        }
+        #TOC li {
+          list-style: none;
+        }
+        #TOC ul {
+          padding-left: 1.3em;
+        }
+        #TOC > ul {
+          padding-left: 0;
+        }
+        #TOC a:not(:hover) {
+          text-decoration: none;
+        }
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+      </style>
+  <meta name="dc.identifier" content="doi:10.5281/zenodo.23005271">
+  <meta name="dc.title" content="Efficient Thinking VIII: Experience Priors">
+  <meta name="dc.creator" content="Louay Alsakka">
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">Efficient Thinking VIII</h1>
-</header>
 <h1 id="efficient-thinking-viii-experience-priors">Efficient Thinking
 VIII: Experience Priors</h1>
 <h2
@@ -359,17 +512,30 @@ id="the-constraint-and-the-carrier-how-verified-history-moves-a-frozen-models-qu
 constraint and the carrier — how verified history moves a frozen model’s
 quality–compute frontier</h2>
 <blockquote>
-<p><strong>STATE 2026-09-28: MEASURED, closed; v1.0.1 (plain-words summary and a related-work paragraph on value heads and learned verifiers; no number changed).</strong> Every result
-below is on disk under <code>experience/results/</code> with its
+<p><strong>STATE 2026-10-02: MEASURED, closed; v1.0.2 (three references
+and four sentences in §6a on how carrier C has since been constructed
+elsewhere, after an exchange with the authors of one of them; no number
+changed; v1.0.1: plain-words summary and a related-work paragraph on
+value heads and learned verifiers; no number changed).</strong> Every
+result below is on disk under <code>experience/results/</code> with its
 command; the pre-registered readings are scored in §10; the closing runs
 landed 2026-09-19 to 09-20 and nothing further enters this paper. First
 paper of the VIII line (working label 8a); VIII-b accumulation, VIII-c
 carrier studies and VIII-d instruments follow
 (<code>et8-series-plan.md</code>).</p>
 </blockquote>
-<p><strong>Louay Alsakka</strong> · September 28, 2026 ·
-<em>v1.0.1</em> · doi:<a href="https://doi.org/10.5281/zenodo.23005271">10.5281/zenodo.23005271</a></p>
-<blockquote><p><strong>In plain words.</strong> A model that is never retrained can still improve. We keep a record of what it did before and whether it worked, verified by tests, and fit a small read-only helper that reads the model's internal state at each decision and points it toward what worked before. On the same budget the model solves more problems; at the same quality it spends less than half the computation. Nothing inside the model changes.</p></blockquote>
+<p><strong>Louay Alsakka</strong> · October 2, 2026 · <em>v1.0.2</em> ·
+doi:<a
+href="https://doi.org/10.5281/zenodo.23005271">10.5281/zenodo.23005271</a></p>
+<blockquote>
+<p><strong>In plain words.</strong> A model that is never retrained can
+still improve. We keep a record of what it did before and whether it
+worked, verified by tests, and fit a small read-only helper that reads
+the model’s internal state at each decision and points it toward what
+worked before. On the same budget the model solves more problems; at the
+same quality it spends less than half the computation. Nothing inside
+the model changes.</p>
+</blockquote>
 <h2 id="abstract">Abstract</h2>
 <p>An experience prior is a component that makes a frozen model’s search
 cheaper without making the model less capable. We define it by that
@@ -1655,20 +1821,70 @@ carrier this paper calls A, and it is the one that fell furthest under
 the constraint. Activation steering [Turner et al. 2023; Li et al. 2023]
 is carrier C; the result that the hidden state carries the decision
 while an additive vector cannot act on it is the observation the
-read-only head was built from. Linear probes on hidden states [Alain
-&amp; Bengio 2016; Kadavath et al. 2022; Burns et al. 2022] are the
-instrument; what is new is their use as a controller under a cost
-constraint, with the three probe controls and the task and prompt gates
-that separate a readout from a lookup table. Low-rank adaptation [Hu et
-al. 2021; Dettmers et al. 2023] is the weight-update carrier studied in
-§8’s poet study, not as a baseline but as a case of what a weight update
-carries. The chess anchor stands on AlphaZero-style self-play [Silver et
-al. 2017] with a frozen evaluator, and the debugging environment is
-deliberately synthetic where SWE-bench [Jimenez et al. 2023] is real, so
-that the verifier decides every bug and the gates can be enforced at
-generation.</p>
-<p><strong>Where this sits.</strong> The question is old: Chollet (arXiv:1911.01547) proposes measuring intelligence as the efficiency with which a fixed system turns priors and experience into skill, which separates the system, its experience and its skill in the way this series does; Silver and Sutton (2025) argue the next gains come from agents learning from their own experience, of which this series tests one small, measurable piece. Frozen models improving from their own past without retraining is the crowded neighbourhood — Reflexion (arXiv:2303.11366), ExpeL (arXiv:2308.10144), Voyager (arXiv:2305.16291), Agent Workflow Memory (arXiv:2409.07429), and in 2025 Dynamic Cheatsheet (arXiv:2504.07952), ReasoningBank (arXiv:2509.25140) and Agentic Context Engineering (arXiv:2510.04618) — and every one of them carries experience into the prompt as text. This series keeps it outside the prompt, in a read-only head over the model's state, which is what makes the compute accounting clean. On the plateau side, curiosity-driven exploration (arXiv:1705.05363) and Go-Explore (arXiv:1901.10995) rest on the same premise that what is collected bounds what can be learned; STaR (arXiv:2203.14465) and rejection-sampling fine-tuning plateau because a model mostly generates data it could already produce; and Yue et al. (arXiv:2504.13837) find RL-trained models largely reshuffle what the base model could already do, a weight-update cousin of VIII-b's saturation. None of the individual pieces here is new. What the series adds is the separation of three things usually blended — the fixed intelligence, the use of experience, and the acquisition of experience worth using — measured in one controlled system with the controller's own compute charged.</p>
-<p><strong>Compared with value heads and learned verifiers.</strong> The head is a linear readout over a frozen model's hidden states, which is the same object as a value head or a learned verifier: a small model fitted on the frozen model's own behaviour. What this paper measures differs from what those lines report — the head is fitted offline from a verifier's labels on the model's own verified past, read at one decision point, and measured on the quality–compute frontier at matched compute rather than on task score — but the objects are close enough that a reader will ask for the comparison on the same episodes: a value function fitted on trajectory return, and retrieval of past successes into the prompt in the manner of ExpeL. Neither is run here. Both are registered as the first arm of the generality programme (<code>series-completion-plan.md</code>, VIII-e), on the same 300-problem sets, and their result will be published either way.</p>
+read-only head was built from. Carrier C has since been built more
+carefully than §7.3 built it: Neural Procedural Memory [Zhao et
+al. 2026] derives the direction from success-versus-failure trajectory
+contrasts, retrieves task-relevant contrasts at inference and bounds the
+strength by the divergence it causes; Dynamic Steering with Episodic
+Memory [Do et al. 2025] keeps steering vectors in a retrievable memory
+and applies them per token chunk; and Li et al. [2026] select the layer
+by how linearly decodable the target signal is and set the strength
+adaptively. §7.3’s vector was none of these: its direction came from a
+productive-versus-wasted probe, its strength was fixed, and no signal
+characterised the desired state before the direction was built. Whether
+steering constructed their way passes the constraint where §7.3’s failed
+is a registered question for a later paper, not a claim here. Linear
+probes on hidden states [Alain &amp; Bengio 2016; Kadavath et al. 2022;
+Burns et al. 2022] are the instrument; what is new is their use as a
+controller under a cost constraint, with the three probe controls and
+the task and prompt gates that separate a readout from a lookup table.
+Low-rank adaptation [Hu et al. 2021; Dettmers et al. 2023] is the
+weight-update carrier studied in §8’s poet study, not as a baseline but
+as a case of what a weight update carries. The chess anchor stands on
+AlphaZero-style self-play [Silver et al. 2017] with a frozen evaluator,
+and the debugging environment is deliberately synthetic where SWE-bench
+[Jimenez et al. 2023] is real, so that the verifier decides every bug
+and the gates can be enforced at generation.</p>
+<p><strong>Where this sits.</strong> The question is old: Chollet
+(arXiv:1911.01547) proposes measuring intelligence as the efficiency
+with which a fixed system turns priors and experience into skill, which
+separates the system, its experience and its skill in the way this
+series does; Silver and Sutton (2025) argue the next gains come from
+agents learning from their own experience, of which this series tests
+one small, measurable piece. Frozen models improving from their own past
+without retraining is the crowded neighbourhood — Reflexion
+(arXiv:2303.11366), ExpeL (arXiv:2308.10144), Voyager
+(arXiv:2305.16291), Agent Workflow Memory (arXiv:2409.07429), and in
+2025 Dynamic Cheatsheet (arXiv:2504.07952), ReasoningBank
+(arXiv:2509.25140) and Agentic Context Engineering (arXiv:2510.04618) —
+and every one of them carries experience into the prompt as text. This
+series keeps it outside the prompt, in a read-only head over the model’s
+state, which is what makes the compute accounting clean. On the plateau
+side, curiosity-driven exploration (arXiv:1705.05363) and Go-Explore
+(arXiv:1901.10995) rest on the same premise that what is collected
+bounds what can be learned; STaR (arXiv:2203.14465) and
+rejection-sampling fine-tuning plateau because a model mostly generates
+data it could already produce; and Yue et al. (arXiv:2504.13837) find
+RL-trained models largely reshuffle what the base model could already
+do, a weight-update cousin of VIII-b’s saturation. None of the
+individual pieces here is new. What the series adds is the separation of
+three things usually blended — the fixed intelligence, the use of
+experience, and the acquisition of experience worth using — measured in
+one controlled system with the controller’s own compute charged.</p>
+<p><strong>Compared with value heads and learned verifiers.</strong> The
+head is a linear readout over a frozen model’s hidden states, which is
+the same object as a value head or a learned verifier: a small model
+fitted on the frozen model’s own behaviour. What this paper measures
+differs from what those lines report — the head is fitted offline from a
+verifier’s labels on the model’s own verified past, read at one decision
+point, and measured on the quality–compute frontier at matched compute
+rather than on task score — but the objects are close enough that a
+reader will ask for the comparison on the same episodes: a value
+function fitted on trajectory return, and retrieval of past successes
+into the prompt in the manner of ExpeL. Neither is run here. Both are
+registered as the first arm of the generality programme
+(<code>series-completion-plan.md</code>, VIII-e), on the same
+300-problem sets, and their result will be published either way.</p>
 <h2 id="registered-predictions-scored">10. Registered predictions,
 scored</h2>
 <p>The proposal (<code>efficient-thinking-8-proposal.md</code>,
@@ -1837,39 +2053,79 @@ published +9.3 [+3.7, +15.0] — each estimate inside the other’s interval
 chronology, including every withdrawn claim, is Appendix A.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>Alain, G. & Bengio, Y. (2016). <em>Understanding intermediate layers using linear classifier probes.</em> arXiv:1610.01644.</li>
-<li>Alsakka, L. (2026). <em>Efficient Thinking I: Measuring What Capability Costs.</em> This series.</li>
-<li>Alsakka, L. (2026). <em>Efficient Thinking II: Where Search Pays and Where It Can't.</em> This series.</li>
-<li>Alsakka, L. (2026). <em>Efficient Thinking III: Efficient Judging.</em> This series.</li>
-<li>Brown, B. et al. (2024). <em>Large Language Monkeys: Scaling Inference Compute with Repeated Sampling.</em> arXiv:2407.21787.</li>
-<li>Burns, C. et al. (2022). <em>Discovering Latent Knowledge in Language Models Without Supervision.</em> arXiv:2212.03827.</li>
-<li>Chollet, F. (2019). <em>On the Measure of Intelligence.</em> arXiv:1911.01547.</li>
-<li>Dettmers, T. et al. (2023). <em>QLoRA: Efficient Finetuning of Quantized LLMs.</em> arXiv:2305.14314.</li>
-<li>Ecoffet, A. et al. (2019). <em>Go-Explore: a New Approach for Hard-Exploration Problems.</em> arXiv:1901.10995.</li>
-<li>Hu, E. J. et al. (2021). <em>LoRA: Low-Rank Adaptation of Large Language Models.</em> arXiv:2106.09685.</li>
-<li>Jimenez, C. E. et al. (2023). <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em> arXiv:2310.06770.</li>
-<li>Kadavath, S. et al. (2022). <em>Language Models (Mostly) Know What They Know.</em> arXiv:2207.05221.</li>
-<li>Li, K. et al. (2023). <em>Inference-Time Intervention: Eliciting Truthful Answers from a Language Model.</em> NeurIPS.</li>
-<li>Lightman, H. et al. (2023). <em>Let's Verify Step by Step.</em> arXiv:2305.20050.</li>
-<li>McNemar, Q. (1947). <em>Note on the sampling error of the difference between correlated proportions or percentages.</em> Psychometrika 12.</li>
-<li>Ouyang, S. et al. (2025). <em>ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory.</em> arXiv:2509.25140.</li>
-<li>Pathak, D. et al. (2017). <em>Curiosity-driven Exploration by Self-supervised Prediction.</em> arXiv:1705.05363.</li>
-<li>Shinn, N. et al. (2023). <em>Reflexion: Language Agents with Verbal Reinforcement Learning.</em> arXiv:2303.11366.</li>
-<li>Silver, D. & Sutton, R. S. (2025). <em>Welcome to the Era of Experience.</em> Preprint chapter.</li>
-<li>Silver, D. et al. (2017). <em>Mastering the game of Go without human knowledge.</em> Nature 550.</li>
-<li>Snell, C. et al. (2024). <em>Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters.</em> arXiv:2408.03314.</li>
-<li>Suzgun, M. et al. (2025). <em>Dynamic Cheatsheet: Test-Time Learning with Adaptive Memory.</em> arXiv:2504.07952.</li>
-<li>Turner, A. M. et al. (2023). <em>Activation Addition: Steering Language Models Without Optimization.</em> arXiv:2308.10248.</li>
-<li>Wang, G. et al. (2023). <em>Voyager: An Open-Ended Embodied Agent with Large Language Models.</em> arXiv:2305.16291.</li>
-<li>Wang, X. et al. (2022). <em>Self-Consistency Improves Chain of Thought Reasoning in Language Models.</em> arXiv:2203.11171.</li>
-<li>Wang, Z. Z. et al. (2024). <em>Agent Workflow Memory.</em> arXiv:2409.07429.</li>
-<li>Yue, Y. et al. (2025). <em>Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?</em> arXiv:2504.13837.</li>
-<li>Zelikman, E. et al. (2022). <em>STaR: Bootstrapping Reasoning With Reasoning.</em> arXiv:2203.14465.</li>
-<li>Zhang, Q. et al. (2025). <em>Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models.</em> arXiv:2510.04618.</li>
-<li>Zhao, A. et al. (2023). <em>ExpeL: LLM Agents Are Experiential Learners.</em> arXiv:2308.10144.</li>
+<li><p>Alain, G. &amp; Bengio, Y. (2016). <em>Understanding intermediate
+layers using linear classifier probes.</em> arXiv:1610.01644.</p></li>
+<li><p>Alsakka, L. (2026). <em>Efficient Thinking I: Measuring What
+Capability Costs.</em> This series.</p></li>
+<li><p>Alsakka, L. (2026). <em>Efficient Thinking II: Where Search Pays
+and Where It Can’t.</em> This series.</p></li>
+<li><p>Alsakka, L. (2026). <em>Efficient Thinking III: Efficient
+Judging.</em> This series.</p></li>
+<li><p>Brown, B. et al. (2024). <em>Large Language Monkeys: Scaling
+Inference Compute with Repeated Sampling.</em>
+arXiv:2407.21787.</p></li>
+<li><p>Burns, C. et al. (2022). <em>Discovering Latent Knowledge in
+Language Models Without Supervision.</em> arXiv:2212.03827.</p></li>
+<li><p>Chollet, F. (2019). <em>On the Measure of Intelligence.</em>
+arXiv:1911.01547.</p></li>
+<li><p>Dettmers, T. et al. (2023). <em>QLoRA: Efficient Finetuning of
+Quantized LLMs.</em> arXiv:2305.14314.</p></li>
+<li><p>Do, V. D. et al. (2025). <em>Dynamic Steering with Episodic
+Memory for Large Language Models.</em> Findings of ACL 2025.</p></li>
+<li><p>Ecoffet, A. et al. (2019). <em>Go-Explore: a New Approach for
+Hard-Exploration Problems.</em> arXiv:1901.10995.</p></li>
+<li><p>Hu, E. J. et al. (2021). <em>LoRA: Low-Rank Adaptation of Large
+Language Models.</em> arXiv:2106.09685.</p></li>
+<li><p>Jimenez, C. E. et al. (2023). <em>SWE-bench: Can Language Models
+Resolve Real-World GitHub Issues?</em> arXiv:2310.06770.</p></li>
+<li><p>Kadavath, S. et al. (2022). <em>Language Models (Mostly) Know
+What They Know.</em> arXiv:2207.05221.</p></li>
+<li><p>Li, K. et al. (2023). <em>Inference-Time Intervention: Eliciting
+Truthful Answers from a Language Model.</em> NeurIPS.</p></li>
+<li><p>Li, Y. et al. (2026). <em>Efficient Reasoning with Balanced
+Thinking.</em> arXiv:2603.12372. ICLR 2026.</p></li>
+<li><p>Lightman, H. et al. (2023). <em>Let’s Verify Step by Step.</em>
+arXiv:2305.20050.</p></li>
+<li><p>McNemar, Q. (1947). <em>Note on the sampling error of the
+difference between correlated proportions or percentages.</em>
+Psychometrika 12.</p></li>
+<li><p>Ouyang, S. et al. (2025). <em>ReasoningBank: Scaling Agent
+Self-Evolving with Reasoning Memory.</em> arXiv:2509.25140.</p></li>
+<li><p>Pathak, D. et al. (2017). <em>Curiosity-driven Exploration by
+Self-supervised Prediction.</em> arXiv:1705.05363.</p></li>
+<li><p>Shinn, N. et al. (2023). <em>Reflexion: Language Agents with
+Verbal Reinforcement Learning.</em> arXiv:2303.11366.</p></li>
+<li><p>Silver, D. &amp; Sutton, R. S. (2025). <em>Welcome to the Era of
+Experience.</em> Preprint chapter.</p></li>
+<li><p>Silver, D. et al. (2017). <em>Mastering the game of Go without
+human knowledge.</em> Nature 550.</p></li>
+<li><p>Snell, C. et al. (2024). <em>Scaling LLM Test-Time Compute
+Optimally can be More Effective than Scaling Model Parameters.</em>
+arXiv:2408.03314.</p></li>
+<li><p>Suzgun, M. et al. (2025). <em>Dynamic Cheatsheet: Test-Time
+Learning with Adaptive Memory.</em> arXiv:2504.07952.</p></li>
+<li><p>Turner, A. M. et al. (2023). <em>Activation Addition: Steering
+Language Models Without Optimization.</em> arXiv:2308.10248.</p></li>
+<li><p>Wang, G. et al. (2023). <em>Voyager: An Open-Ended Embodied Agent
+with Large Language Models.</em> arXiv:2305.16291.</p></li>
+<li><p>Wang, X. et al. (2022). <em>Self-Consistency Improves Chain of
+Thought Reasoning in Language Models.</em> arXiv:2203.11171.</p></li>
+<li><p>Wang, Z. Z. et al. (2024). <em>Agent Workflow Memory.</em>
+arXiv:2409.07429.</p></li>
+<li><p>Yue, Y. et al. (2025). <em>Does Reinforcement Learning Really
+Incentivize Reasoning Capacity in LLMs Beyond the Base Model?</em>
+arXiv:2504.13837.</p></li>
+<li><p>Zelikman, E. et al. (2022). <em>STaR: Bootstrapping Reasoning
+With Reasoning.</em> arXiv:2203.14465.</p></li>
+<li><p>Zhang, Q. et al. (2025). <em>Agentic Context Engineering:
+Evolving Contexts for Self-Improving Language Models.</em>
+arXiv:2510.04618.</p></li>
+<li><p>Zhao, A. et al. (2023). <em>ExpeL: LLM Agents Are Experiential
+Learners.</em> arXiv:2308.10144.</p></li>
+<li><p>Zhao, C. et al. (2026). <em>Neural Procedural Memory: Empowering
+LLM Agents with Implicit Activation Steering.</em> arXiv:2606.29824. ##
+Appendix A. How This Was Found</p></li>
 </ul>
-<h2 id="appendix-a.-how-this-was-found">Appendix A. How This Was
-Found</h2>
 <p>The order in which the results above were reached, with what each
 error cost and the rule it earned. Dates are 2026. The work was done by
 one experimenter (E), who built and ran everything, and one reviewer
