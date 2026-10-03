@@ -125,6 +125,62 @@ PLANS = {
                        "offline fit is close to self-prediction and says nothing about in-loop "
                        "value. This programme has six recorded probe non-conversions; reading "
                        "the offline gap as a result would be the seventh.")},
+    # ─── VIII-f arm 1 ────────────────────────────────────────────────────────────
+    # A THIRD MODEL FAMILY for the foundation claim: does a small frozen linear head over
+    # the frozen model's hidden states beat both the base agent and ExPEL-style prompt
+    # retrieval, in a family that is neither of the two already measured?
+    #
+    # REGISTERED BEFORE THE ARMS FINISHED, as every plan in this file is, and the
+    # disclosure is unusually clean this time so it is worth stating exactly:
+    # WHEN THIS WAS WRITTEN, NO GREEN COUNT FROM ANY VIII-f SCORED ARM HAD BEEN READ.
+    # Six of nine games existed (base x3, head x3) and two were still unrun; I had looked
+    # at episode counts, task manifests and the head's sha to verify completeness, and at
+    # the COLLECTION's green rate (57 of 300) -- which is a forced-look acquisition run and
+    # is not one of the arms scored below. No pairing, no arm rate, and no comparison.
+    #
+    # THE LAYER IS NOT A FREE PARAMETER HERE AND WAS NOT CHOSEN BY FIT. It is the same
+    # DEPTH FRACTION as the original head (18/28 = 0.643), which on this family's 48 layers
+    # is layer 31, fixed before any state was collected. States were also collected at 24,
+    # 27 and 36 as a declared sensitivity and MAY NOT be swapped in after seeing games.
+    # Layer 31 did also turn out to fit best offline (51.8% against 50.0/50.6/50.4) -- that
+    # is recorded as a COINCIDENCE in the registration precisely so it can never be read as
+    # a choice, because this programme has six probe non-conversions and an offline fit has
+    # never been allowed to pick an in-loop arm.
+    #
+    # ⛔ COMPARING GREEN RATES ACROSS FAMILIES IS FORBIDDEN AND THIS PLAN WILL NOT DO IT.
+    # Family, quantisation (4-bit here, bf16 for family 1) and box all differ at once. The
+    # series plan already fixes this: "The claim of record is tested per family; the paper
+    # reports where it holds and where it does not." What transfers is the VERDICT, never
+    # the magnitude -- so there is no pairing here against any other family's arm, and the
+    # §14b bar comes from THIS family's own within-arm ranges.
+    #
+    # ⚠️ AND ONE HARNESS SPLIT, RECORDED BEFORE IT CAN BE DISCOVERED LATER: the three base
+    # games ran on an older loop revision than the head and retrieval games. Exactly one
+    # commit touched the loop between them -- the opt-in retrieval mode -- every change is
+    # gated behind the new flag, and the greedy first decision was measured identical on 5
+    # of 5 tasks across the two revisions. Both revisions go in the lock.
+    "viiif": {"base": "base_g",
+              "arms": ("base_g", "head_g", "retr_g"),
+              "labels": {
+                  "base_g": "base: no head, no retrieval",
+                  "head_g": "the frozen shared head at layer 31 of 48 (0.643 of depth, the "
+                            "original's fraction), argmax over candidates",
+                  "retr_g": "ExPEL-style prompt retrieval, k=1, ONCE PER DECISION, no head, "
+                            "retrieval tokens charged in the turn's own input count"},
+              "aliases": {},
+              "wanted": [("head_g", "base_g"),
+                         ("head_g", "retr_g"),
+                         ("retr_g", "base_g")],
+              "forbidden": set(),
+              "note": ("F1 reads off head vs base: the head replicates in a third family. "
+                       "F2 reads off head vs retr: what the head buys is the CHANNEL and not "
+                       "the text. F3 reads off retr vs base: whether prompt retrieval is a "
+                       "null here as it was in VIII-e. All three under BOTH criteria in 3 of "
+                       "3, with the §14b bar taken from THIS family's own largest "
+                       "within-head-arm range. The CV column is excluded for every arm, as "
+                       "for VIII-d and VIII-e. A FAILURE of F1 would be confounded between "
+                       "family and quantisation and must be reported as such rather than as "
+                       "a family limit; a PASS would hold despite the quantisation.")},
     # ─── VIII-d arm 1 ────────────────────────────────────────────────────────────
     # COVERAGE or READABILITY: does the forced-look advantage come from the head
     # seeing more of the states the game later visits, or from post-inspection
