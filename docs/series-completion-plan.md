@@ -205,6 +205,121 @@ Readings, fixed now: R1 S-cov beats S-read by more than the bar → coverage; R2
 
 **Amendment 7, 2026-10-01, replay-only follow-up and one retraction.** (a) The hubness correction approved for the replay was measured: dividing similarity by retrieval frequency is degenerate on this bank (raw pairwise cosines sit in a 0.08-wide band, so the divisor selects the rarest entry, not a similar non-hub); centring widens the band 22.6× and still changes nothing; every variant is at or below raw retrieval, with a most-generous ceiling of +1.7 points against arm 1's 3.7-point resolution. The lever is closed without games; the concentration is anisotropy of the embedding, not frequency. (b) **Retraction:** the pre-run replay estimate of 16.0% transfer, quoted beside the in-run 16.2% as "predicted to 0.2 points", cannot be re-derived: no step file on record yields its 820-decision query set (the candidate that would have been serious, scoring the bank's own source states, gives 815 and did not happen). The in-run 16.2% stands; the "predicted to 0.2 points" sentence is withdrawn and no decision rests on it.
 
+## VIII-h — R1 re-run: which label makes the better head — REGISTERED 2026-10-03, PLAYED 2026-10-04, NOT YET SCORED
+
+Everything below the horizontal rule was fixed before the result existed; the result section is a placeholder that must not be read as a finding.
+
+**It is a re-run and not a replicate, and the word matters.** VIII-e's head weights and
+layer-18 hidden states are gone — from both studio boxes and from the durable host — leaving
+only the old lock's sha256 digests, which can verify a copy nobody has. So the heads here are
+**re-fitted**. VIII-e's published +1.7 / +4.0 / +4.3 are carried as prior context and are
+never pooled with these nine differences. "Replicate" is forbidden for this run.
+
+**The question.** A frozen linear head over the frozen model's hidden states can be fitted
+against either of two labels, and the series has never compared them: the **verifier** label,
+and the per-candidate **agent-pick** label. Which one makes the better head?
+
+**The construction**, carried from VIII-e's own lock so it cannot drift: Qwen2.5-7B-Instruct
+at bf16, 28 layers, head at **layer 18** (18/28 = 0.6429, the original head's depth fraction).
+One layer only — no sensitivity column in this arm. Arm A is the head fitted on the verifier
+label; arm B on the agent-pick label. Both heads fitted with the same cut and the same number
+of cross-validation folds, declared in the registration.
+
+**A fresh collection, although usable states already existed.** The preceding steering stage
+produced a seed-73 forced-look collection with layer-18 states, and reusing them would have
+saved about half an hour. It would also have fitted both heads on the very states whose
+within-task separability for these two candidate labels had already been measured and
+published — choosing the arm on a number already seen. So: a fresh seed-73 forced-look
+collection, 300 episodes, states at layer 18, both heads fitted on it.
+
+**✏️ Amended before any fit and before any game — arm B's label was named wrongly.** The
+registration first defined arm B on a recorded `agent_hit` field. That field is a
+**group-level** fact — across 815 decision groups it is all-zero in 696, all-one in 119, and
+**never varies within a group** — so it carries no within-group signal and cannot be fitted as
+a per-candidate head at all; the first construction matched zero of 815 groups. The
+per-candidate label is **derived**: whether a candidate is the one the agent picked. Caught by
+the arm-builder's own smoke test while the fresh collection was still running, and corrected
+under an amendment before any compute was spent on a head.
+
+**G = 9, and the nine task sets were declared before the run.** Nine games per arm on nine
+**distinct** draws, 300 episodes each, with the collection set disjoint from all nine. The
+pooled estimator takes the **game as the sampling unit**:
+
+    d_g = greens_A(T_g)/n − greens_B(T_g)/n       paired within game, n = 300
+    D   = mean(d_g)       se = sd(d_g)/√G         CI = D ± t(8, 0.975)·se
+
+`t`, not 1.96: G = 9 is small. **§14a** is that the pooled interval excludes zero. **§14b** is
+that its lower bound exceeds the bar. Both are read **once**, on the pooled quantity; the nine
+per-game intervals are published for continuity with the preceding arms and **are not the
+reading** — nine per-game verdicts and one pooled verdict are different claims and must not
+share a sentence. The published per-game half-width is a McNemar form for one draw, and
+averaging nine of those estimates one game's precision nine times; the **game-level standard
+deviation is the only term carrying task-sampling variation**, which is what the claim
+generalises over.
+
+**The bar, declared ahead and computed once:** the larger of the two arms' ranges over games
+1, 2 and 3 — "first three" fixed by the mapping, not the best three. Both arms here are head
+arms, so "the head arm's range" would be ambiguous, and taking the larger is conservative and
+fixed in advance. A range grows with G, so it is taken at a fixed G = 3: a bigger experiment
+must not face a stiffer bar for being bigger. Each arm's nine-game standard deviation is
+reported beside it.
+
+**⚠️ A defect in these criteria, disclosed before the result was seen.** §14b as registered is
+`D − t·se > bar`, which is **directional**: with `d_g = A − B` it can only ever fire for arm A.
+If the agent-pick label wins, §14a fires, §14b cannot fire however large the margin, and
+silence would read as "no difference" — the same backwards failure the preceding steering stage
+had already reported in one of its own arms. This was found while building the scorer, **before
+any green count was computed**, and put to the chair as a choice between the faithful reading
+(§14b stands, and a B-win is reported as not applicable in that direction with the margin
+stated) and a symmetric one (`|D| − t·se > bar`, direction always stated). The scorer computes
+both. **Ruling, 2026-10-04, before any green count was read by anyone:** the symmetric form
+`|D| − t·se > bar` governs, with the direction always stated in words, because the arm's
+question is which label is better and not whether one named label is; the faithful directional
+form is reported beside it so a reader can see that the bar did not move. It is recorded here
+because a criterion amended after the sign of the effect is known is not a criterion, and this
+one was amended before.
+
+**⛔ Forbidden, declared before the numbers exist:** the word "replicate"; pooling these nine
+differences with VIII-e's published figures; reading §14a or §14b per game as the result; and
+treating the preceding stage's within-task separability as predicting this head comparison.
+
+**Bounds, up front.** One model, one precision, one task family, one collection rule, one
+layer, one draw per game. The t-interval is the registered reading and a sign test is context,
+never a second gate.
+
+**The lock and the archive.** The run completed with **18 of 18 games at exactly 300 episodes**
+— no short game and no zero-episode game. The lock is final at 67 hashed artefacts, reconciled
+against the run so that nothing present on disk is undeclared, and it records: the nine task
+sets as **nine distinct manifests, paired within each game index**; and that the two arms'
+feature matrices are **byte-identical**, so the label is provably the only difference between
+them. Every declared artefact — the collection, all three state sets, both head weights and all
+18 games — is archived to a durable host outside the studio boxes, where **67 of 67 verify**
+against the lock's own content digest, with zero mismatches, zero missing and zero size
+mismatches. The archive directory is named for the lock's content digest, so a lock that does
+not hash to it is not the lock the archive was verified against.
+
+Measured cost, replacing the registration's estimate: **54.6 minutes per game** (median 53.6,
+range 51.5–59.1 over fifteen intervals) against a registered estimate of about 46, for **16.4
+hours** on one studio box against an estimated 13.8.
+
+---
+
+## RESULT — placeholder, not a finding
+
+> ⛔ **NOT SCORED.** Two gates stand, in this order: the second reader's signature on the
+> final lock, and the §14b direction call above. Neither green count nor `d_g` nor any pooled
+> quantity has been computed or seen by the author at the time of writing. The scorer refuses
+> to print one without the signature, which is how its checks were proved against the live run
+> without revealing the outcome.
+>
+> When it is scored, this section states: D with its 95% interval, §14a and §14b verdicts under
+> whichever reading governs, the bar with each arm's nine-game standard deviation beside it,
+> the nine per-game differences as continuity only, and the direction in words.
+
+**And what this result will NOT change.** This is a within-family mechanism comparison — two
+labels, one model, one layer. It is **not** a fourth model family and must not be read as new
+breadth for the cross-family claim, whichever label wins.
+
 ## VIII-g — steering constructed from the verifier's label — STAGE A REGISTERED AND FAILED, 2026-10-03
 
 **Why it was run.** The authors of the adaptive-steering work cited in VIII-c §6a suggested, in correspondence, that VIII §7.3's steering failure may have been construction rather than application: no quantitative signal characterised the desired state before the direction was built. Stage A tests that precondition at the cost of about an hour, so that the full arm (Stage B, about 6.5 hours) is spent only if the signal exists.
