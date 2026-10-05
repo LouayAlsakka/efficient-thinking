@@ -205,6 +205,256 @@ Readings, fixed now: R1 S-cov beats S-read by more than the bar → coverage; R2
 
 **Amendment 7, 2026-10-01, replay-only follow-up and one retraction.** (a) The hubness correction approved for the replay was measured: dividing similarity by retrieval frequency is degenerate on this bank (raw pairwise cosines sit in a 0.08-wide band, so the divisor selects the rarest entry, not a similar non-hub); centring widens the band 22.6× and still changes nothing; every variant is at or below raw retrieval, with a most-generous ceiling of +1.7 points against arm 1's 3.7-point resolution. The lever is closed without games; the concentration is anisotropy of the embedding, not frequency. (b) **Retraction:** the pre-run replay estimate of 16.0% transfer, quoted beside the in-run 16.2% as "predicted to 0.2 points", cannot be re-derived: no step file on record yields its 820-decision query set (the candidate that would have been serious, scoring the bank's own source states, gives 815 and did not happen). The in-run 16.2% stands; the "predicted to 0.2 points" sentence is withdrawn and no decision rests on it.
 
+## What the head loses — the four-cell paired tables, 2026-10-05
+
+The method never changes a parameter, so every suite the vanilla model passes it still passes. The method's own risk is that the head steers search away from a place the vanilla model would have reached. That is measured here, problem by problem, as the comparator-only cell of a paired table on the same problems. **Finding:** the regression cell ranges from 2.2% (VIII-f, head vs base: 20 of 900) to 12.2% (VIII-e, verifier head vs base: 110 of 900) and does not track the headline gain — the largest net (+22.1) carries the smallest regression, and a smaller net (+9.4) the largest. Prompt retrieval in VIII-e, reported as a null, is in this view a net negative over real churn: it gains 43 and loses 53. Three arms this column cannot cover: VIII-h and VIII-d arm 1 have no base arm (their tables are head-vs-head and head-vs-anchor; a base from another session is never borrowed, because its games ran on another box in the same window and that is a box confound); VIII-i is not yet scored. Every published mean is reproduced from the episode files below, which is the check that the derivation is sound. From this date the four-cell table is published beside every arm's headline.
+
+From the author's standing requirement: *"exploring the risks of missing something the
+vanilla model without experience would get; make it clear and transparent."*
+
+Every table below is **paired on the same problems** and reports four cells: both solve ·
+head only · **the comparator only (the regression)** · neither. The regression cell is the
+one Louay's question is about.
+
+## Method, and the one thing that could have made all of it wrong
+
+- **Joined on `task_id`, and the task set asserted first.** `task_id` is an INDEX WITHIN A SET,
+  not a global identifier — every seed directory holds `task_0001..task_0300` and the same
+  name is a different problem in each (measured: `seed89/task_0001` is 2183 bytes,
+  `seed101/task_0001` is 2402). `four_cell.py` refuses to join two games whose configs
+  declare different `tasks_manifest_sha256`. Every pairing below shares one manifest.
+- **The regression cell is DERIVED**, from the paired per-episode `green` values — never
+  quoted from a published figure (the second reader's rule).
+- **The four cells are asserted to sum to n** on every row.
+- A within-game duplicate `task_id` is refused rather than silently last-wins.
+
+## ✅ The derivation reproduces every published headline, which is the check that it is sound
+
+```
+  VIII-e verifier head    derived +9.44    published +7.3 / +10.0 / +11.0   (mean +9.43)
+  VIII-e agent-pick head  derived +6.11    published +5.7 /  +6.0 /  +6.7   (mean +6.13)
+  VIII-e anchor head      derived +13.00   published +11.3 / +12.7 / +15.0  (mean +13.00)
+  VIII-e retrieval        derived -1.11    published -1.0 /  -2.0 /  -0.3   (mean -1.10)
+  VIII-f head vs base     derived +22.11   published +21.3 / +22.0 / +23.0  (mean +22.10)
+  VIII-f head vs retr     derived +21.67   published +20.7 / +22.0 / +22.3  (mean +21.67)
+```
+
+⚖️ **Eleven pairings, every published mean reproduced from the episode files. The four-cell
+decomposition is therefore a re-reading of the results of record, not a new measurement.**
+
+## VIII-f (Yi-1.5-9B-4bit) — head vs base
+
+| game | n | both solve | head only | **base only** (the regression) | neither | head % | base % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 39 | 72 | **8** | 181 | 37.00 | 15.67 | +21.33 |
+| g2 | 300 | 40 | 71 | **5** | 184 | 37.00 | 15.00 | +22.00 |
+| g3 | 300 | 41 | 76 | **7** | 176 | 39.00 | 16.00 | +23.00 |
+| **all** | 900 | 120 | 219 | **20** | 541 | 37.67 | 15.56 | +22.11 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **base only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-f — head vs retrieval
+
+| game | n | both solve | head only | **retrieval only** (the regression) | neither | head % | retrieval % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 40 | 71 | **9** | 180 | 37.00 | 16.33 | +20.67 |
+| g2 | 300 | 40 | 71 | **5** | 184 | 37.00 | 15.00 | +22.00 |
+| g3 | 300 | 41 | 76 | **9** | 174 | 39.00 | 16.67 | +22.33 |
+| **all** | 900 | 121 | 218 | **23** | 538 | 37.67 | 16.00 | +21.67 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **retrieval only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-f — retrieval vs base
+
+| game | n | both solve | retrieval only | **base only** (the regression) | neither | retrieval % | base % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 41 | 8 | **6** | 245 | 16.33 | 15.67 | +0.67 |
+| g2 | 300 | 39 | 6 | **6** | 249 | 15.00 | 15.00 | +0.00 |
+| g3 | 300 | 39 | 11 | **9** | 241 | 16.67 | 16.00 | +0.67 |
+| **all** | 900 | 119 | 25 | **21** | 735 | 16.00 | 15.56 | +0.44 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **base only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-e — verifier head vs base
+
+| game | n | both solve | verifier-head only | **base only** (the regression) | neither | verifier-head % | base % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 25 | 61 | **39** | 175 | 28.67 | 21.33 | +7.33 |
+| g2 | 300 | 26 | 67 | **37** | 170 | 31.00 | 21.00 | +10.00 |
+| g3 | 300 | 23 | 67 | **34** | 176 | 30.00 | 19.00 | +11.00 |
+| **all** | 900 | 74 | 195 | **110** | 521 | 29.89 | 20.44 | +9.44 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **base only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-e — agent-pick head vs base
+
+| game | n | both solve | agentpick-head only | **base only** (the regression) | neither | agentpick-head % | base % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 49 | 32 | **15** | 204 | 27.00 | 21.33 | +5.67 |
+| g2 | 300 | 50 | 31 | **13** | 206 | 27.00 | 21.00 | +6.00 |
+| g3 | 300 | 47 | 30 | **10** | 213 | 25.67 | 19.00 | +6.67 |
+| **all** | 900 | 146 | 93 | **38** | 623 | 26.56 | 20.44 | +6.11 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **base only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-e — anchor head (the published instrument) vs base
+
+| game | n | both solve | anchor-head only | **base only** (the regression) | neither | anchor-head % | base % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 51 | 51 | **13** | 185 | 34.00 | 21.33 | +12.67 |
+| g2 | 300 | 45 | 52 | **18** | 185 | 32.33 | 21.00 | +11.33 |
+| g3 | 300 | 44 | 58 | **13** | 185 | 34.00 | 19.00 | +15.00 |
+| **all** | 900 | 140 | 161 | **44** | 555 | 33.44 | 20.44 | +13.00 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **base only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-e — retrieval vs base
+
+| game | n | both solve | retrieval only | **base only** (the regression) | neither | retrieval % | base % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 45 | 16 | **19** | 220 | 20.33 | 21.33 | -1.00 |
+| g2 | 300 | 43 | 14 | **20** | 223 | 19.00 | 21.00 | -2.00 |
+| g3 | 300 | 43 | 13 | **14** | 230 | 18.67 | 19.00 | -0.33 |
+| **all** | 900 | 131 | 43 | **53** | 673 | 19.33 | 20.44 | -1.11 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **base only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-d arm 1 — S_cov vs the in-session anchor
+
+| game | n | both solve | S_cov only | **anchor only** (the regression) | neither | S_cov % | anchor % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 73 | 39 | **29** | 159 | 37.33 | 34.00 | +3.33 |
+| g2 | 300 | 71 | 47 | **26** | 156 | 39.33 | 32.33 | +7.00 |
+| g3 | 300 | 77 | 44 | **25** | 154 | 40.33 | 34.00 | +6.33 |
+| **all** | 900 | 221 | 130 | **80** | 469 | 39.00 | 33.44 | +5.56 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **anchor only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-d arm 1 — S_cov_mix vs the in-session anchor
+
+| game | n | both solve | S_cov_mix only | **anchor only** (the regression) | neither | S_cov_mix % | anchor % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 70 | 44 | **32** | 154 | 38.00 | 34.00 | +4.00 |
+| g2 | 300 | 72 | 49 | **25** | 154 | 40.33 | 32.33 | +8.00 |
+| g3 | 300 | 70 | 43 | **32** | 155 | 37.67 | 34.00 | +3.67 |
+| **all** | 900 | 212 | 136 | **89** | 463 | 38.67 | 33.44 | +5.22 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **anchor only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-d arm 1 — S_read vs the in-session anchor
+
+| game | n | both solve | S_read only | **anchor only** (the regression) | neither | S_read % | anchor % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 75 | 46 | **27** | 152 | 40.33 | 34.00 | +6.33 |
+| g2 | 300 | 70 | 45 | **27** | 158 | 38.33 | 32.33 | +6.00 |
+| g3 | 300 | 73 | 45 | **29** | 153 | 39.33 | 34.00 | +5.33 |
+| **all** | 900 | 218 | 136 | **83** | 463 | 39.33 | 33.44 | +5.89 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **anchor only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+## VIII-d arm 1 — rand132_strat (the RANDOM baseline) vs the in-session anchor
+
+| game | n | both solve | rand132_strat only | **anchor only** (the regression) | neither | rand132_strat % | anchor % | delta |
+|---|---|---|---|---|---|---|---|---|
+| g1 | 300 | 81 | 43 | **21** | 155 | 41.33 | 34.00 | +7.33 |
+| g2 | 300 | 75 | 48 | **22** | 155 | 41.00 | 32.33 | +8.67 |
+| g3 | 300 | 78 | 44 | **24** | 154 | 40.67 | 34.00 | +6.67 |
+| **all** | 900 | 234 | 135 | **67** | 464 | 41.00 | 33.44 | +7.56 |
+
+- every row's four cells sum to n: True
+- all games share one task manifest: True (799b5abcff733243)
+- **anchor only** is DERIVED from the paired per-episode `green` values, not quoted from any published figure.
+
+
+---
+
+## 🔴 WHAT THIS SHOWS, and it is the answer to Louay's question
+
+The regression cell is **not small and not constant**. Across the eleven pairings, the
+comparator-only count ranges from **20 of 900 (2.2%)** to **110 of 900 (12.2%)**:
+
+```
+  VIII-f  head vs base              base only   20 / 900   2.2%   net +22.11
+  VIII-e  anchor head vs base       base only   44 / 900   4.9%   net +13.00
+  VIII-e  agent-pick head vs base   base only   38 / 900   4.2%   net  +6.11
+  VIII-e  verifier head vs base     base only  110 / 900  12.2%   net  +9.44
+  VIII-e  retrieval vs base         base only   53 / 900   5.9%   net  -1.11
+```
+
+⚖️ **VIII-e's verifier head gains 195 problems and loses 110.** Its published +9.4 is a net
+over very large churn in both directions, and the headline cannot show that. ⛔ **So Louay's
+worry is real and measurable: in that arm the head breaks one in eight of the problems the
+vanilla model already solved.**
+
+📌 **And the regression does not track the gain.** VIII-f's head has the LARGEST net (+22.1)
+and the SMALLEST regression (2.2%); VIII-e's verifier head has a smaller net (+9.4) and the
+largest regression (12.2%). A bigger headline is not a safer head.
+
+⚖️ **Retrieval is sharper in this view than "a null" conveys:** in VIII-e it gains 43 and
+loses 53 — the null is a net negative over real churn, not an absence of effect. In VIII-f it
+gains 25 and loses 21, which is the same shape at a smaller scale.
+
+⚖️ **And in VIII-d arm 1, the RANDOM baseline loses the fewest (67) while gaining comparably
+(135)** — which strengthens that arm's own negative result rather than softening it.
+
+## ⛔ WHAT CANNOT BE DERIVED, and why — three gaps, not blanks
+
+```
+  R1 (VIII-h)        NO BASE ARM. Its arms are the verifier head and the agent-pick head;
+                     there is nothing vanilla to pair against. Reported in the record 15279.
+  VIII-d arm 1       NO BASE ARM EITHER. Its five arms are the anchor head and four
+                     selection heads, so its tables above are vs the IN-SESSION ANCHOR,
+                     which answers "which rule is better" and NOT "what the head loses".
+  VIII-i             HAS a base arm, but is UNSCORED. Deriving its cells means computing
+                     its green counts, which IS the result -- so it waits for 匠's second
+                     read exactly as its score does.
+  VIII-c             its episodes are in the public repo's own `experience/traj/`; not
+                     derived here because I have not established which files correspond to
+                     the published arms.
+```
+
+🔵 **the author — one question on VIII-d arm 1.** Its games and VIII-e's `base_g1-3` share the SAME
+manifest (`799b5abcff733243`), so a head-vs-base pairing is *computable* on identical
+problems. But VIII-e's base ran **on the other box**, in parallel, by the plan's own design
+("VIII-e arm 1 and VIII-d arm 1 run in parallel — different boxes"). ⚖️ **Their wall-clock
+windows overlap, so it is a BOX confound rather than a drift one** — VIII-e's base games ran
+10-01 14:01–15:08Z, inside VIII-d arm 1's 10-01 03:23Z → 10-02 01:05Z. ⛔ **The series' own
+convention keeps an arm's games on one box; I will not borrow a base across boxes without
+your word.** If you license it, the pairing is one command and I will label the confound in
+the table itself.
+
+## Provenance
+
+Every cell comes from the arms' own `episodes.jsonl`. VIII-f's are read from the durable
+archive; VIII-d arm 1's and VIII-e's from their runs on the studio box — **which existed on
+ONE box until tonight and are now rescue-archived and manifest-verified**
+(`reports/sautee/et-unbacked-rescue-2026-10-05/`). ⛔ **The rescue came first, deliberately:
+deriving a published number from an unbacked artefact is how the next re-run gets created.**
+
+Regenerate with `./build_tables.sh`. No number in this file is typed by hand.
+
+— the experimenter Sautée, studio lane
+
 ## VIII-h — R1 re-run: which label makes the better head — REGISTERED 2026-10-03, PLAYED 2026-10-04, NOT YET SCORED
 
 Everything below the horizontal rule was fixed before the result existed; the result section is a placeholder that must not be read as a finding.
