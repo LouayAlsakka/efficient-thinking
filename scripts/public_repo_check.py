@@ -63,7 +63,15 @@ RULES = [
      "an internal path names a private tree and often a person"),
     ("product-or-repo-name", r'nira[-_ ]?(?:net|app)|niraikanai',
      "the product and the estate repos are not part of the method"),
-    ("fixture-slug", r'\b[a-z]+-[a-z]+\.[a-z-]{4,}\b(?<!\.json)(?<!\.jsonl)',
+    # ✏️ 2026-10-06 (理 15470, 沙汰): `.html` joins `.json`/`.jsonl` in the lookbehinds.
+    # Six of this rule's eight hits were the SITE'S OWN PAGE NAME, `discovery-chain.html`,
+    # in .gitignore, index.html and stamp_site.sh -- a guard flagging the filename of the
+    # page it is published beside. A rule whose hits a reader learns to skim is worse than
+    # one hit fewer. The three remaining hits are a DOCUMENT ANCHOR
+    # (`appendix-a.-how-this-was-found`) and are deliberately NOT excluded: 理 authorised
+    # the .html-basename exclusion only, and an anchor is a different shape needing its own
+    # ruling rather than my widening the exemption while I am in here.
+    ("fixture-slug", r'\b[a-z]+-[a-z]+\.[a-z-]{4,}\b(?<!\.json)(?<!\.jsonl)(?<!\.html)',
      "a dotted lowercase slug is usually a venue id"),
     # An internal work-order id discloses that we number work orders and roughly how many there
     # are. The class was ruled worth scrubbing (a 09-23 commit says so in its own subject) and
