@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-318 — utterance -> `area`, for the two-venue demo (理).
+"""Utterance -> `area`, for the two-venue demo (理).
 
   classify(utterance, venue) -> Area
       .area        {intent, tags, commit, taxonomy}   — tags exist in THIS venue's set, always
@@ -12,7 +12,7 @@ THE MODEL COMPILES, IT NEVER EXECUTES (理). This returns a typed value; `visibl
 work, deterministically, from the compiled tree. Nothing here renders, ranks or decides.
 
 WHAT IS SENT: the utterance and the venue's tag ids. **No state, no prior turn, no identity, no
-session history** — `docs/wo318-data-scope-sautee.md` §1, and it is enforced by this signature
+session history** — `docs/data-scope-sautee.md` §1, and it is enforced by this signature
 rather than promised in prose: there is no parameter through which any of it could arrive.
 
 UNRESOLVED IS A MEASUREMENT, NOT AN ERROR PATH (prereg §2b): a tag outside the venue's set is

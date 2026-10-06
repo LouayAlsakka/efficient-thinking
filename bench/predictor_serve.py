@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-312 — predictor v0 behind a localhost HTTP endpoint, so the renderer can call it from JS.
+"""Predictor v0 behind a localhost HTTP endpoint, so the renderer can call it from JS.
 
 形's harness is Vite + react-native-web; predictor v0 is Python. This is the seam.
 
@@ -149,11 +149,11 @@ class Handler(BaseHTTPRequestHandler):
                          "turn": Handler.predictor.turns, "mode": Handler.mode})
 
     def _area(self):
-        """WO-318 §4 — utterance -> typed area. 理's demo endpoint.
+        """Registration §4 — utterance -> typed area. 理's demo endpoint.
 
         Takes an utterance and a venue and NOTHING ELSE. No state, no prior turn, no identity, no
         session history: there is no field here through which any of them could arrive, which is
-        `docs/wo318-data-scope-sautee.md` §1 enforced by the signature rather than promised.
+        `docs/data-scope-sautee.md` §1 enforced by the signature rather than promised.
         """
         try:
             n = int(self.headers.get("Content-Length", 0))
@@ -191,7 +191,7 @@ def main():
     # DEFAULTS TO LOOPBACK ON PURPOSE. 形 could not reach /area from their checkout because this
     # bound 127.0.0.1 on box A and I said "the endpoint is there" without saying WHOSE loopback
     # . --host 0.0.0.0 puts it on the estate LAN; it is not a public route and there
-    # is none to this box. The $10 WO-318 cap is enforced in AreaV0 against its own ledger file, so
+    # is none to this box. The registered $10 cap is enforced in AreaV0 against its own ledger file, so
     # a second caller shares the ceiling rather than raising it — that is the point of a meter in
     # code rather than a watched number.
     ap.add_argument("--host", default="127.0.0.1",

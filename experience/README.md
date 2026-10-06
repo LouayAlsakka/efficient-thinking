@@ -191,4 +191,4 @@ Owner: Sautee (box A). 理 reads the task-conditioned probe result before step 2
 - 2026-09-18 08:5xZ (理): R2c VOID as written (raw-text identity 33/40) — a pre-registered gate is not relaxed after it fails.
   R2d pre-registered: (i) calibration — uncached vs uncached raw-text identity n=40 (does the strict gate measure the cache
   or bf16 decoding?); (ii) parsed-action identity n=300; (iii) paired outcomes cached vs uncached identical on the 75. All
-  three → cost under R2d with R2c's failure + calibration printed. GPU order: WO-297 gate → R2d → 8a stops.
+  three → cost under R2d with R2c's failure + calibration printed. GPU order: the casing gate → R2d → 8a stops.

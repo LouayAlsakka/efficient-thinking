@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-"""WO-312 — the scripted task list, with a known optimal path so taps-to-goal has a floor.
+"""The scripted task list, with a known optimal path so taps-to-goal has a floor.
 
-WO-312: "First a scripted user (a task list with a known optimal path, so taps-to-goal has a floor)."
+The pre-registration: "First a scripted user (a task list with a known optimal path, so taps-to-goal has a floor)."
 This builds that list against 庭's compiled fixture — the same file the bench renders, verified by
-md5 rather than by eye — and computes each task's optimal action sequence in WO-264's vocabulary.
+md5 rather than by eye — and computes each task's optimal action sequence in the fixed vocabulary.
 
 TWO THINGS THIS FILE EXISTS TO SAY OUT LOUD, BOTH BEFORE ANY RUN:
 
@@ -167,8 +167,8 @@ def main():
 
     taps = sorted({t["optimal_taps"] for t in tasks})
     out = {
-        "document": "WO-312 — scripted task list v0, fixture-v0",
-        "prereg": "docs/wo312-measurement-prereg.md",
+        "document": "scripted task list v0, fixture-v0",
+        "prereg": "docs/measurement-prereg.md",
         "space_file": os.path.basename(a.space), "space_md5": hashlib.md5(raw).hexdigest(),
         "reference_date": a.frm, "reference_date_is_today": a.frm == str(datetime.date.today()), "open_days_offered": a.open_days, "seed": a.seed,
         "n_tasks": len(tasks), "n_reachable_targets": len(targets),

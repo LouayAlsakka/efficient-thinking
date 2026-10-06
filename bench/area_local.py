@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-318 — the LOCAL arm of `/area`. Same class, same prompt, same parser; a different model.
+"""The LOCAL arm of `/area`. Same class, same prompt, same parser; a different model.
 
 WHY THIS ARM EXISTS. 理 §2(c), ruled again by 令 R464 §7: the classifier choice gains a third
 criterion beside disagreement rate and latency — **whether the user's sentence leaves the estate**.

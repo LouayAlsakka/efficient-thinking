@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-318 — the local-vs-Bedrock `/area` measurement. Pre-registered: docs/area-classifier-prereg.md
+"""The local-vs-Bedrock `/area` measurement. Pre-registered: docs/area-classifier-prereg.md
 
 WHAT IT DECIDES, AND WHY THERE ARE THREE CRITERIA AND NOT TWO (理 §2(c), 令 R464 §7):
 
@@ -197,7 +197,7 @@ def main():
     # whole cap. The service holds wo318_spend_ledger.json open for 形's renderer; two processes
     # read-modify-writing one json file lose entries, and a lost entry is a cap that under-counts.
     # So the instrument meters itself against its own $2 sub-budget and the artifact prints BOTH
-    # totals against WO-318's $10 — a split that is stated is a split that can be added up.
+    # totals against the registered $10 — a split that is stated is a split that can be added up.
     ap.add_argument("--bedrock-ledger", default=os.path.join(HERE, "wo318_measure_ledger.json"))
     ap.add_argument("--bedrock-cap", type=float, default=2.0)
     ap.add_argument("--service-ledger", default=os.path.join(HERE, "wo318_spend_ledger.json"))
@@ -256,7 +256,7 @@ def main():
               % (arm, r["disagreement_rate"], r["latency_median_s"], r["latency_p90_s"],
                  r["cost_usd_total"], r["utterance_leaves_the_estate"]))
 
-    out = {"document": "WO-318 — /area classifier measurement, local vs Bedrock",
+    out = {"document": "/area classifier measurement, local vs Bedrock",
            "prereg": "docs/area-classifier-prereg.md (§2c amended 2026-09-23)",
            "utterances": os.path.abspath(a.utterances), "n": len(rows),
            "replicates": a.replicates,
@@ -302,7 +302,7 @@ def _merge(a):
                  "measured under one set of readings beside numbers measured under another, with "
                  "nothing in the artifact saying so. Re-run those arms." % ", ".join(sorted(stale)))
     ns = {v["n_replicates"] for v in arms.values()}
-    out = {"document": "WO-318 — /area classifier measurement, arms merged",
+    out = {"document": "/area classifier measurement, arms merged",
            "prereg": "docs/area-classifier-prereg.md (§2c, §2d)",
            "merged_from": [os.path.abspath(p) for p in a.merge],
            "n": len(next(iter(sets))), "replicates": sorted(ns),
@@ -325,7 +325,7 @@ def _merge(a):
 
 
 def _spend_rollup(a):
-    """WO-318's $10 seen across BOTH ledgers, so the split never hides a total."""
+    """The registered $10 seen across BOTH ledgers, so the split never hides a total."""
     def tot(p):
         try:
             return float(json.load(open(p))["spent_usd"])

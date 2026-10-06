@@ -145,7 +145,7 @@ afternoon on a Studio, minutes on box A.
    confidence         0.9 (decays 0.9/round without new evidence)
    expiry / reopen    reopen if producer-first fails ≥3 consecutive held-out tasks
    ```
-   This is the WO-227 claim record with `alternatives_tried` and `reopen_condition` added (review §6.5).
+   This is the claims-protocol record with `alternatives_tried` and `reopen_condition` added (review §6.5).
 3. **Verify (the gate).** A lesson is admitted only if it improves decisions on ≥ k = 20 *held-out* tasks in scope and
    does not degrade decisions out of scope (shuffled-family control). Register the **rejection rate** — the fraction of
    candidate lessons the external verifier throws out is the measurement of how wrong a self-verified loop would have

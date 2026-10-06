@@ -1,4 +1,4 @@
-# WO-318 — the venue side. PRE-REGISTRATION.
+# Data scope — the classifier and the log row (my half)
 
 This document has moved out of the paper repository. It is a work-order document and lives in
 the estate repository.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-318 — the N-replicate runner for the area classifier. Pre-registered: docs/area-classifier-prereg.md
+"""The N-replicate runner for the area classifier. Pre-registered: docs/area-classifier-prereg.md
 
 Deliberately SHAPE-INDEPENDENT. The one thing not yet decided is what an `area` IS — a typed object
 or a statement in the search DSL (理, my 12378) — and the disagreement comparison depends on

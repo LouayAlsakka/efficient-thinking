@@ -4,7 +4,7 @@
 Written before the credential exists so the first thing that touches it is reviewed rather than
 improvised. It answers, in order, the four things that have to be true before an arm runs:
 
-  1  THE PRINCIPAL IS NOT ROOT. 理 and 鉄 (WO-265 S1): a scoped principal with
+  1  THE PRINCIPAL IS NOT ROOT. 理 and 鉄: a scoped principal with
      bedrock:InvokeModel only. If get_caller_identity still says :root, this REFUSES and stops —
      it does not "work anyway", because working anyway is how root keys stay in place.
   2  THE PRINCIPAL IS ACTUALLY SCOPED. It must NOT be able to read IAM or list buckets. A key that

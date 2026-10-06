@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-318 §19 — the five numbers the narrowing page has to carry, scored from the scripted run's log.
+"""Registration §19 — the five numbers the narrowing page has to carry, scored from the scripted run's log.
 
 COMMITTED BEFORE THE RUN EXISTS, on purpose: a scorer written after the log is a scorer written to
 the data it scores. The field names are a MAP at the top rather than literals in the code, so 形's
@@ -14,7 +14,7 @@ THE THREE PROPERTIES THAT MATTER MORE THAN THE RATES:
   3. A rate's resolution is 1/n. It is printed beside the rate so nobody reads 100.0% on n=3 as a
      result.
 
-WHAT IS DELIBERATELY NOT COMPUTED: the walk-up rate. WO-318 §19 names it; the three readings I can
+WHAT IS DELIBERATELY NOT COMPUTED: the walk-up rate. The registration §19 names it; the three readings I can
 think of ("resolved to the venue node with no narrowing", "resolved to an offer needing no resource
 pick", "the user is told to walk in") have three different denominators, and the definition is 理's
 to give. Pass --walkup-field to name the boolean field that IS the definition; without it this
@@ -118,7 +118,7 @@ def check_serial(rows):
 
 def load_gold(paths):
     """Gold rows keyed (venue, utterance). Authored by 案内; a reviewer who authors the gold set is
-    the conflict WO-318 §19's split exists to prevent, so this file only READS it.
+    the conflict the registration §19's split exists to prevent, so this file only READS it.
 
     THE ROW SHAPE IS THE LANDED ONE, not the one this file first guessed: each row is
     {"utterance", "kind", "area": {"intent", "tags", "commit", "taxonomy"}} and the VENUE is the
@@ -408,7 +408,7 @@ def main():
 
     # PER KIND, because the pooled ask rate hides four different failure modes: an off-menu row
     # that comes back with a tag is a different defect from a plain ask that comes back empty, and
-    # WO-318 §19's single "ask-classification accuracy" cannot separate them. The pooled number
+    # the registration §19's single "ask-classification accuracy" cannot separate them. The pooled number
     # stays the headline; these say where it came from.
     per_kind = collections.defaultdict(lambda: [0, 0])
     for r in rows:
@@ -551,7 +551,7 @@ def main():
                   "  labelled as such beside the page's numbers." % conc)
 
     if a.out:
-        json.dump({"document": "WO-318 §19 — scripted narrowing run, scored",
+        json.dump({"document": "scripted narrowing run, scored",
                    "log": os.path.basename(a.log), "rows_parsed": len(rows), "lines_unparsed": bad,
                    "venues": venues,
                    "ask_classification": {"ok": ask_ok, "n": ask_n, "dropped": ask_drop,

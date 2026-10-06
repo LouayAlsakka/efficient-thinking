@@ -4,7 +4,7 @@
 // be hit by accident: 'Haircut' substring-matches the summary, 'Haircut' exact does not.
 // If a future frame renders a chip's label as its OWN node too, this breaks loudly (strict
 // mode violation) rather than silently clicking the wrong thing — which is the behaviour I want.
-// WO-312 — the SANITY GATE, not the comparison. Prereg §4: "any arm's completion < 100% on the
+// The SANITY GATE, not the comparison. Prereg §4: "any arm's completion < 100% on the
 // scripted user -> the world or the engine is broken, not the interface... the measurement is void
 // until it does". §2b registered that the scripted run on v0 is a floor; this runs it.
 // Every task is driven on its own page load so each gets its own logger session.
@@ -65,7 +65,7 @@ await b.close();
 const ok = results.filter(r => !r.error && r.submit_screen_reached);
 const secs = results.map(r => r.seconds).sort((a, z) => a - z);
 fs.writeFileSync(outFile, JSON.stringify({
-  document: 'WO-312 — scripted sweep on STATIC, the sanity gate (prereg §4 / §2b)',
+  document: 'scripted sweep on STATIC, the sanity gate (prereg §4 / §2b)',
   arm: 'static', tasks_file: tasksFile, n: results.length,
   reached_submit_screen: ok.length,
   completion_rate_SCREEN_ONLY: +(ok.length / results.length).toFixed(4),

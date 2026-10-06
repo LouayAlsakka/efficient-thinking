@@ -1,6 +1,6 @@
 {
- "document": "WO-312 — scripted task list v0, fixture-v0",
- "prereg": "docs/wo312-measurement-prereg.md",
+ "document": "scripted task list v0, fixture-v0",
+ "prereg": "docs/measurement-prereg.md",
  "space_file": "fixture-v1_space.json",
  "space_md5": "277b180e0498bcbe64dc902feaf605be",
  "reference_date": "2026-09-22",

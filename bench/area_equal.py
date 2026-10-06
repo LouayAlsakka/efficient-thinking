@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-318 — the canonical form of an `area`, and equality on it. ONE property, reused.
+"""The canonical form of an `area`, and equality on it. ONE property, reused.
 
 THE RULE IS 案内'S, NOT MINE (doc 239, 12438), and it is transcribed here rather than re-derived:
 

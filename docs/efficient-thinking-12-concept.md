@@ -29,7 +29,7 @@ verified history, choosing the adapter, with the three probe controls and the ta
 Two served L2 adapters, held by hash in the adapter registry. A head fitted on the frozen base's state at the query
 picks one per query; arms: always-A, always-B, both (merged), the model's own preference, the head. Verifier: the
 served result-set checks. Readings written before the run, in VIII's form. Not a production change; offline, the
-WO-304 rules apply.
+standing rules for such arms apply.
 
 ## Relation to the series
 

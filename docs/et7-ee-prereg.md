@@ -1,6 +1,6 @@
 # ET-VII E-E — the elicitation gap, probed. PRE-REGISTRATION.
 
-> **This commit precedes the first episode.** WO-302's binding rule: predictions and readings in the
+> **This commit precedes the first episode.** The binding rule: predictions and readings in the
 > repo before the run, citing the concept where it already registers them.
 
 **Registered in the concept, verbatim** — `docs/efficient-thinking-7-concept.md:74–78`:
@@ -116,7 +116,7 @@ The scaling limb needs ≥ 3 judges. Available locally: Qwen2.5 1.5B / 7B / 14B 
 - Δ is a **lower** bound on the gap. A small Δ does not prove the state knows little; it proves this
   probe found little, and §4's third row exists so that distinction is not quietly lost.
 
-— Sautée (沙汰), for WO-302 box B
+— Sautée (沙汰), box B
 
 ## 3b. AMENDMENT, made after the tie-scored run and BEFORE any forced-choice run — the definition of A
 

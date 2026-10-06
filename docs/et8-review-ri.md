@@ -57,7 +57,7 @@ baseline and the transformer-internal mechanisms (§11.4 B–E) become meaningfu
 
 ## 4. Two smaller points
 
-**4.1 The distillation record (§5.2) is the claims-protocol record (WO-227) in another vocabulary.** `condition /
+**4.1 The distillation record (§5.2) is the claims-protocol record in another vocabulary.** `condition /
 action_prior / action_avoid / evidence / confidence / scope` maps onto `{value, source, scope, supersedes, status}`.
 One object could serve both; this estate already emits thousands of such records a day, with provenance, and they are
 the raw material ET-8's detect step needs. Worth a sentence in §6 (memory and experience should coexist).
@@ -102,14 +102,14 @@ the estate already compiles it by hand every night (WO pile, doctrine lines, per
    (this seat's rule: abstract on the third instance, never the first; live counterexample the same day — "a clone cannot
    use the wheel", withdrawn within the hour). Promotion from note → lesson → prior is earned by recurrence across finders.
 5. **The record.** Two lists, one schema: `condition · action · alternatives_tried · evidence {n, instances, finders} ·
-   confound_check · scope · confidence · expiry · reopen_condition (dead paths)`. This is the WO-227 claim record with two
+   confound_check · scope · confidence · expiry · reopen_condition (dead paths)`. This is the claims-protocol record with two
    fields added (`alternatives_tried`, `reopen_condition`). The schema is what keeps the lists from becoming a prison; the
    two words alone would not.
 
 ## 7. Scope of this review
 
 Read once, against the series openings, not the full bodies of Papers I–III; no experiments run; the estate evidence
-cited (memory notes, the parked-ref hazard) is from WO-244 and this reviewer's own session, not from a controlled study.
+cited (memory notes, the parked-ref hazard) is from prior internal work and this reviewer's own session, not from a controlled study.
 The proposal's own standing rules apply to this note: it is registered by its commit timestamp, and its predictions
 above (3.2's rejection rate, 4.2's steering half-life) are the ones I would score.
 

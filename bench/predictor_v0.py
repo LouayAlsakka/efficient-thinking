@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""WO-312 — PREDICTOR v0: top-N next actions from state + last exchange. A function the renderer calls.
+"""PREDICTOR v0: top-N next actions from state + last exchange. A function the renderer calls.
 
 理 §3: "沙汰 — predictor v0 (the frontier model on Bedrock, top-N next actions from state +
 last exchange) as a function the renderer calls, by 09-26, so the PREDICTED arm exists the same day
@@ -19,7 +19,7 @@ the renderer changing:
         .raw       the model's reply, kept for replay (kanna's rule: persist the trajectory)
         .dropped   actions the model proposed that were NOT in the vocabulary, counted not hidden
 
-VOCABULARY IS ENFORCED HERE, NOT SUGGESTED. WO-312: "Nothing outside it can be shown." A model asked
+VOCABULARY IS ENFORCED HERE, NOT SUGGESTED. The pre-registration: "Nothing outside it can be shown." A model asked
 for next actions will happily invent one, and a bench whose PREDICTED arm can show an action the
 STATIC arm cannot is not measuring the head — it is measuring who had the bigger vocabulary. Every
 proposal is checked against the fixed kinds and dropped if it is not one of them; the drop count
@@ -33,7 +33,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "poetry"))
 import api_rater as AR
 
-# docs/127 + WO-264's fixed kinds, per WO-312 "the fixed vocabulary ... already decided in WO-264"
+# docs/127 + the previously fixed kinds, per the pre-registration "the fixed vocabulary ... already decided"
 DEFAULT_KINDS = ("select", "set", "add", "remove", "next", "back", "cancel", "confirm", "ask")
 
 PROMPT = """You are predicting what a user will do NEXT in a booking interface.
@@ -100,7 +100,7 @@ def _resolvable(world):
 # Measured on the real mid-flow state: all four reached the Bedrock prompt verbatim. The predictor
 # needs the SHAPE of the state — is the form filled, which offer/staff/day/slot are chosen — and
 # never the identity itself. `last_exchange` stays: it is the deliberate, named user-originated
-# input the whole mechanism is about, and it is stated as such in docs/wo318-data-scope-sautee.md.
+# input the whole mechanism is about, and it is stated as such in docs/data-scope-sautee.md.
 REDACTED = "<redacted>"
 _IDENTITY_FIELDS = ("name", "phone", "email", "sms_opt_in", "note")
 

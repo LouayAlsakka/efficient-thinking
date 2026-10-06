@@ -666,7 +666,7 @@ agent) → the region is the policy's, not the task's; (ii) the B-experience hea
 clearing §15 → different-agent experience extends the gain: the escape route exists and it is cheap; (iii) the union
 head beats both → exchange compounds; (iv) B's subset overlaps gen0's (< 10% different) → the region is the task's
 and no policy escapes it — a finding that closes the route. Any control fires → that arm withdrawn. **Not run until
-WO-318's demo has reached the owner; then it is the only VIII-c run.**
+the demo has reached the owner; then it is the only VIII-c run.**
 
 ## 16a. Amendment, registered 2026-09-24 13:5xZ, after arm 1 was stopped at 33 episodes and before any reading
 

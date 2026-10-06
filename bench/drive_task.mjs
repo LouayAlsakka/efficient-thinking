@@ -4,7 +4,7 @@
 // be hit by accident: 'Haircut' substring-matches the summary, 'Haircut' exact does not.
 // If a future frame renders a chip's label as its OWN node too, this breaks loudly (strict
 // mode violation) rather than silently clicking the wrong thing — which is the behaviour I want.
-// WO-312 — drive ONE task from the scripted list all the way to submit, through the real STATIC
+// Drive ONE task from the scripted list all the way to submit, through the real STATIC
 // head, with 鉋's logger running. This is the first end-to-end check that the three pieces meet:
 // my task list's arg shapes, 形's reducer, and 鉋's replay log. 形 and 鉋 both
 // asked to see a REAL tap rather than a synthetic one.

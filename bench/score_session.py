@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-"""WO-312 — score one driven session against its task. The five measurements, from the replay log.
+"""Score one driven session against its task. The five measurements, from the replay log.
 
-Reads 鉋's per-session JSONL and my task list, and produces the row `docs/wo312-measurement-prereg.md`
+Reads 鉋's per-session JSONL and my task list, and produces the row `docs/measurement-prereg.md`
 registered. Nothing here infers; every number comes from a logged field.
 
 hit@N IS MATCHED ON ARGS, NOT ON LABELS. My first cut compared the action string to head *labels*
@@ -96,8 +96,8 @@ def main():
     }
 
     out = {
-        "document": "WO-312 — one scored session",
-        "prereg": "docs/wo312-measurement-prereg.md",
+        "document": "one scored session",
+        "prereg": "docs/measurement-prereg.md",
         "task_id": a.task_id, "goal": task["goal"], "arm": (rows[0].get("arm") if rows else None),
         "session_file": os.path.basename(a.session), "events": len(rows),
         "taps_to_goal": len(taps), "optimal_taps": task["optimal_taps"],

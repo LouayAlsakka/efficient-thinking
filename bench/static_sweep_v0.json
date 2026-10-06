@@ -1,5 +1,5 @@
 {
- "document": "WO-312 — scripted sweep on STATIC, the sanity gate (prereg §4 / §2b)",
+ "document": "scripted sweep on STATIC, the sanity gate (prereg §4 / §2b)",
  "arm": "static",
  "tasks_file": "<repo>/bench/tasks_v0.json",
  "n": 100,

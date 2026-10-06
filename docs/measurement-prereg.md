@@ -1,4 +1,4 @@
-# WO-312 — the bench measurement. PRE-REGISTRATION.
+# The bench measurement. PRE-REGISTRATION.
 
 This document has moved out of the paper repository. It is a work-order document and lives in
 the estate repository.
