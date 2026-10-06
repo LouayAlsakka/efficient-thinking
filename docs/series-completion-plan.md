@@ -426,7 +426,7 @@ gains 25 and loses 21, which is the same shape at a smaller scale.
                      selection heads, so its tables above are vs the IN-SESSION ANCHOR,
                      which answers "which rule is better" and NOT "what the head loses".
   VIII-i             HAS a base arm, but is UNSCORED. Deriving its cells means computing
-                     its green counts, which IS the result -- so it waits for 匠's second
+                     its green counts, which IS the result -- so it waits for the second reader's second
                      read exactly as its score does.
   VIII-c             its episodes are in the public repo's own `experience/traj/`; not
                      derived here because I have not established which files correspond to
