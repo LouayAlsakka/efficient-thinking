@@ -167,7 +167,7 @@ def main():
                          "ask rate rather than split silently.")
     ap.add_argument("--taxonomy-parents", default="",
                     help="the allocating taxonomy registry ({tags: {id: {parent}}}). With it, WALK-UP "
-                         "is computed as 理 defined it (13178 §2): the rate at which the classifier "
+                         "is computed as ruled (2026-09): the rate at which the classifier "
                          "returns an ANCESTOR of the gold tag instead of the tag. Without it the "
                          "rate stays NOT COMPUTED rather than guessed from a string prefix.")
     ap.add_argument("--walkup-field", default="",
