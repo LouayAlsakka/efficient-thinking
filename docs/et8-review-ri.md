@@ -64,7 +64,7 @@ the raw material ET-8's detect step needs. Worth a sentence in §6 (memory and e
 
 **4.2 §10.5 "excessive prior strength — expertise becomes dogma" deserves its own experiment, not a paragraph.**
 Live instance, 2026-09-05: a confident, later-withdrawn instruction ("land the parked ref") held by every lane was
-worse than no prior; 96% of the parked refs it would have landed were hazards (tsubame). A prior that cannot be
+worse than no prior; 96% of the parked refs it would have landed were hazards (the hazard review's figure). A prior that cannot be
 overridden by contrary evidence is a liability, and the draft's safeguards (confidence decay, domain gating, rollback)
 should be tested as their own arm: inject one verified-then-invalidated lesson and measure how long it steers.
 

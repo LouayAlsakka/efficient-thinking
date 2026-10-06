@@ -33,9 +33,15 @@ RULES = [
     ("id-next-to-a-name",
      # OUR glyphs, not any CJK: "唐寅, 1470" is a poet's birth year and flagging it teaches
      # the reader to ignore this rule, which is the only way a routing check really fails.
-     r'(?:[理令匠形案内女将庭鉋目付鎖巳紗鍵雲鉄文沙汰]{1,2}|\b(?:ri|rei|takumi|katachi|annai|okami|niwa|kanna|metsuke|kusari|'
-     r'misa|kagi|kumo|tetsu|fumi|sautee)\b)[^\n]{0,40}?\b(?!19\d\d|20\d\d)\d{4,5}\b',
+     r'(?:地図|深海|からくり|[理令匠形案内女将庭鉋目付鎖巳紗鍵雲鉄文沙汰秤信声経宝守栞瞬柱繋燕暦眸窯]{1,2}|\b(?:ri|rei|takumi|katachi|annai|okami|niwa|kanna|metsuke|kusari|'
+     r'misa|kagi|kumo|tetsu|fumi|sautee|chizu|fangfei|francis|hakari|hana|hashira|hibiki|jude|kama|karakuri|keiko|koe|koyomi|mamoru|manako|nagare|nagomi|sami|shin|shinkai|shiori|shun|takara|tsubame|tsunagi|weixu)\b)[^\n]{0,40}?\b(?!19\d\d|20\d\d)\d{4,5}\b',
      "a 4-5 digit number beside a name reads as an internal decision id"),
+    # The glyph arm carries the roster's seals EXCEPT 花, 和 and 流: everyday characters that
+    # flag a poetry corpus ("花枝 … GB 2312" is a font encoding beside a flower). Those three
+    # lanes are reached by the romaji arm only, and that limit is stated here on purpose.
+    # ✏️ 2026-10-06 (目付 15683): the romaji arm knew 16 of the ~42 names on the roster. Widened
+    # to the whole roster as the channel registry lists it; a name the registry does not carry
+    # is still invisible here, and this list is only as complete as the day it was copied.
     # ✏️ 2026-10-06 (理 15458, 沙汰): the separator class was `[\s,(]*` -- adjacency only.
     # It matched "理 13178" and MISSED "理 defined it (13178 §2)", and a scan of the whole
     # tracked corpus with a 40-char same-line window found 22 MORE real ids the narrow form
