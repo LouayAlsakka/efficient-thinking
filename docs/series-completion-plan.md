@@ -455,7 +455,23 @@ Regenerate with `./build_tables.sh`. No number in this file is typed by hand.
 
 — the experimenter Sautée, studio lane
 
-## VIII-h — R1 re-run: which label makes the better head — REGISTERED 2026-10-03, PLAYED 2026-10-04, NOT YET SCORED
+## VIII-i — the quantisation control on family 1 — REGISTERED 2026-10-04, SCORED 2026-10-05
+
+**Why.** VIII-f's third family ran at 4-bit where family 1 was bf16, so "the head survives 4-bit" was an inference. Family 1 (Qwen2.5-7B-Instruct) at the same 4-bit quantisation, under VIII-f's exact protocol — base, head (fitted on a fresh seed-73 forced-look collection at 4-bit, layer 18), retrieval (k = 1), three games on the seed-89 set, this arm's own bar — is the within-family control that makes it a measurement. Registered before any compute; the only cross-precision statement licensed in advance is a speed anchor (one base game at bf16 on the same box).
+
+**Result** (lock final, ten games at 300, 39 of 39 artefact hashes recomputed, independent second read signed):
+
+| | game 1 | game 2 | game 3 | mean |
+|---|---|---|---|---|
+| base | 9.67 | 11.00 | 10.67 | 10.44 |
+| head | 36.33 | 37.67 | 38.00 | 37.33 |
+| retrieval | 9.00 | 8.67 | 8.00 | 8.56 |
+
+Bar 1.67 (largest within-arm range, from the head arm). F1, head over base: +26.89 [+25.93, +27.85], both criteria. F2, head over retrieval: +28.78 [+25.43, +32.12], both criteria. F3, retrieval against base: −1.89 [−4.55, +0.77], a null (the interval includes zero; the nominal sign is not read). **The head survives 4-bit on family 1; what it buys is the channel; prompt retrieval is a null for the third time (VIII-e, VIII-f, VIII-i).** The speed anchor: the same base game at 4-bit 17 min, at bf16 35 min, 2.0×, a rate only. Not claimed: that quantisation helps, or any comparison of this arm's +26.9 with VIII-e's +9.4 — different sessions, different fitted heads, a much weaker comparator here (10.4% against 20.4%).
+
+**The four-cell tables, derived after the headline.** Head vs base: both 83, head only 253, base only 11, neither 553. Head vs retrieval: both 70, head only 266, retrieval only 7, neither 557. Retrieval vs base: both 68, retrieval only 9, base only 26, neither 797 — 35 of 900 problems change hands, 26 lost against 9 gained: the registered reading stays a null, and the table shows that the null is a wash, not an absence; no criterion was added on the churn after seeing it. **Two denominators for the regression cell, both kept from here:** against the task set, base-only is 11 of 900 (1.2%); against what the base itself solved, 11 of 94 (11.7%). Applying the same correction to VIII-e's verifier head: 110 of 900 (12.2%) is 110 of 184 (59.8%) of the base's own solutions. The second denominator prices the behaviour; the first was the one published earlier, and it understated it.
+
+## VIII-h — R1 re-run: which label makes the better head — REGISTERED 2026-10-03, PLAYED 2026-10-04, SCORED 2026-10-05
 
 Everything below the horizontal rule was fixed before the result existed; the result section is a placeholder that must not be read as a finding.
 
@@ -554,17 +570,14 @@ hours** on one studio box against an estimated 13.8.
 
 ---
 
-## RESULT — placeholder, not a finding
+## RESULT — scored 2026-10-05 after the second reader's signature, under the symmetric criterion ruled before any count was read
 
-> ⛔ **NOT SCORED.** Two gates stand, in this order: the second reader's signature on the
-> final lock, and the §14b direction call above. Neither green count nor `d_g` nor any pooled
-> quantity has been computed or seen by the author at the time of writing. The scorer refuses
-> to print one without the signature, which is how its checks were proved against the live run
-> without revealing the outcome.
->
-> When it is scored, this section states: D with its 95% interval, §14a and §14b verdicts under
-> whichever reading governs, the bar with each arm's nine-game standard deviation beside it,
-> the nine per-game differences as continuity only, and the direction in words.
+| game | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | mean |
+|---|---|---|---|---|---|---|---|---|---|---|
+| A, verifier-label head (% green) | 39.3 | 38.3 | 41.0 | 35.7 | 37.3 | 42.3 | 39.0 | 35.0 | 42.7 | 38.96 |
+| B, agent's-pick head (% green) | 26.3 | 22.3 | 26.3 | 19.0 | 18.3 | 23.7 | 20.7 | 22.0 | 23.0 | 22.41 |
+
+D = +16.56 points (A over B), sd of the nine paired differences 2.56, se 0.85, 95% t-interval [+14.59, +18.52]. §14a passes (the interval excludes zero; direction: the verifier label). §14b passes under the symmetric form, |D| − t·se = 14.59 against the bar of 4.0 (the larger of the two arms' first-three ranges); the directional form agrees. All nine per-game differences are positive, reported as context only. Nine distinct task sets, one per game, verified from the manifests. **The verifier label makes the better head, by a margin 3.6 times the bar. Of the three readings written before the lock was opened, the first holds: useful experience carries information the agent did not already hold in its own behaviour; the channel imports something external to the policy.** VIII-e's unresolved +1.7/+4.0/+4.3 on three replays of one set was a resolution problem, as the pooled design was built to test. The four-cell table for this arm is head-versus-head (there is no base arm; a base from another session is never borrowed) and is published with the lock.
 
 **And what this result will NOT change.** This is a within-family mechanism comparison — two
 labels, one model, one layer. It is **not** a fourth model family and must not be read as new
