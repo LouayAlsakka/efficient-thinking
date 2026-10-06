@@ -34,8 +34,15 @@ RULES = [
      # OUR glyphs, not any CJK: "唐寅, 1470" is a poet's birth year and flagging it teaches
      # the reader to ignore this rule, which is the only way a routing check really fails.
      r'(?:[理令匠形案内女将庭鉳目付鎖巳紗鍵雲鉄文沙汰]{1,2}|\b(?:ri|rei|takumi|katachi|annai|okami|niwa|kanna|metsuke|kusari|'
-     r'misa|kagi|kumo|tetsu|fumi|sautee)\b)[\s,(]*(?!19\d\d|20\d\d)\d{4,5}\b',
+     r'misa|kagi|kumo|tetsu|fumi|sautee)\b)[^\n]{0,40}?\b(?!19\d\d|20\d\d)\d{4,5}\b',
      "a 4-5 digit number beside a name reads as an internal decision id"),
+    # ✏️ 2026-10-06 (理 15458, 沙汰): the separator class was `[\s,(]*` -- adjacency only.
+    # It matched "理 13178" and MISSED "理 defined it (13178 §2)", and a scan of the whole
+    # tracked corpus with a 40-char same-line window found 22 MORE real ids the narrow form
+    # could not see -- "形's 12340", "理, from 沙汰–10912", "理/11104", "理's fixed 9170",
+    # "理, amended 11397", "理 ruled at 10909". Zero false positives in those 22, measured
+    # before the change, so the widening costs no signal. The window is bounded and
+    # same-line on purpose: unbounded would pair a name with any number in the document.
     # Every arm here USED to require a trailing digit, and the coordination host's name has
     # none -- so the one machine that is the git server and the message store was the single
     # host shape this guard could not express, and it returned a clean zero on a corpus that
@@ -44,7 +51,15 @@ RULES = [
     # the file's own idiom -- `fixture-slug` already carries them for the same reason.
     ("host-shaped-token", r'\b(?:llm\d|mini\d|box[-_ ]?[A-Z]\d)\b|(?<![-\w])lm(?![-\w])',
      "a machine name is estate topology: how many boxes there are and what they do"),
-    ("internal-path-fragment", r'(?:reports|wo)/[a-z]+/|/Users/[a-z]+/(?:github|claude)/',
+    ("internal-path-fragment",
+     # ✏️ 2026-10-06 (沙汰): the first two alternatives did NOT cover an agent session's
+     # scratchpad, which is `/private/tmp/claude-<uid>/-Users-...-agents-<Lane>/<uuid>/`.
+     # 13 published result JSONs carried that full path as a recorded --states/--out value
+     # and NO rule here flagged it; the widened id-next-to-a-name rule caught it only by
+     # accident, because "Sautee" sat 40 chars from four digits of the UUID. A blind spot
+     # demonstrated by 13 files is not a bound to note, it is a gate to add.
+     r'(?:reports|wo)/[a-z]+/|/Users/[a-z]+/(?:github|claude)/'
+     r'|/private/tmp/claude-\d+/|-agents-[A-Za-z]+/[0-9a-f]{8}-',
      "an internal path names a private tree and often a person"),
     ("product-or-repo-name", r'nira[-_ ]?(?:net|app)|niraikanai',
      "the product and the estate repos are not part of the method"),
@@ -130,16 +145,21 @@ def scan(files, rev=None, self_path=None):
             m = re.search(pat, f, re.I)
             if m:
                 hits.append((f, 0, name, why + " (in the FILE PATH)", m.group(0)[:40], f))
-                break
         if f.endswith(SKIP_EXT):
             continue
         body = read(f, rev)
         for i, line in enumerate(body.split("\n"), 1):
+            # ✏️ 2026-10-06 (沙汰): this used to `break` after the FIRST matching rule, so a
+            # line carrying two classes reported only the earlier one in RULES order -- and
+            # 13 result JSONs whose recorded --states path is an agent scratchpad reported
+            # only `id-next-to-a-name` (RULES[0]) while `internal-path-fragment` was never
+            # evaluated on that same line. The consequence is worse than a miscount: a scrub
+            # becomes ITERATIVE, each pass revealing a class the previous pass hid, so a
+            # zero after one pass is not a zero. Every rule is now evaluated on every line.
             for name, pat, why in RULES:
                 m = re.search(pat, line, re.I)
                 if m:
                     hits.append((f, i, name, why, m.group(0)[:40], line.strip()[:100]))
-                    break
     return hits
 
 
