@@ -3,8 +3,22 @@
 
 WHY A SEPARATE EXTRACTOR. et8_head_v3.post_inspect_decisions reconstructs a v3 PYTHON decision
 (region_source over a program, decision_prompt from et8_inject). SQL decisions are built by
-et8_sql_agent's own SYSTEM prompt and state(). This file reconstructs EXACTLY what that agent saw,
-so the states the head is fitted on are the states the head will act on.
+et8_sql_agent's own SYSTEM prompt and state(). FIDELITY — DERIVED, WITH ITS RATE, NOT ASSERTED. This rebuild matches what the agent read for
+299 of 300 decisions in the collection it was checked on, and it holds for a structural reason
+rather than a careful one:
+  * this extractor BREAKS at the first `hypothesize` of an episode, so it never rebuilds a
+    state from after a patch -- and a patch step records `region` and `patch_ok` and no source
+    text, which makes post-patch prompts unrecoverable in principle, not merely unrecovered;
+  * the lines built here and in et8_sql_agent.state() are the same lines, in the same order,
+    with the same 6-entry history window.
+THE ONE EXCEPTION IS A DEFECT IN THIS FILE: the history fallback `"%s %s" % (action, region)`
+writes an entry for action kinds the agent writes none for -- the agent's only history writes
+are inspect / hypothesize / patch / run. One step in 300 reached it. The fallback should be a
+whitelist of those four forms.
+NO HASH EXISTS ON THIS SIDE: et8_sql_agent does not log the prompt it built, so the 299/300 is
+DERIVED from the two readings above and is not a measurement. experience/prompt_fidelity.py
+measures the same question on the debugging side, where the loop does log one; logging a prompt
+hash in et8_sql_agent would turn this paragraph into a measurement.
 
 It writes X_layer*.npy + meta.jsonl in et8_head_v3's format, so the FIT and its three controls
 (permutation, PCA-8, five-draw n=100) run unchanged — the mechanism transfers, the code does too.
@@ -46,6 +60,14 @@ def post_inspect_decisions(steps, tasks_dir):
                             "bug_region": task["bug_region"], "regions": regions,
                             "agent_region": s["region"], "agent_hit": bool(s["region_hit"]),
                             "messages": [sysmsg, {"role": "user", "content": "\n".join(lines)}]})
+                # LOAD-BEARING, AND A PUBLISHED FIGURE DEPENDS ON IT. Stopping at the
+                # first `hypothesize` means nothing here is ever rebuilt from after a
+                # patch, and post-patch prompts cannot be rebuilt at all because the
+                # patch source is never logged. The SQL probe figure in
+                # docs/efficient-thinking-8.md (§7.7, 89.3% on held-out decisions) is
+                # measured on states from this function. Extending this loop past the
+                # first decision moves that figure into the unverifiable regime.
+                # Re-measure the figure before removing this.
                 break
             if s["action"] in ("inspect", "repeat_inspect") and s["region"] in regions:
                 inspected[s["region"]] = parts[s["region"]]

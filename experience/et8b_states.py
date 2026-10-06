@@ -36,8 +36,31 @@ def decisions_from(steps, tasks_dir):
                 inspected[s["region"]] = A.region_source(program, s["region"]) or ""
                 history.append("inspect %s" % s["region"])
             elif act == "hypothesize":
-                # §16a: byte-identical to et8b_loop.state_text(). A replay that rebuilds a
-                # DIFFERENT prompt computes hidden states at a position the agent was never in.
+                # §16a — A REQUIREMENT, NOT AN ASSURANCE. This reconstruction must reproduce
+                # et8b_loop.state_text() byte for byte: a replay that rebuilds a DIFFERENT prompt
+                # computes hidden states at a position the agent was never in.
+                #
+                # MEASURED 2026-10-06, AND AS WRITTEN IT DOES NOT HOLD. The loop records
+                # sha1(state_text()) on every decision step as `decision_state`, so this
+                # reconstruction can be checked against what the agent actually read without
+                # re-running anything. experience/prompt_fidelity.py is that check.
+                #
+                #   unforced collection   decision 1 exact (300/300); decisions 2 and 3 diverge
+                #   forced collections    every decision diverges (0 of 813, 0 of 819, 0 of 840)
+                #
+                # TWO CAUSES, each confirmed against the logged hash:
+                #   1. A FORCED LOOK IS NOT A DECISION AND THE LOG CANNOT SAY SO. The loop records
+                #      it as action="hypothesize", region=None, with the truth only in
+                #      parsed_action="inspect_forced". Keying on `action` writes "hypothesize ?"
+                #      into history where the loop wrote "inspect-forced". Writing the loop's own
+                #      token and KEEPING the row makes every forced collection's decision 1 exact.
+                #   2. THE PATCH SOURCE WAS NEVER WRITTEN DOWN. A patch step records `region` and
+                #      `patch_ok` and no source text, so once a patch has changed an inspected
+                #      region the loop's prompt is unrecoverable in principle, not merely
+                #      unrecovered. Fixing this helps future collections only.
+                #
+                # So: states from decision 1 are the prompts the agent read. States from later
+                # decisions are not, and heads fitted across all decisions carry that skew.
                 lines = ["SYMPTOM: %s" % task["symptom"],
                          "Regions: %s" % ", ".join(regions)]
                 for r, v in inspected.items():

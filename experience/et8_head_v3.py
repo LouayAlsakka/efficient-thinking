@@ -56,6 +56,21 @@ def post_inspect_decisions(steps, tasks_dir):
                             "bug_region": task["bug_region"], "regions": task["regions"],
                             "agent_region": s["region"], "agent_hit": bool(s["region_hit"]),
                             "messages": I.decision_prompt(task, hist, insp, 12, s["step"])})
+                # LOAD-BEARING: one decision per episode, always the FIRST
+                # `hypothesize`. The Python probe figure in
+                # docs/efficient-thinking-8.md (head 56.0% on its own post-inspect
+                # states) is measured on states from this function.
+                #
+                # FIDELITY IS CONDITIONAL AND THE CONDITION IS NOT CHECKED HERE: the
+                # history rebuilt above accumulates `inspect` entries only, while the
+                # live state in et8_agent can also carry a verifier-result line, two
+                # patch nudges, and a "You already suspect ..." line. So the rebuild
+                # equals what the agent read ONLY IF no patch or noop_patch preceded
+                # this step. et8_inject.decision_prompt's docstring says it "mirrors
+                # et8_agent.run_episode's state construction" -- that is the
+                # requirement, and the condition above is what it depends on.
+                # Extending this loop past the first decision also loses the prompt
+                # outright, because a patch's source text is never logged.
                 break
             if s["action"] == "inspect" and s["region"]:
                 insp[s["region"]] = A.region_source(task["program"], s["region"]) or ""
