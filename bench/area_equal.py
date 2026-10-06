@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """The canonical form of an `area`, and equality on it. ONE property, reused.
 
-THE RULE IS 案内'S, NOT MINE (doc 239, 12438), and it is transcribed here rather than re-derived:
+THE RULE IS 案内'S, NOT MINE (doc 239), and it is transcribed here rather than re-derived:
 
     sort + subsumption-reduce `tags` — **a tag and its already-present ancestor collapse to the
     ancestor; siblings never reduce** — single-value `commit`, closed-enum `intent`. Two statements

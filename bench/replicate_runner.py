@@ -2,7 +2,7 @@
 """The N-replicate runner for the area classifier. Pre-registered: docs/area-classifier-prereg.md
 
 Deliberately SHAPE-INDEPENDENT. The one thing not yet decided is what an `area` IS — a typed object
-or a statement in the search DSL (理, my 12378) — and the disagreement comparison depends on
+or a statement in the search DSL (理, and mine) — and the disagreement comparison depends on
 that answer. So the comparator is INJECTED, not assumed, and this file never parses an area.
 
 形's discipline, applied here: build the part whose shape is known, wait for the rest. What is

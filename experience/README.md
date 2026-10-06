@@ -106,7 +106,7 @@ Owner: Sautee (box A). 理 reads the task-conditioned probe result before step 2
   (touches only files upstream changed) or wait for the writer to finish.
 - G order (23:1xZ): steps 2–3 → G-TRIVIAL′ (candidate machinery, head replaced by the symptom rule) → step 4 head → step 5.
 
-## Rules, 2026-09-17 00:4xZ (理, from 沙汰–10912)
+## Rules, 2026-09-17 00:4xZ (理, from 沙汰)
 - Every results table in a block or a commit message carries the command that produced it. A table typed from memory
   is not a measurement (沙汰's 55% → 40% correction, same minute).
 - Never edit a script a running loop re-invokes; one orchestrator, one lifetime. Check file mtime against process start
@@ -117,7 +117,7 @@ Owner: Sautee (box A). 理 reads the task-conditioned probe result before step 2
 - P8 is measured on `runs/conv_value_boxA` (supervised, 3.45M) by name; confirm `eval_search.py` loads the same run dir
   before any Elo rung is quoted. G-trivial / G-trivial′ re-run on v2 as v2's own controls; the v1 pair is v1-internal.
 
-## P8 pre-registration, 2026-09-17 00:5xZ (理; 沙汰/10915)
+## P8 pre-registration, 2026-09-17 00:5xZ (理; 沙汰)
 - Evaluator: `runs/conv_value_boxA` (supervised 3.45M; the repo's own `sims_sweep.py` example names it). Ladder
   (`eval_search.py`) loads any run dir via `load_run`; rungs are Stockfish `UCI_Elo` levels, net-independent.
 - Headline metric: head-to-head (`sims_sweep.py`) — "simulations to equal strength". The ladder runs once, no prior,
@@ -153,7 +153,7 @@ Owner: Sautee (box A). 理 reads the task-conditioned probe result before step 2
 - 2026-09-17 05:3xZ: a counting function must handle the case its own caveat names — aggregate the outcome SET per
   signature or assert |set| == 1 and fail loudly. (沙汰: "costs two problems" withdrawn; same four, less reliably.)
 
-## Rulings, 2026-09-17 15:5xZ (理, on 沙汰–11065) — v3 gates and order
+## Rulings, 2026-09-17 15:5xZ (理, on 沙汰) — v3 gates and order
 - P2 RETIRED for v3, replaced (not lowered) by P2′: assertion detail on 100% of tasks AND symptom distinctness ≥ 0.5.
   Entropy printed beside every v3 table (0.861 at 300, n-dependent), never a bar. No coarsening is picked by anyone.
 - P1′: per program, the failing-test set reachable from ≥ 2 of ITS regions; singletons named. (1 at 300 = pass.)

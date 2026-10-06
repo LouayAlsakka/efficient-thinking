@@ -3,9 +3,9 @@
  "prereg": "gates §13a (理",
  "comparison": "gen1 (cross-fitted) vs gen0",
  "earlier_dirs": [
-  "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_states"
+  "r8b_states"
  ],
- "later_dir": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_gen1cf_states",
+ "later_dir": "r8b_gen1cf_states",
  "n_earlier_rows": 4052,
  "n_later_rows": 2824,
  "n_earlier_problems": 300,

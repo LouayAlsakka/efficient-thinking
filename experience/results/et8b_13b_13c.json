@@ -713,7 +713,7 @@
    "train_rows": 1447,
    "source_has_decision_field": true,
    "layer": 18,
-   "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/g1pp_dec",
+   "source_states": "g1pp_dec",
    "head": {
     "cv_pick_pct": 53.4,
     "n": 290,
@@ -747,7 +747,7 @@
    "train_rows": 1437,
    "source_has_decision_field": true,
    "layer": 18,
-   "source_states": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/g13c_matched_states",
+   "source_states": "g13c_matched_states",
    "head": {
     "cv_pick_pct": 26.7,
     "n": 693,
@@ -776,9 +776,9 @@
   "prereg": "gates §13a (理)",
   "comparison": "13c disjoint-draw rows vs gen0",
   "earlier_dirs": [
-   "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/r8b_states"
+   "r8b_states"
   ],
-  "later_dir": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/g13c_matched_states",
+  "later_dir": "g13c_matched_states",
   "n_earlier_rows": 4052,
   "n_later_rows": 1437,
   "n_earlier_problems": 300,

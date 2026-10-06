@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""ET-8b §13b — the scorer. READINGS FIXED BY 理 BEFORE ANY ARM RAN (12417, form ruled 12436).
+"""ET-8b §13b — the scorer. READINGS FIXED BY 理 BEFORE ANY ARM RAN; the form was ruled separately.
 
     g1  − g0           the confirmatory replication, scored under §14
     g1' − g1-matched   INDEPENDENCE AT EQUAL ROWS — the §13b question. Prediction, registered:

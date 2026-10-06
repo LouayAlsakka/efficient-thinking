@@ -1,6 +1,6 @@
 // POSITION, not DOM order. My 12304 verification read the body TEXT ORDER and concluded the bar had
 // moved to the bottom. Text order is DOM order; a flex layout can put a DOM-last element anywhere,
-// and 形's 12340 says that is exactly what happened — render order changed, position did not.
+// and 形's own finding says that is exactly what happened — render order changed, position did not.
 // This measures where things actually ARE.
 import { chromium } from 'playwright';
 const b = await chromium.launch();

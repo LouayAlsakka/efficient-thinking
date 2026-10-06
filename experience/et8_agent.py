@@ -373,7 +373,7 @@ def main():
                          "A one-line rule learned from the agent's own history and the control G "
                          "must beat — it needs no model, no head and no activations.")
     ap.add_argument("--candidate-select", default="", choices=["", "symptom"],
-                    help="G-TRIVIAL-PRIME (理, candidate set structural per 10909): build one "
+                    help="G-TRIVIAL-PRIME (理's ruling, candidate set structural): build one "
                          "candidate per visible region by teacher-forcing the opening fields, then "
                          "pick the candidate whose region is the symptom region. Separates WHERE "
                          "from HOW: unlike --trivial-symptom the hypothesis TEXT is still the "

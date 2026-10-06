@@ -1703,6 +1703,6 @@
   "rounds": 0,
   "episodes": 189,
   "moves": 16906,
-  "source": "/private/tmp/claude-501/-Users-lab-claude-agents-Sautee/fc31e304-98e1-4753-b784-c8378097baaa/scratchpad/chess_traj"
+  "source": "chess_traj"
  }
 }

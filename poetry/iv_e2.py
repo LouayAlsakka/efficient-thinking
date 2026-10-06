@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ET-IV E2 — blind A/B rating of one pair per brief, by the frontier judge.
 
-理's run order (11688): E2 -> 7d -> E5 -> E3 -> the 25% re-rate. This is E2.
+理's run order: E2 -> 7d -> E5 -> E3 -> the 25% re-rate. This is E2.
 
 WHAT IS REUSED AND WHAT IS NEW. The candidates come from poetry_gen.py's cache and are scored by
 e1_score.score_sample -- the committed checkers, not a reimplementation of them. Pareto pruning,
