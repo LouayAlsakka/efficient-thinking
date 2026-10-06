@@ -33,7 +33,7 @@ RULES = [
     ("id-next-to-a-name",
      # OUR glyphs, not any CJK: "唐寅, 1470" is a poet's birth year and flagging it teaches
      # the reader to ignore this rule, which is the only way a routing check really fails.
-     r'(?:[理令匠形案内女将庭鉳目付鎖巳紗鍵雲鉄文沙汰]{1,2}|\b(?:ri|rei|takumi|katachi|annai|okami|niwa|kanna|metsuke|kusari|'
+     r'(?:[理令匠形案内女将庭鉋目付鎖巳紗鍵雲鉄文沙汰]{1,2}|\b(?:ri|rei|takumi|katachi|annai|okami|niwa|kanna|metsuke|kusari|'
      r'misa|kagi|kumo|tetsu|fumi|sautee)\b)[^\n]{0,40}?\b(?!19\d\d|20\d\d)\d{4,5}\b',
      "a 4-5 digit number beside a name reads as an internal decision id"),
     # ✏️ 2026-10-06 (理 15458, 沙汰): the separator class was `[\s,(]*` -- adjacency only.
