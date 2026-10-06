@@ -115,7 +115,7 @@ def _selftest():
 
     m = FreeMeter(None)
     a = AreaV0(tax, model="local-test", transport=fake, meter=m)
-    r = a.classify("what time do you close", "quick-cuts.chelsea")
+    r = a.classify("what time do you close", "fixture-v0")
     assert r.error == "", r.error
     assert r.area["intent"] == "hours", r.area
     assert r.area["tags"] == ["info.hours"], r.area          # 1: the venue's tag is kept
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--model", default=DEFAULT_LOCAL_MODEL)
-    ap.add_argument("--venue", default="quick-cuts.chelsea")
+    ap.add_argument("--venue", default="fixture-v0")
     ap.add_argument("--ledger", default="")
     ap.add_argument("utterance", nargs="*")
     a = ap.parse_args()

@@ -193,18 +193,18 @@ def _selftest():
     def fake(reply):
         return lambda req, **kw: AR.bedrock_transport(req, client=AR.FakeBedrock([reply]))
     a = AreaV0(tax, transport=fake('{"intent":"book","tags":["svc.hair.cut"],"commit":true}'),
-               ledger="/tmp/_a1.json").classify("book me a haircut", "quick-cuts.chelsea")
+               ledger="/tmp/_a1.json").classify("book me a haircut", "fixture-v0")
     assert a.area["intent"] == "book" and a.area["tags"] == ["svc.hair.cut"] and a.area["commit"]
     print("  [1] commit parsed: %s" % a.area)
     b = AreaV0(tax, transport=fake('{"intent":"ask","tags":["svc.laser","svc.hair.cut"],"commit":false}'),
-               ledger="/tmp/_a2.json").classify("do you do laser?", "quick-cuts.chelsea")
+               ledger="/tmp/_a2.json").classify("do you do laser?", "fixture-v0")
     assert b.area["tags"] == ["svc.hair.cut"] and b.unresolved == ["svc.laser"]
     print("  [2] tag the venue lacks DROPPED and counted: unresolved=%s" % b.unresolved)
     c = AreaV0(tax, transport=fake('{"intent":"teleport","tags":[],"commit":true}'),
-               ledger="/tmp/_a3.json").classify("beam me up", "quick-cuts.chelsea")
+               ledger="/tmp/_a3.json").classify("beam me up", "fixture-v0")
     assert not c.area and c.error
     print("  [3] intent outside the enum -> no area, caller leaves it UNCHANGED: %r" % c.error[:44])
-    d = AreaV0(tax, transport=fake("sorry, I can't"), ledger="/tmp/_a4.json").classify("hi", "quick-cuts.chelsea")
+    d = AreaV0(tax, transport=fake("sorry, I can't"), ledger="/tmp/_a4.json").classify("hi", "fixture-v0")
     assert not d.area and d.error
     print("  [4] unparseable -> error, never a silent empty area")
     try:
@@ -213,7 +213,7 @@ def _selftest():
     except KeyError as e:
         print("  [5] unknown venue refused: %s" % str(e)[:56])
     e = AreaV0(tax, transport=fake('{"intent":"hours","tags":["info.hours"],"commit":false}'),
-               ledger="/tmp/_a6.json").classify("when do you open", "fresh-fold-laundry.lower-east-side")
+               ledger="/tmp/_a6.json").classify("when do you open", "fixture-v1")
     assert e.area["tags"] == ["info.hours"]
     print("  [6] second venue, its own tag set: %s" % e.area)
     for i in range(1, 7):
@@ -226,7 +226,7 @@ def _selftest():
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
-    ap.add_argument("--utterance"); ap.add_argument("--venue", default="quick-cuts.chelsea")
+    ap.add_argument("--utterance"); ap.add_argument("--venue", default="fixture-v0")
     a = ap.parse_args()
     if a.selftest:
         _selftest()

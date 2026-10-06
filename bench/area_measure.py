@@ -357,8 +357,8 @@ def _selftest():
 
     stable = '{"intent":"hours","tags":["info.hours"],"commit":false}'
     wobble = '{"intent":"ask","tags":[],"commit":false}'
-    rows = [{"utterance": "what time do you close", "venue": "quick-cuts.chelsea", "kind": "plain ask"},
-            {"utterance": "can you resole my shoes", "venue": "quick-cuts.chelsea",
+    rows = [{"utterance": "what time do you close", "venue": "fixture-v0", "kind": "plain ask"},
+            {"utterance": "can you resole my shoes", "venue": "fixture-v0",
              "kind": "off-menu", "off_menu": True}]
 
     A = AreaV0(tax, model="canned-stable", transport=canned([stable]), meter=FreeMeter(None))

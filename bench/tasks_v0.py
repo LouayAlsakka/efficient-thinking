@@ -7,7 +7,7 @@ md5 rather than by eye — and computes each task's optimal action sequence in W
 
 TWO THINGS THIS FILE EXISTS TO SAY OUT LOUD, BOTH BEFORE ANY RUN:
 
-1. **The optimal tap count is CONSTANT on this world.** quick-cuts.chelsea sells ONE offer, so the
+1. **The optimal tap count is CONSTANT on this world.** fixture-v0 sells ONE offer, so the
    path is offer -> staff -> day -> slot -> identity -> submit for every target that exists. Taps to
    goal therefore has ZERO variance across tasks for a correct arm: it can only go UP (a wrong
    guess) and, for PREDICTED, down by collapsing a step. The WO's headline measure cannot separate
@@ -167,7 +167,7 @@ def main():
 
     taps = sorted({t["optimal_taps"] for t in tasks})
     out = {
-        "document": "WO-312 — scripted task list v0, quick-cuts.chelsea",
+        "document": "WO-312 — scripted task list v0, fixture-v0",
         "prereg": "docs/wo312-measurement-prereg.md",
         "space_file": os.path.basename(a.space), "space_md5": hashlib.md5(raw).hexdigest(),
         "reference_date": a.frm, "reference_date_is_today": a.frm == str(datetime.date.today()), "open_days_offered": a.open_days, "seed": a.seed,

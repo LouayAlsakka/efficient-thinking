@@ -28,22 +28,7 @@
   "info.staff": "info"
  },
  "venues": {
-  "quick-cuts.chelsea": {
-   "offer_tags": {
-    "haircut": [
-     "svc.hair.cut"
-    ]
-   },
-   "tags": [
-    "svc.hair.cut",
-    "info.hours",
-    "info.location",
-    "info.contact",
-    "info.price",
-    "info.staff"
-   ]
-  },
-  "fresh-fold-laundry.lower-east-side": {
+  "fixture-v1": {
    "offer_tags": {
     "wash-and-fold": [
      "svc.laundry.washfold"
@@ -63,6 +48,21 @@
     "info.location",
     "info.contact",
     "info.price"
+   ]
+  },
+  "fixture-v0": {
+   "offer_tags": {
+    "haircut": [
+     "svc.hair.cut"
+    ]
+   },
+   "tags": [
+    "svc.hair.cut",
+    "info.hours",
+    "info.location",
+    "info.contact",
+    "info.price",
+    "info.staff"
    ]
   }
  }

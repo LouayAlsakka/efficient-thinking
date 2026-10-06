@@ -213,7 +213,7 @@ class PredictorV0:
 # 形 (the record) — not a shape I invented. The first version of this file tested against
 # {"screen": "salon", "service": None, ...}, which no renderer ever produces.
 REAL_STATE = {
-    "space": "quick-cuts.chelsea", "audience": "customer", "tab": "overview", "view": None,
+    "space": "fixture-v0", "audience": "customer", "tab": "overview", "view": None,
     "selection": {"offer_ids": [], "staff": None, "day": None, "slot": None,
                   "thread": None, "cell": None},
     "filters": {}, "form": {}, "sheet": "none", "highlight": None,
@@ -222,9 +222,9 @@ REAL_STATE = {
 }
 
 # niwa's compiled fixture, reduced to the keys world_from_space reads (source of truth:
-# an internal report path wo312-bench-fixture-2026-09-22/quick-cuts-barbershop_space.json).
+# the compiled fixture-v0 space file, 2026-09-22).
 REAL_SPACE = {
-    "space": {"handle": "quick-cuts.chelsea", "name": "Quick Cuts Barbershop",
+    "space": {"handle": "fixture-v0", "name": "Quick Cuts Barbershop",
               "hours": {"tue": "09:00-18:00", "wed": "09:00-18:00", "thu": "09:00-18:00",
                         "fri": "09:00-18:00", "sat": "09:00-18:00", "sun": "09:00-18:00"}},
     "offer_sheet": [{"name": "Haircut", "offer_id": "haircut", "kind": "service",

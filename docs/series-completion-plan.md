@@ -207,7 +207,7 @@ Readings, fixed now: R1 S-cov beats S-read by more than the bar → coverage; R2
 
 ## What the head loses — the four-cell paired tables, 2026-10-05
 
-The method never changes a parameter, so every suite the vanilla model passes it still passes. The method's own risk is that the head steers search away from a place the vanilla model would have reached. That is measured here, problem by problem, as the comparator-only cell of a paired table on the same problems. **Finding:** the regression cell ranges from 2.2% (VIII-f, head vs base: 20 of 900) to 12.2% (VIII-e, verifier head vs base: 110 of 900) and does not track the headline gain — the largest net (+22.1) carries the smallest regression, and a smaller net (+9.4) the largest. Prompt retrieval in VIII-e, reported as a null, is in this view a net negative over real churn: it gains 43 and loses 53. Three arms this column cannot cover: VIII-h and VIII-d arm 1 have no base arm (their tables are head-vs-head and head-vs-anchor; a base from another session is never borrowed, because its games ran on another box in the same window and that is a box confound); VIII-i is not yet scored. Every published mean is reproduced from the episode files below, which is the check that the derivation is sound. From this date the four-cell table is published beside every arm's headline.
+The method never changes a parameter, so every suite the vanilla model passes it still passes. The method's own risk is that the head steers search away from a place the vanilla model would have reached. That is measured here, problem by problem, as the comparator-only cell of a paired table on the same problems. **Finding:** the regression cell ranges from 1.2% of problems (VIII-i, 11 of 900) to 12.2% (VIII-e verifier head, 110 of 900) — and against the stricter denominator, the problems the comparator itself solved, from 11.7% (11 of 94) to 59.8% (110 of 184). Both are published; the second prices the behaviour. The cell does not track the headline gain — the largest net (+22.1) carries the smallest regression, and a smaller net (+9.4) the largest. Prompt retrieval in VIII-e, reported as a null, is in this view a net negative over real churn: it gains 43 and loses 53. Three arms this column cannot cover: VIII-h and VIII-d arm 1 have no base arm (their tables are head-vs-head and head-vs-anchor; a base from another session is never borrowed, because its games ran on another box in the same window and that is a box confound); VIII-i is not yet scored. Every published mean is reproduced from the episode files below, which is the check that the derivation is sound. From this date the four-cell table is published beside every arm's headline.
 
 From the author's standing requirement: *"exploring the risks of missing something the
 vanilla model without experience would get; make it clear and transparent."*
@@ -391,24 +391,33 @@ decomposition is therefore a re-reading of the results of record, not a new meas
 ## 🔴 WHAT THIS SHOWS, and it is the answer to Louay's question
 
 The regression cell is **not small and not constant**. Across the eleven pairings, the
-comparator-only count ranges from **20 of 900 (2.2%)** to **110 of 900 (12.2%)**:
+comparator-only count ranges from **1.2% of the task set (VIII-i, 11 of 900)** to **12.2%
+(VIII-e verifier head, 110 of 900)** — and against the stricter denominator, the problems the
+comparator itself solved, from **11.7% (11 of 94)** to **59.8% (110 of 184)**. Both are
+published; the second prices the behaviour.
 
 ```
-  VIII-f  head vs base              base only   20 / 900   2.2%   net +22.11
-  VIII-e  anchor head vs base       base only   44 / 900   4.9%   net +13.00
-  VIII-e  agent-pick head vs base   base only   38 / 900   4.2%   net  +6.11
-  VIII-e  verifier head vs base     base only  110 / 900  12.2%   net  +9.44
-  VIII-e  retrieval vs base         base only   53 / 900   5.9%   net  -1.11
+  arm                               comparator only   / task set   / what the comparator SOLVED   net
+  VIII-i  F1 head vs base (4-bit)         11            1.2%          11.7%  ( 11 of  94)      +26.89
+  VIII-i  F2 head vs retrieval             7            0.8%           9.1%  (  7 of  77)      +28.78
+  VIII-f  head vs base                    20            2.2%          14.3%  ( 20 of 140)      +22.11
+  VIII-f  head vs retrieval               23            2.6%          16.0%  ( 23 of 144)
+  VIII-f  retrieval vs base               21            2.3%          15.0%  ( 21 of 140)
+  VIII-e  anchor head vs base             44            4.9%          23.9%  ( 44 of 184)      +13.00
+  VIII-e  agent-pick head vs base         38            4.2%          20.7%  ( 38 of 184)       +6.11
+  VIII-e  retrieval vs base               53            5.9%          28.8%  ( 53 of 184)       -1.11
+  VIII-e  verifier head vs base          110           12.2%          59.8%  (110 of 184)       +9.44
 ```
+(VIII-d arm 1's rows are against an in-session anchor, not a base, so they are not in this range.)
 
 ⚖️ **VIII-e's verifier head gains 195 problems and loses 110.** Its published +9.4 is a net
 over very large churn in both directions, and the headline cannot show that. ⛔ **So Louay's
-worry is real and measurable: in that arm the head breaks one in eight of the problems the
-vanilla model already solved.**
+worry is real and measurable: in that arm the head breaks one in eight of the task set — and
+six in ten of the problems the vanilla model itself solved (110 of 184).**
 
 📌 **And the regression does not track the gain.** VIII-f's head has the LARGEST net (+22.1)
-and the SMALLEST regression (2.2%); VIII-e's verifier head has a smaller net (+9.4) and the
-largest regression (12.2%). A bigger headline is not a safer head.
+and a small regression (2.2% of the task set, 14.3% of base's own solutions); VIII-e's verifier head
+has a smaller net (+9.4) and the largest regression (12.2% of the task set, 59.8% of base's own). A bigger headline is not a safer head.
 
 ⚖️ **Retrieval is sharper in this view than "a null" conveys:** in VIII-e it gains 43 and
 loses 53 — the null is a net negative over real churn, not an absence of effect. In VIII-f it
