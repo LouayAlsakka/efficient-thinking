@@ -30,7 +30,30 @@ import et8_agent as A
 import et8_env as E
 
 def decision_prompt(task: dict, history: list[str], inspected: dict[str, str], budget: int, step: int) -> list[dict]:
-    """Rebuild the exact chat the agent saw at a decision step (mirrors et8_agent.run_episode's state construction)."""
+    """Rebuild the chat the agent saw at a decision step. COMPARED, NOT ASSERTED.
+
+    This MIRRORS et8_agent.run_episode's state construction only in part, and the gap is named
+    rather than implied. The agent can emit four blocks this function does not build at all:
+
+        "Last verifier result: ..."                  (when a prior patch left failures)
+        the noop-patch nudge                         (last action was an identical patch)
+        the failed-patch nudge                       (last patch did not fix it)
+        "You already suspect {r}. Do not repeat ..."  (a prior hypothesize in history)
+
+    So the rebuild equals what the agent read IF AND ONLY IF nothing but `inspect` actions
+    preceded this step: the three patch-dependent blocks need a prior patch, and the fourth
+    needs a prior hypothesize, which every caller excludes by breaking at the first one.
+
+    NO TEST CAN FALSIFY THE EQUIVALENCE, because no loop or agent calls this function -- its
+    only callers are extractors. There is no execution in which this and the agent's own
+    construction both run, so the comparison above is the whole of the evidence, and the
+    condition is what a reader should check against their own collection.
+
+    The per-collection RATE of that condition is unmeasured here: it needs a run whose loop
+    logged its own prompt hash, and no run of this generation did. experience/prompt_fidelity.py
+    measures exactly this question on the generation that does log one -- where the first
+    decision of each episode came back byte-exact and the later ones did not.
+    """
     state = f"SYMPTOM: {task['symptom']}\nRegions: {', '.join(task['regions'])}\n"
     if inspected:
         state += f"Already inspected (do not inspect again): {', '.join(inspected)}\n"
