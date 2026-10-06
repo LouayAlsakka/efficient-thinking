@@ -480,7 +480,7 @@ def main():
         print("    the gold set's OWN unresolved share: %.1f%% (%d/%d) — the floor this rate is\n"
               "    read against, not zero" % (100.0 * len(exp_un) / len(rows), len(exp_un), len(rows)))
     if a.taxonomy_parents:
-        # 理 13178 §2: walk-up = the classifier answered COARSER — every tag it returned is a
+        # ruled 2026-09: walk-up = the classifier answered COARSER — every tag it returned is a
         # proper ancestor of something the gold wanted. Computed from the registry's own `parent`
         # chain, not from a dotted-string prefix: `svc.face.eyes` is not an ancestor of
         # `svc.face.eyebrows` even though the strings share two segments, and a prefix test would

@@ -457,7 +457,7 @@ the table itself.
 Every cell comes from the arms' own `episodes.jsonl`. VIII-f's are read from the durable
 archive; VIII-d arm 1's and VIII-e's from their runs on the studio box — **which existed on
 ONE box until tonight and are now rescue-archived and manifest-verified**
-(`reports/sautee/et-unbacked-rescue-2026-10-05/`). ⛔ **The rescue came first, deliberately:
+(the rescue record, kept internally). ⛔ **The rescue came first, deliberately:
 deriving a published number from an unbacked artefact is how the next re-run gets created.**
 
 Regenerate with `./build_tables.sh`. No number in this file is typed by hand.

@@ -279,7 +279,7 @@ from the numbers; verification command and its expected output stated with every
 The estate's coordination layer already produces the raw material of §3 every night — thousands of claim records with
 provenance, the WO pile of doctrine lines, per-lane memory notes — and the 2026-09-05 shift produced textbook instances
 of both lists (what worked: qualified fetch, single-file pushes, alternates; what didn't: shallow clones, partial clone
-on lm, bare fetches) and of the failure P6 guards against (a withdrawn instruction held by every lane). Once §2's
+on the git host, bare fetches) and of the failure P6 guards against (a withdrawn instruction held by every lane). Once §2's
 synthetic environment has settled the mechanism, the estate's real trajectories are the second environment, and the
 two-list nightly compile is the consolidation schedule. Not before: the synthetic environment exists to remove
 confounds the estate cannot.

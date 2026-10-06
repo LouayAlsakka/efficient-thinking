@@ -962,7 +962,7 @@ same sign, indistinguishable from within-arm variation.
 One reading the matched budget cannot separate: the union was cut to 290 whole groups, drawn B 158 / forced 132,
 so at matched budget it is forced WITH HALF REPLACED BY B, not forced plus B. Two readings fit: (a) the 158 B groups
 are dead weight; (b) the forced arm saturates — 132 forced groups already buy what 290 do — in which case the union
-says nothing about B either way. DISCRIMINATOR, registered and running (llm2, ~2.9 h): a head on the union's own 132
+says nothing about B either way. DISCRIMINATOR, registered and running (studio box, ~2.9 h): a head on the union's own 132
 forced groups alone (not a fresh draw, to avoid confounding "B added nothing" with "a different forced set"); CV
 45.5% (n=132), permutations at chance. Readings fixed: forced@132 ≈ forced@290 (41.2) → saturation, the union
 cannot speak about B; forced@132 ≈ union (38.6) → the B groups neither add nor subtract; forced@132 ≈ B (35.4) →

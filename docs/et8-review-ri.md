@@ -93,7 +93,7 @@ the estate already compiles it by hand every night (WO pile, doctrine lines, per
 2. **Every dead path carries its own unlock condition.** "Didn't work" means "didn't work under these conditions", and
    conditions change (§10.4 temporal drift). The exit from the prison is not general permission to disobey, which nobody
    exercises, but a specific predicate per lesson: what would have to be true to retry. "Partial clone is dead" is a
-   prison; "partial clone is dead until `uploadpack.allowFilter` is set on lm" is a guideline with a door. Symmetrically,
+   prison; "partial clone is dead until `uploadpack.allowFilter` is set on the git host" is a guideline with a door. Symmetrically,
    a *works* carries the alternatives it beat, so a new alternative reopens the comparison automatically.
 3. **A prior should predict, and be re-tested on a miss.** "This path costs X" / "this branch fails" — when the
    observation diverges from the prediction, that lesson is re-opened. Cheaper and more targeted than a fixed exploration
