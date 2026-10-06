@@ -975,7 +975,7 @@ within-day stability (66/67/65), a within-day fact carrying a between-day claim.
 no invocation of its own; the forced-inspection states' source set was established from the data (candidate
 region names ⊆ the task's own regions: 300/300 against seed 73, 15/300 against seed 89) rather than from memory;
 the loop gains a `<out>.config.json` (resolved args, task-set sha, head sha, script sha) after the running chain is
-off the file. Lock v2 `1d22c99` (v1 untouched); results reader: 匠.
+off the file. Lock v2 `1d22c99` (v1 untouched); results reader: the review lane.
 
 **16c (iii), 2026-09-26 22:4xZ — the degeneracy alternative for arm 3 tested and refuted (descriptive; registers
 nothing; discriminator excluded until its three games are on disk).** Per-decision behaviour of each head over
