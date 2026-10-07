@@ -3,4 +3,4 @@
 set -e
 cd "$(dirname "$0")/.."
 sha=$(git rev-parse --short HEAD); d=$(date -u +%Y-%m-%d\ %H:%MZ)
-perl -0pi -e "s|Site build <code>[^<]*</code>|Site build <code>after $sha · $d</code>|" docs/index.html docs/discovery-chain.html
+perl -0pi -e "s|Site build <code>[^<]*</code>|Site build <code>after $sha · $d</code>|" docs/index.html docs/discovery-chain.html docs/series-deck.html
