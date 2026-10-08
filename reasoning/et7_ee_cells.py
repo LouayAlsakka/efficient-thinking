@@ -30,7 +30,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--answers", default=os.path.join(HERE, "arena_answers_v2.json"))
     ap.add_argument("--out", default=os.path.join(HERE, "et7_ee_cells.json"))
+    # E-D's intransitivity half needs the pairs this builder excludes: a 3-cycle spans three
+    # policies, and the decisive filter removes the closing edge -- MEASURED, zero closed
+    # triangles exist across all 205 problems of the decisive corpus. REQUIRED with no
+    # default, because which population is built is a registered choice.
+    ap.add_argument("--keep", choices=("decisive", "all"), required=True,
+                    help="REQUIRED, no default: 'decisive' is E-E stage 1 as registered -- "
+                         "exactly one side right. 'all' keeps the both-right and both-wrong "
+                         "pairs too, for E-D's round-robin. Writing 'all' to the decisive "
+                         "corpus's own path is refused.")
     a = ap.parse_args()
+    if a.keep == "all" and os.path.abspath(a.out) == os.path.join(HERE, "et7_ee_cells.json"):
+        raise SystemExit("refusing to write the round-robin over et7_ee_cells.json: that file "
+                         "is the provenance of every E-E reading. Name a new --out.")
     d = json.load(open(a.answers))
     qs, ans = d["questions"], d["answers"]
     models = sorted(ans)
@@ -57,7 +69,17 @@ def main():
             if vx is None or vy is None:
                 tally["excluded_unreadable"] += 1; continue
             if vx == vy:
-                tally["excluded_both_right" if vx else "excluded_both_wrong"] += 1; continue
+                tally["excluded_both_right" if vx else "excluded_both_wrong"] += 1
+                if a.keep != "all":
+                    continue
+                # kept only for --keep all, and MARKED so no downstream reading can mistake a
+                # both-right or both-wrong pair for a decisive one
+                cells.append({"problem_index": i, "problem": q["problem"], "gold": gold,
+                              "level": q.get("level"), "model_A": x, "model_B": y,
+                              "answer_A": tx, "answer_B": ty,
+                              "decisive": False,
+                              "both": "right" if vx else "wrong"})
+                continue
             tally["DECISIVE"] += 1
             cells.append({"problem_index": i, "problem": q["problem"], "gold": gold,
                           "level": q.get("level"), "model_A": x, "model_B": y,
@@ -77,13 +99,26 @@ def main():
     print("\n  DECISIVE CELLS: %d, over %d distinct problems" % (len(cells), probs))
     print("  (held out BY PROBLEM, per the prereg — so the usable split is %d problems, not %d pairs)"
           % (probs, len(cells)))
-    json.dump({"document": "ET-VII E-E stage 1 — decisive pairs",
-               "prereg": "docs/et7-ee-prereg.md §1",
-               "source": os.path.basename(a.answers),
-               "census": dict(tally), "per_policy_correct": dict(per_model_correct),
-               "unreadable_per_policy": dict(unreadable),
-               "decisive_cells": len(cells), "distinct_problems": probs,
-               "cells": cells}, open(a.out, "w"), indent=1, ensure_ascii=False)
+    # ⚖️ --keep decisive must reproduce the existing file BYTE-IDENTICALLY, so NOTHING
+    # new may appear in that mode: the extra keys exist only for --keep all.
+    rec = {"document": "ET-VII E-E stage 1 — decisive pairs",
+           "prereg": "docs/et7-ee-prereg.md §1",
+           "source": os.path.basename(a.answers),
+           "census": dict(tally), "per_policy_correct": dict(per_model_correct),
+           "unreadable_per_policy": dict(unreadable),
+           "decisive_cells": len(cells), "distinct_problems": probs,
+           "cells": cells}
+    if a.keep == "all":
+        n_dec = tally["DECISIVE"]
+        rec["document"] = ("ET-VII E-D — the ROUND-ROBIN corpus: every pair, decisive and not. "
+                           "A decisive-only reading must filter on cells[].decisive")
+        rec["keep"] = "all"
+        rec["decisive_cells"] = n_dec
+        rec["non_decisive_cells"] = len(cells) - n_dec
+        rec["why"] = ("E-D's intransitivity clause is unmeasurable on the decisive corpus: "
+                      "zero closed triangles exist in it, because the filter removes the "
+                      "edge a triangle needs. These pairs restore it.")
+    json.dump(rec, open(a.out, "w"), indent=1, ensure_ascii=False)
     print("  wrote %s" % a.out)
 
 
