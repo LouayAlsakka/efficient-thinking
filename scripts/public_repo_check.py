@@ -350,17 +350,34 @@ def self_test():
         ck("3. quiet: %s" % why, fires("id-next-to-a-name", line), False)
 
     print(u"\n=== every other rule has a firing fixture and a quiet one ===")
-    # Each row is (rule, a line that MUST fire, a line that must not). These eight lines quote
-    # the shapes verbatim -- a fixture written in words tests nothing -- so they carry the
-    # marker, and the count printed with every result is how a reader sees that they do.
+    # Each row is (rule, a line that MUST fire, a line that must not). A fixture written in
+    # words tests nothing, so these lines carry the shapes and therefore the marker -- and the
+    # count printed with every result is how a reader watches them.
+    #
+    # \U0001f534 A second reader set the right test for them: each must be a DISTINCT shape
+    # that NAMES why it could never be a real reference, not eight lines leaning on one
+    # blanket marker. Applying that test found four REAL references in here -- a real
+    # work-order id, a real host, a real lane path, a real uid -- published behind my own
+    # marker within an hour of my writing that a blanket exemption hides what it was not for.
+    # They are now shapes that match the pattern and refer to nothing:
     other = [
-        ("host-shaped-token", "llm1", "mlx-lm"),  # shape-example
+        # a host rung that is no machine: the pattern is the host prefix plus a digit, and
+        # the digit used here names nothing on this estate
+        ("host-shaped-token", "llm7", "mlx-lm"),  # shape-example
+        # the digitless host. The rule LITERAL must contain these two letters to match them,
+        # so the name is in this file by necessity and the fixture adds no new disclosure
         ("host-shaped-token", "trained on lm", "html-lm-x"),  # shape-example
-        ("internal-path-fragment", "reports/sautee/et7/x.md", "reasoning/results/x.md"),  # shape-example
-        ("internal-path-fragment", "/private/tmp/claude-501/x", "/private/tmp/claude-x/y"),  # shape-example
+        # `reports/<word>/` with a word that is no lane
+        ("internal-path-fragment", "reports/zzz/x.md", "reasoning/results/x.md"),  # shape-example
+        # the scratchpad shape with uid zero, which is root and never an agent session
+        ("internal-path-fragment", "/private/tmp/claude-0/x", "/private/tmp/claude-x/y"),  # shape-example
+        # the product name, which the rule literal must also contain to match it
         ("product-or-repo-name", "the niraikanai tree", "nirvana apps"),  # shape-example
-        ("internal-wo-id", "WO-336 says", "WO-"),  # shape-example
+        # a work-order number of all zeroes, outside any range we have issued
+        ("internal-wo-id", "WO-0000 says", "WO-"),  # shape-example
+        # an invented slug in the venue shape
         ("fixture-slug", "venue-name.some-slug", "results.json"),  # shape-example
+        # a key PREFIX plus the word EXAMPLE: the shape without a key
         ("credential-shaped", "AKIAEXAMPLE1234567", "AKIA"),  # shape-example
     ]
     for rule, hot, cold in other:
