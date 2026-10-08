@@ -12,7 +12,7 @@ look smaller than it is for a reason that has nothing to do with the judge.
 Run before any GPU is committed, because the arm's n is a fact about the data and not about the
 plan: if there are too few decisive pairs the arm needs rethinking, not running.
 """
-import argparse, collections, itertools, json, os, sys
+import argparse, collections, itertools, json, os, random, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from reason_math_sweep import extract_boxed, normalize
@@ -109,6 +109,22 @@ def main():
            "decisive_cells": len(cells), "distinct_problems": probs,
            "cells": cells}
     if a.keep == "all":
+        # 🔴 THE PRESENTATION ORDER MUST BE A PROPERTY OF THE CELL, NOT OF ITS POSITION.
+        # et7_ee_probe.py draws one flip per cell from a single sequential Random(0) in
+        # FILE ORDER, so interleaving the excluded pairs with the decisive ones would give
+        # every later decisive cell a different presentation than E-E used -- its states
+        # would not be bitwise identical and its forced pick would be read under a different
+        # presentation. Recording the flip faithfully would not fix that; it would only
+        # record the wrong order. So the builder assigns it HERE, by cell:
+        #   decisive cells      replay Random(0) over them IN CANONICAL ORDER -> exactly the
+        #                       flips E-E used (verified: 1050 of 1050 against stored meta)
+        #   non-decisive cells  a SEPARATE registered stream, Random(101), over them in their
+        #                       own order -- so adding or removing them cannot disturb the
+        #                       decisive flips
+        # Only --keep all carries the field, so --keep decisive stays byte-identical.
+        r_dec, r_non = random.Random(0), random.Random(101)
+        for c in cells:
+            c["flipped"] = bool((r_non if c.get("decisive") is False else r_dec).random() < 0.5)
         n_dec = tally["DECISIVE"]
         rec["document"] = ("ET-VII E-D — the ROUND-ROBIN corpus: every pair, decisive and not. "
                            "A decisive-only reading must filter on cells[].decisive")

@@ -75,12 +75,48 @@ key = lambda c: (c["problem_index"], c["model_A"], c["model_B"])
 amap = {key(c): c for c in cells if c.get("decisive") is not False}
 missing = [k for k in (key(c) for c in canon) if k not in amap]
 ck("2g. every canonical decisive cell is present", len(missing), 0)
-differ = [key(c) for c in canon if key(c) in amap and amap[key(c)] != c]
-ck("2h. ...and identical in content, field for field", len(differ), 0)
+# ✏️ this asserted the cells were IDENTICAL. --keep all now adds `flipped` to every cell --
+# the presentation order, made a property of the cell so that interleaving cannot change it --
+# so a decisive cell is the canonical cell PLUS one registered key. Asserting identity would
+# have been wrong; asserting "agrees on every canonical field AND adds only the registered
+# key" is stricter than either, because a stray extra field now fails too.
+differ = [key(c) for c in canon
+          if key(c) in amap and any(amap[key(c)].get(k) != v for k, v in c.items())]
+ck("2h. ...agreeing on every canonical field", len(differ), 0)
+added = set()
+for c in canon:
+    added |= set(amap[key(c)]) - set(c)
+ck("2h2. ...and adding ONLY the registered presentation field", sorted(added), ["flipped"])
 ck("2i. every non-decisive cell is MARKED, so none can be mistaken for decisive",
    all(c.get("decisive") is False and c.get("both") in ("right", "wrong") for c in non), True)
 ck("2j. the canonical file itself carries no such marks (it is decisive-only)",
    any("decisive" in c for c in canon), False)
+
+print("\n=== CONTROL 2b — the presentation order is a property of the CELL (究 16481) ===")
+# 🔴 et7_ee_probe.py draws one flip per cell from a single sequential Random(0) in FILE
+# ORDER, so interleaving the excluded pairs would have given every later decisive cell a
+# different presentation than E-E used. These assert the builder's assignment instead.
+import random as _r
+_rd = _r.Random(0)
+_canon_flips = [_rd.random() < 0.5 for _ in canon]
+_amap = {key(c): c for c in cells if c.get("decisive") is not False}
+_eq = sum(1 for i, c in enumerate(canon)
+          if _amap[key(c)]["flipped"] == _canon_flips[i])
+ck("2k. every decisive cell's flip is EXACTLY the one E-E's sequential Random(0) gave it",
+   _eq, len(canon))
+ck("2l. every non-decisive cell carries a flip too",
+   sum(1 for c in cells if c.get("decisive") is False and "flipped" in c), len(non))
+# and the decisive flips must not depend on the excluded pairs being there at all
+rc2, _ = run("--keep", "all", "--out", os.path.join(d, "all2.json"))
+_c2 = json.load(open(os.path.join(d, "all2.json")))["cells"]
+_m2 = {key(c): c for c in _c2 if c.get("decisive") is not False}
+ck("2m. the assignment is deterministic across builds",
+   all(_m2[k]["flipped"] == v["flipped"] for k, v in _amap.items()), True)
+# ✏️ this compared two 1,050-element lists and printed BOTH on failure AND on success --
+# a control whose output no operator can read. It is a count now, and it duplicated 2k's
+# assertion anyway; what it adds is that the excluded pairs' PRESENCE changes nothing.
+ck("2n. the excluded pairs' presence disturbs no decisive flip",
+   sum(1 for i, c in enumerate(canon) if _amap[key(c)]["flipped"] != _canon_flips[i]), 0)
 
 print("\n=== CONTROL 3 — the refusals ===")
 rc, out = run("--out", os.path.join(d, "x.json"))
