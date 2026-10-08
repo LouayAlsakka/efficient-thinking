@@ -65,9 +65,16 @@ def main():
         cells = cells[:len(meta)]
     for i, c in enumerate([] if meta else cells):
         # ORDER RANDOMISED and the judge BLINDED — the existing harness's own presentation
-        flip = rng.random() < 0.5
+        # The presentation order is taken from the CELL when the builder assigned it, and
+        # drawn from this sequential stream only for cell files that predate the field. A
+        # flip drawn here depends on a cell's POSITION, so interleaving a larger population
+        # would silently re-present every later cell -- see et7_ee_cells.py --keep all.
+        flip = bool(c["flipped"]) if "flipped" in c else (rng.random() < 0.5)
         left, right = (c["answer_B"], c["answer_A"]) if flip else (c["answer_A"], c["answer_B"])
-        correct = ("B" if c["correct_side"] == "A" else "A") if flip else c["correct_side"]
+        # A both-right or both-wrong pair has NO correct side, and one may not be invented:
+        # it would become a probe target. Such cells carry states and a judge pick only.
+        cs = c.get("correct_side")
+        correct = None if cs is None else (("B" if cs == "A" else "A") if flip else cs)
         user = ("[Problem]\n%s\n\n[Assistant A]\n%s\n\n[Assistant B]\n%s\n\nWhich is correct? A, B, or TIE."
                 % (c["problem"], left, right))
         msgs = [{"role": "system", "content": SYS}, {"role": "user", "content": user}]
@@ -82,7 +89,7 @@ def main():
             strong_side = "B" if strong_side == "A" else "A"
         meta.append({"problem": c["problem_index"], "pair": pair_key(c), "correct": correct,
                      "judge_pick": pick, "strong_side": strong_side,
-                     "balanced": pair_key(c) in BAL})
+                     "balanced": pair_key(c) in BAL, "flipped": flip})
         if (i + 1) % 100 == 0:
             print("  %d/%d" % (i + 1, len(cells)), file=sys.stderr)
     if not isinstance(X, np.ndarray):
@@ -95,12 +102,20 @@ def main():
             print("  cached states -> %s" % a.states, file=sys.stderr)
     X = X.astype(np.float64)
 
-    probs = sorted({m["problem"] for m in meta})
+    # 🔴 THE PROBE IS FIT OVER THE LABELLED SUBPOPULATION ONLY -- its cells AND its
+    # problems. The problem shuffle below is seeded, so a larger problem set would reorder it
+    # and change the train/test split: the published probe would not reproduce. Restricting
+    # to labelled problems keeps the split identical when the cell file is a superset.
+    lab = np.array([m["correct"] is not None for m in meta])
+    probs = sorted({m["problem"] for m, k in zip(meta, lab) if k})
     rng2 = random.Random(7); rng2.shuffle(probs)
     cut = int(0.75 * len(probs)); train_p = set(probs[:cut])
-    tr = np.array([m["problem"] in train_p for m in meta])
+    tr = np.array([m["problem"] in train_p and m["correct"] is not None for m in meta])
     y_cor = np.array([1.0 if m["correct"] == "A" else 0.0 for m in meta])
     y_str = np.array([1.0 if m["strong_side"] == "A" else 0.0 for m in meta])
+    if not lab.all():
+        print("  %d of %d cells are unlabelled (both-right / both-wrong): states and judge "
+              "pick only, no probe target" % (int((~lab).sum()), len(meta)), file=sys.stderr)
 
     def fit_eval(mask_tr, mask_te, y, rngnp):
         mu, sd = X[mask_tr].mean(0), X[mask_tr].std(0) + 1e-6
@@ -132,7 +147,11 @@ def main():
     rngnp = np.random.default_rng(11)
     for tag, sel in (("PRIMARY_balanced_pairs", np.array([m["balanced"] for m in meta])),
                      ("SECONDARY_confounded_pairs", np.array([not m["balanced"] for m in meta]))):
-        mtr, mte = tr & sel, (~tr) & sel
+        # 🔴 `~tr` would include the UNLABELLED rows, whose y_cor silently becomes
+        # 0.0 from `m["correct"] == "A"` on None -- a fabricated label in the test set, which
+        # is the one thing refusing to invent `correct_side` was meant to prevent. Both masks
+        # carry `lab`.
+        mtr, mte = tr & sel & lab, (~tr) & sel & lab
         if mtr.sum() < 40 or mte.sum() < 20:
             out["strata"][tag] = {"status": "too few cells", "train": int(mtr.sum()), "test": int(mte.sum())}
             print("    %-28s too few (train %d, test %d)" % (tag, mtr.sum(), mte.sum()), file=sys.stderr)

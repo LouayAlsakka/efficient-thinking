@@ -105,7 +105,20 @@ def main():
     rows = []
     for n, i in enumerate(idx):
         c, m = cells[i], meta[i]
-        flip = (m["correct"] != c["correct_side"])          # the order the states were taken under
+        # 🔴 The order the states were taken under. It USED to be inferred by comparing the
+        # stored label against the cell's -- an indirect dependency that breaks for a cell
+        # with no correct side at all (both-right / both-wrong), where the forced pick's A/B
+        # mapping would then be ambiguous. The extractor records it now; the label comparison
+        # remains only for meta written before that field existed.
+        if "flipped" in m:
+            flip = bool(m["flipped"])
+        else:
+            cs = c.get("correct_side")
+            if cs is None:
+                sys.exit("cell %d has neither a recorded `flipped` nor a correct side, so the "
+                         "presentation order is unrecoverable: re-extract its states with an "
+                         "extractor that records `flipped`." % i)
+            flip = (m["correct"] != cs)
         left, right = (c["answer_B"], c["answer_A"]) if flip else (c["answer_A"], c["answer_B"])
         r = {"cell": int(i), "problem": m["problem"], "correct_primary": m["correct"],
              "judge_pick_generated": m["judge_pick"], "strong_side": m["strong_side"]}
