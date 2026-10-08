@@ -29,25 +29,48 @@ Exit status is 0 unless --strict: routing, not gating.
 import argparse, os, re, subprocess, sys
 
 # Shapes, each with the reason a human should look -- never a bare pattern.
+# A name beside a 4-5 digit number reads as an internal decision id. TWO arms, on purpose.
+#
+# The first is the ROSTER -- our seals and romaji names -- with a bounded same-line window, so
+# it finds a citation written as prose and not only one written tight. Its weakness was stated
+# in this file on the day it was widened: a roster is only as complete as the day it was copied.
+# That weakness then arrived. The chair's own seal had never been on it, so a real citation sat
+# in a published test file and this checker returned a clean zero on the very file carrying it.
+# A list cannot be the only arm of a rule whose subject is "any name".
+#
+# So the second arm carries NO LIST: any one or two CJK ideographs beside a number in the range
+# our own numbering occupies. MEASURED over the whole tracked corpus before adopting it. A
+# list-free arm with no range bound costs eight false positives against one true hit -- a poet's
+# birth year, a font encoding, a LaTeX fraction, an HTML character reference -- and a rule whose
+# hits a reader learns to skim is worse than one hit fewer. With the range bound and the two
+# lookbehinds: nine hits, all nine real. The bound IS the discriminator, and it is a fact about
+# our own numbering rather than about any name: a 4-digit number below 5000 in this corpus is a
+# year, an encoding or a quantity, never one of our sequences, and the sequences only grow.
+_ID_WINDOW = r'[^\n]{0,40}?'
+_ID_ANY_NUM = r'\b(?!19\d\d|20\d\d)\d{4,5}\b'
+_ID_ANY_SEAL = r'[㐀-䶿一-鿿]{1,2}'
+_ID_OUR_RANGE = r'(?<!&#)(?<!\{)\b(?:[5-9]\d{3}|[1-9]\d{4})\b'
+_ID_ROSTER = (r"(?:地図|深海|からくり|[理令匠形案内女将庭鉋目付鎖巳紗鍵雲鉄文沙汰秤信声経宝守栞瞬柱繋燕暦眸窯]{1,2}|\b(?:ri|rei|takumi|katachi|annai|okami|niwa|kanna|metsuke|kusari|"
+              r"misa|kagi|kumo|tetsu|fumi|sautee|chizu|fangfei|francis|hakari|hana|hashira|hibiki|jude|kama|karakuri|keiko|koe|koyomi|mamoru|manako|nagare|nagomi|sami|shin|shinkai|shiori|shun|takara|tsubame|tsunagi|weixu)\b)")
+ID_PAT = (_ID_ROSTER + _ID_WINDOW + _ID_ANY_NUM
+          + '|' + _ID_ANY_SEAL + _ID_WINDOW + _ID_OUR_RANGE)
+
+
 RULES = [
-    ("id-next-to-a-name",
-     # OUR glyphs, not any CJK: "唐寅, 1470" is a poet's birth year and flagging it teaches
-     # the reader to ignore this rule, which is the only way a routing check really fails.
-     r'(?:地図|深海|からくり|[理令匠形案内女将庭鉋目付鎖巳紗鍵雲鉄文沙汰秤信声経宝守栞瞬柱繋燕暦眸窯]{1,2}|\b(?:ri|rei|takumi|katachi|annai|okami|niwa|kanna|metsuke|kusari|'
-     r'misa|kagi|kumo|tetsu|fumi|sautee|chizu|fangfei|francis|hakari|hana|hashira|hibiki|jude|kama|karakuri|keiko|koe|koyomi|mamoru|manako|nagare|nagomi|sami|shin|shinkai|shiori|shun|takara|tsubame|tsunagi|weixu)\b)[^\n]{0,40}?\b(?!19\d\d|20\d\d)\d{4,5}\b',
+    ("id-next-to-a-name", ID_PAT,
      "a 4-5 digit number beside a name reads as an internal decision id"),
     # The glyph arm carries the roster's seals EXCEPT 花, 和 and 流: everyday characters that
-    # flag a poetry corpus ("花枝 … GB 2312" is a font encoding beside a flower). Those three
+    # flag a poetry corpus ("花枕 … GB 2312" is a font encoding beside a flower). Those three
     # lanes are reached by the romaji arm only, and that limit is stated here on purpose.
-    # ✏️ 2026-10-06 (目付 15683): the romaji arm knew 16 of the ~42 names on the roster. Widened
-    # to the whole roster as the channel registry lists it; a name the registry does not carry
-    # is still invisible here, and this list is only as complete as the day it was copied.
-    # ✏️ 2026-10-06 (理 15458, 沙汰): the separator class was `[\s,(]*` -- adjacency only.
-    # It matched "理 13178" and MISSED "理 defined it (13178 §2)", and a scan of the whole
-    # tracked corpus with a 40-char same-line window found 22 MORE real ids the narrow form
-    # could not see -- "形's 12340", "理, from 沙汰–10912", "理/11104", "理's fixed 9170",
-    # "理, amended 11397", "理 ruled at 10909". Zero false positives in those 22, measured
-    # before the change, so the widening costs no signal. The window is bounded and
+    # ✏️ 2026-10-06: the romaji arm knew 16 of the ~42 names on the roster; widened to the whole
+    # roster as the channel registry lists it. A name the registry does not carry is invisible
+    # to THIS arm, which is why the list-free arm above exists.
+    # ✏️ 2026-10-06: the separator class was adjacency-only, so it matched a seal and a number
+    # written tight and missed the same citation written as prose -- a seal, a verb, then the
+    # number in brackets. A scan of the whole tracked corpus with a 40-char same-line window
+    # found 22 more real ids the narrow form could not see: a possessive seal, a seal with a
+    # slash, a seal with an interposed "from" or "amended". Zero false positives in those 22,
+    # measured before the change, so the widening cost no signal. The window is bounded and
     # same-line on purpose: unbounded would pair a name with any number in the document.
     # Every arm here USED to require a trailing digit, and the coordination host's name has
     # none -- so the one machine that is the git server and the message store was the single
@@ -55,7 +78,7 @@ RULES = [
     # names it twice. Found by a second reader, validated on the whole corpus rather than on
     # chosen cases: 2 hits, both true, and none of the 109 `mlx-lm` lines. The lookarounds are
     # the file's own idiom -- `fixture-slug` already carries them for the same reason.
-    ("host-shaped-token", r'\b(?:llm\d|mini\d|box[-_ ]?[A-Z]\d)\b|(?<![-\w])lm(?![-\w])',
+    ("host-shaped-token", r'\b(?:llm\d|mini\d|box[-_ ]?[A-Z]\d)\b|(?<![-\w])lm(?![-\w])',  # shape-example
      "a machine name is estate topology: how many boxes there are and what they do"),
     ("internal-path-fragment",
      # ✏️ 2026-10-06 (沙汰): the first two alternatives did NOT cover an agent session's
@@ -67,14 +90,14 @@ RULES = [
      r'(?:reports|wo)/[a-z]+/|/Users/[a-z]+/(?:github|claude)/'
      r'|/private/tmp/claude-\d+/|-agents-[A-Za-z]+/[0-9a-f]{8}-',
      "an internal path names a private tree and often a person"),
-    ("product-or-repo-name", r'nira[-_ ]?(?:net|app)|niraikanai',
+    ("product-or-repo-name", r'nira[-_ ]?(?:net|app)|niraikanai',  # shape-example
      "the product and the estate repos are not part of the method"),
-    # ✏️ 2026-10-06 (理 15470, 沙汰): `.html` joins `.json`/`.jsonl` in the lookbehinds.
+    # ✏️ 2026-10-06: `.html` joins `.json`/`.jsonl` in the lookbehinds.
     # Six of this rule's eight hits were the SITE'S OWN PAGE NAME, `discovery-chain.html`,
     # in .gitignore, index.html and stamp_site.sh -- a guard flagging the filename of the
     # page it is published beside. A rule whose hits a reader learns to skim is worse than
     # one hit fewer. The three remaining hits are a DOCUMENT ANCHOR
-    # (`appendix-a.-how-this-was-found`) and are deliberately NOT excluded: 理 authorised
+    # (`appendix-a.-how-this-was-found`) and are NOT excluded  # shape-example
     # the .html-basename exclusion only, and an anchor is a different shape needing its own
     # ruling rather than my widening the exemption while I am in here.
     ("fixture-slug", r'\b[a-z]+-[a-z]+\.[a-z-]{4,}\b(?<!\.json)(?<!\.jsonl)(?<!\.html)',
@@ -100,8 +123,9 @@ RULES = [
 ]
 SKIP_EXT = (".npz", ".npy", ".png", ".jpg", ".pdf", ".ico", ".woff", ".woff2", ".zip", ".gz",
             ".safetensors", ".bin", ".pt", ".pth", ".onnx", ".mlmodel")
-# Binary weights matched three rules on random bytes ("llm9", "\u7a7a8549"). A check whose output
-# is a reading list must not fill it with tensors nobody can read.
+# Binary weights matched three rules on random bytes: a host-shaped token, and a seal beside
+# four digits. A check whose output is a reading list must not fill it with tensors nobody can
+# read. (The examples are described rather than quoted: this file is scanned like any other.)
 
 
 _ROOT = None
@@ -145,11 +169,31 @@ def read(path, rev=None):
         return ""
 
 
+SHAPE_EXAMPLE = "shape-example"   # the ONE marker that exempts a line of THIS file
+
+
+def exempt_self_line(line):
+    """Does this line of the checker's own source legitimately carry a shape it detects?
+
+    The exemption used to be the whole FILE -- a `continue` on the checker's own path -- on the
+    reasoning that a file quoting the shapes it looks for is noise. That reasoning is right
+    about the rule literals and wrong about every other line, and under it SIX real decision
+    ids accumulated in the editorial comments here, invisible to this tool by construction.
+    They were found by a second reader. A guard with a blind spot over its own source is the
+    one place a reader will never think to look.
+
+    So the exemption is per LINE and must be written on the line it covers. The default is to
+    SCAN: an unmarked line is read exactly like a line of any other file. Marking a line is a
+    visible act in a diff, and the number of marked lines is printed with every result, so the
+    exemption cannot widen quietly.
+    """
+    return SHAPE_EXAMPLE in line
+
+
 def scan(files, rev=None, self_path=None):
     hits = []
+    scan.self_exempt = 0
     for f in files:
-        if f == self_path:
-            continue           # this file QUOTES the shapes it looks for; scanning it is noise
         # THE PATH IS PUBLISHED TEXT. This guard read only the inside of files, so a file NAMED
         # after a host was invisible to it by construction -- and a skipped binary's path was
         # doubly invisible, since the extension skip took the name out with the bytes. A name
@@ -163,7 +207,10 @@ def scan(files, rev=None, self_path=None):
             continue
         body = read(f, rev)
         for i, line in enumerate(body.split("\n"), 1):
-            # ✏️ 2026-10-06 (沙汰): this used to `break` after the FIRST matching rule, so a
+            if f == self_path and exempt_self_line(line):
+                scan.self_exempt += 1
+                continue
+            # ✏️ 2026-10-06: this used to `break` after the FIRST matching rule, so a
             # line carrying two classes reported only the earlier one in RULES order -- and
             # 13 result JSONs whose recorded --states path is an agent scratchpad reported
             # only `id-next-to-a-name` (RULES[0]) while `internal-path-fragment` was never
@@ -222,15 +269,169 @@ def completeness_statement(files):
             "  path, and would pass every rule above. That claim needs a reader." % len(files))
 
 
+def self_test():
+    """Controls for this checker, because it is the gate every public commit passes through.
+
+    It shipped without any. The defect that prompted them was found by a second reader on a
+    published file: a lane pseudonym beside a channel sequence number, which this tool returned
+    a clean zero on, because its name predicate was a LIST and the chair's own seal had never
+    been added to it.
+
+    The FIRING fixtures keep the seal and the number in separate literals and join them at run
+    time, so this file stays scannable by its own rules rather than needing an exemption for
+    every fixture. The NON-FIRING fixtures are the eight real false positives measured over the
+    tracked corpus while choosing the list-free arm -- they are kept as tests because a rule
+    whose hits a reader learns to skim is worse than one hit fewer.
+    """
+    RAN = []
+
+    def ck(name, got, want):
+        ok = (got == want)
+        RAN.append(ok)
+        def s(v):
+            r = repr(v)
+            return r[:70] + u"\u2026" if len(r) > 70 else r
+        print(u"  %s %-64s %s" % (u"\u2705" if ok else u"\U0001f534", name,
+                                 u"" if ok else u"got %s, want %s" % (s(got), s(want))))
+
+    BY = dict((n, p) for n, p, w in RULES)
+
+    def fires(rule, line):
+        return re.search(BY[rule], line, re.I) is not None
+
+    # Seals and sequences, deliberately apart -- and the KEYS are roles, not names: a table
+    # keyed by lane name put a romaji name within the window of a four-figure number and this
+    # file flagged its own fixtures. Control 5c found that, which is the point of control 5c.
+    seq = {"chair": "16481", "ruling": "15458", "second": "15683", "form": "12340",
+           "studio": "10912", "ruling_b": "11104", "ruling_c": "13178", "older": "9170",
+           "offroster": "15000", "below_range": "4321"}
+
+    print(u"\n=== id-next-to-a-name: THE LEAK THAT PROMPTED THIS, as a fixture ===")
+    leaked = (u'print("\\n=== CONTROL 2b \u2014 the presentation order is a property of the '
+              u'CELL (\u7a76 ' + seq["chair"] + u') ===")')
+    ck("1. the exact published line that leaked now fires", fires("id-next-to-a-name", leaked), True)
+    ck("1b. the chair's seal beside a sequence fires on its own",
+       fires("id-next-to-a-name", u"\u7a76 " + seq["chair"]), True)
+    ck("1c. ...and the chair's seal is NOT on the roster arm, so arm two is what caught it",
+       re.search(_ID_ROSTER + _ID_WINDOW + _ID_ANY_NUM,
+                 u"\u7a76 " + seq["chair"], re.I) is not None, False)
+    ck("1d. a seal no roster will ever carry fires too",
+       fires("id-next-to-a-name", u"\u9df9 " + seq["offroster"]), True)
+
+    print(u"\n=== id-next-to-a-name: the roster arm still does its own work ===")
+    for who, s in (("a ruling", seq["ruling"]), ("a second read", seq["second"])):
+        ck("2. a roster seal beside a sequence (%s)" % who,
+           fires("id-next-to-a-name", u"\u7406 " + s), True)
+    ck("2b. a possessive seal", fires("id-next-to-a-name", u"\u5f62's " + seq["form"]), True)
+    ck("2c. a seal with an interposed preposition",
+       fires("id-next-to-a-name", u"\u7406, from \u6c99\u6c70\u2013" + seq["studio"]), True)
+    ck("2d. a seal with a slash", fires("id-next-to-a-name", u"\u7406/" + seq["ruling_b"]), True)
+    ck("2e. a citation written as prose, which adjacency-only missed",
+       fires("id-next-to-a-name", u"\u7406 defined it (" + seq["ruling_c"] + u" \u00a72)"), True)
+    ck("2f. a romaji name", fires("id-next-to-a-name", "sautee " + seq["chair"]), True)
+    ck("2g. a 4-digit id BELOW the list-free arm's range, which only the roster can catch",
+       fires("id-next-to-a-name", u"\u7406 " + seq["below_range"]), True)
+    ck("2h. ...and the list-free arm indeed declines that one, as designed",
+       re.search(_ID_ANY_SEAL + _ID_WINDOW + _ID_OUR_RANGE,
+                 u"\u7406 " + seq["below_range"], re.I) is not None, False)
+
+    print(u"\n=== id-next-to-a-name: the eight measured false positives stay quiet ===")
+    quiet = [
+        ("a poet's birth year beside his name", u"a Tang Yin (\u5510\u5bc5, 1470\u20131524) voice prior"),
+        ("a font encoding beside a flower", u"\u82b1\u6795 Fonts: \u6977\u9ad4 GB 2312"),
+        ("a LaTeX fraction after a glyph", u"\u5f0f: \\frac{4321}{9999}"),
+        ("an HTML character reference", u"\u9999 '&#26412"),
+        ("a DATE citation, which the chair ruled stays", u"\u7406 2026-09-14"),
+        ("a bare year", u"\u7406 1999"),
+        ("an Elo ladder with no name near it", "--ladder 2400,2700,3000"),
+        ("a 4-digit quantity with no name on the line", "--ckpt-every 4000 --seed 3"),
+    ]
+    for why, line in quiet:
+        ck("3. quiet: %s" % why, fires("id-next-to-a-name", line), False)
+
+    print(u"\n=== every other rule has a firing fixture and a quiet one ===")
+    # Each row is (rule, a line that MUST fire, a line that must not). These eight lines quote
+    # the shapes verbatim -- a fixture written in words tests nothing -- so they carry the
+    # marker, and the count printed with every result is how a reader sees that they do.
+    other = [
+        ("host-shaped-token", "llm1", "mlx-lm"),  # shape-example
+        ("host-shaped-token", "trained on lm", "html-lm-x"),  # shape-example
+        ("internal-path-fragment", "reports/sautee/et7/x.md", "reasoning/results/x.md"),  # shape-example
+        ("internal-path-fragment", "/private/tmp/claude-501/x", "/private/tmp/claude-x/y"),  # shape-example
+        ("product-or-repo-name", "the niraikanai tree", "nirvana apps"),  # shape-example
+        ("internal-wo-id", "WO-336 says", "WO-"),  # shape-example
+        ("fixture-slug", "venue-name.some-slug", "results.json"),  # shape-example
+        ("credential-shaped", "AKIAEXAMPLE1234567", "AKIA"),  # shape-example
+    ]
+    for rule, hot, cold in other:
+        ck("4. %-22s fires" % rule, fires(rule, hot), True)
+        ck("4. %-22s quiet" % rule, fires(rule, cold), False)
+
+    print(u"\n=== the self-exemption: per LINE, and it cannot hide a new id ===")
+    ck("5. an unmarked editorial citation in this file is NOT exempt",
+       exempt_self_line(u"    # \u270f\ufe0f 2026-10-08 (\u7a76 " + seq["chair"] + u"): widened"), False)
+    ck("5b. a line carrying the marker IS exempt",
+       exempt_self_line("    a rule literal, in full, on this line  # " + SHAPE_EXAMPLE), True)
+    me = os.path.relpath(os.path.abspath(__file__), repo_root())
+    ck("5c. this checker is CLEAN on its own source, marker lines aside",
+       scan([me], self_path=me), [])
+    marked = scan.self_exempt
+    ck("5d. ...and it says how many of its own lines it did not read", marked > 0, True)
+
+    real_read = read
+    try:
+        globals()["read"] = lambda path, rev=None: (
+            u"a rule literal naming the estate repo, in full  # " + SHAPE_EXAMPLE + u"\n"
+            u"# \u270f\ufe0f 2026-10-08 (\u7a76 " + seq["chair"] + u"): a real id, unmarked\n")
+        hits = scan([me], self_path=me)
+    finally:
+        globals()["read"] = real_read
+    ck("5e. a REAL id added to this file is reported (the defect that hid six of them)",
+       [(h[1], h[2]) for h in hits], [(2, "id-next-to-a-name")])
+    ck("5f. ...while the marked rule literal beside it stays exempt, counted not silent",
+       scan.self_exempt, 1)
+
+    print(u"\n=== a selector that cannot testify beyond itself ===")
+    ck("6. an unreadable --files path yields no content, so it must be refused not counted",
+       missing_paths(["reasoning/et7_ee_probe.py", "no/such/file.py"]), ["no/such/file.py"])
+    ck("6b. ...and a path that is there is not refused",
+       missing_paths(["reasoning/et7_ee_probe.py"]), [])
+
+    print(u"\n  %d/%d controls pass." % (sum(RAN), len(RAN)))
+    return 0 if all(RAN) else 1
+
+
+def missing_paths(files):
+    """--files paths this process cannot read.
+
+    `read()` returns "" for anything it cannot open, so a mistyped path used to produce a
+    confident `0 line(s)` over a file that was never opened -- a clean bill whose scope was
+    empty. The caller refuses instead of counting.
+    """
+    return [f for f in files
+            if not os.path.isfile(os.path.join(repo_root(), f))]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--rev", default="", help="scan a git revision instead of the working tree")
     ap.add_argument("--files", nargs="*", help="only these paths")
     ap.add_argument("--strict", action="store_true", help="exit non-zero when anything is flagged")
     ap.add_argument("--summary", action="store_true", help="counts per rule, not the lines")
+    ap.add_argument("--self-test", action="store_true", help="controls for this checker itself")
     a = ap.parse_args()
+    if a.self_test:
+        sys.exit(self_test())
     rev = a.rev or None
     files = a.files or tracked(rev)
+    if a.files and not rev:
+        gone = missing_paths(a.files)
+        if gone:
+            print("  REFUSED: %d of the %d paths given cannot be opened, so a clean result over\n"
+                  "  them would be a statement about nothing:" % (len(gone), len(a.files)))
+            for f in gone:
+                print("    %s" % f)
+            sys.exit(2)
     me = os.path.relpath(os.path.abspath(__file__), repo_root())
     hits = scan(files, rev, self_path=me)
     if a.summary:
@@ -244,6 +445,10 @@ def main():
             print("%s:%d  [%s] %r\n    %s\n    -> %s" % (f, i, name, tok, line, why))
         print("\n%d line(s) for a person to read, over %d files." % (len(hits), len(files)))
     print(completeness_statement(files))
+    if getattr(scan, "self_exempt", 0):
+        print("\n  %d line(s) of %s are marked `%s` and were NOT scanned: they define or\n"
+              "  describe a shape this checker looks for. Every other line of it was read."
+              % (scan.self_exempt, me, SHAPE_EXAMPLE))
 
     # WHAT WAS NOT OPENED, said as a number rather than left to the prose above. A guard that
     # skips a surface silently reports a zero that is true of everything it read and says

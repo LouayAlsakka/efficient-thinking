@@ -92,7 +92,7 @@ ck("2i. every non-decisive cell is MARKED, so none can be mistaken for decisive"
 ck("2j. the canonical file itself carries no such marks (it is decisive-only)",
    any("decisive" in c for c in canon), False)
 
-print("\n=== CONTROL 2b — the presentation order is a property of the CELL (究 16481) ===")
+print("\n=== CONTROL 2b — the presentation order is a property of the CELL, not of the probe ===")
 # 🔴 et7_ee_probe.py draws one flip per cell from a single sequential Random(0) in FILE
 # ORDER, so interleaving the excluded pairs would have given every later decisive cell a
 # different presentation than E-E used. These assert the builder's assignment instead.

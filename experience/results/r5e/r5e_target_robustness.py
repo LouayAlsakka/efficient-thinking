@@ -14,13 +14,17 @@ import json, sys
 SP = sys.argv[1]
 rows = json.load(open(SP + "/r5e_ladder.json"))["ladder"]
 out = {"rule": "nearest by absolute distance", "targets": {}}
-for name, tgt in (("理's fixed 9170", 9170.0), ("my arithmetic 9194.1", 9194.1)):
+# Named without the seal beside the figure: a lane name next to a four-figure number reads
+# as an internal decision id to a stranger, and the figure belongs in the value anyway.
+RULED_TARGET = 9170.0        # tokens/episode, as fixed in the ruling
+MY_ARITHMETIC = 9194.1       # my own sum from the measured 300s
+for name, tgt in (("the ruled target", RULED_TARGET), ("my arithmetic", MY_ARITHMETIC)):
     pick = min(rows, key=lambda r: abs(r["tokens_per_episode"] - tgt))
     out["targets"][name] = {
         "selected_budget": pick["budget"],
         "distances": {r["budget"]: round(abs(r["tokens_per_episode"] - tgt), 1) for r in rows}}
-a = out["targets"]["理's fixed 9170"]["selected_budget"]
-b = out["targets"]["my arithmetic 9194.1"]["selected_budget"]
+a = out["targets"]["the ruled target"]["selected_budget"]
+b = out["targets"]["my arithmetic"]["selected_budget"]
 out["SAME_SELECTION"] = (a == b)
 out["reading"] = ("the 0.26%% target difference does not change the selected budget (%d) -- the "
                   "choice is robust to it" % a) if a == b else (
