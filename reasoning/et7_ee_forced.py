@@ -54,6 +54,10 @@ def main():
     ap.add_argument("--layer", type=int, default=18)
     ap.add_argument("--foldwise", default="", help="et7_ee_foldwise.json to assert the probe against")
     ap.add_argument("--limit", type=int, default=0, help="smoke test: read only the first N primary cells")
+    ap.add_argument("--pairs", choices=("balanced", "all"), required=True,
+                    help="REQUIRED, no default: 'balanced' is E-E's registered primary "
+                         "stratum (the two balanced policy pairs); 'all' reads every pair, "
+                         "which E-D half B needs because a 3-cycle spans three policies.")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     import et8_head_v3 as H
@@ -64,7 +68,17 @@ def main():
     meta = json.load(open(os.path.join(a.states, "meta.json")))
     X = np.load(os.path.join(a.states, "X.npy")).astype(np.float64)
     assert len(meta) == len(cells) == len(X), (len(meta), len(cells), len(X))
-    sel = np.array([tuple(m["pair"]) in BAL for m in meta])
+    # E-D half B needs the judge's FORCED preference on pairs outside the balanced stratum --
+    # a 3-cycle needs three policies, and BAL holds two pairs. The filter is therefore a
+    # REQUIRED choice with no default: which stratum is read is a registered decision, and a
+    # permissive default here would silently change the population a reading covers.
+    # The widening is proven inert by re-running the pick-reproduction control in BOTH modes
+    # on the cells that have stored forced picks; on newly visible pairs there is nothing
+    # stored to reproduce, so inertness there rests on this filter being the only change.
+    if a.pairs == "balanced":
+        sel = np.array([tuple(m["pair"]) in BAL for m in meta])
+    else:
+        sel = np.ones(len(meta), dtype=bool)
     idx = np.where(sel)[0]
     if a.limit:
         idx = idx[:a.limit]
