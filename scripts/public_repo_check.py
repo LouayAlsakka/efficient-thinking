@@ -127,6 +127,44 @@ SKIP_EXT = (".npz", ".npy", ".png", ".jpg", ".pdf", ".ico", ".woff", ".woff2", "
 # four digits. A check whose output is a reading list must not fill it with tensors nobody can
 # read. (The examples are described rather than quoted: this file is scanned like any other.)
 
+# -- NAMED EXCLUSIONS -------------------------------------------------------------
+# A declared, EXACT (path, rule, token) triple -- never a widened pattern.
+# Why a triple and not a lookbehind: a widened pattern is a SILENT FUTURE EXCLUSION.
+# It would swallow a real hit that merely resembles the excluded shape, and nobody
+# would ever learn it happened. A named triple fails LOUDLY the moment the text it
+# names changes -- the scan reports it as STALE below and the exemption stops
+# applying. That boundary behaviour is the whole reason for the form.
+#
+# An earlier change (2026-10-06) excluded `.html` BASENAMES from the dotted-slug rule
+# by lookbehind and deliberately LEFT these three anchors, on the grounds that an
+# anchor "is a different shape needing its own ruling rather than my widening the
+# exemption while I am in here." The legal lane granted that suppression on
+# 2026-10-10 and required this named form rather than a fourth lookbehind.
+#
+# NOTE ON THIS TABLE'S OWN TEXT: the reasons below carry DATES and no channel or
+# decision ids. The first draft cited the granting blocks by sequence number and this
+# guard flagged its own table -- correctly, since a channel name plus a sequence
+# number is one of the shapes it exists to find, and this repo is public. The right
+# fix was to remove the ids, not to mark the lines exempt.
+EXCLUSIONS = (
+    ("docs/efficient-thinking-7.html", "fixture-slug",
+     "appendix-a.-how-this-was-found",  # shape-example
+     "auto-generated HTML heading anchor for 'Appendix A. How This Was Found'; not a "
+     "venue id. Three permanent false positives teach a reader to skim this rule, "
+     "which is the only way a routing check really fails. Granted 2026-10-10"),
+    ("docs/efficient-thinking-8b.html", "fixture-slug",
+     "appendix-a.-how-this-was-found",  # shape-example
+     "as above; same anchor, same heading. Granted 2026-10-10"),
+    ("docs/efficient-thinking-8c.html", "fixture-slug",
+     "appendix-a.-how-this-was-found",  # shape-example
+     "as above; 8c's heading is sentence-cased ('How this was found') but the "
+     "generated anchor is identical. Granted 2026-10-10"),
+)
+
+_EXCL_INDEX = {(f, r, t): why for f, r, t, why in EXCLUSIONS}
+_EXCL_FIRED = set()
+
+
 
 _ROOT = None
 
@@ -221,7 +259,14 @@ def scan(files, rev=None, self_path=None):
                 m = re.search(pat, line, re.I)
                 if m:
                     hits.append((f, i, name, why, m.group(0)[:40], line.strip()[:100]))
-    return hits
+    kept = []
+    for h in hits:
+        key = (h[0], h[2], h[4])
+        if key in _EXCL_INDEX:
+            _EXCL_FIRED.add(key)
+            continue
+        kept.append(h)
+    return kept
 
 
 def derived_staleness(files):
@@ -461,6 +506,21 @@ def main():
         for f, i, name, why, tok, line in hits:
             print("%s:%d  [%s] %r\n    %s\n    -> %s" % (f, i, name, tok, line, why))
         print("\n%d line(s) for a person to read, over %d files." % (len(hits), len(files)))
+    # THE LOUD HALF OF A NAMED EXCLUSION. An exemption that stops matching must announce
+    # itself, or it decays into a pattern nobody audits: the anchor text changes, the
+    # exclusion silently covers nothing, and a reader still believes three known lines are
+    # being suppressed for a stated reason. Reported whether the scan was clean or not.
+    stale = [k for k in _EXCL_INDEX if k not in _EXCL_FIRED]
+    if stale:
+        print("\n  STALE NAMED EXCLUSION -- declared but matched NOTHING this scan.")
+        print("  The text it names has changed, moved or been removed. Re-read it and either")
+        print("  update the triple or delete it; until then this guard is suppressing nothing")
+        print("  on these entries and the reason recorded beside them no longer applies:")
+        for f, r, t in stale:
+            print("    %s  [%s]  %r" % (f, r, t))
+    elif _EXCL_INDEX:
+        print("\n  named exclusions applied: %d of %d (all still matching; reasons in EXCLUSIONS)"
+              % (len(_EXCL_FIRED), len(_EXCL_INDEX)))
     print(completeness_statement(files))
     if getattr(scan, "self_exempt", 0):
         print("\n  %d line(s) of %s are marked `%s` and were NOT scanned: they define or\n"
