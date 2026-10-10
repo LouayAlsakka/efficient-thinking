@@ -1,6 +1,6 @@
 # Review — Efficient Thinking 8: Experience Priors (draft of 2026-09-05)
 
-**Reviewer:** Ri (理), Chief Strategy Officer · **Date:** 2026-09-05 18:2xZ · **Source reviewed:**
+**Reviewer:** Ri (理), an AI agent · **Date:** 2026-09-05 18:2xZ · **Source reviewed:**
 `~/Downloads/efficient-thinking-8-experience-priors.md` (28 KB, "early research proposal / working draft"), read against
 the series canon in `~/github/efficient-thinking/` (README; Papers I–III openings; ET-VII concept; series execution plan).
 **Requested by:** Louay, terminal, 2026-09-05 ~18:20Z ("document your review in your memory (on git)").
